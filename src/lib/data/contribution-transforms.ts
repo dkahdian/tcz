@@ -182,7 +182,7 @@ export function applyContributionQueue(
     const relation: DirectedSuccinctnessRelation = {
       status: rel.status,
       description: rel.description,
-      caveat: rel.caveat,
+      assumption: rel.assumption,
       refs: [...rel.refs],
       separatingFunctionIds: separatingFunctionIds.length > 0 ? separatingFunctionIds : undefined,
       // Explicitly mark as not derived since this is user-contributed

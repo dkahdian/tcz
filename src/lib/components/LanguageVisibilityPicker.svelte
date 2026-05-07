@@ -140,10 +140,20 @@
   }
 
   function setOnlyOriginalKcmVisible() {
+    const visibleIds = getVisibleIds(value);
     const availableKcmIds = ORIGINAL_KCM_LANGUAGE_IDS.filter((id) =>
       languages.some((language) => language.id === id)
     );
-    onChange({ ...value, mode: 'only', ids: availableKcmIds });
+    const visibleFamilyAndUnionIds = languages
+      .filter((language) => (language.classification ?? 'plain') !== 'plain')
+      .map((language) => language.id)
+      .filter((id) => visibleIds.has(id));
+
+    onChange({
+      ...value,
+      mode: 'only',
+      ids: Array.from(new Set([...availableKcmIds, ...visibleFamilyAndUnionIds]))
+    });
   }
 
   function resetPicker() {
@@ -512,7 +522,7 @@
     flex-direction: column;
     gap: 0.18rem;
     flex: 1 1 auto;
-    min-height: 16rem;
+    min-height: 24rem;
     overflow-y: auto;
     padding-right: 0.15rem;
   }

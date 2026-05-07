@@ -11,7 +11,7 @@
     SelectedOperationCell,
     ViewMode
   } from '$lib/types.js';
-  import { extractCitationKeys } from '$lib/utils/math-text.js';
+  import { extractCitationKeys, formatAssumptionForMathText } from '$lib/utils/math-text.js';
   import { getGlobalRefNumber } from '$lib/data/references.js';
   import { getOperationTractabilityDisplay } from '$lib/utils/operation-tractability.js';
 
@@ -70,12 +70,12 @@
     // Add refs from the support
     support.refs?.forEach(id => refIds.add(id));
     
-    // Extract inline citations from description/caveat
+    // Extract inline citations from description/assumption
     if (support.description) {
       extractCitationKeys(support.description).forEach(key => refIds.add(key));
     }
-    if (support.caveat) {
-      extractCitationKeys(support.caveat).forEach(key => refIds.add(key));
+    if (support.assumption) {
+      extractCitationKeys(support.assumption).forEach(key => refIds.add(key));
     }
     
     // Build result from global references
@@ -100,7 +100,10 @@
   <div class="scrollable-content">
     {#if selectedOperationCell}
       <!-- Show language + operation cell info -->
-      {@const display = getOperationTractabilityDisplay(selectedOperationCell.support)}
+      {@const display = getOperationTractabilityDisplay(
+        selectedOperationCell.support,
+        selectedOperationCell.operationType
+      )}
       <div class="operation-cell-details">
         <div class="cell-header">
           <button 
@@ -128,10 +131,10 @@
         <p class="tractability-line text-sm text-gray-700 mb-2">
           <span class={`tractability-symbol ${display.cssClass}`}>{display.symbol}</span>
           <span>{display.label}</span>
-          {#if selectedOperationCell.support.caveat}
-            <span> unless </span>
+          {#if selectedOperationCell.support.assumption}
+            <span> assuming </span>
             <MathText
-              text={selectedOperationCell.support.caveat}
+              text={formatAssumptionForMathText(selectedOperationCell.support.assumption)}
               className="inline"
               onCitationClick={handleCitationClick}
             />

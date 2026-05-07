@@ -73,8 +73,8 @@
       return { id: byTitle.id, title: byTitle.title, resolved: true };
     }
 
-    // Common fallback: \defref{vtree} should match id "vtree", and similarly
-    // for slug-like refs that may use spaces/underscores/hyphens interchangeably.
+    // Common fallback for slug-like refs that may use spaces, underscores,
+    // or hyphens interchangeably.
     const slug = lower.replace(/[_\s]+/g, '-');
     const candidates = [
       normalized,

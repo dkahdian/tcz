@@ -182,8 +182,8 @@
     if (!relation) return `${colLang.name} → ${rowLang.name}: no relation`;
     const label = STATUS_LABELS[relation.status];
     const refs = relation.refs?.length ? ` · refs: ${relation.refs.join(', ')}` : '';
-    const caveatStr = relation.caveat ? ` (unless ${relation.caveat})` : '';
-    return `${colLang.name} → ${rowLang.name}: ${label}${caveatStr}${refs}`;
+    const assumptionStr = relation.assumption ? ` (assuming ${relation.assumption})` : '';
+    return `${colLang.name} → ${rowLang.name}: ${label}${assumptionStr}${refs}`;
   }
 
   // Dynamic cell sizing
@@ -292,7 +292,7 @@
                       onclick={() => handleCellClick(colLanguage.id, rowLanguage.id, relation)}
                       title={getCellTitle(rowLanguage.language, colLanguage.language, relation)}
                     >
-                      <span class="cell-short">{@html STATUS_SHORT_HTML[relation.status]}{#if relation.caveat}*{/if}</span>
+                      <span class="cell-short">{@html STATUS_SHORT_HTML[relation.status]}{#if relation.assumption}*{/if}</span>
                     </button>
                   </td>
                 {:else}

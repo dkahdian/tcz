@@ -47,9 +47,9 @@ export function initParent(size: number): number[][] {
 }
 
 /**
- * Compute reachability with a two-pass preference for caveat-free paths.
- * Pass 1 uses only uncaveated edges; Pass 2 fills in remaining reachable nodes
- * via caveated edges.  This ensures that when an uncaveated path exists, the
+ * Compute reachability with a two-pass preference for assumption-free paths.
+ * Pass 1 uses only assumption-free edges; Pass 2 fills in remaining reachable nodes
+ * via assumption-bearing edges.  This ensures that when an assumption-free path exists, the
  * parent chain always follows it.
  */
 export function computeReachability(matrix: KCAdjacencyMatrix, allowed: Set<string>): { reach: boolean[][]; parent: number[][] } {
@@ -58,7 +58,7 @@ export function computeReachability(matrix: KCAdjacencyMatrix, allowed: Set<stri
   const parent = initParent(size);
 
   for (let source = 0; source < size; source += 1) {
-    // Pass 1: only caveat-free edges
+    // Pass 1: only assumption-free edges
     const visited1 = new Set<number>();
     const stack1: number[] = [source];
     while (stack1.length > 0) {
@@ -72,7 +72,7 @@ export function computeReachability(matrix: KCAdjacencyMatrix, allowed: Set<stri
         const relation = row[target];
         if (!relation) continue;
         if (!allowed.has(relation.status)) continue;
-        if (relation.caveat) continue; // Skip caveated edges in pass 1
+        if (relation.assumption) continue; // Skip assumption-bearing edges in pass 1
         if (!reach[source][target]) {
           reach[source][target] = true;
           parent[source][target] = current;
@@ -83,7 +83,7 @@ export function computeReachability(matrix: KCAdjacencyMatrix, allowed: Set<stri
       }
     }
 
-    // Pass 2: all edges (fills in nodes only reachable via caveated paths)
+    // Pass 2: all edges (fills in nodes only reachable via assumption-bearing paths)
     const visited2 = new Set<number>();
     const stack2: number[] = [source];
     while (stack2.length > 0) {
@@ -154,31 +154,31 @@ export function formatCitations(refs: string[]): string {
 }
 
 /**
- * Format a caveat as an inline parenthetical "(unless caveat)".
- * Used inside descriptions to show caveat provenance on individual premises.
+ * Format an assumption as an inline phrase.
+ * Used inside descriptions to show assumption provenance on individual premises.
  */
-export function formatInlineCaveat(caveat: string | undefined): string {
-  if (!caveat) return '';
-  return ` (unless ${caveat})`;
+export function formatInlineAssumption(assumption: string | undefined): string {
+  if (!assumption) return '';
+  return ` assuming ${assumption}`;
 }
 
 /**
- * Collect and merge caveats from all edges along a path.
- * Returns undefined if no caveats, a single caveat if only one,
- * or caveats joined with " OR " if multiple unique caveats.
+ * Collect and merge assumptions from all edges along a path.
+ * Returns undefined if no assumptions, a single assumption if only one,
+ * or assumptions joined with " AND " if multiple unique assumptions.
  */
-export function collectCaveatsUnion(path: number[], matrix: KCAdjacencyMatrix): string | undefined {
-  const caveats = new Set<string>();
+export function collectAssumptionsUnion(path: number[], matrix: KCAdjacencyMatrix): string | undefined {
+  const assumptions = new Set<string>();
   for (let i = 0; i < path.length - 1; i += 1) {
     const from = path[i];
     const to = path[i + 1];
     const relation = matrix.matrix[from]?.[to];
-    if (relation?.caveat) {
-      caveats.add(relation.caveat);
+    if (relation?.assumption) {
+      assumptions.add(relation.assumption);
     }
   }
-  if (caveats.size === 0) return undefined;
-  return Array.from(caveats).join(' OR ');
+  if (assumptions.size === 0) return undefined;
+  return Array.from(assumptions).join(' AND ');
 }
 
 export function describePath(pathIds: string[], matrix: KCAdjacencyMatrix): string {
@@ -191,30 +191,30 @@ export function describePath(pathIds: string[], matrix: KCAdjacencyMatrix): stri
     const toIdx = languageIds.indexOf(toId);
     const relation = matrix.matrix[fromIdx]?.[toIdx];
     const status = relation?.status ?? 'unknown';
-    const caveat = relation?.caveat;
-    parts.push(`\\edgeref{${fromId}}{${toId}} ${phraseForStatus(status)}${formatInlineCaveat(caveat)}.`);
+    const assumption = relation?.assumption;
+    parts.push(`\\edgeref{${fromId}}{${toId}} ${phraseForStatus(status)}${formatInlineAssumption(assumption)}.`);
   }
   return parts.join(' ');
 }
 
 /**
  * Format a contradicting relationship as a premise statement with its own
- * inline caveat.  E.g. "A cannot compile to B in polynomial time (unless P = NP) [refs]".
+ * inline assumption.  E.g. "A cannot compile to B in polynomial time assuming P \neq NP [refs]".
  */
 export function formatContradictingPremise(
   srcId: string,
   tgtId: string,
   status: string,
-  caveat: string | undefined
+  assumption: string | undefined
 ): string {
   switch (status) {
     case 'no-poly-quasi':
     case 'no-poly-unknown-quasi':
-      return `\\nedgeref{${srcId}}{${tgtId}} in polynomial time${formatInlineCaveat(caveat)}`;
+      return `\\nedgeref{${srcId}}{${tgtId}} in polynomial time${formatInlineAssumption(assumption)}`;
     case 'no-quasi':
-      return `\\nedgeref{${srcId}}{${tgtId}} in quasi-polynomial time${formatInlineCaveat(caveat)}`;
+      return `\\nedgeref{${srcId}}{${tgtId}} in quasi-polynomial time${formatInlineAssumption(assumption)}`;
     default:
-      return `${idToName(srcId)} and ${idToName(tgtId)} have an incompatible relationship${formatInlineCaveat(caveat)}`;
+      return `${idToName(srcId)} and ${idToName(tgtId)} have an incompatible relationship${formatInlineAssumption(assumption)}`;
   }
 }
 

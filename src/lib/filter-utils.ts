@@ -177,16 +177,17 @@ export function updateDelta(
   deltas: FilterDeltas,
   filterId: string,
   value: FilterParamValue,
-  filter: AnyFilter
+  filter: AnyFilter,
+  viewMode: ViewMode = 'graph'
 ): FilterDeltas {
   if (isLockedInternalFilter(filter)) {
     return deltas;
   }
 
   const newDeltas = new Map(deltas);
-  const graphDefault = getFilterDefault(filter, 'graph');
+  const viewDefault = getFilterDefault(filter, viewMode);
   
-  if (areFilterValuesEqual(value, graphDefault)) {
+  if (areFilterValuesEqual(value, viewDefault)) {
     newDeltas.delete(filterId);
   } else {
     newDeltas.set(filterId, value);

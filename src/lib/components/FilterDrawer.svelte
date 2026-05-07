@@ -293,8 +293,8 @@
   }
 
   .filter-row--language-picker {
-    flex: 1 1 min(34rem, 65vh);
-    min-height: 24rem;
+    flex: 1 1 auto;
+    min-height: min(42rem, calc(100vh - 8rem));
     display: flex;
     flex-direction: column;
   }

@@ -96,7 +96,7 @@ export function cloneRelationshipEntry(entry: RelationshipEntry): RelationshipEn
     targetId: entry.targetId,
     status: entry.status,
     description: entry.description,
-    caveat: entry.caveat,
+    assumption: entry.assumption,
     refs: [...entry.refs],
     separatingFunctionIds: entry.separatingFunctionIds ? [...entry.separatingFunctionIds] : undefined
   };

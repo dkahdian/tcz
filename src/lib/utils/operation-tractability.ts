@@ -1,6 +1,7 @@
 import type { KCOpEntry, KCOpSupport } from '$lib/types.js';
 
 export type OperationTractabilityId = 'tractable' | 'conditional' | 'intractable' | 'unknown';
+export type OperationDisplayContext = 'query' | 'transformation';
 
 export type OperationTractabilityDisplay = {
   id: OperationTractabilityId;
@@ -23,22 +24,22 @@ export const OPERATION_TRACTABILITY_DISPLAYS: Record<OperationTractabilityId, Op
   tractable: {
     id: 'tractable',
     symbol: '✓',
-    label: 'Tractable',
-    description: 'Operation is tractable in polynomial time.',
+    label: 'Polynomial time',
+    description: 'Operation has a polynomial-time algorithm.',
     cssClass: 'operation-tractability-tractable'
   },
   conditional: {
     id: 'conditional',
     symbol: '○',
-    label: 'Conditionally not tractable',
-    description: 'Operation is not tractable unless the listed condition holds.',
+    label: 'Not polynomial time',
+    description: 'Operation is not polynomial time assuming the listed condition.',
     cssClass: 'operation-tractability-conditional'
   },
   intractable: {
     id: 'intractable',
     symbol: '●',
-    label: 'Not tractable',
-    description: 'Operation is not tractable.',
+    label: 'Not polynomial time',
+    description: 'Operation is not polynomial time.',
     cssClass: 'operation-tractability-intractable'
   },
   unknown: {
@@ -51,7 +52,8 @@ export const OPERATION_TRACTABILITY_DISPLAYS: Record<OperationTractabilityId, Op
 };
 
 export function getOperationTractabilityDisplay(
-  support: Pick<KCOpEntry | KCOpSupport, 'complexity' | 'caveat'> | null | undefined
+  support: Pick<KCOpEntry | KCOpSupport, 'complexity' | 'assumption'> | null | undefined,
+  context?: OperationDisplayContext
 ): OperationTractabilityDisplay {
   if (!support?.complexity || UNKNOWN_CODES.has(support.complexity)) {
     return OPERATION_TRACTABILITY_DISPLAYS.unknown;
@@ -61,7 +63,7 @@ export function getOperationTractabilityDisplay(
     return OPERATION_TRACTABILITY_DISPLAYS.tractable;
   }
 
-  if (support.caveat) {
+  if (support.assumption) {
     return OPERATION_TRACTABILITY_DISPLAYS.conditional;
   }
 

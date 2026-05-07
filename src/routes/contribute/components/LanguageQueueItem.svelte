@@ -1,5 +1,6 @@
 <script lang="ts">
-	import MathText from '$lib/components/MathText.svelte';
+  import MathText from '$lib/components/MathText.svelte';
+  import { formatAssumptionForMathText } from '$lib/utils/math-text.js';
 	import type { LanguageToAdd } from '../types.js';
 	import GenericQueueItem from './GenericQueueItem.svelte';
 
@@ -90,8 +91,10 @@
 								<div class="bg-white p-2 rounded border">
 									<div class="font-medium">{code}</div>
 									<div class="text-gray-600">{support.complexity}</div>
-									{#if support.caveat}
-										<MathText text={`Unless ${support.caveat}`} className="text-gray-500 italic text-xs block" />
+									{#if support.assumption}
+										<div class="text-gray-500 italic text-xs">
+											<span>Assuming </span><MathText text={formatAssumptionForMathText(support.assumption)} className="inline" />
+										</div>
 									{/if}
 								{#if support.refs.length > 0}
 									<div class="text-gray-500 text-xs">Refs: [{support.refs.join(', ')}]</div>
@@ -111,8 +114,10 @@
 								<div class="bg-white p-2 rounded border">
 									<div class="font-medium">{code}</div>
 									<div class="text-gray-600">{support.complexity}</div>
-									{#if support.caveat}
-										<MathText text={`Unless ${support.caveat}`} className="text-gray-500 italic text-xs block" />
+									{#if support.assumption}
+										<div class="text-gray-500 italic text-xs">
+											<span>Assuming </span><MathText text={formatAssumptionForMathText(support.assumption)} className="inline" />
+										</div>
 									{/if}
 								{#if support.refs.length > 0}
 									<div class="text-gray-500 text-xs">Refs: [{support.refs.join(', ')}]</div>

@@ -1,57 +1,14 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import MathText from '$lib/components/MathText.svelte';
-	import { initialGraphData } from '$lib/data/index.js';
-	import { getReferences } from '$lib/data/references.js';
-
-	const definitions = initialGraphData.definitions ?? [];
-
-	let expandedDefinitionIds = new Set<string>();
-
-	function expandDefinition(id: string, scroll = false) {
-		expandedDefinitionIds = new Set(expandedDefinitionIds).add(id);
-
-		if (scroll) {
-			requestAnimationFrame(() => {
-				document.getElementById(id)?.scrollIntoView({ block: 'start' });
-			});
-		}
-	}
-
-	function toggleDefinition(id: string) {
-		const next = new Set(expandedDefinitionIds);
-		if (next.has(id)) {
-			next.delete(id);
-		} else {
-			next.add(id);
-		}
-		expandedDefinitionIds = next;
-	}
-
-	function expandHashDefinition() {
-		const id = decodeURIComponent(window.location.hash.slice(1));
-		if (id && definitions.some((definition) => definition.id === id)) {
-			expandDefinition(id, true);
-		}
-	}
-
-	onMount(() => {
-		expandHashDefinition();
-		window.addEventListener('hashchange', expandHashDefinition);
-
-		return () => {
-			window.removeEventListener('hashchange', expandHashDefinition);
-		};
-	});
 </script>
 
 <svelte:head>
-	<title>About — Tractable Circuit Zoo</title>
+	<title>About - Tractable Circuit Zoo</title>
 </svelte:head>
 
 <div class="about-page">
 	<header class="about-header">
-		<a href="/" class="back-link">← Back to Zoo</a>
+		<a href="/" class="back-link">&lt;- Back to Zoo</a>
 		<h1>About the Tractable Circuit Zoo</h1>
 	</header>
 
@@ -70,52 +27,37 @@
 		</section>
 
 		<section>
+			<h2>How to read the zoo</h2>
+			<p>
+				A <strong>representation language</strong> is a restricted circuit or formula format for Boolean functions. The zoo compares these languages in two ways: how succinctly one language can simulate another, and which operations can be performed efficiently once a function has been compiled into a language.
+			</p>
+			<p>
+				Some entries are ordinary languages, while others are <strong>families</strong> or <strong>unions</strong>. A family fixes a structural parameter, such as an order or tree shape, and a union language allows any member of that family. For example, <MathText text={`\\langfam{OBDD}{<}`} className="inline" /> fixes an order, while <MathText text={`\\langref{OBDD}`} className="inline" /> ranges over all orders.
+			</p>
+		</section>
+
+		<section>
+			<h2>Succinctness and operations</h2>
+			<p>
+				A language <MathText text={`A`} className="inline" /> is <strong>at least as succinct as</strong> a language <MathText text={`B`} className="inline" /> when every <MathText text={`B`} className="inline" /> representation can be compiled into an equivalent <MathText text={`A`} className="inline" /> representation with only polynomial blowup. A separating function shows that such a polynomial compilation cannot exist.
+			</p>
+			<p>
+				For operations, "polynomial time" means there is an algorithm whose running time is polynomial in the input representation size. Negative entries record known lower bounds, sometimes under standard complexity assumptions.
+			</p>
+		</section>
+
+		<section>
 			<h2>Definitions</h2>
 			<p>
-				These informal definitions intend to provide a minimalistic, intuitive overview of the project. Each is linked to more formal statements in the literature.
+				The full generated glossary has the project definitions for core concepts, queries, and transformations.
+				<a href="/definitions">Open the definitions page</a>.
 			</p>
-			<div class="definition-list">
-				{#each definitions as definition}
-					{@const expanded = expandedDefinitionIds.has(definition.id)}
-					<article class="definition-card" class:expanded id={definition.id}>
-						<button
-							type="button"
-							class="definition-card-header"
-							aria-expanded={expanded}
-							aria-controls={`${definition.id}-body`}
-							onclick={() => toggleDefinition(definition.id)}
-						>
-							<h3><MathText text={definition.title} as="span" /></h3>
-							<span class="definition-toggle" aria-hidden="true">{expanded ? '-' : '+'}</span>
-						</button>
-						{#if expanded}
-							<div class="definition-body" id={`${definition.id}-body`}>
-								<div class="definition-statement">
-									<MathText text={definition.statement} as="p" />
-								</div>
-								{#if definition.explanation}
-									<div class="definition-explanation">
-										<MathText text={definition.explanation} as="p" />
-									</div>
-								{/if}
-								{#if definition.refs.length > 0}
-									<div class="definition-refs">
-										<span>References:</span>
-										{#each getReferences(...definition.refs) as ref, index}
-											<a href={ref.href} target="_blank" rel="noopener noreferrer">{ref.title}</a>{index < definition.refs.length - 1 ? ', ' : ''}
-										{/each}
-									</div>
-								{/if}
-							</div>
-						{/if}
-					</article>
-				{/each}
-			</div>
 		</section>
+
 		<section>
 			<h2>Automated reasoning</h2>
 			<p>
-				Not all of folklore is explicitly documented. We use automated reasoning to derive portions of the zoo, and provide sketch proofs.
+				Not all of folklore is explicitly documented. We use automated reasoning to derive portions of the zoo, and provide sketch proofs. Such results are shown with gray diagonal stripes.
 			</p>
 		</section>
 	</main>
@@ -167,95 +109,10 @@
 		margin-bottom: 1.5rem;
 	}
 
-	.definition-list {
-		display: grid;
-		gap: 0.9rem;
-	}
-
-	.definition-card {
-		scroll-margin-top: 1rem;
-		border: 1px solid #e2e8f0;
-		border-radius: 0.5rem;
-		background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-		box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-	}
-
-	.definition-card.expanded {
-		border-color: #cbd5e1;
-	}
-
-	.definition-card-header {
-		display: flex;
-		width: 100%;
-		align-items: center;
-		justify-content: space-between;
-		gap: 1rem;
-		padding: 0.875rem 1rem;
-		border: 0;
-		background: transparent;
-		cursor: pointer;
-		text-align: left;
-	}
-
-	.definition-card h3 {
-		font-size: 1rem;
-		font-weight: 700;
-		color: #0f172a;
-		margin: 0;
-	}
-
-	.definition-toggle {
-		display: inline-grid;
-		flex: 0 0 auto;
-		width: 1.5rem;
-		height: 1.5rem;
-		place-items: center;
-		border-radius: 999px;
-		background: #e2e8f0;
-		color: #334155;
-		font-size: 1rem;
-		font-weight: 700;
-		line-height: 1;
-	}
-
-	.definition-body {
-		padding: 0 1rem 0.875rem;
-		border-top: 1px solid #e2e8f0;
-	}
-
-	.definition-statement,
-	.definition-explanation {
-		margin: 0.4rem 0;
-		line-height: 1.65;
-		color: #475569;
-	}
-
-	.definition-refs {
-		margin-top: 0.5rem;
-		font-size: 0.875rem;
-		color: #64748b;
-	}
-
-	.definition-refs span {
-		font-weight: 600;
-		color: #334155;
-	}
-
 	p {
 		line-height: 1.65;
 		margin: 0 0 0.75rem;
 		color: #475569;
-	}
-
-	ul {
-		margin: 0.5rem 0;
-		padding-left: 1.5rem;
-		color: #475569;
-	}
-
-	li {
-		line-height: 1.65;
-		margin-bottom: 0.375rem;
 	}
 
 	a {

@@ -17,17 +17,17 @@
  * 
  * 2. LaTeX → JSON (--to-json):
  *    - Parses all LaTeX files with STRICT canonical format requirements
- *    - Updates database.json with editable content (descriptions, refs, caveats)
+ *    - Updates database.json with editable content (descriptions, refs, assumptions)
  *    - Runs refresh-derived.ts to propagate changes
  * 
  * CANONICAL CLAIM FORMAT for edges (strictly enforced):
  *   \begin{claim}[status=STATUS]
- *   \langref{LANG1} transforms to \langref{LANG2} (unless CAVEAT)?
+ *   \langref{LANG1} transforms to \langref{LANG2} (assuming ASSUMPTION)?
  *   \end{claim}
  * 
  * CANONICAL CLAIM FORMAT for operations (strictly enforced):
  *   \begin{claim}[lang=LANG_ID, op=OP_CODE]
- *   \langref{LANG} supports OP_LABEL COMPLEXITY_TEXT (unless CAVEAT)?
+ *   \langref{LANG} supports OP_LABEL COMPLEXITY_TEXT (assuming ASSUMPTION)?
  *   \end{claim}
  * 
  * Usage:
@@ -79,7 +79,7 @@ interface Edge {
   toName: string;
   status: string;
   description: string;
-  caveat: string;
+  assumption: string;
   refs: string[];
   derived: boolean;
   separatingFunctionIds?: string[];
@@ -301,7 +301,7 @@ function extractEdges(database: DatabaseSchema): Edge[] {
         toName: toLang.name,
         status: relation.status,
         description: relation.description || '',
-        caveat: relation.caveat || '',
+        assumption: relation.assumption || '',
         refs: relation.refs || [],
         derived: false, // We skip derived edges above
         separatingFunctionIds: relation.separatingFunctionIds,
@@ -441,8 +441,8 @@ function buildClaimTextWithEffectiveStatus(edge: Edge): string {
   
   let claim = `${fromLatex} ${transformType} ${toLatex}`;
   
-  if (edge.caveat) {
-    claim += ` unless ${edge.caveat}`;
+  if (edge.assumption) {
+    claim += ` assuming ${edge.assumption}`;
   }
   
   // For partially derived edges, only include refs from non-derived part
@@ -476,7 +476,7 @@ function buildClaimTextWithEffectiveStatus(edge: Edge): string {
  * 
  * Format:
  *   \begin{claim}
- *   $LANG1$ TRANSFORMATION_TYPE $LANG2$ (unless CAVEAT)? \citet{REFS}?
+ *   $LANG1$ TRANSFORMATION_TYPE $LANG2$ (assuming ASSUMPTION)? \citet{REFS}?
  *   \end{claim}
  *   \begin{claimdescription}
  *   DESCRIPTION (EDITABLE)
@@ -697,7 +697,7 @@ interface ParsedClaim {
   fromName: string;
   toName: string;
   status: string;
-  caveat: string;
+  assumption: string;
   proofSketch: string;  // Copied directly to description field
   refs: string[];       // References from the claim line
   derived: boolean;
@@ -709,7 +709,7 @@ interface ParsedClaim {
  * 
  * Expected format:
  *   \begin{claim}
- *   LANG1 TRANSFORMATION_TYPE LANG2 (unless CAVEAT)? (\citet{REFS})?
+ *   LANG1 TRANSFORMATION_TYPE LANG2 (assuming ASSUMPTION)? (\citet{REFS})?
  *   where LANG is either legacy $...$ tokenization or \langref{...}
  *   \end{claim}
  * 
@@ -721,7 +721,7 @@ function parseCanonicalClaim(
   proofSketch: string,
   derived: boolean
 ): ParsedClaim | null {
-  // Parse claim body: $LANG1$ TRANSFORMATION_TYPE $LANG2$ (unless CAVEAT)? (\citet{REFS})?
+  // Parse claim body: $LANG1$ TRANSFORMATION_TYPE $LANG2$ (assuming ASSUMPTION)? (\citet{REFS})?
   let body = claimBody.trim();
   
   // First, extract and remove citation if present (always at the end)
@@ -732,12 +732,12 @@ function parseCanonicalClaim(
     body = body.slice(0, citeMatch.index).trim();
   }
   
-  // Extract caveat if present (comes before citation)
-  let caveat = '';
-  const caveatMatch = body.match(/\s+unless\s+(.+)$/i);
-  if (caveatMatch) {
-    caveat = caveatMatch[1].trim();
-    body = body.slice(0, caveatMatch.index).trim();
+  // Extract assumption if present (comes before citation)
+  let assumption = '';
+  const assumptionMatch = body.match(/\s+assuming\s+(.+)$/i);
+  if (assumptionMatch) {
+    assumption = assumptionMatch[1].trim();
+    body = body.slice(0, assumptionMatch.index).trim();
   }
   
   // Now body should be: LANG1 TRANSFORMATION_TYPE LANG2
@@ -786,7 +786,7 @@ function parseCanonicalClaim(
     fromName,
     toName,
     status,
-    caveat,
+    assumption,
     proofSketch: proofSketch.trim(),  // Copy directly - this is the editable part
     derived,
     refs  // References extracted from the claim line
@@ -912,7 +912,7 @@ function buildNameToIdMap(languages: KCLanguage[]): Map<string, string> {
  * Update database from parsed claims.
  * Only non-derived claims are updated.
  * The description is copied directly to the description field.
- * References, status, and caveat are taken from the claim line.
+ * References, status, and assumption are taken from the claim line.
  */
 function updateDatabase(database: DatabaseSchema, claims: ParsedClaim[]): void {
   const nameToId = buildNameToIdMap(database.languages);
@@ -969,8 +969,8 @@ function updateDatabase(database: DatabaseSchema, claims: ParsedClaim[]): void {
         refs: claim.refs,
         derived: false,
       };
-      if (claim.caveat) {
-        existing.caveat = claim.caveat;
+      if (claim.assumption) {
+        existing.assumption = claim.assumption;
       }
       if (claim.separatingFunctionIds && claim.separatingFunctionIds.length > 0) {
         existing.separatingFunctionIds = claim.separatingFunctionIds;
@@ -988,10 +988,10 @@ function updateDatabase(database: DatabaseSchema, claims: ParsedClaim[]): void {
       existing.status = claim.status;
       existing.description = claim.proofSketch;
       existing.refs = claim.refs;
-      if (claim.caveat) {
-        existing.caveat = claim.caveat;
+      if (claim.assumption) {
+        existing.assumption = claim.assumption;
       } else {
-        delete existing.caveat;
+        delete existing.assumption;
       }
       if (claim.separatingFunctionIds && claim.separatingFunctionIds.length > 0) {
         existing.separatingFunctionIds = claim.separatingFunctionIds;
@@ -1019,12 +1019,12 @@ function updateDatabase(database: DatabaseSchema, claims: ParsedClaim[]): void {
       existing.refs = claim.refs;
     }
     
-    // Update caveat from claim line
-    if (claim.caveat) {
-      existing.caveat = claim.caveat;
-    } else if ('caveat' in existing) {
-      // If caveat was removed from LaTeX, remove it from DB too
-      delete existing.caveat;
+    // Update assumption from claim line
+    if (claim.assumption) {
+      existing.assumption = claim.assumption;
+    } else if ('assumption' in existing) {
+      // If assumption was removed from LaTeX, remove it from DB too
+      delete existing.assumption;
     }
 
     // Update separating function IDs
@@ -2075,7 +2075,7 @@ interface OpClaim {
   opCode: string;
   opLabel: string;
   complexity: string;
-  caveat: string;
+  assumption: string;
   description: string;
   refs: string[];
   derived: boolean;
@@ -2157,7 +2157,7 @@ function extractOpClaims(
         opCode: opDef.code,
         opLabel: opDef.label,
         complexity: support.complexity,
-        caveat: support.caveat || '',
+        assumption: support.assumption || '',
         description: support.description || '',
         refs: support.refs || [],
         derived: false
@@ -2174,7 +2174,7 @@ function extractOpClaims(
  * Format:
  *   % lang=LANG_ID, op=OP_SAFE_KEY
  *   \begin{claim}
- *   $LANG$ supports $OP_LABEL$ COMPLEXITY_TEXT (unless CAVEAT)? \citet{REFS}?
+ *   $LANG$ supports $OP_LABEL$ COMPLEXITY_TEXT (assuming ASSUMPTION)? \citet{REFS}?
  *   \end{claim}
  *   \begin{claimdescription}
  *   DESCRIPTION (EDITABLE)
@@ -2191,8 +2191,8 @@ function generateOpClaim(claim: OpClaim): string {
 
   let claimText = `${langLatex} supports ${claim.opLabel} ${complexityText}`;
 
-  if (claim.caveat) {
-    claimText += ` unless ${claim.caveat}`;
+  if (claim.assumption) {
+    claimText += ` assuming ${claim.assumption}`;
   }
 
   if (claim.refs.length > 0) {
@@ -2216,7 +2216,7 @@ function generateBatchClaim(batch: KCBatchClaim): string {
     `id=${batch.id}`,
     `op=${batch.op}`,
     `status=${batch.status}`,
-    ...(batch.caveat ? [`caveat=${batch.caveat}`] : [])
+    ...(batch.assumption ? [`assumption=${batch.assumption}`] : [])
   ].join(', ');
 
   return `\\begin{batchclaim}[${options}]
@@ -2450,7 +2450,7 @@ interface ParsedOpClaim {
   langId: string;
   opCode: string;
   complexity: string;
-  caveat: string;
+  assumption: string;
   description: string;
   refs: string[];
 }
@@ -2461,7 +2461,7 @@ interface ParsedOpClaim {
  * Expected format:
  *   % lang=LANG_ID, op=OP_SAFE_KEY
  *   \begin{claim}
- *   LANG supports OP_LABEL COMPLEXITY_TEXT (unless CAVEAT)? (\citet{REFS})?
+ *   LANG supports OP_LABEL COMPLEXITY_TEXT (assuming ASSUMPTION)? (\citet{REFS})?
  *   \end{claim}
  *   \begin{claimdescription}
  *   DESCRIPTION
@@ -2522,7 +2522,7 @@ function parseOpsLatex(latexContent: string): ParsedOpClaim[] {
         i++; // Skip \end{claimdescription}
       }
 
-      // Parse the claim body to extract complexity, caveat, refs
+      // Parse the claim body to extract complexity, assumption, refs
       let body = claimContent.trim();
 
       // Extract citation
@@ -2533,12 +2533,12 @@ function parseOpsLatex(latexContent: string): ParsedOpClaim[] {
         body = body.slice(0, citeMatch.index).trim();
       }
 
-      // Extract caveat
-      let caveat = '';
-      const caveatMatch2 = body.match(/\s+unless\s+(.+)$/i);
-      if (caveatMatch2) {
-        caveat = caveatMatch2[1].trim();
-        body = body.slice(0, caveatMatch2.index).trim();
+      // Extract assumption
+      let assumption = '';
+      const assumptionMatch2 = body.match(/\s+assuming\s+(.+)$/i);
+      if (assumptionMatch2) {
+        assumption = assumptionMatch2[1].trim();
+        body = body.slice(0, assumptionMatch2.index).trim();
       }
 
       // Determine complexity from canonical text
@@ -2560,7 +2560,7 @@ function parseOpsLatex(latexContent: string): ParsedOpClaim[] {
         langId,
         opCode,
         complexity,
-        caveat,
+        assumption,
         description: descContent.trim(),
         refs
       });
@@ -2595,7 +2595,7 @@ function parseBatchOpsLatex(
     const id = options.id;
     const op = options.op;
     const status = options.status;
-    const caveat = options.caveat;
+    const assumption = options.assumption;
 
     if (!id || !op || !status) {
       console.warn(`Skipping batchclaim with missing id/op/status: ${line}`);
@@ -2636,7 +2636,7 @@ function parseBatchOpsLatex(
       opType,
       op,
       status,
-      ...(caveat && { caveat }),
+      ...(assumption && { assumption }),
       languageIds,
       claimTemplate: trimmedClaim,
       descriptionTemplate: descriptionTemplate.trim(),
@@ -2721,10 +2721,10 @@ function updateOpsFromLatex(
       if (claim.refs.length > 0) {
         existing.refs = claim.refs;
       }
-      if (claim.caveat) {
-        existing.caveat = claim.caveat;
-      } else if ('caveat' in existing) {
-        delete existing.caveat;
+      if (claim.assumption) {
+        existing.assumption = claim.assumption;
+      } else if ('assumption' in existing) {
+        delete existing.assumption;
       }
     } else {
       // Create new entry
@@ -2732,7 +2732,7 @@ function updateOpsFromLatex(
         complexity: claim.complexity,
         refs: claim.refs,
       };
-      if (claim.caveat) newSupport.caveat = claim.caveat;
+      if (claim.assumption) newSupport.assumption = claim.assumption;
       if (claim.description && claim.description !== '(Description needed)') {
         newSupport.description = claim.description;
       }

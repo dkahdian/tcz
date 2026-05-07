@@ -14,7 +14,7 @@ export type RelationshipEntry = {
   /** Complexity code (use getComplexity() for display) */
   status: string;
   description?: string;
-  caveat?: string;
+  assumption?: string;
   refs: string[];
   separatingFunctionIds?: string[]; // Array of shortNames referencing top-level separatingFunctions
 };

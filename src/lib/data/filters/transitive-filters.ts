@@ -1,4 +1,4 @@
-import type { EdgeFilter, GraphData, KCAdjacencyMatrix } from '../../types.js';
+import type { GraphData, KCAdjacencyMatrix } from '../../types.js';
 import { cloneDataset } from '../transforms.js';
 
 /**
@@ -35,7 +35,7 @@ function getStrictEdgeType(
 }
 
 /**
- * Omit transitive edges - ON BY DEFAULT
+ * Internal transitive reduction pass.
  * 
  * For each node N, marks edges as hidden if they are redundant due to transitivity.
  * Uses MST approach: builds two minimum spanning trees (poly-only, poly+quasi).
@@ -49,30 +49,9 @@ function getStrictEdgeType(
  *   - If yes: edge is transitive, keep hidden
  *   - If no: edge is needed, unhide it
  */
-export const omitTransitiveEdges: EdgeFilter<boolean> = {
-  id: 'omit-transitive-edges',
-  name: 'Omit Transitive Edges',
-  description: 'Hide edges that are redundant due to transitivity',
-  applicableViews: ['graph'],
-  uiGroup: 'Visibility',
-  kind: 'edge-visibility',
-  defaultParam: true, // ON BY DEFAULT for graph
-  defaultParamMatrix: false, // OFF for matrix - show all edges
-  controlType: 'checkbox',
-  lambda: (data: GraphData, param: boolean) => {
+export function applyTransitiveReduction(data: GraphData): GraphData {
     const working = cloneDataset(data);
     const { adjacencyMatrix } = working;
-
-    if (!param) {
-      for (let i = 0; i < adjacencyMatrix.languageIds.length; i += 1) {
-        const row = adjacencyMatrix.matrix[i];
-        if (!row) continue;
-        row.forEach((relation) => {
-          if (relation) relation.hidden = false;
-        });
-      }
-      return working;
-    }
 
     // Pass 1: strict transitive reduction on (poly/quasi forward + no-quasi backward).
     // Must run BEFORE the standard poly/quasi reduction so we don't lose forward edges
@@ -109,8 +88,7 @@ export const omitTransitiveEdges: EdgeFilter<boolean> = {
     }
 
     return working;
-  }
-};
+}
 
 /**
  * Strict transitive reduction.
@@ -246,6 +224,3 @@ function canReachStrict(
   return false;
 }
 
-export const transitiveFilters: EdgeFilter<boolean>[] = [
-  omitTransitiveEdges
-];

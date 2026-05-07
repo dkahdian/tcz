@@ -170,7 +170,7 @@ export function expandBatchClaims(database: DatabaseSchema): number {
         derived: true,
         batchId: batch.id
       };
-      if (batch.caveat) support.caveat = batch.caveat;
+      if (batch.assumption) support.assumption = batch.assumption;
 
       language.properties[batch.opType]![batch.op] = support;
       expanded++;

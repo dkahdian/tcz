@@ -15,8 +15,8 @@ import {
   ensurePath,
   phraseForStatus,
   formatContradictingPremise,
-  formatInlineCaveat,
-  collectCaveatsUnion,
+  formatInlineAssumption,
+  collectAssumptionsUnion,
   describePath,
   buildNoPolyQuasiDescription,
   contradictionError,
@@ -92,18 +92,18 @@ function applySimpleUpgrade(
   const source = path[0];
   const target = path[path.length - 1];
   const refs = collectRefsUnion(path, matrix);
-  const caveat = collectCaveatsUnion(path, matrix);
+  const assumption = collectAssumptionsUnion(path, matrix);
   const pathIds = path.map((idx) => languageIds[idx]);
   const pathDesc = describePath(pathIds, matrix);
-  // Append merged caveat to conclusion for provenance
-  const conclusionWithCaveat = caveat
-    ? derivedDescription.replace(/\.\s*$/, '') + formatInlineCaveat(caveat) + '.'
+  // Append merged assumption to conclusion for provenance
+  const conclusionWithAssumption = assumption
+    ? derivedDescription.replace(/\.\s*$/, '') + formatInlineAssumption(assumption) + '.'
     : derivedDescription;
-  const description = `${pathDesc} ${conclusionWithCaveat}`.trim();
+  const description = `${pathDesc} ${conclusionWithAssumption}`.trim();
   matrix.matrix[source][target] = {
     status: newStatus,
     refs,
-    caveat,
+    assumption,
     separatingFunctionIds: undefined,
     hidden: false,
     derived: true,
@@ -138,9 +138,9 @@ function applyNoPolyQuasiUpgrade(
   // Create derived quasiDescription
   const pathIds = path.map((idx) => languageIds[idx]);
   const pathDesc = describePath(pathIds, matrix);
-  const pathCaveat = collectCaveatsUnion(path, matrix);
-  const quasiConclusion = pathCaveat
-    ? `Therefore ${idToName(srcId)} compiles to ${idToName(tgtId)} in quasi-polynomial time (unless ${pathCaveat}).`
+  const pathAssumption = collectAssumptionsUnion(path, matrix);
+  const quasiConclusion = pathAssumption
+    ? `Therefore ${idToName(srcId)} compiles to ${idToName(tgtId)} in quasi-polynomial time assuming ${pathAssumption}.`
     : `Therefore ${idToName(srcId)} compiles to ${idToName(tgtId)} in quasi-polynomial time.`;
   const quasiDesc = `${pathDesc} ${quasiConclusion}`;
   const quasiRefs = collectRefsUnion(path, matrix);
@@ -155,16 +155,16 @@ function applyNoPolyQuasiUpgrade(
   // Combine refs from both proofs
   const allRefs = [...new Set([...noPolyDescription.refs, ...quasiDescription.refs])];
   
-  // Merge caveats: original caveat + path caveats
-  const originalCaveat = originalRelation.caveat;
-  const allCaveats = new Set<string>();
-  if (originalCaveat) allCaveats.add(originalCaveat);
-  if (pathCaveat) {
-    for (const c of pathCaveat.split(' OR ')) {
-      allCaveats.add(c.trim());
+  // Merge assumptions: original assumption + path assumptions
+  const originalAssumption = originalRelation.assumption;
+  const allAssumptions = new Set<string>();
+  if (originalAssumption) allAssumptions.add(originalAssumption);
+  if (pathAssumption) {
+    for (const c of pathAssumption.split(' AND ')) {
+      allAssumptions.add(c.trim());
     }
   }
-  const mergedCaveat = allCaveats.size > 0 ? Array.from(allCaveats).join(' OR ') : undefined;
+  const mergedAssumption = allAssumptions.size > 0 ? Array.from(allAssumptions).join(' AND ') : undefined;
   
   // derived = true only if BOTH proofs are derived
   const fullyDerived = noPolyDescription.derived && quasiDescription.derived;
@@ -172,7 +172,7 @@ function applyNoPolyQuasiUpgrade(
   matrix.matrix[sourceIdx][targetIdx] = {
     status: 'no-poly-quasi',
     refs: allRefs,
-    caveat: mergedCaveat,
+    assumption: mergedAssumption,
     separatingFunctionIds: originalRelation.separatingFunctionIds,
     hidden: false,
     derived: fullyDerived,
@@ -290,12 +290,12 @@ export function tryDowngrade(
   const buildContradictionDescription = (
     triedStatus: string,
     witnessIds: string[],
-    mergedCaveat?: string
+    mergedAssumption?: string
   ): string => {
     // witnessIds is the path that would exist if the tested edge had `triedStatus`
     // The contradiction is that the path endpoints have an incompatible status
     if (witnessIds.length < 2) {
-      return `If ${idToName(srcId)} compiled to ${idToName(tgtId)} ${phraseForStatus(triedStatus)}, a contradiction arises${formatInlineCaveat(mergedCaveat)}.`;
+      return `If ${idToName(srcId)} compiled to ${idToName(tgtId)} ${phraseForStatus(triedStatus)}, a contradiction arises${formatInlineAssumption(mergedAssumption)}.`;
     }
 
     const pathStart = witnessIds[0];
@@ -306,9 +306,9 @@ export function tryDowngrade(
     const endIdx = languageIds.indexOf(pathEnd);
     const actualRelation = adjacencyMatrix.matrix[startIdx]?.[endIdx];
     const actualStatus = actualRelation?.status ?? 'unknown';
-    const actualCaveat = actualRelation?.caveat;
+    const actualAssumption = actualRelation?.assumption;
 
-    // Build premises: existing path edges (excluding the tested edge), each with inline caveats
+    // Build premises: existing path edges (excluding the tested edge), each with inline assumptions
     const premises: string[] = [];
     for (let i = 0; i < witnessIds.length - 1; i++) {
       const fromId = witnessIds[i];
@@ -319,27 +319,27 @@ export function tryDowngrade(
       const toIdx = languageIds.indexOf(toId);
       const edgeRelation = adjacencyMatrix.matrix[fromIdx]?.[toIdx];
       const edgeStatus = edgeRelation?.status ?? 'unknown';
-      const edgeCaveat = edgeRelation?.caveat;
-      premises.push(`\\edgeref{${fromId}}{${toId}} ${phraseForStatus(edgeStatus)}${formatInlineCaveat(edgeCaveat)}`);
+      const edgeAssumption = edgeRelation?.assumption;
+      premises.push(`\\edgeref{${fromId}}{${toId}} ${phraseForStatus(edgeStatus)}${formatInlineAssumption(edgeAssumption)}`);
     }
 
-    // State the contradicting fact as a premise with its own inline caveat
-    premises.push(formatContradictingPremise(pathStart, pathEnd, actualStatus, actualCaveat));
+    // State the contradicting fact as a premise with its own inline assumption
+    premises.push(formatContradictingPremise(pathStart, pathEnd, actualStatus, actualAssumption));
 
     const premisesPart = premises.join('. ') + '. ';
     const triedPhrase = phraseForStatus(triedStatus);
     const impliedPhrase = triedStatus === 'poly' ? 'in polynomial time' : 'in at most quasi-polynomial time';
 
-    return `${premisesPart}If ${idToName(srcId)} compiled to ${idToName(tgtId)} ${triedPhrase}, then ${idToName(pathStart)} would compile to ${idToName(pathEnd)} ${impliedPhrase}, contradicting the above. Therefore ${idToName(srcId)} cannot compile to ${idToName(tgtId)} ${triedPhrase}${formatInlineCaveat(mergedCaveat)}.`;
+    return `${premisesPart}If ${idToName(srcId)} compiled to ${idToName(tgtId)} ${triedPhrase}, then ${idToName(pathStart)} would compile to ${idToName(pathEnd)} ${impliedPhrase}, contradicting the above. Therefore ${idToName(srcId)} cannot compile to ${idToName(tgtId)} ${triedPhrase}${formatInlineAssumption(mergedAssumption)}.`;
   };
 
   /**
-   * Calculate the merged caveat from the witness path and contradicting edge.
+   * Calculate the merged assumption from the witness path and contradicting edge.
    * This should be called before buildContradictionDescription.
    */
-  const calculateMergedCaveat = (witnessIds: string[]): string | undefined => {
+  const calculateMergedAssumption = (witnessIds: string[]): string | undefined => {
     const pathIndices = witnessIds.map((id) => languageIds.indexOf(id)).filter((i) => i >= 0);
-    const pathCaveat = collectCaveatsUnion(pathIndices, adjacencyMatrix);
+    const pathAssumption = collectAssumptionsUnion(pathIndices, adjacencyMatrix);
     
     // Get the contradicting edge (from path start to path end)
     const pathStart = witnessIds[0];
@@ -347,19 +347,19 @@ export function tryDowngrade(
     const startIdx = languageIds.indexOf(pathStart);
     const endIdx = languageIds.indexOf(pathEnd);
     const contradictingEdge = adjacencyMatrix.matrix[startIdx]?.[endIdx];
-    const contradictingCaveat = contradictingEdge?.caveat;
+    const contradictingAssumption = contradictingEdge?.assumption;
     
-    // Merge all caveats
-    const allCaveats = new Set<string>();
-    if (pathCaveat) {
-      for (const c of pathCaveat.split(' OR ')) {
-        allCaveats.add(c.trim());
+    // Merge all assumptions
+    const allAssumptions = new Set<string>();
+    if (pathAssumption) {
+      for (const c of pathAssumption.split(' AND ')) {
+        allAssumptions.add(c.trim());
       }
     }
-    if (contradictingCaveat) {
-      allCaveats.add(contradictingCaveat);
+    if (contradictingAssumption) {
+      allAssumptions.add(contradictingAssumption);
     }
-    return allCaveats.size > 0 ? Array.from(allCaveats).join(' OR ') : undefined;
+    return allAssumptions.size > 0 ? Array.from(allAssumptions).join(' AND ') : undefined;
   };
 
   const finalizeSimpleDowngrade = (
@@ -370,18 +370,18 @@ export function tryDowngrade(
     const pathIndices = witnessIds.map((id) => languageIds.indexOf(id)).filter((i) => i >= 0);
     const refs = collectRefsUnion(pathIndices, adjacencyMatrix);
     
-    // Calculate merged caveat from path + contradicting edge
-    const caveat = calculateMergedCaveat(witnessIds);
+    // Calculate merged assumption from path + contradicting edge
+    const assumption = calculateMergedAssumption(witnessIds);
     
-    // Pass merged caveat to description builder so it appears in description text
-    const newDesc = buildContradictionDescription(triedStatus, witnessIds, caveat);
+    // Pass merged assumption to description builder so it appears in description text
+    const newDesc = buildContradictionDescription(triedStatus, witnessIds, assumption);
     if (DEBUG_PROPAGATION) {
       console.log(`[Propagation] DOWNGRADE ${srcName} -> ${tgtName}: ${status ?? 'null'} -> ${nextStatus} (witness: ${witnessIds.map(idToName).join(' -> ')})`);
     }
     adjacencyMatrix.matrix[source][target] = {
       status: nextStatus,
       refs,
-      caveat,
+      assumption,
       hidden: false,
       derived: true,
       separatingFunctionIds: undefined,
@@ -405,22 +405,22 @@ export function tryDowngrade(
       derived: relation?.derived ?? false
     };
     
-    // Calculate merged caveat first (for both the field and description text)
-    // Merge caveats: original caveat + path caveats + contradicting edge caveat
+    // Calculate merged assumption first (for both the field and description text)
+    // Merge assumptions: original assumption + path assumptions + contradicting edge assumption
     const pathIndices = witnessIds.map((id) => languageIds.indexOf(id)).filter((i) => i >= 0);
-    const baseMergedCaveat = calculateMergedCaveat(witnessIds);
-    const originalCaveat = relation?.caveat;
-    const allCaveats = new Set<string>();
-    if (originalCaveat) allCaveats.add(originalCaveat);
-    if (baseMergedCaveat) {
-      for (const c of baseMergedCaveat.split(' OR ')) {
-        allCaveats.add(c.trim());
+    const baseMergedAssumption = calculateMergedAssumption(witnessIds);
+    const originalAssumption = relation?.assumption;
+    const allAssumptions = new Set<string>();
+    if (originalAssumption) allAssumptions.add(originalAssumption);
+    if (baseMergedAssumption) {
+      for (const c of baseMergedAssumption.split(' AND ')) {
+        allAssumptions.add(c.trim());
       }
     }
-    const mergedCaveat = allCaveats.size > 0 ? Array.from(allCaveats).join(' OR ') : undefined;
+    const mergedAssumption = allAssumptions.size > 0 ? Array.from(allAssumptions).join(' AND ') : undefined;
     
-    // Create derived noPolyDescription from contradiction (with merged caveat)
-    const noPolyDesc = buildContradictionDescription('poly', witnessIds, mergedCaveat);
+    // Create derived noPolyDescription from contradiction (with merged assumption)
+    const noPolyDesc = buildContradictionDescription('poly', witnessIds, mergedAssumption);
     const noPolyRefs = collectRefsUnion(pathIndices, adjacencyMatrix);
     const noPolyDerivOrder = nextDerivationOrder();
     const noPolyDescription: DescriptionComponent = {
@@ -444,7 +444,7 @@ export function tryDowngrade(
     adjacencyMatrix.matrix[source][target] = {
       status: 'no-poly-quasi',
       refs: allRefs,
-      caveat: mergedCaveat,
+      assumption: mergedAssumption,
       hidden: false,
       derived: fullyDerived,
       separatingFunctionIds: relation?.separatingFunctionIds,

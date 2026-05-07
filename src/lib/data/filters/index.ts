@@ -3,7 +3,6 @@ export { languageVisibilityFilter } from './language-scope-filters.js';
 export { queryVisualizationFilters } from './query-visualizations.js';
 export { transformationVisualizationFilters } from './transformation-visualizations.js';
 export { edgeFilters } from './edge-filters.js';
-export { transitiveFilters } from './transitive-filters.js';
 export { 
   createOperationVisualizer, 
   createFillUnknownOperationsFilter 

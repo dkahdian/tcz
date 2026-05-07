@@ -148,7 +148,7 @@ export function validateAdjacencyConsistency(data: GraphData): SemanticValidatio
   const reachP = computeReachability(adjacencyMatrix, POLY_STATUS);
   const reachQ = computeReachability(adjacencyMatrix, QUASI_STATUS);
 
-  // Prefer contradictions where the contradicting edge has NO caveat,
+  // Prefer contradictions where the contradicting edge has NO assumption,
   // so that derived results are unconditional when possible.
   let fallback: SemanticValidationResult | null = null;
 
@@ -161,14 +161,14 @@ export function validateAdjacencyConsistency(data: GraphData): SemanticValidatio
         const path = reconstructPathIndices(i, j, reachP.parent[i]);
         const message = buildContradictionMessage(i, j, 'poly', path, adjacencyMatrix);
         const result: SemanticValidationResult = { ok: false, error: message, witnessPath: pathToIds(path, adjacencyMatrix.languageIds) };
-        if (!relation?.caveat) return result;
+        if (!relation?.assumption) return result;
         if (!fallback) fallback = result;
       }
       if (reachQ.reach[i][j] && status === 'no-quasi') {
         const path = reconstructPathIndices(i, j, reachQ.parent[i]);
         const message = buildContradictionMessage(i, j, 'quasi', path, adjacencyMatrix);
         const result: SemanticValidationResult = { ok: false, error: message, witnessPath: pathToIds(path, adjacencyMatrix.languageIds) };
-        if (!relation?.caveat) return result;
+        if (!relation?.assumption) return result;
         if (!fallback) fallback = result;
       }
     }

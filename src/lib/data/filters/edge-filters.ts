@@ -1,7 +1,6 @@
 import type { DirectedSuccinctnessRelation, EdgeFilter, GraphData } from '../../types.js';
 import { mapRelationsInDataset, mapLanguagesInDataset } from '../transforms.js';
-
-type ManageUnknownsMode = 'omit-all' | 'expressively' | 'optimistically' | 'pessimistically';
+import { applyTransitiveReduction } from './transitive-filters.js';
 
 /**
  * A classifier function that determines if an edge matches a certain criterion.
@@ -167,92 +166,31 @@ export const omitSeparatorFunctions: EdgeFilter = {
 };
 
 /**
- * Manage how unknown edges are displayed or transformed
- */
-export const manageUnknowns: EdgeFilter<ManageUnknownsMode> = {
-  id: 'manage-unknowns',
-  name: 'Manage Unknowns',
-  description: 'Control how edges with unknown status are treated',
-  applicableViews: ['graph', 'succinctness'],
-  uiGroup: 'Visibility',
-  kind: 'edge-visibility',
-  defaultParam: 'omit-all',
-  defaultParamMatrix: 'expressively',
-  controlType: 'dropdown',
-  options: [
-    { value: 'omit-all', label: 'Omit all', description: 'Hide edges with unknown or partially unknown status' },
-    { value: 'expressively', label: 'Expressively', description: 'Show unknown edges without modification' },
-    { value: 'optimistically', label: 'Optimistically', description: 'Assume unknown edges behave as positively as possible' },
-    { value: 'pessimistically', label: 'Pessimistically', description: 'Assume unknown edges behave as restrictively as possible' }
-  ],
-  lambda: (data, mode) => {
-    if (mode === 'expressively') {
-      return data;
-    }
-
-    return mapRelationsInDataset(data, (relation) => {
-      if (!relation) return null;
-
-      switch (mode) {
-        case 'omit-all':
-          if (
-            relation.status !== 'unknown-poly-quasi' &&
-            relation.status !== 'unknown-both' &&
-            relation.status !== 'no-poly-unknown-quasi'
-          ) {
-            return relation;
-          }
-          return null;
-        case 'optimistically': {
-          let newStatus = relation.status;
-          if (relation.status === 'no-poly-unknown-quasi') {
-            newStatus = 'no-poly-quasi';
-          } else if (
-            relation.status === 'unknown-poly-quasi' ||
-            relation.status === 'unknown-both'
-          ) {
-            newStatus = 'poly';
-          }
-          return newStatus === relation.status ? relation : { ...relation, status: newStatus };
-        }
-        case 'pessimistically': {
-          let newStatus = relation.status;
-          if (relation.status === 'unknown-both' || relation.status === 'no-poly-unknown-quasi') {
-            newStatus = 'no-quasi';
-          } else if (relation.status === 'unknown-poly-quasi') {
-            newStatus = 'no-poly-quasi';
-          }
-          return newStatus === relation.status ? relation : { ...relation, status: newStatus };
-        }
-        default:
-          return relation;
-      }
-    });
-  }
-};
-
-/**
- * Omit incomparable - ON BY DEFAULT
+ * Show incomparabilities - OFF BY DEFAULT
  *
- * Hides pairs where both directions are no-quasi (or null).
+ * When disabled, hides pairs where both directions are gaps, unknown, or null.
  * Uses the pairwise classifier: an edge pair A<->B is hidden IFF
- * both A->B and B->A are no-quasi or null.
+ * both A->B and B->A are gap/unknown-like.
  */
 export const omitIncomparable: EdgeFilter<boolean> = {
   id: 'omit-incomparable',
-  name: 'Omit Incomparable',
-  description: 'Omit edges where both directions are no-quasi',
+  name: 'Show incomparabilities',
+  description: 'Show edges where both directions are gaps or unknown',
   applicableViews: ['graph'],
   uiGroup: 'Visibility',
   kind: 'edge-visibility',
-  defaultParam: true,
-  defaultParamMatrix: false,
+  defaultParam: false,
   controlType: 'checkbox',
   lambda: (data, param) => {
-    if (!param) return data;
+    if (param) return data;
     
-    // Classifier: matches if the relation is no-quasi (or null)
-    const isIncomparable: EdgeClassifier = (rel) => !rel || rel.status === 'no-quasi';
+    const isIncomparable: EdgeClassifier = (rel) =>
+      !rel ||
+      rel.status === 'not-poly' ||
+      rel.status === 'no-poly-unknown-quasi' ||
+      rel.status === 'no-quasi' ||
+      rel.status === 'unknown' ||
+      rel.status === 'unknown-both';
     
     return mapRelationsInDataset(data, createPairwiseOmitFilter(isIncomparable, data));
   }
@@ -274,40 +212,36 @@ export const omitMarkedEdges: EdgeFilter = {
   hidden: true, // Internal filter, not shown in UI
   lambda: (data, param) => {
     if (!param) return data;
-    return mapRelationsInDataset(data, (relation) => {
-      if (!relation) return null;
-      if (relation.hidden) {
-        return null;
-      }
-      return relation;
-    });
+    const isMarkedHidden: EdgeClassifier = (rel) => !rel || rel.hidden === true;
+    return mapRelationsInDataset(data, createPairwiseOmitFilter(isMarkedHidden, data));
   }
 };
 
 /**
- * Omit implicit (derived) edges - ON BY DEFAULT for graph view
+ * Show transitive (derived) edges - OFF BY DEFAULT for graph view
  * 
- * Hides edge pairs where both directions were inferred by propagation (derived=true)
+ * When disabled, hides edge pairs where both directions were inferred by propagation (derived=true)
  * or are null. Uses the pairwise classifier: an edge pair A<->B is hidden IFF
  * both A->B and B->A are derived or null.
  */
 export const omitImplicitEdges: EdgeFilter = {
   id: 'omit-implicit-edges',
-  name: 'Omit Implicit Edges',
-  description: 'Omit edges where both directions were inferred by propagation',
+  name: 'Show transitive edges',
+  description: 'Show edges inferred by propagation',
   applicableViews: ['graph'],
   uiGroup: 'Visibility',
   kind: 'edge-visibility',
-  defaultParam: true, // ON by default for graph
-  defaultParamMatrix: false, // OFF by default for matrix
+  defaultParam: false,
   controlType: 'checkbox',
   lambda: (data, param) => {
-    if (!param) return data;
+    if (param) return data;
+
+    const reducedData = applyTransitiveReduction(data);
     
     // Classifier: matches if the relation is derived (or null)
     const isImplicit: EdgeClassifier = (rel) => !rel || rel.derived === true;
     
-    return mapRelationsInDataset(data, createPairwiseOmitFilter(isImplicit, data));
+    return mapRelationsInDataset(reducedData, createPairwiseOmitFilter(isImplicit, reducedData));
   }
 };
 
@@ -367,60 +301,11 @@ export const implicitEdgeTreatment: EdgeFilter<ImplicitEdgeTreatmentMode> = {
   }
 };
 
-/**
- * Helper function to determine if a language has any edges
- */
-function languageHasEdges(data: GraphData, languageId: string): boolean {
-  const { adjacencyMatrix } = data;
-  const index = adjacencyMatrix.indexByLanguage[languageId];
-  if (index === undefined) return false;
-  
-  // Check outgoing edges
-  const row = adjacencyMatrix.matrix[index];
-  if (row) {
-    for (let j = 0; j < adjacencyMatrix.languageIds.length; j++) {
-      if (row[j]) return true;
-    }
-  }
-  
-  // Check incoming edges
-  for (let i = 0; i < adjacencyMatrix.languageIds.length; i++) {
-    if (adjacencyMatrix.matrix[i]?.[index]) return true;
-  }
-  
-  return false;
-}
-
-/**
- * Hide languages that have no edges (in progress languages) - ON BY DEFAULT
- */
-export const hideInProgressLanguages: EdgeFilter = {
-  id: 'hide-in-progress',
-  name: 'Hide In Progress Languages',
-  description: 'Hide languages that have no edges (not yet connected to the graph)',
-  applicableViews: ['graph'],
-  uiGroup: 'Visibility',
-  kind: 'edge-visibility',
-  defaultParam: true, // ON BY DEFAULT
-  controlType: 'checkbox',
-  lambda: (data, param) => {
-    if (!param) return data;
-    return mapLanguagesInDataset(data, (language) => {
-      if (languageHasEdges(data, language.id)) {
-        return language;
-      }
-      return null;
-    });
-  }
-};
-
 export const edgeFilters: EdgeFilter<any>[] = [
-  hideInProgressLanguages,
-  manageUnknowns,
+  polyDisplay,
   omitIncomparable,
   omitImplicitEdges,
   implicitEdgeTreatment,
-  polyDisplay,
   omitSeparatorFunctions,
   omitMarkedEdges
 ];

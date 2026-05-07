@@ -8,9 +8,9 @@ import {
   computeReachability,
   reconstructPathIndices,
   ensurePath,
-  collectCaveatsUnion,
+  collectAssumptionsUnion,
   formatCitations,
-  formatInlineCaveat,
+  formatInlineAssumption,
   buildNoPolyQuasiDescription,
   contradictionError,
   nextDerivationOrder
@@ -22,17 +22,17 @@ import {
 type Reachability = { reach: boolean[][]; parent: number[][] };
 
 /**
- * Merge multiple optional caveats into a single caveat string.
- * Returns undefined if no caveats, a single caveat if only one unique,
- * or caveats joined with " OR " if multiple unique caveats.
+ * Merge multiple optional assumptions into a single assumption string.
+ * Returns undefined if no assumptions, a single assumption if only one unique,
+ * or assumptions joined with " AND " if multiple unique assumptions.
  */
-function mergeCaveats(...caveats: (string | undefined)[]): string | undefined {
+function mergeAssumptions(...assumptions: (string | undefined)[]): string | undefined {
   const set = new Set<string>();
-  for (const c of caveats) {
+  for (const c of assumptions) {
     if (c) set.add(c);
   }
   if (set.size === 0) return undefined;
-  return Array.from(set).join(' OR ');
+  return Array.from(set).join(' AND ');
 }
 
 function uniqueRefs(...refLists: Array<string[] | undefined>): string[] {
@@ -46,9 +46,9 @@ function uniqueRefs(...refLists: Array<string[] | undefined>): string[] {
 }
 
 /**
- * Collect edge caveats along the reachability path from source to target.
+ * Collect edge assumptions along the reachability path from source to target.
  */
-function collectPathCaveats(
+function collectPathAssumptions(
   sourceIdx: number,
   targetIdx: number,
   parent: number[][],
@@ -56,7 +56,7 @@ function collectPathCaveats(
 ): string | undefined {
   const pathIndices = reconstructPathIndices(sourceIdx, targetIdx, parent[sourceIdx]);
   const path = ensurePath(pathIndices, sourceIdx, targetIdx);
-  return collectCaveatsUnion(path, matrix);
+  return collectAssumptionsUnion(path, matrix);
 }
 
 /**
@@ -165,23 +165,23 @@ export function propagateQueriesViaSuccinctness(
           if (reachP.reach[l1MatrixIdx][l2MatrixIdx]) {
             const l1Complexity = getQueryComplexity(l1, queryCode);
             const l1Support = getOperationSupport(l1, queryCode);
-            // Compute caveats early for description and prefer-unconditional check
-            const pathCaveat = collectPathCaveats(l1MatrixIdx, l2MatrixIdx, reachP.parent, adjacencyMatrix);
+            // Compute assumptions early for description and prefer-unconditional check
+            const pathAssumption = collectPathAssumptions(l1MatrixIdx, l2MatrixIdx, reachP.parent, adjacencyMatrix);
             const pathRefs = collectPathRefs(l1MatrixIdx, l2MatrixIdx, reachP.parent, adjacencyMatrix);
-            const queryCaveat = l2Support?.caveat;
-            const caveat = mergeCaveats(pathCaveat, queryCaveat);
+            const queryAssumption = l2Support?.assumption;
+            const assumption = mergeAssumptions(pathAssumption, queryAssumption);
             const needsUpgrade = !queryGuaranteesPoly(l1Complexity);
-            const canImproveCaveat = queryGuaranteesPoly(l1Complexity) && l1Support?.caveat && l1Support?.derived && !caveat;
-            if (needsUpgrade || canImproveCaveat) {
-              // Upgrade L1's query to poly (or remove caveat from existing poly)
+            const canImproveAssumption = queryGuaranteesPoly(l1Complexity) && l1Support?.assumption && l1Support?.derived && !assumption;
+            if (needsUpgrade || canImproveAssumption) {
+              // Upgrade L1's query to poly (or remove assumption from existing poly)
               const l1Name = idToName(l1Id);
               const l2Name = idToName(l2Id);
               const l2Refs = l2.properties?.queries?.[queryCode]?.refs ?? [];
               const refs = uniqueRefs(pathRefs, l2Refs);
-              const description = `\\edgeref{${l1Id}}{${l2Id}} in polynomial time${formatInlineCaveat(pathCaveat)}, and \\opref{${l2Id}}{${queryCode}} in polynomial time${formatInlineCaveat(queryCaveat)}. Therefore ${idToName(l1Id)} supports ${opLabel(queryCode)} in polynomial time${formatInlineCaveat(caveat)}.`;
+              const description = `\\edgeref{${l1Id}}{${l2Id}} in polynomial time${formatInlineAssumption(pathAssumption)}, and \\opref{${l2Id}}{${queryCode}} in polynomial time${formatInlineAssumption(queryAssumption)}. Therefore ${idToName(l1Id)} supports ${opLabel(queryCode)} in polynomial time${formatInlineAssumption(assumption)}.`;
 
               if (DEBUG_PROPAGATION) {
-                const reason = canImproveCaveat ? 'CAVEAT-IMPROVE' : 'UPGRADE';
+                const reason = canImproveAssumption ? 'ASSUMPTION-IMPROVE' : 'UPGRADE';
                 console.log(`[Query Propagation] ${reason} ${l1Name}.${queryCode}: ${l1Complexity} -> poly`);
               }
               
@@ -192,7 +192,7 @@ export function propagateQueriesViaSuccinctness(
                 description,
                 derivationOrder: nextDerivationOrder(),
                 proofTrace: { rule: 'query-via-succinctness', sourceLanguageId: l1Id, targetLanguageId: l2Id, operation: queryCode, level: 'poly' },
-                ...(caveat && { caveat })
+                ...(assumption && { assumption })
               });
               changed = true;
             }
@@ -216,25 +216,25 @@ export function propagateQueriesViaSuccinctness(
             // Don't upgrade if L1 asserts no-quasi (proven impossible)
             if (queryAssertsNoQuasi(l1Complexity)) continue;
 
-            // Compute caveats early for description and prefer-unconditional check
-            const pathCaveat = collectPathCaveats(l1MatrixIdx, l2MatrixIdx, reachQ.parent, adjacencyMatrix);
+            // Compute assumptions early for description and prefer-unconditional check
+            const pathAssumption = collectPathAssumptions(l1MatrixIdx, l2MatrixIdx, reachQ.parent, adjacencyMatrix);
             const pathRefs = collectPathRefs(l1MatrixIdx, l2MatrixIdx, reachQ.parent, adjacencyMatrix);
-            const queryCaveat = l2Support?.caveat;
-            const caveat = mergeCaveats(pathCaveat, queryCaveat);
+            const queryAssumption = l2Support?.assumption;
+            const assumption = mergeAssumptions(pathAssumption, queryAssumption);
             const needsUpgrade = !queryGuaranteesQuasi(l1Complexity);
-            const canImproveCaveat = queryGuaranteesQuasi(l1Complexity) && l1Support?.caveat && l1Support?.derived && !caveat;
-            if (!needsUpgrade && !canImproveCaveat) continue;
+            const canImproveAssumption = queryGuaranteesQuasi(l1Complexity) && l1Support?.assumption && l1Support?.derived && !assumption;
+            if (!needsUpgrade && !canImproveAssumption) continue;
 
-            // Upgrade L1's query to quasi (or remove caveat from existing quasi)
+            // Upgrade L1's query to quasi (or remove assumption from existing quasi)
             const l1Name = idToName(l1Id);
             const l2Name = idToName(l2Id);
             const newComplexity = l1Complexity === 'no-poly-unknown-quasi' ? 'no-poly-quasi' : 'unknown-poly-quasi';
             const l2Refs = l2.properties?.queries?.[queryCode]?.refs ?? [];
             const refs = uniqueRefs(pathRefs, l2Refs);
-            const description = `\\edgeref{${l1Id}}{${l2Id}} in quasi-polynomial time${formatInlineCaveat(pathCaveat)}, and \\opref{${l2Id}}{${queryCode}} in quasi-polynomial time${formatInlineCaveat(queryCaveat)}. Therefore ${idToName(l1Id)} supports ${opLabel(queryCode)} in at most quasi-polynomial time${formatInlineCaveat(caveat)}.`;
+            const description = `\\edgeref{${l1Id}}{${l2Id}} in quasi-polynomial time${formatInlineAssumption(pathAssumption)}, and \\opref{${l2Id}}{${queryCode}} in quasi-polynomial time${formatInlineAssumption(queryAssumption)}. Therefore ${idToName(l1Id)} supports ${opLabel(queryCode)} in at most quasi-polynomial time${formatInlineAssumption(assumption)}.`;
 
             if (DEBUG_PROPAGATION) {
-              const reason = canImproveCaveat ? 'CAVEAT-IMPROVE' : 'UPGRADE';
+              const reason = canImproveAssumption ? 'ASSUMPTION-IMPROVE' : 'UPGRADE';
               console.log(`[Query Propagation] ${reason} ${l1Name}.${queryCode}: ${l1Complexity} -> ${newComplexity}`);
             }
             
@@ -245,7 +245,7 @@ export function propagateQueriesViaSuccinctness(
               description,
               derivationOrder: nextDerivationOrder(),
               proofTrace: { rule: 'query-via-succinctness', sourceLanguageId: l1Id, targetLanguageId: l2Id, operation: queryCode, level: 'quasi' },
-              ...(caveat && { caveat })
+              ...(assumption && { assumption })
             });
             changed = true;
           }
@@ -273,7 +273,7 @@ export function propagateQueriesViaLemmas(
       // Check if all antecedent operations are supported
       let allSupported = true;
       let worstComplexity = 'poly'; // Start with best, find worst
-      const antecedentCaveats: (string | undefined)[] = [];
+      const antecedentAssumptions: (string | undefined)[] = [];
 
       for (const antecedentOp of lemma.antecedent) {
         const support = getOperationSupport(language, antecedentOp);
@@ -282,7 +282,7 @@ export function propagateQueriesViaLemmas(
           break;
         }
 
-        antecedentCaveats.push(support.caveat);
+        antecedentAssumptions.push(support.assumption);
         const complexity = support.complexity;
         if (polyOnly) {
           if (!queryGuaranteesPoly(complexity)) {
@@ -309,27 +309,27 @@ export function propagateQueriesViaLemmas(
 
       const targetComplexity = polyOnly ? 'poly' : worstComplexity;
 
-      // Merge caveats from all antecedent operations
-      const caveat = mergeCaveats(...antecedentCaveats);
+      // Merge assumptions from all antecedent operations
+      const assumption = mergeAssumptions(...antecedentAssumptions);
 
-      // Only upgrade if current complexity is worse, or we can improve a caveated derived result
+      // Only upgrade if current complexity is worse, or we can improve an assumption-bearing derived result
       const shouldUpgrade = polyOnly
         ? !queryGuaranteesPoly(consequentComplexity)
         : !queryGuaranteesQuasi(consequentComplexity);
-      const canImproveCaveat = !shouldUpgrade && consequentSupport?.caveat && consequentSupport?.derived && !caveat;
+      const canImproveAssumption = !shouldUpgrade && consequentSupport?.assumption && consequentSupport?.derived && !assumption;
 
-      if (shouldUpgrade || canImproveCaveat) {
+      if (shouldUpgrade || canImproveAssumption) {
         const langName = idToName(language.id);
         const premiseLevel = polyOnly ? 'in polynomial time' : 'in quasi-polynomial time';
         const antecedentPremises = lemma.antecedent
-          .map((op, idx) => `\\opref{${language.id}}{${op}} ${premiseLevel}${formatInlineCaveat(antecedentCaveats[idx])}`)
+          .map((op, idx) => `\\opref{${language.id}}{${op}} ${premiseLevel}${formatInlineAssumption(antecedentAssumptions[idx])}`)
           .join(', ');
         const antecedentRefs = lemma.antecedent.map((op) => getOperationSupport(language, op)?.refs ?? []);
         const refs = uniqueRefs(lemma.refs, ...antecedentRefs);
         const description = `Since ${antecedentPremises}, ${lemma.antecedent.map(opLabel).join(' ∧ ')} implies ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}. Therefore \\langref{${language.id}} supports ${opLabel(lemma.consequent)}.`;
 
         if (DEBUG_PROPAGATION) {
-          const reason = canImproveCaveat ? 'CAVEAT-IMPROVE' : 'LEMMA';
+          const reason = canImproveAssumption ? 'ASSUMPTION-IMPROVE' : 'LEMMA';
           console.log(`[Query Propagation] ${reason} ${langName}.${lemma.consequent}: ${consequentComplexity} -> ${targetComplexity} (via ${lemma.id})`);
         }
 
@@ -346,7 +346,7 @@ export function propagateQueriesViaLemmas(
             description,
             derivationOrder: lemmaDerOrder,
             proofTrace: lemmaTrace,
-            ...(caveat && { caveat })
+            ...(assumption && { assumption })
           });
         } else {
           // Transformation consequent
@@ -359,7 +359,7 @@ export function propagateQueriesViaLemmas(
             description,
             derivationOrder: lemmaDerOrder,
             proofTrace: lemmaTrace,
-            ...(caveat && { caveat })
+            ...(assumption && { assumption })
           };
         }
         changed = true;
@@ -376,11 +376,11 @@ export function propagateQueriesViaLemmas(
  * Simple algorithm:
  * - For language L1 with L1.X = no-poly:
  *   - For language L2 downstream of L1 (L1 -> L2 in poly):
- *     - Set L2.X to no-poly-unknown-quasi (unless L2 already asserts no-poly)
+ *     - Set L2.X to no-poly-unknown-quasi unless L2 already asserts no-poly
  * 
  * - For language L1 with L1.X = no-quasi:
  *   - For language L2 downstream of L1 (L1 -> L2 in quasi):
- *     - Set L2.X to no-quasi (unless L2 already asserts no-quasi)
+ *     - Set L2.X to no-quasi unless L2 already asserts no-quasi
  */
 export function propagateQueryDowngrades(
   data: GraphData,
@@ -413,20 +413,20 @@ export function propagateQueryDowngrades(
           const l2Complexity = getQueryComplexity(l2, queryCode);
           const l2Support = getOperationSupport(l2, queryCode);
 
-          // Compute caveats early for prefer-unconditional check
-          const pathCaveat = collectPathCaveats(l1MatrixIdx, l2MatrixIdx, reachP.parent, adjacencyMatrix);
+          // Compute assumptions early for prefer-unconditional check
+          const pathAssumption = collectPathAssumptions(l1MatrixIdx, l2MatrixIdx, reachP.parent, adjacencyMatrix);
           const pathRefs = collectPathRefs(l1MatrixIdx, l2MatrixIdx, reachP.parent, adjacencyMatrix);
-          const queryCaveat = l1Support?.caveat;
-          const caveat = mergeCaveats(pathCaveat, queryCaveat);
+          const queryAssumption = l1Support?.assumption;
+          const assumption = mergeAssumptions(pathAssumption, queryAssumption);
 
-          // Skip if L2 already asserts no-poly, unless we can improve a caveated derived result
-          const canImproveCaveatNoPoly = queryAssertsNoPoly(l2Complexity) && l2Support?.caveat && l2Support?.derived && !caveat;
-          if (queryAssertsNoPoly(l2Complexity) && !canImproveCaveatNoPoly) continue;
+          // Skip if L2 already asserts no-poly, unless we can improve an assumption-bearing derived result
+          const canImproveAssumptionNoPoly = queryAssertsNoPoly(l2Complexity) && l2Support?.assumption && l2Support?.derived && !assumption;
+          if (queryAssertsNoPoly(l2Complexity) && !canImproveAssumptionNoPoly) continue;
 
           const l2Name = idToName(l2.id);
           const l1Refs = l1.properties?.queries?.[queryCode]?.refs ?? [];
           const refs = uniqueRefs(l1Refs, pathRefs);
-          const description = `\\nopref{${l1.id}}{${queryCode}}${formatInlineCaveat(queryCaveat)}, and \\edgeref{${l1.id}}{${l2.id}} in polynomial time${formatInlineCaveat(pathCaveat)}. If ${idToName(l2.id)} supported ${opLabel(queryCode)} in polynomial time, then ${idToName(l1.id)} could too by compiling first. Therefore ${opLabel(queryCode)} is unsupported by ${idToName(l2.id)}${formatInlineCaveat(caveat)}.`;
+          const description = `\\nopref{${l1.id}}{${queryCode}}${formatInlineAssumption(queryAssumption)}, and \\edgeref{${l1.id}}{${l2.id}} in polynomial time${formatInlineAssumption(pathAssumption)}. If ${idToName(l2.id)} supported ${opLabel(queryCode)} in polynomial time, then ${idToName(l1.id)} could too by compiling first. Therefore ${opLabel(queryCode)} is unsupported by ${idToName(l2.id)}${formatInlineAssumption(assumption)}.`;
 
           if (DEBUG_PROPAGATION) {
             console.log(`[Query Propagation] DOWNGRADE ${l2Name}.${queryCode}: ${l2Complexity} -> no-poly-unknown-quasi`);
@@ -439,7 +439,7 @@ export function propagateQueryDowngrades(
             description,
             derivationOrder: nextDerivationOrder(),
             proofTrace: { rule: 'query-downgrade-via-succinctness', sourceLanguageId: l1.id, targetLanguageId: l2.id, operation: queryCode, level: 'poly' },
-            ...(caveat && { caveat })
+            ...(assumption && { assumption })
           });
           changed = true;
         }
@@ -459,20 +459,20 @@ export function propagateQueryDowngrades(
           const l2Complexity = getQueryComplexity(l2, queryCode);
           const l2SupportNoQuasi = getOperationSupport(l2, queryCode);
 
-          // Compute caveats early for prefer-unconditional check
-          const pathCaveat = collectPathCaveats(l1MatrixIdx, l2MatrixIdx, reachQ.parent, adjacencyMatrix);
+          // Compute assumptions early for prefer-unconditional check
+          const pathAssumption = collectPathAssumptions(l1MatrixIdx, l2MatrixIdx, reachQ.parent, adjacencyMatrix);
           const pathRefs = collectPathRefs(l1MatrixIdx, l2MatrixIdx, reachQ.parent, adjacencyMatrix);
-          const queryCaveat = l1Support?.caveat;
-          const caveat = mergeCaveats(pathCaveat, queryCaveat);
+          const queryAssumption = l1Support?.assumption;
+          const assumption = mergeAssumptions(pathAssumption, queryAssumption);
 
-          // Skip if L2 already asserts no-quasi, unless we can improve a caveated derived result
-          const canImproveCaveatNoQuasi = queryAssertsNoQuasi(l2Complexity) && l2SupportNoQuasi?.caveat && l2SupportNoQuasi?.derived && !caveat;
-          if (queryAssertsNoQuasi(l2Complexity) && !canImproveCaveatNoQuasi) continue;
+          // Skip if L2 already asserts no-quasi, unless we can improve an assumption-bearing derived result
+          const canImproveAssumptionNoQuasi = queryAssertsNoQuasi(l2Complexity) && l2SupportNoQuasi?.assumption && l2SupportNoQuasi?.derived && !assumption;
+          if (queryAssertsNoQuasi(l2Complexity) && !canImproveAssumptionNoQuasi) continue;
 
           const l2Name = idToName(l2.id);
           const l1Refs = l1.properties?.queries?.[queryCode]?.refs ?? [];
           const refs = uniqueRefs(l1Refs, pathRefs);
-          const description = `\\nopref{${l1.id}}{${queryCode}} in quasi-polynomial time${formatInlineCaveat(queryCaveat)}, and \\edgeref{${l1.id}}{${l2.id}} in quasi-polynomial time${formatInlineCaveat(pathCaveat)}. If ${idToName(l2.id)} supported ${opLabel(queryCode)} in quasi-polynomial time, then ${idToName(l1.id)} could too by compiling first. Therefore ${opLabel(queryCode)} is unsupported by ${idToName(l2.id)} in quasi-polynomial time${formatInlineCaveat(caveat)}.`;
+          const description = `\\nopref{${l1.id}}{${queryCode}} in quasi-polynomial time${formatInlineAssumption(queryAssumption)}, and \\edgeref{${l1.id}}{${l2.id}} in quasi-polynomial time${formatInlineAssumption(pathAssumption)}. If ${idToName(l2.id)} supported ${opLabel(queryCode)} in quasi-polynomial time, then ${idToName(l1.id)} could too by compiling first. Therefore ${opLabel(queryCode)} is unsupported by ${idToName(l2.id)} in quasi-polynomial time${formatInlineAssumption(assumption)}.`;
 
           if (DEBUG_PROPAGATION) {
             console.log(`[Query Propagation] DOWNGRADE ${l2Name}.${queryCode}: ${l2Complexity} -> no-quasi`);
@@ -485,7 +485,7 @@ export function propagateQueryDowngrades(
             description,
             derivationOrder: nextDerivationOrder(),
             proofTrace: { rule: 'query-downgrade-via-succinctness', sourceLanguageId: l1.id, targetLanguageId: l2.id, operation: queryCode, level: 'quasi' },
-            ...(caveat && { caveat })
+            ...(assumption && { assumption })
           });
           changed = true;
         }
@@ -536,13 +536,13 @@ export function propagateDowngradesViaLemmaContrapositives(
           const targetSupport = getOperationSupport(language, targetOp);
           const targetComplexity = targetSupport?.complexity ?? 'unknown-to-us';
 
-          // Skip if target already asserts no-poly without caveat (no improvement possible)
-          if (queryAssertsNoPoly(targetComplexity) && (!targetSupport?.caveat || !targetSupport?.derived)) continue;
+          // Skip if target already asserts no-poly without assumption (no improvement possible)
+          if (queryAssertsNoPoly(targetComplexity) && (!targetSupport?.assumption || !targetSupport?.derived)) continue;
 
           // Check if ALL OTHER antecedents support poly
           let allOthersPolySupported = true;
           const otherAntecedents: string[] = [];
-          const otherCaveats: (string | undefined)[] = [];
+          const otherAssumptions: (string | undefined)[] = [];
           const otherRefs: string[][] = [];
           for (let k = 0; k < lemma.antecedent.length; k++) {
             if (k === j) continue;
@@ -554,7 +554,7 @@ export function propagateDowngradesViaLemmaContrapositives(
               allOthersPolySupported = false;
               break;
             }
-            otherCaveats.push(otherSupport?.caveat);
+            otherAssumptions.push(otherSupport?.assumption);
             otherRefs.push(otherSupport?.refs ?? []);
           }
 
@@ -562,20 +562,20 @@ export function propagateDowngradesViaLemmaContrapositives(
 
           // All other antecedents support poly, consequent is no-poly → target must be no-poly
           const consequentRefs = consequentSupport?.refs ?? [];
-          // Merge caveats from the consequent and all other antecedents
-          const caveat = mergeCaveats(consequentSupport?.caveat, ...otherCaveats);
+          // Merge assumptions from the consequent and all other antecedents
+          const assumption = mergeAssumptions(consequentSupport?.assumption, ...otherAssumptions);
 
-          // If already asserting no-poly, only continue if we can improve the caveat
-          if (queryAssertsNoPoly(targetComplexity) && caveat) continue;
+          // If already asserting no-poly, only continue if we can improve the assumption
+          if (queryAssertsNoPoly(targetComplexity) && assumption) continue;
 
           const refs = uniqueRefs(lemma.refs, consequentRefs, ...otherRefs);
           const othersDesc = otherAntecedents.length > 0 
-            ? ` and since ${otherAntecedents.map((op, idx) => `\\opref{${language.id}}{${op}} in polynomial time${formatInlineCaveat(otherCaveats[idx])}`).join(' and ')},`
+            ? ` and since ${otherAntecedents.map((op, idx) => `\\opref{${language.id}}{${op}} in polynomial time${formatInlineAssumption(otherAssumptions[idx])}`).join(' and ')},`
             : '';
-          const description = `Since ${lemma.antecedent.map(opLabel).join(' ∧ ')} implies ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}, and since \\nopref{${language.id}}{${lemma.consequent}}${formatInlineCaveat(consequentSupport?.caveat)},${othersDesc} then ${opLabel(targetOp)} is unsupported by ${idToName(language.id)} as well${formatInlineCaveat(caveat)}.`;
+          const description = `Since ${lemma.antecedent.map(opLabel).join(' ∧ ')} implies ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}, and since \\nopref{${language.id}}{${lemma.consequent}}${formatInlineAssumption(consequentSupport?.assumption)},${othersDesc} then ${opLabel(targetOp)} is unsupported by ${idToName(language.id)} as well${formatInlineAssumption(assumption)}.`;
 
           if (DEBUG_PROPAGATION) {
-            const reason = queryAssertsNoPoly(targetComplexity) ? 'CAVEAT-IMPROVE' : 'CONTRAPOSITIVE';
+            const reason = queryAssertsNoPoly(targetComplexity) ? 'ASSUMPTION-IMPROVE' : 'CONTRAPOSITIVE';
             console.log(`[Query Propagation] ${reason} ${langName}.${targetOp}: ${targetComplexity} -> no-poly-unknown-quasi (via ¬${lemma.consequent}${otherAntecedents.length > 0 ? ', with ' + otherAntecedents.join('+') + ' supported' : ''})`);
           }
 
@@ -591,7 +591,7 @@ export function propagateDowngradesViaLemmaContrapositives(
               description,
               derivationOrder: noPolyContraOrder,
               proofTrace: noPolyContraTrace,
-              ...(caveat && { caveat })
+              ...(assumption && { assumption })
             });
           } else {
             if (!language.properties) language.properties = {};
@@ -603,7 +603,7 @@ export function propagateDowngradesViaLemmaContrapositives(
               description,
               derivationOrder: noPolyContraOrder,
               proofTrace: noPolyContraTrace,
-              ...(caveat && { caveat })
+              ...(assumption && { assumption })
             };
           }
           changed = true;
@@ -618,13 +618,13 @@ export function propagateDowngradesViaLemmaContrapositives(
           const targetSupport = getOperationSupport(language, targetOp);
           const targetComplexity = targetSupport?.complexity ?? 'unknown-to-us';
 
-          // Skip if target already asserts no-quasi without caveat (no improvement possible)
-          if (queryAssertsNoQuasi(targetComplexity) && (!targetSupport?.caveat || !targetSupport?.derived)) continue;
+          // Skip if target already asserts no-quasi without assumption (no improvement possible)
+          if (queryAssertsNoQuasi(targetComplexity) && (!targetSupport?.assumption || !targetSupport?.derived)) continue;
 
           // Check if ALL OTHER antecedents support quasi
           let allOthersQuasiSupported = true;
           const otherAntecedents: string[] = [];
-          const otherCaveats: (string | undefined)[] = [];
+          const otherAssumptions: (string | undefined)[] = [];
           const otherRefs: string[][] = [];
           for (let k = 0; k < lemma.antecedent.length; k++) {
             if (k === j) continue;
@@ -636,7 +636,7 @@ export function propagateDowngradesViaLemmaContrapositives(
               allOthersQuasiSupported = false;
               break;
             }
-            otherCaveats.push(otherSupport?.caveat);
+            otherAssumptions.push(otherSupport?.assumption);
             otherRefs.push(otherSupport?.refs ?? []);
           }
 
@@ -644,20 +644,20 @@ export function propagateDowngradesViaLemmaContrapositives(
 
           // All other antecedents support quasi, consequent is no-quasi → target must be no-quasi
           const consequentRefs = consequentSupport?.refs ?? [];
-          // Merge caveats from the consequent and all other antecedents
-          const caveat = mergeCaveats(consequentSupport?.caveat, ...otherCaveats);
+          // Merge assumptions from the consequent and all other antecedents
+          const assumption = mergeAssumptions(consequentSupport?.assumption, ...otherAssumptions);
 
-          // If already asserting no-quasi, only continue if we can improve the caveat
-          if (queryAssertsNoQuasi(targetComplexity) && caveat) continue;
+          // If already asserting no-quasi, only continue if we can improve the assumption
+          if (queryAssertsNoQuasi(targetComplexity) && assumption) continue;
 
           const refs = uniqueRefs(lemma.refs, consequentRefs, ...otherRefs);
           const othersDesc = otherAntecedents.length > 0 
-            ? ` and since ${otherAntecedents.map((op, idx) => `\\opref{${language.id}}{${op}} in quasi-polynomial time${formatInlineCaveat(otherCaveats[idx])}`).join(' and ')},`
+            ? ` and since ${otherAntecedents.map((op, idx) => `\\opref{${language.id}}{${op}} in quasi-polynomial time${formatInlineAssumption(otherAssumptions[idx])}`).join(' and ')},`
             : '';
-          const description = `Since ${lemma.antecedent.map(opLabel).join(' ∧ ')} implies ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}, and since \\nopref{${language.id}}{${lemma.consequent}} in quasi-polynomial time${formatInlineCaveat(consequentSupport?.caveat)},${othersDesc} then ${opLabel(targetOp)} is unsupported by ${idToName(language.id)} in quasi-polynomial time as well${formatInlineCaveat(caveat)}.`;
+          const description = `Since ${lemma.antecedent.map(opLabel).join(' ∧ ')} implies ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}, and since \\nopref{${language.id}}{${lemma.consequent}} in quasi-polynomial time${formatInlineAssumption(consequentSupport?.assumption)},${othersDesc} then ${opLabel(targetOp)} is unsupported by ${idToName(language.id)} in quasi-polynomial time as well${formatInlineAssumption(assumption)}.`;
 
           if (DEBUG_PROPAGATION) {
-            const reason = queryAssertsNoQuasi(targetComplexity) ? 'CAVEAT-IMPROVE' : 'CONTRAPOSITIVE';
+            const reason = queryAssertsNoQuasi(targetComplexity) ? 'ASSUMPTION-IMPROVE' : 'CONTRAPOSITIVE';
             console.log(`[Query Propagation] ${reason} ${langName}.${targetOp}: ${targetComplexity} -> no-quasi (via ¬${lemma.consequent}${otherAntecedents.length > 0 ? ', with ' + otherAntecedents.join('+') + ' supported' : ''})`);
           }
 
@@ -673,7 +673,7 @@ export function propagateDowngradesViaLemmaContrapositives(
               description,
               derivationOrder: noQuasiContraOrder,
               proofTrace: noQuasiContraTrace,
-              ...(caveat && { caveat })
+              ...(assumption && { assumption })
             });
           } else {
             if (!language.properties) language.properties = {};
@@ -685,7 +685,7 @@ export function propagateDowngradesViaLemmaContrapositives(
               description,
               derivationOrder: noQuasiContraOrder,
               proofTrace: noQuasiContraTrace,
-              ...(caveat && { caveat })
+              ...(assumption && { assumption })
             };
           }
           changed = true;
@@ -798,12 +798,12 @@ function deriveNoPolyEdge(
 
   const aRefs = aSupport?.refs ?? [];
   const bRefs = bSupport?.refs ?? [];
-  const caveat = mergeCaveats(aSupport?.caveat, bSupport?.caveat);
+  const assumption = mergeAssumptions(aSupport?.assumption, bSupport?.assumption);
   const description =
-    `\\opref{${langA.id}}{${queryCode}} in polynomial time${formatInlineCaveat(aSupport?.caveat)}, but ` +
-    `\\nopref{${langB.id}}{${queryCode}}${formatInlineCaveat(bSupport?.caveat)}. If ${idToName(langB.id)} could compile to ${idToName(langA.id)} in ` +
+    `\\opref{${langA.id}}{${queryCode}} in polynomial time${formatInlineAssumption(aSupport?.assumption)}, but ` +
+    `\\nopref{${langB.id}}{${queryCode}}${formatInlineAssumption(bSupport?.assumption)}. If ${idToName(langB.id)} could compile to ${idToName(langA.id)} in ` +
     `polynomial time, ${idToName(langB.id)} could support ${opLabel(queryCode)} by first compiling to ${idToName(langA.id)}. ` +
-    `Therefore ${idToName(langB.id)} cannot compile to ${idToName(langA.id)} in polynomial time${formatInlineCaveat(caveat)}.`;
+    `Therefore ${idToName(langB.id)} cannot compile to ${idToName(langA.id)} in polynomial time${formatInlineAssumption(assumption)}.`;
   const refs = uniqueRefs(aRefs, bRefs);
 
   if (currentStatus === 'unknown-poly-quasi' && currentRelation) {
@@ -824,22 +824,22 @@ function deriveNoPolyEdge(
     };
     const allRefs = [...new Set([...noPolyDescription.refs, ...quasiDescription.refs])];
 
-    // Merge caveats: query-derived caveat + original relation caveat
-    const allCaveats = new Set<string>();
-    if (caveat) {
-      for (const c of caveat.split(' OR ')) allCaveats.add(c.trim());
+    // Merge assumptions: query-derived assumption + original relation assumption
+    const allAssumptions = new Set<string>();
+    if (assumption) {
+      for (const c of assumption.split(' AND ')) allAssumptions.add(c.trim());
     }
-    if (currentRelation.caveat) {
-      for (const c of currentRelation.caveat.split(' OR ')) allCaveats.add(c.trim());
+    if (currentRelation.assumption) {
+      for (const c of currentRelation.assumption.split(' AND ')) allAssumptions.add(c.trim());
     }
-    const mergedCaveat = allCaveats.size > 0 ? Array.from(allCaveats).join(' OR ') : undefined;
+    const mergedAssumption = allAssumptions.size > 0 ? Array.from(allAssumptions).join(' AND ') : undefined;
 
     const fullyDerived = noPolyDescription.derived && quasiDescription.derived;
 
     adjacencyMatrix.matrix[bIdx][aIdx] = {
       status: 'no-poly-quasi',
       refs: allRefs,
-      caveat: mergedCaveat,
+      assumption: mergedAssumption,
       separatingFunctionIds: currentRelation.separatingFunctionIds,
       hidden: false,
       derived: fullyDerived,
@@ -852,7 +852,7 @@ function deriveNoPolyEdge(
     adjacencyMatrix.matrix[bIdx][aIdx] = {
       status: 'no-poly-unknown-quasi',
       refs,
-      caveat,
+      assumption,
       separatingFunctionIds: undefined,
       hidden: false,
       derived: true,
@@ -906,21 +906,21 @@ function deriveNoQuasiEdge(
 
   const aRefs = aSupport?.refs ?? [];
   const bRefs = bSupport?.refs ?? [];
-  const queryCaveat = mergeCaveats(aSupport?.caveat, bSupport?.caveat);
-  // Merge with existing edge caveat (e.g., from a prior no-poly-unknown-quasi derivation)
-  const caveat = mergeCaveats(queryCaveat, currentRelation?.caveat);
+  const queryAssumption = mergeAssumptions(aSupport?.assumption, bSupport?.assumption);
+  // Merge with existing edge assumption (e.g., from a prior no-poly-unknown-quasi derivation)
+  const assumption = mergeAssumptions(queryAssumption, currentRelation?.assumption);
   const description =
-    `\\opref{${langA.id}}{${queryCode}} in quasi-polynomial time${formatInlineCaveat(aSupport?.caveat)}, but ` +
-    `\\nopref{${langB.id}}{${queryCode}} in quasi-polynomial time${formatInlineCaveat(bSupport?.caveat)}. If ${idToName(langB.id)} could compile to ${idToName(langA.id)} in ` +
+    `\\opref{${langA.id}}{${queryCode}} in quasi-polynomial time${formatInlineAssumption(aSupport?.assumption)}, but ` +
+    `\\nopref{${langB.id}}{${queryCode}} in quasi-polynomial time${formatInlineAssumption(bSupport?.assumption)}. If ${idToName(langB.id)} could compile to ${idToName(langA.id)} in ` +
     `quasi-polynomial time, ${idToName(langB.id)} could support ${opLabel(queryCode)} by first compiling to ${idToName(langA.id)}. ` +
-    `Therefore ${idToName(langB.id)} cannot compile to ${idToName(langA.id)} in quasi-polynomial time${formatInlineCaveat(caveat)}.`;
+    `Therefore ${idToName(langB.id)} cannot compile to ${idToName(langA.id)} in quasi-polynomial time${formatInlineAssumption(assumption)}.`;
   const refs = uniqueRefs(aRefs, bRefs, currentRelation?.refs);
 
   // Transition: null / unknown-both / no-poly-unknown-quasi → no-quasi
   adjacencyMatrix.matrix[bIdx][aIdx] = {
     status: 'no-quasi',
     refs,
-    caveat,
+    assumption,
     separatingFunctionIds: currentRelation?.separatingFunctionIds,
     hidden: false,
     derived: true,

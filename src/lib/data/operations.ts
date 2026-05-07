@@ -82,7 +82,7 @@ export function resolveOperations(
         code: opDef.code,
         label: opDef.label,
         complexity: support.complexity,
-        caveat: support.caveat,
+        assumption: support.assumption,
         refs: support.refs,
         description: support.description,
         derived: support.derived,

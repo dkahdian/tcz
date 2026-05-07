@@ -71,7 +71,7 @@ export function createFillUnknownOperationsFilter(): LanguageFilter {
             if (support) {
               result[opDef.code] = {
                 complexity: support.complexity,
-                ...(support.caveat && { caveat: support.caveat }),
+                ...(support.assumption && { assumption: support.assumption }),
                 refs: support.refs ?? [],
                 ...(support.description && { description: support.description }),
                 ...(support.derived != null && { derived: support.derived }),

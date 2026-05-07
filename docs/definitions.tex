@@ -1,7 +1,7 @@
 % =============================
 % Tractable Circuit Zoo - Conceptual Definitions
 % Auto-generated from database.json
-% Generated: 2026-04-30T04:55:56.123Z
+% Generated: 2026-05-07T23:01:47.214Z
 %
 % EDITING INSTRUCTIONS:
 % - Definition IDs are preserved in \label{...}. Do NOT edit.
@@ -52,23 +52,9 @@
 \begin{document}
 \maketitle
 
-\begin{definition}\label{kdef:boolean-formula}
-\textbf{Boolean Formula} \\
-Fix a countable set $\text{PS} = \{x_1, x_2, \ldots\}$ of propositional variables \citep{Boole_1847}.
-
-A \emph{Boolean formula} is a syntactic expression built inductively from variables $x_i \in PS$, constants $\top$ and $\bot$, and connectives $\neg, \wedge, \vee$ in the usual way.
-
-Each formula $\alpha$ of arity $n$ over variables $X = (x_1, x_2, \cdots, x_n)$ denotes a Boolean function $\alpha : \{0,1\}^n \to \{0,1\}$. Two formulas are \emph{semantically equivalent}, written $\alpha \equiv \beta$, when they agree on every truth assignment ($\alpha(X) = \beta(X), \forall X \in \{0,1\}^n$). \citet{Darwiche_2002}
-\end{definition}
-
 \begin{definition}\label{kdef:representation-language}
 \textbf{Representation Language} \\
 A \emph{representation language} $L$ is a set of Boolean formulas sharing a common syntactic structure, endowed with the standard Boolean semantics and a size measure $|\cdot|$, usually simply the count of all variables and connectives in the formula. \citet{Darwiche_2002}
-\end{definition}
-
-\begin{definition}\label{kdef:variable-order}
-\textbf{Variable Order} \\
-A variable order is a total order $<$ on the propositional variables. When a formula mentions only finitely many variables, we implicitly restrict $<$ to the variables that appear in the formula. \citet{Bryant_1986,Wegener_2000}
 \end{definition}
 
 \begin{definition}\label{kdef:language-family}
@@ -121,25 +107,6 @@ The standard query operations in this project are \defref{query-co}, \defref{que
 A \emph{transformation} maps one or more formulas from $\alpha_1,\alpha_2,..., \alpha_m\ \in L$, where $m$ may be arbitrarily large, to a new formula $\alpha_{m+1} \in L$.
 
 The standard transformations in this project are \defref{transformation-cd}, \defref{transformation-fo}, \defref{transformation-sfo}, \defref{transformation-and-c}, \defref{transformation-and-bc}, \defref{transformation-or-c}, \defref{transformation-or-bc}, and \defref{transformation-not-c}. \citet{Darwiche_2002}
-\end{definition}
-
-\begin{definition}\label{kdef:order}
-\textbf{Variable Order} \\
-A \emph{variable order} $<$ on $PS$ is a strict total order on $PS$. For any finite nonempty $X \subseteq PS$, the induced order $<|_X$ is the restriction of $<$ to $X$. \citet{Bryant_1986}
-\end{definition}
-
-\begin{definition}\label{kdef:vtree}
-\textbf{vtree} \\
-A \emph{global vtree} $T$ over $PS$ is an infinite rooted binary tree where every internal node has exactly two children and leaves are in bijection with $PS$.
-
-For any finite nonempty $X \subseteq PS$, the \emph{restriction} $T|_X$ is obtained by taking the minimal connected subgraph containing the root and the leaves for variables in $X$, then repeatedly contracting internal nodes with exactly one child while preserving left/right orientation. The result is a finite full rooted binary tree with leaves in bijection with $X$. 
-
-A formula $f:X \to \{0,1\}$ is said to respect the (infinite) vtree $T$ if it respects the (finite) restriction $T|_X$. \citet{Darwiche_2011}
-\end{definition}
-
-\begin{definition}\label{kdef:right-linear-vtree}
-\textbf{Right-Linear vtree} \\
-A finite vtree is \emph{right-linear} if every internal node has a leaf as its left child. Equivalently, all non-leaf nodes form a single chain through right children. This construction is useful in its bijection with the total orders \citet{Pipatsrisawat_2008}
 \end{definition}
 
 \begin{definition}\label{kdef:query-co}

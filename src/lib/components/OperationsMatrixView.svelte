@@ -86,7 +86,7 @@
       code: opDef.code,
       label: opDef.label,
       complexity: support.complexity,
-      caveat: support.caveat,
+      assumption: support.assumption,
       refs: support.refs ?? [],
       description: support.description,
       derived: support.derived,
@@ -153,9 +153,12 @@
   function getCellTitle(language: KCLanguage, opCode: string, support: KCOpEntry | null): string {
     const opDef = operations[opCode];
     if (!support) return `${language.name} - ${opDef?.label ?? opCode}: no data`;
-    const display = getOperationTractabilityDisplay(support);
-    const caveatStr = support.caveat ? ` (unless ${support.caveat})` : '';
-    return `${language.name} - ${opDef?.label ?? opCode}: ${display.label}${caveatStr}`;
+    const display = getOperationTractabilityDisplay(
+      support,
+      operationType === 'queries' ? 'query' : 'transformation'
+    );
+    const assumptionStr = support.assumption ? ` (assuming ${support.assumption})` : '';
+    return `${language.name} - ${opDef?.label ?? opCode}: ${display.label}${assumptionStr}`;
   }
 
   // Dynamic cell sizing
@@ -227,7 +230,10 @@
             </th>
             {#each operationCodes as opCode}
               {@const support = getOperationSupport(language, opCode)}
-              {@const display = getOperationTractabilityDisplay(support)}
+              {@const display = getOperationTractabilityDisplay(
+                support,
+                operationType === 'queries' ? 'query' : 'transformation'
+              )}
               <td>
                 {#if support}
                 <button

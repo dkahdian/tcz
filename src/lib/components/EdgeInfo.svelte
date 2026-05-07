@@ -2,7 +2,7 @@
   import MathText from './MathText.svelte';
   import type { SelectedEdge, GraphData, FilteredGraphData, KCReference, KCSeparatingFunction, DirectedSuccinctnessRelation, ViewMode } from '$lib/types.js';
   import { getComplexityFromCatalog } from '$lib/data/complexities.js';
-  import { extractCitationKeys } from '$lib/utils/math-text.js';
+  import { extractCitationKeys, formatAssumptionForMathText } from '$lib/utils/math-text.js';
   import { getGlobalRefNumber } from '$lib/data/references.js';
   import DynamicLegend from './DynamicLegend.svelte';
   import ReferenceList from './ReferenceList.svelte';
@@ -139,7 +139,7 @@
   }
 
   /**
-   * Split a compound status label at the semicolon so the caveat can be
+   * Split a compound status label at the semicolon so the assumption can be
    * inserted after the first part (the primary claim) rather than at the
    * very end.  For simple statuses (no semicolon) prefix is the full label
    * and suffix is empty.
@@ -196,7 +196,7 @@
               {#if true}
                 {@const parts = splitStatusLabel(relation.status)}
                 <p class="text-sm text-gray-700 mb-2">
-                  {parts.prefix}{#if relation.caveat}{' '}unless <MathText text={relation.caveat} className="inline" />{/if}{parts.suffix}{#if relation.refs.length}{' '}{#each relation.refs as refId}<button 
+                  {parts.prefix}{#if relation.assumption}{' '}assuming <MathText text={formatAssumptionForMathText(relation.assumption)} className="inline" />{/if}{parts.suffix}{#if relation.refs.length}{' '}{#each relation.refs as refId}<button 
                       class="ref-badge"
                       onclick={scrollToReferences}
                       title="View reference"

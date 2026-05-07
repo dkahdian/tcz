@@ -133,7 +133,7 @@
     for (let i = 0; i < languageIds.length; i++) {
       for (let j = 0; j < languageIds.length; j++) {
         const relation = matrix[i][j];
-        if (!relation?.caveat) continue;
+        if (!relation?.assumption) continue;
         const edgeId = `${languageIds[i]}->${languageIds[j]}`;
         if (filteredData.visibleEdgeIds.has(edgeId)) return true;
       }
@@ -164,11 +164,18 @@
         
         for (const [opId, support] of Object.entries(supportMap)) {
           if (!visibleOperationIds.has(opId)) continue;
-          idsInUse.add(getOperationTractabilityDisplay(support).id);
+          idsInUse.add(getOperationTractabilityDisplay(support, isQueries ? 'query' : 'transformation').id);
         }
       }
       
-      return getOrderedOperationTractabilityDisplays(idsInUse);
+      return getOrderedOperationTractabilityDisplays(idsInUse).map((display) =>
+        display.id === 'intractable'
+          ? getOperationTractabilityDisplay(
+              { complexity: 'not-poly' },
+              isQueries ? 'query' : 'transformation'
+            )
+          : display
+      );
     }
     
     // Graph view: only show when operation filters are active
@@ -192,13 +199,13 @@
       // Check queries
       for (const op of resolved.queries) {
         if (suffix.includes(op.code)) {
-          idsInUse.add(getOperationTractabilityDisplay(op).id);
+          idsInUse.add(getOperationTractabilityDisplay(op, 'query').id);
         }
       }
       // Check transformations
       for (const op of resolved.transformations) {
         if (suffix.includes(op.code)) {
-          idsInUse.add(getOperationTractabilityDisplay(op).id);
+          idsInUse.add(getOperationTractabilityDisplay(op, 'transformation').id);
         }
       }
     }
@@ -326,9 +333,9 @@
             {/if}
           {/each}
           {#if hasVisibleConditionalSuccinctness}
-            <div class="legend-row matrix-row caveat-row">
-              <span class="matrix-notation caveat-marker">*</span>
-              <span class="matrix-description">conditional result (unless the listed condition holds)</span>
+            <div class="legend-row matrix-row assumption-row">
+              <span class="matrix-notation assumption-marker">*</span>
+              <span class="matrix-description">conditional result (assuming the listed condition)</span>
             </div>
           {/if}
         </div>
@@ -456,11 +463,11 @@
     color: #4b5563;
   }
 
-  .caveat-row {
+  .assumption-row {
     margin-top: 0.25rem;
   }
 
-  .caveat-marker {
+  .assumption-marker {
     font-weight: 700;
     color: #1f2937;
   }

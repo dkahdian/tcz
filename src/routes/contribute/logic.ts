@@ -23,7 +23,7 @@ export function cloneOperationSupport(
       const key = convertToSafeKeys ? displayCodeToSafeKey(code) : code;
       cloned[key] = {
         complexity: support.complexity,
-        caveat: support.caveat,
+        assumption: support.assumption,
         refs: Array.isArray(support.refs) ? [...support.refs] : []
       };
     }
@@ -34,7 +34,7 @@ export function cloneOperationSupport(
 export interface BaselineRelation {
   status: string;
   description?: string;
-  caveat?: string;
+  assumption?: string;
   refs: string[];
   separatingFunctionIds?: string[];
   derived?: boolean;
@@ -64,7 +64,7 @@ export function buildBaselineRelations(adjacencyMatrix: {
         baselineRelations.set(relationKey(sourceId, targetId), {
           status: relation.status,
           description: relation.description,
-          caveat: relation.caveat,
+          assumption: relation.assumption,
           refs: relation.refs ? [...relation.refs] : [],
           separatingFunctionIds,
           derived: relation.derived

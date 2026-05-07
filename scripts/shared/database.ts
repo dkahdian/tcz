@@ -37,16 +37,16 @@ export function loadDatabase(): DatabaseSchema {
 }
 
 export function saveDatabase(database: DatabaseSchema): void {
-  // Strip empty string caveats (should be undefined, not "")
+  // Strip empty string assumptions (should be undefined, not "")
   for (const lang of database.languages) {
     if (lang.properties?.queries) {
       for (const op of Object.values(lang.properties.queries)) {
-        if (op && 'caveat' in op && !op.caveat) delete op.caveat;
+        if (op && 'assumption' in op && !op.assumption) delete op.assumption;
       }
     }
     if (lang.properties?.transformations) {
       for (const op of Object.values(lang.properties.transformations)) {
-        if (op && 'caveat' in op && !op.caveat) delete op.caveat;
+        if (op && 'assumption' in op && !op.assumption) delete op.assumption;
       }
     }
   }
@@ -54,7 +54,7 @@ export function saveDatabase(database: DatabaseSchema): void {
     for (const row of database.adjacencyMatrix.matrix) {
       if (!row) continue;
       for (const cell of row) {
-        if (cell && 'caveat' in cell && !cell.caveat) delete cell.caveat;
+        if (cell && 'assumption' in cell && !cell.assumption) delete cell.assumption;
       }
     }
   }

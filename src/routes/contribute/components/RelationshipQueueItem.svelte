@@ -2,7 +2,8 @@
 	import type { RelationshipEntry } from '../types.js';
 	import { relationKey } from '../logic.js';
 	import GenericQueueItem from './GenericQueueItem.svelte';
-	import MathText from '$lib/components/MathText.svelte';
+  import MathText from '$lib/components/MathText.svelte';
+  import { formatAssumptionForMathText } from '$lib/utils/math-text.js';
 
 	/**
 	 * Display a single queued relationship
@@ -74,11 +75,12 @@
 						</div>
 					</div>
 				{/if}
-				{#if relationship.caveat}
+				{#if relationship.assumption}
 					<div>
-						<div class="font-semibold text-gray-700 mb-1">Caveat:</div>
+						<div class="font-semibold text-gray-700 mb-1">Assumption:</div>
 						<div class="bg-white p-2 rounded border">
-							<span class="text-gray-700">Unless {relationship.caveat}</span>
+							<span class="text-gray-700">Assuming </span>
+							<MathText text={formatAssumptionForMathText(relationship.assumption)} className="inline text-gray-700" />
 						</div>
 					</div>
 				{/if}

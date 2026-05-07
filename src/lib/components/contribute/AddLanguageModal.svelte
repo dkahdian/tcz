@@ -7,8 +7,8 @@
     fullName: string;
     definition: string;
     definitionRefs: string[];
-    queries: Record<string, { complexity: string; caveat?: string; refs: string[] }>;
-    transformations: Record<string, { complexity: string; caveat?: string; refs: string[] }>;
+    queries: Record<string, { complexity: string; assumption?: string; refs: string[] }>;
+    transformations: Record<string, { complexity: string; assumption?: string; refs: string[] }>;
     tags: Array<{ label: string; color: string; description?: string; refs: string[] }>;
     existingReferences: string[];
   };
@@ -56,8 +56,8 @@
   let fullName = $state('');
   let definition = $state('');
   let definitionRefs = $state<string[]>([]);
-  let querySupport = $state<Record<string, { complexity: string; caveat?: string; refs: string[] }>>({});
-  let transformationSupport = $state<Record<string, { complexity: string; caveat?: string; refs: string[] }>>({});
+  let querySupport = $state<Record<string, { complexity: string; assumption?: string; refs: string[] }>>({});
+  let transformationSupport = $state<Record<string, { complexity: string; assumption?: string; refs: string[] }>>({});
   let selectedTags = $state<Tag[]>([]);
   let selectedExistingRefs = $state<string[]>([]);
   let errorMessage = $state<string | null>(null);
@@ -200,11 +200,11 @@
           const source = initialData.queries[q.code];
           merged[q.code] = { 
             complexity: source.complexity, 
-            caveat: source.caveat || '', 
+            assumption: source.assumption || '', 
             refs: [...source.refs] 
           };
         } else {
-          merged[q.code] = { complexity: 'unknown-to-us', caveat: '', refs: [] };
+          merged[q.code] = { complexity: 'unknown-to-us', assumption: '', refs: [] };
         }
       });
       querySupport = merged;
@@ -237,10 +237,10 @@
           }
           // Copy data, creating new objects for reactivity
           merged[t.code] = source
-            ? { complexity: source.complexity, caveat: source.caveat || '', refs: [...source.refs] }
-            : { complexity: 'unknown-to-us', caveat: '', refs: [] };
+            ? { complexity: source.complexity, assumption: source.assumption || '', refs: [...source.refs] }
+            : { complexity: 'unknown-to-us', assumption: '', refs: [] };
         } else {
-          merged[t.code] = { complexity: 'unknown-to-us', caveat: '', refs: [] };
+          merged[t.code] = { complexity: 'unknown-to-us', assumption: '', refs: [] };
         }
       });
       transformationSupport = merged;
@@ -357,12 +357,12 @@
                       </select>
                     </div>
                     <div>
-                      <label for="query-{query.code}-caveat" class="block text-xs font-medium text-gray-700 mb-1">Caveat (unless...)</label>
+                      <label for="query-{query.code}-assumption" class="block text-xs font-medium text-gray-700 mb-1">Assumption</label>
                       <input
-                        id="query-{query.code}-caveat"
+                        id="query-{query.code}-assumption"
                         type="text"
-                        bind:value={querySupport[query.code].caveat}
-                        placeholder="e.g., P=NP"
+                        bind:value={querySupport[query.code].assumption}
+                        placeholder="e.g., P \\neq NP"
                         class="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-green-500"
                       />
                   </div>
@@ -412,12 +412,12 @@
                       </select>
                     </div>
                     <div>
-                      <label for="transform-{transform.code}-caveat" class="block text-xs font-medium text-gray-700 mb-1">Caveat (unless...)</label>
+                      <label for="transform-{transform.code}-assumption" class="block text-xs font-medium text-gray-700 mb-1">Assumption</label>
                       <input
-                        id="transform-{transform.code}-caveat"
+                        id="transform-{transform.code}-assumption"
                         type="text"
-                        bind:value={transformationSupport[transform.code].caveat}
-                        placeholder="e.g., P=NP"
+                        bind:value={transformationSupport[transform.code].assumption}
+                        placeholder="e.g., P \\neq NP"
                         class="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-green-500"
                       />
                   </div>

@@ -165,6 +165,14 @@ export function containsLatex(input?: string | null): boolean {
   return LATEX_TRIGGER.test(input);
 }
 
+export function formatAssumptionForMathText(input?: string | null): string {
+  const text = input ?? '';
+  if (!text.trim()) return text;
+  if (containsLatex(text)) return text;
+  if (/\\[a-zA-Z]+/.test(text)) return `$${text}$`;
+  return text;
+}
+
 /**
  * Render text with citations resolved to reference numbers.
  * The keyToNumber function should return the display number for a citation key,
@@ -355,7 +363,7 @@ export function renderEntityLinks(
     }
 
     const safeId = escapeHtml(resolved.id);
-    return `<a class="entity-link def-link" href="/about#${safeId}" data-entity-type="def" data-def-id="${safeId}">${renderNameHtml(resolved.title)}</a>`;
+    return `<a class="entity-link def-link" href="/definitions#${safeId}" data-entity-type="def" data-def-id="${safeId}">${renderNameHtml(resolved.title)}</a>`;
   });
 
   // Replace \langref{langId or langName}

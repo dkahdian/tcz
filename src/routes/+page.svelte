@@ -424,7 +424,7 @@
 
   // Handler for individual filter changes from the filter drawer
   function handleFilterChange(filter: LanguageFilter | EdgeFilter, value: FilterParamValue) {
-    filterDeltas = updateDelta(filterDeltas, filter.id, value, filter);
+    filterDeltas = updateDelta(filterDeltas, filter.id, value, filter, viewMode);
     filterStates = computeEffectiveFilterState(languageFilters, edgeFilters, viewMode, filterDeltas);
   }
 

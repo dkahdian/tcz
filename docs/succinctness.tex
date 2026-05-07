@@ -1,7 +1,7 @@
 % =============================
 % Tractable Circuit Zoo - Succinctness Claims and Descriptions
 % Auto-generated from database.json
-% Generated: 2026-04-30T04:55:56.117Z
+% Generated: 2026-05-07T23:01:47.205Z
 % 
 % EDITING INSTRUCTIONS:
 % - Claim environments are auto-generated. Do NOT edit.
@@ -400,7 +400,7 @@ The $OR_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \lang
 \end{claimdescription}
 
 \begin{claim}
-\langref{DNF} is not polynomial-time compilable to \langref{d-DNNF} unless the polynomial hierarchy collapses \citet{Darwiche_2002}
+\langref{DNF} is not polynomial-time compilable to \langref{d-DNNF} assuming the polynomial hierarchy does not collapse \citet{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 Because counting the models of a \langref{d-DNNF} is in P and counting the models of a \langref{DNF} is \#P-complete, \langref{DNF} cannot be polynomially compiled into \langref{d-DNNF} unconditionally. Such a compilation implies P = \#P, collapsing the polynomial hierarchy \citep{Darwiche_2002}.

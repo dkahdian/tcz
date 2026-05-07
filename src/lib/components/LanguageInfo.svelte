@@ -12,7 +12,7 @@
     SelectedOperationCell
   } from '$lib/types.js';
   import { resolveLanguageProperties } from '$lib/data/operations.js';
-  import { extractCitationKeys } from '$lib/utils/math-text.js';
+  import { extractCitationKeys, formatAssumptionForMathText } from '$lib/utils/math-text.js';
   import { getGlobalRefNumber } from '$lib/data/references.js';
   import DynamicLegend from './DynamicLegend.svelte';
   import ReferenceList from './ReferenceList.svelte';
@@ -37,7 +37,7 @@
 
   const isOperationsView = $derived(viewMode === 'queries' || viewMode === 'transforms');
   const isStudiedOperation = (op: KCOpEntry) =>
-    op.complexity !== 'unknown-to-us' || Boolean(op.caveat || op.description || op.refs?.length);
+    op.complexity !== 'unknown-to-us' || Boolean(op.assumption || op.description || op.refs?.length);
 
   // Use filteredGraphData for the legend if provided, otherwise fall back to graphData
   const legendGraphData = $derived(filteredGraphData ?? graphData);
@@ -69,16 +69,16 @@
       extractCitationKeys(selectedLanguage.definition).forEach(key => refIds.add(key));
     }
     
-    // Extract inline citations from operation caveats
+    // Extract inline citations from operation assumptions
     if (resolvedProperties) {
       for (const q of resolvedProperties.queries) {
-        if (q.caveat) {
-          extractCitationKeys(q.caveat).forEach(key => refIds.add(key));
+        if (q.assumption) {
+          extractCitationKeys(q.assumption).forEach(key => refIds.add(key));
         }
       }
       for (const t of resolvedProperties.transformations) {
-        if (t.caveat) {
-          extractCitationKeys(t.caveat).forEach(key => refIds.add(key));
+        if (t.assumption) {
+          extractCitationKeys(t.assumption).forEach(key => refIds.add(key));
         }
       }
     }
@@ -318,7 +318,7 @@
             <h5 class="font-semibold text-gray-900 mb-2">{heading}</h5>
             <div class="grid grid-cols-2 gap-x-4 gap-y-2">
               {#each ops as op}
-                {@const display = getOperationTractabilityDisplay(op)}
+                {@const display = getOperationTractabilityDisplay(op, opType)}
                 <button
                   type="button"
                   class="op-row grid grid-cols-[auto,1fr] items-start gap-x-2"
@@ -346,12 +346,15 @@
                             title="View reference"
                           >[{getGlobalRefNumber(refId) ?? '?'}]</span>{/each}{/if}
                     </div>
-                    {#if op.caveat}
-                      <MathText 
-                        text={`Unless ${op.caveat}`} 
-                        className="text-xs text-gray-500"
-                        onCitationClick={handleCitationClick}
-                      />
+                    {#if op.assumption}
+                      <div class="text-xs text-gray-500">
+                        <span>Assuming </span>
+                        <MathText 
+                          text={formatAssumptionForMathText(op.assumption)} 
+                          className="inline"
+                          onCitationClick={handleCitationClick}
+                        />
+                      </div>
                     {/if}
                   </div>
                 </button>

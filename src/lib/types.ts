@@ -114,8 +114,8 @@ export interface VisualOverrides {
 export interface KCOpSupport {
   /** complexity code (use getComplexity() to get full Complexity object for display) */
   complexity: string;
-  /** optional caveat (unless clause), e.g., "P=NP" meaning "unless P=NP" */
-  caveat?: string;
+  /** Optional complexity assumption under which the claim holds, e.g., "P \neq NP". */
+  assumption?: string;
   /** reference IDs pointing to entries in the language's references array */
   refs: string[];
   /** optional justification/description for this complexity claim */
@@ -143,7 +143,7 @@ export interface KCBatchClaim {
   opType: 'queries' | 'transformations';
   op: string;
   status: string;
-  caveat?: string;
+  assumption?: string;
   languageIds: string[];
   claimTemplate: string;
   descriptionTemplate: string;
@@ -329,8 +329,8 @@ export interface DirectedSuccinctnessRelation {
   status: string;
   /** Optional descriptive note for this direction */
   description?: string;
-  /** Optional caveat (unless clause), e.g., "P=NP" meaning "unless P=NP" */
-  caveat?: string;
+  /** Optional complexity assumption under which the claim holds, e.g., "P \neq NP". */
+  assumption?: string;
   /** Supporting references */
   refs: string[];
   /** Separating function shortNames (references top-level separatingFunctions array by shortName) */

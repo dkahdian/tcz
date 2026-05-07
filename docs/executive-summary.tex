@@ -82,8 +82,8 @@ We say a language $L \in \textbf{L}$ \emph{supports} an operation $o \in \textbf
 
 Note that "not supported" (which could be \texttt{no-poly} or \texttt{unknown}) is distinct from "unsupported" (which means strictly \texttt{no-poly}).
 
-\paragraph{Caveats.}
-Many \texttt{no-poly} results are conditional on complexity-theoretic assumptions such as $\text{P} \neq \text{NP}$ or the polynomial hierarchy not collapsing. Each entry in $M_s$ or $M_o$ may carry an optional \emph{caveat} string $c$ (e.g.\ ``$\text{P} = \text{NP}$''), meaning the result holds \emph{unless} $c$ is true. When a derived result has multiple unique caveats, these are merged by union. As such, the handling of the caveats in the algorithms below is as expected. 
+\paragraph{Assumptions.}
+Many \texttt{no-poly} results are conditional on complexity-theoretic assumptions such as $\text{P} \neq \text{NP}$ or the polynomial hierarchy not collapsing. Each entry in $M_s$ or $M_o$ may carry an optional \emph{assumption} string $c$ (e.g.\ ``$\text{P} \neq \text{NP}$''), meaning the result holds assuming $c$. When a derived result has multiple unique assumptions, these are merged by conjunction. As such, the handling of the assumptions in the algorithms below is as expected. 
 
 However, the current implementation does have a small flaw: the propagator does not "prioritize" unconditional results over conditional results, so we may end up with conditional results that could be upgraded to unconditional. Implementing a system that prioritizes unconditional results is simple: we would only need to double the status space $S$ and thus also double the runtime.
 

@@ -1,6 +1,6 @@
 import type { EdgeFilter, GraphData, LanguageFilter } from '../types.js';
 import { canonicalDataset } from './canonical.js';
-import { allPredefinedFilters, edgeFilters, transitiveFilters } from './filters/index.js';
+import { allPredefinedFilters, edgeFilters } from './filters/index.js';
 
 // Export main GraphData object
 export const initialGraphData: GraphData = canonicalDataset;
@@ -12,7 +12,7 @@ export function getAllLanguageFilters(): LanguageFilter[] {
 
 // Export all edge filters
 export function getAllEdgeFilters(): EdgeFilter[] {
-  return [...transitiveFilters, ...edgeFilters];
+  return [...edgeFilters];
 }
 
 // Re-export specific parts for convenience
