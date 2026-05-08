@@ -134,7 +134,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_27fffab2}{CT} assuming the polynomial hierarchy does not collapse, and \\edgeref{lang_27fffab2}{lang_89649e36} in polynomial time. If CNF supported Model Counting in polynomial time, then PI could too by compiling first. Therefore Model Counting is unsupported by CNF assuming the polynomial hierarchy does not collapse.",
-            "derivationOrder": 1373,
+            "derivationOrder": 1372,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_27fffab2",
@@ -151,7 +151,7 @@
             ],
             "derived": true,
             "description": "Since Equivalence implies Consistency \\citet{Darwiche_2002}, and since \\nopref{lang_89649e36}{CO} assuming P \\neq NP, then Equivalence is unsupported by CNF as well assuming P \\neq NP.",
-            "derivationOrder": 1374,
+            "derivationOrder": 1373,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-co",
@@ -168,7 +168,7 @@
             ],
             "derived": true,
             "description": "Since Sentential Entailment implies Equivalence \\citet{Darwiche_2002}, and since \\nopref{lang_89649e36}{EQ} assuming P \\neq NP, then Sentential Entailment is unsupported by CNF as well assuming P \\neq NP.",
-            "derivationOrder": 1375,
+            "derivationOrder": 1374,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "se-eq",
@@ -185,7 +185,7 @@
             ],
             "derived": true,
             "description": "Since Clausal Entailment implies Consistency \\citet{Darwiche_2002}, and since \\nopref{lang_89649e36}{CO} assuming P \\neq NP, then Clausal Entailment is unsupported by CNF as well assuming P \\neq NP.",
-            "derivationOrder": 1376,
+            "derivationOrder": 1375,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "ce-co",
@@ -202,7 +202,7 @@
             ],
             "derived": true,
             "description": "Since Model Enumeration implies Consistency \\citet{Darwiche_2002}, and since \\nopref{lang_89649e36}{CO} assuming P \\neq NP, then Model Enumeration is unsupported by CNF as well assuming P \\neq NP.",
-            "derivationOrder": 1377,
+            "derivationOrder": 1376,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "me-co",
@@ -279,7 +279,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Conjunction implies Disjunction \\citet{Darwiche_2002}, and since \\nopref{lang_89649e36}{OR_C}, and since \\opref{lang_89649e36}{AND_C} in polynomial time, then Negation is unsupported by CNF as well.",
-            "derivationOrder": 1378,
+            "derivationOrder": 1377,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-and-c-or-c",
@@ -411,7 +411,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP, and \\edgeref{lang_b9d72a7c}{lang_83e3b023} in polynomial time. If cSDD supported Sentential Entailment in polynomial time, then OBDD could too by compiling first. Therefore Sentential Entailment is unsupported by cSDD assuming P \\neq NP.",
-            "derivationOrder": 1351,
+            "derivationOrder": 1350,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_b9d72a7c",
@@ -495,7 +495,7 @@
             ],
             "derived": true,
             "description": "Since Model Counting ∧ Bounded Conjunction implies Sentential Entailment, and since \\nopref{lang_83e3b023}{SE} assuming P \\neq NP, and since \\opref{lang_83e3b023}{CT} in polynomial time, then Bounded Conjunction is unsupported by cSDD as well assuming P \\neq NP.",
-            "derivationOrder": 1379,
+            "derivationOrder": 1378,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "ct-and-bc-se",
@@ -622,7 +622,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP, and \\edgeref{lang_b9d72a7c}{lang_6c130090} in polynomial time. If d-DNNF supported Sentential Entailment in polynomial time, then OBDD could too by compiling first. Therefore Sentential Entailment is unsupported by d-DNNF assuming P \\neq NP.",
-            "derivationOrder": 1352,
+            "derivationOrder": 1351,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_b9d72a7c",
@@ -664,7 +664,7 @@
             ],
             "derived": true,
             "description": "Since Conjunction implies Bounded Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_6c130090}{AND_BC} assuming P \\neq NP, then Conjunction is unsupported by d-DNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1380,
+            "derivationOrder": 1379,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "and-c-and-bc",
@@ -681,7 +681,7 @@
             ],
             "derived": true,
             "description": "Since Conditioning ∧ Bounded Disjunction implies Singleton Forgetting \\citet{Darwiche_2002}, and since \\nopref{lang_6c130090}{SFO} assuming P \\neq NP, and since \\opref{lang_6c130090}{CD} in polynomial time, then Bounded Disjunction is unsupported by d-DNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1382,
+            "derivationOrder": 1381,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "cd-or-bc-sfo",
@@ -698,7 +698,7 @@
             ],
             "derived": true,
             "description": "Since Disjunction implies Bounded Disjunction \\citet{Darwiche_2002}, and since \\nopref{lang_6c130090}{OR_BC} assuming P \\neq NP, then Disjunction is unsupported by d-DNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1437,
+            "derivationOrder": 1436,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
@@ -715,7 +715,7 @@
             ],
             "derived": true,
             "description": "Since Forgetting implies Singleton Forgetting \\citet{Darwiche_2002}, and since \\nopref{lang_6c130090}{SFO} assuming P \\neq NP, then Forgetting is unsupported by d-DNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1381,
+            "derivationOrder": 1380,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -800,7 +800,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP, and \\edgeref{lang_b9d72a7c}{lang_ea9b5299} in polynomial time. If d-SDNNF supported Sentential Entailment in polynomial time, then OBDD could too by compiling first. Therefore Sentential Entailment is unsupported by d-SDNNF assuming P \\neq NP.",
-            "derivationOrder": 1353,
+            "derivationOrder": 1352,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_b9d72a7c",
@@ -934,7 +934,7 @@
             ],
             "derived": true,
             "description": "Since Model Counting ∧ Bounded Conjunction implies Sentential Entailment, and since \\nopref{lang_ea9b5299}{SE} assuming P \\neq NP, and since \\opref{lang_ea9b5299}{CT} in polynomial time, then Bounded Conjunction is unsupported by d-SDNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1383,
+            "derivationOrder": 1382,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "ct-and-bc-se",
@@ -1178,7 +1178,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse, and \\edgeref{lang_6ae90adc}{lang_4c204bf3} in polynomial time. If DNF supported Model Counting in polynomial time, then IP could too by compiling first. Therefore Model Counting is unsupported by DNF assuming the polynomial hierarchy does not collapse.",
-            "derivationOrder": 1365,
+            "derivationOrder": 1364,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_6ae90adc",
@@ -1195,7 +1195,7 @@
             ],
             "derived": true,
             "description": "Since Equivalence implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_4c204bf3}{VA} assuming P \\neq NP, then Equivalence is unsupported by DNF as well assuming P \\neq NP.",
-            "derivationOrder": 1384,
+            "derivationOrder": 1383,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -1212,7 +1212,7 @@
             ],
             "derived": true,
             "description": "Since Sentential Entailment implies Equivalence \\citet{Darwiche_2002}, and since \\nopref{lang_4c204bf3}{EQ} assuming P \\neq NP, then Sentential Entailment is unsupported by DNF as well assuming P \\neq NP.",
-            "derivationOrder": 1385,
+            "derivationOrder": 1384,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "se-eq",
@@ -1229,7 +1229,7 @@
             ],
             "derived": true,
             "description": "Since Implicant implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_4c204bf3}{VA} assuming P \\neq NP, then Implicant is unsupported by DNF as well assuming P \\neq NP.",
-            "derivationOrder": 1386,
+            "derivationOrder": 1385,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -1299,7 +1299,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Disjunction implies Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_4c204bf3}{AND_C} in quasi-polynomial time, and since \\opref{lang_4c204bf3}{OR_C} in quasi-polynomial time, then Negation is unsupported by DNF in quasi-polynomial time as well.",
-            "derivationOrder": 1388,
+            "derivationOrder": 1387,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-c-and-c",
@@ -1401,7 +1401,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_4c204bf3}{VA} assuming P \\neq NP, and \\edgeref{lang_4c204bf3}{lang_3bebcab7} in polynomial time. If DNNF supported Validity in polynomial time, then DNF could too by compiling first. Therefore Validity is unsupported by DNNF assuming P \\neq NP.",
-            "derivationOrder": 1344,
+            "derivationOrder": 1343,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_4c204bf3",
@@ -1420,7 +1420,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP, and \\edgeref{lang_b9d72a7c}{lang_3bebcab7} in polynomial time. If DNNF supported Sentential Entailment in polynomial time, then OBDD could too by compiling first. Therefore Sentential Entailment is unsupported by DNNF assuming P \\neq NP.",
-            "derivationOrder": 1354,
+            "derivationOrder": 1353,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_b9d72a7c",
@@ -1437,7 +1437,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse, and \\edgeref{lang_6ae90adc}{lang_3bebcab7} in polynomial time. If DNNF supported Model Counting in polynomial time, then IP could too by compiling first. Therefore Model Counting is unsupported by DNNF assuming the polynomial hierarchy does not collapse.",
-            "derivationOrder": 1366,
+            "derivationOrder": 1365,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_6ae90adc",
@@ -1454,7 +1454,7 @@
             ],
             "derived": true,
             "description": "Since Equivalence implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_3bebcab7}{VA} assuming P \\neq NP, then Equivalence is unsupported by DNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1389,
+            "derivationOrder": 1388,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -1471,7 +1471,7 @@
             ],
             "derived": true,
             "description": "Since Implicant implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_3bebcab7}{VA} assuming P \\neq NP, then Implicant is unsupported by DNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1390,
+            "derivationOrder": 1389,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -1601,7 +1601,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Disjunction implies Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_3bebcab7}{AND_C} in quasi-polynomial time, and since \\opref{lang_3bebcab7}{OR_C} in quasi-polynomial time, then Negation is unsupported by DNNF in quasi-polynomial time as well.",
-            "derivationOrder": 1392,
+            "derivationOrder": 1391,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-c-and-c",
@@ -1714,7 +1714,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP, and \\edgeref{lang_b9d72a7c}{lang_684b1ca7} in polynomial time. If FBDD supported Sentential Entailment in polynomial time, then OBDD could too by compiling first. Therefore Sentential Entailment is unsupported by FBDD assuming P \\neq NP.",
-            "derivationOrder": 1355,
+            "derivationOrder": 1354,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_b9d72a7c",
@@ -1755,7 +1755,7 @@
             ],
             "derived": true,
             "description": "Since Forgetting implies Singleton Forgetting \\citet{Darwiche_2002}, and since \\nopref{lang_684b1ca7}{SFO} assuming P \\neq NP, then Forgetting is unsupported by FBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1393,
+            "derivationOrder": 1392,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -1772,7 +1772,7 @@
             ],
             "derived": true,
             "description": "Since Conditioning ∧ Bounded Disjunction implies Singleton Forgetting \\citet{Darwiche_2002}, and since \\nopref{lang_684b1ca7}{SFO} assuming P \\neq NP, and since \\opref{lang_684b1ca7}{CD} in polynomial time, then Bounded Disjunction is unsupported by FBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1394,
+            "derivationOrder": 1393,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "cd-or-bc-sfo",
@@ -1789,7 +1789,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Bounded Conjunction implies Bounded Disjunction \\citet{Darwiche_2002}, and since \\nopref{lang_684b1ca7}{OR_BC} assuming P \\neq NP, and since \\opref{lang_684b1ca7}{NOT_C} in polynomial time, then Bounded Conjunction is unsupported by FBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1395,
+            "derivationOrder": 1394,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-and-bc-or-bc",
@@ -1955,7 +1955,7 @@
             ],
             "derived": true,
             "description": "Since Disjunction implies Bounded Disjunction \\citet{Darwiche_2002}, and since \\nopref{lang_6ae90adc}{OR_BC} in quasi-polynomial time, then Disjunction is unsupported by IP in quasi-polynomial time as well.",
-            "derivationOrder": 1397,
+            "derivationOrder": 1396,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
@@ -1985,7 +1985,7 @@
             ],
             "derived": true,
             "description": "Since Forgetting implies Singleton Forgetting \\citet{Darwiche_2002}, and since \\nopref{lang_6ae90adc}{SFO} in quasi-polynomial time, then Forgetting is unsupported by IP in quasi-polynomial time as well.",
-            "derivationOrder": 1399,
+            "derivationOrder": 1398,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -2210,7 +2210,7 @@
             ],
             "derived": true,
             "description": "Since Disjunction implies Bounded Disjunction \\citet{Darwiche_2002}, and since \\nopref{lang_e02902d0}{OR_BC} in quasi-polynomial time, then Disjunction is unsupported by MODS in quasi-polynomial time as well.",
-            "derivationOrder": 1401,
+            "derivationOrder": 1400,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
@@ -2240,7 +2240,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP, and \\edgeref{lang_b9d72a7c}{lang_1df07cc3} in polynomial time. If nFBDD supported Sentential Entailment in polynomial time, then OBDD could too by compiling first. Therefore Sentential Entailment is unsupported by nFBDD assuming P \\neq NP.",
-            "derivationOrder": 1356,
+            "derivationOrder": 1355,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_b9d72a7c",
@@ -2259,7 +2259,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_4c204bf3}{VA} assuming P \\neq NP, and \\edgeref{lang_4c204bf3}{lang_1df07cc3} in polynomial time. If nFBDD supported Validity in polynomial time, then DNF could too by compiling first. Therefore Validity is unsupported by nFBDD assuming P \\neq NP.",
-            "derivationOrder": 1345,
+            "derivationOrder": 1344,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_4c204bf3",
@@ -2278,7 +2278,7 @@
             ],
             "derived": true,
             "description": "Since Equivalence implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_1df07cc3}{VA} assuming P \\neq NP, then Equivalence is unsupported by nFBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1402,
+            "derivationOrder": 1401,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -2297,7 +2297,7 @@
             ],
             "derived": true,
             "description": "Since Implicant implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_1df07cc3}{VA} assuming P \\neq NP, then Implicant is unsupported by nFBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1403,
+            "derivationOrder": 1402,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -2316,7 +2316,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse, and \\edgeref{lang_6ae90adc}{lang_1df07cc3} in polynomial time. If nFBDD supported Model Counting in polynomial time, then IP could too by compiling first. Therefore Model Counting is unsupported by nFBDD assuming the polynomial hierarchy does not collapse.",
-            "derivationOrder": 1367,
+            "derivationOrder": 1366,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_6ae90adc",
@@ -2403,7 +2403,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Consistency implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_1df07cc3}{VA} assuming P \\neq NP, and since \\opref{lang_1df07cc3}{CO} in polynomial time, then Negation is unsupported by nFBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1404,
+            "derivationOrder": 1403,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-co-va",
@@ -2432,7 +2432,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_89649e36}{CO} assuming P \\neq NP, and \\edgeref{lang_89649e36}{lang_5bf00851} in polynomial time. If NNF supported Consistency in polynomial time, then CNF could too by compiling first. Therefore Consistency is unsupported by NNF assuming P \\neq NP.",
-            "derivationOrder": 1343,
+            "derivationOrder": 1342,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_89649e36",
@@ -2449,7 +2449,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_4c204bf3}{VA} assuming P \\neq NP, and \\edgeref{lang_4c204bf3}{lang_5bf00851} in polynomial time. If NNF supported Validity in polynomial time, then DNF could too by compiling first. Therefore Validity is unsupported by NNF assuming P \\neq NP.",
-            "derivationOrder": 1346,
+            "derivationOrder": 1345,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_4c204bf3",
@@ -2468,7 +2468,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP, and \\edgeref{lang_b9d72a7c}{lang_5bf00851} in polynomial time. If NNF supported Sentential Entailment in polynomial time, then OBDD could too by compiling first. Therefore Sentential Entailment is unsupported by NNF assuming P \\neq NP.",
-            "derivationOrder": 1357,
+            "derivationOrder": 1356,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_b9d72a7c",
@@ -2485,7 +2485,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse, and \\edgeref{lang_6ae90adc}{lang_5bf00851} in polynomial time. If NNF supported Model Counting in polynomial time, then IP could too by compiling first. Therefore Model Counting is unsupported by NNF assuming the polynomial hierarchy does not collapse.",
-            "derivationOrder": 1368,
+            "derivationOrder": 1367,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_6ae90adc",
@@ -2502,7 +2502,7 @@
             ],
             "derived": true,
             "description": "Since Equivalence implies Consistency \\citet{Darwiche_2002}, and since \\nopref{lang_5bf00851}{CO} assuming P \\neq NP, then Equivalence is unsupported by NNF as well assuming P \\neq NP.",
-            "derivationOrder": 1405,
+            "derivationOrder": 1404,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-co",
@@ -2519,7 +2519,7 @@
             ],
             "derived": true,
             "description": "Since Implicant implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_5bf00851}{VA} assuming P \\neq NP, then Implicant is unsupported by NNF as well assuming P \\neq NP.",
-            "derivationOrder": 1406,
+            "derivationOrder": 1405,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -2536,7 +2536,7 @@
             ],
             "derived": true,
             "description": "Since Clausal Entailment implies Consistency \\citet{Darwiche_2002}, and since \\nopref{lang_5bf00851}{CO} assuming P \\neq NP, then Clausal Entailment is unsupported by NNF as well assuming P \\neq NP.",
-            "derivationOrder": 1407,
+            "derivationOrder": 1406,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "ce-co",
@@ -2553,7 +2553,7 @@
             ],
             "derived": true,
             "description": "Since Model Enumeration implies Consistency \\citet{Darwiche_2002}, and since \\nopref{lang_5bf00851}{CO} assuming P \\neq NP, then Model Enumeration is unsupported by NNF as well assuming P \\neq NP.",
-            "derivationOrder": 1408,
+            "derivationOrder": 1407,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "me-co",
@@ -2677,7 +2677,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP, and \\edgeref{lang_b9d72a7c}{lang_d24efe0e} in polynomial time. If nOBDD supported Sentential Entailment in polynomial time, then OBDD could too by compiling first. Therefore Sentential Entailment is unsupported by nOBDD assuming P \\neq NP.",
-            "derivationOrder": 1358,
+            "derivationOrder": 1357,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_b9d72a7c",
@@ -2696,7 +2696,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_4c204bf3}{VA} assuming P \\neq NP, and \\edgeref{lang_4c204bf3}{lang_d24efe0e} in polynomial time. If nOBDD supported Validity in polynomial time, then DNF could too by compiling first. Therefore Validity is unsupported by nOBDD assuming P \\neq NP.",
-            "derivationOrder": 1347,
+            "derivationOrder": 1346,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_4c204bf3",
@@ -2715,7 +2715,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse, and \\edgeref{lang_6ae90adc}{lang_d24efe0e} in polynomial time. If nOBDD supported Model Counting in polynomial time, then IP could too by compiling first. Therefore Model Counting is unsupported by nOBDD assuming the polynomial hierarchy does not collapse.",
-            "derivationOrder": 1369,
+            "derivationOrder": 1368,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_6ae90adc",
@@ -2734,7 +2734,7 @@
             ],
             "derived": true,
             "description": "Since Equivalence implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_d24efe0e}{VA} assuming P \\neq NP, then Equivalence is unsupported by nOBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1409,
+            "derivationOrder": 1408,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -2753,7 +2753,7 @@
             ],
             "derived": true,
             "description": "Since Implicant implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_d24efe0e}{VA} assuming P \\neq NP, then Implicant is unsupported by nOBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1410,
+            "derivationOrder": 1409,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -2840,7 +2840,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Consistency implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_d24efe0e}{VA} assuming P \\neq NP, and since \\opref{lang_d24efe0e}{CO} in polynomial time, then Negation is unsupported by nOBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1411,
+            "derivationOrder": 1410,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-co-va",
@@ -2961,7 +2961,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Conjunction implies Disjunction \\citet{Darwiche_2002}, and since \\nopref{lang_d69995dd}{OR_C} in quasi-polynomial time, and since \\opref{lang_d69995dd}{NOT_C} in quasi-polynomial time, then Conjunction is unsupported by OBDD$_<$ in quasi-polynomial time as well.",
-            "derivationOrder": 1413,
+            "derivationOrder": 1412,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-and-c-or-c",
@@ -3175,7 +3175,7 @@
             ],
             "derived": true,
             "description": "Since Conjunction implies Bounded Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_27fffab2}{AND_BC} in quasi-polynomial time, then Conjunction is unsupported by PI in quasi-polynomial time as well.",
-            "derivationOrder": 1415,
+            "derivationOrder": 1414,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "and-c-and-bc",
@@ -3343,7 +3343,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP, and \\edgeref{lang_b9d72a7c}{lang_1afefbe2} in polynomial time. If SDD supported Sentential Entailment in polynomial time, then OBDD could too by compiling first. Therefore Sentential Entailment is unsupported by SDD assuming P \\neq NP.",
-            "derivationOrder": 1359,
+            "derivationOrder": 1358,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_b9d72a7c",
@@ -3429,7 +3429,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Disjunction implies Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_1afefbe2}{AND_C} in quasi-polynomial time, and since \\opref{lang_1afefbe2}{NOT_C} in quasi-polynomial time, then Disjunction is unsupported by SDD in quasi-polynomial time as well.",
-            "derivationOrder": 1417,
+            "derivationOrder": 1416,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-c-and-c",
@@ -3450,7 +3450,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Bounded Conjunction ∧ Consistency implies Sentential Entailment \\citet{Darwiche_2002}, and since \\nopref{lang_1afefbe2}{SE} assuming P \\neq NP, and since \\opref{lang_1afefbe2}{NOT_C} in polynomial time and \\opref{lang_1afefbe2}{CO} in polynomial time, then Bounded Conjunction is unsupported by SDD as well assuming P \\neq NP.",
-            "derivationOrder": 1418,
+            "derivationOrder": 1417,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-and-bc-co-se",
@@ -3472,7 +3472,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Bounded Disjunction implies Bounded Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_1afefbe2}{AND_BC} assuming P \\neq NP, and since \\opref{lang_1afefbe2}{NOT_C} in polynomial time, then Bounded Disjunction is unsupported by SDD as well assuming P \\neq NP.",
-            "derivationOrder": 1438,
+            "derivationOrder": 1437,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-bc-and-bc",
@@ -3753,7 +3753,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP, and \\edgeref{lang_b9d72a7c}{lang_b13b0d78} in polynomial time. If SDNNF supported Sentential Entailment in polynomial time, then OBDD could too by compiling first. Therefore Sentential Entailment is unsupported by SDNNF assuming P \\neq NP.",
-            "derivationOrder": 1360,
+            "derivationOrder": 1359,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_b9d72a7c",
@@ -3773,7 +3773,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_4c204bf3}{VA} assuming P \\neq NP, and \\edgeref{lang_4c204bf3}{lang_b13b0d78} in polynomial time. If SDNNF supported Validity in polynomial time, then DNF could too by compiling first. Therefore Validity is unsupported by SDNNF assuming P \\neq NP.",
-            "derivationOrder": 1348,
+            "derivationOrder": 1347,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_4c204bf3",
@@ -3793,7 +3793,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse, and \\edgeref{lang_6ae90adc}{lang_b13b0d78} in polynomial time. If SDNNF supported Model Counting in polynomial time, then IP could too by compiling first. Therefore Model Counting is unsupported by SDNNF assuming the polynomial hierarchy does not collapse.",
-            "derivationOrder": 1370,
+            "derivationOrder": 1369,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_6ae90adc",
@@ -3813,7 +3813,7 @@
             ],
             "derived": true,
             "description": "Since Equivalence implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_b13b0d78}{VA} assuming P \\neq NP, then Equivalence is unsupported by SDNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1419,
+            "derivationOrder": 1418,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -3833,7 +3833,7 @@
             ],
             "derived": true,
             "description": "Since Implicant implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_b13b0d78}{VA} assuming P \\neq NP, then Implicant is unsupported by SDNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1420,
+            "derivationOrder": 1419,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -3944,7 +3944,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Consistency implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_b13b0d78}{VA} assuming P \\neq NP, and since \\opref{lang_b13b0d78}{CO} in polynomial time, then Negation is unsupported by SDNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1421,
+            "derivationOrder": 1420,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-co-va",
@@ -3982,7 +3982,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_4c204bf3}{VA} assuming P \\neq NP, and \\edgeref{lang_4c204bf3}{lang_3c803ba1} in polynomial time. If SDNNF$_T$ supported Validity in polynomial time, then DNF could too by compiling first. Therefore Validity is unsupported by SDNNF$_T$ assuming P \\neq NP.",
-            "derivationOrder": 1349,
+            "derivationOrder": 1348,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_4c204bf3",
@@ -4001,7 +4001,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse, and \\edgeref{lang_6ae90adc}{lang_3c803ba1} in polynomial time. If SDNNF$_T$ supported Model Counting in polynomial time, then IP could too by compiling first. Therefore Model Counting is unsupported by SDNNF$_T$ assuming the polynomial hierarchy does not collapse.",
-            "derivationOrder": 1371,
+            "derivationOrder": 1370,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_6ae90adc",
@@ -4020,7 +4020,7 @@
             ],
             "derived": true,
             "description": "Since Equivalence implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_3c803ba1}{VA} assuming P \\neq NP, then Equivalence is unsupported by SDNNF$_T$ as well assuming P \\neq NP.",
-            "derivationOrder": 1422,
+            "derivationOrder": 1421,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -4039,7 +4039,7 @@
             ],
             "derived": true,
             "description": "Since Sentential Entailment implies Equivalence \\citet{Darwiche_2002}, and since \\nopref{lang_3c803ba1}{EQ} assuming P \\neq NP, then Sentential Entailment is unsupported by SDNNF$_T$ as well assuming P \\neq NP.",
-            "derivationOrder": 1423,
+            "derivationOrder": 1422,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "se-eq",
@@ -4058,7 +4058,7 @@
             ],
             "derived": true,
             "description": "Since Implicant implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_3c803ba1}{VA} assuming P \\neq NP, then Implicant is unsupported by SDNNF$_T$ as well assuming P \\neq NP.",
-            "derivationOrder": 1424,
+            "derivationOrder": 1423,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -4177,7 +4177,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Disjunction implies Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_3c803ba1}{AND_C} in quasi-polynomial time, and since \\opref{lang_3c803ba1}{OR_C} in quasi-polynomial time, then Negation is unsupported by SDNNF$_T$ in quasi-polynomial time as well.",
-            "derivationOrder": 1426,
+            "derivationOrder": 1425,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-c-and-c",
@@ -4363,7 +4363,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP, and \\edgeref{lang_b9d72a7c}{lang_4e62a038} in polynomial time. If uFBDD supported Sentential Entailment in polynomial time, then OBDD could too by compiling first. Therefore Sentential Entailment is unsupported by uFBDD assuming P \\neq NP.",
-            "derivationOrder": 1361,
+            "derivationOrder": 1360,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_b9d72a7c",
@@ -4396,7 +4396,7 @@
             ],
             "derived": true,
             "description": "Since Model Counting ∧ Bounded Conjunction implies Sentential Entailment, and since \\nopref{lang_4e62a038}{SE} assuming P \\neq NP, and since \\opref{lang_4e62a038}{CT} in polynomial time, then Bounded Conjunction is unsupported by uFBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1427,
+            "derivationOrder": 1426,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "ct-and-bc-se",
@@ -4551,7 +4551,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP, and \\edgeref{lang_b9d72a7c}{lang_c2df8c2b} in polynomial time. If uOBDD supported Sentential Entailment in polynomial time, then OBDD could too by compiling first. Therefore Sentential Entailment is unsupported by uOBDD assuming P \\neq NP.",
-            "derivationOrder": 1362,
+            "derivationOrder": 1361,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_b9d72a7c",
@@ -4594,7 +4594,7 @@
             ],
             "derived": true,
             "description": "Since Model Counting ∧ Bounded Conjunction implies Sentential Entailment, and since \\nopref{lang_c2df8c2b}{SE} assuming P \\neq NP, and since \\opref{lang_c2df8c2b}{CT} in polynomial time, then Bounded Conjunction is unsupported by uOBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1428,
+            "derivationOrder": 1427,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "ct-and-bc-se",
@@ -4790,7 +4790,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Bounded Disjunction implies Bounded Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_b9d72a7c}{AND_BC} assuming P \\neq NP, and since \\opref{lang_b9d72a7c}{NOT_C} in polynomial time, then Bounded Disjunction is unsupported by OBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1429,
+            "derivationOrder": 1428,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-bc-and-bc",
@@ -4960,7 +4960,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP, and \\edgeref{lang_b9d72a7c}{lang_981b62f0} in polynomial time. If dec-DNNF supported Sentential Entailment in polynomial time, then OBDD could too by compiling first. Therefore Sentential Entailment is unsupported by dec-DNNF assuming P \\neq NP.",
-            "derivationOrder": 1363,
+            "derivationOrder": 1362,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_b9d72a7c",
@@ -5006,7 +5006,7 @@
             ],
             "derived": true,
             "description": "Since Model Counting ∧ Bounded Conjunction implies Sentential Entailment, and since \\nopref{lang_981b62f0}{SE} assuming P \\neq NP, and since \\opref{lang_981b62f0}{CT} in polynomial time, then Bounded Conjunction is unsupported by dec-DNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1430,
+            "derivationOrder": 1429,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "ct-and-bc-se",
@@ -5135,9 +5135,10 @@
             }
           },
           "EQ": {
-            "complexity": "unknown-poly-quasi",
+            "complexity": "poly",
             "refs": [
               "Amarilli_2018",
+              "Darwiche_Huang_2002",
               "Bollig_2018",
               "Beame_2015",
               "Darwiche_2002",
@@ -5147,15 +5148,16 @@
               "Beame_2013"
             ],
             "derived": true,
-            "description": "\\edgeref{lang_0f27d539}{lang_b9d72a7c} in quasi-polynomial time, and \\opref{lang_b9d72a7c}{EQ} in quasi-polynomial time. Therefore dec-SDNNF supports Equivalence in at most quasi-polynomial time.",
-            "derivationOrder": 1470,
+            "description": "\\edgeref{lang_0f27d539}{lang_6c130090} in polynomial time, and \\opref{lang_6c130090}{EQ} in polynomial time assuming $P = \\mathrm{BPP}$. Therefore dec-SDNNF supports Equivalence in polynomial time assuming $P = \\mathrm{BPP}$.\n\nAlso, dec-SDNNF supports Equivalence in quasipolynomial time unconditionally. \\edgeref{lang_0f27d539}{lang_b9d72a7c} in quasi-polynomial time, and \\opref{lang_b9d72a7c}{EQ} in quasi-polynomial time. Therefore dec-SDNNF supports Equivalence in at most quasi-polynomial time.",
+            "derivationOrder": 1198,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_0f27d539",
-              "targetLanguageId": "lang_b9d72a7c",
+              "targetLanguageId": "lang_6c130090",
               "operation": "EQ",
-              "level": "quasi"
-            }
+              "level": "poly"
+            },
+            "assumption": "$P = \\mathrm{BPP}$"
           },
           "SE": {
             "complexity": "no-poly-unknown-quasi",
@@ -5166,7 +5168,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP, and \\edgeref{lang_b9d72a7c}{lang_0f27d539} in polynomial time. If dec-SDNNF supported Sentential Entailment in polynomial time, then OBDD could too by compiling first. Therefore Sentential Entailment is unsupported by dec-SDNNF assuming P \\neq NP.",
-            "derivationOrder": 1364,
+            "derivationOrder": 1363,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_b9d72a7c",
@@ -5221,7 +5223,7 @@
             ],
             "derived": true,
             "description": "Since Model Counting ∧ Bounded Conjunction implies Sentential Entailment, and since \\nopref{lang_0f27d539}{SE} assuming P \\neq NP, and since \\opref{lang_0f27d539}{CT} in polynomial time, then Bounded Conjunction is unsupported by dec-SDNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1431,
+            "derivationOrder": 1430,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "ct-and-bc-se",
@@ -5659,7 +5661,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Bounded Disjunction implies Bounded Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_82fa749e}{AND_BC}, and since \\opref{lang_82fa749e}{NOT_C} in polynomial time, then Bounded Disjunction is unsupported by cSDD$_T$ as well.",
-            "derivationOrder": 1432,
+            "derivationOrder": 1431,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-bc-and-bc",
@@ -5705,7 +5707,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_4c204bf3}{VA} assuming P \\neq NP, and \\edgeref{lang_4c204bf3}{lang_e827cf31} in polynomial time. If nOBDD$_<$ supported Validity in polynomial time, then DNF could too by compiling first. Therefore Validity is unsupported by nOBDD$_<$ assuming P \\neq NP.",
-            "derivationOrder": 1350,
+            "derivationOrder": 1349,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_4c204bf3",
@@ -5724,7 +5726,7 @@
             ],
             "derived": true,
             "description": "\\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse, and \\edgeref{lang_6ae90adc}{lang_e827cf31} in polynomial time. If nOBDD$_<$ supported Model Counting in polynomial time, then IP could too by compiling first. Therefore Model Counting is unsupported by nOBDD$_<$ assuming the polynomial hierarchy does not collapse.",
-            "derivationOrder": 1372,
+            "derivationOrder": 1371,
             "proofTrace": {
               "rule": "query-downgrade-via-succinctness",
               "sourceLanguageId": "lang_6ae90adc",
@@ -5743,7 +5745,7 @@
             ],
             "derived": true,
             "description": "Since Equivalence implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_e827cf31}{VA} assuming P \\neq NP, then Equivalence is unsupported by nOBDD$_<$ as well assuming P \\neq NP.",
-            "derivationOrder": 1433,
+            "derivationOrder": 1432,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -5762,7 +5764,7 @@
             ],
             "derived": true,
             "description": "Since Sentential Entailment implies Equivalence \\citet{Darwiche_2002}, and since \\nopref{lang_e827cf31}{EQ} assuming P \\neq NP, then Sentential Entailment is unsupported by nOBDD$_<$ as well assuming P \\neq NP.",
-            "derivationOrder": 1434,
+            "derivationOrder": 1433,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "se-eq",
@@ -5781,7 +5783,7 @@
             ],
             "derived": true,
             "description": "Since Implicant implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_e827cf31}{VA} assuming P \\neq NP, then Implicant is unsupported by nOBDD$_<$ as well assuming P \\neq NP.",
-            "derivationOrder": 1435,
+            "derivationOrder": 1434,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -5873,7 +5875,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Consistency implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_e827cf31}{VA} assuming P \\neq NP, and since \\opref{lang_e827cf31}{CO} in polynomial time, then Negation is unsupported by nOBDD$_<$ as well assuming P \\neq NP.",
-            "derivationOrder": 1436,
+            "derivationOrder": 1435,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-co-va",
@@ -7253,7 +7255,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_91f812d0}{SE} in polynomial time, but \\nopref{lang_83e3b023}{SE} assuming P \\neq NP. If cSDD could compile to d-SDNNF$_T$ in polynomial time, cSDD could support Sentential Entailment by first compiling to d-SDNNF$_T$. Therefore cSDD cannot compile to d-SDNNF$_T$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1439,
+          "derivationOrder": 1438,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -7484,7 +7486,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_9c84a267}{SE} in polynomial time, but \\nopref{lang_83e3b023}{SE} assuming P \\neq NP. If cSDD could compile to SDD$_T$ in polynomial time, cSDD could support Sentential Entailment by first compiling to SDD$_T$. Therefore cSDD cannot compile to SDD$_T$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1445,
+          "derivationOrder": 1444,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -7643,7 +7645,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_82fa749e}{SE} in polynomial time, but \\nopref{lang_83e3b023}{SE} assuming P \\neq NP. If cSDD could compile to cSDD$_T$ in polynomial time, cSDD could support Sentential Entailment by first compiling to cSDD$_T$. Therefore cSDD cannot compile to cSDD$_T$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1450,
+          "derivationOrder": 1449,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -7667,7 +7669,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_43a33aec}{SE} in polynomial time, but \\nopref{lang_83e3b023}{SE} assuming P \\neq NP. If cSDD could compile to uOBDD$_<$ in polynomial time, cSDD could support Sentential Entailment by first compiling to uOBDD$_<$. Therefore cSDD cannot compile to uOBDD$_<$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1455,
+          "derivationOrder": 1454,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -8353,7 +8355,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_91f812d0}{SE} in polynomial time, but \\nopref{lang_ea9b5299}{SE} assuming P \\neq NP. If d-SDNNF could compile to d-SDNNF$_T$ in polynomial time, d-SDNNF could support Sentential Entailment by first compiling to d-SDNNF$_T$. Therefore d-SDNNF cannot compile to d-SDNNF$_T$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1440,
+          "derivationOrder": 1439,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -11265,7 +11267,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_83e3b023}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to cSDD in polynomial time, IP could support Model Counting by first compiling to cSDD. Therefore IP cannot compile to cSDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1459,
+          "derivationOrder": 1458,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -11284,7 +11286,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_6c130090}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-DNNF in polynomial time, IP could support Model Counting by first compiling to d-DNNF. Therefore IP cannot compile to d-DNNF in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1460,
+          "derivationOrder": 1459,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -11304,7 +11306,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_ea9b5299}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-SDNNF in polynomial time, IP could support Model Counting by first compiling to d-SDNNF. Therefore IP cannot compile to d-SDNNF in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1461,
+          "derivationOrder": 1460,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -11325,7 +11327,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_91f812d0}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-SDNNF$_T$ in polynomial time, IP could support Model Counting by first compiling to d-SDNNF$_T$. Therefore IP cannot compile to d-SDNNF$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1462,
+          "derivationOrder": 1461,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -11500,7 +11502,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_1afefbe2}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to SDD in polynomial time, IP could support Model Counting by first compiling to SDD. Therefore IP cannot compile to SDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1463,
+          "derivationOrder": 1462,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -11522,7 +11524,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_9c84a267}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to SDD$_T$ in polynomial time, IP could support Model Counting by first compiling to SDD$_T$. Therefore IP cannot compile to SDD$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1464,
+          "derivationOrder": 1463,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -11588,7 +11590,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_4e62a038}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uFBDD in polynomial time, IP could support Model Counting by first compiling to uFBDD. Therefore IP cannot compile to uFBDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1465,
+          "derivationOrder": 1464,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -11608,7 +11610,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_c2df8c2b}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uOBDD in polynomial time, IP could support Model Counting by first compiling to uOBDD. Therefore IP cannot compile to uOBDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1466,
+          "derivationOrder": 1465,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -11719,7 +11721,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_82fa749e}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to cSDD$_T$ in polynomial time, IP could support Model Counting by first compiling to cSDD$_T$. Therefore IP cannot compile to cSDD$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1467,
+          "derivationOrder": 1466,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -11761,7 +11763,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_43a33aec}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uOBDD$_<$ in polynomial time, IP could support Model Counting by first compiling to uOBDD$_<$. Therefore IP cannot compile to uOBDD$_<$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1468,
+          "derivationOrder": 1467,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -15233,7 +15235,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_91f812d0}{SE} in polynomial time, but \\nopref{lang_1afefbe2}{SE} assuming P \\neq NP. If SDD could compile to d-SDNNF$_T$ in polynomial time, SDD could support Sentential Entailment by first compiling to d-SDNNF$_T$. Therefore SDD cannot compile to d-SDNNF$_T$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1441,
+          "derivationOrder": 1440,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -15480,7 +15482,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_9c84a267}{SE} in polynomial time, but \\nopref{lang_1afefbe2}{SE} assuming P \\neq NP. If SDD could compile to SDD$_T$ in polynomial time, SDD could support Sentential Entailment by first compiling to SDD$_T$. Therefore SDD cannot compile to SDD$_T$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1446,
+          "derivationOrder": 1445,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -15671,7 +15673,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_82fa749e}{SE} in polynomial time, but \\nopref{lang_1afefbe2}{SE} assuming P \\neq NP. If SDD could compile to cSDD$_T$ in polynomial time, SDD could support Sentential Entailment by first compiling to cSDD$_T$. Therefore SDD cannot compile to cSDD$_T$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1451,
+          "derivationOrder": 1450,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -15696,7 +15698,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_43a33aec}{SE} in polynomial time, but \\nopref{lang_1afefbe2}{SE} assuming P \\neq NP. If SDD could compile to uOBDD$_<$ in polynomial time, SDD could support Sentential Entailment by first compiling to uOBDD$_<$. Therefore SDD cannot compile to uOBDD$_<$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1456,
+          "derivationOrder": 1455,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -18225,7 +18227,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_91f812d0}{SE} in polynomial time, but \\nopref{lang_c2df8c2b}{SE} assuming P \\neq NP. If uOBDD could compile to d-SDNNF$_T$ in polynomial time, uOBDD could support Sentential Entailment by first compiling to d-SDNNF$_T$. Therefore uOBDD cannot compile to d-SDNNF$_T$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1442,
+          "derivationOrder": 1441,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -18476,7 +18478,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_9c84a267}{SE} in polynomial time, but \\nopref{lang_c2df8c2b}{SE} assuming P \\neq NP. If uOBDD could compile to SDD$_T$ in polynomial time, uOBDD could support Sentential Entailment by first compiling to SDD$_T$. Therefore uOBDD cannot compile to SDD$_T$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1447,
+          "derivationOrder": 1446,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -18626,7 +18628,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_82fa749e}{SE} in polynomial time, but \\nopref{lang_c2df8c2b}{SE} assuming P \\neq NP. If uOBDD could compile to cSDD$_T$ in polynomial time, uOBDD could support Sentential Entailment by first compiling to cSDD$_T$. Therefore uOBDD cannot compile to cSDD$_T$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1452,
+          "derivationOrder": 1451,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -18649,7 +18651,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_43a33aec}{SE} in polynomial time, but \\nopref{lang_c2df8c2b}{SE} assuming P \\neq NP. If uOBDD could compile to uOBDD$_<$ in polynomial time, uOBDD could support Sentential Entailment by first compiling to uOBDD$_<$. Therefore uOBDD cannot compile to uOBDD$_<$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1457,
+          "derivationOrder": 1456,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -18739,7 +18741,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_91f812d0}{SE} in polynomial time, but \\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP. If OBDD could compile to d-SDNNF$_T$ in polynomial time, OBDD could support Sentential Entailment by first compiling to d-SDNNF$_T$. Therefore OBDD cannot compile to d-SDNNF$_T$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1443,
+          "derivationOrder": 1442,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -18963,7 +18965,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_9c84a267}{SE} in polynomial time, but \\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP. If OBDD could compile to SDD$_T$ in polynomial time, OBDD could support Sentential Entailment by first compiling to SDD$_T$. Therefore OBDD cannot compile to SDD$_T$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1448,
+          "derivationOrder": 1447,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -19086,7 +19088,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_82fa749e}{SE} in polynomial time, but \\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP. If OBDD could compile to cSDD$_T$ in polynomial time, OBDD could support Sentential Entailment by first compiling to cSDD$_T$. Therefore OBDD cannot compile to cSDD$_T$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1453,
+          "derivationOrder": 1452,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -19109,7 +19111,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_43a33aec}{SE} in polynomial time, but \\nopref{lang_b9d72a7c}{SE} assuming P \\neq NP. If OBDD could compile to uOBDD$_<$ in polynomial time, OBDD could support Sentential Entailment by first compiling to uOBDD$_<$. Therefore OBDD cannot compile to uOBDD$_<$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1458,
+          "derivationOrder": 1457,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -19881,7 +19883,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_91f812d0}{SE} in polynomial time, but \\nopref{lang_0f27d539}{SE} assuming P \\neq NP. If dec-SDNNF could compile to d-SDNNF$_T$ in polynomial time, dec-SDNNF could support Sentential Entailment by first compiling to d-SDNNF$_T$. Therefore dec-SDNNF cannot compile to d-SDNNF$_T$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1444,
+          "derivationOrder": 1443,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -20240,7 +20242,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_9c84a267}{SE} in polynomial time, but \\nopref{lang_0f27d539}{SE} assuming P \\neq NP. If dec-SDNNF could compile to SDD$_T$ in polynomial time, dec-SDNNF could support Sentential Entailment by first compiling to SDD$_T$. Therefore dec-SDNNF cannot compile to SDD$_T$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1449,
+          "derivationOrder": 1448,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",
@@ -20469,7 +20471,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_82fa749e}{SE} in polynomial time, but \\nopref{lang_0f27d539}{SE} assuming P \\neq NP. If dec-SDNNF could compile to cSDD$_T$ in polynomial time, dec-SDNNF could support Sentential Entailment by first compiling to cSDD$_T$. Therefore dec-SDNNF cannot compile to cSDD$_T$ in polynomial time assuming P \\neq NP.",
-          "derivationOrder": 1454,
+          "derivationOrder": 1453,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "SE",

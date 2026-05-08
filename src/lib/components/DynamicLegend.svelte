@@ -213,6 +213,12 @@
     return getOrderedOperationTractabilityDisplays(idsInUse);
   });
 
+  const operationLegendTitle = $derived.by(() => {
+    if (viewMode === 'queries') return 'Queries';
+    if (viewMode === 'transforms') return 'Transformations';
+    return 'Queries/Transformations';
+  });
+
   let containerRefs = $state<{ [status: string]: HTMLDivElement | null }>({});
 
   onMount(() => {
@@ -345,7 +351,7 @@
   
   {#if visibleOperationDisplays.length > 0}
     <div class="legend-section">
-      <h5>Operations</h5>
+      <h5>{operationLegendTitle}</h5>
       {#each visibleOperationDisplays as display}
         <div class="legend-row">
           <span class={`operation-symbol ${display.cssClass}`}>{display.symbol}</span>

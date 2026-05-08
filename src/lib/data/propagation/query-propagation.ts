@@ -222,8 +222,12 @@ export function propagateQueriesViaSuccinctness(
             const queryAssumption = l2Support?.assumption;
             const assumption = mergeAssumptions(pathAssumption, queryAssumption);
             const needsUpgrade = !queryGuaranteesQuasi(l1Complexity);
-            const canImproveAssumption = queryGuaranteesQuasi(l1Complexity) && l1Support?.assumption && l1Support?.derived && !assumption;
-            if (!needsUpgrade && !canImproveAssumption) continue;
+            const canImproveAssumption =
+              queryGuaranteesQuasi(l1Complexity) &&
+              !queryGuaranteesPoly(l1Complexity) &&
+              l1Support?.assumption &&
+              l1Support?.derived &&
+              !assumption;
 
             // Upgrade L1's query to quasi (or remove assumption from existing quasi)
             const l1Name = idToName(l1Id);
@@ -232,6 +236,26 @@ export function propagateQueriesViaSuccinctness(
             const l2Refs = l2.properties?.queries?.[queryCode]?.refs ?? [];
             const refs = uniqueRefs(pathRefs, l2Refs);
             const description = `\\edgeref{${l1Id}}{${l2Id}} in quasi-polynomial time${formatInlineAssumption(pathAssumption)}, and \\opref{${l2Id}}{${queryCode}} in quasi-polynomial time${formatInlineAssumption(queryAssumption)}. Therefore ${idToName(l1Id)} supports ${opLabel(queryCode)} in at most quasi-polynomial time${formatInlineAssumption(assumption)}.`;
+
+            const canAddUnconditionalQuasiNote =
+              queryGuaranteesPoly(l1Complexity) &&
+              Boolean(l1Support?.assumption) &&
+              l1Support?.derived &&
+              !assumption &&
+              !l1Support.description?.includes(description);
+
+            if (!needsUpgrade && !canImproveAssumption && !canAddUnconditionalQuasiNote) continue;
+
+            if (canAddUnconditionalQuasiNote && l1Support) {
+              const note = `\n\nAlso, ${idToName(l1Id)} supports ${opLabel(queryCode)} in quasipolynomial time unconditionally. ${description}`;
+              setQuerySupport(l1, queryCode, {
+                ...l1Support,
+                refs: uniqueRefs(l1Support.refs, refs),
+                description: `${l1Support.description ?? ''}${note}`
+              });
+              changed = true;
+              continue;
+            }
 
             if (DEBUG_PROPAGATION) {
               const reason = canImproveAssumption ? 'ASSUMPTION-IMPROVE' : 'UPGRADE';
