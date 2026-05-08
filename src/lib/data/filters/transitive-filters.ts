@@ -10,13 +10,20 @@ function isPolyOrQuasi(status: string): 'poly' | 'quasi' | null {
   return null;
 }
 
-function isNoQuasi(status: string): boolean {
-  return status === 'no-quasi';
+function isNegativeOrUnknown(status: string): boolean {
+  return (
+    status === 'not-poly' ||
+    status === 'no-poly-unknown-quasi' ||
+    status === 'no-poly-quasi' ||
+    status === 'no-quasi' ||
+    status === 'unknown' ||
+    status === 'unknown-both'
+  );
 }
 
 /**
  * A "strict" edge is one where the forward direction is poly/quasi
- * AND the reverse direction is no-quasi.
+ * AND the reverse direction carries no positive succinctness information.
  */
 function getStrictEdgeType(
   matrix: KCAdjacencyMatrix,
@@ -30,8 +37,21 @@ function getStrictEdgeType(
 
   const edgeType = isPolyOrQuasi(forward.status);
   if (!edgeType) return null;
-  if (!isNoQuasi(backward.status)) return null;
+  if (!isNegativeOrUnknown(backward.status)) return null;
   return edgeType;
+}
+
+function hideReverseIfNonPositive(
+  matrix: KCAdjacencyMatrix,
+  sourceIndex: number,
+  targetIndex: number
+): void {
+  const reverse = matrix.matrix[targetIndex]?.[sourceIndex];
+  if (!reverse) return;
+  if (isPolyOrQuasi(reverse.status)) return;
+  if (isNegativeOrUnknown(reverse.status)) {
+    reverse.hidden = true;
+  }
 }
 
 /**
@@ -53,9 +73,9 @@ export function applyTransitiveReduction(data: GraphData): GraphData {
     const working = cloneDataset(data);
     const { adjacencyMatrix } = working;
 
-    // Pass 1: strict transitive reduction on (poly/quasi forward + no-quasi backward).
+    // Pass 1: strict transitive reduction on (poly/quasi forward + negative/unknown backward).
     // Must run BEFORE the standard poly/quasi reduction so we don't lose forward edges
-    // needed to infer implied no-quasi relationships.
+    // needed to infer implied reverse lower-bound/gap relationships.
     omitStrictTransitiveEdges(adjacencyMatrix);
 
     // Pass 2: existing poly/quasi transitive reduction.
@@ -83,6 +103,8 @@ export function applyTransitiveReduction(data: GraphData): GraphData {
         const reachable = canReach(adjacencyMatrix, nodeIndex, targetIndex, edgeType);
         if (!reachable) {
           edge.hidden = previousHidden;
+        } else {
+          hideReverseIfNonPositive(adjacencyMatrix, nodeIndex, targetIndex);
         }
       }
     }
@@ -93,9 +115,10 @@ export function applyTransitiveReduction(data: GraphData): GraphData {
 /**
  * Strict transitive reduction.
  *
- * For each strict edge A→C (poly/quasi forward and C→A no-quasi),
+ * For each strict edge A→C (poly/quasi forward and C→A negative/unknown),
  * hide it if C is reachable from A through other strict edges.
- * If hidden, also hide the implied reverse no-quasi edge C→A.
+ * If hidden, also hide the reverse edge C→A when it carries no positive
+ * succinctness information of its own.
  */
 function omitStrictTransitiveEdges(adjacencyMatrix: KCAdjacencyMatrix): void {
   for (let sourceIndex = 0; sourceIndex < adjacencyMatrix.languageIds.length; sourceIndex += 1) {
@@ -124,10 +147,7 @@ function omitStrictTransitiveEdges(adjacencyMatrix: KCAdjacencyMatrix): void {
         continue;
       }
 
-      const backward = adjacencyMatrix.matrix[targetIndex]?.[sourceIndex];
-      if (backward && isNoQuasi(backward.status)) {
-        backward.hidden = true;
-      }
+      hideReverseIfNonPositive(adjacencyMatrix, sourceIndex, targetIndex);
     }
   }
 }
