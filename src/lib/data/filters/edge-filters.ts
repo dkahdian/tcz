@@ -218,16 +218,16 @@ export const omitMarkedEdges: EdgeFilter = {
 };
 
 /**
- * Show transitive (derived) edges - OFF BY DEFAULT for graph view
- * 
- * When disabled, hides edge pairs where both directions were inferred by propagation (derived=true)
- * or are null. Uses the pairwise classifier: an edge pair A<->B is hidden IFF
- * both A->B and B->A are derived or null.
+ * Show transitive edges - OFF BY DEFAULT for graph view.
+ *
+ * When disabled, computes transitive reduction on the currently visible relation
+ * graph and marks redundant edges hidden. This is intentionally independent of
+ * proof provenance: explicit and derived edges are treated the same.
  */
 export const omitImplicitEdges: EdgeFilter = {
   id: 'omit-implicit-edges',
   name: 'Show transitive edges',
-  description: 'Show edges inferred by propagation',
+  description: 'Show edges that are redundant by transitivity',
   applicableViews: ['graph'],
   uiGroup: 'Visibility',
   kind: 'edge-visibility',
@@ -235,13 +235,7 @@ export const omitImplicitEdges: EdgeFilter = {
   controlType: 'checkbox',
   lambda: (data, param) => {
     if (param) return data;
-
-    const reducedData = applyTransitiveReduction(data);
-    
-    // Classifier: matches if the relation is derived (or null)
-    const isImplicit: EdgeClassifier = (rel) => !rel || rel.derived === true;
-    
-    return mapRelationsInDataset(reducedData, createPairwiseOmitFilter(isImplicit, reducedData));
+    return applyTransitiveReduction(data);
   }
 };
 

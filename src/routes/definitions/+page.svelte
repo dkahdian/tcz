@@ -51,6 +51,9 @@
 			<a href="/about" class="back-link">About</a>
 		</nav>
 		<h1>Definitions</h1>
+		<p class="page-description">
+			These definitions are generated from <code class="source-path">docs/definitions.tex</code>. The lists below group the same source definitions into core concepts, queries, and transformations.
+		</p>
 	</header>
 
 	<main class="definitions-content">
@@ -164,7 +167,7 @@
 		margin-bottom: 1.65rem;
 	}
 
-	p,
+	.page-description,
 	:global(.definition-text),
 	:global(.operation-description) {
 		line-height: 1.6;
@@ -172,7 +175,7 @@
 		color: #475569;
 	}
 
-	code {
+	.source-path {
 		font-size: 0.92em;
 		color: #0f172a;
 		background: #f1f5f9;

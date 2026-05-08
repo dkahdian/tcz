@@ -1,7 +1,7 @@
 % =============================
 % Tractable Circuit Zoo - Language Definitions
 % Auto-generated from database.json
-% Generated: 2026-05-07T23:01:47.211Z
+% Generated: 2026-05-07T23:37:00.561Z
 % 
 % EDITING INSTRUCTIONS:
 % - Language names in brackets are auto-generated. Do NOT edit.
@@ -15,6 +15,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{mathtools}
+\usepackage{xparse}
 \usepackage{enumitem}
 \usepackage{hyperref}
 \usepackage{cleveref}
@@ -40,6 +41,7 @@
 % Cross-reference commands (rendered as links in the web UI)
 \newcommand{\langref}[1]{\textbf{#1}}
 \newcommand{\langfam}[2]{\textbf{#1$_{#2}$}}
+\NewDocumentCommand{\defref}{m g}{\hyperref[kdef:#1]{\textbf{\IfNoValueTF{#2}{#1}{#2}}}}
 \newcommand{\edgeref}[2]{#1 compiles to #2}
 \newcommand{\nedgeref}[2]{#1 cannot compile to #2}
 \newcommand{\opref}[2]{#1 supports #2}
@@ -58,15 +60,15 @@ A standard logical representation where a formula is a conjunction of clauses, w
 \end{definition}
 
 \begin{definition}[\langref{cSDD}]\label{def:lang_83e3b023}
-\textbf{Canonical/Compressed Sentential Decision Diagram} \\
-The language obtained by taking the union of every vtree: \langref{cSDD} $= \bigcup_T \langfam{cSDD}{T}$.
+\textbf{Compressed Sentential Decision Diagram} \\
+The set of compressed SDDs, respecting any vtree: $T$ \langref{cSDD} $= \bigcup_T \langfam{cSDD}{T}$.
 \citet{VanDenBroeck_2015,Darwiche_2011}.
 \end{definition}
 
 \begin{definition}[\langfam{cSDD}{T}]\label{def:lang_82fa749e}
-\textbf{Canonical/Compressed Sentential Decision Diagram (wrt a fixed vtree)} \\
-For each fixed vtree $T$, \langfam{cSDD}{T} is the subset of \langfam{SDD}{T} that is \emph{compressed} (no two elements share equivalent subs), together with either normalization or trimming conventions.
-Under fixed $T$, compressed+normalized and compressed+trimmed forms are efficiently inter-convertible, so map claims apply to either convention. \citet{Darwiche_2011}
+\textbf{Compressed Sentential Decision Diagram (wrt a fixed vtree)} \\
+For each fixed vtree $T$, \langfam{cSDD}{T} is the subset of \langfam{SDD}{T} that is \emph{compressed} (no two elements share equivalent subs), together with either normalization or trimming.
+Under fixed $T$, compressed+normalized and compressed+trimmed forms are canonical. They are also efficiently inter-convertible, so claims apply to either convention. \citet{Darwiche_2011}
 \end{definition}
 
 \begin{definition}[\langref{d-DNNF}]\label{def:lang_6c130090}
@@ -76,7 +78,7 @@ A subset of \langref{DNNF} where the children of every $\vee$ node represent mut
 
 \begin{definition}[\langref{d-SDNNF}]\label{def:lang_ea9b5299}
 \textbf{Deterministic Structured Decomposable Negation Normal Form} \\
-The language obtained by taking the union of every vtree: \langref{d-SDNNF} $= \bigcup_T \langfam{d-SDNNF}{T}$.
+The set of \langfam{d-SDNNF}{T} formulas, respecting any vtree $T$: \langref{d-SDNNF} $= \bigcup_T \langfam{d-SDNNF}{T}$.
 \citet{Pipatsrisawat_2008}.
 \end{definition}
 
@@ -133,12 +135,12 @@ A generalization of \langref{FBDD} that allows for nondeterministic $\vee$ "gues
 
 \begin{definition}[\langref{NNF}]\label{def:lang_5bf00851}
 \textbf{Negation Normal Form} \\
-A boolean formula constructed strictly with $\wedge$, $\vee$, and literals, where negations are only allowed directly on the variables. It serves as the broad superset for most tractable knowledge compilation languages \citet{Darwiche_2002}.
+A boolean formula constructed strictly with $\wedge$, $\vee$, and literals, where negations are only allowed directly on the variables. It serves as the broad superset for most tractable circuits \citet{Darwiche_2002}.
 \end{definition}
 
 \begin{definition}[\langref{nOBDD}]\label{def:lang_d24efe0e}
-\textbf{nondeterministic Ordered Binary Decision Diagram} \\
-The language obtained by taking the union of every variable order: \langref{nOBDD} $= \bigcup_{<} \langfam{nOBDD}{<}$.
+\textbf{Nondeterministic Ordered Binary Decision Diagram} \\
+The set of nOBDD formulas following any variable order $<$: \langref{nOBDD} $= \bigcup_{<} \langfam{nOBDD}{<}$.
 \citet{Wegener_2000}.
 \end{definition}
 
@@ -149,7 +151,7 @@ For each fixed variable order $<$, \langfam{nOBDD}{<} is the set of \langref{nFB
 
 \begin{definition}[\langref{OBDD}]\label{def:lang_b9d72a7c}
 \textbf{Ordered Binary Decision Diagram} \\
-The language obtained by taking the union of every variable order: \langref{OBDD} $= \bigcup_{<} \langfam{OBDD}{<}$. \citet{Bryant_1986,Darwiche_2002}
+The set of \langfam{OBDD}{<} formulas following any variable order $<$ \langref{OBDD} $= \bigcup_{<} \langfam{OBDD}{<}$. \citet{Bryant_1986,Darwiche_2002}
 \end{definition}
 
 \begin{definition}[\langfam{OBDD}{<}]\label{def:lang_d69995dd}
@@ -164,18 +166,19 @@ The subset of \langref{CNF} where formulas represent exactly the disjunction of 
 
 \begin{definition}[\langref{SDD}]\label{def:lang_1afefbe2}
 \textbf{Sentential Decision Diagram} \\
-The language obtained by taking the union of every vtree: \langref{SDD} $= \bigcup_T \langfam{SDD}{T}$.
+The set of \langfam{SDNNF}{T} formulas respecting any vtree $T$: \langref{SDD} $= \bigcup_T \langfam{SDD}{T}$.
 \citet{Darwiche_2011}.
 \end{definition}
 
 \begin{definition}[\langfam{SDD}{T}]\label{def:lang_9c84a267}
 \textbf{Sentential Decision Diagram (wrt a fixed vtree)} \\
-For each fixed vtree $T$, \langfam{SDD}{T} is the set of \langref{DNNF} formulas that respect $T$ and whose disjunction gates are sentential decisions aligned with nodes of $T$. \citet{Darwiche_2011}
+For each variable tree $T$, \langfam{SDD}{T} is the subset of \langfam{d-SDNNF}{T} formulas where each node corresponds to a X-Y (or prime-sub) partition. Specifically, $f \in $ \langfam{SDD}{T} $\Leftrightarrow f(X, Y) = \bigvee_{i=1}^{n}(p_i \land s_i)$, where $p_i$ are mutually exclusive and exhaustive "primes" over X, and $s_i$ are "subs" over Y.
+\citet{Darwiche_2011}
 \end{definition}
 
 \begin{definition}[\langref{SDNNF}]\label{def:lang_b13b0d78}
 \textbf{Structured Decomposable Negation Normal Form} \\
-The language obtained by taking the union of every vtree: \langref{SDNNF} $= \bigcup_T \langfam{SDNNF}{T}$.
+The set of \langfam{SDNNF}{T} formulas respecting any vtree $T$: \langref{SDNNF} $= \bigcup_T \langfam{SDNNF}{T}$.
 \citet{Pipatsrisawat_2008}.
 \end{definition}
 
@@ -186,18 +189,18 @@ For each fixed vtree $T$, \langfam{SDNNF}{T} is the subset of \langref{DNNF} tha
 
 \begin{definition}[\langref{uFBDD}]\label{def:lang_4e62a038}
 \textbf{Unambiguous Free Binary Decision Diagram} \\
-A restricted form of \langref{nFBDD} where every satisfying assignment has exactly one valid accepting path. This "unambiguity" preserves the ability to perform efficient model counting while allowing for greater compression \citet{Wegener_2000}.
+A restricted form of \langref{nFBDD} where every satisfying assignment has exactly one valid accepting path. This is equivalent to: for every $\lor$-node of the form $f_1 \lor f_2$, $f_1$ and $f_2$ are mutually exclusive. \citet{Wegener_2000}.
 \end{definition}
 
 \begin{definition}[\langref{uOBDD}]\label{def:lang_c2df8c2b}
 \textbf{Unambiguous Ordered Binary Decision Diagram} \\
-The language obtained by taking the union of every variable order: \langref{uOBDD} $= \bigcup_{<} \langfam{uOBDD}{<}$.
+The set of \langfam{uOBDD}{<} formulas respecting any order $<$: \langref{uOBDD} $= \bigcup_{<} \langfam{uOBDD}{<}$.
 \citet{Wegener_2000}.
 \end{definition}
 
 \begin{definition}[\langfam{uOBDD}{<}]\label{def:lang_43a33aec}
 \textbf{Unambiguous Ordered Binary Decision Diagram (wrt a fixed variable order)} \\
-For each fixed variable order $<$, \langfam{uOBDD}{<} is the subset of \langfam{nOBDD}{<} with the unambiguity property (every satisfying assignment induces exactly one accepting path). Equivalently, this is the order-constrained view corresponding to a right-linear vtree. \citet{Wegener_2000}.
+For each fixed variable order $<$, \langfam{uOBDD}{<} is the subset of \langfam{nOBDD}{<} with the unambiguity property. Equivalently, this is the set of \langref{uFBDD} formulas respecting the order $<$. \citet{Wegener_2000}.
 \end{definition}
 
 % =============================

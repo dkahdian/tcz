@@ -618,6 +618,7 @@ function generateLatex(database: DatabaseSchema): string {
 \\usepackage[margin=1in]{geometry}
 \\usepackage{amsmath, amssymb, amsthm}
 \\usepackage{mathtools}
+\\usepackage{xparse}
 \\usepackage{enumitem}
 \\usepackage{hyperref}
 \\usepackage{cleveref}
@@ -659,6 +660,7 @@ function generateLatex(database: DatabaseSchema): string {
 % Cross-reference commands (rendered as links in the web UI)
 \\newcommand{\\langref}[1]{\\textbf{#1}}
 \\newcommand{\\langfam}[2]{\\textbf{#1$_{#2}$}}
+\\NewDocumentCommand{\\defref}{m g}{\\hyperref[kdef:#1]{\\textbf{\\IfNoValueTF{#2}{#1}{#2}}}}
 \\newcommand{\\edgeref}[2]{#1 compiles to #2}
 \\newcommand{\\nedgeref}[2]{#1 cannot compile to #2}
 \\newcommand{\\opref}[2]{#1 supports #2}
@@ -1353,6 +1355,7 @@ function generateLanguagesLatex(database: DatabaseSchema): string {
 \\usepackage[margin=1in]{geometry}
 \\usepackage{amsmath, amssymb, amsthm}
 \\usepackage{mathtools}
+\\usepackage{xparse}
 \\usepackage{enumitem}
 \\usepackage{hyperref}
 \\usepackage{cleveref}
@@ -1378,6 +1381,7 @@ function generateLanguagesLatex(database: DatabaseSchema): string {
 % Cross-reference commands (rendered as links in the web UI)
 \\newcommand{\\langref}[1]{\\textbf{#1}}
 \\newcommand{\\langfam}[2]{\\textbf{#1$_{#2}$}}
+\\NewDocumentCommand{\\defref}{m g}{\\hyperref[kdef:#1]{\\textbf{\\IfNoValueTF{#2}{#1}{#2}}}}
 \\newcommand{\\edgeref}[2]{#1 compiles to #2}
 \\newcommand{\\nedgeref}[2]{#1 cannot compile to #2}
 \\newcommand{\\opref}[2]{#1 supports #2}
@@ -1643,6 +1647,7 @@ function generateDefinitionsLatex(database: DatabaseSchema): string {
 \\usepackage[margin=1in]{geometry}
 \\usepackage{amsmath, amssymb, amsthm}
 \\usepackage{mathtools}
+\\usepackage{xparse}
 \\usepackage{enumitem}
 \\usepackage{hyperref}
 \\usepackage{cleveref}
@@ -1668,6 +1673,7 @@ function generateDefinitionsLatex(database: DatabaseSchema): string {
 % Cross-reference commands (rendered as links in the web UI)
 \\newcommand{\\langref}[1]{\\textbf{#1}}
 \\newcommand{\\langfam}[2]{\\textbf{#1$_{#2}$}}
+\\NewDocumentCommand{\\defref}{m g}{\\hyperref[kdef:#1]{\\textbf{\\IfNoValueTF{#2}{#1}{#2}}}}
 \\newcommand{\\edgeref}[2]{#1 compiles to #2}
 \\newcommand{\\nedgeref}[2]{#1 cannot compile to #2}
 \\newcommand{\\opref}[2]{#1 supports #2}
@@ -1871,6 +1877,7 @@ function generateSepFuncsLatex(database: DatabaseSchema): string {
 \\usepackage[margin=1in]{geometry}
 \\usepackage{amsmath, amssymb, amsthm}
 \\usepackage{mathtools}
+\\usepackage{xparse}
 \\usepackage{enumitem}
 \\usepackage{hyperref}
 \\usepackage{cleveref}
@@ -1896,6 +1903,7 @@ function generateSepFuncsLatex(database: DatabaseSchema): string {
 % Cross-reference commands (rendered as links in the web UI)
 \\newcommand{\\langref}[1]{\\textbf{#1}}
 \\newcommand{\\langfam}[2]{\\textbf{#1$_{#2}$}}
+\\NewDocumentCommand{\\defref}{m g}{\\hyperref[kdef:#1]{\\textbf{\\IfNoValueTF{#2}{#1}{#2}}}}
 \\newcommand{\\edgeref}[2]{#1 compiles to #2}
 \\newcommand{\\nedgeref}[2]{#1 cannot compile to #2}
 \\newcommand{\\opref}[2]{#1 supports #2}
@@ -2374,6 +2382,7 @@ function generateOpsLatex(database: DatabaseSchema, opType: 'queries' | 'transfo
 \\usepackage[margin=1in]{geometry}
 \\usepackage{amsmath, amssymb, amsthm}
 \\usepackage{mathtools}
+\\usepackage{xparse}
 \\usepackage{enumitem}
 \\usepackage{hyperref}
 \\usepackage{cleveref}
@@ -2408,6 +2417,7 @@ function generateOpsLatex(database: DatabaseSchema, opType: 'queries' | 'transfo
 % Cross-reference commands (rendered as links in the web UI)
 \\newcommand{\\langref}[1]{\\textbf{#1}}
 \\newcommand{\\langfam}[2]{\\textbf{#1$_{#2}$}}
+\\NewDocumentCommand{\\defref}{m g}{\\hyperref[kdef:#1]{\\textbf{\\IfNoValueTF{#2}{#1}{#2}}}}
 \\newcommand{\\edgeref}[2]{#1 compiles to #2}
 \\newcommand{\\nedgeref}[2]{#1 cannot compile to #2}
 \\newcommand{\\opref}[2]{#1 supports #2}

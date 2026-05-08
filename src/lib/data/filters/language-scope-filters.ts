@@ -10,7 +10,7 @@ import { LANGUAGE_CLASSIFICATIONS } from '../language-classifications.js';
 import { QUERIES, TRANSFORMATIONS } from '../operations.js';
 import { getOperationTractabilityDisplay } from '../../utils/operation-tractability.js';
 
-const DEFAULT_HIDDEN_UNION_LANGUAGE_IDS = Object.entries(LANGUAGE_CLASSIFICATIONS)
+export const DEFAULT_HIDDEN_UNION_LANGUAGE_IDS = Object.entries(LANGUAGE_CLASSIFICATIONS)
   .filter(([, classification]) => classification === 'union')
   .map(([id]) => id);
 
@@ -53,7 +53,7 @@ export const languageVisibilityFilter: LanguageFilter<LanguageVisibilityParam> =
   applicableViews: ['graph', 'succinctness', 'queries', 'transforms'],
   uiGroup: 'Language Scope',
   kind: 'language-visibility',
-  defaultParam: { mode: 'all', ids: [] },
+  defaultParam: { mode: 'except', ids: DEFAULT_HIDDEN_UNION_LANGUAGE_IDS },
   defaultParamMatrix: { mode: 'except', ids: DEFAULT_HIDDEN_UNION_LANGUAGE_IDS },
   controlType: 'language-picker',
   lambda: (data: GraphData, visibility) => {

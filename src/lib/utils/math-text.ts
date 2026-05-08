@@ -5,7 +5,7 @@ const LATEX_FRAGMENT = /(\$\$[\s\S]+?\$\$|\$[\s\S]+?\$|\\\[[\s\S]+?\\\]|\\\([\s\
 const CITATION_PATTERN = /\\cite[tp]?\{([^}]+)\}/g;
 
 // Entity link patterns (processed after HTML rendering)
-const DEFREF_PATTERN = /\\defref\{((?:[^{}]|\{[^{}]*\})+)\}/g;
+const DEFREF_PATTERN = /\\defref\{((?:[^{}]|\{[^{}]*\})+)\}(?:\{((?:[^{}]|\{[^{}]*\})+)\})?/g;
 const LANGREF_PATTERN = /\\langref\{((?:[^{}]|\{[^{}]*\})+)\}/g;
 const LANGFAM_PATTERN = /\\langfam\{([^}]+)\}\{([^}]+)\}/g;
 const EDGEREF_PATTERN = /\\edgeref\{([^}]+)\}\{([^}]+)\}/g;
@@ -269,6 +269,13 @@ function renderNameHtml(name: string): string {
   return escapeHtml(name);
 }
 
+function renderEntityLabelHtml(label: string): string {
+  // Inline math inside entity arguments may already have been rendered by
+  // renderMathText before entity-link replacement runs.
+  if (label.includes('class="katex')) return label;
+  return renderNameHtml(label);
+}
+
 function decodeMinimalEntities(value: string): string {
   return value
     .replace(/&lt;/gi, '<')
@@ -349,9 +356,10 @@ export function renderEntityLinks(
     return { id: normalizedRef, name: normalizedRef, resolved: false };
   };
 
-  // Replace \defref{definitionId or definitionTitle}
-  result = result.replace(DEFREF_PATTERN, (_match, defRef: string) => {
+  // Replace \defref{definitionId or definitionTitle} or \defref{id}{label}
+  result = result.replace(DEFREF_PATTERN, (_match, defRef: string, label: string | undefined) => {
     const normalized = decodeMinimalEntities(defRef).trim();
+    const displayLabel = label ? decodeMinimalEntities(label).trim() : undefined;
     const resolved = definitionRefResolver?.(normalized) ?? {
       id: normalized,
       title: normalized,
@@ -363,7 +371,8 @@ export function renderEntityLinks(
     }
 
     const safeId = escapeHtml(resolved.id);
-    return `<a class="entity-link def-link" href="/definitions#${safeId}" data-entity-type="def" data-def-id="${safeId}">${renderNameHtml(resolved.title)}</a>`;
+    const labelHtml = renderEntityLabelHtml(displayLabel || resolved.title);
+    return `<a class="entity-link def-link" href="/definitions#${safeId}" data-entity-type="def" data-def-id="${safeId}"><strong>${labelHtml}</strong></a>`;
   });
 
   // Replace \langref{langId or langName}

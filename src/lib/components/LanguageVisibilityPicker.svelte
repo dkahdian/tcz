@@ -6,7 +6,10 @@
     LanguageVisibilityParam,
     ViewMode
   } from '$lib/types.js';
-  import { ORIGINAL_KCM_LANGUAGE_IDS } from '$lib/data/filters/language-scope-filters.js';
+  import {
+    DEFAULT_HIDDEN_UNION_LANGUAGE_IDS,
+    ORIGINAL_KCM_LANGUAGE_IDS
+  } from '$lib/data/filters/language-scope-filters.js';
   import { QUERIES, TRANSFORMATIONS } from '$lib/data/operations.js';
 
   let {
@@ -140,25 +143,26 @@
   }
 
   function setOnlyOriginalKcmVisible() {
-    const visibleIds = getVisibleIds(value);
     const availableKcmIds = ORIGINAL_KCM_LANGUAGE_IDS.filter((id) =>
       languages.some((language) => language.id === id)
     );
-    const visibleFamilyAndUnionIds = languages
-      .filter((language) => (language.classification ?? 'plain') !== 'plain')
-      .map((language) => language.id)
-      .filter((id) => visibleIds.has(id));
 
     onChange({
       ...value,
       mode: 'only',
-      ids: Array.from(new Set([...availableKcmIds, ...visibleFamilyAndUnionIds]))
+      ids: availableKcmIds
     });
   }
 
   function resetPicker() {
     search = '';
-    onChange({ mode: 'all', ids: [] });
+    onChange({
+      ...value,
+      mode: 'except',
+      ids: DEFAULT_HIDDEN_UNION_LANGUAGE_IDS.filter((id) =>
+        languages.some((language) => language.id === id)
+      )
+    });
   }
 
   function sectionStateLabel(open: boolean): string {

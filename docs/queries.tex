@@ -1,7 +1,7 @@
 % =============================
 % Tractable Circuit Zoo - Query Support Claims
 % Auto-generated from database.json
-% Generated: 2026-05-07T23:01:47.218Z
+% Generated: 2026-05-07T23:37:00.568Z
 %
 % EDITING INSTRUCTIONS:
 % - Claim environments are auto-generated. Do NOT edit.
@@ -16,6 +16,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{mathtools}
+\usepackage{xparse}
 \usepackage{enumitem}
 \usepackage{hyperref}
 \usepackage{cleveref}
@@ -50,6 +51,7 @@
 % Cross-reference commands (rendered as links in the web UI)
 \newcommand{\langref}[1]{\textbf{#1}}
 \newcommand{\langfam}[2]{\textbf{#1$_{#2}$}}
+\NewDocumentCommand{\defref}{m g}{\hyperref[kdef:#1]{\textbf{\IfNoValueTF{#2}{#1}{#2}}}}
 \newcommand{\edgeref}[2]{#1 compiles to #2}
 \newcommand{\nedgeref}[2]{#1 cannot compile to #2}
 \newcommand{\opref}[2]{#1 supports #2}

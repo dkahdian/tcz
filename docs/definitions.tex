@@ -1,7 +1,7 @@
 % =============================
 % Tractable Circuit Zoo - Conceptual Definitions
 % Auto-generated from database.json
-% Generated: 2026-05-07T23:01:47.214Z
+% Generated: 2026-05-07T23:37:00.563Z
 %
 % EDITING INSTRUCTIONS:
 % - Definition IDs are preserved in \label{...}. Do NOT edit.
@@ -15,6 +15,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{mathtools}
+\usepackage{xparse}
 \usepackage{enumitem}
 \usepackage{hyperref}
 \usepackage{cleveref}
@@ -40,6 +41,7 @@
 % Cross-reference commands (rendered as links in the web UI)
 \newcommand{\langref}[1]{\textbf{#1}}
 \newcommand{\langfam}[2]{\textbf{#1$_{#2}$}}
+\NewDocumentCommand{\defref}{m g}{\hyperref[kdef:#1]{\textbf{\IfNoValueTF{#2}{#1}{#2}}}}
 \newcommand{\edgeref}[2]{#1 compiles to #2}
 \newcommand{\nedgeref}[2]{#1 cannot compile to #2}
 \newcommand{\opref}[2]{#1 supports #2}
@@ -99,14 +101,14 @@ An operation $\mathcal{O}$ is \emph{tractable} on a representation language $L$ 
 \textbf{Query} \\
 A \emph{query} takes a formula $\alpha \in L$ (and possibly auxiliary inputs) and returns a Boolean answer or a numerical value without modifying $\alpha$.
 
-The standard query operations in this project are \defref{query-co}, \defref{query-va}, \defref{query-ce}, \defref{query-im}, \defref{query-eq}, \defref{query-ct}, \defref{query-me}, and \defref{query-se}. \citet{Darwiche_2002}
+The standard query operations in this project are \defref{query-co}{Consistency}, \defref{query-va}{Validity}, \defref{query-ce}{Clausal Entailment}, \defref{query-im}{Implicant}, \defref{query-eq}{Equivalence}, \defref{query-ct}{Model Counting}, \defref{query-me}{Model Enumeration}, and \defref{query-se}{Sentential Entailment}. \citet{Darwiche_2002}
 \end{definition}
 
 \begin{definition}\label{kdef:transformation-operation}
 \textbf{Transformation} \\
 A \emph{transformation} maps one or more formulas from $\alpha_1,\alpha_2,..., \alpha_m\ \in L$, where $m$ may be arbitrarily large, to a new formula $\alpha_{m+1} \in L$.
 
-The standard transformations in this project are \defref{transformation-cd}, \defref{transformation-fo}, \defref{transformation-sfo}, \defref{transformation-and-c}, \defref{transformation-and-bc}, \defref{transformation-or-c}, \defref{transformation-or-bc}, and \defref{transformation-not-c}. \citet{Darwiche_2002}
+The standard transformations in this project are \defref{transformation-cd}{Conditioning}, \defref{transformation-fo}{Forgetting}, \defref{transformation-sfo}{Singleton Forgetting}, \defref{transformation-and-c}{Conjunction}, \defref{transformation-and-bc}{Bounded Conjunction}, \defref{transformation-or-c}{Disjunction}, \defref{transformation-or-bc}{Bounded Disjunction}, and \defref{transformation-not-c}{Negation}. \citet{Darwiche_2002}
 \end{definition}
 
 \begin{definition}\label{kdef:query-co}

@@ -48,7 +48,7 @@ assert.equal(containsEntityLinks('See \\edgeref{a}{b}'), true);
 assert.equal(containsEntityLinks('See \\opref{a}{CO}'), true);
 assert.equal(containsEntityLinks('Plain text only'), false);
 
-// Definition id resolution should link to the About page anchor.
+// Definition id resolution should link to the Definitions page anchor.
 const byId = renderEntityLinks(
   'Refer to \\defref{representation-language}.',
   (id) => id,
@@ -56,8 +56,21 @@ const byId = renderEntityLinks(
   undefined,
   resolveDefinitionRef
 );
-assertIncludes(byId, 'href="/about#representation-language"', 'definition id should link to /about#id');
+assertIncludes(byId, 'href="/definitions#representation-language"', 'definition id should link to /definitions#id');
 assertIncludes(byId, '>Representation Language<', 'definition id should render the canonical title');
+assertIncludes(byId, '<strong>Representation Language</strong>', 'definition link label should render bold');
+
+// A second braced argument should override the visible link label while preserving the target.
+const customLabel = renderEntityLinks(
+  'Refer to \\defref{representation-language}{representation languages}.',
+  (id) => id,
+  undefined,
+  undefined,
+  resolveDefinitionRef
+);
+assertIncludes(customLabel, 'href="/definitions#representation-language"', 'custom label should keep the first argument as the link target');
+assertIncludes(customLabel, '<strong>representation languages</strong>', 'custom label should render as bold link text');
+assert.equal(customLabel.includes('>Representation Language<'), false, 'custom label should not render the canonical title');
 
 // Title fallback should resolve to the same anchor.
 const byTitle = renderEntityLinks(
@@ -67,7 +80,7 @@ const byTitle = renderEntityLinks(
   undefined,
   resolveDefinitionRef
 );
-assertIncludes(byTitle, 'href="/about#language-family"', 'definition title should link to the matching definition id');
+assertIncludes(byTitle, 'href="/definitions#language-family"', 'definition title should link to the matching definition id');
 assertIncludes(byTitle, '>Language Family<', 'definition title should render the canonical title');
 
 // Definition link labels can contain inline LaTeX and should render it instead of
@@ -79,9 +92,20 @@ const latexTitle = renderEntityLinks(
   undefined,
   resolveDefinitionRef
 );
-assertIncludes(latexTitle, 'href="/about#transformation-and-c"', 'latex definition title should link to /about#id');
+assertIncludes(latexTitle, 'href="/definitions#transformation-and-c"', 'latex definition title should link to /definitions#id');
 assertIncludes(latexTitle, 'katex', 'latex definition title should render KaTeX markup');
 assert.equal(latexTitle.includes('$\\wedge$C'), false, 'latex definition title should not expose raw math delimiters');
+
+const latexCustomLabel = renderEntityLinks(
+  'See \\defref{transformation-and-c}{Conjunction ($\\wedge$C)}.',
+  (id) => id,
+  undefined,
+  undefined,
+  resolveDefinitionRef
+);
+assertIncludes(latexCustomLabel, 'href="/definitions#transformation-and-c"', 'latex custom label should link to /definitions#id');
+assertIncludes(latexCustomLabel, '<strong>', 'latex custom label should be bold');
+assertIncludes(latexCustomLabel, 'katex', 'latex custom label should render KaTeX markup');
 
 // Missing references should stay visible instead of breaking rendering.
 const missing = renderEntityLinks(

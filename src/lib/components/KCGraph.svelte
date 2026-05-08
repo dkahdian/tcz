@@ -66,6 +66,19 @@
     }
   }
 
+  function persistPositionMap(positions: Map<string, NodePosition>) {
+    if (!browser) return;
+    try {
+      const existing = loadStoredNodePositions();
+      for (const [nodeId, pos] of positions) {
+        existing[nodeId] = { x: pos.x, y: pos.y };
+      }
+      localStorage.setItem(NODE_POSITIONS_STORAGE_KEY, JSON.stringify(existing));
+    } catch (error) {
+      console.warn('Failed to persist node positions', error);
+    }
+  }
+
   function getRenderableContent(value: string | null | undefined) {
     const normalized = value ?? '';
     const result = renderMathText(normalized);
@@ -126,8 +139,8 @@
 
   let graphContainer: HTMLDivElement;
   let cy: cytoscape.Core;
-  let showResetButton = $state(false);
   let defaultPositions = new Map<string, NodePosition>();
+  let autoLayoutPositions = new Map<string, NodePosition>();
 
   const BASE_NODE_STYLE = {
     'border-color': '#d1d5db',
@@ -144,37 +157,30 @@
     });
   }
 
-  function checkIfPositionsModified(): boolean {
-    if (!browser) return false;
-    const stored = loadStoredNodePositions();
-    if (Object.keys(stored).length === 0) {
-      return false;
-    }
-    
-    // Check if any stored position differs from default
-    for (const [nodeId, storedPos] of Object.entries(stored)) {
-      const defaultPos = defaultPositions.get(nodeId);
-      if (!defaultPos) continue;
-      
-      // Consider positions different if they vary by more than 1 pixel (to account for floating point)
-      if (Math.abs(storedPos.x - defaultPos.x) > 1 || Math.abs(storedPos.y - defaultPos.y) > 1) {
-        return true;
-      }
-    }
-    
-    return false;
-  }
-
   function resetGraphPositions() {
     if (!browser) return;
     localStorage.removeItem(NODE_POSITIONS_STORAGE_KEY);
-    showResetButton = false;
     
     // Recreate the graph with default positions
     if (cy) {
       cy.destroy();
       createGraph();
     }
+  }
+
+  function applyAutoLayout() {
+    if (!cy || autoLayoutPositions.size === 0) return;
+
+    cy.batch(() => {
+      cy.nodes().forEach((node) => {
+        const position = autoLayoutPositions.get(node.id());
+        if (!position) return;
+        node.position({ x: position.x, y: position.y });
+      });
+    });
+
+    persistPositionMap(autoLayoutPositions);
+    cy.fit(cy.elements(), 40);
   }
 
   // Function to create/update graph
@@ -193,6 +199,7 @@
     
     // Clear default positions map for this rebuild
     defaultPositions.clear();
+    autoLayoutPositions.clear();
 
     const BASE_NODE_WIDTH = 80;
     const BASE_NODE_HEIGHT = 80;
@@ -364,6 +371,7 @@
 
         // Store default position (clone to prevent later mutation)
         defaultPositions.set(lang.id, { ...defaultPosition });
+        autoLayoutPositions.set(lang.id, { ...computedDefaultPosition });
 
         const storedPosition = storedPositions[lang.id];
         const initialPosition = storedPosition
@@ -561,8 +569,6 @@
         // to avoid overwriting the empty localStorage with all default positions
         const movedNode = evt.target;
         persistNodePositions(movedNode);
-        // Check if we should show reset button after user moves a node
-        showResetButton = checkIfPositionsModified();
       });
     }
 
@@ -656,10 +662,6 @@
       graphContainer.style.cursor = 'default';
     });
 
-    // Check if we should show reset button after building/rebuilding the graph
-    if (browser) {
-      showResetButton = checkIfPositionsModified();
-    }
   }
 
   function buildEdgeLabelTemplate(data: any): string {
@@ -712,16 +714,24 @@
     <div class="axis-label axis-label-bottom">Less succinct</div>
   </div>
   
-  {#if showResetButton}
+  <div class="layout-controls" aria-label="Graph layout controls">
     <button 
-      class="reset-positions-btn"
+      class="layout-btn"
       onclick={resetGraphPositions}
       type="button"
-      title="Reset node positions to default layout"
+      title="Use the default saved layout"
     >
-      Reset Layout
+      Default
     </button>
-  {/if}
+    <button 
+      class="layout-btn"
+      onclick={applyAutoLayout}
+      type="button"
+      title="Automatically place visible nodes with Dagre"
+    >
+      Auto
+    </button>
+  </div>
 </div>
 
 <style>
@@ -777,10 +787,16 @@
     margin-top: 6px;
   }
 
-  .reset-positions-btn {
+  .layout-controls {
     position: absolute;
     top: 12px;
     right: 12px;
+    z-index: 30;
+    display: flex;
+    gap: 0.45rem;
+  }
+
+  .layout-btn {
     padding: 8px 16px;
     background-color: #3b82f6;
     color: white;
@@ -791,16 +807,15 @@
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 30;
   }
 
-  .reset-positions-btn:hover {
+  .layout-btn:hover {
     background-color: #2563eb;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
     transform: translateY(-1px);
   }
 
-  .reset-positions-btn:active {
+  .layout-btn:active {
     background-color: #1d4ed8;
     transform: translateY(0);
   }
