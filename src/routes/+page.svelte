@@ -518,6 +518,9 @@
             {submittingPreview ? 'Submitting...' : 'Submit'}
           </button>
         {:else}
+          <a href="/contribute" class="contribute-link">
+            Contribute
+          </a>
           <a href="/about" class="about-link">
             About
           </a>

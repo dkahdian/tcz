@@ -239,11 +239,6 @@
   });
 
   onMount(() => {
-    if (browser) {
-      window.location.replace('/');
-      return;
-    }
-
     if (!browser) {
       queuePersistenceReady = true;
       return;
