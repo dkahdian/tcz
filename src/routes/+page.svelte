@@ -339,6 +339,19 @@
     return Boolean(adjacencyMatrix.matrix[sourceIdx]?.[targetIdx] || adjacencyMatrix.matrix[targetIdx]?.[sourceIdx]);
   }
 
+  function clearSelectedCells() {
+    selectedEdge = null;
+    selectedOperation = null;
+    selectedOperationCell = null;
+  }
+
+  function switchViewMode(newMode: ViewMode) {
+    if (viewMode === newMode) return;
+    clearSelectedCells();
+    viewMode = newMode;
+    filterStates = computeEffectiveFilterState(languageFilters, edgeFilters, newMode, filterDeltas);
+  }
+
   // =========================================================================
   // Hash-based navigation for entity links (lang, edge, op)
   // =========================================================================
@@ -535,12 +548,7 @@
               class={`toggle-btn ${viewMode === mode.id ? 'is-active' : ''}`}
               aria-pressed={viewMode === mode.id}
               onclick={() => {
-                const newMode = mode.id;
-                if (viewMode !== newMode) {
-                  viewMode = newMode;
-                  // Recompute effective state: defaults for new view + existing deltas
-                  filterStates = computeEffectiveFilterState(languageFilters, edgeFilters, newMode, filterDeltas);
-                }
+                switchViewMode(mode.id);
               }}
             >
               {mode.label}

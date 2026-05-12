@@ -108,6 +108,7 @@
         selectedOperationCell.operationType
       )}
       <div class="operation-cell-details">
+        <h3 class="panel-title">{panelTitle}</h3>
         <div class="cell-header">
           <button 
             type="button"
@@ -124,11 +125,7 @@
             onclick={() => handleOperationCodeClick(selectedOperationCell.operationCode, selectedOperationCell.operationType)}
             title="View operation details"
           >{selectedOperationCell.operationCode}</button>
-        </div>
-        
-        <div class="cell-operation-label text-sm text-gray-600 mb-4">
-          {selectedOperationCell.operationLabel}
-          ({selectedOperationCell.operationType})
+          <span class="operation-label-inline">({selectedOperationCell.operationLabel})</span>
         </div>
 
         <p class="tractability-line text-sm text-gray-700 mb-2">
@@ -174,7 +171,7 @@
       </div>
     {:else}
       <div class="welcome-message">
-        <h3 class="text-lg font-semibold text-gray-700 mb-2">{panelTitle}</h3>
+        <h3 class="panel-title">{panelTitle}</h3>
         <p class="text-gray-600 text-sm mb-4">
           Click on a language name to see its details, an operation code to learn about it, 
           or a cell to see the complexity of that operation for that language.
@@ -202,6 +199,13 @@
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 0.5rem;
+  }
+
+  .panel-title {
+    margin: 0 0 1rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #374151;
   }
 
   .language-link {
@@ -236,6 +240,12 @@
 
   .operation-code-link:hover {
     text-decoration: underline;
+  }
+
+  .operation-label-inline {
+    color: #4b5563;
+    font-size: 1rem;
+    font-weight: 600;
   }
 
   .tractability-line {
