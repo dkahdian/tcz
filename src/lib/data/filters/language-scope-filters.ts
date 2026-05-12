@@ -78,7 +78,7 @@ export const languageVisibilityFilter: LanguageFilter<LanguageVisibilityParam> =
         const support = language.properties.queries?.[id] ?? language.properties.queries?.[opDef.code];
         if (!support) continue;
         const display = getOperationTractabilityDisplay(support);
-        suffixParts.push(`${display.symbol} ${opDef.code}`);
+        suffixParts.push(`${display.graphSymbol} ${opDef.code}`);
       }
 
       for (const id of graphTransformationIds) {
@@ -88,7 +88,7 @@ export const languageVisibilityFilter: LanguageFilter<LanguageVisibilityParam> =
           language.properties.transformations?.[id] ?? language.properties.transformations?.[opDef.code];
         if (!support) continue;
         const display = getOperationTractabilityDisplay(support);
-        suffixParts.push(`${display.symbol} ${opDef.code}`);
+        suffixParts.push(`${display.graphSymbol} ${opDef.code}`);
       }
 
       if (suffixParts.length === 0) {

@@ -36,6 +36,9 @@
   } = $props();
 
   const legendGraphData = $derived(filteredGraphData ?? graphData);
+  const panelTitle = $derived(
+    viewMode === 'transforms' ? 'Transformation Tractability' : 'Query Tractability'
+  );
 
   let referencesSection: HTMLElement | null = $state(null);
 
@@ -129,7 +132,7 @@
         </div>
 
         <p class="tractability-line text-sm text-gray-700 mb-2">
-          <span class={`tractability-symbol ${display.cssClass}`}>{display.symbol}</span>
+          <span class={`tractability-symbol ${display.cssClass}`}>{@html display.symbolHtml}</span>
           <span>{display.label}</span>
           {#if selectedOperationCell.support.assumption}
             <span> assuming </span>
@@ -171,7 +174,7 @@
       </div>
     {:else}
       <div class="welcome-message">
-        <h3 class="text-lg font-semibold text-gray-700 mb-2">Operations Matrix</h3>
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">{panelTitle}</h3>
         <p class="text-gray-600 text-sm mb-4">
           Click on a language name to see its details, an operation code to learn about it, 
           or a cell to see the complexity of that operation for that language.

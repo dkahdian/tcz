@@ -354,7 +354,7 @@
       <h5>{operationLegendTitle}</h5>
       {#each visibleOperationDisplays as display}
         <div class="legend-row">
-          <span class={`operation-symbol ${display.cssClass}`}>{display.symbol}</span>
+          <span class={`operation-symbol ${display.cssClass}`}>{@html display.symbolHtml}</span>
           <span title={display.description}>{display.label}</span>
         </div>
       {/each}

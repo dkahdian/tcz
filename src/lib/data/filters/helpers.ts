@@ -28,7 +28,7 @@ export function createOperationVisualizer(
       if (!support) return language;
 
       const display = getOperationTractabilityDisplay(support);
-      const suffix = `\n${display.symbol} ${code}`;
+      const suffix = `\n${display.graphSymbol} ${code}`;
 
       return {
         ...language,

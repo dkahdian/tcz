@@ -11,6 +11,8 @@ export type OperationDisplayContext = 'query' | 'transformation';
 export type OperationTractabilityDisplay = {
   id: OperationTractabilityId;
   symbol: string;
+  symbolHtml: string;
+  graphSymbol: string;
   label: string;
   description: string;
   cssClass: string;
@@ -26,6 +28,12 @@ export const OPERATION_TRACTABILITY_ORDER: OperationTractabilityId[] = [
   'unknown'
 ];
 
+const SOLID_CHECK_SVG =
+  '<svg class="operation-check-icon operation-check-icon--solid" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.7 19.2 1.9 12.4 5 9.3l3.7 3.7L19.1 2.6l3.1 3.1L8.7 19.2Z"/></svg>';
+
+const HOLLOW_CHECK_SVG =
+  '<svg class="operation-check-icon operation-check-icon--hollow" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.7 19.2 1.9 12.4 5 9.3l3.7 3.7L19.1 2.6l3.1 3.1L8.7 19.2Z"/></svg>';
+
 export const OPERATION_TRACTABILITY_DISPLAYS: Record<
   OperationTractabilityId,
   OperationTractabilityDisplay
@@ -33,6 +41,8 @@ export const OPERATION_TRACTABILITY_DISPLAYS: Record<
   tractable: {
     id: 'tractable',
     symbol: '\u2713',
+    symbolHtml: SOLID_CHECK_SVG,
+    graphSymbol: '\u2713',
     label: 'Unconditionally polynomial time',
     description: 'Operation has an unconditional polynomial-time algorithm.',
     cssClass: 'operation-tractability-tractable'
@@ -40,6 +50,8 @@ export const OPERATION_TRACTABILITY_DISPLAYS: Record<
   'conditional-tractable': {
     id: 'conditional-tractable',
     symbol: '\u2713*',
+    symbolHtml: HOLLOW_CHECK_SVG,
+    graphSymbol: '$\\checkmark^{*}$',
     label: 'Conditionally polynomial time',
     description: 'Operation has a polynomial-time algorithm assuming the listed condition.',
     cssClass: 'operation-tractability-conditional-tractable'
@@ -47,6 +59,8 @@ export const OPERATION_TRACTABILITY_DISPLAYS: Record<
   'conditional-intractable': {
     id: 'conditional-intractable',
     symbol: '\u25CB',
+    symbolHtml: '\u25CB',
+    graphSymbol: '\u25CB',
     label: 'Conditionally not polynomial time',
     description: 'Operation is not polynomial time assuming the listed condition.',
     cssClass: 'operation-tractability-conditional-intractable'
@@ -54,6 +68,8 @@ export const OPERATION_TRACTABILITY_DISPLAYS: Record<
   intractable: {
     id: 'intractable',
     symbol: '\u25CF',
+    symbolHtml: '\u25CF',
+    graphSymbol: '\u25CF',
     label: 'Unconditionally not polynomial time',
     description: 'Operation is unconditionally not polynomial time.',
     cssClass: 'operation-tractability-intractable'
@@ -61,6 +77,8 @@ export const OPERATION_TRACTABILITY_DISPLAYS: Record<
   unknown: {
     id: 'unknown',
     symbol: '?',
+    symbolHtml: '?',
+    graphSymbol: '?',
     label: 'Unknown',
     description: 'Tractability is unknown.',
     cssClass: 'operation-tractability-unknown'

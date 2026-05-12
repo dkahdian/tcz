@@ -116,8 +116,8 @@
 }
 
 .operation-tractability-conditional-tractable {
-  background: #dbeafe;
-  color: #1d4ed8;
+  background: #ecfdf5;
+  color: #166534;
 }
 
 .operation-tractability-conditional-intractable {
@@ -133,4 +133,22 @@
 .operation-tractability-unknown {
   background: #f3f4f6;
   color: #6b7280;
+}
+
+.operation-check-icon {
+  display: block;
+  width: 1em;
+  height: 1em;
+  overflow: visible;
+}
+
+.operation-check-icon--solid path {
+  fill: currentColor;
+}
+
+.operation-check-icon--hollow path {
+  fill: white;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linejoin: round;
 }

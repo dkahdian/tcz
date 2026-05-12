@@ -327,7 +327,7 @@
                   disabled={!isOperationsView}
                 >
                   <span class={`op-symbol ${display.cssClass}`} title={display.label}>
-                    {display.symbol}
+                    {@html display.symbolHtml}
                   </span>
                   <div class="text-sm leading-5 text-left">
                     <div>

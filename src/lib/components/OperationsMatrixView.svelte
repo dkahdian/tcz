@@ -242,7 +242,7 @@
                   onclick={() => handleCellClick(language, opCode)}
                   title={getCellTitle(language, opCode, support)}
                 >
-                  <span class="cell-symbol">{display.symbol}</span>
+                  <span class="cell-symbol">{@html display.symbolHtml}</span>
                 </button>
                 {:else}
                 <span class="matrix-cell matrix-cell--empty" title={`${language.name}: ${opCode} — no data`}>&nbsp;</span>
