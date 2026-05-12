@@ -195,18 +195,18 @@
               </div>
               {#if true}
                 {@const parts = splitStatusLabel(relation.status)}
-                <p class="text-sm text-gray-700 mb-2">
+                <h5 class="edge-status-heading">
                   {parts.prefix}{#if relation.assumption}{' '}assuming <MathText text={formatAssumptionForMathText(relation.assumption)} className="inline" />{/if}{parts.suffix}{#if relation.refs.length}{' '}{#each relation.refs as refId}<button 
                       class="ref-badge"
                       onclick={scrollToReferences}
                       title="View reference"
                     >[{getGlobalRefNumber(refId) ?? '?'}]</button>{/each}{/if}
-                </p>
+                </h5>
               {/if}
               {#if relation.description}
                 <MathText 
                   text={relation.description} 
-                  className="text-sm text-gray-600 mb-2 italic block" 
+                  className="edge-description-text" 
                   onCitationClick={handleCitationClick}
                 />
               {/if}
@@ -300,5 +300,22 @@
 
   .succinctness-notation {
     font-weight: 700;
+  }
+
+  .edge-status-heading {
+    margin: 0 0 0.4rem;
+    color: #1f2937;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  .edge-description-text {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #4b5563;
+    font-size: 0.875rem;
+    font-style: normal;
+    line-height: 1.5;
   }
 </style>
