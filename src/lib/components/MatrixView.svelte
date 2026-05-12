@@ -20,11 +20,13 @@
   let {
     graphData,
     selectedNode = $bindable(),
-    selectedEdge = $bindable()
+    selectedEdge = $bindable(),
+    highlightedEdgeIds = new Set<string>()
   }: {
     graphData: GraphData | FilteredGraphData;
     selectedNode: KCLanguage | null;
     selectedEdge: SelectedEdge | null;
+    highlightedEdgeIds?: Set<string>;
   } = $props();
 
   const STATUS_LABELS = $derived.by<Record<string, string>>(() => {
@@ -173,6 +175,14 @@
     return source === targetId && target === sourceId;
   }
 
+  function isLanguageHighlighted(languageId: string): boolean {
+    return selectedNode?.id === languageId;
+  }
+
+  function isPreviewHighlighted(sourceId: string, targetId: string): boolean {
+    return highlightedEdgeIds.has(`${sourceId}->${targetId}`);
+  }
+
   function getCellTitle(
     rowLang: KCLanguage,
     colLang: KCLanguage,
@@ -271,7 +281,7 @@
             </th>
             {#each matrixLanguages as colLanguage}
               {#if rowLanguage.id === colLanguage.id}
-                <td class="matrix-cell--diagonal">
+                <td class={`matrix-cell--diagonal ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted is-col-highlighted' : ''}`}>
                   <button
                     type="button"
                     class="diagonal-button"
@@ -288,7 +298,7 @@
                   <td>
                     <button
                       type="button"
-                      class={`matrix-cell matrix-cell--button ${STATUS_CLASSES[relation.status]} ${relation.dimmed ? 'is-dimmed' : ''} ${relation.explicit ? 'is-explicit' : ''} ${isEdgeSelected(colLanguage.id, rowLanguage.id) ? 'is-selected' : ''} ${isComplementSelected(colLanguage.id, rowLanguage.id) ? 'is-complement' : ''}`}
+                      class={`matrix-cell matrix-cell--button ${STATUS_CLASSES[relation.status]} ${relation.dimmed ? 'is-dimmed' : ''} ${relation.explicit ? 'is-explicit' : ''} ${isEdgeSelected(colLanguage.id, rowLanguage.id) ? 'is-selected' : ''} ${isComplementSelected(colLanguage.id, rowLanguage.id) ? 'is-complement' : ''} ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted' : ''} ${isLanguageHighlighted(colLanguage.id) ? 'is-col-highlighted' : ''} ${isPreviewHighlighted(colLanguage.id, rowLanguage.id) ? 'is-preview-highlighted' : ''}`}
                       onclick={() => handleCellClick(colLanguage.id, rowLanguage.id, relation)}
                       title={getCellTitle(rowLanguage.language, colLanguage.language, relation)}
                     >
@@ -296,7 +306,10 @@
                     </button>
                   </td>
                 {:else}
-                  <td class="matrix-cell--empty" title={getCellTitle(rowLanguage.language, colLanguage.language, null)}>&nbsp;</td>
+                  <td
+                    class={`matrix-cell--empty ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted' : ''} ${isLanguageHighlighted(colLanguage.id) ? 'is-col-highlighted' : ''} ${isPreviewHighlighted(colLanguage.id, rowLanguage.id) ? 'is-preview-highlighted' : ''}`}
+                    title={getCellTitle(rowLanguage.language, colLanguage.language, null)}
+                  >&nbsp;</td>
                 {/if}
               {/if}
             {/each}
@@ -440,6 +453,7 @@
   .row-header.is-active,
   .col-header.is-active {
     background: #e0f2fe;
+    box-shadow: inset 0 0 0 2px #2563eb;
   }
 
   tbody th {
@@ -477,6 +491,29 @@
 
   .matrix-cell--button:is(:hover, :focus-visible) {
     box-shadow: inset 0 0 0 2px rgba(15, 23, 42, 0.2);
+  }
+
+  .matrix-cell.is-row-highlighted,
+  .matrix-cell--empty.is-row-highlighted,
+  .matrix-cell--diagonal.is-row-highlighted {
+    box-shadow: inset 0 2px 0 #2563eb, inset 0 -2px 0 #2563eb;
+  }
+
+  .matrix-cell.is-col-highlighted,
+  .matrix-cell--empty.is-col-highlighted,
+  .matrix-cell--diagonal.is-col-highlighted {
+    box-shadow: inset 2px 0 0 #2563eb, inset -2px 0 0 #2563eb;
+  }
+
+  .matrix-cell.is-row-highlighted.is-col-highlighted,
+  .matrix-cell--empty.is-row-highlighted.is-col-highlighted,
+  .matrix-cell--diagonal.is-row-highlighted.is-col-highlighted {
+    box-shadow: inset 0 0 0 2px #2563eb;
+  }
+
+  .matrix-cell.is-preview-highlighted,
+  .matrix-cell--empty.is-preview-highlighted {
+    box-shadow: inset 0 0 0 3px #a855f7;
   }
 
   .matrix-cell--diagonal {
@@ -520,6 +557,10 @@
   /* Explicit edges - golden border to highlight non-derived edges */
   .matrix-cell.is-explicit {
     box-shadow: inset 0 0 0 2px #eab308; /* yellow-500 golden border */
+  }
+
+  .matrix-cell.is-explicit.is-preview-highlighted {
+    box-shadow: inset 0 0 0 3px #a855f7, inset 0 0 0 5px #eab308;
   }
 
   /* Selection borders override explicit border */

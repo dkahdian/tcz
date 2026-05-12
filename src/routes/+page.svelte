@@ -143,7 +143,9 @@
     }
 
     // Check for preview mode
-    if (hasQueuedChanges()) {
+    const queuedChanges = hasQueuedChanges() ? loadQueuedChanges() : null;
+
+    if (queuedChanges) {
       const dataset = loadPreviewDataset();
       if (dataset) {
         previewGraphData = dataset;
@@ -151,18 +153,13 @@
       } else {
         // The preview dataset is best-effort (it can fail to persist due to localStorage quota).
         // If it's missing but the queue exists, rebuild it on demand so preview mode still works.
-        const queue = loadQueuedChanges();
-        if (queue) {
-          try {
-            const rebuilt = applyContributionQueue(initialGraphData, queue);
-            previewGraphData = rebuilt;
-            isPreviewMode = true;
-            savePreviewDataset(rebuilt);
-          } catch (error) {
-            console.error('Failed to rebuild preview dataset from queued changes:', error);
-            console.warn('Queued changes detected but preview dataset is missing');
-          }
-        } else {
+        try {
+          const rebuilt = applyContributionQueue(initialGraphData, queuedChanges);
+          previewGraphData = rebuilt;
+          isPreviewMode = true;
+          savePreviewDataset(rebuilt);
+        } catch (error) {
+          console.error('Failed to rebuild preview dataset from queued changes:', error);
           console.warn('Queued changes detected but preview dataset is missing');
         }
       }
@@ -338,6 +335,45 @@
     if (sourceIdx === undefined || targetIdx === undefined) return false;
     return Boolean(adjacencyMatrix.matrix[sourceIdx]?.[targetIdx] || adjacencyMatrix.matrix[targetIdx]?.[sourceIdx]);
   }
+
+  function relationSignature(source: GraphData, sourceId: string, targetId: string): string {
+    const { adjacencyMatrix } = source;
+    const sourceIdx = adjacencyMatrix.indexByLanguage[sourceId];
+    const targetIdx = adjacencyMatrix.indexByLanguage[targetId];
+    if (sourceIdx === undefined || targetIdx === undefined) return 'missing-language';
+    const relation = adjacencyMatrix.matrix[sourceIdx]?.[targetIdx] ?? null;
+    if (!relation) return 'null';
+    return JSON.stringify({
+      status: relation.status ?? null,
+      assumption: relation.assumption ?? null,
+      description: relation.description ?? null,
+      refs: relation.refs ?? [],
+      separatingFunctionIds: relation.separatingFunctionIds ?? [],
+      derived: relation.derived ?? false,
+      noPolyDescription: relation.noPolyDescription ?? null,
+      quasiDescription: relation.quasiDescription ?? null
+    });
+  }
+
+  function getChangedSuccinctnessCellIds(base: GraphData, preview: GraphData): Set<string> {
+    const ids = new Set([...base.adjacencyMatrix.languageIds, ...preview.adjacencyMatrix.languageIds]);
+    const changed = new Set<string>();
+    for (const sourceId of ids) {
+      for (const targetId of ids) {
+        if (sourceId === targetId) continue;
+        if (relationSignature(base, sourceId, targetId) !== relationSignature(preview, sourceId, targetId)) {
+          changed.add(`${sourceId}->${targetId}`);
+        }
+      }
+    }
+    return changed;
+  }
+
+  const previewChangedSuccinctnessCellIds = $derived(
+    isPreviewMode && previewGraphData
+      ? getChangedSuccinctnessCellIds(initialGraphData, previewGraphData)
+      : new Set<string>()
+  );
 
   function clearSelectedCells() {
     selectedEdge = null;
@@ -575,7 +611,12 @@
       {/if}
       {#if succinctnessMounted}
         <div class="keep-alive-wrapper" class:is-active={viewMode === 'succinctness'}>
-          <MatrixView graphData={filteredGraphData} bind:selectedNode bind:selectedEdge />
+          <MatrixView
+            graphData={filteredGraphData}
+            bind:selectedNode
+            bind:selectedEdge
+            highlightedEdgeIds={previewChangedSuccinctnessCellIds}
+          />
         </div>
       {/if}
       {#if viewMode === 'queries'}
