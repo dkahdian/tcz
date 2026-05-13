@@ -4,6 +4,17 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #f9fafb;
+}
+
+body {
+  overflow: auto;
+}
+
 /* ── Shared info-panel layout (LanguageInfo, EdgeInfo, OperationInfo) ── */
 
 .content-wrapper {

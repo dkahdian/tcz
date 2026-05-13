@@ -927,9 +927,3 @@
   availableSeparatingFunctions={getAvailableSeparatingFunctions(data.existingSeparatingFunctions, separatingFunctionPayloads)}
   {baselineRelations}
 />
-
-<style>
-  :global(body) {
-    margin: 0;
-  }
-</style>

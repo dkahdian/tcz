@@ -372,7 +372,7 @@ export function renderEntityLinks(
 
     const safeId = escapeHtml(resolved.id);
     const labelHtml = renderEntityLabelHtml(displayLabel || resolved.title);
-    return `<a class="entity-link def-link" href="/definitions#${safeId}" data-entity-type="def" data-def-id="${safeId}"><strong>${labelHtml}</strong></a>`;
+    return `<a class="entity-link def-link" href="/about#${safeId}" data-entity-type="def" data-def-id="${safeId}"><strong>${labelHtml}</strong></a>`;
   });
 
   // Replace \langref{langId or langName}

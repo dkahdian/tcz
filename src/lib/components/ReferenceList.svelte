@@ -27,7 +27,12 @@
 
 <div class="mt-4 pt-4 border-t border-gray-200" bind:this={anchorElement}>
   {#if references.length > 0}
-    <h6 class="text-sm font-semibold text-gray-900 mb-2">References</h6>
+    <h6 class="text-sm font-semibold text-gray-900 mb-2">
+      References
+      <a class="text-xs font-medium text-blue-600 hover:text-blue-800 underline" href="/bibliography">
+        (full bibliography)
+      </a>
+    </h6>
     <ol class="space-y-2">
       {#each references as ref}
         <li class="text-xs text-gray-700">

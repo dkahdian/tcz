@@ -573,9 +573,6 @@
           <a href="/about" class="about-link">
             About
           </a>
-          <a href="/bibliography" class="bib-link">
-            Bibliography
-          </a>
         {/if}
         <div class="view-toggle" role="group" aria-label="Visualization mode">
           {#each VIEW_MODES as mode}
@@ -726,13 +723,13 @@
 </div>
 
 <style>
-  :global(html, body) { height: 100%; margin: 0; }
-  :global(body) { overflow: hidden; background: #f9fafb; }
-
   .app-shell {
-    height: 100vh;
+    position: fixed;
+    inset: 0;
     display: grid;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    overflow: hidden;
+    background: #f9fafb;
   }
 
   .app-header {
@@ -891,28 +888,6 @@
     transform: translateY(0);
   }
 
-  .bib-link {
-    padding: 0.5rem 1rem;
-    background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
-    color: white;
-    border-radius: 0.5rem;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.875rem;
-    transition: all 0.2s;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  }
-
-  .bib-link:hover {
-    background: linear-gradient(135deg, #ca8a04 0%, #a16207 100%);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    transform: translateY(-1px);
-  }
-
-  .bib-link:active {
-    transform: translateY(0);
-  }
-
   .contribute-link {
     padding: 0.5rem 1rem;
     background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
@@ -940,8 +915,9 @@
     grid-template-columns: 2fr 1fr;
     gap: 0.75rem;
     padding: 0.75rem;
-    height: 100%;
+    box-sizing: border-box;
     min-height: 0; /* allow children to shrink */
+    overflow: hidden;
   }
 
   .visual-panel {
@@ -987,7 +963,7 @@
     padding: 0.75rem;
   }
   
-  .side-panel > :global(.scrollable-content) {
+  .side-panel > :global(.content-wrapper) > :global(.scrollable-content) {
     flex: 1;
     overflow-y: auto;
     min-height: 0;

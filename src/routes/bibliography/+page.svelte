@@ -286,10 +286,6 @@
 </div>
 
 <style>
-	:global(body) {
-		overflow: auto;
-	}
-
 	.page {
 		max-width: 56rem;
 		margin: 0 auto;
