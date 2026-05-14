@@ -128,24 +128,28 @@
           <span class="operation-label-inline">({selectedOperationCell.operationLabel})</span>
         </div>
 
-        <p class="tractability-line text-sm text-gray-700 mb-2">
-          <span class={`tractability-symbol ${display.cssClass}`}>{@html display.symbolHtml}</span>
-          <span>{display.label}</span>
+        <div class={`tractability-summary ${display.cssClass}`}>
+          <span class="tractability-symbol">{@html display.symbolHtml}</span>
+          <div class="tractability-copy">
+            <span class="tractability-label">{display.label}</span>
           {#if selectedOperationCell.support.assumption}
-            <span> assuming </span>
-            <MathText
-              text={formatAssumptionForMathText(selectedOperationCell.support.assumption)}
-              className="inline"
-              onCitationClick={handleCitationClick}
-            />
+              <span class="assumption-line">
+                <span class="assumption-prefix">assuming</span>
+                <MathText
+                  text={formatAssumptionForMathText(selectedOperationCell.support.assumption)}
+                  className="inline assumption-math"
+                  onCitationClick={handleCitationClick}
+                />
+              </span>
           {/if}
-        </p>
+          </div>
+        </div>
 
         {#if selectedOperationCell.support.description}
-          <div class="description-section mb-4">
+          <div class="description-section">
             <MathText 
               text={selectedOperationCell.support.description} 
-              className="text-sm text-gray-700"
+              className="operation-description-text"
               onCitationClick={handleCitationClick}
             />
           </div>
@@ -197,8 +201,10 @@
   .cell-header {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.45rem;
+    margin-bottom: 0.85rem;
+    line-height: 1.25;
   }
 
   .panel-title {
@@ -244,26 +250,79 @@
 
   .operation-label-inline {
     color: #4b5563;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
   }
 
-  .tractability-line {
+  .tractability-summary {
     display: flex;
-    align-items: center;
-    gap: 0.35rem;
+    align-items: flex-start;
+    gap: 0.65rem;
+    margin: 0 0 0.9rem;
+    padding: 0.65rem 0.75rem;
+    border-left: 4px solid currentColor;
+    background-clip: padding-box;
   }
 
   .tractability-symbol {
-    display: inline-grid;
-    width: 1.5rem;
-    height: 1.25rem;
+    display: grid;
+    flex: 0 0 1.75rem;
+    width: 1.75rem;
+    height: 1.55rem;
     place-items: center;
-    border-radius: 0.2rem;
+    border-radius: 0.25rem;
+    background: rgba(255, 255, 255, 0.72);
     font-family: KaTeX_Main, "Times New Roman", serif;
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 700;
     line-height: 1;
+  }
+
+  .tractability-copy {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    line-height: 1.3;
+  }
+
+  .tractability-label {
+    color: #111827;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .assumption-line {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    color: #475569;
+    font-size: 0.88rem;
+  }
+
+  .assumption-prefix {
+    color: #64748b;
+    font-weight: 650;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: 0.72rem;
+  }
+
+  .assumption-line :global(.assumption-math) {
+    color: #334155;
+    font-size: 0.95rem;
+  }
+
+  .description-section {
+    margin: 0 0 1rem;
+    padding-top: 0.15rem;
+  }
+
+  .description-section :global(.operation-description-text) {
+    color: #374151;
+    font-size: 0.92rem;
+    line-height: 1.55;
   }
 
   .operation-header {
