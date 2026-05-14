@@ -20,14 +20,45 @@
     operationType,
     selectedNode = $bindable(),
     selectedOperation = $bindable(),
-    selectedOperationCell = $bindable()
+    selectedOperationCell = $bindable(),
+    highlightedOperationCellIds = new Set<string>(),
+    directEditedOperationCellIds = new Set<string>(),
+    sandboxMode = false,
+    sandboxSelectedOperationCellId = null,
+    sandboxBaselineGraphData = null,
+    onSandboxOperationEdit,
+    onSandboxOperationStatusChange
   }: {
     graphData: GraphData | FilteredGraphData;
     operationType: OperationType;
     selectedNode: KCLanguage | null;
     selectedOperation: SelectedOperation | null;
     selectedOperationCell: SelectedOperationCell | null;
+    highlightedOperationCellIds?: Set<string>;
+    directEditedOperationCellIds?: Set<string>;
+    sandboxMode?: boolean;
+    sandboxSelectedOperationCellId?: string | null;
+    sandboxBaselineGraphData?: GraphData | FilteredGraphData | null;
+    onSandboxOperationEdit?: (
+      operationType: 'query' | 'transformation',
+      languageId: string,
+      operationCode: string
+    ) => void;
+    onSandboxOperationStatusChange?: (
+      operationType: 'query' | 'transformation',
+      languageId: string,
+      operationCode: string,
+      complexity: string | null
+    ) => boolean;
   } = $props();
+
+  const UNKNOWN_OPERATION_COMPLEXITIES = new Set([
+    '',
+    'unknown',
+    'unknown-both',
+    'unknown-to-us',
+    'unknown-poly-quasi'
+  ]);
 
   // Get the operations based on type
   const operations = $derived(operationType === 'queries' ? QUERIES : TRANSFORMATIONS);
@@ -69,10 +100,15 @@
   });
 
   // Get operation support for a language
-  function getOperationSupport(language: KCLanguage, opCode: string): KCOpEntry | null {
-    const supportMap = operationType === 'queries' 
-      ? language.properties.queries 
-      : language.properties.transformations;
+  function getOperationSupport(
+    language: KCLanguage,
+    opCode: string,
+    sourceData: GraphData | FilteredGraphData = graphData
+  ): KCOpEntry | null {
+    const sourceLanguage = sourceData.languages.find((candidate) => candidate.id === language.id) ?? language;
+    const supportMap = operationType === 'queries'
+      ? sourceLanguage.properties.queries
+      : sourceLanguage.properties.transformations;
     
     const operationDefs = operationType === 'queries' ? QUERIES : TRANSFORMATIONS;
     const opDef = operationDefs[opCode];
@@ -117,10 +153,21 @@
 
   function handleCellClick(language: KCLanguage, opCode: string) {
     const support = getOperationSupport(language, opCode);
-    if (!support) return;
-
     const opDef = operations[opCode];
     if (!opDef) return;
+
+    if (sandboxMode) {
+      onSandboxOperationEdit?.(
+        operationType === 'queries' ? 'query' : 'transformation',
+        language.id,
+        opCode
+      );
+    }
+
+    if (!support) {
+      selectedOperationCell = null;
+      return;
+    }
 
     selectedNode = null;
     selectedOperation = null;
@@ -148,6 +195,50 @@
     const opDef = operations[opCode];
     return selectedOperationCell.language.id === language.id && 
            selectedOperationCell.operationCode === opDef?.code;
+  }
+
+  function operationCellId(language: KCLanguage, opCode: string): string {
+    const type = operationType === 'queries' ? 'query' : 'transformation';
+    return `${type}:${language.id}:${opCode}`;
+  }
+
+  function isPreviewHighlighted(language: KCLanguage, opCode: string): boolean {
+    return highlightedOperationCellIds.has(operationCellId(language, opCode));
+  }
+
+  function isDirectSandboxEdit(language: KCLanguage, opCode: string): boolean {
+    return directEditedOperationCellIds.has(operationCellId(language, opCode));
+  }
+
+  function isSandboxEditing(language: KCLanguage, opCode: string): boolean {
+    return sandboxMode && sandboxSelectedOperationCellId === operationCellId(language, opCode);
+  }
+
+  function getSandboxCellValue(support: KCOpEntry | null): string {
+    return support?.complexity ?? '';
+  }
+
+  function validSandboxOptions(currentValue: string): string[] {
+    return UNKNOWN_OPERATION_COMPLEXITIES.has(currentValue) ? ['', 'poly', 'no-quasi'] : [];
+  }
+
+  function optionDisplayHtml(complexity: string): string {
+    return getOperationTractabilityDisplay({ complexity }).symbolHtml;
+  }
+
+  function handleSandboxStatusClick(
+    event: MouseEvent,
+    language: KCLanguage,
+    opCode: string,
+    complexity: string
+  ) {
+    event.stopPropagation();
+    const type = operationType === 'queries' ? 'query' : 'transformation';
+    if (complexity === getSandboxCellValue(getOperationSupport(language, opCode))) {
+      onSandboxOperationEdit?.(type, language.id, opCode);
+      return;
+    }
+    onSandboxOperationStatusChange?.(type, language.id, opCode, complexity || null);
   }
 
   function getCellTitle(language: KCLanguage, opCode: string, support: KCOpEntry | null): string {
@@ -234,18 +325,74 @@
                 support,
                 operationType === 'queries' ? 'query' : 'transformation'
               )}
-              <td>
+              <td class:is-sandbox-editor-cell={isSandboxEditing(language, opCode)}>
                 {#if support}
                 <button
                   type="button"
-                  class={`matrix-cell matrix-cell--button ${display.cssClass} ${isCellSelected(language, opCode) ? 'is-selected' : ''} ${support?.dimmed ? 'is-dimmed' : ''} ${support?.explicit ? 'is-explicit' : ''}`}
+                  class={`matrix-cell matrix-cell--button ${display.cssClass} ${isCellSelected(language, opCode) ? 'is-selected' : ''} ${support?.dimmed ? 'is-dimmed' : ''} ${support?.explicit ? 'is-explicit' : ''} ${isPreviewHighlighted(language, opCode) ? 'is-preview-highlighted' : ''} ${isDirectSandboxEdit(language, opCode) ? 'is-sandbox-direct' : ''}`}
                   onclick={() => handleCellClick(language, opCode)}
                   title={getCellTitle(language, opCode, support)}
                 >
                   <span class="cell-symbol">{@html display.symbolHtml}</span>
                 </button>
+                {#if isSandboxEditing(language, opCode)}
+                  {@const currentValue = getSandboxCellValue(support)}
+                  {@const baselineValue = getSandboxCellValue(getOperationSupport(language, opCode, sandboxBaselineGraphData ?? graphData))}
+                  {@const options = validSandboxOptions(baselineValue)}
+                  {#if options.length > 0}
+                    <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${language.name} ${opCode}`}>
+                      {#each options as option}
+                        {@const optionDisplay = option ? getOperationTractabilityDisplay({ complexity: option }) : null}
+                        <button
+                          type="button"
+                          class={`sandbox-option ${optionDisplay?.cssClass ?? 'sandbox-option--blank'}`}
+                          title={optionDisplay?.label ?? 'Blank'}
+                          aria-label={optionDisplay?.label ?? 'Blank'}
+                          onclick={(event) => handleSandboxStatusClick(event, language, opCode, option)}
+                        >
+                          {#if option}
+                            <span class="cell-symbol">{@html optionDisplayHtml(option)}</span>
+                          {/if}
+                        </button>
+                      {/each}
+                    </div>
+                  {/if}
+                {/if}
                 {:else}
+                  {#if sandboxMode}
+                    <button
+                      type="button"
+                      class={`matrix-cell matrix-cell--button matrix-cell--empty ${isPreviewHighlighted(language, opCode) ? 'is-preview-highlighted' : ''} ${isDirectSandboxEdit(language, opCode) ? 'is-sandbox-direct' : ''}`}
+                      onclick={() => handleCellClick(language, opCode)}
+                      aria-label={`Edit ${language.name} ${opCode}`}
+                      title={`${language.name}: ${opCode} - no data`}
+                    >&nbsp;</button>
+                    {#if isSandboxEditing(language, opCode)}
+                      {@const currentValue = getSandboxCellValue(null)}
+                      {@const baselineValue = getSandboxCellValue(getOperationSupport(language, opCode, sandboxBaselineGraphData ?? graphData))}
+                      {@const options = validSandboxOptions(baselineValue)}
+                      {#if options.length > 0}
+                        <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${language.name} ${opCode}`}>
+                          {#each options as option}
+                            {@const optionDisplay = option ? getOperationTractabilityDisplay({ complexity: option }) : null}
+                            <button
+                              type="button"
+                              class={`sandbox-option ${optionDisplay?.cssClass ?? 'sandbox-option--blank'}`}
+                              title={optionDisplay?.label ?? 'Blank'}
+                              aria-label={optionDisplay?.label ?? 'Blank'}
+                              onclick={(event) => handleSandboxStatusClick(event, language, opCode, option)}
+                            >
+                              {#if option}
+                                <span class="cell-symbol">{@html optionDisplayHtml(option)}</span>
+                              {/if}
+                            </button>
+                          {/each}
+                        </div>
+                      {/if}
+                    {/if}
+                  {:else}
                 <span class="matrix-cell matrix-cell--empty" title={`${language.name}: ${opCode} — no data`}>&nbsp;</span>
+                  {/if}
                 {/if}
               </td>
             {/each}
@@ -383,6 +530,12 @@
     padding: 0;
   }
 
+  td.is-sandbox-editor-cell {
+    position: relative;
+    overflow: visible;
+    z-index: 20;
+  }
+
   .matrix-cell {
     width: 100%;
     height: 100%;
@@ -410,6 +563,16 @@
     background: #f9fafb;
   }
 
+  .matrix-cell.is-preview-highlighted,
+  .matrix-cell--empty.is-preview-highlighted {
+    box-shadow: inset 0 0 0 3px #a855f7;
+  }
+
+  .matrix-cell.is-sandbox-direct,
+  .matrix-cell--empty.is-sandbox-direct {
+    box-shadow: inset 0 0 0 3px #0284c7;
+  }
+
   .cell-symbol {
     font-family: KaTeX_Main, "Times New Roman", serif;
     font-size: 1.08rem;
@@ -417,9 +580,57 @@
     line-height: 1;
   }
 
+  .sandbox-cell-popover {
+    position: absolute;
+    left: 50%;
+    top: calc(100% + 0.2rem);
+    z-index: 30;
+    display: grid;
+    grid-auto-flow: row;
+    gap: 0.15rem;
+    min-width: max(2.4rem, var(--cell-width, 2.4rem));
+    transform: translateX(-50%);
+    border: 1px solid #cbd5e1;
+    border-radius: 0.3rem;
+    background: #fff;
+    padding: 0.2rem;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18);
+  }
+
+  .sandbox-option {
+    width: 100%;
+    min-width: 2.1rem;
+    height: 1.65rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid transparent;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .sandbox-option:hover,
+  .sandbox-option:focus-visible {
+    border-color: #0284c7;
+    box-shadow: inset 0 0 0 1px #0284c7;
+  }
+
+  .sandbox-option--blank {
+    background: #fff;
+  }
+
   /* Explicit (non-derived) edges - golden border to highlight manually authored data */
   .matrix-cell.is-explicit {
     box-shadow: inset 0 0 0 2px #eab308; /* yellow-500 golden border */
+  }
+
+  .matrix-cell.is-explicit.is-preview-highlighted {
+    box-shadow: inset 0 0 0 3px #a855f7, inset 0 0 0 5px #eab308;
+  }
+
+  .matrix-cell.is-explicit.is-sandbox-direct {
+    box-shadow: inset 0 0 0 3px #0284c7, inset 0 0 0 5px #eab308;
   }
 
   /* Selection borders override explicit border */

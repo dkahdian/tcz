@@ -13,6 +13,14 @@
   import { onMount } from 'svelte';
   import { browser } from '$app/environment';
   import { QUERIES, TRANSFORMATIONS } from '$lib/data/operations.js';
+  import { loadSandboxState, saveSandboxState, clearSandboxState } from '$lib/sandbox-storage.js';
+  import {
+    applySandboxEdits,
+    getChangedSuccinctnessCellIds,
+    type SandboxEdit,
+    type SandboxEvaluationResult,
+    type SandboxOperationType
+  } from '$lib/data/sandbox-transforms.js';
 
   import {
     hasQueuedChanges,
@@ -110,6 +118,15 @@
   let isPreviewMode = $state(false);
   let previewGraphData: GraphData | null = $state(null);
   let submittingPreview = $state(false);
+  let isSandboxMode = $state(false);
+  let sandboxEdits = $state<SandboxEdit[]>([]);
+  let sandboxError = $state<string | null>(null);
+  let sandboxPersistenceReady = $state(false);
+  let sandboxSelection = $state<
+    | { kind: 'edge'; sourceId: string; targetId: string }
+    | { kind: 'operation'; operationType: SandboxOperationType; languageId: string; operationCode: string }
+    | null
+  >(null);
 
   onMount(() => {
     if (!browser) {
@@ -164,6 +181,21 @@
         }
       }
     }
+
+    if (!isPreviewMode) {
+      const storedSandbox = loadSandboxState();
+      if (storedSandbox) {
+        const evaluation = applySandboxEdits(initialGraphData, storedSandbox.edits);
+        if (evaluation.ok) {
+          sandboxEdits = storedSandbox.edits;
+          isSandboxMode = true;
+        } else {
+          sandboxError = `Stored sandbox edits could not be restored: ${evaluation.error}`;
+          clearSandboxState();
+        }
+      }
+    }
+    sandboxPersistenceReady = true;
 
     try {
       const stored = localStorage.getItem(FILTER_STORAGE_KEY);
@@ -324,8 +356,15 @@
 
   const allFilters = $derived([...languageFilters, ...edgeFilters]);
 
+  const sandboxEvaluation = $derived<SandboxEvaluationResult | null>(
+    sandboxEdits.length > 0 ? applySandboxEdits(initialGraphData, sandboxEdits) : null
+  );
+  const activeSandboxGraphData = $derived(
+    isSandboxMode && sandboxEvaluation?.ok ? sandboxEvaluation.graphData : null
+  );
+
   // Compute filtered graph data reactively
-  const baseGraphData = $derived(previewGraphData || initialGraphData);
+  const baseGraphData = $derived(activeSandboxGraphData || previewGraphData || initialGraphData);
   const filteredGraphData = $derived(applyFiltersWithParams(baseGraphData, languageFilters, edgeFilters, filterStates, viewMode));
 
   function hasBaseEdge(sourceId: string, targetId: string) {
@@ -336,43 +375,25 @@
     return Boolean(adjacencyMatrix.matrix[sourceIdx]?.[targetIdx] || adjacencyMatrix.matrix[targetIdx]?.[sourceIdx]);
   }
 
-  function relationSignature(source: GraphData, sourceId: string, targetId: string): string {
-    const { adjacencyMatrix } = source;
-    const sourceIdx = adjacencyMatrix.indexByLanguage[sourceId];
-    const targetIdx = adjacencyMatrix.indexByLanguage[targetId];
-    if (sourceIdx === undefined || targetIdx === undefined) return 'missing-language';
-    const relation = adjacencyMatrix.matrix[sourceIdx]?.[targetIdx] ?? null;
-    if (!relation) return 'null';
-    return JSON.stringify({
-      status: relation.status ?? null,
-      assumption: relation.assumption ?? null,
-      description: relation.description ?? null,
-      refs: relation.refs ?? [],
-      separatingFunctionIds: relation.separatingFunctionIds ?? [],
-      derived: relation.derived ?? false,
-      noPolyDescription: relation.noPolyDescription ?? null,
-      quasiDescription: relation.quasiDescription ?? null
-    });
-  }
-
-  function getChangedSuccinctnessCellIds(base: GraphData, preview: GraphData): Set<string> {
-    const ids = new Set([...base.adjacencyMatrix.languageIds, ...preview.adjacencyMatrix.languageIds]);
-    const changed = new Set<string>();
-    for (const sourceId of ids) {
-      for (const targetId of ids) {
-        if (sourceId === targetId) continue;
-        if (relationSignature(base, sourceId, targetId) !== relationSignature(preview, sourceId, targetId)) {
-          changed.add(`${sourceId}->${targetId}`);
-        }
-      }
-    }
-    return changed;
-  }
-
   const previewChangedSuccinctnessCellIds = $derived(
     isPreviewMode && previewGraphData
       ? getChangedSuccinctnessCellIds(initialGraphData, previewGraphData)
       : new Set<string>()
+  );
+  const sandboxChangedSuccinctnessCellIds = $derived(
+    isSandboxMode && sandboxEvaluation?.ok ? sandboxEvaluation.changedEdgeIds : new Set<string>()
+  );
+  const sandboxChangedOperationCellIds = $derived(
+    isSandboxMode && sandboxEvaluation?.ok ? sandboxEvaluation.changedOperationCellIds : new Set<string>()
+  );
+  const directSandboxEdgeIds = $derived(
+    isSandboxMode && sandboxEvaluation?.ok ? sandboxEvaluation.directEdgeIds : new Set<string>()
+  );
+  const directSandboxOperationCellIds = $derived(
+    isSandboxMode && sandboxEvaluation?.ok ? sandboxEvaluation.directOperationCellIds : new Set<string>()
+  );
+  const highlightedSuccinctnessCellIds = $derived(
+    isSandboxMode ? sandboxChangedSuccinctnessCellIds : previewChangedSuccinctnessCellIds
   );
 
   function clearSelectedCells() {
@@ -380,6 +401,144 @@
     selectedOperation = null;
     selectedOperationCell = null;
   }
+
+  function handleSetSandboxMode(enabled: boolean) {
+    if (isPreviewMode) return;
+    if (isSandboxMode === enabled) return;
+    isSandboxMode = enabled;
+    sandboxSelection = null;
+    sandboxError = null;
+    clearSelectedCells();
+  }
+
+  function handleResetSandbox() {
+    sandboxEdits = [];
+    sandboxSelection = null;
+    sandboxError = null;
+    clearSandboxState();
+    clearSelectedCells();
+  }
+
+  function isSameSandboxTarget(a: SandboxEdit, b: SandboxEdit): boolean {
+    if (a.kind !== b.kind) return false;
+    if (a.kind === 'edge' && b.kind === 'edge') {
+      return a.sourceId === b.sourceId && a.targetId === b.targetId;
+    }
+    if (a.kind === 'operation' && b.kind === 'operation') {
+      return (
+        a.operationType === b.operationType &&
+        a.languageId === b.languageId &&
+        a.operationCode === b.operationCode
+      );
+    }
+    return false;
+  }
+
+  function commitSandboxEdits(nextEdits: SandboxEdit[]): boolean {
+    if (nextEdits.length === 0) {
+      sandboxEdits = [];
+      sandboxError = null;
+      return true;
+    }
+
+    const evaluation = applySandboxEdits(initialGraphData, nextEdits);
+    if (!evaluation.ok) {
+      sandboxError = evaluation.error;
+      return false;
+    }
+
+    sandboxEdits = nextEdits;
+    sandboxError = null;
+    return true;
+  }
+
+  function nextSandboxEditsFor(edit: SandboxEdit): SandboxEdit[] {
+    const retainedEdits = sandboxEdits.filter((existing) => !isSameSandboxTarget(existing, edit));
+    if (
+      (edit.kind === 'edge' && !edit.status) ||
+      (edit.kind === 'operation' && !edit.complexity)
+    ) {
+      return retainedEdits;
+    }
+    return [...retainedEdits, edit];
+  }
+
+  function handleSandboxApply(edit: SandboxEdit): boolean {
+    const nextEdits = nextSandboxEditsFor(edit);
+    return commitSandboxEdits(nextEdits);
+  }
+
+  function handleSandboxEdgeStatusChange(sourceId: string, targetId: string, status: string | null): boolean {
+    const applied = handleSandboxApply({
+      kind: 'edge',
+      sourceId,
+      targetId,
+      status
+    });
+    if (applied) sandboxSelection = null;
+    return applied;
+  }
+
+  function handleSandboxOperationStatusChange(
+    operationType: SandboxOperationType,
+    languageId: string,
+    operationCode: string,
+    complexity: string | null
+  ): boolean {
+    const applied = handleSandboxApply({
+      kind: 'operation',
+      operationType,
+      languageId,
+      operationCode,
+      complexity
+    });
+    if (applied) sandboxSelection = null;
+    return applied;
+  }
+
+  function handleSandboxEdgeEdit(sourceId: string, targetId: string) {
+    if (!isSandboxMode) return;
+    selectedNode = null;
+    if (
+      sandboxSelection?.kind === 'edge' &&
+      sandboxSelection.sourceId === sourceId &&
+      sandboxSelection.targetId === targetId
+    ) {
+      sandboxSelection = null;
+      return;
+    }
+    sandboxSelection = { kind: 'edge', sourceId, targetId };
+  }
+
+  function handleSandboxOperationEdit(
+    operationType: SandboxOperationType,
+    languageId: string,
+    operationCode: string
+  ) {
+    if (!isSandboxMode) return;
+    selectedNode = null;
+    if (
+      sandboxSelection?.kind === 'operation' &&
+      sandboxSelection.operationType === operationType &&
+      sandboxSelection.languageId === languageId &&
+      sandboxSelection.operationCode === operationCode
+    ) {
+      sandboxSelection = null;
+      return;
+    }
+    sandboxSelection = { kind: 'operation', operationType, languageId, operationCode };
+  }
+
+  const sandboxSelectedEdgeId = $derived(
+    isSandboxMode && sandboxSelection?.kind === 'edge'
+      ? `${sandboxSelection.sourceId}->${sandboxSelection.targetId}`
+      : null
+  );
+  const sandboxSelectedOperationCellId = $derived(
+    isSandboxMode && sandboxSelection?.kind === 'operation'
+      ? `${sandboxSelection.operationType}:${sandboxSelection.languageId}:${sandboxSelection.operationCode}`
+      : null
+  );
 
   function switchViewMode(newMode: ViewMode) {
     if (viewMode === newMode) return;
@@ -501,6 +660,12 @@
       }
     }
   });
+
+  $effect(() => {
+    if (sandboxPersistenceReady && browser && !isPreviewMode) {
+      saveSandboxState(sandboxEdits);
+    }
+  });
   
   // Reset selected node if it's no longer visible after filtering
   $effect(() => {
@@ -532,7 +697,7 @@
 
 <div class="app-shell">
   <!-- Header -->
-  <header class="app-header" class:preview-mode={isPreviewMode}>
+  <header class="app-header" class:preview-mode={isPreviewMode} class:sandbox-mode={isSandboxMode}>
     <div class="header-content">
       <div class="header-left">
         <h1 class="title">Tractable Circuit Zoo</h1>
@@ -543,13 +708,20 @@
             </svg>
             <span>Currently previewing your contribution</span>
           </div>
+        {:else if isSandboxMode}
+          <div class="sandbox-status-group">
+            <div class="sandbox-badge">
+              <span>Sandbox</span>
+              <strong>{sandboxEdits.length}</strong>
+            </div>
+            <button type="button" class="sandbox-reset" disabled={sandboxEdits.length === 0} onclick={handleResetSandbox}>
+              Reset
+            </button>
+          </div>
         {/if}
       </div>
       <div class="header-controls">
         {#if isPreviewMode}
-          <a href="/contribute" class="btn btn-edit" data-sveltekit-reload>
-            Edit Contribution
-          </a>
           <button
             type="button"
             onclick={handleDiscardPreview}
@@ -567,9 +739,6 @@
             {submittingPreview ? 'Submitting...' : 'Submit'}
           </button>
         {:else}
-          <a href="/contribute" class="contribute-link">
-            Contribute
-          </a>
           <a href="/about" class="about-link">
             About
           </a>
@@ -593,6 +762,9 @@
           languages={baseGraphData.languages}
           {filterStates}
           {viewMode}
+          sandboxMode={isSandboxMode}
+          sandboxDisabled={isPreviewMode}
+          onSandboxModeChange={handleSetSandboxMode}
           onFilterChange={handleFilterChange}
           onReset={handleFilterReset}
         />
@@ -612,7 +784,13 @@
             graphData={filteredGraphData}
             bind:selectedNode
             bind:selectedEdge
-            highlightedEdgeIds={previewChangedSuccinctnessCellIds}
+            highlightedEdgeIds={highlightedSuccinctnessCellIds}
+            directEditedEdgeIds={directSandboxEdgeIds}
+            sandboxMode={isSandboxMode}
+            sandboxSelectedEdgeId={sandboxSelectedEdgeId}
+            sandboxBaselineGraphData={initialGraphData}
+            onSandboxEdgeEdit={handleSandboxEdgeEdit}
+            onSandboxEdgeStatusChange={handleSandboxEdgeStatusChange}
           />
         </div>
       {/if}
@@ -623,6 +801,13 @@
           bind:selectedNode 
           bind:selectedOperation
           bind:selectedOperationCell
+          highlightedOperationCellIds={sandboxChangedOperationCellIds}
+          directEditedOperationCellIds={directSandboxOperationCellIds}
+          sandboxMode={isSandboxMode}
+          sandboxSelectedOperationCellId={sandboxSelectedOperationCellId}
+          sandboxBaselineGraphData={initialGraphData}
+          onSandboxOperationEdit={handleSandboxOperationEdit}
+          onSandboxOperationStatusChange={handleSandboxOperationStatusChange}
         />
       {:else if viewMode === 'transforms'}
         <OperationsMatrixView 
@@ -631,11 +816,24 @@
           bind:selectedNode 
           bind:selectedOperation
           bind:selectedOperationCell
+          highlightedOperationCellIds={sandboxChangedOperationCellIds}
+          directEditedOperationCellIds={directSandboxOperationCellIds}
+          sandboxMode={isSandboxMode}
+          sandboxSelectedOperationCellId={sandboxSelectedOperationCellId}
+          sandboxBaselineGraphData={initialGraphData}
+          onSandboxOperationEdit={handleSandboxOperationEdit}
+          onSandboxOperationStatusChange={handleSandboxOperationStatusChange}
         />
       {/if}
     </section>
 
     <aside class="side-panel">
+      {#if isSandboxMode && sandboxError}
+        <div class="sandbox-error" role="alert">
+          <strong>Sandbox contradiction</strong>
+          <p>{sandboxError}</p>
+        </div>
+      {/if}
       {#if viewMode === 'queries' || viewMode === 'transforms'}
         <!-- Operations matrix sidebar -->
         {#if selectedOperationCell}
@@ -742,6 +940,10 @@
     background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
   }
 
+  .app-header.sandbox-mode {
+    background: linear-gradient(135deg, #ecfeff 0%, #e0f2fe 100%);
+  }
+
   .header-content {
     display: flex;
     align-items: center;
@@ -778,6 +980,57 @@
 
   .preview-badge .icon {
     flex-shrink: 0;
+  }
+
+  .sandbox-status-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .sandbox-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.65rem;
+    background: rgba(2, 132, 199, 0.12);
+    border: 1px solid #0284c7;
+    border-radius: 0.375rem;
+    color: #075985;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .sandbox-badge strong {
+    min-width: 1.25rem;
+    height: 1.25rem;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 999px;
+    background: #0284c7;
+    color: #fff;
+    font-size: 0.72rem;
+  }
+
+  .sandbox-reset {
+    padding: 0.35rem 0.65rem;
+    border-radius: 0.375rem;
+    border: 1px solid #cbd5e1;
+    background: #fff;
+    color: #334155;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .sandbox-reset:hover:not(:disabled) {
+    background: #e2e8f0;
+    color: #0f172a;
+  }
+
+  .sandbox-reset:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 
   .header-controls {
@@ -836,16 +1089,6 @@
     cursor: not-allowed;
   }
 
-  .btn-edit {
-    background: #6366f1;
-    color: white;
-  }
-
-  .btn-edit:hover {
-    background: #4f46e5;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-
   .btn-discard {
     background: #ef4444;
     color: white;
@@ -885,28 +1128,6 @@
   }
 
   .about-link:active {
-    transform: translateY(0);
-  }
-
-  .contribute-link {
-    padding: 0.5rem 1rem;
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    color: white;
-    border-radius: 0.5rem;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.875rem;
-    transition: all 0.2s;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  }
-
-  .contribute-link:hover {
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    transform: translateY(-1px);
-  }
-
-  .contribute-link:active {
     transform: translateY(0);
   }
 
@@ -971,6 +1192,26 @@
   
   .side-panel > :global(.fixed-legend) {
     flex-shrink: 0;
+  }
+
+  .sandbox-error {
+    flex-shrink: 0;
+    padding: 0.85rem;
+    border-bottom: 1px solid #fecaca;
+    background: #fef2f2;
+    color: #991b1b;
+  }
+
+  .sandbox-error strong {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 0.82rem;
+  }
+
+  .sandbox-error p {
+    margin: 0;
+    font-size: 0.78rem;
+    line-height: 1.35;
   }
 
   /* Ensure visualizations fill container */

@@ -1,4 +1,5 @@
 import type { PageLoad } from './$types.js';
+import { redirect } from '@sveltejs/kit';
 import { allLanguages } from '$lib/data/languages.js';
 import { QUERIES, TRANSFORMATIONS } from '$lib/data/operations.js';
 import { COMPLEXITIES } from '$lib/data/complexities.js';
@@ -7,7 +8,13 @@ import { relationTypes } from '$lib/data/complexities.js';
 import { allSeparatingFunctions } from '$lib/data/separating-functions.js';
 import { allReferences } from '$lib/data/references.js';
 
+const CONTRIBUTIONS_ENABLED = false;
+
 export const load: PageLoad = () => {
+  if (!CONTRIBUTIONS_ENABLED) {
+    throw redirect(307, '/');
+  }
+
   const existingLanguageIds = allLanguages.map((lang) => lang.name);
 
   const existingReferences = allReferences.map((ref) => ({ id: ref.id, title: ref.title, bibtex: ref.bibtex }));

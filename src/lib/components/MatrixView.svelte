@@ -21,13 +21,35 @@
     graphData,
     selectedNode = $bindable(),
     selectedEdge = $bindable(),
-    highlightedEdgeIds = new Set<string>()
+    highlightedEdgeIds = new Set<string>(),
+    directEditedEdgeIds = new Set<string>(),
+    sandboxMode = false,
+    sandboxSelectedEdgeId = null,
+    sandboxBaselineGraphData = null,
+    onSandboxEdgeEdit,
+    onSandboxEdgeStatusChange
   }: {
     graphData: GraphData | FilteredGraphData;
     selectedNode: KCLanguage | null;
     selectedEdge: SelectedEdge | null;
     highlightedEdgeIds?: Set<string>;
+    directEditedEdgeIds?: Set<string>;
+    sandboxMode?: boolean;
+    sandboxSelectedEdgeId?: string | null;
+    sandboxBaselineGraphData?: GraphData | FilteredGraphData | null;
+    onSandboxEdgeEdit?: (sourceId: string, targetId: string) => void;
+    onSandboxEdgeStatusChange?: (sourceId: string, targetId: string, status: string | null) => boolean;
   } = $props();
+
+  const ALL_SANDBOX_EDGE_OPTIONS = [
+    '',
+    'poly',
+    'no-poly-unknown-quasi',
+    'no-poly-quasi',
+    'unknown-poly-quasi',
+    'unknown-both',
+    'no-quasi'
+  ];
 
   const STATUS_LABELS = $derived.by<Record<string, string>>(() => {
     return Object.fromEntries(Object.values(graphData.complexities).map((c) => [c.code, c.label]));
@@ -151,6 +173,9 @@
   }
 
   function handleCellClick(sourceId: string, targetId: string, relation: DirectedSuccinctnessRelation | null) {
+    if (sandboxMode) {
+      onSandboxEdgeEdit?.(sourceId, targetId);
+    }
     if (!relation) {
       selectedEdge = null;
       return;
@@ -181,6 +206,59 @@
 
   function isPreviewHighlighted(sourceId: string, targetId: string): boolean {
     return highlightedEdgeIds.has(`${sourceId}->${targetId}`);
+  }
+
+  function isDirectSandboxEdit(sourceId: string, targetId: string): boolean {
+    return directEditedEdgeIds.has(`${sourceId}->${targetId}`);
+  }
+
+  function isSandboxEditing(sourceId: string, targetId: string): boolean {
+    return sandboxMode && sandboxSelectedEdgeId === `${sourceId}->${targetId}`;
+  }
+
+  function getSandboxCellValue(relation: DirectedSuccinctnessRelation | null): string {
+    return relation?.status ?? '';
+  }
+
+  function getBaselineRelation(sourceId: string, targetId: string): DirectedSuccinctnessRelation | null {
+    const sourceData = sandboxBaselineGraphData ?? graphData;
+    const { adjacencyMatrix } = sourceData;
+    const sourceIndex = adjacencyMatrix.indexByLanguage[sourceId];
+    const targetIndex = adjacencyMatrix.indexByLanguage[targetId];
+    if (sourceIndex === undefined || targetIndex === undefined) return null;
+    return adjacencyMatrix.matrix[sourceIndex]?.[targetIndex] ?? null;
+  }
+
+  function validSandboxOptions(currentValue: string): string[] {
+    switch (currentValue) {
+      case 'poly':
+      case 'no-quasi':
+      case 'no-poly-quasi':
+        return [];
+      case 'no-poly-unknown-quasi':
+        return ['', 'no-poly-unknown-quasi', 'no-poly-quasi', 'no-quasi'];
+      case 'unknown-poly-quasi':
+        return ['', 'unknown-poly-quasi', 'no-poly-quasi', 'poly'];
+      case 'unknown-both':
+      case '':
+      default:
+        return ALL_SANDBOX_EDGE_OPTIONS;
+    }
+  }
+
+  function handleSandboxStatusClick(
+    event: MouseEvent,
+    sourceId: string,
+    targetId: string,
+    status: string,
+    currentValue: string
+  ) {
+    event.stopPropagation();
+    if (status === currentValue) {
+      onSandboxEdgeEdit?.(sourceId, targetId);
+      return;
+    }
+    onSandboxEdgeStatusChange?.(sourceId, targetId, status || null);
   }
 
   function getCellTitle(
@@ -295,21 +373,77 @@
               {:else}
                 {@const relation = getRelation(rowLanguage, colLanguage)}
                 {#if relation}
-                  <td>
+                  <td class:is-sandbox-editor-cell={isSandboxEditing(colLanguage.id, rowLanguage.id)}>
                     <button
                       type="button"
-                      class={`matrix-cell matrix-cell--button ${STATUS_CLASSES[relation.status]} ${relation.dimmed ? 'is-dimmed' : ''} ${relation.explicit ? 'is-explicit' : ''} ${isEdgeSelected(colLanguage.id, rowLanguage.id) ? 'is-selected' : ''} ${isComplementSelected(colLanguage.id, rowLanguage.id) ? 'is-complement' : ''} ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted' : ''} ${isLanguageHighlighted(colLanguage.id) ? 'is-col-highlighted' : ''} ${isPreviewHighlighted(colLanguage.id, rowLanguage.id) ? 'is-preview-highlighted' : ''}`}
+                      class={`matrix-cell matrix-cell--button ${STATUS_CLASSES[relation.status]} ${relation.dimmed ? 'is-dimmed' : ''} ${relation.explicit ? 'is-explicit' : ''} ${isEdgeSelected(colLanguage.id, rowLanguage.id) ? 'is-selected' : ''} ${isComplementSelected(colLanguage.id, rowLanguage.id) ? 'is-complement' : ''} ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted' : ''} ${isLanguageHighlighted(colLanguage.id) ? 'is-col-highlighted' : ''} ${isPreviewHighlighted(colLanguage.id, rowLanguage.id) ? 'is-preview-highlighted' : ''} ${isDirectSandboxEdit(colLanguage.id, rowLanguage.id) ? 'is-sandbox-direct' : ''}`}
                       onclick={() => handleCellClick(colLanguage.id, rowLanguage.id, relation)}
                       title={getCellTitle(rowLanguage.language, colLanguage.language, relation)}
                     >
                       <span class="cell-short">{@html STATUS_SHORT_HTML[relation.status]}{#if relation.assumption}*{/if}</span>
                     </button>
+                    {#if isSandboxEditing(colLanguage.id, rowLanguage.id)}
+                      {@const currentValue = getSandboxCellValue(relation)}
+                      {@const baselineValue = getSandboxCellValue(getBaselineRelation(colLanguage.id, rowLanguage.id))}
+                      {@const options = validSandboxOptions(baselineValue)}
+                      {#if options.length > 0}
+                        <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${colLanguage.language.name} to ${rowLanguage.language.name}`}>
+                          {#each options as option}
+                            <button
+                              type="button"
+                              class={`sandbox-option ${option ? STATUS_CLASSES[option] : 'sandbox-option--blank'}`}
+                              title={option ? STATUS_LABELS[option] : 'Blank'}
+                              aria-label={option ? STATUS_LABELS[option] : 'Blank'}
+                              onclick={(event) => handleSandboxStatusClick(event, colLanguage.id, rowLanguage.id, option, currentValue)}
+                            >
+                              {#if option}
+                                <span class="cell-short">{@html STATUS_SHORT_HTML[option]}</span>
+                              {/if}
+                            </button>
+                          {/each}
+                        </div>
+                      {/if}
+                    {/if}
                   </td>
                 {:else}
-                  <td
-                    class={`matrix-cell--empty ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted' : ''} ${isLanguageHighlighted(colLanguage.id) ? 'is-col-highlighted' : ''} ${isPreviewHighlighted(colLanguage.id, rowLanguage.id) ? 'is-preview-highlighted' : ''}`}
-                    title={getCellTitle(rowLanguage.language, colLanguage.language, null)}
-                  >&nbsp;</td>
+                  <td class:is-sandbox-editor-cell={isSandboxEditing(colLanguage.id, rowLanguage.id)}>
+                    {#if sandboxMode}
+                      <button
+                        type="button"
+                        class={`matrix-cell matrix-cell--button matrix-cell--empty ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted' : ''} ${isLanguageHighlighted(colLanguage.id) ? 'is-col-highlighted' : ''} ${isPreviewHighlighted(colLanguage.id, rowLanguage.id) ? 'is-preview-highlighted' : ''} ${isDirectSandboxEdit(colLanguage.id, rowLanguage.id) ? 'is-sandbox-direct' : ''}`}
+                        onclick={() => handleCellClick(colLanguage.id, rowLanguage.id, null)}
+                        aria-label={`Edit ${colLanguage.language.name} to ${rowLanguage.language.name}`}
+                        title={getCellTitle(rowLanguage.language, colLanguage.language, null)}
+                      >&nbsp;</button>
+                      {#if isSandboxEditing(colLanguage.id, rowLanguage.id)}
+                        {@const currentValue = getSandboxCellValue(null)}
+                        {@const baselineValue = getSandboxCellValue(getBaselineRelation(colLanguage.id, rowLanguage.id))}
+                        {@const options = validSandboxOptions(baselineValue)}
+                        {#if options.length > 0}
+                          <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${colLanguage.language.name} to ${rowLanguage.language.name}`}>
+                            {#each options as option}
+                              <button
+                                type="button"
+                                class={`sandbox-option ${option ? STATUS_CLASSES[option] : 'sandbox-option--blank'}`}
+                                title={option ? STATUS_LABELS[option] : 'Blank'}
+                                aria-label={option ? STATUS_LABELS[option] : 'Blank'}
+                                onclick={(event) => handleSandboxStatusClick(event, colLanguage.id, rowLanguage.id, option, currentValue)}
+                              >
+                                {#if option}
+                                  <span class="cell-short">{@html STATUS_SHORT_HTML[option]}</span>
+                                {/if}
+                              </button>
+                            {/each}
+                          </div>
+                        {/if}
+                      {/if}
+                    {:else}
+                      <span
+                        class={`matrix-cell matrix-cell--empty ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted' : ''} ${isLanguageHighlighted(colLanguage.id) ? 'is-col-highlighted' : ''} ${isPreviewHighlighted(colLanguage.id, rowLanguage.id) ? 'is-preview-highlighted' : ''}`}
+                        title={getCellTitle(rowLanguage.language, colLanguage.language, null)}
+                      >&nbsp;</span>
+                    {/if}
+                  </td>
                 {/if}
               {/if}
             {/each}
@@ -468,6 +602,12 @@
     overflow: hidden;
   }
 
+  td.is-sandbox-editor-cell {
+    position: relative;
+    overflow: visible;
+    z-index: 20;
+  }
+
   .matrix-cell {
     width: 100%;
     height: 100%;
@@ -516,6 +656,11 @@
     box-shadow: inset 0 0 0 3px #a855f7;
   }
 
+  .matrix-cell.is-sandbox-direct,
+  .matrix-cell--empty.is-sandbox-direct {
+    box-shadow: inset 0 0 0 3px #0284c7;
+  }
+
   .matrix-cell--diagonal {
     background: #e5e7eb;
   }
@@ -554,6 +699,46 @@
     letter-spacing: 0.04em;
   }
 
+  .sandbox-cell-popover {
+    position: absolute;
+    left: 50%;
+    top: calc(100% + 0.2rem);
+    z-index: 30;
+    display: grid;
+    grid-auto-flow: row;
+    gap: 0.15rem;
+    min-width: max(2.4rem, var(--cell-width, 2.4rem));
+    transform: translateX(-50%);
+    border: 1px solid #cbd5e1;
+    border-radius: 0.3rem;
+    background: #fff;
+    padding: 0.2rem;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18);
+  }
+
+  .sandbox-option {
+    width: 100%;
+    min-width: 2.1rem;
+    height: 1.65rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid transparent;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .sandbox-option:hover,
+  .sandbox-option:focus-visible {
+    border-color: #0284c7;
+    box-shadow: inset 0 0 0 1px #0284c7;
+  }
+
+  .sandbox-option--blank {
+    background: #fff;
+  }
+
   /* Explicit edges - golden border to highlight non-derived edges */
   .matrix-cell.is-explicit {
     box-shadow: inset 0 0 0 2px #eab308; /* yellow-500 golden border */
@@ -561,6 +746,10 @@
 
   .matrix-cell.is-explicit.is-preview-highlighted {
     box-shadow: inset 0 0 0 3px #a855f7, inset 0 0 0 5px #eab308;
+  }
+
+  .matrix-cell.is-explicit.is-sandbox-direct {
+    box-shadow: inset 0 0 0 3px #0284c7, inset 0 0 0 5px #eab308;
   }
 
   /* Selection borders override explicit border */
