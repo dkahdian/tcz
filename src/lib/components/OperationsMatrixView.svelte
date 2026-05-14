@@ -14,6 +14,13 @@
   import { getOperationTractabilityDisplay } from '$lib/utils/operation-tractability.js';
 
   type OperationType = 'queries' | 'transformations';
+  type SandboxOperationOption = {
+    id: string;
+    complexity: string | null;
+    assumption?: string;
+  };
+
+  const SANDBOX_CONDITIONAL_ASSUMPTION = 'your condition under test';
 
   let {
     graphData,
@@ -48,7 +55,8 @@
       operationType: 'query' | 'transformation',
       languageId: string,
       operationCode: string,
-      complexity: string | null
+      complexity: string | null,
+      assumption?: string
     ) => boolean;
   } = $props();
 
@@ -218,27 +226,71 @@
     return support?.complexity ?? '';
   }
 
-  function validSandboxOptions(currentValue: string): string[] {
-    return UNKNOWN_OPERATION_COMPLEXITIES.has(currentValue) ? ['', 'poly', 'no-quasi'] : [];
+  function validSandboxOptions(baselineSupport: KCOpEntry | null): SandboxOperationOption[] {
+    const baselineComplexity = baselineSupport?.complexity ?? '';
+    if (UNKNOWN_OPERATION_COMPLEXITIES.has(baselineComplexity)) {
+      return [
+        { id: 'blank', complexity: null },
+        { id: 'poly', complexity: 'poly' },
+        { id: 'poly-conditional', complexity: 'poly', assumption: SANDBOX_CONDITIONAL_ASSUMPTION },
+        {
+          id: 'no-poly-conditional',
+          complexity: 'no-poly-unknown-quasi',
+          assumption: SANDBOX_CONDITIONAL_ASSUMPTION
+        },
+        { id: 'no-poly', complexity: 'no-poly-unknown-quasi' }
+      ];
+    }
+
+    if (baselineSupport?.assumption) {
+      return [
+        { id: 'blank', complexity: null },
+        {
+          id: `${baselineComplexity}-conditional`,
+          complexity: baselineComplexity,
+          assumption: baselineSupport.assumption
+        },
+        { id: `${baselineComplexity}-unconditional`, complexity: baselineComplexity }
+      ];
+    }
+
+    return [];
   }
 
-  function optionDisplayHtml(complexity: string): string {
-    return getOperationTractabilityDisplay({ complexity }).symbolHtml;
+  function optionDisplay(option: SandboxOperationOption) {
+    return option.complexity
+      ? getOperationTractabilityDisplay({
+          complexity: option.complexity,
+          assumption: option.assumption
+        })
+      : null;
+  }
+
+  function isCurrentSandboxOption(option: SandboxOperationOption, support: KCOpEntry | null): boolean {
+    const currentComplexity = support?.complexity ?? null;
+    const currentAssumption = support?.assumption ?? undefined;
+    return option.complexity === currentComplexity && option.assumption === currentAssumption;
   }
 
   function handleSandboxStatusClick(
     event: MouseEvent,
     language: KCLanguage,
     opCode: string,
-    complexity: string
+    option: SandboxOperationOption
   ) {
     event.stopPropagation();
     const type = operationType === 'queries' ? 'query' : 'transformation';
-    if (complexity === getSandboxCellValue(getOperationSupport(language, opCode))) {
+    if (isCurrentSandboxOption(option, getOperationSupport(language, opCode))) {
       onSandboxOperationEdit?.(type, language.id, opCode);
       return;
     }
-    onSandboxOperationStatusChange?.(type, language.id, opCode, complexity || null);
+    onSandboxOperationStatusChange?.(
+      type,
+      language.id,
+      opCode,
+      option.complexity,
+      option.assumption
+    );
   }
 
   function getCellTitle(language: KCLanguage, opCode: string, support: KCOpEntry | null): string {
@@ -336,22 +388,21 @@
                   <span class="cell-symbol">{@html display.symbolHtml}</span>
                 </button>
                 {#if isSandboxEditing(language, opCode)}
-                  {@const currentValue = getSandboxCellValue(support)}
-                  {@const baselineValue = getSandboxCellValue(getOperationSupport(language, opCode, sandboxBaselineGraphData ?? graphData))}
-                  {@const options = validSandboxOptions(baselineValue)}
+                  {@const baselineSupport = getOperationSupport(language, opCode, sandboxBaselineGraphData ?? graphData)}
+                  {@const options = validSandboxOptions(baselineSupport)}
                   {#if options.length > 0}
                     <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${language.name} ${opCode}`}>
                       {#each options as option}
-                        {@const optionDisplay = option ? getOperationTractabilityDisplay({ complexity: option }) : null}
+                        {@const displayOption = optionDisplay(option)}
                         <button
                           type="button"
-                          class={`sandbox-option ${optionDisplay?.cssClass ?? 'sandbox-option--blank'}`}
-                          title={optionDisplay?.label ?? 'Blank'}
-                          aria-label={optionDisplay?.label ?? 'Blank'}
+                          class={`sandbox-option ${displayOption?.cssClass ?? 'sandbox-option--blank'}`}
+                          title={displayOption?.label ?? 'Blank'}
+                          aria-label={displayOption?.label ?? 'Blank'}
                           onclick={(event) => handleSandboxStatusClick(event, language, opCode, option)}
                         >
-                          {#if option}
-                            <span class="cell-symbol">{@html optionDisplayHtml(option)}</span>
+                          {#if displayOption}
+                            <span class="cell-symbol">{@html displayOption.symbolHtml}</span>
                           {/if}
                         </button>
                       {/each}
@@ -368,22 +419,21 @@
                       title={`${language.name}: ${opCode} - no data`}
                     >&nbsp;</button>
                     {#if isSandboxEditing(language, opCode)}
-                      {@const currentValue = getSandboxCellValue(null)}
-                      {@const baselineValue = getSandboxCellValue(getOperationSupport(language, opCode, sandboxBaselineGraphData ?? graphData))}
-                      {@const options = validSandboxOptions(baselineValue)}
+                      {@const baselineSupport = getOperationSupport(language, opCode, sandboxBaselineGraphData ?? graphData)}
+                      {@const options = validSandboxOptions(baselineSupport)}
                       {#if options.length > 0}
                         <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${language.name} ${opCode}`}>
                           {#each options as option}
-                            {@const optionDisplay = option ? getOperationTractabilityDisplay({ complexity: option }) : null}
+                            {@const displayOption = optionDisplay(option)}
                             <button
                               type="button"
-                              class={`sandbox-option ${optionDisplay?.cssClass ?? 'sandbox-option--blank'}`}
-                              title={optionDisplay?.label ?? 'Blank'}
-                              aria-label={optionDisplay?.label ?? 'Blank'}
+                              class={`sandbox-option ${displayOption?.cssClass ?? 'sandbox-option--blank'}`}
+                              title={displayOption?.label ?? 'Blank'}
+                              aria-label={displayOption?.label ?? 'Blank'}
                               onclick={(event) => handleSandboxStatusClick(event, language, opCode, option)}
                             >
-                              {#if option}
-                                <span class="cell-symbol">{@html optionDisplayHtml(option)}</span>
+                              {#if displayOption}
+                                <span class="cell-symbol">{@html displayOption.symbolHtml}</span>
                               {/if}
                             </button>
                           {/each}

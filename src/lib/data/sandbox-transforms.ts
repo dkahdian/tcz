@@ -229,7 +229,8 @@ function applyOperationEdit(data: GraphData, edit: Extract<SandboxEdit, { kind: 
     complexity: edit.complexity,
     refs: [],
     description: SANDBOX_DESCRIPTION,
-    derived: false
+    derived: false,
+    ...(edit.assumption ? { assumption: edit.assumption } : {})
   };
 }
 

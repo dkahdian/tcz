@@ -483,14 +483,16 @@
     operationType: SandboxOperationType,
     languageId: string,
     operationCode: string,
-    complexity: string | null
+    complexity: string | null,
+    assumption?: string
   ): boolean {
     const applied = handleSandboxApply({
       kind: 'operation',
       operationType,
       languageId,
       operationCode,
-      complexity
+      complexity,
+      assumption
     });
     if (applied) sandboxSelection = null;
     return applied;
