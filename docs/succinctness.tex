@@ -1,7 +1,7 @@
 % =============================
 % Tractable Circuit Zoo - Succinctness Claims and Descriptions
 % Auto-generated from database.json
-% Generated: 2026-05-07T23:37:00.556Z
+% Generated: 2026-05-14T22:07:29.266Z
 % 
 % EDITING INSTRUCTIONS:
 % - Claim environments are auto-generated. Do NOT edit.
@@ -113,10 +113,10 @@ For any fixed vtree $T$, \langfam{d-SDNNF}{T} is exactly the subset of \langfam{
 \end{claimdescription}
 
 \begin{claim}
-\langfam{d-SDNNF}{T} has unknown polynomial-time (but has quasi-polynomial-time) compilation to \langfam{uOBDD}{<} \citet{Amarilli_2018,Bollig_2018,Beame_2015}
+\langfam{d-SDNNF}{T} has unknown polynomial-time (but has quasi-polynomial-time) compilation to \langfam{uOBDD}{<} \citet{Amarilli_2018,Bollig_2018,Beame_2015,TCZ_Forthcoming}
 \end{claim}
 \begin{claimdescription}
-Apply the common-order simulation of quasi-note.tex to \langfam{d-SDNNF}{T}. The output order depends only on $T$, and the Bollig--Buttkus certificate argument shows that deterministic inputs yield unambiguous nondeterministic OBDDs. The polynomial lower bound follows from \langfam{d-SDNNF}{T} not compiling to \langref{nFBDD} in polynomial time and the polynomial inclusion \langfam{uOBDD}{<} $\subseteq$ \langref{nFBDD}.
+The common-order quasipolynomial simulation of \citet{TCZ_Forthcoming} specializes to \langfam{d-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$; determinism guarantees that the output is a \langfam{uOBDD}{<}.
 \end{claimdescription}
 
 \begin{claim}
@@ -169,10 +169,10 @@ This is the fixed-vtree form of Proposition 3.10 of \citet{Amarilli_2018}.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{dec-SDNNF}{T} has unknown polynomial-time (but has quasi-polynomial-time) compilation to \langfam{OBDD}{<} \citet{Amarilli_2018,Bollig_2018,Beame_2015}
+\langfam{dec-SDNNF}{T} has unknown polynomial-time (but has quasi-polynomial-time) compilation to \langfam{OBDD}{<} \citet{Amarilli_2018,Bollig_2018,Beame_2015,TCZ_Forthcoming}
 \end{claim}
 \begin{claimdescription}
-The common-order simulation of quasi-note.tex specializes to \langfam{dec-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and produces a quasipolynomial-size \langfam{OBDD}{<}. The polynomial lower bound follows from \langfam{dec-SDNNF}{T} not compiling to \langref{FBDD} in polynomial time and the polynomial inclusion \langfam{OBDD}{<} $\subseteq$ \langref{FBDD}.
+The common-order quasipolynomial simulation of \citet{TCZ_Forthcoming} specializes to \langfam{dec-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and produces a quasipolynomial-size \langfam{OBDD}{<}.
 \end{claimdescription}
 
 \begin{claim}
@@ -304,10 +304,10 @@ Theorem 2 of \citet{Bollig_2018} shows that \langref{SDNNF} can be compiled into
 \end{claimdescription}
 
 \begin{claim}
-\langfam{SDNNF}{T} has unknown polynomial-time (but has quasi-polynomial-time) compilation to \langfam{nOBDD}{<} \citet{Amarilli_2018,Bollig_2018,Beame_2015}
+\langfam{SDNNF}{T} has unknown polynomial-time (but has quasi-polynomial-time) compilation to \langfam{nOBDD}{<} \citet{Amarilli_2018,Bollig_2018,Beame_2015,TCZ_Forthcoming}
 \end{claim}
 \begin{claimdescription}
-The Bollig--Buttkus simulation of structured DNNFs by nondeterministic OBDDs can use the vtree leaf-count orientation of quasi-note.tex. For every fixed source vtree $T$, this chooses one output order $<$ depending only on $T$, not on the input circuit, and gives a quasipolynomial-size \langfam{nOBDD}{<}. The polynomial lower bound follows from \langfam{d-SDNNF}{T} not compiling to \langref{nFBDD} in polynomial time, together with the polynomial inclusions \langfam{d-SDNNF}{T} $\subseteq$ \langfam{SDNNF}{T} and \langfam{nOBDD}{<} $\subseteq$ \langref{nFBDD}.
+The \langref{SDNNF}-to-\langref{nOBDD} simulation can be oriented as in \citet{TCZ_Forthcoming}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and gives a quasipolynomial-size \langfam{nOBDD}{<}.
 \end{claimdescription}
 
 \begin{claim}
@@ -577,7 +577,7 @@ The $OR_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \lang
 \langfam{cSDD}{T} is not quasi-polynomial-time compilable to \langfam{OBDD}{<} \citet{Bova_2016_a,Bryant_1986,Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-The generalized hidden weighted bit functions $F_n$ of \citet{Bova_2016_a} have compressed SDDs of size $O(n^3)$ respecting the explicit vtrees used in the construction. Those finite vtrees can be packed, after renaming variables into disjoint blocks, into one global source vtree. For the lower bound, conditioning the auxiliary variables of $F_n$ recovers $HWB_n$; conditioning an \langfam{OBDD}{<} preserves the same variable order and cannot increase size. Since Bryant's lower bound gives exponential OBDD size for $HWB_n$ for every variable order \citet{Bryant_1986,Wegener_2000}, every fixed-order OBDD for $F_n$ is exponential. Hence \langfam{cSDD}{T} is not quasi-polynomial-time compilable to \langfam{OBDD}{<}.
+\citet{Bova_2016_a} gives functions $F_n$ with polynomial-size \langfam{cSDD}{T} representations over explicit vtrees. Conditioning the auxiliary variables of $F_n$ recovers $HWB_n$, and conditioning a \langfam{OBDD}{<} preserves the order and cannot increase size. Since \citet{Bryant_1986,Wegener_2000} give exponential \langfam{OBDD}{<} size for $HWB_n$ for every order, every \langfam{OBDD}{<} for $F_n$ is exponential. Hence \langfam{cSDD}{T} is not quasi-polynomial-time compilable to \langfam{OBDD}{<}.
 \end{claimdescription}
 
 \begin{claim}

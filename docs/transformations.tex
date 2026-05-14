@@ -1,7 +1,7 @@
 % =============================
 % Tractable Circuit Zoo - Transformation Support Claims
 % Auto-generated from database.json
-% Generated: 2026-05-07T23:37:00.571Z
+% Generated: 2026-05-14T22:07:29.278Z
 %
 % EDITING INSTRUCTIONS:
 % - Claim environments are auto-generated. Do NOT edit.
@@ -97,10 +97,10 @@ For each language $\mathcal{L}$ in
   \langfam{uOBDD}{<}
 \},
 \]
-$\mathcal{L}$ supports Conjunction not in quasi-polynomial time \citet{Darwiche_2002}.
+$\mathcal{L}$ supports Conjunction not in quasi-polynomial time \citet{Darwiche_2002,TCZ_Forthcoming}.
 \end{batchclaim}
 \begin{claimdescription}
-In the language $\mathcal{L}$, every clause has a polynomial-size representation. If $\mathcal{L}$ supported $\land$C, then every CNF could be compiled into $\mathcal{L}$ by conjoining the translated clauses. This contradicts \nedgeref{CNF}{\mathcal{L}}.
+In the language $\mathcal{L}$, every clause has a polynomial-size representation. If $\mathcal{L}$ supported $\land$C, then every \langref{CNF} could be compiled into $\mathcal{L}$ by conjoining the translated clauses. This contradicts \nedgeref{CNF}{\mathcal{L}} \citet{TCZ_Forthcoming}.
 \end{claimdescription}
 
 \begin{batchclaim}[id=darwiche-or-c-term-dnf-lower-bound, op=OR_C, status=no-quasi]
@@ -122,10 +122,10 @@ For each language $\mathcal{L}$ in
   \langfam{uOBDD}{<}
 \},
 \]
-$\mathcal{L}$ supports Disjunction not in quasi-polynomial time \citet{Darwiche_2002}.
+$\mathcal{L}$ supports Disjunction not in quasi-polynomial time \citet{Darwiche_2002,TCZ_Forthcoming}.
 \end{batchclaim}
 \begin{claimdescription}
-In the language $\mathcal{L}$, every term has a polynomial-size representation. If $\mathcal{L}$ supported $\lor$C, then every DNF could be compiled into $\mathcal{L}$ by disjoining the translated terms. This contradicts \nedgeref{DNF}{\mathcal{L}}.
+In the language $\mathcal{L}$, every term has a polynomial-size representation. If $\mathcal{L}$ supported $\lor$C, then every \langref{DNF} could be compiled into $\mathcal{L}$ by disjoining the translated terms. This contradicts \nedgeref{DNF}{\mathcal{L}} \citet{TCZ_Forthcoming}.
 \end{claimdescription}
 
 \begin{batchclaim}[id=darwiche-fo-cnf-consistency-lower-bound, op=FO, status=no-poly-unknown-quasi, assumption=P \neq NP]
@@ -155,7 +155,7 @@ For each language $\mathcal{L}$ in
 $\mathcal{L}$ supports Forgetting not in polynomial time (quasi-polynomial unknown) \citet{Darwiche_2002,VanDenBroeck_2015}.
 \end{batchclaim}
 \begin{claimdescription}
-By the standard selector-variable construction, a polynomial-time forgetting procedure for $\mathcal{L}$ would turn every DNF sentence into an equivalent polynomial-size $\mathcal{L}$ representation after introducing fresh selectors and forgetting them. This contradicts \nedgeref{DNF}{\mathcal{L}}. For \langfam{SDD}{T} and \langfam{cSDD}{T}, fix a right-linear vtree, where the language contains the ordered-BDD fragment for the corresponding variable order \citet{Darwiche_2002,VanDenBroeck_2015}.
+A polynomial-time forgetting procedure for $\mathcal{L}$ would turn every \langref{DNF} sentence into an equivalent polynomial-size $\mathcal{L}$ representation after introducing fresh selectors and forgetting them. This contradicts \nedgeref{DNF}{\mathcal{L}} \citet{TCZ_Forthcoming}.
 \end{claimdescription}
 
 
@@ -570,6 +570,99 @@ Darwiche's DNNF projection operation for forgetting variables preserves decompos
 
 
 % =============================
+\section{Tractable Circuit Zoo, "Tractable Circuit Zoo", forthcoming.}
+% Reference ID: TCZ_Forthcoming
+% =============================
+% lang=lang_1df07cc3, op=OR_C
+\begin{claim}
+\langref{nFBDD} supports Disjunction in polynomial time \citet{TCZ_Forthcoming}
+\end{claim}
+\begin{claimdescription}
+Disjunction of \langref{nFBDD} formulas is obtained by adding a top-level nondeterministic $\lor$-node whose children are the input formulas. This preserves the free read-once property.
+\end{claimdescription}
+
+% lang=lang_1df07cc3, op=CD
+\begin{claim}
+\langref{nFBDD} supports Conditioning in polynomial time \citet{TCZ_Forthcoming}
+\end{claim}
+\begin{claimdescription}
+Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. This preserves the free read-once property.
+\end{claimdescription}
+
+% lang=lang_1df07cc3, op=FO
+\begin{claim}
+\langref{nFBDD} supports Forgetting in polynomial time \citet{TCZ_Forthcoming}
+\end{claim}
+\begin{claimdescription}
+To forget a variable, replace each decision node labeled by that variable with a nondeterministic $\lor$-node over its two children. Repeating this for all forgotten variables preserves the free read-once property and computes existential quantification.
+\end{claimdescription}
+
+% lang=lang_d24efe0e, op=CD
+\begin{claim}
+\langref{nOBDD} supports Conditioning in polynomial time \citet{TCZ_Forthcoming}
+\end{claim}
+\begin{claimdescription}
+Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. This preserves the ordered decision-diagram property.
+\end{claimdescription}
+
+% lang=lang_d24efe0e, op=FO
+\begin{claim}
+\langref{nOBDD} supports Forgetting in polynomial time \citet{TCZ_Forthcoming}
+\end{claim}
+\begin{claimdescription}
+To forget a variable, replace each decision node labeled by that variable with a nondeterministic $\lor$-node over its two children. Repeating this for all forgotten variables preserves the ordered decision-diagram property and computes existential quantification.
+\end{claimdescription}
+
+% lang=lang_e827cf31, op=OR_C
+\begin{claim}
+\langfam{nOBDD}{<} supports Disjunction in polynomial time \citet{TCZ_Forthcoming}
+\end{claim}
+\begin{claimdescription}
+Disjunction of \langfam{nOBDD}{<} formulas is obtained by adding a top-level nondeterministic $\lor$-node whose children are the input formulas. Since all inputs respect the same fixed order $<$, the result is still a \langfam{nOBDD}{<} formula.
+\end{claimdescription}
+
+% lang=lang_e827cf31, op=CD
+\begin{claim}
+\langfam{nOBDD}{<} supports Conditioning in polynomial time \citet{TCZ_Forthcoming}
+\end{claim}
+\begin{claimdescription}
+Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. The fixed order $<$ is preserved.
+\end{claimdescription}
+
+% lang=lang_e827cf31, op=FO
+\begin{claim}
+\langfam{nOBDD}{<} supports Forgetting in polynomial time \citet{TCZ_Forthcoming}
+\end{claim}
+\begin{claimdescription}
+To forget a variable, replace each decision node labeled by that variable with a nondeterministic $\lor$-node over its two children. Repeating this for all forgotten variables preserves the fixed order $<$ and computes existential quantification.
+\end{claimdescription}
+
+% lang=lang_4e62a038, op=CD
+\begin{claim}
+\langref{uFBDD} supports Conditioning in polynomial time \citet{TCZ_Forthcoming}
+\end{claim}
+\begin{claimdescription}
+Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. This preserves the free read-once property and cannot create two accepting paths for a remaining assignment.
+\end{claimdescription}
+
+% lang=lang_c2df8c2b, op=CD
+\begin{claim}
+\langref{uOBDD} supports Conditioning in polynomial time \citet{TCZ_Forthcoming,Wegener_2000}
+\end{claim}
+\begin{claimdescription}
+Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. This preserves the ordered decision-diagram property and cannot create two accepting paths for a remaining assignment. For a similar closure property for parity nondeterminism, see Theorem~10.5.1 of \citet{Wegener_2000}.
+\end{claimdescription}
+
+% lang=lang_43a33aec, op=CD
+\begin{claim}
+\langfam{uOBDD}{<} supports Conditioning in polynomial time \citet{TCZ_Forthcoming}
+\end{claim}
+\begin{claimdescription}
+Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. The fixed order $<$ is preserved, and the restriction cannot create two accepting paths for a remaining assignment.
+\end{claimdescription}
+
+
+% =============================
 \section{A. Darwiche, "SDD: a new canonical representation of propositional knowledge bas...}
 % Reference ID: Darwiche_2011
 % =============================
@@ -623,6 +716,43 @@ Conditioning an \langfam{SDD}{T} sentence $f$ on a literal $l$ is equivalent to 
 
 
 % =============================
+\section{C. Meinel and T. Theobald, "Algorithms and Data Structures in VLSI Design: OBDD ...}
+% Reference ID: Meinel_Theobald_1998
+% =============================
+% lang=lang_1df07cc3, op=AND_BC
+\begin{claim}
+\langref{nFBDD} supports Bounded Conjunction not in polynomial time (quasi-polynomial unknown) assuming P \neq NP \citet{Meinel_Theobald_1998}
+\end{claim}
+\begin{claimdescription}
+Checking consistency of two OBDDs with possibly different variable orders is NP-complete (Lemma~8.14 of \citet{Meinel_Theobald_1998}). Since every OBDD is an \langref{nFBDD} and consistency for \langref{nFBDD} is polynomial-time decidable, a polynomial-time $\land$BC transformation for \langref{nFBDD} would imply P = NP.
+\end{claimdescription}
+
+% lang=lang_d24efe0e, op=AND_BC
+\begin{claim}
+\langref{nOBDD} supports Bounded Conjunction not in polynomial time (quasi-polynomial unknown) assuming P \neq NP \citet{Meinel_Theobald_1998}
+\end{claim}
+\begin{claimdescription}
+Checking consistency of two OBDDs with possibly different variable orders is NP-complete (Lemma~8.14 of \citet{Meinel_Theobald_1998}). Since every OBDD is an \langref{nOBDD} and consistency for \langref{nOBDD} is polynomial-time decidable, a polynomial-time $\land$BC transformation for \langref{nOBDD} would imply P = NP.
+\end{claimdescription}
+
+% lang=lang_4e62a038, op=AND_BC
+\begin{claim}
+\langref{uFBDD} supports Bounded Conjunction not in polynomial time (quasi-polynomial unknown) assuming P \neq NP \citet{Meinel_Theobald_1998}
+\end{claim}
+\begin{claimdescription}
+Checking consistency of two OBDDs with possibly different variable orders is NP-complete (Lemma~8.14 of \citet{Meinel_Theobald_1998}). Since every OBDD is a \langref{uFBDD} and consistency for \langref{uFBDD} is polynomial-time decidable, a polynomial-time $\land$BC transformation for \langref{uFBDD} would imply P = NP.
+\end{claimdescription}
+
+% lang=lang_c2df8c2b, op=AND_BC
+\begin{claim}
+\langref{uOBDD} supports Bounded Conjunction not in polynomial time (quasi-polynomial unknown) assuming P \neq NP \citet{Meinel_Theobald_1998}
+\end{claim}
+\begin{claimdescription}
+Checking consistency of two OBDDs with possibly different variable orders is NP-complete (Lemma~8.14 of \citet{Meinel_Theobald_1998}). Since every OBDD is a \langref{uOBDD} and consistency for \langref{uOBDD} is polynomial-time decidable, a polynomial-time $\land$BC transformation for \langref{uOBDD} would imply P = NP.
+\end{claimdescription}
+
+
+% =============================
 \section{R. E. Bryant, "Graph-based algorithms for boolean function manipulation", IEEE T...}
 % Reference ID: Bryant_1986
 % =============================
@@ -668,7 +798,7 @@ Conditioning (the restrict operation) on OBDD$_<$ replaces each node labeled by 
 \langfam{cSDD}{T} supports Negation in polynomial time \citet{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
-Canonical SDDs remain canonical under negation for a fixed vtree: intuitively, negation flips the Boolean content of subs without changing the underlying case split, and canonicity lets the result be reduced back to the unique compressed representation over the same vtree. Hence \langfam{cSDD}{T} satisfies $\neg$C in polynomial time.
+\citet{VanDenBroeck_2015} proved that reduced \langfam{SDD}{T} formulas support negation in polynomial time, by passing negation through the subs.
 \end{claimdescription}
 
 % lang=lang_82fa749e, op=AND_BC
@@ -676,7 +806,7 @@ Canonical SDDs remain canonical under negation for a fixed vtree: intuitively, n
 \langfam{cSDD}{T} supports Bounded Conjunction not in polynomial time (quasi-polynomial unknown) \citet{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
-In the full version, Theorem~6 gives an explicit lower bound for bounded conjunction on canonical SDDs with a shared fixed vtree. The intuition is that two individually small canonical inputs can be conjoined so that the result exposes exactly the kind of exponentially large compressed partition that appears in the paper's hard family. So even bounded conjunction can force the canonical output to blow up exponentially.
+\citet{VanDenBroeck_2015} proved that combining two \langfam{cSDD}{T} formulas can force exponential \langfam{cSDD}{T} size.
 \end{claimdescription}
 
 % lang=lang_82fa749e, op=CD
@@ -684,7 +814,7 @@ In the full version, Theorem~6 gives an explicit lower bound for bounded conjunc
 \langfam{cSDD}{T} supports Conditioning not in polynomial time (quasi-polynomial unknown) \citet{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
-Here the paper proves a genuine fixed-vtree lower bound, not just a table entry. The hard family is built so that before conditioning the function has a compact canonical decomposition, but conditioning on a carefully chosen literal deletes part of the top structure and leaves behind a residual function whose unique compressed partition across the same vtree split has exponentially many distinct cases. So the act of conditioning forces the canonical representation to materialize an exponentially large partition.
+\citet{VanDenBroeck_2015} proved that conditioning a \langfam{cSDD}{T} formula on a literal can force exponential \langfam{cSDD}{T} size.
 \end{claimdescription}
 
 % lang=lang_82fa749e, op=SFO
@@ -692,7 +822,7 @@ Here the paper proves a genuine fixed-vtree lower bound, not just a table entry.
 \langfam{cSDD}{T} supports Singleton Forgetting not in polynomial time (quasi-polynomial unknown) \citet{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
-The hard direction for singleton forgetting is tied to the bounded-conjunction lower bound: the paper shows that if canonical SDDs supported SFO efficiently, one could combine that with the available operations on canonical SDDs to recover an efficient bounded-conjunction procedure, contradicting the lower bound of Theorem~6. So SFO is hard for essentially the same structural reason as AND-BC, even though that implication is less immediate from the standard propagation lemmas.
+\citet{VanDenBroeck_2015} proved that forgetting one variable from a \langfam{cSDD}{T} formula can force exponential \langfam{cSDD}{T} size.
 \end{claimdescription}
 
 
