@@ -17,6 +17,7 @@ interface BatchExpansionData {
 const LANG_PLACEHOLDER_MATH = '$\\mathcal{L}$';
 const LANG_PLACEHOLDER = '\\mathcal{L}';
 const EDGE_REF_PATTERN = /\\(n?edgeref)\{([^}]+)\}\{([^}]+)\}/g;
+const LANG_PLACEHOLDER_ARG = String.raw`\$?\\mathcal\{L\}\$?`;
 const CITATION_PATTERN = /\\cite[tp]?\{([^}]+)\}/g;
 
 function languageRef(language: KCLanguage): string {
@@ -127,13 +128,13 @@ function edgeRefs(
 
 function replaceEdgePlaceholders(text: string, language: KCLanguage): string {
   return text
-    .replace(/\\(n?edgeref)\{([^}]+)\}\{\\mathcal\{L\}\}/g, (_match, command: string, sourceName: string) => {
+    .replace(new RegExp(String.raw`\\(n?edgeref)\{((?:[^{}]|\{[^{}]*\})+)\}\{${LANG_PLACEHOLDER_ARG}\}`, 'g'), (_match, command: string, sourceName: string) => {
       if (command === 'edgeref' && isLanguageRef(language, sourceName)) {
         return `${languageRef(language)} compiles to itself`;
       }
       return `\\${command}{${sourceName.trim()}}{${edgeRefLanguageName(language)}}`;
     })
-    .replace(/\\(n?edgeref)\{\\mathcal\{L\}\}\{([^}]+)\}/g, (_match, command: string, targetName: string) => {
+    .replace(new RegExp(String.raw`\\(n?edgeref)\{${LANG_PLACEHOLDER_ARG}\}\{((?:[^{}]|\{[^{}]*\})+)\}`, 'g'), (_match, command: string, targetName: string) => {
       if (command === 'edgeref' && isLanguageRef(language, targetName)) {
         return `${languageRef(language)} compiles to itself`;
       }

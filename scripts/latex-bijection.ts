@@ -2144,8 +2144,9 @@ function languageIdFromLatexRef(latexRef: string, languages: KCLanguage[]): stri
 
 function inferSelectorFromBatchClaim(claimTemplate: string, languages: KCLanguage[]): KCBatchSelector {
   const selectors: KCBatchSelector[] = [];
+  const languagePlaceholderArg = String.raw`\$?\\mathcal\{L\}\$?`;
 
-  for (const match of claimTemplate.matchAll(/\\edgeref\{((?:[^{}]|\{[^{}]*\})+)\}\{\\mathcal\{L\}\}/g)) {
+  for (const match of claimTemplate.matchAll(new RegExp(String.raw`\\edgeref\{((?:[^{}]|\{[^{}]*\})+)\}\{${languagePlaceholderArg}\}`, 'g'))) {
     const id = languageIdFromLatexRef(`\\langref{${match[1]}}`, languages);
     if (id) {
       selectors.push({
@@ -2157,7 +2158,7 @@ function inferSelectorFromBatchClaim(claimTemplate: string, languages: KCLanguag
     }
   }
 
-  for (const match of claimTemplate.matchAll(/\\edgeref\{\\mathcal\{L\}\}\{((?:[^{}]|\{[^{}]*\})+)\}/g)) {
+  for (const match of claimTemplate.matchAll(new RegExp(String.raw`\\edgeref\{${languagePlaceholderArg}\}\{((?:[^{}]|\{[^{}]*\})+)\}`, 'g'))) {
     const id = languageIdFromLatexRef(`\\langref{${match[1]}}`, languages);
     if (id) {
       selectors.push({

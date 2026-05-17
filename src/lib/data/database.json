@@ -55,7 +55,7 @@
         ]
       },
       "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langref{cSDD},\n  \\langref{d-SDNNF},\n  \\langfam{d-SDNNF}{T},\n  \\langref{DNF},\n  \\langref{DNNF},\n  \\langref{FBDD},\n  \\langref{nFBDD},\n  \\langref{nOBDD},\n  \\langref{SDD},\n  \\langfam{SDD}{T},\n  \\langref{SDNNF},\n  \\langfam{SDNNF}{T},\n  \\langref{uFBDD},\n  \\langref{uOBDD},\n  \\langref{OBDD},\n  \\langref{dec-DNNF},\n  \\langref{dec-SDNNF},\n  \\langfam{dec-SDNNF}{T},\n  \\langfam{cSDD}{T},\n  \\langfam{nOBDD}{<},\n  \\langfam{uOBDD}{<}\n\\},\n\\]\n$\\mathcal{L}$ supports Conjunction not in quasipolynomial time \\citet{Darwiche_2002,TCZ_Forthcoming}.",
-      "descriptionTemplate": "In the language $\\mathcal{L}$, every clause has a polynomial-size representation. If $\\mathcal{L}$ supported $\\land$C, then every \\langref{CNF} could be compiled into $\\mathcal{L}$ by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{\\mathcal{L}} \\citet{TCZ_Forthcoming}.",
+      "descriptionTemplate": "In the language $\\mathcal{L}$, every clause has a polynomial-size representation. If $\\mathcal{L}$ supported $\\land$C, then every \\langref{CNF} could be compiled into $\\mathcal{L}$ by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{$\\mathcal{L}$} \\citet{TCZ_Forthcoming}.",
       "refs": [
         "Darwiche_2002",
         "TCZ_Forthcoming"
@@ -94,8 +94,8 @@
           }
         ]
       },
-      "claimTemplate": "For each language $\\mathcal{L}$ such that \\edgeref{OBDD}{\\mathcal{L}} and \\edgeref{\\mathcal{L}}{DNNF},\n$\\mathcal{L}$ supports Bounded Conjunction not in quasipolynomial time \\citet{TCZ_Forthcoming}.",
-      "descriptionTemplate": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{\\mathcal{L}} and \\edgeref{\\mathcal{L}}{DNNF}, $\\mathcal{L}$ cannot support bounded conjunction.",
+      "claimTemplate": "For each language $\\mathcal{L}$ such that \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{DNNF},\n$\\mathcal{L}$ supports Bounded Conjunction not in quasipolynomial time \\citet{TCZ_Forthcoming}.",
+      "descriptionTemplate": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{DNNF}, $\\mathcal{L}$ cannot support bounded conjunction.",
       "refs": [
         "TCZ_Forthcoming"
       ]
@@ -139,7 +139,7 @@
         ]
       },
       "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langref{cSDD},\n  \\langref{d-SDNNF},\n  \\langfam{d-SDNNF}{T},\n  \\langref{FBDD},\n  \\langfam{OBDD}{<},\n  \\langfam{SDD}{T},\n  \\langref{uOBDD},\n  \\langref{OBDD},\n  \\langref{dec-DNNF},\n  \\langref{dec-SDNNF},\n  \\langfam{dec-SDNNF}{T},\n  \\langfam{cSDD}{T},\n  \\langfam{uOBDD}{<}\n\\},\n\\]\n$\\mathcal{L}$ supports Disjunction not in quasipolynomial time \\citet{Darwiche_2002,TCZ_Forthcoming}.",
-      "descriptionTemplate": "In the language $\\mathcal{L}$, every term has a polynomial-size representation. If $\\mathcal{L}$ supported $\\lor$C, then every \\langref{DNF} could be compiled into $\\mathcal{L}$ by disjoining the translated terms. This contradicts \\nedgeref{DNF}{\\mathcal{L}} \\citet{TCZ_Forthcoming}.",
+      "descriptionTemplate": "In the language $\\mathcal{L}$, every term has a polynomial-size representation. If $\\mathcal{L}$ supported $\\lor$C, then every \\langref{DNF} could be compiled into $\\mathcal{L}$ by disjoining the translated terms. This contradicts \\nedgeref{DNF}{$\\mathcal{L}$} \\citet{TCZ_Forthcoming}.",
       "refs": [
         "Darwiche_2002",
         "TCZ_Forthcoming"
@@ -189,7 +189,7 @@
         ]
       },
       "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langref{OBDD},\n  \\langfam{OBDD}{<},\n  \\langfam{SDD}{T},\n  \\langfam{cSDD}{T}\n\\},\n\\]\n$\\mathcal{L}$ supports Forgetting not in polynomial time (quasipolynomial unknown) \\citet{Darwiche_2002,VanDenBroeck_2015}.",
-      "descriptionTemplate": "A polynomial-time forgetting procedure for $\\mathcal{L}$ would turn every \\langref{DNF} sentence into an equivalent polynomial-size $\\mathcal{L}$ representation after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{\\mathcal{L}} \\citet{TCZ_Forthcoming}.",
+      "descriptionTemplate": "A polynomial-time forgetting procedure for $\\mathcal{L}$ would turn every \\langref{DNF} sentence into an equivalent polynomial-size $\\mathcal{L}$ representation after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{$\\mathcal{L}$} \\citet{TCZ_Forthcoming}.",
       "refs": [
         "Darwiche_2002",
         "VanDenBroeck_2015"
