@@ -285,12 +285,20 @@ Negation of an FBDD is achieved by switching the labels of the 0-sink and 1-sink
 Conditioning on FBDD is the restrict operation: replace each node labeled by a variable in the conditioning term with one of its children. This preserves the free (read-once) property (\citet{Darwiche_2002}, Proposition 5.1).
 \end{claimdescription}
 
-% lang=lang_684b1ca7, op=SFO
+% lang=lang_684b1ca7, op=OR_BC
 \begin{claim}
-\langref{FBDD} supports Singleton Forgetting not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citet{Darwiche_2002}
+\langref{FBDD} supports Bounded Disjunction not in quasipolynomial time \citet{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-If FBDD satisfies SFO, then it satisfies $\lor$BC (since disjunction can be encoded via SFO with a fresh variable). But FBDD does not satisfy $\lor$BC assuming P \neq NP (\citet{Darwiche_2002}, Proposition 5.1).
+Let $ROW_n$ and $COL_n$ test whether an $n \times n$ Boolean matrix has an all-1 row or an all-1 column. Each has polynomial-size FBDDs, but $ROW_n \lor COL_n$ requires FBDD size $\Omega(n^{-7/2}2^n)$ by Theorem 6.2.13 of \citet{Wegener_2000}.
+\end{claimdescription}
+
+% lang=lang_684b1ca7, op=SFO
+\begin{claim}
+\langref{FBDD} supports Singleton Forgetting not in quasipolynomial time \citet{Wegener_2000}
+\end{claim}
+\begin{claimdescription}
+Let $ROW_n$ and $COL_n$ test whether an $n \times n$ Boolean matrix has an all-1 row or an all-1 column. The selector construction $(s \land ROW_n) \lor (\neg s \land COL_n)$ has polynomial-size FBDDs: the top variable $s$ chooses a rowwise or columnwise computation. Forgetting $s$ yields $ROW_n \lor COL_n$, whose FBDD size is $\Omega(n^{-7/2}2^n)$ by Theorem~6.2.13 of \citet{Wegener_2000}.
 \end{claimdescription}
 
 % lang=lang_6ae90adc, op=NOT_C

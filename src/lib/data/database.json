@@ -797,7 +797,7 @@
             ],
             "derived": true,
             "description": "Since Disjunction implies Bounded Disjunction \\citet{Darwiche_2002}, and since \\nopref{lang_6c130090}{OR_BC} assuming P \\neq NP, then Disjunction is unsupported by d-DNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1508,
+            "derivationOrder": 1506,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
@@ -1832,46 +1832,35 @@
             "description": "Conditioning on FBDD is the restrict operation: replace each node labeled by a variable in the conditioning term with one of its children. This preserves the free (read-once) property (\\citet{Darwiche_2002}, Proposition 5.1)."
           },
           "SFO": {
-            "complexity": "no-poly-unknown-quasi",
+            "complexity": "no-quasi",
             "refs": [
-              "Darwiche_2002"
+              "Wegener_2000"
             ],
-            "assumption": "P \\neq NP",
-            "description": "If FBDD satisfies SFO, then it satisfies $\\lor$BC (since disjunction can be encoded via SFO with a fresh variable). But FBDD does not satisfy $\\lor$BC assuming P \\neq NP (\\citet{Darwiche_2002}, Proposition 5.1)."
+            "description": "Let $ROW_n$ and $COL_n$ test whether an $n \\times n$ Boolean matrix has an all-1 row or an all-1 column. The selector construction $(s \\land ROW_n) \\lor (\\neg s \\land COL_n)$ has polynomial-size FBDDs: the top variable $s$ chooses a rowwise or columnwise computation. Forgetting $s$ yields $ROW_n \\lor COL_n$, whose FBDD size is $\\Omega(n^{-7/2}2^n)$ by Theorem~6.2.13 of \\citet{Wegener_2000}."
           },
           "FO": {
-            "complexity": "no-poly-unknown-quasi",
+            "complexity": "no-quasi",
             "refs": [
-              "Darwiche_2002"
+              "Darwiche_2002",
+              "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since Forgetting implies Singleton Forgetting \\citet{Darwiche_2002}, and since \\nopref{lang_684b1ca7}{SFO} assuming P \\neq NP, then Forgetting is unsupported by FBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1463,
+            "description": "Since Forgetting implies Singleton Forgetting \\citet{Darwiche_2002}, and since \\nopref{lang_684b1ca7}{SFO} in quasipolynomial time, then Forgetting is unsupported by FBDD in quasipolynomial time as well.",
+            "derivationOrder": 1464,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
               "languageId": "lang_684b1ca7",
               "pivotOp": "FO",
-              "level": "poly"
-            },
-            "assumption": "P \\neq NP"
+              "level": "quasi"
+            }
           },
           "OR_BC": {
             "complexity": "no-quasi",
             "refs": [
-              "Darwiche_2002",
-              "TCZ_Forthcoming"
+              "Wegener_2000"
             ],
-            "derived": true,
-            "description": "Since Negation ∧ Bounded Disjunction implies Bounded Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_684b1ca7}{AND_BC} in quasipolynomial time, and since \\opref{lang_684b1ca7}{NOT_C} in quasipolynomial time, then Bounded Disjunction is unsupported by FBDD in quasipolynomial time as well.",
-            "derivationOrder": 1466,
-            "proofTrace": {
-              "rule": "lemma-contrapositive",
-              "lemmaId": "not-c-or-bc-and-bc",
-              "languageId": "lang_684b1ca7",
-              "pivotOp": "OR_BC",
-              "level": "quasi"
-            }
+            "description": "Let $ROW_n$ and $COL_n$ test whether an $n \\times n$ Boolean matrix has an all-1 row or an all-1 column. Each has polynomial-size FBDDs, but $ROW_n \\lor COL_n$ requires FBDD size $\\Omega(n^{-7/2}2^n)$ by Theorem 6.2.13 of \\citet{Wegener_2000}."
           },
           "AND_BC": {
             "complexity": "no-quasi",
@@ -2041,7 +2030,7 @@
             ],
             "derived": true,
             "description": "Since Disjunction implies Bounded Disjunction \\citet{Darwiche_2002}, and since \\nopref{lang_6ae90adc}{OR_BC} in quasipolynomial time, then Disjunction is unsupported by IP in quasipolynomial time as well.",
-            "derivationOrder": 1468,
+            "derivationOrder": 1466,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
@@ -2071,7 +2060,7 @@
             ],
             "derived": true,
             "description": "Since Forgetting implies Singleton Forgetting \\citet{Darwiche_2002}, and since \\nopref{lang_6ae90adc}{SFO} in quasipolynomial time, then Forgetting is unsupported by IP in quasipolynomial time as well.",
-            "derivationOrder": 1470,
+            "derivationOrder": 1468,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -2296,7 +2285,7 @@
             ],
             "derived": true,
             "description": "Since Disjunction implies Bounded Disjunction \\citet{Darwiche_2002}, and since \\nopref{lang_e02902d0}{OR_BC} in quasipolynomial time, then Disjunction is unsupported by MODS in quasipolynomial time as well.",
-            "derivationOrder": 1472,
+            "derivationOrder": 1470,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
@@ -2364,7 +2353,7 @@
             ],
             "derived": true,
             "description": "Since Equivalence implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_1df07cc3}{VA} assuming P \\neq NP, then Equivalence is unsupported by nFBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1473,
+            "derivationOrder": 1471,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -2383,7 +2372,7 @@
             ],
             "derived": true,
             "description": "Since Implicant implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_1df07cc3}{VA} assuming P \\neq NP, then Implicant is unsupported by nFBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1474,
+            "derivationOrder": 1472,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -2490,7 +2479,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Disjunction implies Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_1df07cc3}{AND_C} in quasipolynomial time, and since \\opref{lang_1df07cc3}{OR_C} in quasipolynomial time, then Negation is unsupported by nFBDD in quasipolynomial time as well.",
-            "derivationOrder": 1476,
+            "derivationOrder": 1474,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-c-and-c",
@@ -2651,7 +2640,7 @@
             ],
             "derived": true,
             "description": "Since Equivalence implies Consistency \\citet{Darwiche_2002}, and since \\nopref{lang_5bf00851}{CO} assuming P \\neq NP, then Equivalence is unsupported by NNF as well assuming P \\neq NP.",
-            "derivationOrder": 1477,
+            "derivationOrder": 1475,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-co",
@@ -2668,7 +2657,7 @@
             ],
             "derived": true,
             "description": "Since Implicant implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_5bf00851}{VA} assuming P \\neq NP, then Implicant is unsupported by NNF as well assuming P \\neq NP.",
-            "derivationOrder": 1478,
+            "derivationOrder": 1476,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -2685,7 +2674,7 @@
             ],
             "derived": true,
             "description": "Since Clausal Entailment implies Consistency \\citet{Darwiche_2002}, and since \\nopref{lang_5bf00851}{CO} assuming P \\neq NP, then Clausal Entailment is unsupported by NNF as well assuming P \\neq NP.",
-            "derivationOrder": 1479,
+            "derivationOrder": 1477,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "ce-co",
@@ -2702,7 +2691,7 @@
             ],
             "derived": true,
             "description": "Since Model Enumeration implies Consistency \\citet{Darwiche_2002}, and since \\nopref{lang_5bf00851}{CO} assuming P \\neq NP, then Model Enumeration is unsupported by NNF as well assuming P \\neq NP.",
-            "derivationOrder": 1480,
+            "derivationOrder": 1478,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "me-co",
@@ -2883,7 +2872,7 @@
             ],
             "derived": true,
             "description": "Since Equivalence implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_d24efe0e}{VA} assuming P \\neq NP, then Equivalence is unsupported by nOBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1481,
+            "derivationOrder": 1479,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -2902,7 +2891,7 @@
             ],
             "derived": true,
             "description": "Since Implicant implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_d24efe0e}{VA} assuming P \\neq NP, then Implicant is unsupported by nOBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1482,
+            "derivationOrder": 1480,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -2990,7 +2979,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Consistency implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_d24efe0e}{VA} assuming P \\neq NP, and since \\opref{lang_d24efe0e}{CO} in polynomial time, then Negation is unsupported by nOBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1483,
+            "derivationOrder": 1481,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-co-va",
@@ -3152,7 +3141,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Conjunction implies Disjunction \\citet{Darwiche_2002}, and since \\nopref{lang_d69995dd}{OR_C} in quasipolynomial time, and since \\opref{lang_d69995dd}{NOT_C} in quasipolynomial time, then Conjunction is unsupported by OBDD$_<$ in quasipolynomial time as well.",
-            "derivationOrder": 1485,
+            "derivationOrder": 1483,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-and-c-or-c",
@@ -3367,7 +3356,7 @@
             ],
             "derived": true,
             "description": "Since Conjunction implies Bounded Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_27fffab2}{AND_BC} in quasipolynomial time, then Conjunction is unsupported by PI in quasipolynomial time as well.",
-            "derivationOrder": 1487,
+            "derivationOrder": 1485,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "and-c-and-bc",
@@ -3623,7 +3612,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Disjunction implies Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_1afefbe2}{AND_C} in quasipolynomial time, and since \\opref{lang_1afefbe2}{NOT_C} in quasipolynomial time, then Disjunction is unsupported by SDD in quasipolynomial time as well.",
-            "derivationOrder": 1489,
+            "derivationOrder": 1487,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-c-and-c",
@@ -3655,7 +3644,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Bounded Disjunction implies Bounded Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_1afefbe2}{AND_BC} in quasipolynomial time, and since \\opref{lang_1afefbe2}{NOT_C} in quasipolynomial time, then Bounded Disjunction is unsupported by SDD in quasipolynomial time as well.",
-            "derivationOrder": 1491,
+            "derivationOrder": 1489,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-bc-and-bc",
@@ -3997,7 +3986,7 @@
             ],
             "derived": true,
             "description": "Since Equivalence implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_b13b0d78}{VA} assuming P \\neq NP, then Equivalence is unsupported by SDNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1492,
+            "derivationOrder": 1490,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -4017,7 +4006,7 @@
             ],
             "derived": true,
             "description": "Since Implicant implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_b13b0d78}{VA} assuming P \\neq NP, then Implicant is unsupported by SDNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1493,
+            "derivationOrder": 1491,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -4129,7 +4118,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Consistency implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_b13b0d78}{VA} assuming P \\neq NP, and since \\opref{lang_b13b0d78}{CO} in polynomial time, then Negation is unsupported by SDNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1494,
+            "derivationOrder": 1492,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-co-va",
@@ -4215,7 +4204,7 @@
             ],
             "derived": true,
             "description": "Since Equivalence implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_3c803ba1}{VA} assuming P \\neq NP, then Equivalence is unsupported by SDNNF$_T$ as well assuming P \\neq NP.",
-            "derivationOrder": 1495,
+            "derivationOrder": 1493,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -4234,7 +4223,7 @@
             ],
             "derived": true,
             "description": "Since Sentential Entailment implies Equivalence \\citet{Darwiche_2002}, and since \\nopref{lang_3c803ba1}{EQ} assuming P \\neq NP, then Sentential Entailment is unsupported by SDNNF$_T$ as well assuming P \\neq NP.",
-            "derivationOrder": 1496,
+            "derivationOrder": 1494,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "se-eq",
@@ -4253,7 +4242,7 @@
             ],
             "derived": true,
             "description": "Since Implicant implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_3c803ba1}{VA} assuming P \\neq NP, then Implicant is unsupported by SDNNF$_T$ as well assuming P \\neq NP.",
-            "derivationOrder": 1497,
+            "derivationOrder": 1495,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -4374,7 +4363,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Disjunction implies Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_3c803ba1}{AND_C} in quasipolynomial time, and since \\opref{lang_3c803ba1}{OR_C} in quasipolynomial time, then Negation is unsupported by SDNNF$_T$ in quasipolynomial time as well.",
-            "derivationOrder": 1499,
+            "derivationOrder": 1497,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-c-and-c",
@@ -4995,7 +4984,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Bounded Disjunction implies Bounded Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_b9d72a7c}{AND_BC} in quasipolynomial time, and since \\opref{lang_b9d72a7c}{NOT_C} in quasipolynomial time, then Bounded Disjunction is unsupported by OBDD in quasipolynomial time as well.",
-            "derivationOrder": 1501,
+            "derivationOrder": 1499,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-bc-and-bc",
@@ -5855,7 +5844,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Bounded Disjunction implies Bounded Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_82fa749e}{AND_BC}, and since \\opref{lang_82fa749e}{NOT_C} in polynomial time, then Bounded Disjunction is unsupported by cSDD$_T$ as well.",
-            "derivationOrder": 1502,
+            "derivationOrder": 1500,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-bc-and-bc",
@@ -5939,7 +5928,7 @@
             ],
             "derived": true,
             "description": "Since Equivalence implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_e827cf31}{VA} assuming P \\neq NP, then Equivalence is unsupported by nOBDD$_<$ as well assuming P \\neq NP.",
-            "derivationOrder": 1503,
+            "derivationOrder": 1501,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -5958,7 +5947,7 @@
             ],
             "derived": true,
             "description": "Since Sentential Entailment implies Equivalence \\citet{Darwiche_2002}, and since \\nopref{lang_e827cf31}{EQ} assuming P \\neq NP, then Sentential Entailment is unsupported by nOBDD$_<$ as well assuming P \\neq NP.",
-            "derivationOrder": 1504,
+            "derivationOrder": 1502,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "se-eq",
@@ -5977,7 +5966,7 @@
             ],
             "derived": true,
             "description": "Since Implicant implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_e827cf31}{VA} assuming P \\neq NP, then Implicant is unsupported by nOBDD$_<$ as well assuming P \\neq NP.",
-            "derivationOrder": 1505,
+            "derivationOrder": 1503,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -6070,7 +6059,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Disjunction implies Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_e827cf31}{AND_C} in quasipolynomial time, and since \\opref{lang_e827cf31}{OR_C} in quasipolynomial time, then Negation is unsupported by nOBDD$_<$ in quasipolynomial time as well.",
-            "derivationOrder": 1507,
+            "derivationOrder": 1505,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-c-and-c",
@@ -11590,7 +11579,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_83e3b023}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to cSDD in polynomial time, IP could support Model Counting by first compiling to cSDD. Therefore IP cannot compile to cSDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1509,
+          "derivationOrder": 1507,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -11609,7 +11598,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_6c130090}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-DNNF in polynomial time, IP could support Model Counting by first compiling to d-DNNF. Therefore IP cannot compile to d-DNNF in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1510,
+          "derivationOrder": 1508,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -11629,7 +11618,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_ea9b5299}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-SDNNF in polynomial time, IP could support Model Counting by first compiling to d-SDNNF. Therefore IP cannot compile to d-SDNNF in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1511,
+          "derivationOrder": 1509,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -11650,7 +11639,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_91f812d0}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-SDNNF$_T$ in polynomial time, IP could support Model Counting by first compiling to d-SDNNF$_T$. Therefore IP cannot compile to d-SDNNF$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1512,
+          "derivationOrder": 1510,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -11825,7 +11814,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_1afefbe2}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to SDD in polynomial time, IP could support Model Counting by first compiling to SDD. Therefore IP cannot compile to SDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1513,
+          "derivationOrder": 1511,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -11847,7 +11836,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_9c84a267}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to SDD$_T$ in polynomial time, IP could support Model Counting by first compiling to SDD$_T$. Therefore IP cannot compile to SDD$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1514,
+          "derivationOrder": 1512,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -11913,7 +11902,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_4e62a038}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uFBDD in polynomial time, IP could support Model Counting by first compiling to uFBDD. Therefore IP cannot compile to uFBDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1515,
+          "derivationOrder": 1513,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -11933,7 +11922,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_c2df8c2b}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uOBDD in polynomial time, IP could support Model Counting by first compiling to uOBDD. Therefore IP cannot compile to uOBDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1516,
+          "derivationOrder": 1514,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12044,7 +12033,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_82fa749e}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to cSDD$_T$ in polynomial time, IP could support Model Counting by first compiling to cSDD$_T$. Therefore IP cannot compile to cSDD$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1517,
+          "derivationOrder": 1515,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12086,7 +12075,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_43a33aec}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uOBDD$_<$ in polynomial time, IP could support Model Counting by first compiling to uOBDD$_<$. Therefore IP cannot compile to uOBDD$_<$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1518,
+          "derivationOrder": 1516,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
