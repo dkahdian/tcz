@@ -113,6 +113,26 @@ There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by OBDDs 
 As a result, because \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{DNNF}, $\mathcal{L}$ cannot support bounded conjunction.
 \end{claimdescription}
 
+\begin{batchclaim}[id=tcz-obdd-sdnnf-bounded-disjunction-lower-bound, op=OR_BC, status=no-quasi]
+For each language $\mathcal{L}$ such that \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{SDNNF},
+$\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \citet{TCZ_Forthcoming}.
+\end{batchclaim}
+\begin{claimdescription}
+There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\lor g$ has size $2^{\Omega(\sqrt{n})}$ \citep{TCZ_Forthcoming}.
+
+As a result, because \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{SDNNF}, $\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.
+\end{claimdescription}
+
+\begin{batchclaim}[id=tcz-obdd-d-dnnf-bounded-disjunction-lower-bound, op=OR_BC, status=no-quasi]
+For each language $\mathcal{L}$ such that \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{d-DNNF},
+$\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \citet{TCZ_Forthcoming}.
+\end{batchclaim}
+\begin{claimdescription}
+There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by OBDDs of size $O(n)$, such that any d-DNNF computing $f\lor g$ has size $2^{\Omega(\sqrt{n})}$ \citep{TCZ_Forthcoming}.
+
+As a result, because \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{d-DNNF}, $\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.
+\end{claimdescription}
+
 \begin{batchclaim}[id=darwiche-or-c-term-dnf-lower-bound, op=OR_C, status=no-quasi]
 For each language $\mathcal{L}$ in
 \[

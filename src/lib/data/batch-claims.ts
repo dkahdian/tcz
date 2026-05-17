@@ -217,6 +217,10 @@ function selectorForBatch(batch: KCBatchClaim): KCBatchSelector {
   return { kind: 'list', languageIds: batch.languageIds ?? [] };
 }
 
+function hasKnownSupport(support: KCOpSupport | undefined): boolean {
+  return support !== undefined && support.complexity !== 'unknown-to-us';
+}
+
 function clearExpandedBatchClaims(database: BatchExpansionData): void {
   for (const language of database.languages) {
     for (const opType of ['queries', 'transformations'] as const) {
@@ -251,6 +255,9 @@ export function expandBatchClaims(database: BatchExpansionData): number {
       if (!language.properties) language.properties = {};
       if (!language.properties[batch.opType]) language.properties[batch.opType] = {};
 
+      const supportMap = language.properties[batch.opType]!;
+      if (hasKnownSupport(supportMap[batch.op])) continue;
+
       const expandedDescription = expandBatchTemplate(batch.descriptionTemplate, language);
       const citedDescription = citeEdgeReferences(expandedDescription, database, resolveLanguageId);
       const refs = [...batch.refs];
@@ -265,7 +272,7 @@ export function expandBatchClaims(database: BatchExpansionData): number {
       };
       if (batch.assumption) support.assumption = batch.assumption;
 
-      language.properties[batch.opType]![batch.op] = support;
+      supportMap[batch.op] = support;
       expanded++;
     }
   }
