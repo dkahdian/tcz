@@ -133,6 +133,20 @@ There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by OBDDs 
 As a result, because \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{d-DNNF}, $\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.
 \end{claimdescription}
 
+\begin{batchclaim}[id=vinall-smeeth-unambiguous-dnf-bounded-disjunction-lower-bound, op=OR_BC, status=no-poly-unknown-quasi]
+For each language $\mathcal{L}$ in
+\[
+\{
+  \langfam{d-SDNNF}{T},
+  \langfam{uOBDD}{<}
+\},
+\]
+$\mathcal{L}$ supports Bounded Disjunction not in polynomial time (quasipolynomial unknown) \citet{Vinall-Smeeth_2024}.
+\end{batchclaim}
+\begin{claimdescription}
+The proof of Theorem 5 of \citet{Vinall-Smeeth_2024} gives unambiguous DNFs $f$ and $g$ of polynomial size such that $f \lor g$ requires $d$-SDNNF size $s^{\widetilde{\Omega}(\log s)}$. An unambiguous DNF can be transformed into a polynomial-size $\mathcal{L}$ representation, and every $\mathcal{L}$ representation can be transformed into polynomial-size $d$-SDNNF. Thus polynomial-time bounded disjunction for $\mathcal{L}$ would contradict the lower bound.
+\end{claimdescription}
+
 \begin{batchclaim}[id=darwiche-or-c-term-dnf-lower-bound, op=OR_C, status=no-quasi]
 For each language $\mathcal{L}$ in
 \[
@@ -887,6 +901,14 @@ Conditioning (the restrict operation) on OBDD$_<$ replaces each node labeled by 
 \end{claim}
 \begin{claimdescription}
 Structured deterministic DNNF (\langref{d-SDNNF}) is not closed under negation in polytime. \citet{Vinall-Smeeth_2024} proves that for every $n \in \mathbb{N}$, there exists a Boolean function $f$ with an equivalent structured $d$-DNNF of size $n$ such that any structured DNNF equivalent to $\neg f$ has size $n^{\Omega(\tilde{\log}\, n)}$. This super-polynomial lower bound holds for every vtree (not just a single tree), so the result applies to \langref{d-SDNNF} (not just \langfam{d-SDNNF}{T}). Whether quasipolynomial closure holds remains open.
+\end{claimdescription}
+
+% lang=lang_c2df8c2b, op=NOT_C
+\begin{claim}
+\langref{uOBDD} supports Negation not in polynomial time (quasipolynomial unknown) \citet{Vinall-Smeeth_2024}
+\end{claim}
+\begin{claimdescription}
+The proof of Theorem 2 of \citet{Vinall-Smeeth_2024} gives unambiguous DNFs whose negations require quasipolynomially larger $d$-SDNNF size. An unambiguous DNF can be transformed into a polynomial-size \langref{uOBDD}, and every \langref{uOBDD} can be transformed into polynomial-size \langref{d-SDNNF}. Thus polynomial-time negation for \langref{uOBDD} would contradict the lower bound.
 \end{claimdescription}
 
 

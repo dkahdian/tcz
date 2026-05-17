@@ -221,6 +221,27 @@ function hasKnownSupport(support: KCOpSupport | undefined): boolean {
   return support !== undefined && support.complexity !== 'unknown-to-us';
 }
 
+function negativeSupportRank(complexity: string | undefined): number {
+  switch (complexity) {
+    case 'no-poly-unknown-quasi':
+      return 1;
+    case 'no-poly-quasi':
+      return 2;
+    case 'no-quasi':
+      return 3;
+    default:
+      return 0;
+  }
+}
+
+function shouldApplyBatchSupport(existing: KCOpSupport | undefined, incomingComplexity: string): boolean {
+  if (!hasKnownSupport(existing)) return true;
+  const existingRank = negativeSupportRank(existing?.complexity);
+  const incomingRank = negativeSupportRank(incomingComplexity);
+  if (existingRank === 0) return false;
+  return incomingRank > existingRank;
+}
+
 function clearExpandedBatchClaims(database: BatchExpansionData): void {
   for (const language of database.languages) {
     for (const opType of ['queries', 'transformations'] as const) {
@@ -256,11 +277,13 @@ export function expandBatchClaims(database: BatchExpansionData): number {
       if (!language.properties[batch.opType]) language.properties[batch.opType] = {};
 
       const supportMap = language.properties[batch.opType]!;
-      if (hasKnownSupport(supportMap[batch.op])) continue;
+      const previousSupport = supportMap[batch.op];
+      if (!shouldApplyBatchSupport(previousSupport, batch.status)) continue;
 
       const expandedDescription = expandBatchTemplate(batch.descriptionTemplate, language);
       const citedDescription = citeEdgeReferences(expandedDescription, database, resolveLanguageId);
       const refs = [...batch.refs];
+      addUnique(refs, previousSupport?.refs);
       addUnique(refs, citedDescription.refs);
 
       const support: KCOpSupport = {
