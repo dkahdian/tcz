@@ -73,7 +73,7 @@
 % =============================
 % lang=lang_89649e36, op=CO
 \begin{claim}
-\langref{CNF} supports Consistency not in polynomial time (quasi-polynomial unknown) assuming P \neq NP \citet{Darwiche_2002}
+\langref{CNF} supports Consistency not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citet{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 Consistency checking for \langref{CNF} is NP-complete (the classic SAT problem). This is one of the foundational intractability results (\citet{Darwiche_2002}, Proposition 4.1, Table 16).
@@ -97,7 +97,7 @@ A \langref{CNF} sentence is valid iff every clause in it is valid (i.e., contain
 
 % lang=lang_4c204bf3, op=VA
 \begin{claim}
-\langref{DNF} supports Validity not in polynomial time (quasi-polynomial unknown) assuming P \neq NP \citet{Darwiche_2002}
+\langref{DNF} supports Validity not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citet{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 Validity checking for \langref{DNF} is coNP-complete. A \langref{DNF} is valid iff every assignment satisfies at least one term, which requires checking that term coverage is complete (\citet{Darwiche_2002}, Proposition 4.1, Table 16).
@@ -113,7 +113,7 @@ Consistency of a \langref{DNNF} sentence can be decided by a bottom-up traversal
 
 % lang=lang_6ae90adc, op=CT
 \begin{claim}
-\langref{IP} supports Model Counting not in polynomial time (quasi-polynomial unknown) assuming the polynomial hierarchy does not collapse \citet{Darwiche_2002}
+\langref{IP} supports Model Counting not in polynomial time (quasipolynomial unknown) assuming the polynomial hierarchy does not collapse \citet{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 By duality with \langref{PI}: the negation of a formula in prime implicate form is in prime implicant (\langref{IP}) form. The number of models of $\neg\Sigma$ over $\text{Vars}(\Sigma)$ is $2^n$ minus the model count of $\Sigma$. Hence the \#P-hardness of counting for \langref{PI} transfers to \langref{IP} (\citet{Darwiche_2002}, Proposition 4.1, Table 24).
@@ -169,7 +169,7 @@ Any query concerning \langref{OBDD} is equivalent to the corresponding query con
 
 % lang=lang_b9d72a7c, op=SE
 \begin{claim}
-\langref{OBDD} supports Sentential Entailment not in polynomial time (quasi-polynomial unknown) assuming P \neq NP \citet{Darwiche_2002,Meinel_Theobald_1998}
+\langref{OBDD} supports Sentential Entailment not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citet{Darwiche_2002,Meinel_Theobald_1998}
 \end{claim}
 \begin{claimdescription}
 Sentential entailment for \langref{OBDD} is coNP-complete. Darwiche and Marquis use the result that checking consistency of two \langfam{OBDD}{<} formulas using different variable orders is NP-complete (Lemma 8.14, \citet{Meinel_Theobald_1998}). Since \langref{OBDD} supports negation, consistency of $\alpha \land \beta$ is equivalent to $\alpha \not\models \neg\beta$, so polynomial-time SE for arbitrary OBDDs would imply polynomial-time consistency for such pairs (\citet{Darwiche_2002}, Proposition 4.1, Table 20).
@@ -185,7 +185,7 @@ By definition, \langref{PI} is the set of prime implicates of a formula. A claus
 
 % lang=lang_27fffab2, op=CT
 \begin{claim}
-\langref{PI} supports Model Counting not in polynomial time (quasi-polynomial unknown) assuming the polynomial hierarchy does not collapse \citet{Darwiche_2002,Roth_1996}
+\langref{PI} supports Model Counting not in polynomial time (quasipolynomial unknown) assuming the polynomial hierarchy does not collapse \citet{Darwiche_2002,Roth_1996}
 \end{claim}
 \begin{claimdescription}
 The model counting problem for monotone Krom formulas (conjunctions of clauses with at most two positive literals) is \#P-complete \citet{Roth_1996}. Such formulas can be converted to prime implicates form in polynomial time, so \langref{PI} does not satisfy CT (\citet{Darwiche_2002}, Proposition 4.1, Table 24).

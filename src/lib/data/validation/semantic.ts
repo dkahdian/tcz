@@ -22,9 +22,9 @@ function phraseForStatus(status: string): string {
     case 'poly':
       return 'in polynomial time';
     case 'unknown-poly-quasi':
-      return 'in at worst quasi-polynomial time';
+      return 'in at worst quasipolynomial time';
     case 'no-poly-quasi':
-      return 'in quasi-polynomial time';
+      return 'in quasipolynomial time';
     default:
       return 'in unknown time';
   }

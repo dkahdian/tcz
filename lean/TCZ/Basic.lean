@@ -5,7 +5,7 @@
   - The `Language` inductive (one constructor per KC language)
   - The `Operation` inductive (one constructor per query/transformation)
   - Opaque relation declarations: compilesInPoly, compilesInQuasi, supportsInPoly, supportsInQuasi
-  - Structural metatheorems (axioms about polynomial/quasi-polynomial computation)
+  - Structural metatheorems (axioms about polynomial/quasipolynomial computation)
 
   These are mathematical truths about polynomial-time computation, not specific
   to the TCZ data. They form the trusted kernel of the proof system.
@@ -74,13 +74,13 @@ inductive Operation where
 /-- Language `a` can be compiled to language `b` in polynomial time. -/
 axiom compilesInPoly (a b : Language) : Prop
 
-/-- Language `a` can be compiled to language `b` in quasi-polynomial time. -/
+/-- Language `a` can be compiled to language `b` in quasipolynomial time. -/
 axiom compilesInQuasi (a b : Language) : Prop
 
 /-- Language `l` supports operation `op` in polynomial time. -/
 axiom supportsInPoly (l : Language) (op : Operation) : Prop
 
-/-- Language `l` supports operation `op` in quasi-polynomial time. -/
+/-- Language `l` supports operation `op` in quasipolynomial time. -/
 axiom supportsInQuasi (l : Language) (op : Operation) : Prop
 
 -- ===========================================================================
@@ -91,11 +91,11 @@ axiom supportsInQuasi (l : Language) (op : Operation) : Prop
 axiom poly_trans {a b c : Language} :
   compilesInPoly a b → compilesInPoly b c → compilesInPoly a c
 
-/-- Transitivity of quasi-polynomial compilation. -/
+/-- Transitivity of quasipolynomial compilation. -/
 axiom quasi_trans {a b c : Language} :
   compilesInQuasi a b → compilesInQuasi b c → compilesInQuasi a c
 
-/-- Polynomial compilation implies quasi-polynomial compilation. -/
+/-- Polynomial compilation implies quasipolynomial compilation. -/
 axiom poly_implies_quasi {a b : Language} :
   compilesInPoly a b → compilesInQuasi a b
 
@@ -107,6 +107,6 @@ axiom query_via_poly {a b : Language} {op : Operation} :
 axiom query_via_quasi {a b : Language} {op : Operation} :
   compilesInQuasi a b → supportsInQuasi b op → supportsInQuasi a op
 
-/-- Polynomial operation support implies quasi-polynomial operation support. -/
+/-- Polynomial operation support implies quasipolynomial operation support. -/
 axiom poly_support_implies_quasi {l : Language} {op : Operation} :
   supportsInPoly l op → supportsInQuasi l op

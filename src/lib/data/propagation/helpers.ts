@@ -136,9 +136,9 @@ export function phraseForStatus(status: string): string {
     case 'poly':
       return 'in polynomial time';
     case 'unknown-poly-quasi':
-      return 'in at worst quasi-polynomial time';
+      return 'in at worst quasipolynomial time';
     case 'no-poly-quasi':
-      return 'in quasi-polynomial time';
+      return 'in quasipolynomial time';
     default:
       return 'in unknown time';
   }
@@ -212,7 +212,7 @@ export function formatContradictingPremise(
     case 'no-poly-unknown-quasi':
       return `\\nedgeref{${srcId}}{${tgtId}} in polynomial time${formatInlineAssumption(assumption)}`;
     case 'no-quasi':
-      return `\\nedgeref{${srcId}}{${tgtId}} in quasi-polynomial time${formatInlineAssumption(assumption)}`;
+      return `\\nedgeref{${srcId}}{${tgtId}} in quasipolynomial time${formatInlineAssumption(assumption)}`;
     default:
       return `${idToName(srcId)} and ${idToName(tgtId)} have an incompatible relationship${formatInlineAssumption(assumption)}`;
   }
@@ -226,7 +226,7 @@ export function buildNoPolyQuasiDescription(noPolyDescription: DescriptionCompon
   parts.push('First, we show no polynomial compilation exists.');
   parts.push(noPolyDescription.description);
   parts.push('');
-  parts.push('Now, we show a quasi-polynomial compilation exists.');
+  parts.push('Now, we show a quasipolynomial compilation exists.');
   parts.push(quasiDescription.description);
   return parts.join('\n');
 }

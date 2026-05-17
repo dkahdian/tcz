@@ -46,8 +46,8 @@ The proof format used in the table is:
 Any term can be represented in $L$ because [construction]. If $L$ supported $\lor$C, then DNF could compile into $L$ by disjoining all terms. Since DNF cannot compile to $L$ [in polynomial / quasipolynomial time], this is impossible.
 \end{quote}
 
-\subsection{Quasi-polynomial variants}
-The same argument works with ``not in quasi-polynomial time'' in place of ``not in polynomial time.''
+\subsection{Quasipolynomial variants}
+The same argument works with ``not in quasipolynomial time'' in place of ``not in polynomial time.''
 It also works when the lower bound is obtained by propagation rather than from a primary source directly, as long as the propagated succinctness claim is already accepted as sound.
 
 \section{Small Clause Constructions}
@@ -176,7 +176,7 @@ and similarly on the DNF side for $\lor$C.
 \section{Pending Conditional Results}
 Some results are not yet added because the best current succinctness premise is conditional or only excludes polynomial-time compilation:
 \begin{itemize}[noitemsep]
-  \item \langref{d-DNNF}: the natural $\lor$C argument should give a conditional ``not in polynomial time; quasi-polynomial open'' result, but this is already present through propagation.
+  \item \langref{d-DNNF}: the natural $\lor$C argument should give a conditional ``not in polynomial time; quasipolynomial open'' result, but this is already present through propagation.
   \item \langref{uFBDD}: the same style of argument appears available, but is being deferred until the underlying DNF lower bound becomes unconditional.
 \end{itemize}
 

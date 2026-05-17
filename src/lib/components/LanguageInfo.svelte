@@ -142,11 +142,11 @@
       case 'no-quasi':
         return { linkText: `Exponential gap between ${from} and ${to}`, suffixText: '' };
       case 'no-poly-quasi':
-        return { linkText, suffixText: ' in quasi-polynomial time only' };
+        return { linkText, suffixText: ' in quasipolynomial time only' };
       case 'no-poly-unknown-quasi':
-        return { linkText: `No polynomial compilation from ${from} to ${to}`, suffixText: '; quasi-polynomial unknown' };
+        return { linkText: `No polynomial compilation from ${from} to ${to}`, suffixText: '; quasipolynomial unknown' };
       case 'unknown-poly-quasi':
-        return { linkText: `Polynomial compilation unknown from ${from} to ${to}`, suffixText: '; quasi-polynomial exists' };
+        return { linkText: `Polynomial compilation unknown from ${from} to ${to}`, suffixText: '; quasipolynomial exists' };
       case 'unknown-both':
         return { linkText: `Complexity of compilation from ${from} to ${to}`, suffixText: ' is unknown' };
       case 'unknown':

@@ -140,8 +140,8 @@ function applyNoPolyQuasiUpgrade(
   const pathDesc = describePath(pathIds, matrix);
   const pathAssumption = collectAssumptionsUnion(path, matrix);
   const quasiConclusion = pathAssumption
-    ? `Therefore ${idToName(srcId)} compiles to ${idToName(tgtId)} in quasi-polynomial time assuming ${pathAssumption}.`
-    : `Therefore ${idToName(srcId)} compiles to ${idToName(tgtId)} in quasi-polynomial time.`;
+    ? `Therefore ${idToName(srcId)} compiles to ${idToName(tgtId)} in quasipolynomial time assuming ${pathAssumption}.`
+    : `Therefore ${idToName(srcId)} compiles to ${idToName(tgtId)} in quasipolynomial time.`;
   const quasiDesc = `${pathDesc} ${quasiConclusion}`;
   const quasiRefs = collectRefsUnion(path, matrix);
   const quasiDescription: DescriptionComponent = {
@@ -208,7 +208,7 @@ export function phaseOneUpgrade(
           const ids = path.map((idx) => languageIds[idx]);
           const desc = describePath(ids, matrix);
           contradictionError(
-            `Contradiction: ${desc} Therefore ${idToName(srcId)} compiles to ${idToName(tgtId)} in quasi-polynomial time, but ${idToName(srcId)} is marked as not compiling to ${idToName(tgtId)} in quasi-polynomial time.`
+            `Contradiction: ${desc} Therefore ${idToName(srcId)} compiles to ${idToName(tgtId)} in quasipolynomial time, but ${idToName(srcId)} is marked as not compiling to ${idToName(tgtId)} in quasipolynomial time.`
           );
         }
         const path = ensurePath(reconstructPathIndices(i, j, reachQ.parent[i]), i, j);
@@ -222,7 +222,7 @@ export function phaseOneUpgrade(
           applyNoPolyQuasiUpgrade(matrix, i, j, path, relation);
         } else {
           // Standard upgrade to unknown-poly-quasi
-          const derivedDesc = `Therefore ${idToName(srcId)} compiles to ${idToName(tgtId)} in quasi-polynomial time.`;
+          const derivedDesc = `Therefore ${idToName(srcId)} compiles to ${idToName(tgtId)} in quasipolynomial time.`;
           const pathIds = path.map((idx) => languageIds[idx]);
           applySimpleUpgrade(matrix, path, newStatus, derivedDesc, { rule: 'transitivity', path: pathIds, level: 'quasi' });
         }
@@ -328,7 +328,7 @@ export function tryDowngrade(
 
     const premisesPart = premises.join('. ') + '. ';
     const triedPhrase = phraseForStatus(triedStatus);
-    const impliedPhrase = triedStatus === 'poly' ? 'in polynomial time' : 'in at most quasi-polynomial time';
+    const impliedPhrase = triedStatus === 'poly' ? 'in polynomial time' : 'in at most quasipolynomial time';
 
     return `${premisesPart}If ${idToName(srcId)} compiled to ${idToName(tgtId)} ${triedPhrase}, then ${idToName(pathStart)} would compile to ${idToName(pathEnd)} ${impliedPhrase}, contradicting the above. Therefore ${idToName(srcId)} cannot compile to ${idToName(tgtId)} ${triedPhrase}${formatInlineAssumption(mergedAssumption)}.`;
   };

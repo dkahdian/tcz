@@ -57,7 +57,7 @@ Data was primarily sourced from \citet{Darwiche_2002}, \citet{Amarilli_2018}, \c
 
 The knowledge base stores a set of KC languages~$\textbf{L}$ and some relations on $\textbf{L}$ as defined below.
 
-Each succinctness relationship carries one of six statuses capturing the existence or non-existence of polynomial (P) and quasi-polynomial (Q) compilations. For instance, $\texttt{no-poly-unknown-quasi}$ implies that no polynomial compilation is possible, but a quasipolynomial compilation has not been shown or ruled out. Let $S$ be the set of statuses listed below:
+Each succinctness relationship carries one of six statuses capturing the existence or non-existence of polynomial (P) and quasipolynomial (Q) compilations. For instance, $\texttt{no-poly-unknown-quasi}$ implies that no polynomial compilation is possible, but a quasipolynomial compilation has not been shown or ruled out. Let $S$ be the set of statuses listed below:
 \begin{center}
 \small
 \begin{tabular}{lcc}
@@ -183,7 +183,7 @@ After phase 2, $\widetilde M_s$ is finalized (ignoring Phase~6), so we move on t
 
 This is another fixed-point algorithm using the query-by-compiling principle: if $L_1 \leq_p L_2$ (because we now have transitive closure, this is equivalent to checking all paths) and $L_2.q = \texttt{poly}$, then $L_1.q = \texttt{poly}$. Checking all triples $(L_1, L_2, q)$ takes $O((\#\textbf{L})^2(\#Q))$ time. Since there are at most $O((\#\textbf{L})^2))$ upgrades to check, this takes at most $O((\#\textbf{L})^4(\#Q))$ time, although, again, we typically converge after very few iterations.
 
-When dealing with the full set of statuses $S$, we process \texttt{poly} upgrades first (to a fixed point), then worry about quasi-polynomial status upgrades.
+When dealing with the full set of statuses $S$, we process \texttt{poly} upgrades first (to a fixed point), then worry about quasipolynomial status upgrades.
 
 \subsection{Phase 4: Upgrades via Lemmas}
 
@@ -216,7 +216,7 @@ We restrict attention to the $v = 21$ active languages (excluding 7~in-progress 
 
 Known facts become unit clauses: for instance, a \texttt{poly} edge $i \to j$ asserts $P_{ij} = \top$; a \texttt{no-quasi} edge asserts $Q_{ij} = \bot$. Edge statuses that leave one component unknown (e.g.\ \texttt{no-poly-unknown-quasi} constrains $P_{ij} = \bot$ but leaves $Q_{ij}$ free) contribute a single unit clause.
 
-The transitivity lemmas yield 3-literal clauses over all triples, for both the polynomial and quasi-polynomial layers:
+The transitivity lemmas yield 3-literal clauses over all triples, for both the polynomial and quasipolynomial layers:
 \[
   \forall\, i,j,k:\quad (\lnot P_{ij} \lor \lnot P_{jk} \lor P_{ik}) \qquad\text{and}\qquad (\lnot Q_{ij} \lor \lnot Q_{jk} \lor Q_{ik})
 \]

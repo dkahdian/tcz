@@ -100,9 +100,9 @@ interface Edge {
 const CANONICAL_STATUSES: Record<string, string> = {
   'poly':                   'is polynomial-time compilable to',
   'no-poly-unknown-quasi':  'is not polynomial-time compilable to',
-  'no-poly-quasi':          'is not polynomial-time (but is quasi-polynomial-time) compilable to',
-  'unknown-poly-quasi':     'has unknown polynomial-time (but has quasi-polynomial-time) compilation to',
-  'no-quasi':               'is not quasi-polynomial-time compilable to',
+  'no-poly-quasi':          'is not polynomial-time (but is quasipolynomial-time) compilable to',
+  'unknown-poly-quasi':     'has unknown polynomial-time (but has quasipolynomial-time) compilation to',
+  'no-quasi':               'is not quasipolynomial-time compilable to',
   'unknown-both':           'has unknown compilation to',
 };
 
@@ -113,10 +113,10 @@ const CANONICAL_STATUSES: Record<string, string> = {
 const CANONICAL_OP_COMPLEXITIES: Record<string, string> = {
   // Order matters: more specific patterns must come BEFORE less specific ones,
   // since parseOpsLatex() uses body.includes(text) and breaks on first match.
-  'no-poly-unknown-quasi':  'not in polynomial time (quasi-polynomial unknown)',
-  'no-poly-quasi':          'not in polynomial time (but in quasi-polynomial time)',
-  'unknown-poly-quasi':     'in unknown polynomial time (but in quasi-polynomial time)',
-  'no-quasi':               'not in quasi-polynomial time',
+  'no-poly-unknown-quasi':  'not in polynomial time (quasipolynomial unknown)',
+  'no-poly-quasi':          'not in polynomial time (but in quasipolynomial time)',
+  'unknown-poly-quasi':     'in unknown polynomial time (but in quasipolynomial time)',
+  'no-quasi':               'not in quasipolynomial time',
   'unknown-both':           'in unknown complexity',
   'unknown-to-us':          'in unknown-to-us complexity',
   'poly':                   'in polynomial time',
