@@ -802,6 +802,14 @@ The Quine-McCluskey algorithm generates an \langref{IP} formula in polynomial ti
 % =============================
 % separators=Generalized_HWB
 \begin{claim}
+\langfam{cSDD}{T} is not quasi-polynomial-time compilable to \langref{OBDD} \citet{Bova_2016_a}
+\end{claim}
+\begin{claimdescription}
+Theorem 4 of \citet{Bova_2016_a} constructs a generalized hidden weighted bit function $F_n$ with polynomial-size compressed SDDs respecting explicit vtrees, but every \langref{OBDD} for $F_n$ has size $2^{\Omega(n)}$. Hence \langfam{cSDD}{T} is not quasi-polynomial-time compilable to \langref{OBDD}.
+\end{claimdescription}
+
+% separators=Generalized_HWB
+\begin{claim}
 \langref{cSDD} is not quasi-polynomial-time compilable to \langref{OBDD} \citet{Bova_2016_a}
 \end{claim}
 \begin{claimdescription}
