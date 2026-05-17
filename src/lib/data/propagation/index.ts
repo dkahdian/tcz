@@ -1,4 +1,5 @@
 import type { GraphData } from '../../types.js';
+import { expandBatchClaims } from '../batch-claims.js';
 import { validateAdjacencyConsistency } from '../validation/semantic.js';
 import { initNameMap } from '../../utils/language-id.js';
 import { OPERATION_LEMMAS } from '../query-lemmas.js';
@@ -75,6 +76,10 @@ export function propagateImplicitRelations(data: GraphData): GraphData {
         }
       }
     }
+
+    // Expand authored batch claims after edge closure so selector-based batches
+    // can depend on both direct and derived succinctness edges.
+    expandBatchClaims(data);
 
     // Phase 3-5: Query propagation
     propagateQueryOperations(data);

@@ -2,6 +2,7 @@ import type {
   GraphData,
   KCSeparatingFunction,
   KCDefinition,
+  KCBatchClaim,
   NodePositionsByLanguageName
 } from '../types.js';
 import database from './database.json';
@@ -17,6 +18,7 @@ initNameMap(allLanguages);
 
 const separatingFunctions = (database.separatingFunctions ?? []) as KCSeparatingFunction[];
 const definitions = (database.definitions ?? []) as KCDefinition[];
+const batchClaims = (database.batchClaims ?? []) as KCBatchClaim[];
 const rawDefaultNodePositions = (database as { defaultNodePositionsByLanguageName?: unknown })
   .defaultNodePositionsByLanguageName;
 const defaultNodePositionsByLanguageName: NodePositionsByLanguageName | undefined = (() => {
@@ -51,5 +53,6 @@ export const canonicalDataset: GraphData = {
   references: allReferences,
   separatingFunctions,
   defaultNodePositionsByLanguageName,
-  metadata
+  metadata,
+  batchClaims
 };

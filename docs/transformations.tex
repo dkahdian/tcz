@@ -103,6 +103,16 @@ $\mathcal{L}$ supports Conjunction not in quasipolynomial time \citet{Darwiche_2
 In the language $\mathcal{L}$, every clause has a polynomial-size representation. If $\mathcal{L}$ supported $\land$C, then every \langref{CNF} could be compiled into $\mathcal{L}$ by conjoining the translated clauses. This contradicts \nedgeref{CNF}{\mathcal{L}} \citet{TCZ_Forthcoming}.
 \end{claimdescription}
 
+\begin{batchclaim}[id=tcz-obdd-dnnf-bounded-conjunction-lower-bound, op=AND_BC, status=no-quasi]
+For each language $\mathcal{L}$ such that \edgeref{OBDD}{\mathcal{L}} and \edgeref{\mathcal{L}}{DNNF},
+$\mathcal{L}$ supports Bounded Conjunction not in quasipolynomial time \citet{TCZ_Forthcoming}.
+\end{batchclaim}
+\begin{claimdescription}
+There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\land g$ has size $2^{\Omega(\sqrt{n})}$ \citep{TCZ_Forthcoming}.
+
+As a result, because \edgeref{OBDD}{\mathcal{L}} and \edgeref{\mathcal{L}}{DNNF}, $\mathcal{L}$ cannot support bounded conjunction.
+\end{claimdescription}
+
 \begin{batchclaim}[id=darwiche-or-c-term-dnf-lower-bound, op=OR_C, status=no-quasi]
 For each language $\mathcal{L}$ in
 \[

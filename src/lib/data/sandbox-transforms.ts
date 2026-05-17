@@ -265,9 +265,10 @@ export function applySandboxEdits(base: GraphData, edits: SandboxEdit[]): Sandbo
       directOperationCellIds
     };
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
     return {
       ok: false,
-      error: error instanceof Error ? error.message : String(error),
+      error: message.replace(/^Contradiction:\s*/i, ''),
       changedEdgeIds: new Set(),
       changedOperationCellIds: new Set(),
       directEdgeIds,

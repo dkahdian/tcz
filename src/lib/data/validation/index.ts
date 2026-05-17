@@ -34,6 +34,15 @@ function normalizeLanguageId(value: string): string {
   return (value ?? '').replace(LANGUAGE_ID_SANITIZER, '').trim();
 }
 
+function languageLatexRef(name: string | undefined, fallbackId: string): string {
+  const displayName = name ?? fallbackId;
+  const familyMatch = displayName.match(/^(.+)\$_(.+)\$$/);
+  if (familyMatch) {
+    return `\\langfam{${familyMatch[1]}}{${familyMatch[2]}}`;
+  }
+  return `\\langref{${displayName.replace(/\$/g, '')}}`;
+}
+
 function ensureRefsExist(
   refs: unknown,
   context: string,
@@ -293,6 +302,7 @@ function validateSeparatingFunctions(
     } else {
       ids.add(fn.shortName);
     }
+    if (fn.name) ids.add(fn.name);
     ensureRefsExist(fn.refs, `Separating function "${fn.shortName}" refs`, knownRefs, errors);
   }
   return ids;
@@ -302,27 +312,32 @@ function validateRelation(
   relation: DirectedSuccinctnessRelation,
   sourceId: string,
   targetId: string,
+  languageNames: Map<string, string>,
   knownRefs: Set<string>,
   separatingFunctionIds: Set<string>,
   errors: string[]
 ): void {
+  const sourceLabel = languageLatexRef(languageNames.get(normalizeLanguageId(sourceId)), sourceId);
+  const targetLabel = languageLatexRef(languageNames.get(normalizeLanguageId(targetId)), targetId);
+  const edgeLabel = `Edge ${sourceLabel} -> ${targetLabel}`;
+
   if (!VALID_TRANSFORMATION_STATUSES.has(relation.status)) {
-    errors.push(`Edge ${sourceId} -> ${targetId} has unknown status "${relation.status}"`);
+    errors.push(`${edgeLabel} has unknown status "${relation.status}"`);
   }
 
-  ensureRefsExist(relation.refs, `Edge ${sourceId} -> ${targetId} refs`, knownRefs, errors);
+  ensureRefsExist(relation.refs, `${edgeLabel} refs`, knownRefs, errors);
 
   if (relation.separatingFunctionIds !== undefined) {
     if (!Array.isArray(relation.separatingFunctionIds)) {
-      errors.push(`Edge ${sourceId} -> ${targetId}: separatingFunctionIds must be an array`);
+      errors.push(`${edgeLabel}: separatingFunctionIds must be an array`);
     } else {
       for (const fnId of relation.separatingFunctionIds) {
         if (typeof fnId !== 'string' || !fnId.trim()) {
-          errors.push(`Edge ${sourceId} -> ${targetId}: separatingFunctionIds must contain string IDs`);
+          errors.push(`${edgeLabel}: separatingFunctionIds must contain string IDs`);
           continue;
         }
         if (!separatingFunctionIds.has(fnId)) {
-          errors.push(`Edge ${sourceId} -> ${targetId} references unknown separating function "${fnId}"`);
+          errors.push(`${edgeLabel} references unknown separating function "${fnId}"`);
         }
       }
     }
@@ -331,6 +346,7 @@ function validateRelation(
 
 function validateRelations(
   matrix: KCAdjacencyMatrix,
+  languageNames: Map<string, string>,
   knownRefs: Set<string>,
   separatingFunctionIds: Set<string>,
   errors: string[]
@@ -340,7 +356,7 @@ function validateRelations(
     for (let j = 0; j < languageIds.length; j += 1) {
       const relation = relations[i]?.[j];
       if (!relation) continue;
-      validateRelation(relation, languageIds[i], languageIds[j], knownRefs, separatingFunctionIds, errors);
+      validateRelation(relation, languageIds[i], languageIds[j], languageNames, knownRefs, separatingFunctionIds, errors);
     }
   }
 }
@@ -358,7 +374,7 @@ export function validateDatasetStructure(data: GraphData): TransformValidationRe
   validateDefinitions(data.definitions, globalReferenceRegistry, errors);
 
   const separatingFunctionIds = validateSeparatingFunctions(data.separatingFunctions ?? [], globalReferenceRegistry, errors);
-  validateRelations(data.adjacencyMatrix, globalReferenceRegistry, separatingFunctionIds, errors);
+  validateRelations(data.adjacencyMatrix, knownLanguages, globalReferenceRegistry, separatingFunctionIds, errors);
 
   return errors.length > 0 ? { ok: false, errors } : { ok: true };
 }

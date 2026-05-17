@@ -13,7 +13,6 @@
  */
 
 import { loadDatabase, saveDatabase, type DatabaseSchema } from './shared/database.js';
-import { expandBatchClaims } from './shared/batch-claims.js';
 import { hydrateEntityReferenceRefs } from './shared/entity-reference-refs.js';
 
 // Import the propagation logic and types
@@ -161,10 +160,6 @@ function main(): void {
   console.log(`Removed ${queriesRemoved} derived queries.`);
   console.log(`Removed ${transformationsRemoved} derived transformations.\n`);
 
-  console.log('Expanding authored batch claims...');
-  const batchExpanded = expandBatchClaims(database);
-  console.log(`Expanded ${batchExpanded} batch claim entries.\n`);
-  
   // Build graph data structure for propagation
   // Note: complexities and relationTypes come from complexities.ts, not database.json
   const graphData: GraphData = {
@@ -174,7 +169,8 @@ function main(): void {
     complexities: COMPLEXITIES,
     relationTypes: relationTypes,
     adjacencyMatrix: database.adjacencyMatrix,
-    metadata: database.metadata
+    metadata: database.metadata,
+    batchClaims: database.batchClaims
   };
   
   // Run propagation
@@ -190,12 +186,6 @@ function main(): void {
   // Update database with propagated matrix
   database.adjacencyMatrix = propagated.adjacencyMatrix;
 
-  // Re-expand batch claims after propagation so \edgeref/\nedgeref citations can
-  // resolve against derived succinctness edges as well as authored ones.
-  console.log('\nRefreshing batch claim edge citations...');
-  const batchHydrated = expandBatchClaims(database);
-  console.log(`Hydrated ${batchHydrated} batch claim entries.`);
-
   console.log('\nHydrating entity-reference citations...');
   const entityRefHydrated = hydrateEntityReferenceRefs(database);
   console.log(`Hydrated refs for ${entityRefHydrated} facts with entity-reference premises.`);
@@ -207,7 +197,6 @@ function main(): void {
   console.log('\n=== Done ===');
   console.log(`Summary: Removed ${removed} edges, Reverted ${reverted} edges`);
   console.log(`         Removed ${queriesRemoved} queries, ${transformationsRemoved} transformations`);
-  console.log(`         Expanded ${batchExpanded} batch claim entries`);
   console.log(`         Generated ${newDerived} derived edges`);
   console.log(`         Hydrated ${entityRefHydrated} entity-reference fact ref lists`);
 }

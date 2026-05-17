@@ -138,13 +138,29 @@ export interface KCOpSupport {
  * A human-authored grouped operation claim, expanded into ordinary derived
  * operation support entries before propagation.
  */
+export type KCBatchLanguageRef =
+  | { kind: 'current' }
+  | { kind: 'language'; id: string };
+
+export type KCBatchSelector =
+  | { kind: 'list'; languageIds: string[] }
+  | { kind: 'allOf'; selectors: KCBatchSelector[] }
+  | { kind: 'anyOf'; selectors: KCBatchSelector[] }
+  | {
+      kind: 'edge';
+      source: KCBatchLanguageRef;
+      target: KCBatchLanguageRef;
+      level: 'poly' | 'quasi';
+    };
+
 export interface KCBatchClaim {
   id: string;
   opType: 'queries' | 'transformations';
   op: string;
   status: string;
   assumption?: string;
-  languageIds: string[];
+  languageIds?: string[];
+  selector?: KCBatchSelector;
   claimTemplate: string;
   descriptionTemplate: string;
   refs: string[];
@@ -409,6 +425,8 @@ export interface GraphData {
   defaultNodePositionsByLanguageName?: NodePositionsByLanguageName;
   /** optional metadata copied from database.json */
   metadata?: Record<string, unknown>;
+  /** authored grouped operation claims expanded during propagation */
+  batchClaims?: KCBatchClaim[];
   /** UI-filtered operation visibility, used by operation matrix views. */
   operationVisibility?: {
     queryIds: string[];

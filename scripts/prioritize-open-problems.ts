@@ -42,7 +42,8 @@ function buildGraphData(database: DatabaseSchema): GraphData {
     complexities: COMPLEXITIES,
     relationTypes: relationTypes,
     adjacencyMatrix: database.adjacencyMatrix,
-    metadata: database.metadata
+    metadata: database.metadata,
+    batchClaims: database.batchClaims
   };
 }
 

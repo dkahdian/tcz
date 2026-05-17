@@ -6,6 +6,7 @@
   import EdgeInfo from '$lib/components/EdgeInfo.svelte';
   import OperationInfo from '$lib/components/OperationInfo.svelte';
   import FilterDrawer from '$lib/components/FilterDrawer.svelte';
+  import MathText from '$lib/components/MathText.svelte';
 
   import { initialGraphData, getAllLanguageFilters, getAllEdgeFilters } from '$lib/data/index.js';
   import { applyFiltersWithParams, computeEffectiveFilterState, extractDeltasFromState, getVisibleFiltersForView, updateDelta, type FilterDeltas } from '$lib/filter-utils.js';
@@ -832,8 +833,10 @@
     <aside class="side-panel">
       {#if isSandboxMode && sandboxError}
         <div class="sandbox-error" role="alert">
-          <strong>Sandbox contradiction</strong>
-          <p>{sandboxError}</p>
+          <strong>Sandbox error</strong>
+          <div class="sandbox-error-message">
+            <MathText text={sandboxError} />
+          </div>
         </div>
       {/if}
       {#if viewMode === 'queries' || viewMode === 'transforms'}
@@ -1210,7 +1213,7 @@
     font-size: 0.82rem;
   }
 
-  .sandbox-error p {
+  .sandbox-error-message {
     margin: 0;
     font-size: 0.78rem;
     line-height: 1.35;

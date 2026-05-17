@@ -39,7 +39,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { DATABASE_PATH, loadDatabase, saveDatabase, type DatabaseSchema } from './shared/database.js';
-import { expandBatchClaims, expandBatchTemplate } from './shared/batch-claims.js';
 import { cleanBibtexText, extractBibtexField } from '../src/lib/utils/bibtex.js';
 
 // Get script directory (still needed for LaTeX/BibTeX paths)
@@ -65,7 +64,8 @@ import type {
   KCSeparatingFunction,
   KCOpSupport,
   KCOpSupportMap,
-  KCBatchClaim
+  KCBatchClaim,
+  KCBatchSelector
 } from '../src/lib/types.js';
 
 // =============================================================================
@@ -2101,9 +2101,13 @@ function parseOptionList(raw: string): Record<string, string> {
 }
 
 function opRefsFromClaimTemplate(claimTemplate: string): string[] {
-  const citeMatch = claimTemplate.match(/\\citet?\{([^}]+)\}\s*\.?\s*$/);
-  if (!citeMatch) return [];
-  return citeMatch[1].split(',').map(s => s.trim()).filter(Boolean);
+  const refs: string[] = [];
+  for (const match of claimTemplate.matchAll(/\\cite[tp]?\{([^}]+)\}/g)) {
+    for (const ref of match[1].split(',').map(s => s.trim()).filter(Boolean)) {
+      if (!refs.includes(ref)) refs.push(ref);
+    }
+  }
+  return refs;
 }
 
 function languageIdsFromBatchClaim(claimTemplate: string, languages: KCLanguage[]): string[] {
@@ -2131,6 +2135,45 @@ function languageIdsFromBatchClaim(claimTemplate: string, languages: KCLanguage[
   }
 
   return ids;
+}
+
+function languageIdFromLatexRef(latexRef: string, languages: KCLanguage[]): string | undefined {
+  const name = parseLanguageName(latexRef);
+  return languages.find((language) => language.name === name)?.id;
+}
+
+function inferSelectorFromBatchClaim(claimTemplate: string, languages: KCLanguage[]): KCBatchSelector {
+  const selectors: KCBatchSelector[] = [];
+
+  for (const match of claimTemplate.matchAll(/\\edgeref\{((?:[^{}]|\{[^{}]*\})+)\}\{\\mathcal\{L\}\}/g)) {
+    const id = languageIdFromLatexRef(`\\langref{${match[1]}}`, languages);
+    if (id) {
+      selectors.push({
+        kind: 'edge',
+        source: { kind: 'language', id },
+        target: { kind: 'current' },
+        level: 'poly'
+      });
+    }
+  }
+
+  for (const match of claimTemplate.matchAll(/\\edgeref\{\\mathcal\{L\}\}\{((?:[^{}]|\{[^{}]*\})+)\}/g)) {
+    const id = languageIdFromLatexRef(`\\langref{${match[1]}}`, languages);
+    if (id) {
+      selectors.push({
+        kind: 'edge',
+        source: { kind: 'current' },
+        target: { kind: 'language', id },
+        level: 'poly'
+      });
+    }
+  }
+
+  if (selectors.length === 1) return selectors[0];
+  if (selectors.length > 1) return { kind: 'allOf', selectors };
+
+  const languageIds = languageIdsFromBatchClaim(claimTemplate, languages);
+  return { kind: 'list', languageIds };
 }
 
 /**
@@ -2635,8 +2678,9 @@ function parseBatchOpsLatex(
     }
 
     const trimmedClaim = claimTemplate.trim();
-    const languageIds = languageIdsFromBatchClaim(trimmedClaim, languages);
-    if (languageIds.length === 0) {
+    const selector = inferSelectorFromBatchClaim(trimmedClaim, languages);
+    const languageIds = selector.kind === 'list' ? selector.languageIds : [];
+    if (selector.kind === 'list' && languageIds.length === 0) {
       console.warn(`Skipping batchclaim with no recognized languages: ${id}`);
       continue;
     }
@@ -2648,6 +2692,7 @@ function parseBatchOpsLatex(
       status,
       ...(assumption && { assumption }),
       languageIds,
+      selector,
       claimTemplate: trimmedClaim,
       descriptionTemplate: descriptionTemplate.trim(),
       refs: opRefsFromClaimTemplate(trimmedClaim)
@@ -3047,9 +3092,6 @@ async function main(): Promise<void> {
       console.log(`\nNote: Separating functions file not found: ${sepFuncsPath} (skipping sep func updates)`);
     }
 
-    const expandedBatchEntries = expandBatchClaims(database);
-    console.log(`\nExpanded ${expandedBatchEntries} batch claim operation entries`);
-    
     // Write updated database
     console.log(`\nWriting database to: ${DATABASE_PATH}`);
     saveDatabase(database);
