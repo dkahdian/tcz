@@ -43,8 +43,8 @@ export const OPERATION_TRACTABILITY_DISPLAYS: Record<
     symbol: '\u2713',
     symbolHtml: SOLID_CHECK_SVG,
     graphSymbol: '\u2713',
-    label: 'Unconditionally polynomial time',
-    description: 'Operation has an unconditional polynomial-time algorithm.',
+    label: 'Polynomial time',
+    description: 'Operation has a polynomial-time algorithm.',
     cssClass: 'operation-tractability-tractable'
   },
   'conditional-tractable': {
@@ -70,8 +70,8 @@ export const OPERATION_TRACTABILITY_DISPLAYS: Record<
     symbol: '\u25CF',
     symbolHtml: '\u25CF',
     graphSymbol: '\u25CF',
-    label: 'Unconditionally not polynomial time',
-    description: 'Operation is unconditionally not polynomial time.',
+    label: 'Not polynomial time',
+    description: 'Operation is not polynomial time.',
     cssClass: 'operation-tractability-intractable'
   },
   unknown: {

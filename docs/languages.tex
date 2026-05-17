@@ -61,7 +61,7 @@ A standard logical representation where a formula is a conjunction of clauses, w
 
 \begin{definition}[\langref{cSDD}]\label{def:lang_83e3b023}
 \textbf{Compressed Sentential Decision Diagram} \\
-The set of compressed SDDs, respecting any vtree: $T$ \langref{cSDD} $= \bigcup_T \langfam{cSDD}{T}$.
+The set of compressed SDDs, respecting any vtree: \langref{cSDD} $= \bigcup_T$ \langfam{cSDD}{T}.
 \citet{VanDenBroeck_2015,Darwiche_2011}.
 \end{definition}
 
@@ -78,13 +78,13 @@ A subset of \langref{DNNF} where the children of every $\vee$ node represent mut
 
 \begin{definition}[\langref{d-SDNNF}]\label{def:lang_ea9b5299}
 \textbf{Deterministic Structured Decomposable Negation Normal Form} \\
-The set of \langfam{d-SDNNF}{T} formulas, respecting any vtree $T$: \langref{d-SDNNF} $= \bigcup_T \langfam{d-SDNNF}{T}$.
+The set of \langfam{d-SDNNF}{T} formulas, respecting any vtree $T$: \langref{d-SDNNF} $= \bigcup_T$ \langfam{d-SDNNF}{T}.
 \citet{Pipatsrisawat_2008}.
 \end{definition}
 
 \begin{definition}[\langfam{d-SDNNF}{T}]\label{def:lang_91f812d0}
 \textbf{Deterministic Structured Decomposable Negation Normal Form (wrt a fixed vtree)} \\
-For each fixed vtree $T$, \langfam{d-SDNNF}{T} is the subset of \langref{d-DNNF} that respects $T$. Equivalently, it is the deterministic subset of \langfam{SDNNF}{T} (see \langref{d-DNNF}). \citet{Pipatsrisawat_2008}
+For each fixed vtree $T$, \langfam{d-SDNNF}{T} is the subset of \langref{d-DNNF} that respects $T$. Equivalently, for each fixed vtree $T$, \langfam{d-SDNNF}{T} is the deterministic subset of \langfam{SDNNF}{T}. \citet{Pipatsrisawat_2008}
 \end{definition}
 
 \begin{definition}[\langref{dec-DNNF}]\label{def:lang_981b62f0}
@@ -94,13 +94,13 @@ A subset of \langref{DNNF} where $\vee$ nodes are entirely replaced by decision 
 
 \begin{definition}[\langref{dec-SDNNF}]\label{def:lang_0f27d539}
 \textbf{Structured Decision Decomposable Negation Normal Form} \\
-The language obtained by taking the union of every vtree: \langref{dec-SDNNF} $= \bigcup_T \langfam{dec-SDNNF}{T}$.
+The language obtained by taking the union of every vtree: \langref{dec-SDNNF} $= \bigcup_T$ \langfam{dec-SDNNF}{T}.
 \citet{Oztok_2014}.
 \end{definition}
 
 \begin{definition}[\langfam{dec-SDNNF}{T}]\label{def:lang_4ae03bc8}
 \textbf{Structured Decision Decomposable Negation Normal Form (wrt a fixed vtree)} \\
-For each fixed vtree $T$, \langfam{dec-SDNNF}{T} is the subset of \langref{dec-DNNF} that respects $T$. Equivalently, it is the decision fragment of \langfam{SDNNF}{T}. \citet{Oztok_2014}
+For each fixed vtree $T$, \langfam{dec-SDNNF}{T} is the subset of \langref{dec-DNNF} that respects $T$. Equivalently, for each fixed vtree $T$, \langfam{dec-SDNNF}{T} is the decision fragment of \langfam{SDNNF}{T}. \citet{Oztok_2014}
 \end{definition}
 
 \begin{definition}[\langref{DNF}]\label{def:lang_4c204bf3}
@@ -140,7 +140,7 @@ A boolean formula constructed strictly with $\wedge$, $\vee$, and literals, wher
 
 \begin{definition}[\langref{nOBDD}]\label{def:lang_d24efe0e}
 \textbf{Nondeterministic Ordered Binary Decision Diagram} \\
-The set of nOBDD formulas following any variable order $<$: \langref{nOBDD} $= \bigcup_{<} \langfam{nOBDD}{<}$.
+The set of nOBDD formulas following any variable order $<$: \langref{nOBDD} $= \bigcup_{<}$ \langfam{nOBDD}{<}.
 \citet{Wegener_2000}.
 \end{definition}
 
@@ -151,7 +151,7 @@ For each fixed variable order $<$, \langfam{nOBDD}{<} is the set of \langref{nFB
 
 \begin{definition}[\langref{OBDD}]\label{def:lang_b9d72a7c}
 \textbf{Ordered Binary Decision Diagram} \\
-The set of \langfam{OBDD}{<} formulas following any variable order $<$ \langref{OBDD} $= \bigcup_{<} \langfam{OBDD}{<}$. \citet{Bryant_1986,Darwiche_2002}
+The set of \langfam{OBDD}{<} formulas following any variable order $<$ \langref{OBDD} $= \bigcup_{<}$ \langfam{OBDD}{<}. \citet{Bryant_1986,Darwiche_2002}
 \end{definition}
 
 \begin{definition}[\langfam{OBDD}{<}]\label{def:lang_d69995dd}
@@ -161,12 +161,12 @@ For each fixed variable order $<$, \langfam{OBDD}{<} is the set of \langref{FBDD
 
 \begin{definition}[\langref{PI}]\label{def:lang_27fffab2}
 \textbf{Prime Implicates} \\
-The subset of \langref{CNF} where formulas represent exactly the disjunction of all minimal entailed clauses (prime implicates). \citet{Quine_1952}.
+The subset of \langref{CNF} where formulas represent exactly the conjunction of all minimal entailed clauses (prime implicates). \citet{Quine_1952}.
 \end{definition}
 
 \begin{definition}[\langref{SDD}]\label{def:lang_1afefbe2}
 \textbf{Sentential Decision Diagram} \\
-The set of \langfam{SDNNF}{T} formulas respecting any vtree $T$: \langref{SDD} $= \bigcup_T \langfam{SDD}{T}$.
+The set of \langfam{SDD}{T} formulas respecting any vtree $T$: \langref{SDD} $= \bigcup_T$ \langfam{SDD}{T}.
 \citet{Darwiche_2011}.
 \end{definition}
 
@@ -177,7 +177,7 @@ For each variable tree $T$, \langfam{SDD}{T} is the subset of \langfam{d-SDNNF}{
 
 \begin{definition}[\langref{SDNNF}]\label{def:lang_b13b0d78}
 \textbf{Structured Decomposable Negation Normal Form} \\
-The set of \langfam{SDNNF}{T} formulas respecting any vtree $T$: \langref{SDNNF} $= \bigcup_T \langfam{SDNNF}{T}$.
+The set of \langfam{SDNNF}{T} formulas respecting any vtree $T$: \langref{SDNNF} $= \bigcup_T$ \langfam{SDNNF}{T}.
 \citet{Pipatsrisawat_2008}.
 \end{definition}
 
@@ -193,13 +193,13 @@ A restricted form of \langref{nFBDD} where every satisfying assignment has exact
 
 \begin{definition}[\langref{uOBDD}]\label{def:lang_c2df8c2b}
 \textbf{Unambiguous Ordered Binary Decision Diagram} \\
-The set of \langfam{uOBDD}{<} formulas respecting any order $<$: \langref{uOBDD} $= \bigcup_{<} \langfam{uOBDD}{<}$.
+The set of \langfam{uOBDD}{<} formulas respecting any order $<$: \langref{uOBDD} $= \bigcup_{<}$ \langfam{uOBDD}{<}.
 \citet{Wegener_2000}.
 \end{definition}
 
 \begin{definition}[\langfam{uOBDD}{<}]\label{def:lang_43a33aec}
 \textbf{Unambiguous Ordered Binary Decision Diagram (wrt a fixed variable order)} \\
-For each fixed variable order $<$, \langfam{uOBDD}{<} is the subset of \langfam{nOBDD}{<} with the unambiguity property. Equivalently, this is the set of \langref{uFBDD} formulas respecting the order $<$. \citet{Wegener_2000}.
+For each fixed variable order $<$, \langfam{uOBDD}{<} is the subset of \langfam{nOBDD}{<} with the unambiguity property. Equivalently, for each fixed variable order $<$, \langfam{uOBDD}{<} is the set of \langref{uFBDD} formulas respecting the order $<$. \citet{Wegener_2000}.
 \end{definition}
 
 % =============================

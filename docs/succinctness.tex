@@ -276,6 +276,13 @@ As defined by \citet{Amarilli_2018}, \langref{OBDD} is the subset of \langref{uO
 \end{claimdescription}
 
 \begin{claim}
+\langref{OBDD} is not quasi-polynomial-time compilable to \langfam{SDNNF}{T} \citet{TCZ_Forthcoming}
+\end{claim}
+\begin{claimdescription}
+For any fixed vtree $T$, a simple function can be chosen so that every \langfam{SDNNF}{T} representation is exponentially large, while some \langref{OBDD} represents it in linear size. Therefore \langref{OBDD} cannot compile to \langfam{SDNNF}{T} in quasi-polynomial size \citet{TCZ_Forthcoming}.
+\end{claimdescription}
+
+\begin{claim}
 \langfam{OBDD}{<} is polynomial-time compilable to \langfam{dec-SDNNF}{T} \citet{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
@@ -503,14 +510,6 @@ A Shannon tree for any \langref{MODS} formula following order $<$ can be generat
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Darwiche_2002}, \langref{OBDD} is a subset of \langref{FBDD}. Therefore a polynomial time compilation is trivial.
-\end{claimdescription}
-
-% separators=Pairwise equivalence
-\begin{claim}
-\langref{OBDD} is not quasi-polynomial-time compilable to \langfam{OBDD}{<} \citet{Darwiche_2002}
-\end{claim}
-\begin{claimdescription}
-The function $\bigwedge_{i=1}^n(x_i\Leftrightarrow y_i)$ has an \langfam{OBDD}{<} representation of size polynomial in $n$ whenever $<$ satisfies $x_1<y_1<...<x_n<y_n$ but exponential in $n$ if $<$ satisfies $x_1<x_2<...<x_n<y_1<y_2<...<y_n$
 \end{claimdescription}
 
 % separators=Parity

@@ -65,7 +65,7 @@ A \emph{language family} is a parameterized collection $\mathcal{F} = \{L_\theta
 
 For example, \langfam{OBDD}{<} is parameterized by a variable order, and \langref{OBDD} is the union over all such parameters: \langref{OBDD} $= \bigcup_<$ \langfam{OBDD}{<}. Distinguishing family-level from language-level claims is central in this project. \citet{Darwiche_2002,Amarilli_2018}
 
-We will sometimes overload the \emph{family names} (e.g. \langfam{OBDD}{<}) to discuss \emph{family members}; for clarity we will always use language like: \emph{"For each order $<$, the language \langfam{OBDD}{<} satisfies ..."} \citet{Darwiche_2002,Amarilli_2018}
+We overload notation in two controlled ways. When the text says ``for each fixed order $<$'' or ``for each fixed vtree $T$,'' notation such as \langfam{OBDD}{<} or \langfam{SDD}{T} denotes the corresponding member language. When no particular parameter is fixed and a family-level claim is intended, the same notation denotes the whole parameterized family, e.g.\ $\{\langfam{OBDD}{<}\}_{<}$ or $\{\langfam{SDD}{T}\}_{T}$. \citet{Darwiche_2002,Amarilli_2018}
 \end{definition}
 
 \begin{definition}\label{kdef:succinctness-language}
