@@ -586,6 +586,14 @@ The $OR_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \lang
 \langref{nOBDD} is the union of fixed-order languages \langfam{nOBDD}{<}. Hence any \langfam{nOBDD}{<} formula is already an \langref{nOBDD} formula, so the compilation is trivial and polynomial-time.
 \end{claimdescription}
 
+% separators=$WS_n$
+\begin{claim}
+\langref{uOBDD} is not quasi-polynomial-time compilable to \langref{FBDD} \citet{Wegener_2000,Savicky_Zak_1996}
+\end{claim}
+\begin{claimdescription}
+The weighted sum function $WS_n$ has polynomial-size \langref{uOBDD} formulas: \citet{Wegener_2000} gives polynomial-size \langref{nOBDD}{<} formulas for $WS_n$ under every variable ordering $<$, and the pointer-guess construction has at most one accepting guess, so the formula is unambiguous. By \citet{Savicky_Zak_1996}, every \langref{FBDD} for $WS_n$ has size $2^{n-o(n)}$. Hence no quasi-polynomial compilation from \langref{uOBDD} to \langref{FBDD} is possible.
+\end{claimdescription}
+
 % separators=HWB
 \begin{claim}
 \langref{uOBDD} is not quasi-polynomial-time compilable to \langref{OBDD} \citet{Bryant_1986,Wegener_2000}
