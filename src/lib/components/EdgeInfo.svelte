@@ -237,6 +237,27 @@
             </div>
           {/snippet}
 
+{#snippet unknownDirectionBlock(fromName: string, toName: string)}
+            <div class="direction-block">
+              <div class={`succinctness-statement ${getStatusCssClass('unknown-both')}`}>
+                <MathText text={fromName} className="inline" />
+                <span class="compile-arrow">→</span>
+                <MathText text={toName} className="inline" />
+                <span class="order-statement">
+                  (<MathText text={toName} className="inline" />
+                  <MathText text={getStatusNotation('unknown-both')} className="inline succinctness-notation" />
+                  <MathText text={fromName} className="inline" />)
+                </span>
+              </div>
+              <h5 class="edge-status-heading">Unknown</h5>
+              <p class="edge-description-text">No information available.</p>
+            </div>
+          {/snippet}
+
+          {#if originalEdge && !originalEdge.forward}
+            {@render unknownDirectionBlock(selectedEdge.sourceName, selectedEdge.targetName)}
+          {/if}
+
           {#if originalEdge?.forward}
             {@render directionBlock(selectedEdge.sourceName, selectedEdge.targetName, originalEdge.forward, forwardSeparatingFunctions)}
           {/if}

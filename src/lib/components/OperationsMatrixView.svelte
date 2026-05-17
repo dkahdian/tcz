@@ -139,6 +139,17 @@
     };
   }
 
+  function getUnknownOperationSupport(opCode: string): KCOpEntry | null {
+    const opDef = operations[opCode];
+    if (!opDef) return null;
+    return {
+      code: opDef.code,
+      label: opDef.label,
+      complexity: 'unknown-to-us',
+      refs: []
+    };
+  }
+
   function handleLanguageClick(language: KCLanguage) {
     selectedOperation = null;
     selectedOperationCell = null;
@@ -172,10 +183,8 @@
       );
     }
 
-    if (!support) {
-      selectedOperationCell = null;
-      return;
-    }
+    const displayedSupport = support ?? getUnknownOperationSupport(opCode);
+    if (!displayedSupport) return;
 
     selectedNode = null;
     selectedOperation = null;
@@ -184,7 +193,7 @@
       operationCode: opDef.code,
       operationLabel: opDef.label,
       operationType: operationType === 'queries' ? 'query' : 'transformation',
-      support
+      support: displayedSupport
     };
   }
 
@@ -295,7 +304,7 @@
 
   function getCellTitle(language: KCLanguage, opCode: string, support: KCOpEntry | null): string {
     const opDef = operations[opCode];
-    if (!support) return `${language.name} - ${opDef?.label ?? opCode}: no data`;
+    if (!support) return `${language.name} - ${opDef?.label ?? opCode}: Unknown`;
     const display = getOperationTractabilityDisplay(
       support,
       operationType === 'queries' ? 'query' : 'transformation'
@@ -373,15 +382,16 @@
             </th>
             {#each operationCodes as opCode}
               {@const support = getOperationSupport(language, opCode)}
+              {@const displayedSupport = support ?? getUnknownOperationSupport(opCode)}
               {@const display = getOperationTractabilityDisplay(
-                support,
+                displayedSupport,
                 operationType === 'queries' ? 'query' : 'transformation'
               )}
               <td class:is-sandbox-editor-cell={isSandboxEditing(language, opCode)}>
-                {#if support}
+                {#if displayedSupport}
                 <button
                   type="button"
-                  class={`matrix-cell matrix-cell--button ${display.cssClass} ${isCellSelected(language, opCode) ? 'is-selected' : ''} ${support?.dimmed ? 'is-dimmed' : ''} ${support?.explicit ? 'is-explicit' : ''} ${isPreviewHighlighted(language, opCode) ? 'is-preview-highlighted' : ''} ${isDirectSandboxEdit(language, opCode) ? 'is-sandbox-direct' : ''}`}
+                  class={`matrix-cell matrix-cell--button ${display.cssClass} ${!support ? 'matrix-cell--unknown' : ''} ${isCellSelected(language, opCode) ? 'is-selected' : ''} ${support?.dimmed ? 'is-dimmed' : ''} ${support?.explicit ? 'is-explicit' : ''} ${isPreviewHighlighted(language, opCode) ? 'is-preview-highlighted' : ''} ${isDirectSandboxEdit(language, opCode) ? 'is-sandbox-direct' : ''}`}
                   onclick={() => handleCellClick(language, opCode)}
                   title={getCellTitle(language, opCode, support)}
                 >
@@ -611,6 +621,10 @@
 
   .matrix-cell--empty {
     background: #f9fafb;
+  }
+
+  .matrix-cell--unknown {
+    color: #6b7280;
   }
 
   .matrix-cell.is-preview-highlighted,

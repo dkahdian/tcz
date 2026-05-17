@@ -72,6 +72,8 @@
     );
   });
 
+  const UNKNOWN_STATUS = 'unknown-both';
+
   const languageLookup = $derived.by<Map<string, KCLanguage>>(() => {
     const map = new Map<string, KCLanguage>();
     for (const language of graphData.languages) {
@@ -176,10 +178,6 @@
     if (sandboxMode) {
       onSandboxEdgeEdit?.(sourceId, targetId);
     }
-    if (!relation) {
-      selectedEdge = null;
-      return;
-    }
     const edge = buildSelectedEdge(sourceId, targetId);
     if (edge) {
       selectedNode = null;
@@ -267,7 +265,7 @@
     relation: DirectedSuccinctnessRelation | null
   ): string {
     // In transposed view: cell (row, col) shows relation from col → row
-    if (!relation) return `${colLang.name} → ${rowLang.name}: no relation`;
+    if (!relation) return `${colLang.name} → ${rowLang.name}: Unknown`;
     const label = STATUS_LABELS[relation.status];
     const refs = relation.refs?.length ? ` · refs: ${relation.refs.join(', ')}` : '';
     const assumptionStr = relation.assumption ? ` (assuming ${relation.assumption})` : '';
@@ -438,10 +436,14 @@
                         {/if}
                       {/if}
                     {:else}
-                      <span
-                        class={`matrix-cell matrix-cell--empty ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted' : ''} ${isLanguageHighlighted(colLanguage.id) ? 'is-col-highlighted' : ''} ${isPreviewHighlighted(colLanguage.id, rowLanguage.id) ? 'is-preview-highlighted' : ''}`}
+                      <button
+                        type="button"
+                        class={`matrix-cell matrix-cell--button matrix-cell--unknown ${STATUS_CLASSES[UNKNOWN_STATUS]} ${isEdgeSelected(colLanguage.id, rowLanguage.id) ? 'is-selected' : ''} ${isComplementSelected(colLanguage.id, rowLanguage.id) ? 'is-complement' : ''} ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted' : ''} ${isLanguageHighlighted(colLanguage.id) ? 'is-col-highlighted' : ''} ${isPreviewHighlighted(colLanguage.id, rowLanguage.id) ? 'is-preview-highlighted' : ''}`}
+                        onclick={() => handleCellClick(colLanguage.id, rowLanguage.id, null)}
                         title={getCellTitle(rowLanguage.language, colLanguage.language, null)}
-                      >&nbsp;</span>
+                      >
+                        <span class="cell-short">{@html STATUS_SHORT_HTML[UNKNOWN_STATUS] ?? '?'}</span>
+                      </button>
                     {/if}
                   </td>
                 {/if}
@@ -685,6 +687,10 @@
   .matrix-cell--empty {
     background: #fff;
     color: #94a3b8;
+  }
+
+  .matrix-cell--unknown {
+    color: #6b7280;
   }
 
   .cell-short {
