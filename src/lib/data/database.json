@@ -54,8 +54,8 @@
           "lang_43a33aec"
         ]
       },
-      "claimTemplate": "For each language $\\mathcal{L}$ in\r\n\\[\r\n\\{\r\n  \\langref{cSDD},\r\n  \\langref{d-SDNNF},\r\n  \\langfam{d-SDNNF}{T},\r\n  \\langref{DNF},\r\n  \\langref{DNNF},\r\n  \\langref{FBDD},\r\n  \\langref{nFBDD},\r\n  \\langref{nOBDD},\r\n  \\langref{SDD},\r\n  \\langfam{SDD}{T},\r\n  \\langref{SDNNF},\r\n  \\langfam{SDNNF}{T},\r\n  \\langref{uFBDD},\r\n  \\langref{uOBDD},\r\n  \\langref{OBDD},\r\n  \\langref{dec-DNNF},\r\n  \\langref{dec-SDNNF},\r\n  \\langfam{dec-SDNNF}{T},\r\n  \\langfam{cSDD}{T},\r\n  \\langfam{nOBDD}{<},\r\n  \\langfam{uOBDD}{<}\r\n\\},\r\n\\]\r\n$\\mathcal{L}$ supports Conjunction not in quasipolynomial time \\citep{Darwiche_2002,TCZ_Forthcoming}.",
-      "descriptionTemplate": "In the language $\\mathcal{L}$, every clause has a polynomial-size representation. If $\\mathcal{L}$ supported $\\land$C, then every \\langref{CNF} could be compiled into $\\mathcal{L}$ by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{$\\mathcal{L}$} \\citep{TCZ_Forthcoming}.",
+      "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langref{cSDD},\n  \\langref{d-SDNNF},\n  \\langfam{d-SDNNF}{T},\n  \\langref{DNF},\n  \\langref{DNNF},\n  \\langref{FBDD},\n  \\langref{nFBDD},\n  \\langref{nOBDD},\n  \\langref{SDD},\n  \\langfam{SDD}{T},\n  \\langref{SDNNF},\n  \\langfam{SDNNF}{T},\n  \\langref{uFBDD},\n  \\langref{uOBDD},\n  \\langref{OBDD},\n  \\langref{dec-DNNF},\n  \\langref{dec-SDNNF},\n  \\langfam{dec-SDNNF}{T},\n  \\langfam{cSDD}{T},\n  \\langfam{nOBDD}{<},\n  \\langfam{uOBDD}{<}\n\\},\n\\]\n$\\mathcal{L}$ supports Conjunction not in quasipolynomial time. \\citep{Darwiche_2002,TCZ_Forthcoming}",
+      "descriptionTemplate": "In the language $\\mathcal{L}$, every clause has a polynomial-size representation. If $\\mathcal{L}$ supported $\\land$C, then every \\langref{CNF} could be compiled into $\\mathcal{L}$ by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{$\\mathcal{L}$}. \\citep{TCZ_Forthcoming}",
       "refs": [
         "Darwiche_2002",
         "TCZ_Forthcoming"
@@ -94,8 +94,8 @@
           }
         ]
       },
-      "claimTemplate": "For each language $\\mathcal{L}$ such that \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{DNNF},\r\n$\\mathcal{L}$ supports Bounded Conjunction not in quasipolynomial time \\citep{TCZ_Forthcoming}.",
-      "descriptionTemplate": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{DNNF}, $\\mathcal{L}$ cannot support bounded conjunction.",
+      "claimTemplate": "For each language $\\mathcal{L}$ such that \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{DNNF},\n$\\mathcal{L}$ supports Bounded Conjunction not in quasipolynomial time. \\citep{TCZ_Forthcoming}",
+      "descriptionTemplate": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{DNNF}, $\\mathcal{L}$ cannot support bounded conjunction.",
       "refs": [
         "TCZ_Forthcoming"
       ]
@@ -133,8 +133,8 @@
           }
         ]
       },
-      "claimTemplate": "For each language $\\mathcal{L}$ such that \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{SDNNF},\r\n$\\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \\citep{TCZ_Forthcoming}.",
-      "descriptionTemplate": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{SDNNF}, $\\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.",
+      "claimTemplate": "For each language $\\mathcal{L}$ such that \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{SDNNF},\n$\\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time. \\citep{TCZ_Forthcoming}",
+      "descriptionTemplate": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{SDNNF}, $\\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.",
       "refs": [
         "TCZ_Forthcoming"
       ]
@@ -172,8 +172,8 @@
           }
         ]
       },
-      "claimTemplate": "For each language $\\mathcal{L}$ such that \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{d-DNNF},\r\n$\\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \\citep{TCZ_Forthcoming,Vinall-Smeeth_2024}.",
-      "descriptionTemplate": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any d-DNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{d-DNNF}, $\\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.\r\n\r\nNote that \\citet{Vinall-Smeeth_2024} showed a quasipolynomial lower bound for bounded disjunction of \\langref{d-SDNNF}.",
+      "claimTemplate": "For each language $\\mathcal{L}$ such that \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{d-DNNF},\n$\\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time. \\citep{TCZ_Forthcoming,Vinall-Smeeth_2024}",
+      "descriptionTemplate": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any d-DNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{d-DNNF}, $\\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.\n\nNote that \\citet{Vinall-Smeeth_2024} showed a quasipolynomial lower bound for bounded disjunction of \\langref{d-SDNNF}.",
       "refs": [
         "TCZ_Forthcoming",
         "Vinall-Smeeth_2024"
@@ -195,7 +195,7 @@
           "lang_43a33aec"
         ]
       },
-      "claimTemplate": "For each language $\\mathcal{L}$ in\r\n\\[\r\n\\{\r\n  \\langfam{d-SDNNF}{T},\r\n  \\langfam{uOBDD}{<}\r\n\\},\r\n\\]\r\n$\\mathcal{L}$ supports Bounded Disjunction not in polynomial time (quasipolynomial unknown) \\citep{Vinall-Smeeth_2024}.",
+      "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langfam{d-SDNNF}{T},\n  \\langfam{uOBDD}{<}\n\\},\n\\]\n$\\mathcal{L}$ supports Bounded Disjunction not in polynomial time (quasipolynomial unknown). \\citep{Vinall-Smeeth_2024}",
       "descriptionTemplate": "\\citet[Theorem 5]{Vinall-Smeeth_2024} gives unambiguous DNF representations of functions $f$ and $g$ such that, measured in the size $s$ of the corresponding source representations, $f \\lor g$ requires $d$-SDNNF size $s^{\\widetilde{\\Omega}(\\log s)}$. The unambiguous DNF representations can be transformed into $\\mathcal{L}$ representations with only polynomial overhead, and every $\\mathcal{L}$ representation can be transformed into $d$-SDNNF with only polynomial overhead. Thus polynomial-time bounded disjunction for $\\mathcal{L}$ would contradict the lower bound.",
       "refs": [
         "Vinall-Smeeth_2024"
@@ -231,7 +231,7 @@
           "lang_43a33aec"
         ]
       },
-      "claimTemplate": "For each language $\\mathcal{L}$ in\r\n\\[\r\n\\{\r\n  \\langref{cSDD},\r\n  \\langref{d-DNNF},\r\n  \\langfam{d-SDNNF}{T},\r\n  \\langref{dec-DNNF},\r\n  \\langref{dec-SDNNF},\r\n  \\langfam{dec-SDNNF}{T},\r\n  \\langref{SDD},\r\n  \\langref{uFBDD},\r\n  \\langfam{uOBDD}{<}\r\n\\},\r\n\\]\r\n$\\mathcal{L}$ supports Singleton Forgetting not in quasipolynomial time \\citep{TCZ_Forthcoming}.",
+      "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langref{cSDD},\n  \\langref{d-DNNF},\n  \\langfam{d-SDNNF}{T},\n  \\langref{dec-DNNF},\n  \\langref{dec-SDNNF},\n  \\langfam{dec-SDNNF}{T},\n  \\langref{SDD},\n  \\langref{uFBDD},\n  \\langfam{uOBDD}{<}\n\\},\n\\]\n$\\mathcal{L}$ supports Singleton Forgetting not in quasipolynomial time. \\citep{TCZ_Forthcoming}",
       "descriptionTemplate": "If $\\mathcal{L}$ supported Singleton Forgetting in quasipolynomial time, then given two $\\mathcal{L}$ circuits $f$ and $g$ we could form the decision $(x \\land f) \\lor (\\neg x \\land g)$ with only constant overhead and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for $\\mathcal{L}$, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
       "refs": [
         "TCZ_Forthcoming"
@@ -270,7 +270,7 @@
           }
         ]
       },
-      "claimTemplate": "For each language $\\mathcal{L}$ such that \\edgeref{DNF}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{DNNF},\r\n$\\mathcal{L}$ supports Negation not in quasipolynomial time \\citep{Bova_2014}.",
+      "claimTemplate": "For each language $\\mathcal{L}$ such that \\edgeref{DNF}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{DNNF},\n$\\mathcal{L}$ supports Negation not in quasipolynomial time. \\citep{Bova_2014}",
       "descriptionTemplate": "\\citet[Lemma 5]{Bova_2014} gives 2-DNF formulas $D$ whose negations require DNNF size $2^{\\Omega(\\operatorname{size}(D))}$. If $\\mathcal{L}$ supported Negation in quasipolynomial time, then \\edgeref{DNF}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{DNNF} would yield quasipolynomial-size DNNFs for those negations, contradicting the lower bound.",
       "refs": [
         "Bova_2014"
@@ -314,8 +314,8 @@
           "lang_43a33aec"
         ]
       },
-      "claimTemplate": "For each language $\\mathcal{L}$ in\r\n\\[\r\n\\{\r\n  \\langref{cSDD},\r\n  \\langref{d-SDNNF},\r\n  \\langfam{d-SDNNF}{T},\r\n  \\langref{FBDD},\r\n  \\langfam{OBDD}{<},\r\n  \\langfam{SDD}{T},\r\n  \\langref{uOBDD},\r\n  \\langref{OBDD},\r\n  \\langref{dec-DNNF},\r\n  \\langref{dec-SDNNF},\r\n  \\langfam{dec-SDNNF}{T},\r\n  \\langfam{cSDD}{T},\r\n  \\langfam{uOBDD}{<}\r\n\\},\r\n\\]\r\n$\\mathcal{L}$ supports Disjunction not in quasipolynomial time \\citep{Darwiche_2002,TCZ_Forthcoming}.",
-      "descriptionTemplate": "In the language $\\mathcal{L}$, every term has a polynomial-size representation. If $\\mathcal{L}$ supported $\\lor$C, then every \\langref{DNF} could be compiled into $\\mathcal{L}$ by disjoining the translated terms. This contradicts \\nedgeref{DNF}{$\\mathcal{L}$} \\citep{TCZ_Forthcoming}.",
+      "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langref{cSDD},\n  \\langref{d-SDNNF},\n  \\langfam{d-SDNNF}{T},\n  \\langref{FBDD},\n  \\langfam{OBDD}{<},\n  \\langfam{SDD}{T},\n  \\langref{uOBDD},\n  \\langref{OBDD},\n  \\langref{dec-DNNF},\n  \\langref{dec-SDNNF},\n  \\langfam{dec-SDNNF}{T},\n  \\langfam{cSDD}{T},\n  \\langfam{uOBDD}{<}\n\\},\n\\]\n$\\mathcal{L}$ supports Disjunction not in quasipolynomial time. \\citep{Darwiche_2002,TCZ_Forthcoming}",
+      "descriptionTemplate": "In the language $\\mathcal{L}$, every term has a polynomial-size representation. If $\\mathcal{L}$ supported $\\lor$C, then every \\langref{DNF} could be compiled into $\\mathcal{L}$ by disjoining the translated terms. This contradicts \\nedgeref{DNF}{$\\mathcal{L}$}. \\citep{TCZ_Forthcoming}",
       "refs": [
         "Darwiche_2002",
         "TCZ_Forthcoming"
@@ -338,8 +338,8 @@
           "lang_5bf00851"
         ]
       },
-      "claimTemplate": "For each language $\\mathcal{L}$ in\r\n\\[\r\n\\{\r\n  \\langref{CNF},\r\n  \\langref{NNF}\r\n\\},\r\n\\]\r\n$\\mathcal{L}$ supports Forgetting not in polynomial time (quasipolynomial unknown) assuming P \\neq NP \\citep{Darwiche_2002}.",
-      "descriptionTemplate": "If $\\mathcal{L}$ supported FO, then the consistency of any CNF sentence $\\Sigma$ could be tested in polynomial time: represent $\\Sigma$ in $\\mathcal{L}$, compute $\\exists\\text{Vars}(\\Sigma).\\Sigma$, and check the resulting constant sentence. This would decide CNF consistency in polynomial time, implying P = NP \\citep{Darwiche_2002}.",
+      "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langref{CNF},\n  \\langref{NNF}\n\\},\n\\]\n$\\mathcal{L}$ supports Forgetting not in polynomial time (quasipolynomial unknown) assuming P \\neq NP. \\citep{Darwiche_2002}",
+      "descriptionTemplate": "If $\\mathcal{L}$ supported FO, then the consistency of any CNF sentence $\\Sigma$ could be tested in polynomial time: represent $\\Sigma$ in $\\mathcal{L}$, compute $\\exists\\text{Vars}(\\Sigma).\\Sigma$, and check the resulting constant sentence. This would decide CNF consistency in polynomial time, implying P = NP. \\citep{Darwiche_2002}",
       "refs": [
         "Darwiche_2002"
       ]
@@ -364,8 +364,8 @@
           "lang_82fa749e"
         ]
       },
-      "claimTemplate": "For each language $\\mathcal{L}$ in\r\n\\[\r\n\\{\r\n  \\langref{OBDD},\r\n  \\langfam{OBDD}{<},\r\n  \\langfam{SDD}{T},\r\n  \\langfam{cSDD}{T}\r\n\\},\r\n\\]\r\n$\\mathcal{L}$ supports Forgetting not in polynomial time (quasipolynomial unknown) \\citep{Darwiche_2002,VanDenBroeck_2015}.",
-      "descriptionTemplate": "A polynomial-time forgetting procedure for $\\mathcal{L}$ would turn every \\langref{DNF} sentence into an equivalent $\\mathcal{L}$ representation of size polynomial in the input DNF after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{$\\mathcal{L}$} \\citep{TCZ_Forthcoming}.",
+      "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langref{OBDD},\n  \\langfam{OBDD}{<},\n  \\langfam{SDD}{T},\n  \\langfam{cSDD}{T}\n\\},\n\\]\n$\\mathcal{L}$ supports Forgetting not in polynomial time (quasipolynomial unknown). \\citep{Darwiche_2002,VanDenBroeck_2015}",
+      "descriptionTemplate": "A polynomial-time forgetting procedure for $\\mathcal{L}$ would turn every \\langref{DNF} sentence into an equivalent $\\mathcal{L}$ representation of size polynomial in the input DNF after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{$\\mathcal{L}$}. \\citep{TCZ_Forthcoming}",
       "refs": [
         "Darwiche_2002",
         "VanDenBroeck_2015"
@@ -377,7 +377,7 @@
       "id": "lang_89649e36",
       "name": "CNF",
       "fullName": "Conjunctive Normal Form",
-      "definition": "A standard logical representation where a formula is a conjunction of clauses, where a clause is a disjunction of literals (i.e. the set $\\{\\bigwedge_{i=1}^m \\bigvee_{j=1}^n l_{i,j}\\}$, where each $l_{i,j} = x_k$ or $\\neg x_k$, for some $x_k \\in PS$ \\citep{Boole_1847}. Note that \\langref{CNF} $\\subset$ \\langref{NNF}.",
+      "definition": "A standard logical representation where a formula is a conjunction of clauses, where a clause is a disjunction of literals (i.e. the set $\\{\\bigwedge_{i=1}^m \\bigvee_{j=1}^n l_{i,j}\\}$, where each $l_{i,j} = x_k$ or $\\neg x_k$, for some $x_k \\in PS$). \\citep{Boole_1847} Note that \\langref{CNF} $\\subset$ \\langref{NNF}.",
       "definitionRefs": [],
       "properties": {
         "queries": {
@@ -387,21 +387,21 @@
               "Darwiche_2002"
             ],
             "assumption": "P \\neq NP",
-            "description": "Consistency checking for \\langref{CNF} is NP-complete (the classic SAT problem). This is one of the foundational intractability results \\citep{Darwiche_2002}."
+            "description": "Consistency checking for \\langref{CNF} is NP-complete (the classic SAT problem). This is one of the foundational intractability results. \\citep{Darwiche_2002}"
           },
           "IM": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "To check whether a consistent term $\\alpha$ implies a \\langref{CNF} sentence $\\Sigma$, it suffices to verify that each clause of $\\Sigma$ shares a literal with $\\alpha$. This can be done in polynomial time \\citep{Darwiche_2002}."
+            "description": "To check whether a consistent term $\\alpha$ implies a \\langref{CNF} sentence $\\Sigma$, it suffices to verify that each clause of $\\Sigma$ shares a literal with $\\alpha$. This can be done in polynomial time. \\citep{Darwiche_2002}"
           },
           "VA": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "A \\langref{CNF} sentence is valid iff every clause in it is valid (i.e., contains a complementary pair of literals). This can be checked in linear time \\citep{Darwiche_2002}."
+            "description": "A \\langref{CNF} sentence is valid iff every clause in it is valid (i.e., contains a complementary pair of literals). This can be checked in linear time. \\citep{Darwiche_2002}"
           },
           "CT": {
             "complexity": "no-poly-unknown-quasi",
@@ -496,7 +496,7 @@
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "If \\langref{CNF} supported FO, then the consistency of any CNF sentence $\\Sigma$ could be tested in polynomial time: represent $\\Sigma$ in \\langref{CNF}, compute $\\exists\\text{Vars}(\\Sigma).\\Sigma$, and check the resulting constant sentence. This would decide CNF consistency in polynomial time, implying P = NP \\citep{Darwiche_2002}.",
+            "description": "If \\langref{CNF} supported FO, then the consistency of any CNF sentence $\\Sigma$ could be tested in polynomial time: represent $\\Sigma$ in \\langref{CNF}, compute $\\exists\\text{Vars}(\\Sigma).\\Sigma$, and check the resulting constant sentence. This would decide CNF consistency in polynomial time, implying P = NP. \\citep{Darwiche_2002}",
             "derived": false,
             "batchId": "darwiche-fo-cnf-consistency-lower-bound",
             "assumption": "P \\neq NP"
@@ -506,28 +506,28 @@
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Conjunction of CNF sentences is trivially another CNF sentence: simply take the union of all clauses \\citep{Darwiche_2002}."
+            "description": "Conjunction of CNF sentences is trivially another CNF sentence: simply take the union of all clauses. \\citep{Darwiche_2002}"
           },
           "OR_BC": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "The disjunction of two CNF sentences $\\alpha_1 \\lor \\alpha_2$ can be computed by taking all cross products of one clause from $\\alpha_1$ and one from $\\alpha_2$, removing redundant literals and valid clauses. The result is a CNF of polynomial size \\citep{Darwiche_2002}."
+            "description": "The disjunction of two CNF sentences $\\alpha_1 \\lor \\alpha_2$ can be computed by taking all cross products of one clause from $\\alpha_1$ and one from $\\alpha_2$, removing redundant literals and valid clauses. The result is a CNF of polynomial size. \\citep{Darwiche_2002}"
           },
           "OR_C": {
             "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "It is straightforward to convert any term into an equivalent CNF formula in polynomial time. Since specific DNF formulas cannot be turned into equivalent CNF formulas in polynomial space (DNF $\\not\\leq$ CNF), CNF does not satisfy $\\lor$C \\citep{Darwiche_2002}."
+            "description": "It is straightforward to convert any term into an equivalent CNF formula in polynomial time. Since specific DNF formulas cannot be turned into equivalent CNF formulas in polynomial space (DNF $\\not\\leq$ CNF), CNF does not satisfy $\\lor$C. \\citep{Darwiche_2002}"
           },
           "CD": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "CD is trivially satisfied: replacing literals of the conditioning term by Boolean constants in a CNF and removing valid clauses preserves the CNF property \\citep{Darwiche_2002}."
+            "description": "CD is trivially satisfied: replacing literals of the conditioning term by Boolean constants in a CNF and removing valid clauses preserves the CNF property. \\citep{Darwiche_2002}"
           },
           "AND_BC": {
             "complexity": "poly",
@@ -746,7 +746,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{cSDD}, every clause has a polynomial-size representation. If \\langref{cSDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{cSDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{cSDD} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{cSDD}, every clause has a polynomial-size representation. If \\langref{cSDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{cSDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{cSDD}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -758,7 +758,7 @@
               "VanDenBroeck_2015",
               "Amarilli_2018"
             ],
-            "description": "In the language \\langref{cSDD}, every term has a polynomial-size representation. If \\langref{cSDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{cSDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{cSDD} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{cSDD}, every term has a polynomial-size representation. If \\langref{cSDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{cSDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{cSDD}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
@@ -770,7 +770,7 @@
               "VanDenBroeck_2015",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{cSDD} and \\edgeref{cSDD}{DNNF}, \\langref{cSDD} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{cSDD} and \\edgeref{cSDD}{DNNF}, \\langref{cSDD} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -782,7 +782,7 @@
               "VanDenBroeck_2015",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{cSDD} and \\edgeref{cSDD}{SDNNF}, \\langref{cSDD} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{cSDD} and \\edgeref{cSDD}{SDNNF}, \\langref{cSDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
@@ -823,8 +823,11 @@
       },
       "tags": [],
       "id": "lang_83e3b023",
-      "definition": "The set of compressed SDDs, respecting any vtree: \\langref{cSDD} $= \\bigcup_T$ \\langfam{cSDD}{T}.\n\\citep{VanDenBroeck_2015,Darwiche_2011}.",
-      "definitionRefs": []
+      "definition": "The set of compressed SDDs, respecting any vtree: \\langref{cSDD} $= \\bigcup_T$ \\langfam{cSDD}{T}.",
+      "definitionRefs": [
+        "VanDenBroeck_2015",
+        "Darwiche_2011"
+      ]
     },
     {
       "name": "d-DNNF",
@@ -844,7 +847,7 @@
             "refs": [
               "Darwiche_2001b"
             ],
-            "description": "\\langref{d-DNNF} satisfies CT: model counting can be performed in polynomial time by exploiting decomposability (multiplying counts at $\\land$-nodes) and determinism (adding counts at $\\lor$-nodes). This is the key tractability result motivating \\langref{d-DNNF} as a compilation target \\citep{Darwiche_2001b} \\citep{Darwiche_2002}."
+            "description": "\\langref{d-DNNF} satisfies CT: model counting can be performed in polynomial time by exploiting decomposability (multiplying counts at $\\land$-nodes) and determinism (adding counts at $\\lor$-nodes). This is the key tractability result motivating \\langref{d-DNNF} as a compilation target. \\citep{Darwiche_2001b,Darwiche_2002}"
           },
           "CO": {
             "complexity": "poly",
@@ -956,7 +959,7 @@
               "Darwiche_2002",
               "Darwiche_2001a"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{d-DNNF} and \\edgeref{d-DNNF}{DNNF}, \\langref{d-DNNF} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{d-DNNF} and \\edgeref{d-DNNF}{DNNF}, \\langref{d-DNNF} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -986,7 +989,7 @@
               "Vinall-Smeeth_2024",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any d-DNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{d-DNNF} and \\langref{d-DNNF} compiles to itself, \\langref{d-DNNF} cannot support bounded disjunction in quasipolynomial time.\r\n\r\nNote that \\citet{Vinall-Smeeth_2024} showed a quasipolynomial lower bound for bounded disjunction of \\langref{d-SDNNF}.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any d-DNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{d-DNNF} and \\langref{d-DNNF} compiles to itself, \\langref{d-DNNF} cannot support bounded disjunction in quasipolynomial time.\n\nNote that \\citet{Vinall-Smeeth_2024} showed a quasipolynomial lower bound for bounded disjunction of \\langref{d-SDNNF}.",
             "derived": false,
             "batchId": "tcz-obdd-d-dnnf-bounded-disjunction-lower-bound"
           },
@@ -1040,14 +1043,16 @@
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Conditioning preserves both decomposability and determinism. If $\\alpha \\land \\beta \\models \\bot$ then $(\\alpha|\\gamma) \\land (\\beta|\\gamma) \\models \\bot$ for any consistent term $\\gamma$, since $((\\alpha \\land \\beta)|\\gamma) \\land \\gamma \\models \\bot$ and $\\gamma$ is consistent \\citep{Darwiche_2002}."
+            "description": "Conditioning preserves both decomposability and determinism. If $\\alpha \\land \\beta \\models \\bot$ then $(\\alpha|\\gamma) \\land (\\beta|\\gamma) \\models \\bot$ for any consistent term $\\gamma$, since $((\\alpha \\land \\beta)|\\gamma) \\land \\gamma \\models \\bot$ and $\\gamma$ is consistent. \\citep{Darwiche_2002}"
           }
         }
       },
       "tags": [],
       "id": "lang_6c130090",
-      "definition": "A subset of \\langref{DNNF} where the children of every $\\vee$ node represent mutually exclusive sub-formulas. \\citep{Darwiche_2001a}.",
-      "definitionRefs": []
+      "definition": "A subset of \\langref{DNNF} where the children of every $\\vee$ node represent mutually exclusive sub-formulas.",
+      "definitionRefs": [
+        "Darwiche_2001a"
+      ]
     },
     {
       "fullName": "Deterministic Structured Decomposable Negation Normal Form",
@@ -1207,7 +1212,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{d-SDNNF}, every clause has a polynomial-size representation. If \\langref{d-SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{d-SDNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{d-SDNNF} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{d-SDNNF}, every clause has a polynomial-size representation. If \\langref{d-SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{d-SDNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{d-SDNNF}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -1218,7 +1223,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "In the language \\langref{d-SDNNF}, every term has a polynomial-size representation. If \\langref{d-SDNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{d-SDNNF} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{d-SDNNF} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{d-SDNNF}, every term has a polynomial-size representation. If \\langref{d-SDNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{d-SDNNF} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{d-SDNNF}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
@@ -1228,7 +1233,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{d-SDNNF} and \\edgeref{d-SDNNF}{DNNF}, \\langref{d-SDNNF} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{d-SDNNF} and \\edgeref{d-SDNNF}{DNNF}, \\langref{d-SDNNF} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -1238,7 +1243,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{d-SDNNF} and \\edgeref{d-SDNNF}{SDNNF}, \\langref{d-SDNNF} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{d-SDNNF} and \\edgeref{d-SDNNF}{SDNNF}, \\langref{d-SDNNF} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
@@ -1274,8 +1279,10 @@
       },
       "tags": [],
       "id": "lang_ea9b5299",
-      "definition": "The set of \\langfam{d-SDNNF}{T} formulas, respecting any vtree $T$: \\langref{d-SDNNF} $= \\bigcup_T$ \\langfam{d-SDNNF}{T}.\n\\citep{Pipatsrisawat_2008}.",
-      "definitionRefs": []
+      "definition": "The set of \\langfam{d-SDNNF}{T} formulas, respecting any vtree $T$: \\langref{d-SDNNF} $= \\bigcup_T$ \\langfam{d-SDNNF}{T}.",
+      "definitionRefs": [
+        "Pipatsrisawat_2008"
+      ]
     },
     {
       "fullName": "Deterministic Structured Decomposable Negation Normal Form (wrt a fixed vtree)",
@@ -1436,7 +1443,7 @@
               "Pipatsrisawat_2008",
               "Amarilli_2018"
             ],
-            "description": "In the language \\langfam{d-SDNNF}{T}, every term has a polynomial-size representation. If \\langfam{d-SDNNF}{T} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{d-SDNNF}{T} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{d-SDNNF_T} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langfam{d-SDNNF}{T}, every term has a polynomial-size representation. If \\langfam{d-SDNNF}{T} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{d-SDNNF}{T} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{d-SDNNF_T}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
@@ -1449,7 +1456,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langfam{d-SDNNF}{T}, every clause has a polynomial-size representation. If \\langfam{d-SDNNF}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{d-SDNNF}{T} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{d-SDNNF_T} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langfam{d-SDNNF}{T}, every clause has a polynomial-size representation. If \\langfam{d-SDNNF}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{d-SDNNF}{T} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{d-SDNNF_T}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -1542,7 +1549,7 @@
       "id": "lang_4c204bf3",
       "name": "DNF",
       "fullName": "Disjunctive Normal Form",
-      "definition": "A standard logical representation where a formula is a disjunction of terms, where a term is a conjunction of literals (i.e. the set $\\{\\bigvee_{i=1}^m \\bigwedge_{j=1}^n l_{i,j}\\}$, where each $l_{i,j} = x_k$ or $\\neg x_k$, for some $x_k \\in PS$) \\citep{Boole_1847}. Note that \\langref{DNF} $\\subset$ \\langref{NNF}.",
+      "definition": "A standard logical representation where a formula is a disjunction of terms, where a term is a conjunction of literals (i.e. the set $\\{\\bigvee_{i=1}^m \\bigwedge_{j=1}^n l_{i,j}\\}$, where each $l_{i,j} = x_k$ or $\\neg x_k$, for some $x_k \\in PS$). \\citep{Boole_1847} Note that \\langref{DNF} $\\subset$ \\langref{NNF}.",
       "definitionRefs": [],
       "properties": {
         "queries": {
@@ -1552,7 +1559,7 @@
               "Darwiche_2002"
             ],
             "assumption": "P \\neq NP",
-            "description": "Validity checking for \\langref{DNF} is coNP-complete. A \\langref{DNF} is valid iff every assignment satisfies at least one term, which requires checking that term coverage is complete \\citep{Darwiche_2002}."
+            "description": "Validity checking for \\langref{DNF} is coNP-complete. A \\langref{DNF} is valid iff every assignment satisfies at least one term, which requires checking that term coverage is complete. \\citep{Darwiche_2002}"
           },
           "CO": {
             "complexity": "poly",
@@ -1692,7 +1699,7 @@
               "TCZ_Forthcoming",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{DNF}, every clause has a polynomial-size representation. If \\langref{DNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{DNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{DNF} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{DNF}, every clause has a polynomial-size representation. If \\langref{DNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{DNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{DNF}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -1701,21 +1708,21 @@
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "The conjunction of two DNF sentences $\\alpha_1 \\land \\alpha_2$ can be computed by taking all cross products of one term from $\\alpha_1$ and one from $\\alpha_2$, removing redundant literals and inconsistent terms. The result is a DNF of polynomial size \\citep{Darwiche_2002}."
+            "description": "The conjunction of two DNF sentences $\\alpha_1 \\land \\alpha_2$ can be computed by taking all cross products of one term from $\\alpha_1$ and one from $\\alpha_2$, removing redundant literals and inconsistent terms. The result is a DNF of polynomial size. \\citep{Darwiche_2002}"
           },
           "OR_C": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Disjunction of DNF sentences is trivially another DNF sentence: simply take the union of all terms \\citep{Darwiche_2002}."
+            "description": "Disjunction of DNF sentences is trivially another DNF sentence: simply take the union of all terms. \\citep{Darwiche_2002}"
           },
           "FO": {
             "complexity": "poly",
             "refs": [
               "Lang_2003"
             ],
-            "description": "DNF satisfies FO \\citep{Lang_2003}. Forgetting variables from a DNF sentence can be done in polytime \\citep{Darwiche_2002}."
+            "description": "DNF satisfies FO. Forgetting variables from a DNF sentence can be done in polytime. \\citep{Lang_2003,Darwiche_2002}"
           },
           "OR_BC": {
             "complexity": "poly",
@@ -1909,7 +1916,7 @@
               "Amarilli_2018",
               "Darwiche_2002"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{DNNF} and \\langref{DNNF} compiles to itself, \\langref{DNNF} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{DNNF} and \\langref{DNNF} compiles to itself, \\langref{DNNF} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -1920,7 +1927,7 @@
               "TCZ_Forthcoming",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{DNNF}, every clause has a polynomial-size representation. If \\langref{DNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{DNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{DNNF} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{DNNF}, every clause has a polynomial-size representation. If \\langref{DNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{DNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{DNNF}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -1939,21 +1946,21 @@
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Disjunction trivially preserves decomposability since decomposability only constrains $\\land$-nodes. \\citep{Darwiche_2002}."
+            "description": "Disjunction trivially preserves decomposability since decomposability only constrains $\\land$-nodes. \\citep{Darwiche_2002}"
           },
           "CD": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Conditioning preserves decomposability: if $\\alpha$ and $\\beta$ do not share variables, then $\\alpha|\\gamma$ and $\\beta|\\gamma$ do not share variables either, since $\\text{Vars}(\\alpha|\\gamma) \\subseteq \\text{Vars}(\\alpha)$ \\citep{Darwiche_2002}."
+            "description": "Conditioning preserves decomposability: if $\\alpha$ and $\\beta$ do not share variables, then $\\alpha|\\gamma$ and $\\beta|\\gamma$ do not share variables either, since $\\text{Vars}(\\alpha|\\gamma) \\subseteq \\text{Vars}(\\alpha)$. \\citep{Darwiche_2002}"
           },
           "FO": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2001a"
             ],
-            "description": "DNNF satisfies FO: forgetting a set of variables in a DNNF sentence can be performed in polynomial time while preserving decomposability \\citep{Darwiche_2001a} \\citep{Darwiche_2002}."
+            "description": "DNNF satisfies FO: forgetting a set of variables in a DNNF sentence can be performed in polynomial time while preserving decomposability. \\citep{Darwiche_2001a,Darwiche_2002}"
           },
           "OR_BC": {
             "complexity": "poly",
@@ -1990,8 +1997,10 @@
       },
       "tags": [],
       "id": "lang_3bebcab7",
-      "definition": "The subset of \\langref{NNF} where the children of every $\\wedge$ node operate on disjoint sets of variables. \\citep{Darwiche_2001a}.",
-      "definitionRefs": []
+      "definition": "The subset of \\langref{NNF} where the children of every $\\wedge$ node operate on disjoint sets of variables.",
+      "definitionRefs": [
+        "Darwiche_2001a"
+      ]
     },
     {
       "name": "FBDD",
@@ -2004,7 +2013,7 @@
               "Gergov_1994",
               "Bryant_1992"
             ],
-            "description": "Consistency means existence of a satisfying root-to-1 path. For a general FBDD, run graph reachability from the root to terminal 1 in linear time \\citep{Gergov_1994,Bryant_1992}."
+            "description": "Consistency means existence of a satisfying root-to-1 path. For a general FBDD, run graph reachability from the root to terminal 1 in linear time. \\citep{Gergov_1994,Bryant_1992}"
           },
           "CT": {
             "complexity": "poly",
@@ -2012,7 +2021,7 @@
               "Gergov_1994",
               "Bryant_1992"
             ],
-            "description": "Model counting is done by dynamic programming over the DAG representation of the free BDD, combining child counts at each decision node; total runtime is polynomial in graph size \\citep{Gergov_1994,Bryant_1992}."
+            "description": "Model counting is done by dynamic programming over the DAG representation of the free BDD, combining child counts at each decision node; total runtime is polynomial in graph size. \\citep{Gergov_1994,Bryant_1992}"
           },
           "VA": {
             "complexity": "poly",
@@ -2020,7 +2029,7 @@
               "Gergov_1994",
               "Bryant_1992"
             ],
-            "description": "Validity is equivalent to absence of any falsifying path. For a general FBDD, check that terminal 0 is unreachable from the root (equivalently, all root-to-terminal paths evaluate to true); this is graph reachability in polynomial time \\citep{Gergov_1994,Bryant_1992}."
+            "description": "Validity is equivalent to absence of any falsifying path. For a general FBDD, check that terminal 0 is unreachable from the root (equivalently, all root-to-terminal paths evaluate to true); this is graph reachability in polynomial time. \\citep{Gergov_1994,Bryant_1992}"
           },
           "EQ": {
             "complexity": "poly",
@@ -2028,7 +2037,7 @@
               "Blum_1980"
             ],
             "assumption": "$P = \\mathrm{BPP}$",
-            "description": "\\citep{Blum_1980} evaluate both free Boolean graphs under random assignments over a finite field; if values differ, the graphs are definitely distinct, and if values match, they are probably equivalent. Repetition decreases error probability exponentially. Under derandomization assumptions such as P = BPP, this also yields deterministic polynomial-time equivalence testing for \\langref{FBDD}."
+            "description": "\\citet{Blum_1980} evaluate both free Boolean graphs under random assignments over a finite field; if values differ, the graphs are definitely distinct, and if values match, they are probably equivalent. Repetition decreases error probability exponentially. Under derandomization assumptions such as P = BPP, this also yields deterministic polynomial-time equivalence testing for \\langref{FBDD}."
           },
           "ME": {
             "complexity": "poly",
@@ -2108,7 +2117,7 @@
               "TCZ_Forthcoming",
               "Darwiche_2002"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{FBDD} and \\edgeref{FBDD}{DNNF}, \\langref{FBDD} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{FBDD} and \\edgeref{FBDD}{DNNF}, \\langref{FBDD} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -2119,7 +2128,7 @@
               "TCZ_Forthcoming",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{FBDD}, every clause has a polynomial-size representation. If \\langref{FBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{FBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{FBDD} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{FBDD}, every clause has a polynomial-size representation. If \\langref{FBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{FBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{FBDD}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -2130,7 +2139,7 @@
               "TCZ_Forthcoming",
               "Wegener_1987"
             ],
-            "description": "In the language \\langref{FBDD}, every term has a polynomial-size representation. If \\langref{FBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{FBDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{FBDD} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{FBDD}, every term has a polynomial-size representation. If \\langref{FBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{FBDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{FBDD}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
@@ -2141,7 +2150,7 @@
               "Vinall-Smeeth_2024",
               "Darwiche_2002"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any d-DNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{FBDD} and \\edgeref{FBDD}{d-DNNF}, \\langref{FBDD} cannot support bounded disjunction in quasipolynomial time.\r\n\r\nNote that \\citet{Vinall-Smeeth_2024} showed a quasipolynomial lower bound for bounded disjunction of \\langref{d-SDNNF}.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any d-DNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{FBDD} and \\edgeref{FBDD}{d-DNNF}, \\langref{FBDD} cannot support bounded disjunction in quasipolynomial time.\n\nNote that \\citet{Vinall-Smeeth_2024} showed a quasipolynomial lower bound for bounded disjunction of \\langref{d-SDNNF}.",
             "derived": false,
             "batchId": "tcz-obdd-d-dnnf-bounded-disjunction-lower-bound"
           },
@@ -2150,14 +2159,14 @@
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Negation of an FBDD is achieved by switching the labels of the 0-sink and 1-sink. The decision property and read-once property are preserved \\citep{Darwiche_2002}."
+            "description": "Negation of an FBDD is achieved by switching the labels of the 0-sink and 1-sink. The decision property and read-once property are preserved. \\citep{Darwiche_2002}"
           },
           "CD": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the free read-once property \\citep{Darwiche_2002}."
+            "description": "Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the free read-once property. \\citep{Darwiche_2002}"
           },
           "SFO": {
             "complexity": "no-quasi",
@@ -2187,8 +2196,10 @@
       },
       "tags": [],
       "id": "lang_684b1ca7",
-      "definition": "A Binary Decision Diagram (i.e. circuit of decision nodes) that allows variables to be tested in any order along any given path, provided no variable is tested more than once per path. This property is called the read-once property \\citep{Gergov_1994}.",
-      "definitionRefs": []
+      "definition": "A Binary Decision Diagram (i.e. circuit of decision nodes) that allows variables to be tested in any order along any given path, provided no variable is tested more than once per path. This property is called the read-once property.",
+      "definitionRefs": [
+        "Gergov_1994"
+      ]
     },
     {
       "name": "IP",
@@ -2201,21 +2212,21 @@
               "Darwiche_2002"
             ],
             "assumption": "the polynomial hierarchy does not collapse",
-            "description": "By duality with \\langref{PI}: the negation of a formula in prime implicate form is in prime implicant (\\langref{IP}) form. The number of models of $\\neg\\Sigma$ over $\\text{Vars}(\\Sigma)$ is $2^n$ minus the model count of $\\Sigma$. Hence the \\#P-hardness of counting for \\langref{PI} transfers to \\langref{IP} \\citep{Darwiche_2002}."
+            "description": "By duality with \\langref{PI}: the negation of a formula in prime implicate form is in prime implicant (\\langref{IP}) form. The number of models of $\\neg\\Sigma$ over $\\text{Vars}(\\Sigma)$ is $2^n$ minus the model count of $\\Sigma$. Hence the \\#P-hardness of counting for \\langref{PI} transfers to \\langref{IP}. \\citep{Darwiche_2002}"
           },
           "IM": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "By definition, \\langref{IP} is the set of prime implicants of a formula. A consistent term $\\alpha$ implies $\\Sigma$ iff $\\alpha$ entails some prime implicant of $\\Sigma$. This entailment check between terms runs in polynomial time \\citep{Darwiche_2002}."
+            "description": "By definition, \\langref{IP} is the set of prime implicants of a formula. A consistent term $\\alpha$ implies $\\Sigma$ iff $\\alpha$ entails some prime implicant of $\\Sigma$. This entailment check between terms runs in polynomial time. \\citep{Darwiche_2002}"
           },
           "SE": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "$IP \\subseteq DNF$ and \\langref{IP} satisfies IM, so checking sentential entailment reduces to checking implication between prime implicant forms. Two formulas are equivalent iff they share the same prime implicants (canonical form), giving SE \\citep{Darwiche_2002}."
+            "description": "$IP \\subseteq DNF$ and \\langref{IP} satisfies IM, so checking sentential entailment reduces to checking implication between prime implicant forms. Two formulas are equivalent iff they share the same prime implicants (canonical form), giving SE. \\citep{Darwiche_2002}"
           },
           "CO": {
             "complexity": "poly",
@@ -2303,42 +2314,42 @@
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Dual of PI: $\\Sigma_n = \\bigvee_{i=0}^{n-1}(x_{2i} \\land x_{2i+1})$ is in IP form but has $2^n$ prime implicates. Its negation has $2^n$ prime implicants. Hence IP cannot satisfy $\\neg$C \\citep{Darwiche_2002}."
+            "description": "Dual of PI: $\\Sigma_n = \\bigvee_{i=0}^{n-1}(x_{2i} \\land x_{2i+1})$ is in IP form but has $2^n$ prime implicates. Its negation has $2^n$ prime implicants. Hence IP cannot satisfy $\\neg$C. \\citep{Darwiche_2002}"
           },
           "AND_BC": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "$\\text{IP}(\\alpha_1 \\land \\alpha_2) = \\max(\\{\\beta_1 \\land \\beta_2 \\mid \\beta_1 \\in \\text{IP}(\\alpha_1), \\beta_2 \\in \\text{IP}(\\alpha_2)\\}, \\models)$ (dual of Proposition 40, Marquis 2000). The maximization removes subsuming terms, yielding an IP form in polytime \\citep{Darwiche_2002}."
+            "description": "$\\text{IP}(\\alpha_1 \\land \\alpha_2) = \\max(\\{\\beta_1 \\land \\beta_2 \\mid \\beta_1 \\in \\text{IP}(\\alpha_1), \\beta_2 \\in \\text{IP}(\\alpha_2)\\}, \\models)$ (dual of Proposition 40, Marquis 2000). The maximization removes subsuming terms, yielding an IP form in polytime. \\citep{Darwiche_2002}"
           },
           "AND_C": {
             "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "It is straightforward to convert a clause into an equivalent IP formula in polynomial time. Since specific CNF formulas cannot be turned into equivalent IP formulas in polynomial space (CNF $\\not\\leq$ IP), IP does not satisfy $\\land$C \\citep{Darwiche_2002}."
+            "description": "It is straightforward to convert a clause into an equivalent IP formula in polynomial time. Since specific CNF formulas cannot be turned into equivalent IP formulas in polynomial space (CNF $\\not\\leq$ IP), IP does not satisfy $\\land$C. \\citep{Darwiche_2002}"
           },
           "OR_BC": {
             "complexity": "no-quasi",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Combining prime implicants via disjunction requires distributing and re-minimizing terms, which can lead to an exponential explosion of new prime implicants. Let $\\alpha_1 = \\bigwedge_{i=1}^k p_i$ (one prime implicant) and $\\alpha_2 = \\bigvee_{i=1}^k \\bigvee_{j=1}^m (\\neg p_i \\land q_{i,j})$ ($mk$ prime implicants). Then $\\alpha_1 \\lor \\alpha_2$ has $(m+1)^k + mk$ prime implicants, an exponential blowup \\citep{Chandra_1978} \\citep{Darwiche_2002}."
+            "description": "Combining prime implicants via disjunction requires distributing and re-minimizing terms, which can lead to an exponential explosion of new prime implicants. Let $\\alpha_1 = \\bigwedge_{i=1}^k p_i$ (one prime implicant) and $\\alpha_2 = \\bigvee_{i=1}^k \\bigvee_{j=1}^m (\\neg p_i \\land q_{i,j})$ ($mk$ prime implicants). Then $\\alpha_1 \\lor \\alpha_2$ has $(m+1)^k + mk$ prime implicants, an exponential blowup. \\citep{Chandra_1978,Darwiche_2002}"
           },
           "CD": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Given IP formula $\\Sigma = \\bigvee \\gamma_i$, conditioning on $\\gamma$ gives $\\bigvee (\\gamma_i|\\gamma)$. Keeping only the logically weakest surviving terms yields a prime implicants formula equivalent to $\\Sigma|\\gamma$. This requires $O(n^2)$ entailment tests among terms, each polytime \\citep{Darwiche_2002}."
+            "description": "Given IP formula $\\Sigma = \\bigvee \\gamma_i$, conditioning on $\\gamma$ gives $\\bigvee (\\gamma_i|\\gamma)$. Keeping only the logically weakest surviving terms yields a prime implicants formula equivalent to $\\Sigma|\\gamma$. This requires $O(n^2)$ entailment tests among terms, each polytime. \\citep{Darwiche_2002}"
           },
           "SFO": {
             "complexity": "no-quasi",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "The number of prime implicants of $\\exists x.\\Sigma$ can be exponentially greater than the number of prime implicants of $\\Sigma$ \\citep{Chandra_1978}. A specific construction with $mk+1$ prime implicants produces $(m+1)^k + mk$ prime implicants after forgetting one variable \\citep{Darwiche_2002}."
+            "description": "The number of prime implicants of $\\exists x.\\Sigma$ can be exponentially greater than the number of prime implicants of $\\Sigma$. \\citep{Darwiche_2002} A specific construction with $mk+1$ prime implicants produces $(m+1)^k + mk$ prime implicants after forgetting one variable. \\citep{Darwiche_2002}"
           },
           "OR_C": {
             "complexity": "no-quasi",
@@ -2376,8 +2387,10 @@
       },
       "tags": [],
       "id": "lang_6ae90adc",
-      "definition": "The subset of \\langref{DNF} where formulas represent exactly  the disjunction of all minimal entailing terms (prime implicants). \\citep{Quine_1952}.",
-      "definitionRefs": []
+      "definition": "The subset of \\langref{DNF} where formulas represent exactly  the disjunction of all minimal entailing terms (prime implicants).",
+      "definitionRefs": [
+        "Quine_1952"
+      ]
     },
     {
       "name": "MODS",
@@ -2389,14 +2402,14 @@
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "A sentence $\\Sigma$ is consistent iff it has at least one model. Given the set of models, we need only check non-emptyness of the set \\citep{Darwiche_2002}."
+            "description": "A sentence $\\Sigma$ is consistent iff it has at least one model. Given the set of models, we need only check non-emptyness of the set. \\citep{Darwiche_2002}"
           },
           "CT": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "We need only take the cardinality of the set of models (which can be done in linear time) \\citep{Darwiche_2002}."
+            "description": "We need only take the cardinality of the set of models (which can be done in linear time). \\citep{Darwiche_2002}"
           },
           "VA": {
             "complexity": "poly",
@@ -2507,35 +2520,35 @@
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "$\\Sigma = \\bigwedge_{i=1}^n x_i$ has only one model over $\\{x_1,\\ldots,x_n\\}$ but its negation $\\neg\\Sigma$ has $2^n - 1$ models. Hence MODS cannot satisfy $\\neg$C \\citep{Darwiche_2002}."
+            "description": "$\\Sigma = \\bigwedge_{i=1}^n x_i$ has only one model over $\\{x_1,\\ldots,x_n\\}$ but its negation $\\neg\\Sigma$ has $2^n - 1$ models. Hence MODS cannot satisfy $\\neg$C. \\citep{Darwiche_2002}"
           },
           "AND_BC": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "The bounded conjunction of two MODS formulas (over the same variables) is simply taking the intersection of their model sets. If the variables differ, it is the intersection of their cylindrical extensions. The result is a MODS sentence in polytime \\citep{Darwiche_2002}."
+            "description": "The bounded conjunction of two MODS formulas (over the same variables) is simply taking the intersection of their model sets. If the variables differ, it is the intersection of their cylindrical extensions. The result is a MODS sentence in polytime. \\citep{Darwiche_2002}"
           },
           "AND_C": {
             "complexity": "no-quasi",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Let $\\Sigma_i = (x_{i,1} \\lor x_{i,2})$ for $i = 1,\\ldots,n$. Each $\\Sigma_i$ has 3 models. But $\\Sigma = \\bigwedge_{i=1}^n \\Sigma_i$ has $3^n$ models, so no polynomial-size MODS representation exists \\citep{Darwiche_2002}."
+            "description": "Let $\\Sigma_i = (x_{i,1} \\lor x_{i,2})$ for $i = 1,\\ldots,n$. Each $\\Sigma_i$ has 3 models. But $\\Sigma = \\bigwedge_{i=1}^n \\Sigma_i$ has $3^n$ models, so no polynomial-size MODS representation exists. \\citep{Darwiche_2002}"
           },
           "OR_BC": {
             "complexity": "no-quasi",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Let $\\alpha_1 = \\bigwedge_{i=1}^n x_i$ (1 model) and $\\alpha_2 = y$ (1 model). Then $\\alpha_1 \\lor \\alpha_2$ has $2^n + 1$ models over $\\text{Vars}(\\alpha_1) \\cup \\text{Vars}(\\alpha_2)$. Since this already uses the disjunction of just two MODS sentences, MODS does not satisfy $\\lor$BC \\citep{Darwiche_2002}."
+            "description": "Let $\\alpha_1 = \\bigwedge_{i=1}^n x_i$ (1 model) and $\\alpha_2 = y$ (1 model). Then $\\alpha_1 \\lor \\alpha_2$ has $2^n + 1$ models over $\\text{Vars}(\\alpha_1) \\cup \\text{Vars}(\\alpha_2)$. Since this already uses the disjunction of just two MODS sentences, MODS does not satisfy $\\lor$BC. \\citep{Darwiche_2002}"
           },
           "FO": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Given a MODS formula $\\Sigma$ and a set $X$, the MODS representation of $\\exists X.\\Sigma$ is obtained by removing every leaf node labeled by a literal $x$ or $\\neg x$ with $x \\in X$ (Propositions 18 and 20, Lang et al. 2000). See also the polytime FO operation on DNNF from \\citep{Darwiche_2001a} \\citep{Darwiche_2002}."
+            "description": "Given a MODS formula $\\Sigma$ and a set $X$, the MODS representation of $\\exists X.\\Sigma$ is obtained by removing every leaf node labeled by a literal $x$ or $\\neg x$ with $x \\in X$ (Propositions 18 and 20, Lang et al. 2000). See also the polytime FO operation on DNNF. \\citep{Darwiche_2001a,Darwiche_2002}"
           },
           "SFO": {
             "complexity": "poly",
@@ -2587,8 +2600,10 @@
       },
       "tags": [],
       "id": "lang_e02902d0",
-      "definition": "The set of satisfying truth assignments for a given formula. It may be interpreted as the disjunction of each model, and thus as a \\langref{d-SDNNF} formula \\citep{Darwiche_2002}.",
-      "definitionRefs": []
+      "definition": "The set of satisfying truth assignments for a given formula. It may be interpreted as the disjunction of each model, and thus as a \\langref{d-SDNNF} formula.",
+      "definitionRefs": [
+        "Darwiche_2002"
+      ]
     },
     {
       "fullName": "Nondeterministic Free Binary Decision Diagram",
@@ -2754,7 +2769,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{nFBDD}, every clause has a polynomial-size representation. If \\langref{nFBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{nFBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{nFBDD} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{nFBDD}, every clause has a polynomial-size representation. If \\langref{nFBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{nFBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{nFBDD}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -2775,7 +2790,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{nFBDD} and \\edgeref{nFBDD}{DNNF}, \\langref{nFBDD} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{nFBDD} and \\edgeref{nFBDD}{DNNF}, \\langref{nFBDD} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -2836,8 +2851,10 @@
       },
       "tags": [],
       "id": "lang_1df07cc3",
-      "definition": "A generalization of \\langref{FBDD} that allows for nondeterministic $\\vee$ \"guess\" nodes in addition to standard variable decisions. \\citep{Wegener_2000}.",
-      "definitionRefs": []
+      "definition": "A generalization of \\langref{FBDD} that allows for nondeterministic $\\vee$ \"guess\" nodes in addition to standard variable decisions.",
+      "definitionRefs": [
+        "Wegener_2000"
+      ]
     },
     {
       "name": "NNF",
@@ -2989,7 +3006,7 @@
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "If \\langref{NNF} supported FO, then the consistency of any CNF sentence $\\Sigma$ could be tested in polynomial time: represent $\\Sigma$ in \\langref{NNF}, compute $\\exists\\text{Vars}(\\Sigma).\\Sigma$, and check the resulting constant sentence. This would decide CNF consistency in polynomial time, implying P = NP \\citep{Darwiche_2002}.",
+            "description": "If \\langref{NNF} supported FO, then the consistency of any CNF sentence $\\Sigma$ could be tested in polynomial time: represent $\\Sigma$ in \\langref{NNF}, compute $\\exists\\text{Vars}(\\Sigma).\\Sigma$, and check the resulting constant sentence. This would decide CNF consistency in polynomial time, implying P = NP. \\citep{Darwiche_2002}",
             "derived": false,
             "batchId": "darwiche-fo-cnf-consistency-lower-bound",
             "assumption": "P \\neq NP"
@@ -2999,21 +3016,21 @@
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "NNF trivially satisfies $\\neg$C since any propositional sentence can be converted to NNF by pushing negations to literals and this preserves the NNF property \\citep{Darwiche_2002}."
+            "description": "NNF trivially satisfies $\\neg$C since any propositional sentence can be converted to NNF by pushing negations to literals and this preserves the NNF property. \\citep{Darwiche_2002}"
           },
           "AND_C": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Taking the conjunction of NNF sentences $\\alpha_1 \\land \\alpha_2 \\land \\ldots$ trivially produces another NNF sentence, since NNF places no restrictions on $\\land$-nodes \\citep{Darwiche_2002}."
+            "description": "Taking the conjunction of NNF sentences $\\alpha_1 \\land \\alpha_2 \\land \\ldots$ trivially produces another NNF sentence, since NNF places no restrictions on $\\land$-nodes. \\citep{Darwiche_2002}"
           },
           "CD": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "CD is trivially satisfied by NNF: replacing literals of the conditioning term by Boolean constants preserves the NNF property \\citep{Darwiche_2002}."
+            "description": "CD is trivially satisfied by NNF: replacing literals of the conditioning term by Boolean constants preserves the NNF property. \\citep{Darwiche_2002}"
           },
           "AND_BC": {
             "complexity": "poly",
@@ -3079,8 +3096,10 @@
       },
       "tags": [],
       "id": "lang_5bf00851",
-      "definition": "A boolean formula constructed strictly with $\\wedge$, $\\vee$, and literals, where negations are only allowed directly on the variables. It serves as the broad superset for most tractable circuits \\citep{Darwiche_2002}.",
-      "definitionRefs": []
+      "definition": "A boolean formula constructed strictly with $\\wedge$, $\\vee$, and literals, where negations are only allowed directly on the variables. It serves as the broad superset for most tractable circuits.",
+      "definitionRefs": [
+        "Darwiche_2002"
+      ]
     },
     {
       "fullName": "Nondeterministic Ordered Binary Decision Diagram",
@@ -3246,7 +3265,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{nOBDD}, every clause has a polynomial-size representation. If \\langref{nOBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{nOBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{nOBDD} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{nOBDD}, every clause has a polynomial-size representation. If \\langref{nOBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{nOBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{nOBDD}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -3267,7 +3286,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{nOBDD} and \\edgeref{nOBDD}{DNNF}, \\langref{nOBDD} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{nOBDD} and \\edgeref{nOBDD}{DNNF}, \\langref{nOBDD} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -3277,7 +3296,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{nOBDD} and \\edgeref{nOBDD}{SDNNF}, \\langref{nOBDD} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{nOBDD} and \\edgeref{nOBDD}{SDNNF}, \\langref{nOBDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
@@ -3333,8 +3352,10 @@
       },
       "tags": [],
       "id": "lang_d24efe0e",
-      "definition": "The set of nOBDD formulas following any variable order $<$: \\langref{nOBDD} $= \\bigcup_{<}$ \\langfam{nOBDD}{<}.\n\\citep{Wegener_2000}.",
-      "definitionRefs": []
+      "definition": "The set of nOBDD formulas following any variable order $<$: \\langref{nOBDD} $= \\bigcup_{<}$ \\langfam{nOBDD}{<}.",
+      "definitionRefs": [
+        "Wegener_2000"
+      ]
     },
     {
       "fullName": "Ordered Binary Decision Diagram (wrt a fixed variable order)",
@@ -3346,14 +3367,14 @@
             "refs": [
               "Bryant_1986"
             ],
-            "description": "Consistency is trivial for OBDDs: check if the diagram root is not the terminal 0 node \\citep{Bryant_1986}."
+            "description": "Consistency is trivial for OBDDs: check if the diagram root is not the terminal 0 node. \\citep{Bryant_1986}"
           },
           "CT": {
             "complexity": "poly",
             "refs": [
               "Bryant_1986"
             ],
-            "description": "Model counting on OBDDs can be done in polynomial time by a single bottom-up pass \\citep{Bryant_1986, Bryant_1992}."
+            "description": "Model counting on OBDDs can be done in polynomial time by a single bottom-up pass. \\citep{Bryant_1986, Bryant_1992}"
           },
           "EQ": {
             "complexity": "poly",
@@ -3362,7 +3383,7 @@
               "Bryant_1992",
               "Meinel_Theobald_1998"
             ],
-            "description": "OBDDs with a fixed variable ordering are canonical: two functions are equivalent iff their reduced OBDDs are identical. This makes EQ trivial (structural isomorphism check) \\citep{Bryant_1986, Bryant_1992, Meinel_Theobald_1998} (Theorem 8.11)."
+            "description": "OBDDs with a fixed variable ordering are canonical: two functions are equivalent iff their reduced OBDDs are identical. This makes EQ trivial by structural isomorphism checking. \\citep{Bryant_1986, Bryant_1992, Meinel_Theobald_1998}"
           },
           "ME": {
             "complexity": "poly",
@@ -3376,7 +3397,7 @@
             "refs": [
               "Bryant_1986"
             ],
-            "description": "Validity is trivial for OBDDs: check if the diagram root equals the terminal 1 node \\citep{Bryant_1986}."
+            "description": "Validity is trivial for OBDDs: check if the diagram root equals the terminal 1 node. \\citep{Bryant_1986}"
           },
           "CE": {
             "complexity": "poly",
@@ -3438,7 +3459,7 @@
               "VanDenBroeck_2015",
               "Amarilli_2018"
             ],
-            "description": "In the language \\langfam{OBDD}{<}, every term has a polynomial-size representation. If \\langfam{OBDD}{<} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{OBDD}{<} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{OBDD_<} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langfam{OBDD}{<}, every term has a polynomial-size representation. If \\langfam{OBDD}{<} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{OBDD}{<} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{OBDD_<}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
@@ -3450,7 +3471,7 @@
               "Darwiche_2011",
               "Amarilli_2018"
             ],
-            "description": "A polynomial-time forgetting procedure for \\langfam{OBDD}{<} would turn every \\langref{DNF} sentence into an equivalent \\langfam{OBDD}{<} representation of size polynomial in the input DNF after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{OBDD_<} \\citep{TCZ_Forthcoming}.",
+            "description": "A polynomial-time forgetting procedure for \\langfam{OBDD}{<} would turn every \\langref{DNF} sentence into an equivalent \\langfam{OBDD}{<} representation of size polynomial in the input DNF after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{OBDD_<}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-fo-dnf-selector-lower-bound"
           },
@@ -3459,28 +3480,28 @@
             "refs": [
               "Bryant_1986"
             ],
-            "description": "Negation of an OBDD$_<$ is achieved by switching the labels of the 0-sink and 1-sink. The result is an OBDD$_<$ of identical size \\citep{Bryant_1986}."
+            "description": "Negation of an OBDD$_<$ is achieved by switching the labels of the 0-sink and 1-sink. The result is an OBDD$_<$ of identical size. \\citep{Bryant_1986}"
           },
           "AND_BC": {
             "complexity": "poly",
             "refs": [
               "Bryant_1986"
             ],
-            "description": "The Apply algorithm computes the conjunction of two OBDD$_<$ sentences sharing the same variable ordering in polynomial time. The result is a reduced OBDD$_<$ \\citep{Bryant_1986}."
+            "description": "The Apply algorithm computes the conjunction of two OBDD$_<$ sentences sharing the same variable ordering in polynomial time. The result is a reduced OBDD$_<$. \\citep{Bryant_1986}"
           },
           "OR_BC": {
             "complexity": "poly",
             "refs": [
               "Bryant_1986"
             ],
-            "description": "The Apply algorithm computes the disjunction of two OBDD$_<$ sentences sharing the same variable ordering in polynomial time. The result is a reduced OBDD$_<$ \\citep{Bryant_1986}."
+            "description": "The Apply algorithm computes the disjunction of two OBDD$_<$ sentences sharing the same variable ordering in polynomial time. The result is a reduced OBDD$_<$. \\citep{Bryant_1986}"
           },
           "CD": {
             "complexity": "poly",
             "refs": [
               "Bryant_1986"
             ],
-            "description": "Conditioning is easy on OBDD$_<$: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The fixed order $<$ is preserved \\citep{Bryant_1986}."
+            "description": "Conditioning is easy on OBDD$_<$: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The fixed order $<$ is preserved. \\citep{Bryant_1986}"
           },
           "SFO": {
             "complexity": "poly",
@@ -3538,7 +3559,7 @@
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "By definition, \\langref{PI} is the set of prime implicates of a formula. A clause $\\gamma$ is entailed by $\\Sigma$ iff $\\gamma$ subsumes (is a weakening of) some prime implicate of $\\Sigma$. This subsumption check runs in polynomial time \\citep{Darwiche_2002}."
+            "description": "By definition, \\langref{PI} is the set of prime implicates of a formula. A clause $\\gamma$ is entailed by $\\Sigma$ iff $\\gamma$ subsumes (is a weakening of) some prime implicate of $\\Sigma$. This subsumption check runs in polynomial time. \\citep{Darwiche_2002}"
           },
           "CT": {
             "complexity": "no-poly-unknown-quasi",
@@ -3547,14 +3568,14 @@
               "Roth_1996"
             ],
             "assumption": "the polynomial hierarchy does not collapse",
-            "description": "The model counting problem for monotone Krom formulas (conjunctions of clauses with at most two positive literals) is \\#P-complete \\citep{Roth_1996}. Such formulas can be converted to prime implicates form in polynomial time, so \\langref{PI} does not satisfy CT \\citep{Darwiche_2002}."
+            "description": "The model counting problem for monotone Krom formulas (conjunctions of clauses with at most two positive literals) is \\#P-complete. \\citep{Darwiche_2002} Such formulas can be converted to prime implicates form in polynomial time, so \\langref{PI} does not satisfy CT. \\citep{Darwiche_2002}"
           },
           "SE": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "$PI \\subseteq CNF$ and \\langref{PI} satisfies CE, so checking $\\Sigma_1 \\models \\Sigma_2$ for \\langref{CNF} $\\Sigma_2$ reduces to checking each clause of $\\Sigma_2$ against the prime implicates of $\\Sigma_1$. Two formulas are equivalent iff they share the same prime implicates (canonical form), giving SE \\citep{Darwiche_2002}."
+            "description": "$PI \\subseteq CNF$ and \\langref{PI} satisfies CE, so checking $\\Sigma_1 \\models \\Sigma_2$ for \\langref{CNF} $\\Sigma_2$ reduces to checking each clause of $\\Sigma_2$ against the prime implicates of $\\Sigma_1$. Two formulas are equivalent iff they share the same prime implicates (canonical form), giving SE. \\citep{Darwiche_2002}"
           },
           "VA": {
             "complexity": "poly",
@@ -3640,42 +3661,42 @@
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "The formula $\\Sigma_n = \\bigwedge_{i=0}^{n-1}(x_{2i} \\lor x_{2i+1})$ is in PI form but has $2^n$ prime implicants. Its negation has $2^n$ prime implicates. Hence PI cannot satisfy $\\neg$C \\citep{Darwiche_2002}."
+            "description": "The formula $\\Sigma_n = \\bigwedge_{i=0}^{n-1}(x_{2i} \\lor x_{2i+1})$ is in PI form but has $2^n$ prime implicants. Its negation has $2^n$ prime implicates. Hence PI cannot satisfy $\\neg$C. \\citep{Darwiche_2002}"
           },
           "AND_BC": {
             "complexity": "no-quasi",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Combining prime implicates via conjunction requires distributing and re-minimizing clauses, which can lead to an exponential explosion of new prime implicates. Let $\\alpha_1 = \\bigvee_{i=1}^k p_i$ (one prime implicate) and $\\alpha_2 = \\bigwedge_{i=1}^k \\bigwedge_{j=1}^m (\\neg p_i \\lor q_{i,j})$ ($mk$ prime implicates). Then $\\alpha_1 \\land \\alpha_2$ has $(m+1)^k + mk$ prime implicates, an exponential blowup \\citep{Chandra_1978} \\citep{Darwiche_2002}."
+            "description": "Combining prime implicates via conjunction requires distributing and re-minimizing clauses, which can lead to an exponential explosion of new prime implicates. Let $\\alpha_1 = \\bigvee_{i=1}^k p_i$ (one prime implicate) and $\\alpha_2 = \\bigwedge_{i=1}^k \\bigwedge_{j=1}^m (\\neg p_i \\lor q_{i,j})$ ($mk$ prime implicates). Then $\\alpha_1 \\land \\alpha_2$ has $(m+1)^k + mk$ prime implicates, an exponential blowup. \\citep{Chandra_1978,Darwiche_2002}"
           },
           "OR_BC": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "$\\text{PI}(\\alpha_1 \\lor \\alpha_2) = \\min(\\{\\beta_1 \\lor \\beta_2 \\mid \\beta_1 \\in \\text{PI}(\\alpha_1), \\beta_2 \\in \\text{PI}(\\alpha_2)\\}, \\models)$ (Proposition 40, Marquis 2000). The minimization removes subsumed clauses, yielding a PI form in polytime \\citep{Darwiche_2002}."
+            "description": "$\\text{PI}(\\alpha_1 \\lor \\alpha_2) = \\min(\\{\\beta_1 \\lor \\beta_2 \\mid \\beta_1 \\in \\text{PI}(\\alpha_1), \\beta_2 \\in \\text{PI}(\\alpha_2)\\}, \\models)$ (Proposition 40, Marquis 2000). The minimization removes subsumed clauses, yielding a PI form in polytime. \\citep{Darwiche_2002}"
           },
           "OR_C": {
             "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "It is straightforward to convert any term into an equivalent PI formula in polynomial time. Since specific DNF formulas cannot be turned into equivalent PI formulas in polynomial space (DNF $\\not\\leq$ PI), PI does not satisfy $\\lor$C \\citep{Darwiche_2002}."
+            "description": "It is straightforward to convert any term into an equivalent PI formula in polynomial time. Since specific DNF formulas cannot be turned into equivalent PI formulas in polynomial space (DNF $\\not\\leq$ PI), PI does not satisfy $\\lor$C. \\citep{Darwiche_2002}"
           },
           "CD": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "The prime implicates of $\\Sigma \\land \\gamma$ can be computed in polytime when $\\Sigma$ is in PI form and $\\gamma$ is a term (Proposition 36, Marquis 2000). Since PI satisfies FO, the prime implicates of $\\Sigma|\\gamma \\equiv \\exists\\text{Vars}(\\gamma).(\\Sigma \\land \\gamma)$ follow in polytime \\citep{Darwiche_2002}."
+            "description": "The prime implicates of $\\Sigma \\land \\gamma$ can be computed in polytime when $\\Sigma$ is in PI form and $\\gamma$ is a term (Proposition 36, Marquis 2000). Since PI satisfies FO, the prime implicates of $\\Sigma|\\gamma \\equiv \\exists\\text{Vars}(\\gamma).(\\Sigma \\land \\gamma)$ follow in polytime. \\citep{Darwiche_2002}"
           },
           "FO": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "The prime implicates of $\\exists X.\\Sigma$ are exactly the prime implicates of $\\Sigma$ that do not contain any variable from $X$ (Proposition 55, Marquis 2000). Hence FO for PI simply filters out clauses containing forgotten variables \\citep{Darwiche_2002}."
+            "description": "The prime implicates of $\\exists X.\\Sigma$ are exactly the prime implicates of $\\Sigma$ that do not contain any variable from $X$ (Proposition 55, Marquis 2000). Hence FO for PI simply filters out clauses containing forgotten variables. \\citep{Darwiche_2002}"
           },
           "SFO": {
             "complexity": "poly",
@@ -3712,8 +3733,10 @@
       },
       "tags": [],
       "id": "lang_27fffab2",
-      "definition": "The subset of \\langref{CNF} where formulas represent exactly the conjunction of all minimal entailed clauses (prime implicates). \\citep{Quine_1952}.",
-      "definitionRefs": []
+      "definition": "The subset of \\langref{CNF} where formulas represent exactly the conjunction of all minimal entailed clauses (prime implicates).",
+      "definitionRefs": [
+        "Quine_1952"
+      ]
     },
     {
       "fullName": "Sentential Decision Diagram",
@@ -3882,7 +3905,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{SDD}, every clause has a polynomial-size representation. If \\langref{SDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{SDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{SDD} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{SDD}, every clause has a polynomial-size representation. If \\langref{SDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{SDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{SDD}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -3914,7 +3937,7 @@
               "VanDenBroeck_2015",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{SDD} and \\edgeref{SDD}{DNNF}, \\langref{SDD} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{SDD} and \\edgeref{SDD}{DNNF}, \\langref{SDD} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -3926,7 +3949,7 @@
               "VanDenBroeck_2015",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{SDD} and \\edgeref{SDD}{SDNNF}, \\langref{SDD} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{SDD} and \\edgeref{SDD}{SDNNF}, \\langref{SDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
@@ -3961,21 +3984,23 @@
             "refs": [
               "Darwiche_2011"
             ],
-            "description": "An SDD can be negated in polytime by applying exclusive-or with $\\top$ using the Apply algorithm \\citep{Darwiche_2011}."
+            "description": "An SDD can be negated in polytime by applying exclusive-or with $\\top$ using the Apply algorithm. \\citep{Darwiche_2011}"
           },
           "CD": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2011"
             ],
-            "description": "Conditioning an SDD $f$ on a literal $l$ is equivalent to computing $f \\land l$. Since any literal is a trivially small SDD and SDD supports $\\land$BC in polytime via Apply, conditioning is polytime \\citep{Darwiche_2011}."
+            "description": "Conditioning an SDD $f$ on a literal $l$ is equivalent to computing $f \\land l$. Since any literal is a trivially small SDD and SDD supports $\\land$BC in polytime via Apply, conditioning is polytime. \\citep{Darwiche_2011}"
           }
         }
       },
       "tags": [],
       "id": "lang_1afefbe2",
-      "definition": "The set of \\langfam{SDD}{T} formulas respecting any vtree $T$: \\langref{SDD} $= \\bigcup_T$ \\langfam{SDD}{T}.\n\\citep{Darwiche_2011}.",
-      "definitionRefs": []
+      "definition": "The set of \\langfam{SDD}{T} formulas respecting any vtree $T$: \\langref{SDD} $= \\bigcup_T$ \\langfam{SDD}{T}.",
+      "definitionRefs": [
+        "Darwiche_2011"
+      ]
     },
     {
       "fullName": "Sentential Decision Diagram (wrt a fixed vtree)",
@@ -4147,7 +4172,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langfam{SDD}{T}, every clause has a polynomial-size representation. If \\langfam{SDD}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{SDD}{T} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{SDD_T} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langfam{SDD}{T}, every clause has a polynomial-size representation. If \\langfam{SDD}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{SDD}{T} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{SDD_T}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -4160,7 +4185,7 @@
               "VanDenBroeck_2015",
               "Amarilli_2018"
             ],
-            "description": "In the language \\langfam{SDD}{T}, every term has a polynomial-size representation. If \\langfam{SDD}{T} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{SDD}{T} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{SDD_T} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langfam{SDD}{T}, every term has a polynomial-size representation. If \\langfam{SDD}{T} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{SDD}{T} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{SDD_T}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
@@ -4172,7 +4197,7 @@
               "Darwiche_2011",
               "Amarilli_2018"
             ],
-            "description": "A polynomial-time forgetting procedure for \\langfam{SDD}{T} would turn every \\langref{DNF} sentence into an equivalent \\langfam{SDD}{T} representation of size polynomial in the input DNF after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{SDD_T} \\citep{TCZ_Forthcoming}.",
+            "description": "A polynomial-time forgetting procedure for \\langfam{SDD}{T} would turn every \\langref{DNF} sentence into an equivalent \\langfam{SDD}{T} representation of size polynomial in the input DNF after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{SDD_T}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-fo-dnf-selector-lower-bound"
           },
@@ -4181,28 +4206,28 @@
             "refs": [
               "Darwiche_2011"
             ],
-            "description": "Negation of an \\langfam{SDD}{T} can be computed in polytime by applying exclusive-or with $\\top$ using Apply. Since $\\top$ trivially respects any fixed vtree $T$, the result remains an \\langfam{SDD}{T} over the same vtree \\citep{Darwiche_2011}."
+            "description": "Negation of an \\langfam{SDD}{T} can be computed in polytime by applying exclusive-or with $\\top$ using Apply. Since $\\top$ trivially respects any fixed vtree $T$, the result remains an \\langfam{SDD}{T} over the same vtree. \\citep{Darwiche_2011}"
           },
           "AND_BC": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2011"
             ],
-            "description": "The Apply algorithm combines two \\langfam{SDD}{T} sentences using any Boolean operator in polytime. In particular, two \\langfam{SDD}{T} formulas can be conjoined in polytime via Apply \\citep{Darwiche_2011}."
+            "description": "The Apply algorithm combines two \\langfam{SDD}{T} sentences using any Boolean operator in polytime. In particular, two \\langfam{SDD}{T} formulas can be conjoined in polytime via Apply. \\citep{Darwiche_2011}"
           },
           "OR_BC": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2011"
             ],
-            "description": "The Apply algorithm combines two \\langfam{SDD}{T} sentences using any Boolean operator in polytime. In particular, two \\langfam{SDD}{T} formulas can be disjoined in polytime via Apply \\citep{Darwiche_2011}."
+            "description": "The Apply algorithm combines two \\langfam{SDD}{T} sentences using any Boolean operator in polytime. In particular, two \\langfam{SDD}{T} formulas can be disjoined in polytime via Apply. \\citep{Darwiche_2011}"
           },
           "CD": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2011"
             ],
-            "description": "Conditioning an \\langfam{SDD}{T} sentence $f$ on a literal $l$ is equivalent to computing $f \\land l$. Since a literal is a trivially small \\langfam{SDD}{T} respecting the same fixed vtree, and \\langfam{SDD}{T} supports $\\land$BC in polytime via Apply, conditioning is polynomial-time as well \\citep{Darwiche_2011}."
+            "description": "Conditioning an \\langfam{SDD}{T} sentence $f$ on a literal $l$ is equivalent to computing $f \\land l$. Since a literal is a trivially small \\langfam{SDD}{T} respecting the same fixed vtree, and \\langfam{SDD}{T} supports $\\land$BC in polytime via Apply, conditioning is polynomial-time as well. \\citep{Darwiche_2011}"
           },
           "SFO": {
             "complexity": "poly",
@@ -4397,7 +4422,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{SDNNF}, every clause has a polynomial-size representation. If \\langref{SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{SDNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{SDNNF} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{SDNNF}, every clause has a polynomial-size representation. If \\langref{SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{SDNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{SDNNF}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -4419,7 +4444,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{SDNNF} and \\edgeref{SDNNF}{DNNF}, \\langref{SDNNF} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{SDNNF} and \\edgeref{SDNNF}{DNNF}, \\langref{SDNNF} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -4429,7 +4454,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{SDNNF} and \\langref{SDNNF} compiles to itself, \\langref{SDNNF} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{SDNNF} and \\langref{SDNNF} compiles to itself, \\langref{SDNNF} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
@@ -4485,8 +4510,10 @@
       },
       "tags": [],
       "id": "lang_b13b0d78",
-      "definition": "The set of \\langfam{SDNNF}{T} formulas respecting any vtree $T$: \\langref{SDNNF} $= \\bigcup_T$ \\langfam{SDNNF}{T}.\n\\citep{Pipatsrisawat_2008}.",
-      "definitionRefs": []
+      "definition": "The set of \\langfam{SDNNF}{T} formulas respecting any vtree $T$: \\langref{SDNNF} $= \\bigcup_T$ \\langfam{SDNNF}{T}.",
+      "definitionRefs": [
+        "Pipatsrisawat_2008"
+      ]
     },
     {
       "fullName": "Structured Decomposable Negation Normal Form (wrt a fixed vtree)",
@@ -4654,7 +4681,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langfam{SDNNF}{T}, every clause has a polynomial-size representation. If \\langfam{SDNNF}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{SDNNF}{T} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{SDNNF_T} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langfam{SDNNF}{T}, every clause has a polynomial-size representation. If \\langfam{SDNNF}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{SDNNF}{T} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{SDNNF_T}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -4897,7 +4924,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{uFBDD}, every clause has a polynomial-size representation. If \\langref{uFBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{uFBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{uFBDD} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{uFBDD}, every clause has a polynomial-size representation. If \\langref{uFBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{uFBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{uFBDD}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -4907,7 +4934,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{uFBDD} and \\edgeref{uFBDD}{DNNF}, \\langref{uFBDD} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{uFBDD} and \\edgeref{uFBDD}{DNNF}, \\langref{uFBDD} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -4918,7 +4945,7 @@
               "Vinall-Smeeth_2024",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any d-DNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{uFBDD} and \\edgeref{uFBDD}{d-DNNF}, \\langref{uFBDD} cannot support bounded disjunction in quasipolynomial time.\r\n\r\nNote that \\citet{Vinall-Smeeth_2024} showed a quasipolynomial lower bound for bounded disjunction of \\langref{d-SDNNF}.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any d-DNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{uFBDD} and \\edgeref{uFBDD}{d-DNNF}, \\langref{uFBDD} cannot support bounded disjunction in quasipolynomial time.\n\nNote that \\citet{Vinall-Smeeth_2024} showed a quasipolynomial lower bound for bounded disjunction of \\langref{d-SDNNF}.",
             "derived": false,
             "batchId": "tcz-obdd-d-dnnf-bounded-disjunction-lower-bound"
           },
@@ -4978,8 +5005,10 @@
       },
       "tags": [],
       "id": "lang_4e62a038",
-      "definition": "A restricted form of \\langref{nFBDD} where every satisfying assignment has exactly one valid accepting path. This is equivalent to: for every $\\lor$-node of the form $f_1 \\lor f_2$, $f_1$ and $f_2$ are mutually exclusive. \\citep{Wegener_2000}.",
-      "definitionRefs": []
+      "definition": "A restricted form of \\langref{nFBDD} where every satisfying assignment has exactly one valid accepting path. This is equivalent to: for every $\\lor$-node of the form $f_1 \\lor f_2$, $f_1$ and $f_2$ are mutually exclusive.",
+      "definitionRefs": [
+        "Wegener_2000"
+      ]
     },
     {
       "fullName": "Unambiguous Ordered Binary Decision Diagram",
@@ -5138,7 +5167,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "In the language \\langref{uOBDD}, every term has a polynomial-size representation. If \\langref{uOBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{uOBDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{uOBDD} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{uOBDD}, every term has a polynomial-size representation. If \\langref{uOBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{uOBDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{uOBDD}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
@@ -5150,7 +5179,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{uOBDD}, every clause has a polynomial-size representation. If \\langref{uOBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{uOBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{uOBDD} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{uOBDD}, every clause has a polynomial-size representation. If \\langref{uOBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{uOBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{uOBDD}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -5160,7 +5189,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{uOBDD} and \\edgeref{uOBDD}{DNNF}, \\langref{uOBDD} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{uOBDD} and \\edgeref{uOBDD}{DNNF}, \\langref{uOBDD} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -5170,7 +5199,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{uOBDD} and \\edgeref{uOBDD}{SDNNF}, \\langref{uOBDD} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{uOBDD} and \\edgeref{uOBDD}{SDNNF}, \\langref{uOBDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
@@ -5216,8 +5245,10 @@
       },
       "tags": [],
       "id": "lang_c2df8c2b",
-      "definition": "The set of \\langfam{uOBDD}{<} formulas respecting any order $<$: \\langref{uOBDD} $= \\bigcup_{<}$ \\langfam{uOBDD}{<}.\n\\citep{Wegener_2000}.",
-      "definitionRefs": []
+      "definition": "The set of \\langfam{uOBDD}{<} formulas respecting any order $<$: \\langref{uOBDD} $= \\bigcup_{<}$ \\langfam{uOBDD}{<}.",
+      "definitionRefs": [
+        "Wegener_2000"
+      ]
     },
     {
       "name": "OBDD",
@@ -5230,7 +5261,7 @@
               "Bryant_1986",
               "Darwiche_2002"
             ],
-            "description": "Any query concerning \\langref{OBDD} is equivalent to the corresponding query concerning \\langfam{OBDD}{<} when only one DAG is involved. Since \\langfam{OBDD}{<} satisfies CO, VA and CT, so does \\langref{OBDD} \\citep{Darwiche_2002}."
+            "description": "Any query concerning \\langref{OBDD} is equivalent to the corresponding query concerning \\langfam{OBDD}{<} when only one DAG is involved. Since \\langfam{OBDD}{<} satisfies CO, VA and CT, so does \\langref{OBDD}. \\citep{Darwiche_2002}"
           },
           "EQ": {
             "complexity": "poly",
@@ -5239,7 +5270,7 @@
               "Meinel_Theobald_1998",
               "Darwiche_2002"
             ],
-            "description": "\\citet{Meinel_Theobald_1998} cite the polynomial-time equivalence algorithm of \\citet{Fortune_1978} for free single-variable program schemes where one input tests predicates in one fixed order on all executions. An \\langref{OBDD} is such a free read-once scheme: along every root-to-sink path, variables are tested according to its associated order. The algorithm compares the two diagrams by recursively comparing residual subprograms. When the ordered input next tests variable $x$, both $x=0$ and $x=1$ cofactors are compared against the corresponding restrictions of the other diagram; terminal disagreements reject, and repeated residual pairs are memoized. The number of residual pairs is polynomial in the input sizes, so equivalence of two \\langref{OBDD} sentences is decidable in polynomial time \\citep{Darwiche_2002}."
+            "description": "\\citet{Meinel_Theobald_1998} cite the polynomial-time equivalence algorithm of \\citet{Fortune_1978} for free single-variable program schemes where one input tests predicates in one fixed order on all executions. An \\langref{OBDD} is such a free read-once scheme: along every root-to-sink path, variables are tested according to its associated order. The algorithm compares the two diagrams by recursively comparing residual subprograms. When the ordered input next tests variable $x$, both $x=0$ and $x=1$ cofactors are compared against the corresponding restrictions of the other diagram; terminal disagreements reject, and repeated residual pairs are memoized. The number of residual pairs is polynomial in the input sizes, so equivalence of two \\langref{OBDD} sentences is decidable in polynomial time. \\citep{Darwiche_2002}"
           },
           "SE": {
             "complexity": "no-poly-unknown-quasi",
@@ -5248,7 +5279,7 @@
               "Meinel_Theobald_1998"
             ],
             "assumption": "P \\neq NP",
-            "description": "Sentential entailment for \\langref{OBDD} is coNP-complete. Darwiche and Marquis use the result that checking consistency of two \\langfam{OBDD}{<} formulas using different variable orders is NP-complete \\citet[Lemma 8.14]{Meinel_Theobald_1998}. Since \\langref{OBDD} supports negation, consistency of $\\alpha \\land \\beta$ is equivalent to $\\alpha \\not\\models \\neg\\beta$, so polynomial-time SE for arbitrary OBDDs would imply polynomial-time consistency for such pairs \\citep{Darwiche_2002}."
+            "description": "Sentential entailment for \\langref{OBDD} is coNP-complete. Darwiche and Marquis use the result that checking consistency of two \\langfam{OBDD}{<} formulas using different variable orders is NP-complete \\citet[Lemma 8.14]{Meinel_Theobald_1998}. Since \\langref{OBDD} supports negation, consistency of $\\alpha \\land \\beta$ is equivalent to $\\alpha \\not\\models \\neg\\beta$, so polynomial-time SE for arbitrary OBDDs would imply polynomial-time consistency for such pairs. \\citep{Darwiche_2002}"
           },
           "CO": {
             "complexity": "poly",
@@ -5346,7 +5377,7 @@
               "Amarilli_2018",
               "Darwiche_2002"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\langref{OBDD} compiles to itself and \\edgeref{OBDD}{DNNF}, \\langref{OBDD} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\langref{OBDD} compiles to itself and \\edgeref{OBDD}{DNNF}, \\langref{OBDD} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -5360,7 +5391,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{OBDD}, every clause has a polynomial-size representation. If \\langref{OBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{OBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{OBDD} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{OBDD}, every clause has a polynomial-size representation. If \\langref{OBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{OBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{OBDD}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -5371,7 +5402,7 @@
               "TCZ_Forthcoming",
               "Devadas_1993"
             ],
-            "description": "In the language \\langref{OBDD}, every term has a polynomial-size representation. If \\langref{OBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{OBDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{OBDD} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{OBDD}, every term has a polynomial-size representation. If \\langref{OBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{OBDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{OBDD}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
@@ -5381,7 +5412,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\langref{OBDD} compiles to itself and \\edgeref{OBDD}{SDNNF}, \\langref{OBDD} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\langref{OBDD} compiles to itself and \\edgeref{OBDD}{SDNNF}, \\langref{OBDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
@@ -5392,7 +5423,7 @@
               "VanDenBroeck_2015",
               "Devadas_1993"
             ],
-            "description": "A polynomial-time forgetting procedure for \\langref{OBDD} would turn every \\langref{DNF} sentence into an equivalent \\langref{OBDD} representation of size polynomial in the input DNF after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{OBDD} \\citep{TCZ_Forthcoming}.",
+            "description": "A polynomial-time forgetting procedure for \\langref{OBDD} would turn every \\langref{DNF} sentence into an equivalent \\langref{OBDD} representation of size polynomial in the input DNF after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{OBDD}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-fo-dnf-selector-lower-bound"
           },
@@ -5401,21 +5432,21 @@
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Negation of an OBDD is achieved by switching the labels of the 0-sink and 1-sink. The ordered variable property is preserved since the single ordering is not affected \\citep{Darwiche_2002}."
+            "description": "Negation of an OBDD is achieved by switching the labels of the 0-sink and 1-sink. The ordered variable property is preserved since the single ordering is not affected. \\citep{Darwiche_2002}"
           },
           "CD": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Since OBDD $\\subseteq$ FBDD and conditioning preserves the variable ordering, OBDD also satisfies CD \\citep{Darwiche_2002}."
+            "description": "Since OBDD $\\subseteq$ FBDD and conditioning preserves the variable ordering, OBDD also satisfies CD. \\citep{Darwiche_2002}"
           },
           "SFO": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Since only one OBDD sentence is considered in the transformation, and OBDD$_<$ satisfies SFO, OBDD also satisfies SFO \\citep{Darwiche_2002}."
+            "description": "Since only one OBDD sentence is considered in the transformation, and OBDD$_<$ satisfies SFO, OBDD also satisfies SFO. \\citep{Darwiche_2002}"
           }
         }
       },
@@ -5586,7 +5617,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{dec-DNNF}, every clause has a polynomial-size representation. If \\langref{dec-DNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{dec-DNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{dec-DNNF} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{dec-DNNF}, every clause has a polynomial-size representation. If \\langref{dec-DNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{dec-DNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{dec-DNNF}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -5600,7 +5631,7 @@
               "Amarilli_2018",
               "Wegener_1987"
             ],
-            "description": "In the language \\langref{dec-DNNF}, every term has a polynomial-size representation. If \\langref{dec-DNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{dec-DNNF} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{dec-DNNF} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{dec-DNNF}, every term has a polynomial-size representation. If \\langref{dec-DNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{dec-DNNF} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{dec-DNNF}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
@@ -5611,7 +5642,7 @@
               "Amarilli_2018",
               "Darwiche_2002"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{dec-DNNF} and \\edgeref{dec-DNNF}{DNNF}, \\langref{dec-DNNF} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{dec-DNNF} and \\edgeref{dec-DNNF}{DNNF}, \\langref{dec-DNNF} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -5622,7 +5653,7 @@
               "Vinall-Smeeth_2024",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any d-DNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{dec-DNNF} and \\edgeref{dec-DNNF}{d-DNNF}, \\langref{dec-DNNF} cannot support bounded disjunction in quasipolynomial time.\r\n\r\nNote that \\citet{Vinall-Smeeth_2024} showed a quasipolynomial lower bound for bounded disjunction of \\langref{d-SDNNF}.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any d-DNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{dec-DNNF} and \\edgeref{dec-DNNF}{d-DNNF}, \\langref{dec-DNNF} cannot support bounded disjunction in quasipolynomial time.\n\nNote that \\citet{Vinall-Smeeth_2024} showed a quasipolynomial lower bound for bounded disjunction of \\langref{d-SDNNF}.",
             "derived": false,
             "batchId": "tcz-obdd-d-dnnf-bounded-disjunction-lower-bound"
           },
@@ -5662,8 +5693,10 @@
         }
       },
       "tags": [],
-      "definition": "A subset of \\langref{DNNF} where $\\vee$ nodes are entirely replaced by decision nodes, similar to those found in BDDs. \\citep{Oztok_2014}.",
-      "definitionRefs": []
+      "definition": "A subset of \\langref{DNNF} where $\\vee$ nodes are entirely replaced by decision nodes, similar to those found in BDDs.",
+      "definitionRefs": [
+        "Oztok_2014"
+      ]
     },
     {
       "id": "lang_0f27d539",
@@ -5836,7 +5869,7 @@
               "Oztok_2014",
               "Beame_2013"
             ],
-            "description": "In the language \\langref{dec-SDNNF}, every term has a polynomial-size representation. If \\langref{dec-SDNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{dec-SDNNF} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{dec-SDNNF} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{dec-SDNNF}, every term has a polynomial-size representation. If \\langref{dec-SDNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{dec-SDNNF} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{dec-SDNNF}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
@@ -5854,7 +5887,7 @@
               "Oztok_2014",
               "Beame_2013"
             ],
-            "description": "In the language \\langref{dec-SDNNF}, every clause has a polynomial-size representation. If \\langref{dec-SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{dec-SDNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{dec-SDNNF} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langref{dec-SDNNF}, every clause has a polynomial-size representation. If \\langref{dec-SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{dec-SDNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{dec-SDNNF}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -5865,7 +5898,7 @@
               "Amarilli_2018",
               "Darwiche_2002"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{dec-SDNNF} and \\edgeref{dec-SDNNF}{DNNF}, \\langref{dec-SDNNF} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{dec-SDNNF} and \\edgeref{dec-SDNNF}{DNNF}, \\langref{dec-SDNNF} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -5875,7 +5908,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\r\n\r\nAs a result, because \\edgeref{OBDD}{dec-SDNNF} and \\edgeref{dec-SDNNF}{SDNNF}, \\langref{dec-SDNNF} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$. \\citep{TCZ_Forthcoming}\n\nAs a result, because \\edgeref{OBDD}{dec-SDNNF} and \\edgeref{dec-SDNNF}{SDNNF}, \\langref{dec-SDNNF} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
@@ -5915,8 +5948,10 @@
         }
       },
       "tags": [],
-      "definition": "The language obtained by taking the union of every vtree: \\langref{dec-SDNNF} $= \\bigcup_T$ \\langfam{dec-SDNNF}{T}.\n\\citep{Oztok_2014}.",
-      "definitionRefs": []
+      "definition": "The language obtained by taking the union of every vtree: \\langref{dec-SDNNF} $= \\bigcup_T$ \\langfam{dec-SDNNF}{T}.",
+      "definitionRefs": [
+        "Oztok_2014"
+      ]
     },
     {
       "id": "lang_4ae03bc8",
@@ -6087,7 +6122,7 @@
               "VanDenBroeck_2015",
               "Beame_2013"
             ],
-            "description": "In the language \\langfam{dec-SDNNF}{T}, every term has a polynomial-size representation. If \\langfam{dec-SDNNF}{T} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{dec-SDNNF}{T} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{dec-SDNNF_T} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langfam{dec-SDNNF}{T}, every term has a polynomial-size representation. If \\langfam{dec-SDNNF}{T} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{dec-SDNNF}{T} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{dec-SDNNF_T}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
@@ -6105,7 +6140,7 @@
               "Bova_2014",
               "Beame_2013"
             ],
-            "description": "In the language \\langfam{dec-SDNNF}{T}, every clause has a polynomial-size representation. If \\langfam{dec-SDNNF}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{dec-SDNNF}{T} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{dec-SDNNF_T} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langfam{dec-SDNNF}{T}, every clause has a polynomial-size representation. If \\langfam{dec-SDNNF}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{dec-SDNNF}{T} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{dec-SDNNF_T}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -6342,7 +6377,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langfam{cSDD}{T}, every clause has a polynomial-size representation. If \\langfam{cSDD}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{cSDD}{T} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{cSDD_T} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langfam{cSDD}{T}, every clause has a polynomial-size representation. If \\langfam{cSDD}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{cSDD}{T} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{cSDD_T}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -6355,7 +6390,7 @@
               "VanDenBroeck_2015",
               "Amarilli_2018"
             ],
-            "description": "In the language \\langfam{cSDD}{T}, every term has a polynomial-size representation. If \\langfam{cSDD}{T} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{cSDD}{T} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{cSDD_T} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langfam{cSDD}{T}, every term has a polynomial-size representation. If \\langfam{cSDD}{T} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{cSDD}{T} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{cSDD_T}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
@@ -6367,7 +6402,7 @@
               "Darwiche_2011",
               "Amarilli_2018"
             ],
-            "description": "A polynomial-time forgetting procedure for \\langfam{cSDD}{T} would turn every \\langref{DNF} sentence into an equivalent \\langfam{cSDD}{T} representation of size polynomial in the input DNF after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{cSDD_T} \\citep{TCZ_Forthcoming}.",
+            "description": "A polynomial-time forgetting procedure for \\langfam{cSDD}{T} would turn every \\langref{DNF} sentence into an equivalent \\langfam{cSDD}{T} representation of size polynomial in the input DNF after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{cSDD_T}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-fo-dnf-selector-lower-bound"
           },
@@ -6428,8 +6463,10 @@
       "id": "lang_e827cf31",
       "name": "nOBDD$_<$",
       "fullName": "Nondeterministic Ordered Binary Decision Diagram (wrt a fixed variable order)",
-      "definition": "For each fixed variable order $<$, \\langfam{nOBDD}{<} is the set of \\langref{nFBDD} formulas where every root-to-sink path tests variables in an order consistent with $<$. \\citep{Wegener_2000}.",
-      "definitionRefs": [],
+      "definition": "For each fixed variable order $<$, \\langfam{nOBDD}{<} is the set of \\langref{nFBDD} formulas where every root-to-sink path tests variables in an order consistent with $<$.",
+      "definitionRefs": [
+        "Wegener_2000"
+      ],
       "properties": {
         "queries": {
           "CO": {
@@ -6595,7 +6632,7 @@
               "Pipatsrisawat_2008",
               "Bova_2014"
             ],
-            "description": "In the language \\langfam{nOBDD}{<}, every clause has a polynomial-size representation. If \\langfam{nOBDD}{<} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{nOBDD}{<} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{nOBDD_<} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langfam{nOBDD}{<}, every clause has a polynomial-size representation. If \\langfam{nOBDD}{<} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{nOBDD}{<} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{nOBDD_<}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -6679,8 +6716,10 @@
       "id": "lang_43a33aec",
       "name": "uOBDD$_<$",
       "fullName": "Unambiguous Ordered Binary Decision Diagram (wrt a fixed variable order)",
-      "definition": "For each fixed variable order $<$, \\langfam{uOBDD}{<} is the subset of \\langfam{nOBDD}{<} with the unambiguity property. Equivalently, for each fixed variable order $<$, \\langfam{uOBDD}{<} is the set of \\langref{uFBDD} formulas respecting the order $<$. \\citep{Wegener_2000}.",
-      "definitionRefs": [],
+      "definition": "For each fixed variable order $<$, \\langfam{uOBDD}{<} is the subset of \\langfam{nOBDD}{<} with the unambiguity property. Equivalently, for each fixed variable order $<$, \\langfam{uOBDD}{<} is the set of \\langref{uFBDD} formulas respecting the order $<$.",
+      "definitionRefs": [
+        "Wegener_2000"
+      ],
       "properties": {
         "queries": {
           "CO": {
@@ -6840,7 +6879,7 @@
               "Wegener_2000",
               "Amarilli_2018"
             ],
-            "description": "In the language \\langfam{uOBDD}{<}, every term has a polynomial-size representation. If \\langfam{uOBDD}{<} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{uOBDD}{<} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{uOBDD_<} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langfam{uOBDD}{<}, every term has a polynomial-size representation. If \\langfam{uOBDD}{<} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{uOBDD}{<} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{uOBDD_<}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
@@ -6853,7 +6892,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langfam{uOBDD}{<}, every clause has a polynomial-size representation. If \\langfam{uOBDD}{<} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{uOBDD}{<} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{uOBDD_<} \\citep{TCZ_Forthcoming}.",
+            "description": "In the language \\langfam{uOBDD}{<}, every clause has a polynomial-size representation. If \\langfam{uOBDD}{<} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{uOBDD}{<} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{uOBDD_<}. \\citep{TCZ_Forthcoming}",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
@@ -10537,7 +10576,7 @@
             }
           },
           "quasiDescription": {
-            "description": "The common-order quasipolynomial simulation of \\citep{TCZ_Forthcoming} specializes to \\langfam{d-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$; determinism guarantees that the output is a \\langfam{uOBDD}{<}.",
+            "description": "The common-order quasipolynomial simulation specializes to \\langfam{d-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$; determinism guarantees that the output is a \\langfam{uOBDD}{<}. \\citep{TCZ_Forthcoming}",
             "refs": [
               "Amarilli_2018",
               "Bollig_2018",
@@ -10546,7 +10585,7 @@
             ],
             "derived": false
           },
-          "description": "First, we show no polynomial compilation exists.\n\\edgeref{lang_43a33aec}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_91f812d0}{lang_1df07cc3} in polynomial time. If d-SDNNF$_T$ compiled to uOBDD$_<$ in polynomial time, then d-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore d-SDNNF$_T$ cannot compile to uOBDD$_<$ in polynomial time.\n\nNow, we show a quasipolynomial compilation exists.\nThe common-order quasipolynomial simulation of \\citep{TCZ_Forthcoming} specializes to \\langfam{d-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$; determinism guarantees that the output is a \\langfam{uOBDD}{<}."
+          "description": "First, we show no polynomial compilation exists.\n\\edgeref{lang_43a33aec}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_91f812d0}{lang_1df07cc3} in polynomial time. If d-SDNNF$_T$ compiled to uOBDD$_<$ in polynomial time, then d-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore d-SDNNF$_T$ cannot compile to uOBDD$_<$ in polynomial time.\n\nNow, we show a quasipolynomial compilation exists.\nThe common-order quasipolynomial simulation specializes to \\langfam{d-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$; determinism guarantees that the output is a \\langfam{uOBDD}{<}. \\citep{TCZ_Forthcoming}"
         }
       ],
       [
@@ -10592,7 +10631,7 @@
         {
           "status": "no-poly-unknown-quasi",
           "assumption": "the polynomial hierarchy does not collapse",
-          "description": "Because counting the models of a \\langref{d-DNNF} is in P and counting the models of a \\langref{DNF} is \\#P-complete, \\langref{DNF} cannot be polynomially compiled into \\langref{d-DNNF} unconditionally. Such a compilation implies P = \\#P, collapsing the polynomial hierarchy \\citep{Darwiche_2002}.",
+          "description": "Because counting the models of a \\langref{d-DNNF} is in P and counting the models of a \\langref{DNF} is \\#P-complete, \\langref{DNF} cannot be polynomially compiled into \\langref{d-DNNF} unconditionally. Such a compilation implies P = \\#P, collapsing the polynomial hierarchy. \\citep{Darwiche_2002}",
           "refs": [
             "Darwiche_2002"
           ],
@@ -11090,7 +11129,7 @@
         },
         {
           "status": "no-quasi",
-          "description": "\\citet[Proposition 7]{Bova_2016} shows that the Sauerhoff function $S_n$ has \\langref{DNNF} size $O(n^2)$. Theorem 9 shows that $S_n$ has \\langref{d-DNNF} size $2^{\\Omega(n)}$. (Also see \\citep{Bova_2014}.)",
+          "description": "\\citet[Proposition 7]{Bova_2016} shows that the Sauerhoff function $S_n$ has \\langref{DNNF} size $O(n^2)$. \\citet[Theorem 9]{Bova_2016} shows that $S_n$ has \\langref{d-DNNF} size $2^{\\Omega(n)}$.",
           "refs": [
             "Bova_2016"
           ],
@@ -11944,7 +11983,7 @@
           ],
           "hidden": false,
           "derived": false,
-          "description": "\\citep{Beame_2015} relate the size of SDD representations to best-partition communication complexity and derive simple examples for which FBDDs are exponentially more concise than SDDs. This establishes $P(\\langref{FBDD}) \\not\\subseteq P(\\langref{SDD})$."
+          "description": "\\citet{Beame_2015} relate the size of SDD representations to best-partition communication complexity and derive simple examples for which FBDDs are exponentially more concise than SDDs. This establishes $P(\\langref{FBDD}) \\not\\subseteq P(\\langref{SDD})$."
         },
         {
           "status": "no-quasi",
@@ -12035,7 +12074,7 @@
         },
         {
           "status": "no-quasi",
-          "description": "The hidden weighted bit function $HWB_n$ has \\langref{OBDD} size $2^{\\Omega(n/4)}$ \\citep{Bryant_1986} but \\langref{FBDD} size $O(n^2)$ \\citep{Gergov_1994}.",
+          "description": "The hidden weighted bit function $HWB_n$ has \\langref{OBDD} size $2^{\\Omega(n/4)}$. \\citep{Bryant_1986} It has \\langref{FBDD} size $O(n^2)$. \\citep{Gergov_1994}",
           "refs": [
             "Gergov_1994"
           ],
@@ -12046,7 +12085,7 @@
         },
         {
           "status": "poly",
-          "description": "Rewrite each decision node labeled $x$ as $(x \\wedge D_0) \\vee (\\neg x \\wedge D_1)$, where $D_0$ and $D_1$ are the rewritings of the 0- and 1-successors. The introduced $\\vee$-gates are decision gates and the $\\wedge$-gates are decomposable, so all $\\vee$-gates arise from decision node rewrites, yielding a \\langref{dec-DNNF} in linear time \\citep{Amarilli_2018}.",
+          "description": "Rewrite each decision node labeled $x$ as $(x \\wedge D_0) \\vee (\\neg x \\wedge D_1)$, where $D_0$ and $D_1$ are the rewritings of the 0- and 1-successors. The introduced $\\vee$-gates are decision gates and the $\\wedge$-gates are decomposable, so all $\\vee$-gates arise from decision node rewrites, yielding a \\langref{dec-DNNF} in linear time. \\citep{Amarilli_2018}",
           "refs": [
             "Amarilli_2018"
           ],
@@ -12291,7 +12330,7 @@
         },
         {
           "status": "no-quasi",
-          "description": "The negation of the clique detection function $\\neg\\Sigma_{n,k}$ has $O(n^3)$ prime implicants (hence polynomial \\langref{IP} size), but any \\langref{FBDD} for $\\neg\\Sigma_{n,k}$ has exponential size for suitable $k$ \\citep{Darwiche_2002,Wegener_1987}.",
+          "description": "The negation of the clique detection function $\\neg\\Sigma_{n,k}$ has $O(n^3)$ prime implicants (hence polynomial \\langref{IP} size), but any \\langref{FBDD} for $\\neg\\Sigma_{n,k}$ has exponential size for suitable $k$. \\citep{Darwiche_2002,Wegener_1987}",
           "refs": [
             "Darwiche_2002",
             "Wegener_1987"
@@ -12703,7 +12742,7 @@
       [
         {
           "status": "poly",
-          "description": "A Shannon tree for any \\langref{MODS} formula can be generated in polynomial time. Paths from the root to 0-leaves yield a \\langref{CNF} representation \\citep{Darwiche_2002}.",
+          "description": "A Shannon tree for any \\langref{MODS} formula can be generated in polynomial time. Paths from the root to 0-leaves yield a \\langref{CNF} representation. \\citep{Darwiche_2002}",
           "refs": [
             "Darwiche_2002"
           ],
@@ -12920,7 +12959,7 @@
         },
         {
           "status": "poly",
-          "description": "A Shannon tree for any \\langref{MODS} formula following order $<$ can be generated in polynomial time. This tree can be reduced into a corresponding \\langfam{OBDD}{<} in polynomial time \\citep{Darwiche_2002}.",
+          "description": "A Shannon tree for any \\langref{MODS} formula following order $<$ can be generated in polynomial time. This tree can be reduced into a corresponding \\langfam{OBDD}{<} in polynomial time. \\citep{Darwiche_2002}",
           "refs": [
             "Darwiche_2002"
           ],
@@ -13369,7 +13408,7 @@
         },
         {
           "status": "poly",
-          "description": "Rewrite each decision node labeled $x$ as $(x \\wedge D_0) \\vee (\\neg x \\wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The $\\wedge$-gates are decomposable, yielding a \\langref{DNNF} in linear time \\citep{Amarilli_2018}.",
+          "description": "Rewrite each decision node labeled $x$ as $(x \\wedge D_0) \\vee (\\neg x \\wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The $\\wedge$-gates are decomposable, yielding a \\langref{DNNF} in linear time. \\citep{Amarilli_2018}",
           "refs": [
             "Amarilli_2018"
           ],
@@ -13377,7 +13416,7 @@
         },
         {
           "status": "no-quasi",
-          "description": "Consider the Boolean functions $\\psi_n,\\phi_n:\\{0,1\\}^{n^2}\\to\\{0,1\\}$ that respectively test whether, in an $n \\times n$ Boolean matrix, either the number of 1's is odd and there is a full row of 1's, or the number of 1's is even and there is a column full of 1's. An \\langref{FBDD} of size $O(n^2)$ may simulate either $\\psi_n$ or $\\phi_n$, and thus the \\langref{uFBDD} $\\psi_n\\vee\\phi_n$ is of size $O(n^2)$; however, an \\langref{FBDD} for $\\psi_n\\vee\\phi_n$ is provably of size $2^{\\Omega(n^{1/2})}$ \\citep{Amarilli_2018}.",
+          "description": "Consider the Boolean functions $\\psi_n,\\phi_n:\\{0,1\\}^{n^2}\\to\\{0,1\\}$ that respectively test whether, in an $n \\times n$ Boolean matrix, either the number of 1's is odd and there is a full row of 1's, or the number of 1's is even and there is a column full of 1's. An \\langref{FBDD} of size $O(n^2)$ may simulate either $\\psi_n$ or $\\phi_n$, and thus the \\langref{uFBDD} $\\psi_n\\vee\\phi_n$ is of size $O(n^2)$; however, an \\langref{FBDD} for $\\psi_n\\vee\\phi_n$ is provably of size $2^{\\Omega(n^{1/2})}$. \\citep{Amarilli_2018}",
           "refs": [
             "Amarilli_2018"
           ],
@@ -14887,7 +14926,7 @@
         },
         {
           "status": "poly",
-          "description": "Construct a right-linear v-tree from the variable order, then rewrite each decision node labeled $x$ as $(x \\wedge D_0) \\vee (\\neg x \\wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The v-tree alignment ensures every $\\wedge$-gate respects the variable partition, yielding an \\langref{SDNNF} in linear time \\citep{Amarilli_2018}.",
+          "description": "Construct a right-linear v-tree from the variable order, then rewrite each decision node labeled $x$ as $(x \\wedge D_0) \\vee (\\neg x \\wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The v-tree alignment ensures every $\\wedge$-gate respects the variable partition, yielding an \\langref{SDNNF} in linear time. \\citep{Amarilli_2018}",
           "refs": [
             "Amarilli_2018"
           ],
@@ -15748,7 +15787,7 @@
         },
         {
           "status": "no-quasi",
-          "description": "The pairwise CNF $\\Sigma_n = \\bigwedge_{i=0}^{n-1}(x_{2i} \\vee x_{2i+1})$ has $2^n$ prime implicates; its negation $\\neg\\Sigma_n \\in PI$ therefore has $2^n$ essential prime implicants, forcing any \\langref{DNF} representation to have at least $2^n$ terms \\citep{Darwiche_2002}.",
+          "description": "The pairwise CNF $\\Sigma_n = \\bigwedge_{i=0}^{n-1}(x_{2i} \\vee x_{2i+1})$ has $2^n$ prime implicates; its negation $\\neg\\Sigma_n \\in PI$ therefore has $2^n$ essential prime implicants, forcing any \\langref{DNF} representation to have at least $2^n$ terms. \\citep{Darwiche_2002}",
           "refs": [
             "Darwiche_2002"
           ],
@@ -15769,7 +15808,7 @@
         },
         {
           "status": "no-quasi",
-          "description": "The clique detection function $\\Sigma_{n,k}$ has $O(n^3)$ prime implicates (hence polynomial \\langref{PI} size), but any \\langref{FBDD} for $\\Sigma_{n,k}$ has exponential size for suitable $k$ \\citep{Wegener_1987,Darwiche_2002}.",
+          "description": "The clique detection function $\\Sigma_{n,k}$ has $O(n^3)$ prime implicates (hence polynomial \\langref{PI} size), but any \\langref{FBDD} for $\\Sigma_{n,k}$ has exponential size for suitable $k$. \\citep{Wegener_1987,Darwiche_2002}",
           "refs": [
             "Wegener_1987",
             "Darwiche_2002"
@@ -18604,7 +18643,7 @@
             }
           },
           "quasiDescription": {
-            "description": "The \\langref{SDNNF}-to-\\langref{nOBDD} simulation can be oriented as in \\citep{TCZ_Forthcoming}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and gives a quasipolynomial-size \\langfam{nOBDD}{<}.",
+            "description": "The \\langref{SDNNF}-to-\\langref{nOBDD} simulation can be oriented so that for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and gives a quasipolynomial-size \\langfam{nOBDD}{<}. \\citep{TCZ_Forthcoming}",
             "refs": [
               "Amarilli_2018",
               "Bollig_2018",
@@ -18613,7 +18652,7 @@
             ],
             "derived": false
           },
-          "description": "First, we show no polynomial compilation exists.\n\\edgeref{lang_91f812d0}{lang_3c803ba1} in polynomial time. \\edgeref{lang_e827cf31}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_91f812d0}{lang_1df07cc3} in polynomial time. If SDNNF$_T$ compiled to nOBDD$_<$ in polynomial time, then d-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore SDNNF$_T$ cannot compile to nOBDD$_<$ in polynomial time.\n\nNow, we show a quasipolynomial compilation exists.\nThe \\langref{SDNNF}-to-\\langref{nOBDD} simulation can be oriented as in \\citep{TCZ_Forthcoming}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and gives a quasipolynomial-size \\langfam{nOBDD}{<}."
+          "description": "First, we show no polynomial compilation exists.\n\\edgeref{lang_91f812d0}{lang_3c803ba1} in polynomial time. \\edgeref{lang_e827cf31}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_91f812d0}{lang_1df07cc3} in polynomial time. If SDNNF$_T$ compiled to nOBDD$_<$ in polynomial time, then d-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore SDNNF$_T$ cannot compile to nOBDD$_<$ in polynomial time.\n\nNow, we show a quasipolynomial compilation exists.\nThe \\langref{SDNNF}-to-\\langref{nOBDD} simulation can be oriented so that for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and gives a quasipolynomial-size \\langfam{nOBDD}{<}. \\citep{TCZ_Forthcoming}"
         },
         {
           "status": "no-quasi",
@@ -18688,7 +18727,7 @@
         },
         {
           "status": "poly",
-          "description": "Rewrite each decision node labeled $x$ as $(x \\wedge D_0) \\vee (\\neg x \\wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The $\\wedge$-gates are decomposable, and unambiguity of the \\langref{uFBDD} ensures all introduced $\\vee$-gates are deterministic, yielding a \\langref{d-DNNF} in linear time \\citep{Amarilli_2018}.",
+          "description": "Rewrite each decision node labeled $x$ as $(x \\wedge D_0) \\vee (\\neg x \\wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The $\\wedge$-gates are decomposable, and unambiguity of the \\langref{uFBDD} ensures all introduced $\\vee$-gates are deterministic, yielding a \\langref{d-DNNF} in linear time. \\citep{Amarilli_2018}",
           "refs": [
             "Amarilli_2018"
           ],
@@ -19330,7 +19369,7 @@
         },
         {
           "status": "poly",
-          "description": "Construct a right-linear v-tree from the variable order, then rewrite each decision node labeled $x$ as $(x \\wedge D_0) \\vee (\\neg x \\wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The v-tree alignment ensures structuredness, and unambiguity of the \\langref{uOBDD} makes all introduced $\\vee$-gates deterministic, yielding a \\langref{d-SDNNF} in linear time \\citep{Amarilli_2018}.",
+          "description": "Construct a right-linear v-tree from the variable order, then rewrite each decision node labeled $x$ as $(x \\wedge D_0) \\vee (\\neg x \\wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The v-tree alignment ensures structuredness, and unambiguity of the \\langref{uOBDD} makes all introduced $\\vee$-gates deterministic, yielding a \\langref{d-SDNNF} in linear time. \\citep{Amarilli_2018}",
           "refs": [
             "Amarilli_2018"
           ],
@@ -19667,7 +19706,7 @@
         null,
         {
           "status": "no-quasi",
-          "description": "The hidden weighted bit function $HWB_n$ has polynomial-size unambiguous nondeterministic OBDDs under a fixed order: $HWB_n = \\bigvee_{k=1}^n(E_k^n(x) \\wedge x_k)$, where each branch for $k$ tests the variables in the same order to verify the exact Hamming weight and $x_k=1$, and the branches are disjoint. Thus the representation is unambiguous and has polynomial size, as in the 2-OBDD/FBDD constructions discussed by \\citet{Wegener_2000}. Bryant's hidden-weighted-bit lower bound says every OBDD for $HWB_n$, over every variable order, has exponential size \\citep{Bryant_1986,Wegener_2000}. Hence no quasipolynomial compilation to OBDD is possible.",
+          "description": "The hidden weighted bit function $HWB_n$ has polynomial-size unambiguous nondeterministic OBDDs under a fixed order: $HWB_n = \\bigvee_{k=1}^n(E_k^n(x) \\wedge x_k)$, where each branch for $k$ tests the variables in the same order to verify the exact Hamming weight and $x_k=1$, and the branches are disjoint. Thus the representation is unambiguous and has polynomial size, as in the 2-OBDD/FBDD constructions discussed by \\citet{Wegener_2000}. Bryant's hidden-weighted-bit lower bound says every OBDD for $HWB_n$, over every variable order, has exponential size. \\citep{Bryant_1986,Wegener_2000}\nHence no quasipolynomial compilation to OBDD is possible.",
           "refs": [
             "Bryant_1986",
             "Wegener_2000"
@@ -20090,7 +20129,7 @@
           ],
           "hidden": false,
           "derived": false,
-          "description": "Suppose an order $<$ existed so that \\langref{OBDD} compiled to \\langfam{OBDD}{<}. Take the first $2n$ variables in that order, call the first half $x_1,\\ldots,x_n$ and the second half $y_1,\\ldots,y_n$, and consider $EQ_n(x,y)$. This function has linear-size OBDDs under the interleaved order $x_1,y_1,\\ldots,x_n,y_n$, but exponential-size \\langfam{OBDD}{<} representations \\citep{Wegener_2000}. Thus no order $<$ can exist, and \\langref{OBDD} is not quasipolynomial-time compilable to \\langfam{OBDD}{<}.",
+          "description": "Suppose an order $<$ existed so that \\langref{OBDD} compiled to \\langfam{OBDD}{<}. Take the first $2n$ variables in that order, call the first half $x_1,\\ldots,x_n$ and the second half $y_1,\\ldots,y_n$, and consider $EQ_n(x,y)$. This function has linear-size OBDDs under the interleaved order $x_1,y_1,\\ldots,x_n,y_n$, but exponential-size \\langfam{OBDD}{<} representations. \\citep{Wegener_2000}\nThus no order $<$ can exist, and \\langref{OBDD} is not quasipolynomial-time compilable to \\langfam{OBDD}{<}.",
           "separatingFunctionIds": [
             "$EQ_n$"
           ]
@@ -20178,7 +20217,7 @@
         },
         {
           "status": "no-quasi",
-          "description": "For any fixed vtree $T$, a simple function can be chosen so that every \\langfam{SDNNF}{T} representation is exponentially large, while some \\langref{OBDD} represents it in linear size. Therefore \\langref{OBDD} cannot compile to \\langfam{SDNNF}{T} in quasipolynomial size \\citep{TCZ_Forthcoming}.",
+          "description": "For any fixed vtree $T$, a simple function can be chosen so that every \\langfam{SDNNF}{T} representation is exponentially large, while some \\langref{OBDD} represents it in linear size. Therefore \\langref{OBDD} cannot compile to \\langfam{SDNNF}{T} in quasipolynomial size. \\citep{TCZ_Forthcoming}",
           "refs": [
             "TCZ_Forthcoming"
           ],
@@ -20233,7 +20272,7 @@
         },
         {
           "status": "poly",
-          "description": "Construct a right-linear v-tree from the variable order, then rewrite each decision node labeled $x$ as $(x \\wedge D_0) \\vee (\\neg x \\wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The v-tree alignment ensures structuredness, and since all $\\vee$-gates arise from decision node rewrites, every $\\vee$-gate is a decision gate, yielding a \\langref{dec-SDNNF} in linear time \\citep{Amarilli_2018}.",
+          "description": "Construct a right-linear v-tree from the variable order, then rewrite each decision node labeled $x$ as $(x \\wedge D_0) \\vee (\\neg x \\wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The v-tree alignment ensures structuredness, and since all $\\vee$-gates arise from decision node rewrites, every $\\vee$-gate is a decision gate, yielding a \\langref{dec-SDNNF} in linear time. \\citep{Amarilli_2018}",
           "refs": [
             "Amarilli_2018"
           ],
@@ -22129,7 +22168,7 @@
             }
           },
           "quasiDescription": {
-            "description": "The common-order quasipolynomial simulation of \\citep{TCZ_Forthcoming} specializes to \\langfam{dec-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and produces a quasipolynomial-size \\langfam{OBDD}{<}.",
+            "description": "The common-order quasipolynomial simulation specializes to \\langfam{dec-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and produces a quasipolynomial-size \\langfam{OBDD}{<}. \\citep{TCZ_Forthcoming}",
             "refs": [
               "Amarilli_2018",
               "Bollig_2018",
@@ -22138,7 +22177,7 @@
             ],
             "derived": false
           },
-          "description": "First, we show no polynomial compilation exists.\n\\edgeref{lang_d69995dd}{lang_684b1ca7} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_684b1ca7} in polynomial time. If dec-SDNNF$_T$ compiled to OBDD$_<$ in polynomial time, then dec-SDNNF$_T$ would compile to FBDD in polynomial time, contradicting the above. Therefore dec-SDNNF$_T$ cannot compile to OBDD$_<$ in polynomial time.\n\nNow, we show a quasipolynomial compilation exists.\nThe common-order quasipolynomial simulation of \\citep{TCZ_Forthcoming} specializes to \\langfam{dec-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and produces a quasipolynomial-size \\langfam{OBDD}{<}."
+          "description": "First, we show no polynomial compilation exists.\n\\edgeref{lang_d69995dd}{lang_684b1ca7} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_684b1ca7} in polynomial time. If dec-SDNNF$_T$ compiled to OBDD$_<$ in polynomial time, then dec-SDNNF$_T$ would compile to FBDD in polynomial time, contradicting the above. Therefore dec-SDNNF$_T$ cannot compile to OBDD$_<$ in polynomial time.\n\nNow, we show a quasipolynomial compilation exists.\nThe common-order quasipolynomial simulation specializes to \\langfam{dec-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and produces a quasipolynomial-size \\langfam{OBDD}{<}. \\citep{TCZ_Forthcoming}"
         },
         {
           "status": "no-quasi",
@@ -24019,7 +24058,7 @@
         },
         {
           "status": "no-quasi",
-          "description": "Use the same $HWB_n$ family as for \\langref{uOBDD} versus \\langref{OBDD}. The polynomial unambiguous construction can be taken to respect one fixed order for each $n$, and the finite hard instances can be renamed into disjoint variable blocks of one global order. On the target side, Bryant's lower bound is order-independent: every OBDD for $HWB_n$, and hence every \\langfam{OBDD}{<} for every fixed order $<$, has exponential size \\citep{Bryant_1986,Wegener_2000}. Therefore \\langfam{uOBDD}{<} is not quasipolynomial-time compilable to \\langfam{OBDD}{<}.",
+          "description": "Use the same $HWB_n$ family as for \\langref{uOBDD} versus \\langref{OBDD}. The polynomial unambiguous construction can be taken to respect one fixed order for each $n$, and the finite hard instances can be renamed into disjoint variable blocks of one global order. On the target side, Bryant's lower bound is order-independent: every OBDD for $HWB_n$, and hence every \\langfam{OBDD}{<} for every fixed order $<$, has exponential size. \\citep{Bryant_1986,Wegener_2000}\nTherefore \\langfam{uOBDD}{<} is not quasipolynomial-time compilable to \\langfam{OBDD}{<}.",
           "refs": [
             "Bryant_1986",
             "Wegener_2000"
@@ -24535,7 +24574,7 @@
     {
       "id": "succinctness-language",
       "title": "Succinctness Between Languages",
-      "statement": "There are two intuitive definitions of succinctness: a \\emph{time} requirement, i.e. that an efficient compilation algorithm exists between two languages; or the \\emph{space} requirement, that formulas remain ``small'' in the new language. Since, for any computation, runtime is lower-bounded by output size, the latter definition is weaker.\n\nWe fix the convention that succinctness between representation languages is a size-only relation, with no requirement that a conversion algorithm exist \\citep{Gogic_1995}. However, to the best of our knowledge, all known proofs of succinctness use a compilation algorithm to establish the size relationship; and all proofs that \\emph{no} time-efficient compilation algorithm exists use space complexity bounds. An example to the contrary would be highly interesting.\n\nFormally, let $L_1$ and $L_2$ be two languages. $L_1$ is \\emph{at least as succinct as} $L_2$, written $L_1 \\leq_p L_2$, if there exists a polynomial $p$ such that for every $\\alpha \\in L_2$ there exists an equivalent $\\beta \\in L_1$ with $|\\beta| \\leq p(|\\alpha|)$.\n\nWe say $L_1$ \\emph{polynomially compiles into} $L_2$ if there exists a polynomial-time algorithm that converts any $\\alpha \\in L_1$ into an equivalent $\\beta \\in L_2$.\n\nSince all claims in this project work with either definition, we will sometimes use them as if they were interchangeable.\n\nWe additionally define quasipolynomial succinctness identically, except we require a quasipolynomial function $q(n) \\in n^{log^{O(1)}(n)}$ satisfying the above properties and use the notation $\\leq_q$.",
+      "statement": "There are two intuitive definitions of succinctness: a \\emph{time} requirement, i.e. that an efficient compilation algorithm exists between two languages; or the \\emph{space} requirement, that formulas remain ``small'' in the new language. Since, for any computation, runtime is lower-bounded by output size, the latter definition is weaker.\n\nWe fix the convention that succinctness between representation languages is a size-only relation, with no requirement that a conversion algorithm exist. \\citep{Gogic_1995}\nHowever, to the best of our knowledge, all known proofs of succinctness use a compilation algorithm to establish the size relationship; and all proofs that \\emph{no} time-efficient compilation algorithm exists use space complexity bounds. An example to the contrary would be highly interesting.\n\nFormally, let $L_1$ and $L_2$ be two languages. $L_1$ is \\emph{at least as succinct as} $L_2$, written $L_1 \\leq_p L_2$, if there exists a polynomial $p$ such that for every $\\alpha \\in L_2$ there exists an equivalent $\\beta \\in L_1$ with $|\\beta| \\leq p(|\\alpha|)$.\n\nWe say $L_1$ \\emph{polynomially compiles into} $L_2$ if there exists a polynomial-time algorithm that converts any $\\alpha \\in L_1$ into an equivalent $\\beta \\in L_2$.\n\nSince all claims in this project work with either definition, we will sometimes use them as if they were interchangeable.\n\nWe additionally define quasipolynomial succinctness identically, except we require a quasipolynomial function $q(n) \\in n^{log^{O(1)}(n)}$ satisfying the above properties and use the notation $\\leq_q$.",
       "refs": [
         "Darwiche_2002"
       ]
