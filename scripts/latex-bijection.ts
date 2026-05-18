@@ -814,7 +814,7 @@ function parseLatex(latexContent: string): ParsedClaim[] {
   let pendingSeparators: string[] | undefined = undefined;
 
   while (i < lines.length) {
-    const line = lines[i];
+    const line = lines[i].trimEnd();
     
     // Check for derived marker
     if (line.trimStart().startsWith('% [DERIVED')) {
@@ -1435,7 +1435,7 @@ function parseLanguagesLatex(latexContent: string): ParsedLanguageDefinition[] {
   let i = 0;
   
   while (i < lines.length) {
-    const line = lines[i];
+    const line = lines[i].trimEnd();
     
     // Look for definition start: \begin{definition}[$NAME$]\label{def:ID}
     const defMatch = line.match(/\\begin\{definition\}\[([^\]]+)\]\\label\{def:([^}]+)\}/);
@@ -1723,7 +1723,7 @@ function parseDefinitionsLatex(latexContent: string): ParsedConceptualDefinition
   let i = 0;
 
   while (i < lines.length) {
-    const line = lines[i];
+    const line = lines[i].trimEnd();
     const defMatch = line.match(/\\begin\{definition\}(?:\[id=([^\]]+)\])?\\label\{kdef:([^}]+)\}/);
     if (!defMatch) {
       i++;
@@ -1956,7 +1956,7 @@ function parseSepFuncsLatex(latexContent: string): ParsedSepFunc[] {
   let i = 0;
 
   while (i < lines.length) {
-    const line = lines[i];
+    const line = lines[i].trimEnd();
 
     // Look for definition start: \begin{definition}[SHORTNAME]\label{sf:...}
     const defMatch = line.match(/\\begin\{definition\}\[([^\]]+)\]\\label\{sf:([^}]+)\}/);
@@ -2531,7 +2531,7 @@ function parseOpsLatex(latexContent: string): ParsedOpClaim[] {
   let pendingOpCode: string | null = null;
 
   while (i < lines.length) {
-    const line = lines[i];
+    const line = lines[i].trimEnd();
 
     // Look for metadata comment: % lang=..., op=...
     const metaMatch = line.match(/^%\s*lang=([^,]+),\s*op=(.+)$/);
@@ -2638,7 +2638,7 @@ function parseBatchOpsLatex(
   let i = 0;
 
   while (i < lines.length) {
-    const line = lines[i];
+    const line = lines[i].trimEnd();
     const batchMatch = line.match(/\\begin\{batchclaim\}\[([^\]]+)\]/);
     if (!batchMatch) {
       i++;

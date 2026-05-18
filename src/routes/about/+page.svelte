@@ -79,19 +79,19 @@
 			<h2>What is this?</h2>
 			<p>
 				The Tractable Circuit Zoo is a visual guide to tractable circuit languages.
-				We display succinctness relations between languages and operations they support.
+				We display succinctness relations between languages and the queries and transformations they support tractably.
 				We build on the foundational work of
 				<a href="https://arxiv.org/abs/1106.1819" target="_blank" rel="noopener">
 					Darwiche &amp; Marquis (2002)
 				</a>
-				and incorporate results from subsequent research.
+				with results from subsequent research.
 			</p>
 		</section>
 
 		<section>
 			<h2>How to read the zoo</h2>
 			<p>
-				A <strong>representation language</strong> is a restricted circuit or formula format for Boolean functions. The zoo compares these languages in two ways: how succinctly one language can simulate another, and which operations can be performed efficiently once a function has been compiled into a language.
+				A <strong>representation language</strong> is a restricted circuit or formula format for Boolean functions. The zoo compares these languages in two ways: how succinctly one language can simulate another, and which queries and transformations can be performed tractably once a function has been compiled into a language.
 			</p>
 			<p>
 				Some entries are ordinary languages, while others are <strong>families</strong> or <strong>unions</strong>. A family fixes a structural parameter, such as an order or tree shape, and a union language allows any member of that family. For example, <MathText text={`\\langfam{OBDD}{<}`} className="inline" /> fixes an order, while <MathText text={`\\langref{OBDD}`} className="inline" /> ranges over all orders.
@@ -101,10 +101,10 @@
 		<section>
 			<h2>Succinctness and operations</h2>
 			<p>
-				A language <MathText text={`A`} className="inline" /> is <strong>at least as succinct as</strong> a language <MathText text={`B`} className="inline" /> when every <MathText text={`B`} className="inline" /> representation can be compiled into an equivalent <MathText text={`A`} className="inline" /> representation with only polynomial blowup. A separating function shows that such a polynomial compilation cannot exist.
+				A language <MathText text={`A`} className="inline" /> is <strong>at least as succinct as</strong> a language <MathText text={`B`} className="inline" /> when every <MathText text={`B`} className="inline" /> representation has an equivalent <MathText text={`A`} className="inline" /> representation with only polynomial size blowup.
 			</p>
 			<p>
-				For operations, "polynomial time" means there is an algorithm whose running time is polynomial in the input representation size. Negative entries record known lower bounds, sometimes under standard complexity assumptions.
+				For queries and transformations, "polynomial time" is in terms of the input size.
 			</p>
 		</section>
 
@@ -116,8 +116,7 @@
 
 				<div class="definitions-content">
 					<p class="definitions-description">
-						These definitions are generated from <code class="source-path">docs/definitions.tex</code>.
-						The lists below group the same source definitions into core concepts, queries, and transformations.
+						These are informal definitions of some core concepts used in the zoo. For precise definitions, see the papers we reference.
 					</p>
 
 					<section>
@@ -184,7 +183,7 @@
 		<section>
 			<h2>Automated reasoning</h2>
 			<p>
-				Not all of folklore is explicitly documented. We use automated reasoning to derive portions of the zoo, and provide sketch proofs.
+				We use automated reasoning algorithms to derive large portions of the zoo and provide sketch proofs of correctness. For the most part, proofs are immediate consequences of explicit results and some simple lemmas.
 			</p>
 		</section>
 	</main>
@@ -305,14 +304,6 @@
 		line-height: 1.6;
 		margin: 0 0 0.85rem;
 		color: #475569;
-	}
-
-	.source-path {
-		font-size: 0.92em;
-		color: #0f172a;
-		background: #f1f5f9;
-		border-radius: 0.25rem;
-		padding: 0.05rem 0.22rem;
 	}
 
 	.definition-flow {

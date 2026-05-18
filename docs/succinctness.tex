@@ -78,133 +78,133 @@
 % Reference ID: Amarilli_2018
 % =============================
 \begin{claim}
-\langref{d-SDNNF} is polynomial-time compilable to \langref{d-DNNF} \citet{Amarilli_2018}
+\langref{d-SDNNF} is polynomial-time compilable to \langref{d-DNNF} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Amarilli_2018}, a \langref{d-SDNNF} is simply a structured \langref{d-DNNF}, so discarding the vtree completes the compilation.
 \end{claimdescription}
 
 \begin{claim}
-\langref{d-SDNNF} is polynomial-time compilable to \langref{SDNNF} \citet{Amarilli_2018}
+\langref{d-SDNNF} is polynomial-time compilable to \langref{SDNNF} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Amarilli_2018}, \langref{d-SDNNF} is exactly the subset of \langref{SDNNF} satisfying determinism, so compilation is trivial.
 \end{claimdescription}
 
 \begin{claim}
-\langref{d-SDNNF} has unknown polynomial-time (but has quasipolynomial-time) compilation to \langref{uOBDD} \citet{Amarilli_2018,Bollig_2018,Beame_2015}
+\langref{d-SDNNF} has unknown polynomial-time (but has quasipolynomial-time) compilation to \langref{uOBDD} \citep{Amarilli_2018,Bollig_2018,Beame_2015}
 \end{claim}
 \begin{claimdescription}
-Theorem 2 of \citet{Bollig_2018} shows that \langref{SDNNF} can be compiled into \langref{nOBDD} by adapting the compilation of \citet{Beame_2015} from \langref{DNNF} to \langref{nFBDD}; proposition 2 of \citet{Bollig_2018} shows that this \langref{nOBDD} is unambiguous if the \langref{SDNNF} is deterministic.
+\citet[Theorem 2]{Bollig_2018} shows that \langref{SDNNF} can be compiled into \langref{nOBDD} by adapting the compilation of \citet{Beame_2015} from \langref{DNNF} to \langref{nFBDD}; \citet[Proposition 2]{Bollig_2018} shows that this \langref{nOBDD} is unambiguous if the \langref{SDNNF} is deterministic.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{d-SDNNF}{T} is not polynomial-time compilable to \langref{nFBDD} \citet{Amarilli_2018}
+\langfam{d-SDNNF}{T} is not polynomial-time compilable to \langref{nFBDD} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 This follows because \langfam{dec-SDNNF}{T} is a polynomial-time sublanguage of \langfam{d-SDNNF}{T} and \langfam{dec-SDNNF}{T} does not compile to \langref{nFBDD} in polynomial time.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{d-SDNNF}{T} is polynomial-time compilable to \langfam{SDNNF}{T} \citet{Amarilli_2018}
+\langfam{d-SDNNF}{T} is polynomial-time compilable to \langfam{SDNNF}{T} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 For any fixed vtree $T$, \langfam{d-SDNNF}{T} is exactly the subset of \langfam{SDNNF}{T} satisfying determinism, so compilation is trivial.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{d-SDNNF}{T} has unknown polynomial-time (but has quasipolynomial-time) compilation to \langfam{uOBDD}{<} \citet{Amarilli_2018,Bollig_2018,Beame_2015,TCZ_Forthcoming}
+\langfam{d-SDNNF}{T} has unknown polynomial-time (but has quasipolynomial-time) compilation to \langfam{uOBDD}{<} \citep{Amarilli_2018,Bollig_2018,Beame_2015,TCZ_Forthcoming}
 \end{claim}
 \begin{claimdescription}
-The common-order quasipolynomial simulation of \citet{TCZ_Forthcoming} specializes to \langfam{d-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$; determinism guarantees that the output is a \langfam{uOBDD}{<}.
+The common-order quasipolynomial simulation of \citep{TCZ_Forthcoming} specializes to \langfam{d-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$; determinism guarantees that the output is a \langfam{uOBDD}{<}.
 \end{claimdescription}
 
 \begin{claim}
-\langref{dec-DNNF} is polynomial-time compilable to \langref{d-DNNF} \citet{Amarilli_2018}
+\langref{dec-DNNF} is polynomial-time compilable to \langref{d-DNNF} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Amarilli_2018}, \langref{dec-DNNF} is the subset of \langref{d-DNNF} satisfying the decision property.
 \end{claimdescription}
 
 \begin{claim}
-\langref{dec-DNNF} has unknown polynomial-time (but has quasipolynomial-time) compilation to \langref{FBDD} \citet{Beame_2013}
+\langref{dec-DNNF} has unknown polynomial-time (but has quasipolynomial-time) compilation to \langref{FBDD} \citep{Beame_2013}
 \end{claim}
 \begin{claimdescription}
-Corollary 3.2 of \citet{Beame_2013} show quasipolynomial compilation from \langref{dec-DNNF} to \langref{FBDD}
+\citet[Corollary 3.2]{Beame_2013} shows quasipolynomial compilation from \langref{dec-DNNF} to \langref{FBDD}
 \end{claimdescription}
 
 \begin{claim}
-\langref{dec-SDNNF} is polynomial-time compilable to \langref{d-SDNNF} \citet{Amarilli_2018}
+\langref{dec-SDNNF} is polynomial-time compilable to \langref{d-SDNNF} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Amarilli_2018}, \langref{dec-SDNNF} is the subset of \langref{d-SDNNF} satisfying the decision property, so compilation is trivial.
 \end{claimdescription}
 
 \begin{claim}
-\langref{dec-SDNNF} is polynomial-time compilable to \langref{dec-DNNF} \citet{Amarilli_2018}
+\langref{dec-SDNNF} is polynomial-time compilable to \langref{dec-DNNF} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Amarilli_2018}, a \langref{dec-SDNNF} is simply a structured \langref{dec-DNNF}, so discarding the v-tree completes the compilation.
 \end{claimdescription}
 
 \begin{claim}
-\langref{dec-SDNNF} has unknown polynomial-time (but has quasipolynomial-time) compilation to \langref{OBDD} \citet{Amarilli_2018,Bollig_2018,Beame_2015}
+\langref{dec-SDNNF} has unknown polynomial-time (but has quasipolynomial-time) compilation to \langref{OBDD} \citep{Amarilli_2018,Bollig_2018,Beame_2015}
 \end{claim}
 \begin{claimdescription}
-Theorem 2 of \citet{Bollig_2018} shows that \langref{SDNNF} can be compiled into \langref{nOBDD} by adapting the compilation of \citet{Beame_2015} from \langref{DNNF} to \langref{nFBDD}; proposition 2 of \citet{Bollig_2018} shows that this \langref{nOBDD} is unambiguous if the \langref{SDNNF} is deterministic. Additionally, the same compilation yields an \langref{OBDD} if the input is a \langref{dec-SDNNF} since there are no $\vee$-gates that are not decision gates in a \langref{dec-SDNNF}.
+\citet[Theorem 2]{Bollig_2018} shows that \langref{SDNNF} can be compiled into \langref{nOBDD} by adapting the compilation of \citet{Beame_2015} from \langref{DNNF} to \langref{nFBDD}; \citet[Proposition 2]{Bollig_2018} shows that this \langref{nOBDD} is unambiguous if the \langref{SDNNF} is deterministic. Additionally, the same compilation yields an \langref{OBDD} if the input is a \langref{dec-SDNNF} since there are no $\vee$-gates that are not decision gates in a \langref{dec-SDNNF}.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{dec-SDNNF}{T} is polynomial-time compilable to \langfam{d-SDNNF}{T} \citet{Amarilli_2018}
+\langfam{dec-SDNNF}{T} is polynomial-time compilable to \langfam{d-SDNNF}{T} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 For any fixed vtree $T$, \langfam{dec-SDNNF}{T} is the subset of \langfam{d-SDNNF}{T} satisfying the decision property, so compilation is trivial.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{dec-SDNNF}{T} is not polynomial-time compilable to \langref{nFBDD} \citet{Amarilli_2018}
+\langfam{dec-SDNNF}{T} is not polynomial-time compilable to \langref{nFBDD} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
-This is the fixed-vtree form of Proposition 3.10 of \citet{Amarilli_2018}.
+This is the fixed-vtree form of \citet[Proposition 3.10]{Amarilli_2018}.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{dec-SDNNF}{T} has unknown polynomial-time (but has quasipolynomial-time) compilation to \langfam{OBDD}{<} \citet{Amarilli_2018,Bollig_2018,Beame_2015,TCZ_Forthcoming}
+\langfam{dec-SDNNF}{T} has unknown polynomial-time (but has quasipolynomial-time) compilation to \langfam{OBDD}{<} \citep{Amarilli_2018,Bollig_2018,Beame_2015,TCZ_Forthcoming}
 \end{claim}
 \begin{claimdescription}
-The common-order quasipolynomial simulation of \citet{TCZ_Forthcoming} specializes to \langfam{dec-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and produces a quasipolynomial-size \langfam{OBDD}{<}.
+The common-order quasipolynomial simulation of \citep{TCZ_Forthcoming} specializes to \langfam{dec-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and produces a quasipolynomial-size \langfam{OBDD}{<}.
 \end{claimdescription}
 
 \begin{claim}
-\langref{DNF} is not quasipolynomial-time compilable to \langref{d-SDNNF} \citet{Amarilli_2018}
+\langref{DNF} is not quasipolynomial-time compilable to \langref{d-SDNNF} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
-Corollary 7.6 of \citet{Amarilli_2018} gives a lower bound of $2^{\Omega(tw(\phi))}$ on the smallest \langref{d-SDNNF} computing any monotone \langref{DNF} of constant arity and degree. In particular, DNF families whose treewidth grows linearly with their size force exponential-size \langref{d-SDNNF} representations.
+\citet[Corollary 7.6]{Amarilli_2018} gives a lower bound of $2^{\Omega(tw(\phi))}$ on the smallest \langref{d-SDNNF} computing any monotone \langref{DNF} of constant arity and degree. In particular, DNF families whose treewidth grows linearly with their size force exponential-size \langref{d-SDNNF} representations.
 \end{claimdescription}
 
 \begin{claim}
-\langref{DNF} is polynomial-time compilable to \langfam{nOBDD}{<} \citet{Amarilli_2018,Wegener_2000}
+\langref{DNF} is polynomial-time compilable to \langfam{nOBDD}{<} \citep{Amarilli_2018,Wegener_2000}
 \end{claim}
 \begin{claimdescription}
 Fix any variable order $<$. Each term of a \langref{DNF} can be represented as an \langfam{OBDD}{<} of linear size (a chain of decision nodes for each literal in the term). Their nondeterministic disjunction yields an \langfam{nOBDD}{<} of size $O(|\phi|)$ because every branch follows the same fixed order.
 \end{claimdescription}
 
 \begin{claim}
-\langref{DNNF} has unknown polynomial-time (but has quasipolynomial-time) compilation to \langref{nFBDD} \citet{Bodlaender_1993}
+\langref{DNNF} has unknown polynomial-time (but has quasipolynomial-time) compilation to \langref{nFBDD} \citep{Bodlaender_1993}
 \end{claim}
 \begin{claimdescription}
-Section 5 of \citet{Bodlaender_1993} extends the compilation of \langref{dec-DNNF}s into \langref{FBDD}s (shown in \citet{Beame_2013}) to show that \langref{DNNF} can be quasipolynomial-time compiled into \langref{nFBDD}.
+\citet[Section 5]{Bodlaender_1993} extends the compilation of \langref{dec-DNNF}s into \langref{FBDD}s (shown in \citet{Beame_2013}) to show that \langref{DNNF} can be quasipolynomial-time compiled into \langref{nFBDD}.
 \end{claimdescription}
 
 \begin{claim}
-\langref{FBDD} is polynomial-time compilable to \langref{dec-DNNF} \citet{Amarilli_2018}
+\langref{FBDD} is polynomial-time compilable to \langref{dec-DNNF} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
-Rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0$ and $D_1$ are the rewritings of the 0- and 1-successors. The introduced $\vee$-gates are decision gates and the $\wedge$-gates are decomposable, so all $\vee$-gates arise from decision node rewrites, yielding a \langref{dec-DNNF} in linear time \citet{Amarilli_2018}.
+Rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0$ and $D_1$ are the rewritings of the 0- and 1-successors. The introduced $\vee$-gates are decision gates and the $\wedge$-gates are decomposable, so all $\vee$-gates arise from decision node rewrites, yielding a \langref{dec-DNNF} in linear time \citep{Amarilli_2018}.
 \end{claimdescription}
 
 \begin{claim}
-\langref{FBDD} is polynomial-time compilable to \langref{uFBDD} \citet{Amarilli_2018}
+\langref{FBDD} is polynomial-time compilable to \langref{uFBDD} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Amarilli_2018}, \langref{FBDD} is the subset of \langref{uFBDD} with no $\vee$-nodes.
@@ -212,162 +212,162 @@ As defined by \citet{Amarilli_2018}, \langref{FBDD} is the subset of \langref{uF
 
 % separators=Sauerhoff
 \begin{claim}
-\langref{nFBDD} is not quasipolynomial-time compilable to \langref{d-DNNF} \citet{Amarilli_2018}
+\langref{nFBDD} is not quasipolynomial-time compilable to \langref{d-DNNF} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 The Sauerhoff function has an \langref{nFBDD} of size $O(n^2)$ over $n^2$ variables, but as a \langref{d-DNNF} has size $2^{\Omega(n)}$.
 \end{claimdescription}
 
 \begin{claim}
-\langref{nFBDD} is polynomial-time compilable to \langref{DNNF} \citet{Amarilli_2018}
+\langref{nFBDD} is polynomial-time compilable to \langref{DNNF} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
-Rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The $\wedge$-gates are decomposable, yielding a \langref{DNNF} in linear time \citet{Amarilli_2018}.
+Rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The $\wedge$-gates are decomposable, yielding a \langref{DNNF} in linear time \citep{Amarilli_2018}.
 \end{claimdescription}
 
 \begin{claim}
-\langref{nFBDD} is not quasipolynomial-time compilable to \langref{FBDD} \citet{Amarilli_2018}
+\langref{nFBDD} is not quasipolynomial-time compilable to \langref{FBDD} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
-Consider the Boolean functions $\psi_n,\phi_n:\{0,1\}^{n^2}\to\{0,1\}$ that respectively test whether, in an $n \times n$ Boolean matrix, either the number of 1's is odd and there is a full row of 1's, or the number of 1's is even and there is a column full of 1's. An \langref{FBDD} of size $O(n^2)$ may simulate either $\psi_n$ or $\phi_n$, and thus the \langref{uFBDD} $\psi_n\vee\phi_n$ is of size $O(n^2)$; however, an \langref{FBDD} for $\psi_n\vee\phi_n$ is provably of size $2^{\Omega(n^{1/2})}$ \citet{Amarilli_2018}.
+Consider the Boolean functions $\psi_n,\phi_n:\{0,1\}^{n^2}\to\{0,1\}$ that respectively test whether, in an $n \times n$ Boolean matrix, either the number of 1's is odd and there is a full row of 1's, or the number of 1's is even and there is a column full of 1's. An \langref{FBDD} of size $O(n^2)$ may simulate either $\psi_n$ or $\phi_n$, and thus the \langref{uFBDD} $\psi_n\vee\phi_n$ is of size $O(n^2)$; however, an \langref{FBDD} for $\psi_n\vee\phi_n$ is provably of size $2^{\Omega(n^{1/2})}$ \citep{Amarilli_2018}.
 \end{claimdescription}
 
 % separators=Sauerhoff
 \begin{claim}
-\langref{nFBDD} is not quasipolynomial-time compilable to \langref{uFBDD} \citet{Amarilli_2018}
+\langref{nFBDD} is not quasipolynomial-time compilable to \langref{uFBDD} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 The Sauerhoff function has an \langref{nFBDD} of size $O(n^2)$ over $n^2$ variables, but as a \langref{d-DNNF}, which generalize \langref{uFBDD}, has size $2^{\Omega(n)}$.
 \end{claimdescription}
 
 \begin{claim}
-\langref{nOBDD} is polynomial-time compilable to \langref{nFBDD} \citet{Amarilli_2018}
+\langref{nOBDD} is polynomial-time compilable to \langref{nFBDD} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Amarilli_2018}, \langref{nOBDD} is the subset of \langref{nFBDD} satisfying an order of the variables, so compilation entails discarding the order.
 \end{claimdescription}
 
 \begin{claim}
-\langref{nOBDD} is polynomial-time compilable to \langref{SDNNF} \citet{Amarilli_2018}
+\langref{nOBDD} is polynomial-time compilable to \langref{SDNNF} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
-Construct a right-linear v-tree from the variable order, then rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The v-tree alignment ensures every $\wedge$-gate respects the variable partition, yielding an \langref{SDNNF} in linear time \citet{Amarilli_2018}.
+Construct a right-linear v-tree from the variable order, then rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The v-tree alignment ensures every $\wedge$-gate respects the variable partition, yielding an \langref{SDNNF} in linear time \citep{Amarilli_2018}.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{nOBDD}{<} is polynomial-time compilable to \langfam{SDNNF}{T} \citet{Amarilli_2018}
+\langfam{nOBDD}{<} is polynomial-time compilable to \langfam{SDNNF}{T} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. Rewriting each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$ yields an output respecting $T$, so \langfam{nOBDD}{<} compiles to \langfam{SDNNF}{T} in linear time.
 \end{claimdescription}
 
 \begin{claim}
-\langref{OBDD} is polynomial-time compilable to \langref{dec-SDNNF} \citet{Amarilli_2018}
+\langref{OBDD} is polynomial-time compilable to \langref{dec-SDNNF} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
-Construct a right-linear v-tree from the variable order, then rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The v-tree alignment ensures structuredness, and since all $\vee$-gates arise from decision node rewrites, every $\vee$-gate is a decision gate, yielding a \langref{dec-SDNNF} in linear time \citet{Amarilli_2018}.
+Construct a right-linear v-tree from the variable order, then rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The v-tree alignment ensures structuredness, and since all $\vee$-gates arise from decision node rewrites, every $\vee$-gate is a decision gate, yielding a \langref{dec-SDNNF} in linear time \citep{Amarilli_2018}.
 \end{claimdescription}
 
 \begin{claim}
-\langref{OBDD} is polynomial-time compilable to \langref{uOBDD} \citet{Amarilli_2018}
+\langref{OBDD} is polynomial-time compilable to \langref{uOBDD} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Amarilli_2018}, \langref{OBDD} is the subset of \langref{uOBDD} without any $\vee$-node.
 \end{claimdescription}
 
 \begin{claim}
-\langref{OBDD} is not quasipolynomial-time compilable to \langfam{SDNNF}{T} \citet{TCZ_Forthcoming}
+\langref{OBDD} is not quasipolynomial-time compilable to \langfam{SDNNF}{T} \citep{TCZ_Forthcoming}
 \end{claim}
 \begin{claimdescription}
-For any fixed vtree $T$, a simple function can be chosen so that every \langfam{SDNNF}{T} representation is exponentially large, while some \langref{OBDD} represents it in linear size. Therefore \langref{OBDD} cannot compile to \langfam{SDNNF}{T} in quasipolynomial size \citet{TCZ_Forthcoming}.
+For any fixed vtree $T$, a simple function can be chosen so that every \langfam{SDNNF}{T} representation is exponentially large, while some \langref{OBDD} represents it in linear size. Therefore \langref{OBDD} cannot compile to \langfam{SDNNF}{T} in quasipolynomial size \citep{TCZ_Forthcoming}.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{OBDD}{<} is polynomial-time compilable to \langfam{dec-SDNNF}{T} \citet{Amarilli_2018}
+\langfam{OBDD}{<} is polynomial-time compilable to \langfam{dec-SDNNF}{T} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. Rewriting each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$ yields a structured output that respects $T$, and all introduced $\vee$-gates are decision gates, producing \langfam{dec-SDNNF}{T} in linear time.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{OBDD}{<} is polynomial-time compilable to \langfam{uOBDD}{<} \citet{Amarilli_2018,Wegener_2000}
+\langfam{OBDD}{<} is polynomial-time compilable to \langfam{uOBDD}{<} \citep{Amarilli_2018,Wegener_2000}
 \end{claim}
 \begin{claimdescription}
 For any fixed variable order $<$, every \langfam{OBDD}{<} is already an unambiguous nondeterministic OBDD respecting the same order. Thus \langfam{OBDD}{<} is a subset of \langfam{uOBDD}{<}, and the compilation is the identity.
 \end{claimdescription}
 
 \begin{claim}
-\langref{SDNNF} is polynomial-time compilable to \langref{DNNF} \citet{Amarilli_2018}
+\langref{SDNNF} is polynomial-time compilable to \langref{DNNF} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Amarilli_2018}, a structured \langref{DNNF} is a triple of the corresponding \langref{DNNF}, the v-tree $T$, and a mapping $\rho$; as such, extracting a \langref{DNNF} from a \langref{SDNNF} is trivial.
 \end{claimdescription}
 
 \begin{claim}
-\langref{SDNNF} has unknown polynomial-time (but has quasipolynomial-time) compilation to \langref{nOBDD} \citet{Bollig_2018,Beame_2015}
+\langref{SDNNF} has unknown polynomial-time (but has quasipolynomial-time) compilation to \langref{nOBDD} \citep{Bollig_2018,Beame_2015}
 \end{claim}
 \begin{claimdescription}
-Theorem 2 of \citet{Bollig_2018} shows that \langref{SDNNF} can be compiled into \langref{nOBDD} by adapting the compilation of \citet{Beame_2015} from \langref{DNNF} to \langref{nFBDD}.
+\citet[Theorem 2]{Bollig_2018} shows that \langref{SDNNF} can be compiled into \langref{nOBDD} by adapting the compilation of \citet{Beame_2015} from \langref{DNNF} to \langref{nFBDD}.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{SDNNF}{T} has unknown polynomial-time (but has quasipolynomial-time) compilation to \langfam{nOBDD}{<} \citet{Amarilli_2018,Bollig_2018,Beame_2015,TCZ_Forthcoming}
+\langfam{SDNNF}{T} has unknown polynomial-time (but has quasipolynomial-time) compilation to \langfam{nOBDD}{<} \citep{Amarilli_2018,Bollig_2018,Beame_2015,TCZ_Forthcoming}
 \end{claim}
 \begin{claimdescription}
-The \langref{SDNNF}-to-\langref{nOBDD} simulation can be oriented as in \citet{TCZ_Forthcoming}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and gives a quasipolynomial-size \langfam{nOBDD}{<}.
+The \langref{SDNNF}-to-\langref{nOBDD} simulation can be oriented as in \citep{TCZ_Forthcoming}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and gives a quasipolynomial-size \langfam{nOBDD}{<}.
 \end{claimdescription}
 
 \begin{claim}
-\langref{uFBDD} is polynomial-time compilable to \langref{d-DNNF} \citet{Amarilli_2018}
+\langref{uFBDD} is polynomial-time compilable to \langref{d-DNNF} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
-Rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The $\wedge$-gates are decomposable, and unambiguity of the \langref{uFBDD} ensures all introduced $\vee$-gates are deterministic, yielding a \langref{d-DNNF} in linear time \citet{Amarilli_2018}.
+Rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The $\wedge$-gates are decomposable, and unambiguity of the \langref{uFBDD} ensures all introduced $\vee$-gates are deterministic, yielding a \langref{d-DNNF} in linear time \citep{Amarilli_2018}.
 \end{claimdescription}
 
 \begin{claim}
-\langref{uFBDD} is not quasipolynomial-time compilable to \langref{FBDD} \citet{Bova_2016,Amarilli_2018,Wegener_2000}
+\langref{uFBDD} is not quasipolynomial-time compilable to \langref{FBDD} \citep{Bova_2016,Amarilli_2018,Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-Consider the Boolean functions $\phi_n, \psi_n: \{0,1\}^{n^2}\to\{0,1\}$, which respectively test whether, in an $n\times n$ Boolean matrix, that the number of 1's is odd and there is a row full of 1's, and that the number of 1's is even and there is a column full of 1's. \citet{Bova_2016} and \citet{Wegener_2000} show that an \langref{FBDD} expression for $\phi_n \vee \psi_n$ has necessarily size $2^{\Omega(n^{1/2})}$; but since an \langref{FBDD} of size $O(n^2)$ may test $\phi_n$ or $\psi_n$ separately (shown by Proposition 3.1 of \citet{Amarilli_2018}), a \langref{uFBDD} for $\phi_n\vee \psi_n$ may be obtained by simply adding an $\vee$-gate joining these two \langref{FBDD} expressions, since $\phi_n \wedge \psi_n$ is unsatisfiable.
+Consider the Boolean functions $\phi_n, \psi_n: \{0,1\}^{n^2}\to\{0,1\}$, which respectively test whether, in an $n\times n$ Boolean matrix, that the number of 1's is odd and there is a row full of 1's, and that the number of 1's is even and there is a column full of 1's. \citet{Bova_2016} and \citet{Wegener_2000} show that an \langref{FBDD} expression for $\phi_n \vee \psi_n$ has necessarily size $2^{\Omega(n^{1/2})}$; but since an \langref{FBDD} of size $O(n^2)$ may test $\phi_n$ or $\psi_n$ separately (shown by \citet[Proposition 3.1]{Amarilli_2018}), a \langref{uFBDD} for $\phi_n\vee \psi_n$ may be obtained by simply adding an $\vee$-gate joining these two \langref{FBDD} expressions, since $\phi_n \wedge \psi_n$ is unsatisfiable.
 \end{claimdescription}
 
 \begin{claim}
-\langref{uFBDD} is polynomial-time compilable to \langref{nFBDD} \citet{Amarilli_2018}
+\langref{uFBDD} is polynomial-time compilable to \langref{nFBDD} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Amarilli_2018}, \langref{uFBDD} is the subset of \langref{nFBDD} satisfying unambiguity.
 \end{claimdescription}
 
 \begin{claim}
-\langref{uOBDD} is polynomial-time compilable to \langref{d-SDNNF} \citet{Amarilli_2018}
+\langref{uOBDD} is polynomial-time compilable to \langref{d-SDNNF} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
-Construct a right-linear v-tree from the variable order, then rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The v-tree alignment ensures structuredness, and unambiguity of the \langref{uOBDD} makes all introduced $\vee$-gates deterministic, yielding a \langref{d-SDNNF} in linear time \citet{Amarilli_2018}.
+Construct a right-linear v-tree from the variable order, then rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The v-tree alignment ensures structuredness, and unambiguity of the \langref{uOBDD} makes all introduced $\vee$-gates deterministic, yielding a \langref{d-SDNNF} in linear time \citep{Amarilli_2018}.
 \end{claimdescription}
 
 \begin{claim}
-\langref{uOBDD} is polynomial-time compilable to \langref{nOBDD} \citet{Amarilli_2018}
+\langref{uOBDD} is polynomial-time compilable to \langref{nOBDD} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Amarilli_2018}, \langref{uOBDD} is the subset of \langref{nOBDD} satisfying unambiguity.
 \end{claimdescription}
 
 \begin{claim}
-\langref{uOBDD} is polynomial-time compilable to \langref{uFBDD} \citet{Amarilli_2018}
+\langref{uOBDD} is polynomial-time compilable to \langref{uFBDD} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Amarilli_2018}, \langref{uOBDD} is the subset of \langref{uFBDD} satisfying an order of the variables, so compilation entails discarding the order.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{uOBDD}{<} is polynomial-time compilable to \langfam{d-SDNNF}{T} \citet{Amarilli_2018}
+\langfam{uOBDD}{<} is polynomial-time compilable to \langfam{d-SDNNF}{T} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
 Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. Rewriting each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$ yields a structured output respecting $T$, and unambiguity ensures determinism of introduced $\vee$-gates, giving \langfam{d-SDNNF}{T} in linear time.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{uOBDD}{<} is polynomial-time compilable to \langfam{nOBDD}{<} \citet{Amarilli_2018,Wegener_2000}
+\langfam{uOBDD}{<} is polynomial-time compilable to \langfam{nOBDD}{<} \citep{Amarilli_2018,Wegener_2000}
 \end{claim}
 \begin{claimdescription}
 For any fixed variable order $<$, every unambiguous nondeterministic OBDD respecting $<$ is a nondeterministic OBDD respecting the same order. Thus \langfam{uOBDD}{<} is a subset of \langfam{nOBDD}{<}, and the compilation is the identity.
@@ -379,7 +379,7 @@ For any fixed variable order $<$, every unambiguous nondeterministic OBDD respec
 % Reference ID: Darwiche_2002
 % =============================
 \begin{claim}
-\langref{CNF} is polynomial-time compilable to \langref{NNF} \citet{Darwiche_2002}
+\langref{CNF} is polynomial-time compilable to \langref{NNF} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Darwiche_2002}, \langref{CNF} is a subset of \langref{NNF}. Therefore, a polynomial compilation is trivial.
@@ -387,14 +387,14 @@ As defined by \citet{Darwiche_2002}, \langref{CNF} is a subset of \langref{NNF}.
 
 % separators=Parity
 \begin{claim}
-\langref{CNF} is not quasipolynomial-time compilable to \langref{PI} \citet{Darwiche_2002}
+\langref{CNF} is not quasipolynomial-time compilable to \langref{PI} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 It is well-known that some \langref{CNF} formulas (i.e. the negation of the parity function $\neg PARITY_n=\neg\bigoplus_{i=1}^n x_i$) have exponentially many prime implicants.
 \end{claimdescription}
 
 \begin{claim}
-\langref{d-DNNF} is polynomial-time compilable to \langref{DNNF} \citet{Darwiche_2002}
+\langref{d-DNNF} is polynomial-time compilable to \langref{DNNF} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 As formalized by \citet{Darwiche_2002} and originally introduced in \citet{Darwiche_2001a}, \langref{d-DNNF} is a subset of \langref{DNNF} satisfying the determinism property, making a polynomial compilation trivial.
@@ -402,21 +402,21 @@ As formalized by \citet{Darwiche_2002} and originally introduced in \citet{Darwi
 
 % separators=$OR_n$
 \begin{claim}
-\langref{d-DNNF} is not quasipolynomial-time compilable to \langref{MODS} \citet{Darwiche_2002}
+\langref{d-DNNF} is not quasipolynomial-time compilable to \langref{MODS} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 The $OR_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \langref{d-DNNF} formula but has $2^n-1$ models.
 \end{claimdescription}
 
 \begin{claim}
-\langref{DNF} is not polynomial-time compilable to \langref{d-DNNF} assuming the polynomial hierarchy does not collapse \citet{Darwiche_2002}
+\langref{DNF} is not polynomial-time compilable to \langref{d-DNNF} assuming the polynomial hierarchy does not collapse \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 Because counting the models of a \langref{d-DNNF} is in P and counting the models of a \langref{DNF} is \#P-complete, \langref{DNF} cannot be polynomially compiled into \langref{d-DNNF} unconditionally. Such a compilation implies P = \#P, collapsing the polynomial hierarchy \citep{Darwiche_2002}.
 \end{claimdescription}
 
 \begin{claim}
-\langref{DNF} is polynomial-time compilable to \langref{DNNF} \citet{Darwiche_2002}
+\langref{DNF} is polynomial-time compilable to \langref{DNNF} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Darwiche_2002}, \langref{DNF} is a subset of \langref{DNNF}. Therefore, a polynomial compilation is trivial.
@@ -424,21 +424,21 @@ As defined by \citet{Darwiche_2002}, \langref{DNF} is a subset of \langref{DNNF}
 
 % separators=Parity
 \begin{claim}
-\langref{DNF} is not quasipolynomial-time compilable to \langref{IP} \citet{Darwiche_2002}
+\langref{DNF} is not quasipolynomial-time compilable to \langref{IP} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 It is well-known that some \langref{DNF} formulas (i.e. the parity function $PARITY_n=\bigoplus_{i=1}^n x_i$) have exponentially many prime implicates.
 \end{claimdescription}
 
 \begin{claim}
-\langref{DNNF} is polynomial-time compilable to \langref{NNF} \citet{Darwiche_2002}
+\langref{DNNF} is polynomial-time compilable to \langref{NNF} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Darwiche_2002}, \langref{DNNF} is a subset of \langref{NNF}, so a polynomial compilation is trivial.
 \end{claimdescription}
 
 \begin{claim}
-\langref{FBDD} is polynomial-time compilable to \langref{d-DNNF} \citet{Darwiche_2002}
+\langref{FBDD} is polynomial-time compilable to \langref{d-DNNF} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Darwiche_2002}, \langref{FBDD} is a subset of \langref{d-DNNF}, so a polynomial compilation is trivial.
@@ -446,7 +446,7 @@ As defined by \citet{Darwiche_2002}, \langref{FBDD} is a subset of \langref{d-DN
 
 % separators=Pairwise DNF
 \begin{claim}
-\langref{IP} is not quasipolynomial-time compilable to \langref{CNF} \citet{Darwiche_2002}
+\langref{IP} is not quasipolynomial-time compilable to \langref{CNF} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 Consider the \langref{DNF} formula $\Pi_n=\bigvee_{i=0}^{n-1}(x_{2i} \wedge x_{2i+1})$. This formula is in prime implicants form and each clause in $\Pi_n$ is an essential prime implicant of it. Hence its negation $\neg\Pi_n\in IP$.
@@ -455,7 +455,7 @@ Since the early work of Quine, we know that the number of essential prime implic
 \end{claimdescription}
 
 \begin{claim}
-\langref{IP} is polynomial-time compilable to \langref{DNF} \citet{Darwiche_2002}
+\langref{IP} is polynomial-time compilable to \langref{DNF} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Darwiche_2002}, \langref{IP} is a subset of \langref{DNF}. Therefore, a polynomial compilation is trivial.
@@ -463,50 +463,50 @@ As defined by \citet{Darwiche_2002}, \langref{IP} is a subset of \langref{DNF}. 
 
 % separators=Clique
 \begin{claim}
-\langref{IP} is not quasipolynomial-time compilable to \langref{FBDD} \citet{Darwiche_2002,Wegener_1987}
+\langref{IP} is not quasipolynomial-time compilable to \langref{FBDD} \citep{Darwiche_2002,Wegener_1987}
 \end{claim}
 \begin{claimdescription}
-The negation of the clique detection function $\neg\Sigma_{n,k}$ has $O(n^3)$ prime implicants (hence polynomial \langref{IP} size), but any \langref{FBDD} for $\neg\Sigma_{n,k}$ has exponential size for suitable $k$ \citet{Darwiche_2002,Wegener_1987}.
+The negation of the clique detection function $\neg\Sigma_{n,k}$ has $O(n^3)$ prime implicants (hence polynomial \langref{IP} size), but any \langref{FBDD} for $\neg\Sigma_{n,k}$ has exponential size for suitable $k$ \citep{Darwiche_2002,Wegener_1987}.
 \end{claimdescription}
 
 % separators=$OR_n$
 \begin{claim}
-\langref{IP} is not quasipolynomial-time compilable to \langref{MODS} \citet{Darwiche_2002}
+\langref{IP} is not quasipolynomial-time compilable to \langref{MODS} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 The $OR_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \langref{IP} formula but has $2^n-1$ models.
 \end{claimdescription}
 
 \begin{claim}
-\langref{MODS} is polynomial-time compilable to \langref{CNF} \citet{Darwiche_2002}
+\langref{MODS} is polynomial-time compilable to \langref{CNF} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-A Shannon tree for any \langref{MODS} formula can be generated in polynomial time. Paths from the root to 0-leaves yield a \langref{CNF} representation \citet{Darwiche_2002}.
+A Shannon tree for any \langref{MODS} formula can be generated in polynomial time. Paths from the root to 0-leaves yield a \langref{CNF} representation \citep{Darwiche_2002}.
 \end{claimdescription}
 
 \begin{claim}
-\langref{MODS} is polynomial-time compilable to \langref{d-DNNF} \citet{Darwiche_2002}
+\langref{MODS} is polynomial-time compilable to \langref{d-DNNF} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Darwiche_2002}, \langref{MODS} is a subset of \langref{d-DNNF}. Therefore, a polynomial compilation is trivial.
 \end{claimdescription}
 
 \begin{claim}
-\langref{MODS} is polynomial-time compilable to \langref{DNF} \citet{Darwiche_2002}
+\langref{MODS} is polynomial-time compilable to \langref{DNF} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Darwiche_2002}, \langref{MODS} is a subset of \langref{DNF} (any \langref{MODS} formula can be written as a disjunction of the individual models). Therefore, a polynomial compilation is trivial.
 \end{claimdescription}
 
 \begin{claim}
-\langref{MODS} is polynomial-time compilable to \langfam{OBDD}{<} \citet{Darwiche_2002}
+\langref{MODS} is polynomial-time compilable to \langfam{OBDD}{<} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-A Shannon tree for any \langref{MODS} formula following order $<$ can be generated in polynomial time. This tree can be reduced into a corresponding \langfam{OBDD}{<} in polynomial time \citet{Darwiche_2002}.
+A Shannon tree for any \langref{MODS} formula following order $<$ can be generated in polynomial time. This tree can be reduced into a corresponding \langfam{OBDD}{<} in polynomial time \citep{Darwiche_2002}.
 \end{claimdescription}
 
 \begin{claim}
-\langref{OBDD} is polynomial-time compilable to \langref{FBDD} \citet{Darwiche_2002}
+\langref{OBDD} is polynomial-time compilable to \langref{FBDD} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Darwiche_2002}, \langref{OBDD} is a subset of \langref{FBDD}. Therefore a polynomial time compilation is trivial.
@@ -514,7 +514,7 @@ As defined by \citet{Darwiche_2002}, \langref{OBDD} is a subset of \langref{FBDD
 
 % separators=Parity
 \begin{claim}
-\langfam{OBDD}{<} is not quasipolynomial-time compilable to \langref{CNF} \citet{Darwiche_2002}
+\langfam{OBDD}{<} is not quasipolynomial-time compilable to \langref{CNF} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 The parity function $PARITY_n=\bigoplus_{i=1}^n x_i$ has linear size \langfam{OBDD}{<} representations but only exponential size \langref{CNF} representations.
@@ -522,21 +522,21 @@ The parity function $PARITY_n=\bigoplus_{i=1}^n x_i$ has linear size \langfam{OB
 
 % separators=Parity
 \begin{claim}
-\langfam{OBDD}{<} is not quasipolynomial-time compilable to \langref{DNF} \citet{Darwiche_2002}
+\langfam{OBDD}{<} is not quasipolynomial-time compilable to \langref{DNF} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 The parity function $PARITY_n=\bigoplus_{i=1}^n x_i$ has linear size \langfam{OBDD}{<} representations but only exponential size \langref{DNF} representations.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{OBDD}{<} is polynomial-time compilable to \langref{OBDD} \citet{Darwiche_2002}
+\langfam{OBDD}{<} is polynomial-time compilable to \langref{OBDD} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Darwiche_2002}, \langfam{OBDD}{<} is a subset of \langref{OBDD}. Therefore, a polynomial compilation is trivial.
 \end{claimdescription}
 
 \begin{claim}
-\langref{PI} is polynomial-time compilable to \langref{CNF} \citet{Darwiche_2002}
+\langref{PI} is polynomial-time compilable to \langref{CNF} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Darwiche_2002}, \langref{PI} is a subset of \langref{CNF}. Therefore, a polynomial compilation is trivial.
@@ -544,23 +544,23 @@ As defined by \citet{Darwiche_2002}, \langref{PI} is a subset of \langref{CNF}. 
 
 % separators=Pairwise CNF
 \begin{claim}
-\langref{PI} is not quasipolynomial-time compilable to \langref{DNF} \citet{Darwiche_2002}
+\langref{PI} is not quasipolynomial-time compilable to \langref{DNF} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-The pairwise CNF $\Sigma_n = \bigwedge_{i=0}^{n-1}(x_{2i} \vee x_{2i+1})$ has $2^n$ prime implicates; its negation $\neg\Sigma_n \in PI$ therefore has $2^n$ essential prime implicants, forcing any \langref{DNF} representation to have at least $2^n$ terms \citet{Darwiche_2002}.
+The pairwise CNF $\Sigma_n = \bigwedge_{i=0}^{n-1}(x_{2i} \vee x_{2i+1})$ has $2^n$ prime implicates; its negation $\neg\Sigma_n \in PI$ therefore has $2^n$ essential prime implicants, forcing any \langref{DNF} representation to have at least $2^n$ terms \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % separators=Clique
 \begin{claim}
-\langref{PI} is not quasipolynomial-time compilable to \langref{FBDD} \citet{Wegener_1987,Darwiche_2002}
+\langref{PI} is not quasipolynomial-time compilable to \langref{FBDD} \citep{Wegener_1987,Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-The clique detection function $\Sigma_{n,k}$ has $O(n^3)$ prime implicates (hence polynomial \langref{PI} size), but any \langref{FBDD} for $\Sigma_{n,k}$ has exponential size for suitable $k$ \citet{Wegener_1987,Darwiche_2002}.
+The clique detection function $\Sigma_{n,k}$ has $O(n^3)$ prime implicates (hence polynomial \langref{PI} size), but any \langref{FBDD} for $\Sigma_{n,k}$ has exponential size for suitable $k$ \citep{Wegener_1987,Darwiche_2002}.
 \end{claimdescription}
 
 % separators=$OR_n$
 \begin{claim}
-\langref{PI} is not quasipolynomial-time compilable to \langref{MODS} \citet{Darwiche_2002}
+\langref{PI} is not quasipolynomial-time compilable to \langref{MODS} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
 The $OR_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \langref{PI} formula but has $2^n-1$ models.
@@ -573,14 +573,14 @@ The $OR_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \lang
 % =============================
 % separators=Generalized_HWB
 \begin{claim}
-\langfam{cSDD}{T} is not quasipolynomial-time compilable to \langfam{OBDD}{<} \citet{Bova_2016_a,Bryant_1986,Wegener_2000}
+\langfam{cSDD}{T} is not quasipolynomial-time compilable to \langfam{OBDD}{<} \citep{Bova_2016_a,Bryant_1986,Wegener_2000}
 \end{claim}
 \begin{claimdescription}
 \citet{Bova_2016_a} gives functions $F_n$ with polynomial-size \langfam{cSDD}{T} representations over explicit vtrees. Conditioning the auxiliary variables of $F_n$ recovers $HWB_n$, and conditioning a \langfam{OBDD}{<} preserves the order and cannot increase size. Since \citet{Bryant_1986,Wegener_2000} give exponential \langfam{OBDD}{<} size for $HWB_n$ for every order, every \langfam{OBDD}{<} for $F_n$ is exponential. Hence \langfam{cSDD}{T} is not quasipolynomial-time compilable to \langfam{OBDD}{<}.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{nOBDD}{<} is polynomial-time compilable to \langref{nOBDD} \citet{Wegener_2000}
+\langfam{nOBDD}{<} is polynomial-time compilable to \langref{nOBDD} \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
 \langref{nOBDD} is the union of fixed-order languages \langfam{nOBDD}{<}. Hence any \langfam{nOBDD}{<} formula is already an \langref{nOBDD} formula, so the compilation is trivial and polynomial-time.
@@ -588,15 +588,15 @@ The $OR_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \lang
 
 % separators=$EQ_n$
 \begin{claim}
-\langref{OBDD} is not quasipolynomial-time compilable to \langfam{OBDD}{<} \citet{Wegener_2000}
+\langref{OBDD} is not quasipolynomial-time compilable to \langfam{OBDD}{<} \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-Suppose an order $<$ existed so that \langref{OBDD} compiled to \langfam{OBDD}{<}. Take the first $2n$ variables in that order, call the first half $x_1,\ldots,x_n$ and the second half $y_1,\ldots,y_n$, and consider $EQ_n(x,y)$. This function has linear-size OBDDs under the interleaved order $x_1,y_1,\ldots,x_n,y_n$, but exponential-size \langfam{OBDD}{<} representations \citet{Wegener_2000}. Thus no order $<$ can exist, and \langref{OBDD} is not quasipolynomial-time compilable to \langfam{OBDD}{<}.
+Suppose an order $<$ existed so that \langref{OBDD} compiled to \langfam{OBDD}{<}. Take the first $2n$ variables in that order, call the first half $x_1,\ldots,x_n$ and the second half $y_1,\ldots,y_n$, and consider $EQ_n(x,y)$. This function has linear-size OBDDs under the interleaved order $x_1,y_1,\ldots,x_n,y_n$, but exponential-size \langfam{OBDD}{<} representations \citep{Wegener_2000}. Thus no order $<$ can exist, and \langref{OBDD} is not quasipolynomial-time compilable to \langfam{OBDD}{<}.
 \end{claimdescription}
 
 % separators=$WS_n$
 \begin{claim}
-\langref{uOBDD} is not quasipolynomial-time compilable to \langref{FBDD} \citet{Wegener_2000,Savicky_Zak_1996}
+\langref{uOBDD} is not quasipolynomial-time compilable to \langref{FBDD} \citep{Wegener_2000,Savicky_Zak_1996}
 \end{claim}
 \begin{claimdescription}
 The weighted sum function $WS_n$ has polynomial-size \langref{uOBDD} formulas: \citet{Wegener_2000} gives polynomial-size \langref{nOBDD}{<} formulas for $WS_n$ under every variable ordering $<$, and the pointer-guess construction has at most one accepting guess, so the formula is unambiguous. By \citet{Savicky_Zak_1996}, every \langref{FBDD} for $WS_n$ has size $2^{n-o(n)}$. Hence no quasipolynomial compilation from \langref{uOBDD} to \langref{FBDD} is possible.
@@ -604,22 +604,22 @@ The weighted sum function $WS_n$ has polynomial-size \langref{uOBDD} formulas: \
 
 % separators=HWB
 \begin{claim}
-\langref{uOBDD} is not quasipolynomial-time compilable to \langref{OBDD} \citet{Bryant_1986,Wegener_2000}
+\langref{uOBDD} is not quasipolynomial-time compilable to \langref{OBDD} \citep{Bryant_1986,Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-The hidden weighted bit function $HWB_n$ has polynomial-size unambiguous nondeterministic OBDDs under a fixed order: $HWB_n = \bigvee_{k=1}^n(E_k^n(x) \wedge x_k)$, where each branch for $k$ tests the variables in the same order to verify the exact Hamming weight and $x_k=1$, and the branches are disjoint. Thus the representation is unambiguous and has polynomial size, as in the 2-OBDD/FBDD constructions discussed by \citet{Wegener_2000}. Bryant's hidden-weighted-bit lower bound says every OBDD for $HWB_n$, over every variable order, has exponential size \citet{Bryant_1986,Wegener_2000}. Hence no quasipolynomial compilation to OBDD is possible.
+The hidden weighted bit function $HWB_n$ has polynomial-size unambiguous nondeterministic OBDDs under a fixed order: $HWB_n = \bigvee_{k=1}^n(E_k^n(x) \wedge x_k)$, where each branch for $k$ tests the variables in the same order to verify the exact Hamming weight and $x_k=1$, and the branches are disjoint. Thus the representation is unambiguous and has polynomial size, as in the 2-OBDD/FBDD constructions discussed by \citet{Wegener_2000}. Bryant's hidden-weighted-bit lower bound says every OBDD for $HWB_n$, over every variable order, has exponential size \citep{Bryant_1986,Wegener_2000}. Hence no quasipolynomial compilation to OBDD is possible.
 \end{claimdescription}
 
 % separators=HWB
 \begin{claim}
-\langfam{uOBDD}{<} is not quasipolynomial-time compilable to \langfam{OBDD}{<} \citet{Bryant_1986,Wegener_2000}
+\langfam{uOBDD}{<} is not quasipolynomial-time compilable to \langfam{OBDD}{<} \citep{Bryant_1986,Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-Use the same $HWB_n$ family as for \langref{uOBDD} versus \langref{OBDD}. The polynomial unambiguous construction can be taken to respect one fixed order for each $n$, and the finite hard instances can be renamed into disjoint variable blocks of one global order. On the target side, Bryant's lower bound is order-independent: every OBDD for $HWB_n$, and hence every \langfam{OBDD}{<} for every fixed order $<$, has exponential size \citet{Bryant_1986,Wegener_2000}. Therefore \langfam{uOBDD}{<} is not quasipolynomial-time compilable to \langfam{OBDD}{<}.
+Use the same $HWB_n$ family as for \langref{uOBDD} versus \langref{OBDD}. The polynomial unambiguous construction can be taken to respect one fixed order for each $n$, and the finite hard instances can be renamed into disjoint variable blocks of one global order. On the target side, Bryant's lower bound is order-independent: every OBDD for $HWB_n$, and hence every \langfam{OBDD}{<} for every fixed order $<$, has exponential size \citep{Bryant_1986,Wegener_2000}. Therefore \langfam{uOBDD}{<} is not quasipolynomial-time compilable to \langfam{OBDD}{<}.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{uOBDD}{<} is polynomial-time compilable to \langref{uOBDD} \citet{Wegener_2000}
+\langfam{uOBDD}{<} is polynomial-time compilable to \langref{uOBDD} \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
 \langref{uOBDD} is the union of fixed-order languages \langfam{uOBDD}{<}. Hence any \langfam{uOBDD}{<} formula is already a \langref{uOBDD} formula, so the compilation is trivial and polynomial-time.
@@ -631,10 +631,10 @@ Use the same $HWB_n$ family as for \langref{uOBDD} versus \langref{OBDD}. The po
 % Reference ID: Bollig_2018
 % =============================
 \begin{claim}
-\langfam{SDD}{T} is not quasipolynomial-time compilable to \langref{FBDD} \citet{Bollig_2018}
+\langfam{SDD}{T} is not quasipolynomial-time compilable to \langref{FBDD} \citep{Bollig_2018}
 \end{claim}
 \begin{claimdescription}
-The weighted sum function $WS_n$ can be represented by SDDs of size $O(n^3)$ respecting the vtrees used in the construction (Corollary 3 of \citet{Bollig_2018}), but has exponential \langref{FBDD} size. Hence \langfam{SDD}{T} does not compile to \langref{FBDD} in quasipolynomial size. The union-level lower bound \langref{SDD} $\not\to$ \langref{FBDD} then follows from the polynomial inclusion \langfam{SDD}{T} $\subseteq$ \langref{SDD}.
+By \citet[Corollary 3]{Bollig_2018}, the weighted sum function $WS_n$ can be represented by SDDs of size $O(n^3)$ respecting the vtrees used in the construction, but has exponential \langref{FBDD} size. Hence \langfam{SDD}{T} does not compile to \langref{FBDD} in quasipolynomial size. The union-level lower bound \langref{SDD} $\not\to$ \langref{FBDD} then follows from the polynomial inclusion \langfam{SDD}{T} $\subseteq$ \langref{SDD}.
 \end{claimdescription}
 
 
@@ -643,10 +643,10 @@ The weighted sum function $WS_n$ can be represented by SDDs of size $O(n^3)$ res
 % Reference ID: Beame_2015
 % =============================
 \begin{claim}
-\langref{FBDD} is not quasipolynomial-time compilable to \langref{SDD} \citet{Beame_2015}
+\langref{FBDD} is not quasipolynomial-time compilable to \langref{SDD} \citep{Beame_2015}
 \end{claim}
 \begin{claimdescription}
-\citet{Beame_2015} relate the size of SDD representations to best-partition communication complexity and derive simple examples for which FBDDs are exponentially more concise than SDDs. This establishes $P(\langref{FBDD}) \not\subseteq P(\langref{SDD})$.
+\citep{Beame_2015} relate the size of SDD representations to best-partition communication complexity and derive simple examples for which FBDDs are exponentially more concise than SDDs. This establishes $P(\langref{FBDD}) \not\subseteq P(\langref{SDD})$.
 \end{claimdescription}
 
 
@@ -655,10 +655,10 @@ The weighted sum function $WS_n$ can be represented by SDDs of size $O(n^3)$ res
 % Reference ID: Beame_2013
 % =============================
 \begin{claim}
-\langref{d-DNNF} is not quasipolynomial-time compilable to \langref{dec-DNNF} \citet{Beame_2013}
+\langref{d-DNNF} is not quasipolynomial-time compilable to \langref{dec-DNNF} \citep{Beame_2013}
 \end{claim}
 \begin{claimdescription}
-Shown by Corollary 3.5 of \citet{Beame_2013}.
+Shown by \citet[Corollary 3.5]{Beame_2013}.
 \end{claimdescription}
 
 
@@ -667,14 +667,14 @@ Shown by Corollary 3.5 of \citet{Beame_2013}.
 % Reference ID: Pipatsrisawat_2008
 % =============================
 \begin{claim}
-\langfam{d-SDNNF}{T} is polynomial-time compilable to \langref{d-SDNNF} \citet{Pipatsrisawat_2008}
+\langfam{d-SDNNF}{T} is polynomial-time compilable to \langref{d-SDNNF} \citep{Pipatsrisawat_2008}
 \end{claim}
 \begin{claimdescription}
 \langref{d-SDNNF} is the union of the fixed-vtree languages \langfam{d-SDNNF}{T}. Hence any \langfam{d-SDNNF}{T} formula is already a \langref{d-SDNNF} formula, so the compilation is trivial and polynomial-time.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{SDNNF}{T} is polynomial-time compilable to \langref{SDNNF} \citet{Pipatsrisawat_2008}
+\langfam{SDNNF}{T} is polynomial-time compilable to \langref{SDNNF} \citep{Pipatsrisawat_2008}
 \end{claim}
 \begin{claimdescription}
 \langref{SDNNF} is the union of the fixed-vtree families \langfam{SDNNF}{T}. Hence any \langfam{SDNNF}{T} formula is already an \langref{SDNNF} formula, so the compilation is trivial and polynomial-time.
@@ -686,7 +686,7 @@ Shown by Corollary 3.5 of \citet{Beame_2013}.
 % Reference ID: Oztok_2014
 % =============================
 \begin{claim}
-\langfam{dec-SDNNF}{T} is polynomial-time compilable to \langref{dec-SDNNF} \citet{Oztok_2014}
+\langfam{dec-SDNNF}{T} is polynomial-time compilable to \langref{dec-SDNNF} \citep{Oztok_2014}
 \end{claim}
 \begin{claimdescription}
 \langref{dec-SDNNF} is the union of fixed-vtree \langfam{dec-SDNNF}{T} languages. Hence any fixed-family formula is already a \langref{dec-SDNNF} formula, so the compilation is trivial and polynomial-time.
@@ -698,28 +698,28 @@ Shown by Corollary 3.5 of \citet{Beame_2013}.
 % Reference ID: VanDenBroeck_2015
 % =============================
 \begin{claim}
-\langref{cSDD} is polynomial-time compilable to \langref{SDD} \citet{VanDenBroeck_2015}
+\langref{cSDD} is polynomial-time compilable to \langref{SDD} \citep{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{VanDenBroeck_2015}, \langref{cSDD} is the compressed subset of \langref{SDD}, so compilation is trivial.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{cSDD}{T} is polynomial-time compilable to \langfam{SDD}{T} \citet{VanDenBroeck_2015}
+\langfam{cSDD}{T} is polynomial-time compilable to \langfam{SDD}{T} \citep{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
 For any fixed vtree $T$, \langfam{cSDD}{T} is the compressed subset of \langfam{SDD}{T}, so compilation is trivial.
 \end{claimdescription}
 
 \begin{claim}
-\langref{SDD} is polynomial-time compilable to \langref{d-SDNNF} \citet{VanDenBroeck_2015}
+\langref{SDD} is polynomial-time compilable to \langref{d-SDNNF} \citep{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
 \langref{SDD} is a strict subset of \langref{d-SDNNF}.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{SDD}{T} is polynomial-time compilable to \langfam{d-SDNNF}{T} \citet{VanDenBroeck_2015}
+\langfam{SDD}{T} is polynomial-time compilable to \langfam{d-SDNNF}{T} \citep{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
 For any fixed vtree $T$, \langfam{SDD}{T} is a strict subset of \langfam{d-SDNNF}{T}, so compilation is trivial.
@@ -731,28 +731,28 @@ For any fixed vtree $T$, \langfam{SDD}{T} is a strict subset of \langfam{d-SDNNF
 % Reference ID: Darwiche_2011
 % =============================
 \begin{claim}
-\langfam{cSDD}{T} is polynomial-time compilable to \langref{cSDD} \citet{Darwiche_2011}
+\langfam{cSDD}{T} is polynomial-time compilable to \langref{cSDD} \citep{Darwiche_2011}
 \end{claim}
 \begin{claimdescription}
 \langref{cSDD} is the union of the fixed-vtree languages \langfam{cSDD}{T}. Hence any \langfam{cSDD}{T} formula is already a \langref{cSDD} formula, so the compilation is trivial and polynomial-time.
 \end{claimdescription}
 
 \begin{claim}
-\langref{OBDD} is polynomial-time compilable to \langref{cSDD} \citet{Darwiche_2011}
+\langref{OBDD} is polynomial-time compilable to \langref{cSDD} \citep{Darwiche_2011}
 \end{claim}
 \begin{claimdescription}
 As established by \citet{Darwiche_2011}, every \langref{OBDD} is a right-linear \langref{SDD}, which is already compressed (canonical). Thus, \langref{cSDD} strictly generalizes \langref{OBDD}.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{OBDD}{<} is polynomial-time compilable to \langfam{cSDD}{T} \citet{Darwiche_2011}
+\langfam{OBDD}{<} is polynomial-time compilable to \langfam{cSDD}{T} \citep{Darwiche_2011}
 \end{claim}
 \begin{claimdescription}
 Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. Every \langfam{OBDD}{<} is a right-linear \langfam{SDD}{T}, and this representation is compressed (canonical), so compilation to \langfam{cSDD}{T} is polynomial-time.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{SDD}{T} is polynomial-time compilable to \langref{SDD} \citet{Darwiche_2011}
+\langfam{SDD}{T} is polynomial-time compilable to \langref{SDD} \citep{Darwiche_2011}
 \end{claim}
 \begin{claimdescription}
 \langref{SDD} is the union of the fixed-vtree languages \langfam{SDD}{T}. Hence any \langfam{SDD}{T} formula is already an \langref{SDD} formula, so the compilation is trivial and polynomial-time.
@@ -764,10 +764,10 @@ Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. 
 % Reference ID: Bova_2014
 % =============================
 \begin{claim}
-\langref{CNF} is not quasipolynomial-time compilable to \langref{DNNF} \citet{Bova_2014}
+\langref{CNF} is not quasipolynomial-time compilable to \langref{DNNF} \citep{Bova_2014}
 \end{claim}
 \begin{claimdescription}
-Theorem 1 of \citet{Bova_2014} gives a family of \langref{CNF} formulas whose every \langref{DNNF} representation has exponential size, so \langref{CNF} cannot compile to \langref{DNNF} in quasipolynomial size.
+\citet[Theorem 1]{Bova_2014} gives a family of \langref{CNF} formulas whose every \langref{DNNF} representation has exponential size, so \langref{CNF} cannot compile to \langref{DNNF} in quasipolynomial size.
 \end{claimdescription}
 
 
@@ -777,18 +777,18 @@ Theorem 1 of \citet{Bova_2014} gives a family of \langref{CNF} formulas whose ev
 % =============================
 % separators=Sauerhoff
 \begin{claim}
-\langref{DNNF} is not quasipolynomial-time compilable to \langref{d-DNNF} \citet{Bova_2016}
+\langref{DNNF} is not quasipolynomial-time compilable to \langref{d-DNNF} \citep{Bova_2016}
 \end{claim}
 \begin{claimdescription}
-Proposition 7 of \citet{Bova_2016} shows that the Sauerhoff function $S_n$ has \langref{DNNF} size $O(n^2)$. Theorem 9 shows that $S_n$ has \langref{d-DNNF} size $2^{\Omega(n)}$. (Also see \citet{Bova_2014}.)
+\citet[Proposition 7]{Bova_2016} shows that the Sauerhoff function $S_n$ has \langref{DNNF} size $O(n^2)$. Theorem 9 shows that $S_n$ has \langref{d-DNNF} size $2^{\Omega(n)}$. (Also see \citep{Bova_2014}.)
 \end{claimdescription}
 
 % separators=JS
 \begin{claim}
-\langref{PI} is not quasipolynomial-time compilable to \langref{DNNF} \citet{Bova_2016}
+\langref{PI} is not quasipolynomial-time compilable to \langref{DNNF} \citep{Bova_2016}
 \end{claim}
 \begin{claimdescription}
-Proposition 11 of \citet{Bova_2016} shows that the $JS_n$ has \langref{PI} size $O(n^2)$. Proposition 12 of \citet{Bova_2016} shows that $JS_n$ has \langref{DNNF} size $2^{\Omega(n^2)}$.
+\citet[Proposition 11]{Bova_2016} shows that the $JS_n$ has \langref{PI} size $O(n^2)$. \citet[Proposition 12]{Bova_2016} shows that $JS_n$ has \langref{DNNF} size $2^{\Omega(n^2)}$.
 \end{claimdescription}
 
 
@@ -797,7 +797,7 @@ Proposition 11 of \citet{Bova_2016} shows that the $JS_n$ has \langref{PI} size 
 % Reference ID: Wegener_1987
 % =============================
 \begin{claim}
-\langref{MODS} is polynomial-time compilable to \langref{IP} \citet{Wegener_1987}
+\langref{MODS} is polynomial-time compilable to \langref{IP} \citep{Wegener_1987}
 \end{claim}
 \begin{claimdescription}
 The Quine-McCluskey algorithm generates an \langref{IP} formula in polynomial time.
@@ -810,18 +810,18 @@ The Quine-McCluskey algorithm generates an \langref{IP} formula in polynomial ti
 % =============================
 % separators=Generalized_HWB
 \begin{claim}
-\langfam{cSDD}{T} is not quasipolynomial-time compilable to \langref{OBDD} \citet{Bova_2016_a}
+\langfam{cSDD}{T} is not quasipolynomial-time compilable to \langref{OBDD} \citep{Bova_2016_a}
 \end{claim}
 \begin{claimdescription}
-Theorem 4 of \citet{Bova_2016_a} constructs a generalized hidden weighted bit function $F_n$ with polynomial-size compressed SDDs respecting explicit vtrees, but every \langref{OBDD} for $F_n$ has size $2^{\Omega(n)}$. Hence \langfam{cSDD}{T} is not quasipolynomial-time compilable to \langref{OBDD}.
+\citet[Theorem 4]{Bova_2016_a} constructs a generalized hidden weighted bit function $F_n$ with polynomial-size compressed SDDs respecting explicit vtrees, but every \langref{OBDD} for $F_n$ has size $2^{\Omega(n)}$. Hence \langfam{cSDD}{T} is not quasipolynomial-time compilable to \langref{OBDD}.
 \end{claimdescription}
 
 % separators=Generalized_HWB
 \begin{claim}
-\langref{cSDD} is not quasipolynomial-time compilable to \langref{OBDD} \citet{Bova_2016_a}
+\langref{cSDD} is not quasipolynomial-time compilable to \langref{OBDD} \citep{Bova_2016_a}
 \end{claim}
 \begin{claimdescription}
-Theorem 4 of \citet{Bova_2016_a} constructs a generalized hidden weighted bit function $F_n$ on $2n+1$ variables with \langref{cSDD} size $O(n^3)$ but \langref{OBDD} size $2^{\Omega(n)}$. The function $F_n$ augments $HWB_n$ with fresh variables $y_0, \ldots, y_n$ to ensure the resulting SDD is compressed; conditioning $F_n$ on $y_i = 1$ recovers $HWB_n$, preserving Bryant's exponential \langref{OBDD} lower bound.
+\citet[Theorem 4]{Bova_2016_a} constructs a generalized hidden weighted bit function $F_n$ on $2n+1$ variables with \langref{cSDD} size $O(n^3)$ but \langref{OBDD} size $2^{\Omega(n)}$. The function $F_n$ augments $HWB_n$ with fresh variables $y_0, \ldots, y_n$ to ensure the resulting SDD is compressed; conditioning $F_n$ on $y_i = 1$ recovers $HWB_n$, preserving Bryant's exponential \langref{OBDD} lower bound.
 \end{claimdescription}
 
 
@@ -830,14 +830,14 @@ Theorem 4 of \citet{Bova_2016_a} constructs a generalized hidden weighted bit fu
 % Reference ID: Vinall-Smeeth_2024
 % =============================
 \begin{claim}
-\langref{d-SDNNF} is not polynomial-time compilable to \langref{SDD} \citet{Vinall-Smeeth_2024}
+\langref{d-SDNNF} is not polynomial-time compilable to \langref{SDD} \citep{Vinall-Smeeth_2024}
 \end{claim}
 \begin{claimdescription}
-Theorem 1 of \citet{Vinall-Smeeth_2024} proves that there are functions with structured deterministic DNNFs of size $s$ but whose every equivalent \langref{SDD} has size $s^{\widetilde{\Omega}(\log s)}$. The source side is genuinely structured: in the proof of Theorem 2, the hard function is an unambiguous DNF $\psi'$, and the authors fix a vtree $T$ over $\operatorname{var}(\psi')$; each term of $\psi'$ is compiled as a d-DNNF respecting $T$, and their disjunction still respects $T$, with determinism following from unambiguity of $\psi'$. Theorem 1 then transfers this to an SDD lower bound using closure of SDDs under negation.
+\citet[Theorem 1]{Vinall-Smeeth_2024} proves that there are functions with structured deterministic DNNFs of size $s$ but whose every equivalent \langref{SDD} has size $s^{\widetilde{\Omega}(\log s)}$. The source side is genuinely structured: in the proof of Theorem 2, the hard function is an unambiguous DNF $\psi'$, and the authors fix a vtree $T$ over $\operatorname{var}(\psi')$; each term of $\psi'$ is compiled as a d-DNNF respecting $T$, and their disjunction still respects $T$, with determinism following from unambiguity of $\psi'$. Theorem 1 then transfers this to an SDD lower bound using closure of SDDs under negation.
 \end{claimdescription}
 
 \begin{claim}
-\langfam{d-SDNNF}{T} is not polynomial-time compilable to \langfam{SDD}{T} \citet{Vinall-Smeeth_2024}
+\langfam{d-SDNNF}{T} is not polynomial-time compilable to \langfam{SDD}{T} \citep{Vinall-Smeeth_2024}
 \end{claim}
 \begin{claimdescription}
 The Vinall-Smeeth construction gives small source circuits that are explicitly structured: for the hard unambiguous DNF $\psi'$, the proof fixes a vtree $T$ over $\operatorname{var}(\psi')$, compiles each term as a d-DNNF respecting $T$, and takes their deterministic disjunction. Thus the source side can be stated as \langfam{d-SDNNF}{T}. The lower bound is against every equivalent \langref{SDD}; since \langfam{SDD}{T} is a subfamily of \langref{SDD}, it also rules out every target vtree family member.
@@ -849,7 +849,7 @@ The Vinall-Smeeth construction gives small source circuits that are explicitly s
 % Reference ID: Darwiche_2000
 % =============================
 \begin{claim}
-\langref{d-DNNF} is not quasipolynomial-time compilable to \langref{FBDD} \citet{Darwiche_2000}
+\langref{d-DNNF} is not quasipolynomial-time compilable to \langref{FBDD} \citep{Darwiche_2000}
 \end{claim}
 \begin{claimdescription}
 \langref{d-DNNF}s can polynomially represent the disjunction of two functions with conflicting variable orders, which forces \langref{FBDD}s to grow exponentially to track the state of both orders within a single "read-once" path.
@@ -861,7 +861,7 @@ The Vinall-Smeeth construction gives small source circuits that are explicitly s
 % Reference ID: Devadas_1993
 % =============================
 \begin{claim}
-\langref{DNF} is not quasipolynomial-time compilable to \langref{OBDD} \citet{Devadas_1993}
+\langref{DNF} is not quasipolynomial-time compilable to \langref{OBDD} \citep{Devadas_1993}
 \end{claim}
 \begin{claimdescription}
 \citet{Devadas_1993} showed that there exist Boolean functions with polynomial-size \langref{DNF} representations but requiring exponential-size \langref{OBDD} representations for any variable ordering. This establishes $P(\langref{DNF}) \not\subseteq P(\langref{OBDD})$.
@@ -873,10 +873,10 @@ The Vinall-Smeeth construction gives small source circuits that are explicitly s
 % Reference ID: Capelli_2016
 % =============================
 \begin{claim}
-\langref{FBDD} is not quasipolynomial-time compilable to \langref{SDNNF} \citet{Capelli_2016,Pipatsrisawat_2010}
+\langref{FBDD} is not quasipolynomial-time compilable to \langref{SDNNF} \citep{Capelli_2016,Pipatsrisawat_2010}
 \end{claim}
 \begin{claimdescription}
-Appendix D.2 of \citet{Pipatsrisawat_2010} and Section 6.3 of \citet{Capelli_2016} independently proved this result using different techniques.
+\citet[Appendix D.2]{Pipatsrisawat_2010} and \citet[Section 6.3]{Capelli_2016} independently proved this result using different techniques.
 \end{claimdescription}
 
 
@@ -886,10 +886,10 @@ Appendix D.2 of \citet{Pipatsrisawat_2010} and Section 6.3 of \citet{Capelli_201
 % =============================
 % separators=HWB
 \begin{claim}
-\langref{FBDD} is not quasipolynomial-time compilable to \langref{OBDD} \citet{Gergov_1994}
+\langref{FBDD} is not quasipolynomial-time compilable to \langref{OBDD} \citep{Gergov_1994}
 \end{claim}
 \begin{claimdescription}
-The hidden weighted bit function $HWB_n$ has \langref{OBDD} size $2^{\Omega(n/4)}$ \citet{Bryant_1986} but \langref{FBDD} size $O(n^2)$ \citet{Gergov_1994}.
+The hidden weighted bit function $HWB_n$ has \langref{OBDD} size $2^{\Omega(n/4)}$ \citep{Bryant_1986} but \langref{FBDD} size $O(n^2)$ \citep{Gergov_1994}.
 \end{claimdescription}
 
 
@@ -898,7 +898,7 @@ The hidden weighted bit function $HWB_n$ has \langref{OBDD} size $2^{\Omega(n/4)
 % Reference ID: Kaleyski_2016
 % =============================
 \begin{claim}
-\langref{MODS} is not polynomial-time compilable to \langref{PI} \citet{Kaleyski_2016}
+\langref{MODS} is not polynomial-time compilable to \langref{PI} \citep{Kaleyski_2016}
 \end{claim}
 \begin{claimdescription}
 \citet{Kaleyski_2016} constructs a family of Boolean functions $\psi_i$ with \langref{MODS} size $\Theta(2^{2i})$ but \langref{PI} size $\Omega(2^{(i-1)^2/4})$, ruling out a polynomial compilation. Whether an exponential separation exists remains open.

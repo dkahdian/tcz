@@ -97,15 +97,15 @@ For each language $\mathcal{L}$ in
   \langfam{uOBDD}{<}
 \},
 \]
-$\mathcal{L}$ supports Conjunction not in quasipolynomial time \citet{Darwiche_2002,TCZ_Forthcoming}.
+$\mathcal{L}$ supports Conjunction not in quasipolynomial time \citep{Darwiche_2002,TCZ_Forthcoming}.
 \end{batchclaim}
 \begin{claimdescription}
-In the language $\mathcal{L}$, every clause has a polynomial-size representation. If $\mathcal{L}$ supported $\land$C, then every \langref{CNF} could be compiled into $\mathcal{L}$ by conjoining the translated clauses. This contradicts \nedgeref{CNF}{$\mathcal{L}$} \citet{TCZ_Forthcoming}.
+In the language $\mathcal{L}$, every clause has a polynomial-size representation. If $\mathcal{L}$ supported $\land$C, then every \langref{CNF} could be compiled into $\mathcal{L}$ by conjoining the translated clauses. This contradicts \nedgeref{CNF}{$\mathcal{L}$} \citep{TCZ_Forthcoming}.
 \end{claimdescription}
 
 \begin{batchclaim}[id=tcz-obdd-dnnf-bounded-conjunction-lower-bound, op=AND_BC, status=no-quasi]
 For each language $\mathcal{L}$ such that \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{DNNF},
-$\mathcal{L}$ supports Bounded Conjunction not in quasipolynomial time \citet{TCZ_Forthcoming}.
+$\mathcal{L}$ supports Bounded Conjunction not in quasipolynomial time \citep{TCZ_Forthcoming}.
 \end{batchclaim}
 \begin{claimdescription}
 There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\land g$ has size $2^{\Omega(\sqrt{n})}$ \citep{TCZ_Forthcoming}.
@@ -115,7 +115,7 @@ As a result, because \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{D
 
 \begin{batchclaim}[id=tcz-obdd-sdnnf-bounded-disjunction-lower-bound, op=OR_BC, status=no-quasi]
 For each language $\mathcal{L}$ such that \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{SDNNF},
-$\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \citet{TCZ_Forthcoming}.
+$\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \citep{TCZ_Forthcoming}.
 \end{batchclaim}
 \begin{claimdescription}
 There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\lor g$ has size $2^{\Omega(\sqrt{n})}$ \citep{TCZ_Forthcoming}.
@@ -125,14 +125,14 @@ As a result, because \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{S
 
 \begin{batchclaim}[id=tcz-obdd-d-dnnf-bounded-disjunction-lower-bound, op=OR_BC, status=no-quasi]
 For each language $\mathcal{L}$ such that \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{d-DNNF},
-$\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \citet{TCZ_Forthcoming,Vinall-Smeeth_2024}.
+$\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \citep{TCZ_Forthcoming,Vinall-Smeeth_2024}.
 \end{batchclaim}
 \begin{claimdescription}
 There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by OBDDs of size $O(n)$, such that any d-DNNF computing $f\lor g$ has size $2^{\Omega(\sqrt{n})}$ \citep{TCZ_Forthcoming}.
 
 As a result, because \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{d-DNNF}, $\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.
 
-Note that a quasipolynomial lower bound for bounded disjunction of \langref{d-SDNNF} was shown by \citet{Vinall-Smeeth_2024}.
+Note that \citet{Vinall-Smeeth_2024} showed a quasipolynomial lower bound for bounded disjunction of \langref{d-SDNNF}.
 \end{claimdescription}
 
 \begin{batchclaim}[id=vinall-smeeth-unambiguous-dnf-bounded-disjunction-lower-bound, op=OR_BC, status=no-poly-unknown-quasi]
@@ -143,7 +143,7 @@ For each language $\mathcal{L}$ in
   \langfam{uOBDD}{<}
 \},
 \]
-$\mathcal{L}$ supports Bounded Disjunction not in polynomial time (quasipolynomial unknown) \citet{Vinall-Smeeth_2024}.
+$\mathcal{L}$ supports Bounded Disjunction not in polynomial time (quasipolynomial unknown) \citep{Vinall-Smeeth_2024}.
 \end{batchclaim}
 \begin{claimdescription}
 \citet[Theorem 5]{Vinall-Smeeth_2024} gives unambiguous DNF representations of functions $f$ and $g$ such that, measured in the size $s$ of the corresponding source representations, $f \lor g$ requires $d$-SDNNF size $s^{\widetilde{\Omega}(\log s)}$. The unambiguous DNF representations can be transformed into $\mathcal{L}$ representations with only polynomial overhead, and every $\mathcal{L}$ representation can be transformed into $d$-SDNNF with only polynomial overhead. Thus polynomial-time bounded disjunction for $\mathcal{L}$ would contradict the lower bound.
@@ -164,7 +164,7 @@ For each language $\mathcal{L}$ in
   \langfam{uOBDD}{<}
 \},
 \]
-$\mathcal{L}$ supports Singleton Forgetting not in quasipolynomial time \citet{TCZ_Forthcoming}.
+$\mathcal{L}$ supports Singleton Forgetting not in quasipolynomial time \citep{TCZ_Forthcoming}.
 \end{batchclaim}
 \begin{claimdescription}
 If $\mathcal{L}$ supported Singleton Forgetting in quasipolynomial time, then given two $\mathcal{L}$ circuits $f$ and $g$ we could form the decision $(x \land f) \lor (\neg x \land g)$ with only constant overhead and forget $x$, yielding $f \lor g$. This would give quasipolynomial-time Bounded Disjunction for $\mathcal{L}$, contradicting the lower bound of \citet{TCZ_Forthcoming}.
@@ -172,10 +172,10 @@ If $\mathcal{L}$ supported Singleton Forgetting in quasipolynomial time, then gi
 
 \begin{batchclaim}[id=bova-dnf-dnnf-negation-lower-bound, op=NOT_C, status=no-quasi]
 For each language $\mathcal{L}$ such that \edgeref{DNF}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{DNNF},
-$\mathcal{L}$ supports Negation not in quasipolynomial time \citet{Bova_2014}.
+$\mathcal{L}$ supports Negation not in quasipolynomial time \citep{Bova_2014}.
 \end{batchclaim}
 \begin{claimdescription}
-Lemma 5 of \citet{Bova_2014} gives 2-DNF formulas $D$ whose negations require DNNF size $2^{\Omega(\operatorname{size}(D))}$. If $\mathcal{L}$ supported Negation in quasipolynomial time, then \edgeref{DNF}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{DNNF} would yield quasipolynomial-size DNNFs for those negations, contradicting the lower bound.
+\citet[Lemma 5]{Bova_2014} gives 2-DNF formulas $D$ whose negations require DNNF size $2^{\Omega(\operatorname{size}(D))}$. If $\mathcal{L}$ supported Negation in quasipolynomial time, then \edgeref{DNF}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{DNNF} would yield quasipolynomial-size DNNFs for those negations, contradicting the lower bound.
 \end{claimdescription}
 
 \begin{batchclaim}[id=darwiche-or-c-term-dnf-lower-bound, op=OR_C, status=no-quasi]
@@ -197,10 +197,10 @@ For each language $\mathcal{L}$ in
   \langfam{uOBDD}{<}
 \},
 \]
-$\mathcal{L}$ supports Disjunction not in quasipolynomial time \citet{Darwiche_2002,TCZ_Forthcoming}.
+$\mathcal{L}$ supports Disjunction not in quasipolynomial time \citep{Darwiche_2002,TCZ_Forthcoming}.
 \end{batchclaim}
 \begin{claimdescription}
-In the language $\mathcal{L}$, every term has a polynomial-size representation. If $\mathcal{L}$ supported $\lor$C, then every \langref{DNF} could be compiled into $\mathcal{L}$ by disjoining the translated terms. This contradicts \nedgeref{DNF}{$\mathcal{L}$} \citet{TCZ_Forthcoming}.
+In the language $\mathcal{L}$, every term has a polynomial-size representation. If $\mathcal{L}$ supported $\lor$C, then every \langref{DNF} could be compiled into $\mathcal{L}$ by disjoining the translated terms. This contradicts \nedgeref{DNF}{$\mathcal{L}$} \citep{TCZ_Forthcoming}.
 \end{claimdescription}
 
 \begin{batchclaim}[id=darwiche-fo-cnf-consistency-lower-bound, op=FO, status=no-poly-unknown-quasi, assumption=P \neq NP]
@@ -211,10 +211,10 @@ For each language $\mathcal{L}$ in
   \langref{NNF}
 \},
 \]
-$\mathcal{L}$ supports Forgetting not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citet{Darwiche_2002}.
+$\mathcal{L}$ supports Forgetting not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citep{Darwiche_2002}.
 \end{batchclaim}
 \begin{claimdescription}
-If $\mathcal{L}$ supported FO, then the consistency of any CNF sentence $\Sigma$ could be tested in polynomial time: represent $\Sigma$ in $\mathcal{L}$, compute $\exists\text{Vars}(\Sigma).\Sigma$, and check the resulting constant sentence. This would decide CNF consistency in polynomial time, implying P = NP (\citet{Darwiche_2002}, Proposition 5.1).
+If $\mathcal{L}$ supported FO, then the consistency of any CNF sentence $\Sigma$ could be tested in polynomial time: represent $\Sigma$ in $\mathcal{L}$, compute $\exists\text{Vars}(\Sigma).\Sigma$, and check the resulting constant sentence. This would decide CNF consistency in polynomial time, implying P = NP \citep{Darwiche_2002}.
 \end{claimdescription}
 
 \begin{batchclaim}[id=darwiche-fo-dnf-selector-lower-bound, op=FO, status=no-poly-unknown-quasi]
@@ -227,10 +227,10 @@ For each language $\mathcal{L}$ in
   \langfam{cSDD}{T}
 \},
 \]
-$\mathcal{L}$ supports Forgetting not in polynomial time (quasipolynomial unknown) \citet{Darwiche_2002,VanDenBroeck_2015}.
+$\mathcal{L}$ supports Forgetting not in polynomial time (quasipolynomial unknown) \citep{Darwiche_2002,VanDenBroeck_2015}.
 \end{batchclaim}
 \begin{claimdescription}
-A polynomial-time forgetting procedure for $\mathcal{L}$ would turn every \langref{DNF} sentence into an equivalent $\mathcal{L}$ representation of size polynomial in the input DNF after introducing fresh selectors and forgetting them. This contradicts \nedgeref{DNF}{$\mathcal{L}$} \citet{TCZ_Forthcoming}.
+A polynomial-time forgetting procedure for $\mathcal{L}$ would turn every \langref{DNF} sentence into an equivalent $\mathcal{L}$ representation of size polynomial in the input DNF after introducing fresh selectors and forgetting them. This contradicts \nedgeref{DNF}{$\mathcal{L}$} \citep{TCZ_Forthcoming}.
 \end{claimdescription}
 
 
@@ -240,314 +240,314 @@ A polynomial-time forgetting procedure for $\mathcal{L}$ would turn every \langr
 % =============================
 % lang=lang_89649e36, op=AND_C
 \begin{claim}
-\langref{CNF} supports Conjunction in polynomial time \citet{Darwiche_2002}
+\langref{CNF} supports Conjunction in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Conjunction of CNF sentences is trivially another CNF sentence: simply take the union of all clauses (\citet{Darwiche_2002}, Proposition 5.1).
+Conjunction of CNF sentences is trivially another CNF sentence: simply take the union of all clauses \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_89649e36, op=OR_BC
 \begin{claim}
-\langref{CNF} supports Bounded Disjunction in polynomial time \citet{Darwiche_2002}
+\langref{CNF} supports Bounded Disjunction in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-The disjunction of two CNF sentences $\alpha_1 \lor \alpha_2$ can be computed by taking all cross products of one clause from $\alpha_1$ and one from $\alpha_2$, removing redundant literals and valid clauses. The result is a CNF of polynomial size (\citet{Darwiche_2002}, Proposition 5.1).
+The disjunction of two CNF sentences $\alpha_1 \lor \alpha_2$ can be computed by taking all cross products of one clause from $\alpha_1$ and one from $\alpha_2$, removing redundant literals and valid clauses. The result is a CNF of polynomial size \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_89649e36, op=OR_C
 \begin{claim}
-\langref{CNF} supports Disjunction not in polynomial time (quasipolynomial unknown) \citet{Darwiche_2002}
+\langref{CNF} supports Disjunction not in polynomial time (quasipolynomial unknown) \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-It is straightforward to convert any term into an equivalent CNF formula in polynomial time. Since specific DNF formulas cannot be turned into equivalent CNF formulas in polynomial space (DNF $\not\leq$ CNF), CNF does not satisfy $\lor$C (\citet{Darwiche_2002}, Proposition 5.1).
+It is straightforward to convert any term into an equivalent CNF formula in polynomial time. Since specific DNF formulas cannot be turned into equivalent CNF formulas in polynomial space (DNF $\not\leq$ CNF), CNF does not satisfy $\lor$C \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_89649e36, op=CD
 \begin{claim}
-\langref{CNF} supports Conditioning in polynomial time \citet{Darwiche_2002}
+\langref{CNF} supports Conditioning in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-CD is trivially satisfied: replacing literals of the conditioning term by Boolean constants in a CNF and removing valid clauses preserves the CNF property (\citet{Darwiche_2002}, Proposition 5.1).
+CD is trivially satisfied: replacing literals of the conditioning term by Boolean constants in a CNF and removing valid clauses preserves the CNF property \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_6c130090, op=AND_BC
 \begin{claim}
-\langref{d-DNNF} supports Bounded Conjunction not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citet{Darwiche_2002}
+\langref{d-DNNF} supports Bounded Conjunction not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Since OBDD $\subseteq$ d-DNNF and d-DNNF satisfies CO, the NP-completeness of consistency checking for two OBDDs (which may possess different underlying orderings) (Lemma 8.14, \citet{Meinel_Theobald_1998}) implies d-DNNF does not satisfy $\land$BC assuming P \neq NP (\citet{Darwiche_2002}, Proposition 5.1).
+Since OBDD $\subseteq$ d-DNNF and d-DNNF satisfies CO, the NP-completeness of consistency checking for two OBDDs (which may possess different underlying orderings) \citet[Lemma 8.14]{Meinel_Theobald_1998} implies d-DNNF does not satisfy $\land$BC assuming P \neq NP \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_6c130090, op=CD
 \begin{claim}
-\langref{d-DNNF} supports Conditioning in polynomial time \citet{Darwiche_2002}
+\langref{d-DNNF} supports Conditioning in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Conditioning preserves both decomposability and determinism. If $\alpha \land \beta \models \bot$ then $(\alpha|\gamma) \land (\beta|\gamma) \models \bot$ for any consistent term $\gamma$, since $((\alpha \land \beta)|\gamma) \land \gamma \models \bot$ and $\gamma$ is consistent (\citet{Darwiche_2002}, Proposition 5.1).
+Conditioning preserves both decomposability and determinism. If $\alpha \land \beta \models \bot$ then $(\alpha|\gamma) \land (\beta|\gamma) \models \bot$ for any consistent term $\gamma$, since $((\alpha \land \beta)|\gamma) \land \gamma \models \bot$ and $\gamma$ is consistent \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_4c204bf3, op=AND_BC
 \begin{claim}
-\langref{DNF} supports Bounded Conjunction in polynomial time \citet{Darwiche_2002}
+\langref{DNF} supports Bounded Conjunction in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-The conjunction of two DNF sentences $\alpha_1 \land \alpha_2$ can be computed by taking all cross products of one term from $\alpha_1$ and one from $\alpha_2$, removing redundant literals and inconsistent terms. The result is a DNF of polynomial size (\citet{Darwiche_2002}, Proposition 5.1).
+The conjunction of two DNF sentences $\alpha_1 \land \alpha_2$ can be computed by taking all cross products of one term from $\alpha_1$ and one from $\alpha_2$, removing redundant literals and inconsistent terms. The result is a DNF of polynomial size \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_4c204bf3, op=OR_C
 \begin{claim}
-\langref{DNF} supports Disjunction in polynomial time \citet{Darwiche_2002}
+\langref{DNF} supports Disjunction in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Disjunction of DNF sentences is trivially another DNF sentence: simply take the union of all terms (\citet{Darwiche_2002}, Proposition 5.1).
+Disjunction of DNF sentences is trivially another DNF sentence: simply take the union of all terms \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_3bebcab7, op=AND_BC
 \begin{claim}
-\langref{DNNF} supports Bounded Conjunction not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citet{Darwiche_2002}
+\langref{DNNF} supports Bounded Conjunction not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Checking consistency of two OBDDs (which may possess different underlying variable orderings) is NP-complete (Lemma 8.14, \citet{Meinel_Theobald_1998}). Since OBDD $\subseteq$ DNNF and DNNF satisfies CO, if DNNF satisfied $\land$BC then consistency of two OBDDs could be tested in polytime, implying P = NP (\citet{Darwiche_2002}, Proposition 5.1).
+Checking consistency of two OBDDs (which may possess different underlying variable orderings) is NP-complete \citet[Lemma 8.14]{Meinel_Theobald_1998}. Since OBDD $\subseteq$ DNNF and DNNF satisfies CO, if DNNF satisfied $\land$BC then consistency of two OBDDs could be tested in polytime, implying P = NP \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_3bebcab7, op=OR_C
 \begin{claim}
-\langref{DNNF} supports Disjunction in polynomial time \citet{Darwiche_2002}
+\langref{DNNF} supports Disjunction in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Disjunction trivially preserves decomposability since decomposability only constrains $\land$-nodes. (\citet{Darwiche_2002}, Proposition 5.1).
+Disjunction trivially preserves decomposability since decomposability only constrains $\land$-nodes. \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_3bebcab7, op=CD
 \begin{claim}
-\langref{DNNF} supports Conditioning in polynomial time \citet{Darwiche_2002}
+\langref{DNNF} supports Conditioning in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Conditioning preserves decomposability: if $\alpha$ and $\beta$ do not share variables, then $\alpha|\gamma$ and $\beta|\gamma$ do not share variables either, since $\text{Vars}(\alpha|\gamma) \subseteq \text{Vars}(\alpha)$ (\citet{Darwiche_2002}, Proposition 5.1).
+Conditioning preserves decomposability: if $\alpha$ and $\beta$ do not share variables, then $\alpha|\gamma$ and $\beta|\gamma$ do not share variables either, since $\text{Vars}(\alpha|\gamma) \subseteq \text{Vars}(\alpha)$ \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_684b1ca7, op=NOT_C
 \begin{claim}
-\langref{FBDD} supports Negation in polynomial time \citet{Darwiche_2002}
+\langref{FBDD} supports Negation in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Negation of an FBDD is achieved by switching the labels of the 0-sink and 1-sink. The decision property and read-once property are preserved (\citet{Darwiche_2002}, Proposition 5.1).
+Negation of an FBDD is achieved by switching the labels of the 0-sink and 1-sink. The decision property and read-once property are preserved \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_684b1ca7, op=CD
 \begin{claim}
-\langref{FBDD} supports Conditioning in polynomial time \citet{Darwiche_2002}
+\langref{FBDD} supports Conditioning in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the free read-once property (\citet{Darwiche_2002}, Proposition 5.1).
+Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the free read-once property \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_684b1ca7, op=OR_BC
 \begin{claim}
-\langref{FBDD} supports Bounded Disjunction not in quasipolynomial time \citet{Wegener_2000}
+\langref{FBDD} supports Bounded Disjunction not in quasipolynomial time \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-Let $ROW_n$ and $COL_n$ test whether an $n \times n$ Boolean matrix has an all-1 row or an all-1 column. Each has polynomial-size FBDDs, but $ROW_n \lor COL_n$ requires FBDD size $\Omega(n^{-7/2}2^n)$ by Theorem 6.2.13 of \citet{Wegener_2000}.
+Let $ROW_n$ and $COL_n$ test whether an $n \times n$ Boolean matrix has an all-1 row or an all-1 column. Each has polynomial-size FBDDs, but $ROW_n \lor COL_n$ requires FBDD size $\Omega(n^{-7/2}2^n)$ by \citet[Theorem 6.2.13]{Wegener_2000}.
 \end{claimdescription}
 
 % lang=lang_684b1ca7, op=SFO
 \begin{claim}
-\langref{FBDD} supports Singleton Forgetting not in quasipolynomial time \citet{Wegener_2000}
+\langref{FBDD} supports Singleton Forgetting not in quasipolynomial time \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-Let $ROW_n$ and $COL_n$ test whether an $n \times n$ Boolean matrix has an all-1 row or an all-1 column. The selector construction $(s \land ROW_n) \lor (\neg s \land COL_n)$ has polynomial-size FBDDs: the top variable $s$ chooses a rowwise or columnwise computation. Forgetting $s$ yields $ROW_n \lor COL_n$, whose FBDD size is $\Omega(n^{-7/2}2^n)$ by Theorem~6.2.13 of \citet{Wegener_2000}.
+Let $ROW_n$ and $COL_n$ test whether an $n \times n$ Boolean matrix has an all-1 row or an all-1 column. The selector construction $(s \land ROW_n) \lor (\neg s \land COL_n)$ has polynomial-size FBDDs: the top variable $s$ chooses a rowwise or columnwise computation. Forgetting $s$ yields $ROW_n \lor COL_n$, whose FBDD size is $\Omega(n^{-7/2}2^n)$ by \citet[Theorem 6.2.13]{Wegener_2000}.
 \end{claimdescription}
 
 % lang=lang_6ae90adc, op=NOT_C
 \begin{claim}
-\langref{IP} supports Negation not in quasipolynomial time \citet{Darwiche_2002}
+\langref{IP} supports Negation not in quasipolynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Dual of PI: $\Sigma_n = \bigvee_{i=0}^{n-1}(x_{2i} \land x_{2i+1})$ is in IP form but has $2^n$ prime implicates. Its negation has $2^n$ prime implicants. Hence IP cannot satisfy $\neg$C (\citet{Darwiche_2002}, Proposition 5.1).
+Dual of PI: $\Sigma_n = \bigvee_{i=0}^{n-1}(x_{2i} \land x_{2i+1})$ is in IP form but has $2^n$ prime implicates. Its negation has $2^n$ prime implicants. Hence IP cannot satisfy $\neg$C \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_6ae90adc, op=AND_BC
 \begin{claim}
-\langref{IP} supports Bounded Conjunction in polynomial time \citet{Darwiche_2002}
+\langref{IP} supports Bounded Conjunction in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-$\text{IP}(\alpha_1 \land \alpha_2) = \max(\{\beta_1 \land \beta_2 \mid \beta_1 \in \text{IP}(\alpha_1), \beta_2 \in \text{IP}(\alpha_2)\}, \models)$ (dual of Proposition 40, Marquis 2000). The maximization removes subsuming terms, yielding an IP form in polytime (\citet{Darwiche_2002}, Proposition 5.1).
+$\text{IP}(\alpha_1 \land \alpha_2) = \max(\{\beta_1 \land \beta_2 \mid \beta_1 \in \text{IP}(\alpha_1), \beta_2 \in \text{IP}(\alpha_2)\}, \models)$ (dual of Proposition 40, Marquis 2000). The maximization removes subsuming terms, yielding an IP form in polytime \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_6ae90adc, op=AND_C
 \begin{claim}
-\langref{IP} supports Conjunction not in polynomial time (quasipolynomial unknown) \citet{Darwiche_2002}
+\langref{IP} supports Conjunction not in polynomial time (quasipolynomial unknown) \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-It is straightforward to convert a clause into an equivalent IP formula in polynomial time. Since specific CNF formulas cannot be turned into equivalent IP formulas in polynomial space (CNF $\not\leq$ IP), IP does not satisfy $\land$C (\citet{Darwiche_2002}, Proposition 5.1).
+It is straightforward to convert a clause into an equivalent IP formula in polynomial time. Since specific CNF formulas cannot be turned into equivalent IP formulas in polynomial space (CNF $\not\leq$ IP), IP does not satisfy $\land$C \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_6ae90adc, op=OR_BC
 \begin{claim}
-\langref{IP} supports Bounded Disjunction not in quasipolynomial time \citet{Darwiche_2002}
+\langref{IP} supports Bounded Disjunction not in quasipolynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Combining prime implicants via disjunction requires distributing and re-minimizing terms, which can lead to an exponential explosion of new prime implicants. Let $\alpha_1 = \bigwedge_{i=1}^k p_i$ (one prime implicant) and $\alpha_2 = \bigvee_{i=1}^k \bigvee_{j=1}^m (\neg p_i \land q_{i,j})$ ($mk$ prime implicants). Then $\alpha_1 \lor \alpha_2$ has $(m+1)^k + mk$ prime implicants, an exponential blowup \citet{Chandra_1978} (\citet{Darwiche_2002}, Proposition 5.1).
+Combining prime implicants via disjunction requires distributing and re-minimizing terms, which can lead to an exponential explosion of new prime implicants. Let $\alpha_1 = \bigwedge_{i=1}^k p_i$ (one prime implicant) and $\alpha_2 = \bigvee_{i=1}^k \bigvee_{j=1}^m (\neg p_i \land q_{i,j})$ ($mk$ prime implicants). Then $\alpha_1 \lor \alpha_2$ has $(m+1)^k + mk$ prime implicants, an exponential blowup \citep{Chandra_1978} \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_6ae90adc, op=CD
 \begin{claim}
-\langref{IP} supports Conditioning in polynomial time \citet{Darwiche_2002}
+\langref{IP} supports Conditioning in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Given IP formula $\Sigma = \bigvee \gamma_i$, conditioning on $\gamma$ gives $\bigvee (\gamma_i|\gamma)$. Keeping only the logically weakest surviving terms yields a prime implicants formula equivalent to $\Sigma|\gamma$. This requires $O(n^2)$ entailment tests among terms, each polytime (\citet{Darwiche_2002}, Proposition 5.1).
+Given IP formula $\Sigma = \bigvee \gamma_i$, conditioning on $\gamma$ gives $\bigvee (\gamma_i|\gamma)$. Keeping only the logically weakest surviving terms yields a prime implicants formula equivalent to $\Sigma|\gamma$. This requires $O(n^2)$ entailment tests among terms, each polytime \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_6ae90adc, op=SFO
 \begin{claim}
-\langref{IP} supports Singleton Forgetting not in quasipolynomial time \citet{Darwiche_2002}
+\langref{IP} supports Singleton Forgetting not in quasipolynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-The number of prime implicants of $\exists x.\Sigma$ can be exponentially greater than the number of prime implicants of $\Sigma$ \citet{Chandra_1978}. A specific construction with $mk+1$ prime implicants produces $(m+1)^k + mk$ prime implicants after forgetting one variable (\citet{Darwiche_2002}, Proposition 5.1).
+The number of prime implicants of $\exists x.\Sigma$ can be exponentially greater than the number of prime implicants of $\Sigma$ \citep{Chandra_1978}. A specific construction with $mk+1$ prime implicants produces $(m+1)^k + mk$ prime implicants after forgetting one variable \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_e02902d0, op=NOT_C
 \begin{claim}
-\langref{MODS} supports Negation not in quasipolynomial time \citet{Darwiche_2002}
+\langref{MODS} supports Negation not in quasipolynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-$\Sigma = \bigwedge_{i=1}^n x_i$ has only one model over $\{x_1,\ldots,x_n\}$ but its negation $\neg\Sigma$ has $2^n - 1$ models. Hence MODS cannot satisfy $\neg$C (\citet{Darwiche_2002}, Proposition 5.1).
+$\Sigma = \bigwedge_{i=1}^n x_i$ has only one model over $\{x_1,\ldots,x_n\}$ but its negation $\neg\Sigma$ has $2^n - 1$ models. Hence MODS cannot satisfy $\neg$C \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_e02902d0, op=AND_BC
 \begin{claim}
-\langref{MODS} supports Bounded Conjunction in polynomial time \citet{Darwiche_2002}
+\langref{MODS} supports Bounded Conjunction in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-The bounded conjunction of two MODS formulas (over the same variables) is simply taking the intersection of their model sets. If the variables differ, it is the intersection of their cylindrical extensions. The result is a MODS sentence in polytime (\citet{Darwiche_2002}, Proposition 5.1).
+The bounded conjunction of two MODS formulas (over the same variables) is simply taking the intersection of their model sets. If the variables differ, it is the intersection of their cylindrical extensions. The result is a MODS sentence in polytime \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_e02902d0, op=AND_C
 \begin{claim}
-\langref{MODS} supports Conjunction not in quasipolynomial time \citet{Darwiche_2002}
+\langref{MODS} supports Conjunction not in quasipolynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Let $\Sigma_i = (x_{i,1} \lor x_{i,2})$ for $i = 1,\ldots,n$. Each $\Sigma_i$ has 3 models. But $\Sigma = \bigwedge_{i=1}^n \Sigma_i$ has $3^n$ models, so no polynomial-size MODS representation exists (\citet{Darwiche_2002}, Proposition 5.1).
+Let $\Sigma_i = (x_{i,1} \lor x_{i,2})$ for $i = 1,\ldots,n$. Each $\Sigma_i$ has 3 models. But $\Sigma = \bigwedge_{i=1}^n \Sigma_i$ has $3^n$ models, so no polynomial-size MODS representation exists \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_e02902d0, op=OR_BC
 \begin{claim}
-\langref{MODS} supports Bounded Disjunction not in quasipolynomial time \citet{Darwiche_2002}
+\langref{MODS} supports Bounded Disjunction not in quasipolynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Let $\alpha_1 = \bigwedge_{i=1}^n x_i$ (1 model) and $\alpha_2 = y$ (1 model). Then $\alpha_1 \lor \alpha_2$ has $2^n + 1$ models over $\text{Vars}(\alpha_1) \cup \text{Vars}(\alpha_2)$. Since this already uses the disjunction of just two MODS sentences, MODS does not satisfy $\lor$BC (\citet{Darwiche_2002}, Proposition 5.1).
+Let $\alpha_1 = \bigwedge_{i=1}^n x_i$ (1 model) and $\alpha_2 = y$ (1 model). Then $\alpha_1 \lor \alpha_2$ has $2^n + 1$ models over $\text{Vars}(\alpha_1) \cup \text{Vars}(\alpha_2)$. Since this already uses the disjunction of just two MODS sentences, MODS does not satisfy $\lor$BC \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_e02902d0, op=FO
 \begin{claim}
-\langref{MODS} supports Forgetting in polynomial time \citet{Darwiche_2002}
+\langref{MODS} supports Forgetting in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Given a MODS formula $\Sigma$ and a set $X$, the MODS representation of $\exists X.\Sigma$ is obtained by removing every leaf node labeled by a literal $x$ or $\neg x$ with $x \in X$ (Propositions 18 and 20, Lang et al. 2000). See also the polytime FO operation on DNNF from \citet{Darwiche_2001a} (\citet{Darwiche_2002}, Proposition 5.1).
+Given a MODS formula $\Sigma$ and a set $X$, the MODS representation of $\exists X.\Sigma$ is obtained by removing every leaf node labeled by a literal $x$ or $\neg x$ with $x \in X$ (Propositions 18 and 20, Lang et al. 2000). See also the polytime FO operation on DNNF from \citep{Darwiche_2001a} \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_5bf00851, op=NOT_C
 \begin{claim}
-\langref{NNF} supports Negation in polynomial time \citet{Darwiche_2002}
+\langref{NNF} supports Negation in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-NNF trivially satisfies $\neg$C since any propositional sentence can be converted to NNF by pushing negations to literals and this preserves the NNF property (\citet{Darwiche_2002}, Proposition 5.1).
+NNF trivially satisfies $\neg$C since any propositional sentence can be converted to NNF by pushing negations to literals and this preserves the NNF property \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_5bf00851, op=AND_C
 \begin{claim}
-\langref{NNF} supports Conjunction in polynomial time \citet{Darwiche_2002}
+\langref{NNF} supports Conjunction in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Taking the conjunction of NNF sentences $\alpha_1 \land \alpha_2 \land \ldots$ trivially produces another NNF sentence, since NNF places no restrictions on $\land$-nodes (\citet{Darwiche_2002}, Proposition 5.1).
+Taking the conjunction of NNF sentences $\alpha_1 \land \alpha_2 \land \ldots$ trivially produces another NNF sentence, since NNF places no restrictions on $\land$-nodes \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_5bf00851, op=CD
 \begin{claim}
-\langref{NNF} supports Conditioning in polynomial time \citet{Darwiche_2002}
+\langref{NNF} supports Conditioning in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-CD is trivially satisfied by NNF: replacing literals of the conditioning term by Boolean constants preserves the NNF property (\citet{Darwiche_2002}, Proposition 5.1).
+CD is trivially satisfied by NNF: replacing literals of the conditioning term by Boolean constants preserves the NNF property \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_b9d72a7c, op=NOT_C
 \begin{claim}
-\langref{OBDD} supports Negation in polynomial time \citet{Darwiche_2002}
+\langref{OBDD} supports Negation in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Negation of an OBDD is achieved by switching the labels of the 0-sink and 1-sink. The ordered variable property is preserved since the single ordering is not affected (\citet{Darwiche_2002}, Proposition 5.1).
+Negation of an OBDD is achieved by switching the labels of the 0-sink and 1-sink. The ordered variable property is preserved since the single ordering is not affected \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_b9d72a7c, op=AND_BC
 \begin{claim}
-\langref{OBDD} supports Bounded Conjunction not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citet{Darwiche_2002}
+\langref{OBDD} supports Bounded Conjunction not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Checking consistency of two OBDDs (which may possess different underlying orderings) is NP-complete (Lemma 8.14, \citet{Meinel_Theobald_1998}). Since OBDD satisfies CO, if OBDD satisfied $\land$BC consistency could be tested in polytime, implying P = NP (\citet{Darwiche_2002}, Proposition 5.1).
+Checking consistency of two OBDDs (which may possess different underlying orderings) is NP-complete \citet[Lemma 8.14]{Meinel_Theobald_1998}. Since OBDD satisfies CO, if OBDD satisfied $\land$BC consistency could be tested in polytime, implying P = NP \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_b9d72a7c, op=CD
 \begin{claim}
-\langref{OBDD} supports Conditioning in polynomial time \citet{Darwiche_2002}
+\langref{OBDD} supports Conditioning in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Since OBDD $\subseteq$ FBDD and conditioning preserves the variable ordering, OBDD also satisfies CD (\citet{Darwiche_2002}, Proposition 5.1).
+Since OBDD $\subseteq$ FBDD and conditioning preserves the variable ordering, OBDD also satisfies CD \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_b9d72a7c, op=SFO
 \begin{claim}
-\langref{OBDD} supports Singleton Forgetting in polynomial time \citet{Darwiche_2002}
+\langref{OBDD} supports Singleton Forgetting in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Since only one OBDD sentence is considered in the transformation, and OBDD$_<$ satisfies SFO, OBDD also satisfies SFO (\citet{Darwiche_2002}, Proposition 5.1).
+Since only one OBDD sentence is considered in the transformation, and OBDD$_<$ satisfies SFO, OBDD also satisfies SFO \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_27fffab2, op=NOT_C
 \begin{claim}
-\langref{PI} supports Negation not in quasipolynomial time \citet{Darwiche_2002}
+\langref{PI} supports Negation not in quasipolynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-The formula $\Sigma_n = \bigwedge_{i=0}^{n-1}(x_{2i} \lor x_{2i+1})$ is in PI form but has $2^n$ prime implicants. Its negation has $2^n$ prime implicates. Hence PI cannot satisfy $\neg$C (\citet{Darwiche_2002}, Proposition 5.1).
+The formula $\Sigma_n = \bigwedge_{i=0}^{n-1}(x_{2i} \lor x_{2i+1})$ is in PI form but has $2^n$ prime implicants. Its negation has $2^n$ prime implicates. Hence PI cannot satisfy $\neg$C \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_27fffab2, op=AND_BC
 \begin{claim}
-\langref{PI} supports Bounded Conjunction not in quasipolynomial time \citet{Darwiche_2002}
+\langref{PI} supports Bounded Conjunction not in quasipolynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Combining prime implicates via conjunction requires distributing and re-minimizing clauses, which can lead to an exponential explosion of new prime implicates. Let $\alpha_1 = \bigvee_{i=1}^k p_i$ (one prime implicate) and $\alpha_2 = \bigwedge_{i=1}^k \bigwedge_{j=1}^m (\neg p_i \lor q_{i,j})$ ($mk$ prime implicates). Then $\alpha_1 \land \alpha_2$ has $(m+1)^k + mk$ prime implicates, an exponential blowup \citet{Chandra_1978} (\citet{Darwiche_2002}, Proposition 5.1).
+Combining prime implicates via conjunction requires distributing and re-minimizing clauses, which can lead to an exponential explosion of new prime implicates. Let $\alpha_1 = \bigvee_{i=1}^k p_i$ (one prime implicate) and $\alpha_2 = \bigwedge_{i=1}^k \bigwedge_{j=1}^m (\neg p_i \lor q_{i,j})$ ($mk$ prime implicates). Then $\alpha_1 \land \alpha_2$ has $(m+1)^k + mk$ prime implicates, an exponential blowup \citep{Chandra_1978} \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_27fffab2, op=OR_BC
 \begin{claim}
-\langref{PI} supports Bounded Disjunction in polynomial time \citet{Darwiche_2002}
+\langref{PI} supports Bounded Disjunction in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-$\text{PI}(\alpha_1 \lor \alpha_2) = \min(\{\beta_1 \lor \beta_2 \mid \beta_1 \in \text{PI}(\alpha_1), \beta_2 \in \text{PI}(\alpha_2)\}, \models)$ (Proposition 40, Marquis 2000). The minimization removes subsumed clauses, yielding a PI form in polytime (\citet{Darwiche_2002}, Proposition 5.1).
+$\text{PI}(\alpha_1 \lor \alpha_2) = \min(\{\beta_1 \lor \beta_2 \mid \beta_1 \in \text{PI}(\alpha_1), \beta_2 \in \text{PI}(\alpha_2)\}, \models)$ (Proposition 40, Marquis 2000). The minimization removes subsumed clauses, yielding a PI form in polytime \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_27fffab2, op=OR_C
 \begin{claim}
-\langref{PI} supports Disjunction not in polynomial time (quasipolynomial unknown) \citet{Darwiche_2002}
+\langref{PI} supports Disjunction not in polynomial time (quasipolynomial unknown) \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-It is straightforward to convert any term into an equivalent PI formula in polynomial time. Since specific DNF formulas cannot be turned into equivalent PI formulas in polynomial space (DNF $\not\leq$ PI), PI does not satisfy $\lor$C (\citet{Darwiche_2002}, Proposition 5.1).
+It is straightforward to convert any term into an equivalent PI formula in polynomial time. Since specific DNF formulas cannot be turned into equivalent PI formulas in polynomial space (DNF $\not\leq$ PI), PI does not satisfy $\lor$C \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_27fffab2, op=CD
 \begin{claim}
-\langref{PI} supports Conditioning in polynomial time \citet{Darwiche_2002}
+\langref{PI} supports Conditioning in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-The prime implicates of $\Sigma \land \gamma$ can be computed in polytime when $\Sigma$ is in PI form and $\gamma$ is a term (Proposition 36, Marquis 2000). Since PI satisfies FO, the prime implicates of $\Sigma|\gamma \equiv \exists\text{Vars}(\gamma).(\Sigma \land \gamma)$ follow in polytime (\citet{Darwiche_2002}, Proposition 5.1).
+The prime implicates of $\Sigma \land \gamma$ can be computed in polytime when $\Sigma$ is in PI form and $\gamma$ is a term (Proposition 36, Marquis 2000). Since PI satisfies FO, the prime implicates of $\Sigma|\gamma \equiv \exists\text{Vars}(\gamma).(\Sigma \land \gamma)$ follow in polytime \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_27fffab2, op=FO
 \begin{claim}
-\langref{PI} supports Forgetting in polynomial time \citet{Darwiche_2002}
+\langref{PI} supports Forgetting in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-The prime implicates of $\exists X.\Sigma$ are exactly the prime implicates of $\Sigma$ that do not contain any variable from $X$ (Proposition 55, Marquis 2000). Hence FO for PI simply filters out clauses containing forgotten variables (\citet{Darwiche_2002}, Proposition 5.1).
+The prime implicates of $\exists X.\Sigma$ are exactly the prime implicates of $\Sigma$ that do not contain any variable from $X$ (Proposition 55, Marquis 2000). Hence FO for PI simply filters out clauses containing forgotten variables \citep{Darwiche_2002}.
 \end{claimdescription}
 
 
@@ -557,10 +557,10 @@ The prime implicates of $\exists X.\Sigma$ are exactly the prime implicates of $
 % =============================
 % lang=lang_3bebcab7, op=NOT_C
 \begin{claim}
-\langref{DNNF} supports Negation not in quasipolynomial time \citet{Bova_2014}
+\langref{DNNF} supports Negation not in quasipolynomial time \citep{Bova_2014}
 \end{claim}
 \begin{claimdescription}
-Corollary 3 of \citet{Bova_2014} states that negating a \langref{DNNF} can require exponential \langref{DNNF} size; this holds because \langref{DNNF} $\subset$ \langref{DNF} and negating a \langref{DNF} yields a \langref{CNF}.
+\citet[Corollary 3]{Bova_2014} states that negating a \langref{DNNF} can require exponential \langref{DNNF} size; this holds because \langref{DNNF} $\subset$ \langref{DNF} and negating a \langref{DNF} yields a \langref{CNF}.
 \end{claimdescription}
 
 
@@ -570,90 +570,90 @@ Corollary 3 of \citet{Bova_2014} states that negating a \langref{DNNF} can requi
 % =============================
 % lang=lang_ea9b5299, op=CD
 \begin{claim}
-\langref{d-SDNNF} supports Conditioning in polynomial time \citet{Pipatsrisawat_2008}
+\langref{d-SDNNF} supports Conditioning in polynomial time \citep{Pipatsrisawat_2008}
 \end{claim}
 \begin{claimdescription}
-Conditioning preserves both structured decomposability and determinism. The vtree structure is maintained since $\text{Vars}(\Sigma|\gamma) \subseteq \text{Vars}(\Sigma)$, and mutual exclusivity of $\lor$-children is preserved under conditioning (\citet{Pipatsrisawat_2008}, Proposition 4).
+Conditioning preserves both structured decomposability and determinism. The vtree structure is maintained since $\text{Vars}(\Sigma|\gamma) \subseteq \text{Vars}(\Sigma)$, and mutual exclusivity of $\lor$-children is preserved under conditioning \citet[Proposition 4]{Pipatsrisawat_2008}.
 \end{claimdescription}
 
 % lang=lang_ea9b5299, op=FO
 \begin{claim}
-\langref{d-SDNNF} supports Forgetting not in quasipolynomial time \citet{Pipatsrisawat_2008}
+\langref{d-SDNNF} supports Forgetting not in quasipolynomial time \citep{Pipatsrisawat_2008}
 \end{claim}
 \begin{claimdescription}
-If \langref{d-SDNNF} satisfied FO, then every \langref{DNF} could be compiled to an equivalent \langref{d-SDNNF} of size polynomial in the input DNF (using fresh selector variables and applying FO). Since specific \langref{DNF}s require exponential-size \langref{d-SDNNF} representations (unconditionally), this is impossible. This unconditional result applies to the fixed-vtree case (\citet{Pipatsrisawat_2008}, Proposition 4).
+If \langref{d-SDNNF} satisfied FO, then every \langref{DNF} could be compiled to an equivalent \langref{d-SDNNF} of size polynomial in the input DNF (using fresh selector variables and applying FO). Since specific \langref{DNF}s require exponential-size \langref{d-SDNNF} representations (unconditionally), this is impossible. This unconditional result applies to the fixed-vtree case \citet[Proposition 4]{Pipatsrisawat_2008}.
 \end{claimdescription}
 
 % lang=lang_91f812d0, op=AND_BC
 \begin{claim}
-\langfam{d-SDNNF}{T} supports Bounded Conjunction in polynomial time \citet{Pipatsrisawat_2008}
+\langfam{d-SDNNF}{T} supports Bounded Conjunction in polynomial time \citep{Pipatsrisawat_2008}
 \end{claim}
 \begin{claimdescription}
-Bounded conjunction of two \langfam{d-SDNNF}{T} formulas can be performed in polytime via the Apply algorithm, preserving both determinism and structured decomposability (\citet{Pipatsrisawat_2008}, Proposition 4).
+Bounded conjunction of two \langfam{d-SDNNF}{T} formulas can be performed in polytime via the Apply algorithm, preserving both determinism and structured decomposability \citet[Proposition 4]{Pipatsrisawat_2008}.
 \end{claimdescription}
 
 % lang=lang_91f812d0, op=CD
 \begin{claim}
-\langfam{d-SDNNF}{T} supports Conditioning in polynomial time \citet{Pipatsrisawat_2008}
+\langfam{d-SDNNF}{T} supports Conditioning in polynomial time \citep{Pipatsrisawat_2008}
 \end{claim}
 \begin{claimdescription}
-Conditioning preserves both decomposability and determinism, and it preserves the fixed vtree because restricting by a term only removes variables or replaces literals by constants. Hence the conditioned formula remains in \langfam{d-SDNNF}{T} (\citet{Pipatsrisawat_2008}, Proposition 4).
+Conditioning preserves both decomposability and determinism, and it preserves the fixed vtree because restricting by a term only removes variables or replaces literals by constants. Hence the conditioned formula remains in \langfam{d-SDNNF}{T} \citet[Proposition 4]{Pipatsrisawat_2008}.
 \end{claimdescription}
 
 % lang=lang_91f812d0, op=FO
 \begin{claim}
-\langfam{d-SDNNF}{T} supports Forgetting not in polynomial time (quasipolynomial unknown) \citet{Pipatsrisawat_2008}
+\langfam{d-SDNNF}{T} supports Forgetting not in polynomial time (quasipolynomial unknown) \citep{Pipatsrisawat_2008}
 \end{claim}
 \begin{claimdescription}
-For a linear vtree $T$ compatible with an order $<$, every \langfam{OBDD}{<} formula is a \langfam{d-SDNNF}{T} formula, and every such \langfam{d-SDNNF}{T} formula can be converted back to \langfam{OBDD}{<} in polynomial time. If \langfam{d-SDNNF}{T} supported FO in polynomial time, then \langfam{OBDD}{<} would support FO in polynomial time, contradicting the known \langfam{OBDD}{<} lower bound (\citet{Pipatsrisawat_2008}, Proposition 4).
+For a linear vtree $T$ compatible with an order $<$, every \langfam{OBDD}{<} formula is a \langfam{d-SDNNF}{T} formula, and every such \langfam{d-SDNNF}{T} formula can be converted back to \langfam{OBDD}{<} in polynomial time. If \langfam{d-SDNNF}{T} supported FO in polynomial time, then \langfam{OBDD}{<} would support FO in polynomial time, contradicting the known \langfam{OBDD}{<} lower bound \citet[Proposition 4]{Pipatsrisawat_2008}.
 \end{claimdescription}
 
 % lang=lang_b13b0d78, op=CD
 \begin{claim}
-\langref{SDNNF} supports Conditioning in polynomial time \citet{Pipatsrisawat_2008}
+\langref{SDNNF} supports Conditioning in polynomial time \citep{Pipatsrisawat_2008}
 \end{claim}
 \begin{claimdescription}
-Conditioning preserves structured decomposability: replacing conditioned literals by constants and simplifying can only remove variables from subformulas, so every decomposable split continues to respect the original vtree. Therefore the result remains an \langref{SDNNF} formula of size polynomial in the input formula (\citet{Pipatsrisawat_2008}, Proposition 4).
+Conditioning preserves structured decomposability: replacing conditioned literals by constants and simplifying can only remove variables from subformulas, so every decomposable split continues to respect the original vtree. Therefore the result remains an \langref{SDNNF} formula of size polynomial in the input formula \citet[Proposition 4]{Pipatsrisawat_2008}.
 \end{claimdescription}
 
 % lang=lang_b13b0d78, op=FO
 \begin{claim}
-\langref{SDNNF} supports Forgetting in polynomial time \citet{Pipatsrisawat_2008}
+\langref{SDNNF} supports Forgetting in polynomial time \citep{Pipatsrisawat_2008}
 \end{claim}
 \begin{claimdescription}
-Forgetting preserves structured decomposability. Replacing all occurrences of literal $x$ and $\neg x$ with $\top$ in an \langref{SDNNF} preserves the vtree structure, since the decomposition at $\land$-nodes remains valid after variable removal. Inherited from \langref{DNNF} (\citet{Pipatsrisawat_2008}, Proposition 4).
+Forgetting preserves structured decomposability. Replacing all occurrences of literal $x$ and $\neg x$ with $\top$ in an \langref{SDNNF} preserves the vtree structure, since the decomposition at $\land$-nodes remains valid after variable removal. Inherited from \langref{DNNF} \citet[Proposition 4]{Pipatsrisawat_2008}.
 \end{claimdescription}
 
 % lang=lang_3c803ba1, op=AND_BC
 \begin{claim}
-\langfam{SDNNF}{T} supports Bounded Conjunction in polynomial time \citet{Pipatsrisawat_2008}
+\langfam{SDNNF}{T} supports Bounded Conjunction in polynomial time \citep{Pipatsrisawat_2008}
 \end{claim}
 \begin{claimdescription}
-Bounded conjunction of two \langfam{SDNNF}{T} formulas can be performed in polytime via the Apply algorithm. The fixed vtree governs variable partitioning at $\land$-nodes, enabling an efficient recursive traversal (\citet{Pipatsrisawat_2008}, Proposition 4).
+Bounded conjunction of two \langfam{SDNNF}{T} formulas can be performed in polytime via the Apply algorithm. The fixed vtree governs variable partitioning at $\land$-nodes, enabling an efficient recursive traversal \citet[Proposition 4]{Pipatsrisawat_2008}.
 \end{claimdescription}
 
 % lang=lang_3c803ba1, op=OR_C
 \begin{claim}
-\langfam{SDNNF}{T} supports Disjunction in polynomial time \citet{Pipatsrisawat_2008}
+\langfam{SDNNF}{T} supports Disjunction in polynomial time \citep{Pipatsrisawat_2008}
 \end{claim}
 \begin{claimdescription}
-Disjunction of \langfam{SDNNF}{T} formulas preserves structured decomposability, since decomposability only constrains $\land$-nodes and a top-level $\lor$-node introduces no new $\land$-node constraints (\citet{Pipatsrisawat_2008}, Proposition 4).
+Disjunction of \langfam{SDNNF}{T} formulas preserves structured decomposability, since decomposability only constrains $\land$-nodes and a top-level $\lor$-node introduces no new $\land$-node constraints \citet[Proposition 4]{Pipatsrisawat_2008}.
 \end{claimdescription}
 
 % lang=lang_3c803ba1, op=CD
 \begin{claim}
-\langfam{SDNNF}{T} supports Conditioning in polynomial time \citet{Pipatsrisawat_2008}
+\langfam{SDNNF}{T} supports Conditioning in polynomial time \citep{Pipatsrisawat_2008}
 \end{claim}
 \begin{claimdescription}
-Conditioning preserves decomposability with respect to the same fixed vtree: after replacing conditioned literals by constants, each remaining subformula mentions a subset of its previous variables, so every $\land$-node still decomposes according to the original vtree split (\citet{Pipatsrisawat_2008}, Proposition 4).
+Conditioning preserves decomposability with respect to the same fixed vtree: after replacing conditioned literals by constants, each remaining subformula mentions a subset of its previous variables, so every $\land$-node still decomposes according to the original vtree split \citet[Proposition 4]{Pipatsrisawat_2008}.
 \end{claimdescription}
 
 % lang=lang_3c803ba1, op=FO
 \begin{claim}
-\langfam{SDNNF}{T} supports Forgetting in polynomial time \citet{Pipatsrisawat_2008}
+\langfam{SDNNF}{T} supports Forgetting in polynomial time \citep{Pipatsrisawat_2008}
 \end{claim}
 \begin{claimdescription}
-Darwiche's DNNF projection operation for forgetting variables preserves decomposability with respect to any fixed vtree. Applying that operation to a \langfam{SDNNF}{T} formula therefore yields an equivalent \langfam{SDNNF}{T} formula in polynomial time (\citet{Pipatsrisawat_2008}, Proposition 4).
+Darwiche's DNNF projection operation for forgetting variables preserves decomposability with respect to any fixed vtree. Applying that operation to a \langfam{SDNNF}{T} formula therefore yields an equivalent \langfam{SDNNF}{T} formula in polynomial time \citet[Proposition 4]{Pipatsrisawat_2008}.
 \end{claimdescription}
 
 
@@ -663,7 +663,7 @@ Darwiche's DNNF projection operation for forgetting variables preserves decompos
 % =============================
 % lang=lang_1df07cc3, op=OR_C
 \begin{claim}
-\langref{nFBDD} supports Disjunction in polynomial time \citet{TCZ_Forthcoming}
+\langref{nFBDD} supports Disjunction in polynomial time \citep{TCZ_Forthcoming}
 \end{claim}
 \begin{claimdescription}
 Disjunction of \langref{nFBDD} formulas is obtained by adding a top-level nondeterministic $\lor$-node whose children are the input formulas. This preserves the free read-once property.
@@ -671,7 +671,7 @@ Disjunction of \langref{nFBDD} formulas is obtained by adding a top-level nondet
 
 % lang=lang_1df07cc3, op=CD
 \begin{claim}
-\langref{nFBDD} supports Conditioning in polynomial time \citet{Wegener_2000}
+\langref{nFBDD} supports Conditioning in polynomial time \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
 Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the free read-once property. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
@@ -679,7 +679,7 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 
 % lang=lang_1df07cc3, op=FO
 \begin{claim}
-\langref{nFBDD} supports Forgetting in polynomial time \citet{TCZ_Forthcoming}
+\langref{nFBDD} supports Forgetting in polynomial time \citep{TCZ_Forthcoming}
 \end{claim}
 \begin{claimdescription}
 To forget a variable, replace each decision node labeled by that variable with a nondeterministic $\lor$-node over its two children. Repeating this for all forgotten variables preserves the free read-once property and computes existential quantification.
@@ -687,7 +687,7 @@ To forget a variable, replace each decision node labeled by that variable with a
 
 % lang=lang_d24efe0e, op=CD
 \begin{claim}
-\langref{nOBDD} supports Conditioning in polynomial time \citet{Wegener_2000}
+\langref{nOBDD} supports Conditioning in polynomial time \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
 Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the ordered decision-diagram property. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
@@ -695,7 +695,7 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 
 % lang=lang_d24efe0e, op=FO
 \begin{claim}
-\langref{nOBDD} supports Forgetting in polynomial time \citet{TCZ_Forthcoming}
+\langref{nOBDD} supports Forgetting in polynomial time \citep{TCZ_Forthcoming}
 \end{claim}
 \begin{claimdescription}
 To forget a variable, replace each decision node labeled by that variable with a nondeterministic $\lor$-node over its two children. Repeating this for all forgotten variables preserves the ordered decision-diagram property and computes existential quantification.
@@ -703,7 +703,7 @@ To forget a variable, replace each decision node labeled by that variable with a
 
 % lang=lang_e827cf31, op=OR_C
 \begin{claim}
-\langfam{nOBDD}{<} supports Disjunction in polynomial time \citet{TCZ_Forthcoming}
+\langfam{nOBDD}{<} supports Disjunction in polynomial time \citep{TCZ_Forthcoming}
 \end{claim}
 \begin{claimdescription}
 Disjunction of \langfam{nOBDD}{<} formulas is obtained by adding a top-level nondeterministic $\lor$-node whose children are the input formulas. Since all inputs respect the same fixed order $<$, the result is still a \langfam{nOBDD}{<} formula.
@@ -711,7 +711,7 @@ Disjunction of \langfam{nOBDD}{<} formulas is obtained by adding a top-level non
 
 % lang=lang_e827cf31, op=AND_BC
 \begin{claim}
-\langfam{nOBDD}{<} supports Bounded Conjunction in polynomial time \citet{Wegener_2000}
+\langfam{nOBDD}{<} supports Bounded Conjunction in polynomial time \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
 The usual product algorithm for conjoining OBDDs respecting the same variable order works for nondeterministic OBDDs. Run the two diagrams in parallel according to the fixed order $<$, and accept exactly when both components accept. The resulting diagram still respects $<$. \citet{Wegener_2000} gives the analogous construction for EXOR-OBDDs in Theorem 10.5.1.
@@ -719,7 +719,7 @@ The usual product algorithm for conjoining OBDDs respecting the same variable or
 
 % lang=lang_e827cf31, op=CD
 \begin{claim}
-\langfam{nOBDD}{<} supports Conditioning in polynomial time \citet{Wegener_2000}
+\langfam{nOBDD}{<} supports Conditioning in polynomial time \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
 Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The fixed order $<$ is preserved. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
@@ -727,7 +727,7 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 
 % lang=lang_e827cf31, op=FO
 \begin{claim}
-\langfam{nOBDD}{<} supports Forgetting in polynomial time \citet{TCZ_Forthcoming}
+\langfam{nOBDD}{<} supports Forgetting in polynomial time \citep{TCZ_Forthcoming}
 \end{claim}
 \begin{claimdescription}
 To forget a variable, replace each decision node labeled by that variable with a nondeterministic $\lor$-node over its two children. Repeating this for all forgotten variables preserves the fixed order $<$ and computes existential quantification.
@@ -735,7 +735,7 @@ To forget a variable, replace each decision node labeled by that variable with a
 
 % lang=lang_4e62a038, op=CD
 \begin{claim}
-\langref{uFBDD} supports Conditioning in polynomial time \citet{Wegener_2000}
+\langref{uFBDD} supports Conditioning in polynomial time \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
 Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the free read-once property and cannot create two accepting paths for a remaining assignment. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
@@ -743,7 +743,7 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 
 % lang=lang_c2df8c2b, op=CD
 \begin{claim}
-\langref{uOBDD} supports Conditioning in polynomial time \citet{Wegener_2000}
+\langref{uOBDD} supports Conditioning in polynomial time \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
 Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the ordered decision-diagram property and cannot create two accepting paths for a remaining assignment. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
@@ -751,7 +751,7 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 
 % lang=lang_43a33aec, op=CD
 \begin{claim}
-\langfam{uOBDD}{<} supports Conditioning in polynomial time \citet{Wegener_2000}
+\langfam{uOBDD}{<} supports Conditioning in polynomial time \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
 Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The fixed order $<$ is preserved, and the operation cannot create two accepting paths for a remaining assignment. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
@@ -759,7 +759,7 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 
 % lang=lang_43a33aec, op=AND_BC
 \begin{claim}
-\langfam{uOBDD}{<} supports Bounded Conjunction in polynomial time \citet{Wegener_2000}
+\langfam{uOBDD}{<} supports Bounded Conjunction in polynomial time \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
 The usual product algorithm for conjoining OBDDs respecting the same variable order works for unambiguous nondeterministic OBDDs. Run the two diagrams in parallel according to the fixed order $<$, and accept exactly when both components accept. The result is still unambiguous: for any satisfying assignment, each input has at most one accepting path, so the product has at most one accepting path. \citet{Wegener_2000} gives the analogous construction for EXOR-OBDDs in Theorem 10.5.1.
@@ -767,7 +767,7 @@ The usual product algorithm for conjoining OBDDs respecting the same variable or
 
 % lang=lang_981b62f0, op=CD
 \begin{claim}
-\langref{dec-DNNF} supports Conditioning in polynomial time \citet{Wegener_2000}
+\langref{dec-DNNF} supports Conditioning in polynomial time \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
 A \langref{dec-DNNF} can be viewed as a decision diagram with additional decomposable $\land$-nodes. Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The extra $\land$-nodes cause no problem: recurse through them, and decomposability is preserved because conditioning only removes variables from subcircuits. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
@@ -775,7 +775,7 @@ A \langref{dec-DNNF} can be viewed as a decision diagram with additional decompo
 
 % lang=lang_0f27d539, op=CD
 \begin{claim}
-\langref{dec-SDNNF} supports Conditioning in polynomial time \citet{Wegener_2000}
+\langref{dec-SDNNF} supports Conditioning in polynomial time \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
 A \langref{dec-SDNNF} can be viewed as a decision diagram with additional structured decomposable $\land$-nodes. Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The extra $\land$-nodes cause no problem: recurse through them, and structured decomposability is preserved because conditioning only removes variables from subcircuits. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
@@ -783,7 +783,7 @@ A \langref{dec-SDNNF} can be viewed as a decision diagram with additional struct
 
 % lang=lang_4ae03bc8, op=CD
 \begin{claim}
-\langfam{dec-SDNNF}{T} supports Conditioning in polynomial time \citet{Wegener_2000}
+\langfam{dec-SDNNF}{T} supports Conditioning in polynomial time \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
 For each fixed vtree $T$, a \langfam{dec-SDNNF}{T} can be viewed as a decision diagram with additional decomposable $\land$-nodes structured by $T$. Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The extra $\land$-nodes cause no problem: recurse through them, and the fixed vtree is preserved because conditioning only removes variables from subcircuits. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
@@ -796,50 +796,50 @@ For each fixed vtree $T$, a \langfam{dec-SDNNF}{T} can be viewed as a decision d
 % =============================
 % lang=lang_1afefbe2, op=NOT_C
 \begin{claim}
-\langref{SDD} supports Negation in polynomial time \citet{Darwiche_2011}
+\langref{SDD} supports Negation in polynomial time \citep{Darwiche_2011}
 \end{claim}
 \begin{claimdescription}
-An SDD can be negated in polytime by applying exclusive-or with $\top$ using the Apply algorithm \citet{Darwiche_2011}.
+An SDD can be negated in polytime by applying exclusive-or with $\top$ using the Apply algorithm \citep{Darwiche_2011}.
 \end{claimdescription}
 
 % lang=lang_1afefbe2, op=CD
 \begin{claim}
-\langref{SDD} supports Conditioning in polynomial time \citet{Darwiche_2011}
+\langref{SDD} supports Conditioning in polynomial time \citep{Darwiche_2011}
 \end{claim}
 \begin{claimdescription}
-Conditioning an SDD $f$ on a literal $l$ is equivalent to computing $f \land l$. Since any literal is a trivially small SDD and SDD supports $\land$BC in polytime via Apply, conditioning is polytime \citet{Darwiche_2011}.
+Conditioning an SDD $f$ on a literal $l$ is equivalent to computing $f \land l$. Since any literal is a trivially small SDD and SDD supports $\land$BC in polytime via Apply, conditioning is polytime \citep{Darwiche_2011}.
 \end{claimdescription}
 
 % lang=lang_9c84a267, op=NOT_C
 \begin{claim}
-\langfam{SDD}{T} supports Negation in polynomial time \citet{Darwiche_2011}
+\langfam{SDD}{T} supports Negation in polynomial time \citep{Darwiche_2011}
 \end{claim}
 \begin{claimdescription}
-Negation of an \langfam{SDD}{T} can be computed in polytime by applying exclusive-or with $\top$ using Apply. Since $\top$ trivially respects any fixed vtree $T$, the result remains an \langfam{SDD}{T} over the same vtree \citet{Darwiche_2011}.
+Negation of an \langfam{SDD}{T} can be computed in polytime by applying exclusive-or with $\top$ using Apply. Since $\top$ trivially respects any fixed vtree $T$, the result remains an \langfam{SDD}{T} over the same vtree \citep{Darwiche_2011}.
 \end{claimdescription}
 
 % lang=lang_9c84a267, op=AND_BC
 \begin{claim}
-\langfam{SDD}{T} supports Bounded Conjunction in polynomial time \citet{Darwiche_2011}
+\langfam{SDD}{T} supports Bounded Conjunction in polynomial time \citep{Darwiche_2011}
 \end{claim}
 \begin{claimdescription}
-The Apply algorithm combines two \langfam{SDD}{T} sentences using any Boolean operator in polytime. In particular, two \langfam{SDD}{T} formulas can be conjoined in polytime via Apply \citet{Darwiche_2011}.
+The Apply algorithm combines two \langfam{SDD}{T} sentences using any Boolean operator in polytime. In particular, two \langfam{SDD}{T} formulas can be conjoined in polytime via Apply \citep{Darwiche_2011}.
 \end{claimdescription}
 
 % lang=lang_9c84a267, op=OR_BC
 \begin{claim}
-\langfam{SDD}{T} supports Bounded Disjunction in polynomial time \citet{Darwiche_2011}
+\langfam{SDD}{T} supports Bounded Disjunction in polynomial time \citep{Darwiche_2011}
 \end{claim}
 \begin{claimdescription}
-The Apply algorithm combines two \langfam{SDD}{T} sentences using any Boolean operator in polytime. In particular, two \langfam{SDD}{T} formulas can be disjoined in polytime via Apply \citet{Darwiche_2011}.
+The Apply algorithm combines two \langfam{SDD}{T} sentences using any Boolean operator in polytime. In particular, two \langfam{SDD}{T} formulas can be disjoined in polytime via Apply \citep{Darwiche_2011}.
 \end{claimdescription}
 
 % lang=lang_9c84a267, op=CD
 \begin{claim}
-\langfam{SDD}{T} supports Conditioning in polynomial time \citet{Darwiche_2011}
+\langfam{SDD}{T} supports Conditioning in polynomial time \citep{Darwiche_2011}
 \end{claim}
 \begin{claimdescription}
-Conditioning an \langfam{SDD}{T} sentence $f$ on a literal $l$ is equivalent to computing $f \land l$. Since a literal is a trivially small \langfam{SDD}{T} respecting the same fixed vtree, and \langfam{SDD}{T} supports $\land$BC in polytime via Apply, conditioning is polynomial-time as well \citet{Darwiche_2011}.
+Conditioning an \langfam{SDD}{T} sentence $f$ on a literal $l$ is equivalent to computing $f \land l$. Since a literal is a trivially small \langfam{SDD}{T} respecting the same fixed vtree, and \langfam{SDD}{T} supports $\land$BC in polytime via Apply, conditioning is polynomial-time as well \citep{Darwiche_2011}.
 \end{claimdescription}
 
 
@@ -849,34 +849,34 @@ Conditioning an \langfam{SDD}{T} sentence $f$ on a literal $l$ is equivalent to 
 % =============================
 % lang=lang_1df07cc3, op=AND_BC
 \begin{claim}
-\langref{nFBDD} supports Bounded Conjunction not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citet{Meinel_Theobald_1998}
+\langref{nFBDD} supports Bounded Conjunction not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citep{Meinel_Theobald_1998}
 \end{claim}
 \begin{claimdescription}
-Checking consistency of two OBDDs with possibly different variable orders is NP-complete (Lemma~8.14 of \citet{Meinel_Theobald_1998}). Since every OBDD is an \langref{nFBDD} and consistency for \langref{nFBDD} is polynomial-time decidable, a polynomial-time $\land$BC transformation for \langref{nFBDD} would imply P = NP.
+Checking consistency of two OBDDs with possibly different variable orders is NP-complete \citep{Meinel_Theobald_1998}. Since every OBDD is an \langref{nFBDD} and consistency for \langref{nFBDD} is polynomial-time decidable, a polynomial-time $\land$BC transformation for \langref{nFBDD} would imply P = NP.
 \end{claimdescription}
 
 % lang=lang_d24efe0e, op=AND_BC
 \begin{claim}
-\langref{nOBDD} supports Bounded Conjunction not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citet{Meinel_Theobald_1998}
+\langref{nOBDD} supports Bounded Conjunction not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citep{Meinel_Theobald_1998}
 \end{claim}
 \begin{claimdescription}
-Checking consistency of two OBDDs with possibly different variable orders is NP-complete (Lemma~8.14 of \citet{Meinel_Theobald_1998}). Since every OBDD is an \langref{nOBDD} and consistency for \langref{nOBDD} is polynomial-time decidable, a polynomial-time $\land$BC transformation for \langref{nOBDD} would imply P = NP.
+Checking consistency of two OBDDs with possibly different variable orders is NP-complete \citep{Meinel_Theobald_1998}. Since every OBDD is an \langref{nOBDD} and consistency for \langref{nOBDD} is polynomial-time decidable, a polynomial-time $\land$BC transformation for \langref{nOBDD} would imply P = NP.
 \end{claimdescription}
 
 % lang=lang_4e62a038, op=AND_BC
 \begin{claim}
-\langref{uFBDD} supports Bounded Conjunction not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citet{Meinel_Theobald_1998}
+\langref{uFBDD} supports Bounded Conjunction not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citep{Meinel_Theobald_1998}
 \end{claim}
 \begin{claimdescription}
-Checking consistency of two OBDDs with possibly different variable orders is NP-complete (Lemma~8.14 of \citet{Meinel_Theobald_1998}). Since every OBDD is a \langref{uFBDD} and consistency for \langref{uFBDD} is polynomial-time decidable, a polynomial-time $\land$BC transformation for \langref{uFBDD} would imply P = NP.
+Checking consistency of two OBDDs with possibly different variable orders is NP-complete \citep{Meinel_Theobald_1998}. Since every OBDD is a \langref{uFBDD} and consistency for \langref{uFBDD} is polynomial-time decidable, a polynomial-time $\land$BC transformation for \langref{uFBDD} would imply P = NP.
 \end{claimdescription}
 
 % lang=lang_c2df8c2b, op=AND_BC
 \begin{claim}
-\langref{uOBDD} supports Bounded Conjunction not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citet{Meinel_Theobald_1998}
+\langref{uOBDD} supports Bounded Conjunction not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citep{Meinel_Theobald_1998}
 \end{claim}
 \begin{claimdescription}
-Checking consistency of two OBDDs with possibly different variable orders is NP-complete (Lemma~8.14 of \citet{Meinel_Theobald_1998}). Since every OBDD is a \langref{uOBDD} and consistency for \langref{uOBDD} is polynomial-time decidable, a polynomial-time $\land$BC transformation for \langref{uOBDD} would imply P = NP.
+Checking consistency of two OBDDs with possibly different variable orders is NP-complete \citep{Meinel_Theobald_1998}. Since every OBDD is a \langref{uOBDD} and consistency for \langref{uOBDD} is polynomial-time decidable, a polynomial-time $\land$BC transformation for \langref{uOBDD} would imply P = NP.
 \end{claimdescription}
 
 
@@ -886,34 +886,34 @@ Checking consistency of two OBDDs with possibly different variable orders is NP-
 % =============================
 % lang=lang_d69995dd, op=NOT_C
 \begin{claim}
-\langfam{OBDD}{<} supports Negation in polynomial time \citet{Bryant_1986}
+\langfam{OBDD}{<} supports Negation in polynomial time \citep{Bryant_1986}
 \end{claim}
 \begin{claimdescription}
-Negation of an OBDD$_<$ is achieved by switching the labels of the 0-sink and 1-sink. The result is an OBDD$_<$ of identical size \citet{Bryant_1986}.
+Negation of an OBDD$_<$ is achieved by switching the labels of the 0-sink and 1-sink. The result is an OBDD$_<$ of identical size \citep{Bryant_1986}.
 \end{claimdescription}
 
 % lang=lang_d69995dd, op=AND_BC
 \begin{claim}
-\langfam{OBDD}{<} supports Bounded Conjunction in polynomial time \citet{Bryant_1986}
+\langfam{OBDD}{<} supports Bounded Conjunction in polynomial time \citep{Bryant_1986}
 \end{claim}
 \begin{claimdescription}
-The Apply algorithm computes the conjunction of two OBDD$_<$ sentences sharing the same variable ordering in polynomial time. The result is a reduced OBDD$_<$ \citet{Bryant_1986}.
+The Apply algorithm computes the conjunction of two OBDD$_<$ sentences sharing the same variable ordering in polynomial time. The result is a reduced OBDD$_<$ \citep{Bryant_1986}.
 \end{claimdescription}
 
 % lang=lang_d69995dd, op=OR_BC
 \begin{claim}
-\langfam{OBDD}{<} supports Bounded Disjunction in polynomial time \citet{Bryant_1986}
+\langfam{OBDD}{<} supports Bounded Disjunction in polynomial time \citep{Bryant_1986}
 \end{claim}
 \begin{claimdescription}
-The Apply algorithm computes the disjunction of two OBDD$_<$ sentences sharing the same variable ordering in polynomial time. The result is a reduced OBDD$_<$ \citet{Bryant_1986}.
+The Apply algorithm computes the disjunction of two OBDD$_<$ sentences sharing the same variable ordering in polynomial time. The result is a reduced OBDD$_<$ \citep{Bryant_1986}.
 \end{claimdescription}
 
 % lang=lang_d69995dd, op=CD
 \begin{claim}
-\langfam{OBDD}{<} supports Conditioning in polynomial time \citet{Bryant_1986}
+\langfam{OBDD}{<} supports Conditioning in polynomial time \citep{Bryant_1986}
 \end{claim}
 \begin{claimdescription}
-Conditioning is easy on OBDD$_<$: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The fixed order $<$ is preserved \citet{Bryant_1986}.
+Conditioning is easy on OBDD$_<$: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The fixed order $<$ is preserved \citep{Bryant_1986}.
 \end{claimdescription}
 
 
@@ -923,7 +923,7 @@ Conditioning is easy on OBDD$_<$: replace each decision node labeled by a condit
 % =============================
 % lang=lang_83e3b023, op=NOT_C
 \begin{claim}
-\langref{cSDD} supports Negation in polynomial time \citet{VanDenBroeck_2015}
+\langref{cSDD} supports Negation in polynomial time \citep{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
 Every \langref{cSDD} respects some vtree $T$. Apply the fixed-vtree negation procedure for \langfam{cSDD}{T}: \citet{VanDenBroeck_2015} proved that reduced \langfam{SDD}{T} formulas support negation in polynomial time by passing negation through the subs. The result is still a \langfam{cSDD}{T} formula, hence a \langref{cSDD} formula.
@@ -931,7 +931,7 @@ Every \langref{cSDD} respects some vtree $T$. Apply the fixed-vtree negation pro
 
 % lang=lang_82fa749e, op=NOT_C
 \begin{claim}
-\langfam{cSDD}{T} supports Negation in polynomial time \citet{VanDenBroeck_2015}
+\langfam{cSDD}{T} supports Negation in polynomial time \citep{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
 \citet{VanDenBroeck_2015} proved that reduced \langfam{SDD}{T} formulas support negation in polynomial time, by passing negation through the subs.
@@ -939,7 +939,7 @@ Every \langref{cSDD} respects some vtree $T$. Apply the fixed-vtree negation pro
 
 % lang=lang_82fa749e, op=AND_BC
 \begin{claim}
-\langfam{cSDD}{T} supports Bounded Conjunction not in polynomial time (quasipolynomial unknown) \citet{VanDenBroeck_2015}
+\langfam{cSDD}{T} supports Bounded Conjunction not in polynomial time (quasipolynomial unknown) \citep{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
 \citet{VanDenBroeck_2015} proved that combining two \langfam{cSDD}{T} formulas can force exponential \langfam{cSDD}{T} size.
@@ -947,7 +947,7 @@ Every \langref{cSDD} respects some vtree $T$. Apply the fixed-vtree negation pro
 
 % lang=lang_82fa749e, op=CD
 \begin{claim}
-\langfam{cSDD}{T} supports Conditioning not in polynomial time (quasipolynomial unknown) \citet{VanDenBroeck_2015}
+\langfam{cSDD}{T} supports Conditioning not in polynomial time (quasipolynomial unknown) \citep{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
 \citet{VanDenBroeck_2015} proved that conditioning a \langfam{cSDD}{T} formula on a literal can force exponential \langfam{cSDD}{T} size.
@@ -955,7 +955,7 @@ Every \langref{cSDD} respects some vtree $T$. Apply the fixed-vtree negation pro
 
 % lang=lang_82fa749e, op=SFO
 \begin{claim}
-\langfam{cSDD}{T} supports Singleton Forgetting not in polynomial time (quasipolynomial unknown) \citet{VanDenBroeck_2015}
+\langfam{cSDD}{T} supports Singleton Forgetting not in polynomial time (quasipolynomial unknown) \citep{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
 \citet{VanDenBroeck_2015} proved that forgetting one variable from a \langfam{cSDD}{T} formula can force exponential \langfam{cSDD}{T} size.
@@ -968,7 +968,7 @@ Every \langref{cSDD} respects some vtree $T$. Apply the fixed-vtree negation pro
 % =============================
 % lang=lang_ea9b5299, op=NOT_C
 \begin{claim}
-\langref{d-SDNNF} supports Negation not in polynomial time (quasipolynomial unknown) \citet{Vinall-Smeeth_2024}
+\langref{d-SDNNF} supports Negation not in polynomial time (quasipolynomial unknown) \citep{Vinall-Smeeth_2024}
 \end{claim}
 \begin{claimdescription}
 Structured deterministic DNNF (\langref{d-SDNNF}) is not closed under negation in polytime. \citet{Vinall-Smeeth_2024} proves that for every $n \in \mathbb{N}$, there exists a Boolean function $f$ with an equivalent structured $d$-DNNF of size $n$ such that any structured DNNF equivalent to $\neg f$ has size $n^{\Omega(\tilde{\log}\, n)}$. This super-polynomial lower bound holds for every vtree (not just a single tree), so the result applies to \langref{d-SDNNF} (not just \langfam{d-SDNNF}{T}). Whether quasipolynomial closure holds remains open.
@@ -976,7 +976,7 @@ Structured deterministic DNNF (\langref{d-SDNNF}) is not closed under negation i
 
 % lang=lang_c2df8c2b, op=NOT_C
 \begin{claim}
-\langref{uOBDD} supports Negation not in polynomial time (quasipolynomial unknown) \citet{Vinall-Smeeth_2024}
+\langref{uOBDD} supports Negation not in polynomial time (quasipolynomial unknown) \citep{Vinall-Smeeth_2024}
 \end{claim}
 \begin{claimdescription}
 \citet[Theorem 2]{Vinall-Smeeth_2024} gives unambiguous DNF representations whose negations require quasipolynomially larger $d$-SDNNF size, measured against the source representation size. An unambiguous DNF can be transformed into a \langref{uOBDD} with only polynomial overhead, and every \langref{uOBDD} can be transformed into \langref{d-SDNNF} with only polynomial overhead. Thus polynomial-time negation for \langref{uOBDD} would contradict the lower bound.
@@ -984,7 +984,7 @@ Structured deterministic DNNF (\langref{d-SDNNF}) is not closed under negation i
 
 % lang=lang_ea9b5299, op=SFO
 \begin{claim}
-\langref{d-SDNNF} supports Singleton Forgetting not in polynomial time (quasipolynomial unknown) \citet{Vinall-Smeeth_2024}
+\langref{d-SDNNF} supports Singleton Forgetting not in polynomial time (quasipolynomial unknown) \citep{Vinall-Smeeth_2024}
 \end{claim}
 \begin{claimdescription}
 \citet[Corollary 1]{Vinall-Smeeth_2024} gives d-SDNNF formulas of size $s$ whose existential quantification of one variable requires d-SDNNF size $s^{\widetilde{\Omega}(\log s)}$. Hence \langref{d-SDNNF} does not support singleton forgetting in polynomial time.
@@ -992,10 +992,10 @@ Structured deterministic DNNF (\langref{d-SDNNF}) is not closed under negation i
 
 % lang=lang_c2df8c2b, op=SFO
 \begin{claim}
-\langref{uOBDD} supports Singleton Forgetting not in polynomial time (quasipolynomial unknown) \citet{Vinall-Smeeth_2024}
+\langref{uOBDD} supports Singleton Forgetting not in polynomial time (quasipolynomial unknown) \citep{Vinall-Smeeth_2024}
 \end{claim}
 \begin{claimdescription}
-The proof of Corollary 1 of \citet{Vinall-Smeeth_2024} shows the intractability of SFO for \langref{d-SDNNF}, but also immediately applies to \langref{uOBDD}.
+The proof of \citet[Corollary 1]{Vinall-Smeeth_2024} shows the intractability of SFO for \langref{d-SDNNF}, but also immediately applies to \langref{uOBDD}.
 \end{claimdescription}
 
 
@@ -1005,10 +1005,10 @@ The proof of Corollary 1 of \citet{Vinall-Smeeth_2024} shows the intractability 
 % =============================
 % lang=lang_4c204bf3, op=FO
 \begin{claim}
-\langref{DNF} supports Forgetting in polynomial time \citet{Lang_2003}
+\langref{DNF} supports Forgetting in polynomial time \citep{Lang_2003}
 \end{claim}
 \begin{claimdescription}
-DNF satisfies FO \citet{Lang_2003}. Forgetting variables from a DNF sentence can be done in polytime (\citet{Darwiche_2002}, Proposition 5.1).
+DNF satisfies FO \citep{Lang_2003}. Forgetting variables from a DNF sentence can be done in polytime \citep{Darwiche_2002}.
 \end{claimdescription}
 
 
@@ -1018,10 +1018,10 @@ DNF satisfies FO \citet{Lang_2003}. Forgetting variables from a DNF sentence can
 % =============================
 % lang=lang_3bebcab7, op=FO
 \begin{claim}
-\langref{DNNF} supports Forgetting in polynomial time \citet{Darwiche_2001a}
+\langref{DNNF} supports Forgetting in polynomial time \citep{Darwiche_2001a}
 \end{claim}
 \begin{claimdescription}
-DNNF satisfies FO: forgetting a set of variables in a DNNF sentence can be performed in polynomial time while preserving decomposability \citet{Darwiche_2001a} (\citet{Darwiche_2002}, Proposition 5.1).
+DNNF satisfies FO: forgetting a set of variables in a DNNF sentence can be performed in polynomial time while preserving decomposability \citep{Darwiche_2001a} \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % =============================
