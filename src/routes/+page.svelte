@@ -711,16 +711,6 @@
             </svg>
             <span>Currently previewing your contribution</span>
           </div>
-        {:else if isSandboxMode}
-          <div class="sandbox-status-group">
-            <div class="sandbox-badge">
-              <span>Sandbox</span>
-              <strong>{sandboxEdits.length}</strong>
-            </div>
-            <button type="button" class="sandbox-reset" disabled={sandboxEdits.length === 0} onclick={handleResetSandbox}>
-              Reset
-            </button>
-          </div>
         {/if}
       </div>
       <div class="header-controls">
@@ -742,6 +732,22 @@
             {submittingPreview ? 'Submitting...' : 'Submit'}
           </button>
         {:else}
+          {#if isSandboxMode}
+            <button type="button" class="sandbox-reset" disabled={sandboxEdits.length === 0} onclick={handleResetSandbox}>
+              Reset
+            </button>
+          {/if}
+          <button
+            type="button"
+            class={`sandbox-toggle ${isSandboxMode ? 'is-active' : ''}`}
+            aria-pressed={isSandboxMode}
+            onclick={() => handleSetSandboxMode(!isSandboxMode)}
+          >
+            <span>Sandbox</span>
+            {#if sandboxEdits.length > 0}
+              <strong>{sandboxEdits.length}</strong>
+            {/if}
+          </button>
           <a href="/about" class="about-link">
             About
           </a>
@@ -765,9 +771,6 @@
           languages={baseGraphData.languages}
           {filterStates}
           {viewMode}
-          sandboxMode={isSandboxMode}
-          sandboxDisabled={isPreviewMode}
-          onSandboxModeChange={handleSetSandboxMode}
           onFilterChange={handleFilterChange}
           onReset={handleFilterReset}
         />
@@ -987,26 +990,33 @@
     flex-shrink: 0;
   }
 
-  .sandbox-status-group {
+  .sandbox-toggle {
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-  }
-
-  .sandbox-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    padding: 0.35rem 0.65rem;
+    padding: 0.46rem 0.72rem;
     background: rgba(2, 132, 199, 0.12);
     border: 1px solid #0284c7;
-    border-radius: 0.375rem;
+    border-radius: 0.5rem;
     color: #075985;
-    font-size: 0.82rem;
+    font-size: 0.85rem;
     font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
   }
 
-  .sandbox-badge strong {
+  .sandbox-toggle:hover {
+    background: rgba(2, 132, 199, 0.18);
+    color: #0c4a6e;
+  }
+
+  .sandbox-toggle.is-active {
+    background: #0284c7;
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(2, 132, 199, 0.32);
+  }
+
+  .sandbox-toggle strong {
     min-width: 1.25rem;
     height: 1.25rem;
     display: inline-grid;
@@ -1017,15 +1027,21 @@
     font-size: 0.72rem;
   }
 
+  .sandbox-toggle.is-active strong {
+    background: #fff;
+    color: #0369a1;
+  }
+
   .sandbox-reset {
-    padding: 0.35rem 0.65rem;
-    border-radius: 0.375rem;
+    padding: 0.46rem 0.72rem;
+    border-radius: 0.5rem;
     border: 1px solid #cbd5e1;
     background: #fff;
     color: #334155;
-    font-size: 0.82rem;
+    font-size: 0.85rem;
     font-weight: 700;
     cursor: pointer;
+    transition: all 0.2s;
   }
 
   .sandbox-reset:hover:not(:disabled) {

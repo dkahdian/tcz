@@ -23,9 +23,6 @@
     languages = [],
     filterStates,
     viewMode = 'graph' as ViewMode,
-    sandboxMode = false,
-    sandboxDisabled = false,
-    onSandboxModeChange,
     onFilterChange,
     onReset
   }: {
@@ -33,9 +30,6 @@
     languages?: KCLanguage[];
     filterStates: FilterStateMap;
     viewMode?: ViewMode;
-    sandboxMode?: boolean;
-    sandboxDisabled?: boolean;
-    onSandboxModeChange?: (enabled: boolean) => void;
     onFilterChange: (filter: AnyFilter, value: FilterParamValue) => void;
     onReset: (viewMode: ViewMode) => void;
   } = $props();
@@ -63,7 +57,7 @@
   const activeFilters = $derived(visibleFilters.filter((filter) => isFilterActive(filter)));
 
   function getSummary(): string {
-    const activeCount = activeFilters.length + (sandboxMode ? 1 : 0);
+    const activeCount = activeFilters.length;
     if (activeCount === 0) {
       return 'Default view';
     }
@@ -124,20 +118,6 @@
       </div>
 
       <div class="drawer-body">
-        <div class="filter-row sandbox-filter-row">
-          <label class="toggle-field">
-            <input
-              type="checkbox"
-              checked={sandboxMode}
-              disabled={sandboxDisabled}
-              onchange={(event) => onSandboxModeChange?.((event.target as HTMLInputElement).checked)}
-            />
-            <div class="field-copy">
-              <span class="plain-filter-name">Sandbox mode</span>
-            </div>
-          </label>
-        </div>
-
         {#each orderedFilters as filter (filter.id)}
           <div class="filter-row" class:filter-row--language-picker={filter.controlType === 'language-picker'}>
             {#if filter.controlType === 'language-picker'}
@@ -367,12 +347,6 @@
   }
 
   :global(.filter-name) {
-    font-weight: 700;
-    color: #0f172a;
-    font-size: 0.88rem;
-  }
-
-  .plain-filter-name {
     font-weight: 700;
     color: #0f172a;
     font-size: 0.88rem;

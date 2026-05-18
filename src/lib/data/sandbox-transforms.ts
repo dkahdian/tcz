@@ -66,6 +66,17 @@ export function operationEditId(
   return `${operationType}:${languageId}:${operationCode}`;
 }
 
+function languageNameMap(data: GraphData): Map<string, string> {
+  return new Map(data.languages.map((language) => [language.id, language.name]));
+}
+
+function formatSandboxError(message: string, data: GraphData): string {
+  const names = languageNameMap(data);
+  return message
+    .replace(/^Contradiction:\s*/i, '')
+    .replace(/\blang_[a-f0-9]+\b/g, (id) => names.get(id) ?? id);
+}
+
 function relationSignature(source: GraphData, sourceId: string, targetId: string): string {
   const { adjacencyMatrix } = source;
   const sourceIdx = adjacencyMatrix.indexByLanguage[sourceId];
@@ -268,7 +279,7 @@ export function applySandboxEdits(base: GraphData, edits: SandboxEdit[]): Sandbo
     const message = error instanceof Error ? error.message : String(error);
     return {
       ok: false,
-      error: message.replace(/^Contradiction:\s*/i, ''),
+      error: formatSandboxError(message, base),
       changedEdgeIds: new Set(),
       changedOperationCellIds: new Set(),
       directEdgeIds,
