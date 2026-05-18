@@ -24,6 +24,7 @@ export const ORIGINAL_KCM_LANGUAGE_IDS = [
   'lang_e02902d0', // MODS
   'lang_5bf00851', // NNF
   'lang_b9d72a7c', // OBDD
+  'lang_d69995dd', // OBDD<
   'lang_27fffab2' // PI
 ];
 
