@@ -1,8 +1,9 @@
 import katex from 'katex';
 
-const LATEX_TRIGGER = /(\$\$?[\s\S]*?\$|\\\[|\\\(|\\begin\{|\\cite[tp]?\{|\\defref\{|\\langref\{|\\langfam\{|\\n?edgeref\{|\\n?opref\{)/;
+const LATEX_TRIGGER = /(\$\$?[\s\S]*?\$|\\\[|\\\(|\\begin\{|\\cite[tp]?(?:\[[^\]]*\]){0,2}\{|\\defref\{|\\langref\{|\\langfam\{|\\n?edgeref\{|\\n?opref\{)/;
 const LATEX_FRAGMENT = /(\$\$[\s\S]+?\$\$|\$[\s\S]+?\$|\\\[[\s\S]+?\\\]|\\\([\s\S]+?\\\))/g;
-const CITATION_PATTERN = /\\cite[tp]?\{([^}]+)\}/g;
+const CITATION_PATTERN = /\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}/g;
+const CITATION_RENDER_PATTERN = /\\(cite|citet|citep)((?:\[[^\]]*\]){0,2})\{([^}]+)\}/g;
 
 // Entity link patterns (processed after HTML rendering)
 const DEFREF_PATTERN = /\\defref\{((?:[^{}]|\{[^{}]*\})+)\}(?:\{((?:[^{}]|\{[^{}]*\})+)\})?/g;
@@ -76,7 +77,14 @@ export function extractCitationKeys(text: string): string[] {
  * Check if text contains citation commands
  */
 export function containsCitations(text: string): boolean {
-  return /\\cite[tp]?\{/.test(text);
+  return /\\cite[tp]?(?:\[[^\]]*\]){0,2}\{/.test(text);
+}
+
+function parseCitationOptions(rawOptions: string): { prenote?: string; postnote?: string } {
+  const options = [...rawOptions.matchAll(/\[([^\]]*)\]/g)].map((match) => match[1].trim()).filter(Boolean);
+  if (options.length === 0) return {};
+  if (options.length === 1) return { postnote: options[0] };
+  return { prenote: options[0], postnote: options[1] };
 }
 
 function stripDelimiters(fragment: string): { content: string; displayMode: boolean } {
@@ -183,19 +191,35 @@ export function renderTextWithCitations(
   keyToNumber: (key: string) => number | null,
   onCitationClick?: (key: string) => void
 ): string {
-  // Replace citation commands with numbered links
-  // Handle \cite{key}, \citet{key}, \citep{key}
-  return html.replace(/\\cite[tp]?\{([^}]+)\}/g, (match, keyList: string) => {
+  // \cite and \citep render as compact superscript citations.
+  // \citet renders inline so it can be used as a noun, including locators
+  // such as \citet[Theorem 4.2]{key}.
+  return html.replace(CITATION_RENDER_PATTERN, (_match, command: string, rawOptions: string, keyList: string) => {
+    const { prenote, postnote } = parseCitationOptions(rawOptions);
     const keys = keyList.split(',').map(k => k.trim()).filter(Boolean);
-    const numbers = keys.map(key => {
+    const numbers = keys.map((key) => {
       const num = keyToNumber(key);
       if (num === null) {
-        return `<span class="citation-unknown" title="Unknown reference: ${escapeHtml(key)}">[?]</span>`;
+        return { key, html: `<span class="citation-unknown" title="Unknown reference: ${escapeHtml(key)}">?</span>` };
       }
       const dataKey = escapeHtml(key);
-      return `<button class="citation-link" data-citation-key="${dataKey}" title="View reference">[${num}]</button>`;
+      return {
+        key,
+        html: `<button class="citation-link" data-citation-key="${dataKey}" title="View reference">${num}</button>`
+      };
     });
-    return numbers.join('');
+
+    if (command === 'citet') {
+      const parts = numbers.map((number) => number.html);
+      if (postnote) parts.push(`<span class="citation-note">${postnote}</span>`);
+      const prefix = prenote ? `<span class="citation-note">${prenote}</span> ` : '';
+      return `<span class="citation-inline">[${prefix}${parts.join(', ')}]</span>`;
+    }
+
+    return numbers.map((number) => {
+      const key = escapeHtml(number.key);
+      return `<span class="citation-sup" data-citation-source="${key}">[${number.html}]</span>`;
+    }).join('');
   });
 }
 
@@ -317,7 +341,7 @@ function entityCitationSuffix(
   const alreadyCited = immediatelyCitedRefs(fullText, offset, matchLength);
   const missing = unique.filter((ref) => !alreadyCited.has(ref));
   if (missing.length === 0) return '';
-  return ` \\citet{${missing.join(',')}}`;
+  return ` \\citep{${missing.join(',')}}`;
 }
 
 /**

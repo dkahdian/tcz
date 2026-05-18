@@ -146,7 +146,7 @@ For each language $\mathcal{L}$ in
 $\mathcal{L}$ supports Bounded Disjunction not in polynomial time (quasipolynomial unknown) \citet{Vinall-Smeeth_2024}.
 \end{batchclaim}
 \begin{claimdescription}
-The proof of Theorem 5 of \citet{Vinall-Smeeth_2024} gives unambiguous DNF representations of functions $f$ and $g$ such that, measured in the size $s$ of the corresponding source representations, $f \lor g$ requires $d$-SDNNF size $s^{\widetilde{\Omega}(\log s)}$. The unambiguous DNF representations can be transformed into $\mathcal{L}$ representations with only polynomial overhead, and every $\mathcal{L}$ representation can be transformed into $d$-SDNNF with only polynomial overhead. Thus polynomial-time bounded disjunction for $\mathcal{L}$ would contradict the lower bound.
+\citet[Theorem 5]{Vinall-Smeeth_2024} gives unambiguous DNF representations of functions $f$ and $g$ such that, measured in the size $s$ of the corresponding source representations, $f \lor g$ requires $d$-SDNNF size $s^{\widetilde{\Omega}(\log s)}$. The unambiguous DNF representations can be transformed into $\mathcal{L}$ representations with only polynomial overhead, and every $\mathcal{L}$ representation can be transformed into $d$-SDNNF with only polynomial overhead. Thus polynomial-time bounded disjunction for $\mathcal{L}$ would contradict the lower bound.
 \end{claimdescription}
 
 \begin{batchclaim}[id=tcz-bounded-disjunction-singleton-forgetting-lower-bound, op=SFO, status=no-quasi]
@@ -979,7 +979,7 @@ Structured deterministic DNNF (\langref{d-SDNNF}) is not closed under negation i
 \langref{uOBDD} supports Negation not in polynomial time (quasipolynomial unknown) \citet{Vinall-Smeeth_2024}
 \end{claim}
 \begin{claimdescription}
-The proof of Theorem 2 of \citet{Vinall-Smeeth_2024} gives unambiguous DNF representations whose negations require quasipolynomially larger $d$-SDNNF size. An unambiguous DNF can be transformed into a \langref{uOBDD} with only polynomial overhead, and every \langref{uOBDD} can be transformed into \langref{d-SDNNF} with only polynomial overhead. Thus polynomial-time negation for \langref{uOBDD} would contradict the lower bound.
+\citet[Theorem 2]{Vinall-Smeeth_2024} gives unambiguous DNF representations whose negations require quasipolynomially larger $d$-SDNNF size, measured against the source representation size. An unambiguous DNF can be transformed into a \langref{uOBDD} with only polynomial overhead, and every \langref{uOBDD} can be transformed into \langref{d-SDNNF} with only polynomial overhead. Thus polynomial-time negation for \langref{uOBDD} would contradict the lower bound.
 \end{claimdescription}
 
 % lang=lang_ea9b5299, op=SFO
@@ -987,7 +987,7 @@ The proof of Theorem 2 of \citet{Vinall-Smeeth_2024} gives unambiguous DNF repre
 \langref{d-SDNNF} supports Singleton Forgetting not in polynomial time (quasipolynomial unknown) \citet{Vinall-Smeeth_2024}
 \end{claim}
 \begin{claimdescription}
-Corollary 1 of \citet{Vinall-Smeeth_2024} gives d-SDNNF formulas of size $s$ whose existential quantification of one variable requires d-SDNNF size $s^{\widetilde{\Omega}(\log s)}$. Hence \langref{d-SDNNF} does not support singleton forgetting in polynomial time.
+\citet[Corollary 1]{Vinall-Smeeth_2024} gives d-SDNNF formulas of size $s$ whose existential quantification of one variable requires d-SDNNF size $s^{\widetilde{\Omega}(\log s)}$. Hence \langref{d-SDNNF} does not support singleton forgetting in polynomial time.
 \end{claimdescription}
 
 % lang=lang_c2df8c2b, op=SFO

@@ -146,11 +146,11 @@ export function phraseForStatus(status: string): string {
 
 /**
  * Format reference IDs as inline citations.
- * Returns a string like " \\citet{ref1,ref2}" or empty string if no refs.
+ * Returns a string like " \\citep{ref1,ref2}" or empty string if no refs.
  */
 export function formatCitations(refs: string[]): string {
   if (!refs || refs.length === 0) return '';
-  return ` \\citet{${refs.join(',')}}`;
+  return ` \\citep{${refs.join(',')}}`;
 }
 
 /**

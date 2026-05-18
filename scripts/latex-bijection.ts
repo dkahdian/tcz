@@ -465,7 +465,7 @@ function buildClaimTextWithEffectiveStatus(edge: Edge): string {
   
   // Add references at the end
   if (refs && refs.length > 0) {
-    claim += ` \\citet{${refs.join(',')}}`;
+    claim += ` \\citep{${refs.join(',')}}`;
   }
   
   return claim;
@@ -476,7 +476,7 @@ function buildClaimTextWithEffectiveStatus(edge: Edge): string {
  * 
  * Format:
  *   \begin{claim}
- *   $LANG1$ TRANSFORMATION_TYPE $LANG2$ (assuming ASSUMPTION)? \citet{REFS}?
+ *   $LANG1$ TRANSFORMATION_TYPE $LANG2$ (assuming ASSUMPTION)? \citep{REFS}?
  *   \end{claim}
  *   \begin{claimdescription}
  *   DESCRIPTION (EDITABLE)
@@ -711,7 +711,7 @@ interface ParsedClaim {
  * 
  * Expected format:
  *   \begin{claim}
- *   LANG1 TRANSFORMATION_TYPE LANG2 (assuming ASSUMPTION)? (\citet{REFS})?
+ *   LANG1 TRANSFORMATION_TYPE LANG2 (assuming ASSUMPTION)? (\citep{REFS})?
  *   where LANG is either legacy $...$ tokenization or \langref{...}
  *   \end{claim}
  * 
@@ -723,12 +723,12 @@ function parseCanonicalClaim(
   proofSketch: string,
   derived: boolean
 ): ParsedClaim | null {
-  // Parse claim body: $LANG1$ TRANSFORMATION_TYPE $LANG2$ (assuming ASSUMPTION)? (\citet{REFS})?
+  // Parse claim body: $LANG1$ TRANSFORMATION_TYPE $LANG2$ (assuming ASSUMPTION)? (\citep{REFS})?
   let body = claimBody.trim();
   
   // First, extract and remove citation if present (always at the end)
   let refs: string[] = [];
-  const citeMatch = body.match(/\\citet?\{([^}]+)\}\s*$/);
+  const citeMatch = body.match(/\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}\s*$/);
   if (citeMatch) {
     refs = citeMatch[1].split(',').map(s => s.trim());
     body = body.slice(0, citeMatch.index).trim();
@@ -1298,7 +1298,7 @@ function extractUrlFromBibtex(bibtex: string): string | null {
  * Format:
  *   \begin{definition}[$NAME$]\label{def:ID}
  *   \textbf{FULL_NAME} \\
- *   DEFINITION_CONTENT \citet{REFS}?
+ *   DEFINITION_CONTENT \citep{REFS}?
  *   \end{definition}
  */
 function generateLanguageDefinition(lang: KCLanguage): string {
@@ -1312,7 +1312,7 @@ ${definition}`;
   
   // Add references at the end
   if (lang.definitionRefs && lang.definitionRefs.length > 0) {
-    content += ` \\citet{${lang.definitionRefs.join(',')}}`;
+    content += ` \\citep{${lang.definitionRefs.join(',')}}`;
   }
   
   return `\\begin{definition}[${nameLatex}]\\label{def:${lang.id}}
@@ -1426,7 +1426,7 @@ interface ParsedLanguageDefinition {
  * Expected format:
  *   \begin{definition}[$NAME$]\label{def:ID}
  *   \textbf{FULL_NAME} \\
- *   DEFINITION_CONTENT \citet{REFS}?
+ *   DEFINITION_CONTENT \citep{REFS}?
  *   \end{definition}
  */
 function parseLanguagesLatex(latexContent: string): ParsedLanguageDefinition[] {
@@ -1467,7 +1467,7 @@ function parseLanguagesLatex(latexContent: string): ParsedLanguageDefinition[] {
       
       // Extract references from the end
       let definitionRefs: string[] = [];
-      const citeMatch = content.match(/\\citet?\{([^}]+)\}\s*$/);
+      const citeMatch = content.match(/\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}\s*$/);
       if (citeMatch) {
         definitionRefs = citeMatch[1].split(',').map(s => s.trim());
         content = content.slice(0, citeMatch.index).trim();
@@ -1601,7 +1601,7 @@ function updateLanguagesFromLatex(database: DatabaseSchema, parsedDefs: ParsedLa
  * Format:
  *   \begin{definition}[id=DEF_ID]\label{kdef:DEF_ID}
  *   \textbf{TITLE} \\
- *   STATEMENT \citet{REFS}?
+ *   STATEMENT \citep{REFS}?
  *   \end{definition}
  */
 function generateConceptualDefinition(definition: KCDefinition): string {
@@ -1613,7 +1613,7 @@ function generateConceptualDefinition(definition: KCDefinition): string {
 ${statement}`;
 
   if (definition.refs && definition.refs.length > 0) {
-    content += ` \\citet{${definition.refs.join(',')}}`;
+    content += ` \\citep{${definition.refs.join(',')}}`;
   }
 
   return `\\begin{definition}\\label{kdef:${definition.id}}
@@ -1714,7 +1714,7 @@ interface ParsedConceptualDefinition {
  * Expected format:
  *   \begin{definition}[id=DEF_ID]\label{kdef:DEF_ID}
  *   \textbf{TITLE} \\
- *   STATEMENT \citet{REFS}?
+ *   STATEMENT \citep{REFS}?
  *   \end{definition}
  */
 function parseDefinitionsLatex(latexContent: string): ParsedConceptualDefinition[] {
@@ -1752,7 +1752,7 @@ function parseDefinitionsLatex(latexContent: string): ParsedConceptualDefinition
     }
 
     let refs: string[] = [];
-    const citeMatch = content.match(/\\citet?\{([^}]+)\}\s*$/);
+    const citeMatch = content.match(/\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}\s*$/);
     if (citeMatch) {
       refs = citeMatch[1].split(',').map((s) => s.trim()).filter(Boolean);
       content = content.slice(0, citeMatch.index).trim();
@@ -1824,7 +1824,7 @@ function updateDefinitionsFromLatex(database: DatabaseSchema, parsed: ParsedConc
  * Format:
  *   \begin{definition}[SHORTNAME]\label{sf:SAFE_LABEL}
  *   \textbf{NAME} \\
- *   DESCRIPTION \citet{REFS}?
+ *   DESCRIPTION \citep{REFS}?
  *   \end{definition}
  */
 function generateSepFuncDefinition(sf: KCSeparatingFunction): string {
@@ -1837,7 +1837,7 @@ function generateSepFuncDefinition(sf: KCSeparatingFunction): string {
 ${description}`;
 
   if (sf.refs && sf.refs.length > 0) {
-    content += ` \\citet{${sf.refs.join(',')}}`;
+    content += ` \\citep{${sf.refs.join(',')}}`;
   }
 
   return `\\begin{definition}[${escapeLatex(sf.shortName)}]\\label{sf:${safeLabel}}
@@ -1947,7 +1947,7 @@ interface ParsedSepFunc {
  * Expected format:
  *   \begin{definition}[SHORTNAME]\label{sf:SAFE_LABEL}
  *   \textbf{NAME} \\
- *   DESCRIPTION \citet{REFS}?
+ *   DESCRIPTION \citep{REFS}?
  *   \end{definition}
  */
 function parseSepFuncsLatex(latexContent: string): ParsedSepFunc[] {
@@ -1984,7 +1984,7 @@ function parseSepFuncsLatex(latexContent: string): ParsedSepFunc[] {
 
       // Extract references from the end
       let refs: string[] = [];
-      const citeMatch = content.match(/\\citet?\{([^}]+)\}\s*$/);
+      const citeMatch = content.match(/\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}\s*$/);
       if (citeMatch) {
         refs = citeMatch[1].split(',').map(s => s.trim());
         content = content.slice(0, citeMatch.index).trim();
@@ -2102,7 +2102,7 @@ function parseOptionList(raw: string): Record<string, string> {
 
 function opRefsFromClaimTemplate(claimTemplate: string): string[] {
   const refs: string[] = [];
-  for (const match of claimTemplate.matchAll(/\\cite[tp]?\{([^}]+)\}/g)) {
+  for (const match of claimTemplate.matchAll(/\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}/g)) {
     for (const ref of match[1].split(',').map(s => s.trim()).filter(Boolean)) {
       if (!refs.includes(ref)) refs.push(ref);
     }
@@ -2226,7 +2226,7 @@ function extractOpClaims(
  * Format:
  *   % lang=LANG_ID, op=OP_SAFE_KEY
  *   \begin{claim}
- *   $LANG$ supports $OP_LABEL$ COMPLEXITY_TEXT (assuming ASSUMPTION)? \citet{REFS}?
+ *   $LANG$ supports $OP_LABEL$ COMPLEXITY_TEXT (assuming ASSUMPTION)? \citep{REFS}?
  *   \end{claim}
  *   \begin{claimdescription}
  *   DESCRIPTION (EDITABLE)
@@ -2248,7 +2248,7 @@ function generateOpClaim(claim: OpClaim): string {
   }
 
   if (claim.refs.length > 0) {
-    claimText += ` \\citet{${claim.refs.join(',')}}`;
+    claimText += ` \\citep{${claim.refs.join(',')}}`;
   }
 
   const description = claim.description || '(Description needed)';
@@ -2515,7 +2515,7 @@ interface ParsedOpClaim {
  * Expected format:
  *   % lang=LANG_ID, op=OP_SAFE_KEY
  *   \begin{claim}
- *   LANG supports OP_LABEL COMPLEXITY_TEXT (assuming ASSUMPTION)? (\citet{REFS})?
+ *   LANG supports OP_LABEL COMPLEXITY_TEXT (assuming ASSUMPTION)? (\citep{REFS})?
  *   \end{claim}
  *   \begin{claimdescription}
  *   DESCRIPTION
@@ -2581,7 +2581,7 @@ function parseOpsLatex(latexContent: string): ParsedOpClaim[] {
 
       // Extract citation
       let refs: string[] = [];
-      const citeMatch = body.match(/\\citet?\{([^}]+)\}\s*$/);
+      const citeMatch = body.match(/\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}\s*$/);
       if (citeMatch) {
         refs = citeMatch[1].split(',').map(s => s.trim());
         body = body.slice(0, citeMatch.index).trim();

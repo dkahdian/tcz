@@ -231,16 +231,33 @@
     text-decoration-color: rgba(37, 99, 235, 0.8);
   }
 
-  .math-text :global(.citation-link) {
+  .math-text :global(.citation-sup) {
     display: inline;
     font-size: 0.7em;
     vertical-align: super;
     line-height: 0;
     color: #2563eb;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .math-text :global(.citation-inline) {
+    display: inline;
+    color: #374151;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .math-text :global(.citation-link) {
+    display: inline;
+    font-size: inherit;
+    vertical-align: baseline;
+    line-height: inherit;
+    color: #2563eb;
     background: none;
     border: none;
     padding: 0;
-    margin: 0 0.1em;
+    margin: 0;
     cursor: pointer;
     font-weight: 600;
     text-decoration: none;
@@ -254,11 +271,15 @@
   
   .math-text :global(.citation-unknown) {
     display: inline;
-    font-size: 0.7em;
-    vertical-align: super;
-    line-height: 0;
+    font-size: inherit;
+    vertical-align: baseline;
+    line-height: inherit;
     color: #dc2626;
     font-weight: 600;
+  }
+
+  .math-text :global(.citation-note) {
+    color: #4b5563;
   }
 
   .math-text :global(.entity-link) {

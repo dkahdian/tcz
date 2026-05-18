@@ -18,7 +18,7 @@ const LANG_PLACEHOLDER_MATH = '$\\mathcal{L}$';
 const LANG_PLACEHOLDER = '\\mathcal{L}';
 const EDGE_REF_PATTERN = /\\(n?edgeref)\{([^}]+)\}\{([^}]+)\}/g;
 const LANG_PLACEHOLDER_ARG = String.raw`\$?\\mathcal\{L\}\$?`;
-const CITATION_PATTERN = /\\cite[tp]?\{([^}]+)\}/g;
+const CITATION_PATTERN = /\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}/g;
 
 function languageRef(language: KCLanguage): string {
   const familyMatch = language.name.match(/^(.+)\$_(.+)\$$/);

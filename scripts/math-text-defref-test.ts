@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {
   containsEntityLinks,
+  extractCitationKeys,
   renderEntityLinks,
   renderMathText,
   renderTextWithCitations
@@ -48,7 +49,7 @@ assert.equal(containsEntityLinks('See \\edgeref{a}{b}'), true);
 assert.equal(containsEntityLinks('See \\opref{a}{CO}'), true);
 assert.equal(containsEntityLinks('Plain text only'), false);
 
-// Definition id resolution should link to the Definitions page anchor.
+// Definition id resolution should link to the About page anchor.
 const byId = renderEntityLinks(
   'Refer to \\defref{representation-language}.',
   (id) => id,
@@ -56,7 +57,7 @@ const byId = renderEntityLinks(
   undefined,
   resolveDefinitionRef
 );
-assertIncludes(byId, 'href="/definitions#representation-language"', 'definition id should link to /definitions#id');
+assertIncludes(byId, 'href="/about#representation-language"', 'definition id should link to /about#id');
 assertIncludes(byId, '>Representation Language<', 'definition id should render the canonical title');
 assertIncludes(byId, '<strong>Representation Language</strong>', 'definition link label should render bold');
 
@@ -68,7 +69,7 @@ const customLabel = renderEntityLinks(
   undefined,
   resolveDefinitionRef
 );
-assertIncludes(customLabel, 'href="/definitions#representation-language"', 'custom label should keep the first argument as the link target');
+assertIncludes(customLabel, 'href="/about#representation-language"', 'custom label should keep the first argument as the link target');
 assertIncludes(customLabel, '<strong>representation languages</strong>', 'custom label should render as bold link text');
 assert.equal(customLabel.includes('>Representation Language<'), false, 'custom label should not render the canonical title');
 
@@ -80,7 +81,7 @@ const byTitle = renderEntityLinks(
   undefined,
   resolveDefinitionRef
 );
-assertIncludes(byTitle, 'href="/definitions#language-family"', 'definition title should link to the matching definition id');
+assertIncludes(byTitle, 'href="/about#language-family"', 'definition title should link to the matching definition id');
 assertIncludes(byTitle, '>Language Family<', 'definition title should render the canonical title');
 
 // Definition link labels can contain inline LaTeX and should render it instead of
@@ -92,7 +93,7 @@ const latexTitle = renderEntityLinks(
   undefined,
   resolveDefinitionRef
 );
-assertIncludes(latexTitle, 'href="/definitions#transformation-and-c"', 'latex definition title should link to /definitions#id');
+assertIncludes(latexTitle, 'href="/about#transformation-and-c"', 'latex definition title should link to /about#id');
 assertIncludes(latexTitle, 'katex', 'latex definition title should render KaTeX markup');
 assert.equal(latexTitle.includes('$\\wedge$C'), false, 'latex definition title should not expose raw math delimiters');
 
@@ -103,7 +104,7 @@ const latexCustomLabel = renderEntityLinks(
   undefined,
   resolveDefinitionRef
 );
-assertIncludes(latexCustomLabel, 'href="/definitions#transformation-and-c"', 'latex custom label should link to /definitions#id');
+assertIncludes(latexCustomLabel, 'href="/about#transformation-and-c"', 'latex custom label should link to /about#id');
 assertIncludes(latexCustomLabel, '<strong>', 'latex custom label should be bold');
 assertIncludes(latexCustomLabel, 'katex', 'latex custom label should render KaTeX markup');
 
@@ -149,6 +150,33 @@ const mixedLatexWithLinks = renderEntityLinks(
 assertIncludes(mixedLatexWithLinks, '#P-hard', 'escaped # should decode in mixed LaTeX text');
 assert.equal(mixedLatexWithLinks.includes('\\#P'), false, 'mixed output should not contain escaped #');
 assertIncludes(mixedLatexWithLinks, 'data-entity-type="lang"', 'language links should still render in mixed output');
-assertIncludes(mixedLatexWithLinks, '[35]', 'citations should still render in mixed output');
+assertIncludes(mixedLatexWithLinks, 'citation-inline', '\\citet should render inline');
+assertIncludes(mixedLatexWithLinks, 'data-citation-key="Roth_1996"', 'citations should still render in mixed output');
+
+assert.deepEqual(
+  extractCitationKeys('\\citet[Theorem 4.2]{Foo_2020,Bar_2021} and \\citep{Baz_2022}'),
+  ['Foo_2020', 'Bar_2021', 'Baz_2022'],
+  'optional citation arguments should not affect key extraction'
+);
+
+const textualCitation = renderTextWithCitations(
+  renderMathText('\\citet[Theorem 4.2]{Foo_2020,Bar_2021}').html ?? '',
+  (key) => (key === 'Foo_2020' ? 12 : key === 'Bar_2021' ? 13 : null)
+);
+assertIncludes(textualCitation, 'citation-inline', '\\citet should render as an inline citation');
+assertIncludes(textualCitation, 'Theorem 4.2', '\\citet optional postnotes should render inline');
+assertIncludes(textualCitation, 'data-citation-key="Foo_2020"', 'first textual citation key should be clickable');
+assertIncludes(textualCitation, 'data-citation-key="Bar_2021"', 'second textual citation key should be clickable');
+
+const parentheticalCitation = renderTextWithCitations(
+  renderMathText('\\citep[Theorem 4.2]{Foo_2020}').html ?? '',
+  (key) => (key === 'Foo_2020' ? 12 : null)
+);
+assertIncludes(parentheticalCitation, 'citation-sup', '\\citep should render as a superscript citation');
+assert.equal(
+  parentheticalCitation.includes('Theorem 4.2'),
+  false,
+  '\\citep optional postnotes should not render in the superscript citation'
+);
 
 console.log('math-text defref checks passed');
