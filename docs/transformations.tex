@@ -770,7 +770,7 @@ The usual product algorithm for conjoining OBDDs respecting the same variable or
 \langref{dec-DNNF} supports Conditioning in polynomial time \citet{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-A \langref{dec-DNNF} can be viewed as an \langref{FBDD} with additional decomposable $\land$-nodes. Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The extra $\land$-nodes cause no problem: recurse through them, and decomposability is preserved because conditioning only removes variables from subcircuits. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
+A \langref{dec-DNNF} can be viewed as a decision diagram with additional decomposable $\land$-nodes. Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The extra $\land$-nodes cause no problem: recurse through them, and decomposability is preserved because conditioning only removes variables from subcircuits. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
 \end{claimdescription}
 
 % lang=lang_0f27d539, op=CD
@@ -778,7 +778,7 @@ A \langref{dec-DNNF} can be viewed as an \langref{FBDD} with additional decompos
 \langref{dec-SDNNF} supports Conditioning in polynomial time \citet{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-A \langref{dec-SDNNF} can be viewed as a structured \langref{FBDD}-style decision representation with additional structured decomposable $\land$-nodes. Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The extra $\land$-nodes cause no problem: recurse through them, and structured decomposability is preserved because conditioning only removes variables from subcircuits. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
+A \langref{dec-SDNNF} can be viewed as a decision diagram with additional structured decomposable $\land$-nodes. Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The extra $\land$-nodes cause no problem: recurse through them, and structured decomposability is preserved because conditioning only removes variables from subcircuits. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
 \end{claimdescription}
 
 % lang=lang_4ae03bc8, op=CD
@@ -786,7 +786,7 @@ A \langref{dec-SDNNF} can be viewed as a structured \langref{FBDD}-style decisio
 \langfam{dec-SDNNF}{T} supports Conditioning in polynomial time \citet{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-For each fixed vtree $T$, a \langfam{dec-SDNNF}{T} can be viewed as a fixed-structure \langref{FBDD}-style decision representation with additional decomposable $\land$-nodes respecting $T$. Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The extra $\land$-nodes cause no problem: recurse through them, and the fixed vtree is preserved because conditioning only removes variables from subcircuits. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
+For each fixed vtree $T$, a \langfam{dec-SDNNF}{T} can be viewed as a decision diagram with additional decomposable $\land$-nodes structured by $T$. Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The extra $\land$-nodes cause no problem: recurse through them, and the fixed vtree is preserved because conditioning only removes variables from subcircuits. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
 \end{claimdescription}
 
 
