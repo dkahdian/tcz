@@ -594,7 +594,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_83e3b023}{lang_6c130090} in polynomial time, and \\opref{lang_6c130090}{CE} in polynomial time. Therefore cSDD supports Clausal Entailment in polynomial time.",
-            "derivationOrder": 1388,
+            "derivationOrder": 1389,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_83e3b023",
@@ -651,7 +651,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_83e3b023}{lang_1afefbe2} in polynomial time, and \\opref{lang_1afefbe2}{IM} in polynomial time. Therefore cSDD supports Implicant in polynomial time.",
-            "derivationOrder": 1392,
+            "derivationOrder": 1393,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_83e3b023",
@@ -1640,7 +1640,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_4c204bf3}{lang_3bebcab7} in polynomial time, and \\opref{lang_3bebcab7}{CE} in polynomial time. Therefore DNF supports Clausal Entailment in polynomial time.",
-            "derivationOrder": 1391,
+            "derivationOrder": 1392,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_4c204bf3",
@@ -2408,7 +2408,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_e02902d0}{lang_6c130090} in polynomial time, and \\opref{lang_6c130090}{CE} in polynomial time. Therefore MODS supports Clausal Entailment in polynomial time.",
-            "derivationOrder": 1389,
+            "derivationOrder": 1390,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_e02902d0",
@@ -6011,7 +6011,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_4ae03bc8}{lang_91f812d0} in polynomial time, and \\opref{lang_91f812d0}{SE} in polynomial time. Therefore dec-SDNNF$_T$ supports Sentential Entailment in polynomial time.",
-            "derivationOrder": 1394,
+            "derivationOrder": 1395,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_4ae03bc8",
@@ -6171,7 +6171,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_82fa749e}{lang_6c130090} in polynomial time, and \\opref{lang_6c130090}{CE} in polynomial time. Therefore cSDD$_T$ supports Clausal Entailment in polynomial time.",
-            "derivationOrder": 1390,
+            "derivationOrder": 1391,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_82fa749e",
@@ -6268,7 +6268,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_82fa749e}{lang_1afefbe2} in polynomial time, and \\opref{lang_1afefbe2}{IM} in polynomial time. Therefore cSDD$_T$ supports Implicant in polynomial time.",
-            "derivationOrder": 1393,
+            "derivationOrder": 1394,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_82fa749e",
@@ -6287,7 +6287,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_82fa749e}{lang_91f812d0} in polynomial time, and \\opref{lang_91f812d0}{SE} in polynomial time. Therefore cSDD$_T$ supports Sentential Entailment in polynomial time.",
-            "derivationOrder": 1395,
+            "derivationOrder": 1396,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_82fa749e",
@@ -6649,6 +6649,13 @@
               "languageId": "lang_e827cf31",
               "level": "poly"
             }
+          },
+          "AND_BC": {
+            "complexity": "poly",
+            "refs": [
+              "Wegener_2000"
+            ],
+            "description": "The usual product algorithm for conjoining OBDDs respecting the same variable order works for nondeterministic OBDDs. Run the two diagrams in parallel according to the fixed order $<$, and accept exactly when both components accept. The resulting diagram still respects $<$. \\citet{Wegener_2000} gives the analogous construction for EXOR-OBDDs in Theorem 10.5.1."
           }
         }
       },
@@ -6685,8 +6692,8 @@
             "complexity": "poly",
             "refs": [
               "Darwiche_2002",
+              "Wegener_2000",
               "Amarilli_2018",
-              "Pipatsrisawat_2008",
               "Darwiche_2001b"
             ],
             "derived": true,
@@ -6758,18 +6765,17 @@
           "SE": {
             "complexity": "poly",
             "refs": [
+              "Wegener_2000",
               "Amarilli_2018",
-              "Pipatsrisawat_2008",
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "\\edgeref{lang_43a33aec}{lang_91f812d0} in polynomial time, and \\opref{lang_91f812d0}{SE} in polynomial time. Therefore uOBDD$_<$ supports Sentential Entailment in polynomial time.",
-            "derivationOrder": 1396,
+            "description": "Since \\opref{lang_43a33aec}{CT} in polynomial time, \\opref{lang_43a33aec}{AND_BC} in polynomial time, Model Counting ∧ Bounded Conjunction implies Sentential Entailment. Therefore \\langref{lang_43a33aec} supports Sentential Entailment.",
+            "derivationOrder": 1388,
             "proofTrace": {
-              "rule": "query-via-succinctness",
-              "sourceLanguageId": "lang_43a33aec",
-              "targetLanguageId": "lang_91f812d0",
-              "operation": "SE",
+              "rule": "lemma-forward",
+              "lemmaId": "ct-and-bc-se",
+              "languageId": "lang_43a33aec",
               "level": "poly"
             }
           },
@@ -6885,6 +6891,31 @@
               "lemmaId": "fo-sfo",
               "languageId": "lang_43a33aec",
               "pivotOp": "FO",
+              "level": "quasi"
+            }
+          },
+          "AND_BC": {
+            "complexity": "poly",
+            "refs": [
+              "Wegener_2000"
+            ],
+            "description": "The usual product algorithm for conjoining OBDDs respecting the same variable order works for unambiguous nondeterministic OBDDs. Run the two diagrams in parallel according to the fixed order $<$, and accept exactly when both components accept. The result is still unambiguous: for any satisfying assignment, each input has at most one accepting path, so the product has at most one accepting path. \\citet{Wegener_2000} gives the analogous construction for EXOR-OBDDs in Theorem 10.5.1."
+          },
+          "NOT_C": {
+            "complexity": "no-quasi",
+            "refs": [
+              "Darwiche_2002",
+              "TCZ_Forthcoming",
+              "Wegener_2000"
+            ],
+            "derived": true,
+            "description": "Since Negation ∧ Bounded Conjunction implies Bounded Disjunction \\citet{Darwiche_2002}, and since \\nopref{lang_43a33aec}{OR_BC} in quasipolynomial time, and since \\opref{lang_43a33aec}{AND_BC} in quasipolynomial time, then Negation is unsupported by uOBDD$_<$ in quasipolynomial time as well.",
+            "derivationOrder": 1523,
+            "proofTrace": {
+              "rule": "lemma-contrapositive",
+              "lemmaId": "not-c-and-bc-or-bc",
+              "languageId": "lang_43a33aec",
+              "pivotOp": "NOT_C",
               "level": "quasi"
             }
           }
@@ -12149,7 +12180,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_83e3b023}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to cSDD in polynomial time, IP could support Model Counting by first compiling to cSDD. Therefore IP cannot compile to cSDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1522,
+          "derivationOrder": 1524,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12168,7 +12199,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_6c130090}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-DNNF in polynomial time, IP could support Model Counting by first compiling to d-DNNF. Therefore IP cannot compile to d-DNNF in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1523,
+          "derivationOrder": 1525,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12188,7 +12219,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_ea9b5299}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-SDNNF in polynomial time, IP could support Model Counting by first compiling to d-SDNNF. Therefore IP cannot compile to d-SDNNF in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1524,
+          "derivationOrder": 1526,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12209,7 +12240,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_91f812d0}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-SDNNF$_T$ in polynomial time, IP could support Model Counting by first compiling to d-SDNNF$_T$. Therefore IP cannot compile to d-SDNNF$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1525,
+          "derivationOrder": 1527,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12384,7 +12415,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_1afefbe2}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to SDD in polynomial time, IP could support Model Counting by first compiling to SDD. Therefore IP cannot compile to SDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1526,
+          "derivationOrder": 1528,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12406,7 +12437,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_9c84a267}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to SDD$_T$ in polynomial time, IP could support Model Counting by first compiling to SDD$_T$. Therefore IP cannot compile to SDD$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1527,
+          "derivationOrder": 1529,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12472,7 +12503,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_4e62a038}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uFBDD in polynomial time, IP could support Model Counting by first compiling to uFBDD. Therefore IP cannot compile to uFBDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1528,
+          "derivationOrder": 1530,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12492,7 +12523,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_c2df8c2b}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uOBDD in polynomial time, IP could support Model Counting by first compiling to uOBDD. Therefore IP cannot compile to uOBDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1529,
+          "derivationOrder": 1531,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12603,7 +12634,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_82fa749e}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to cSDD$_T$ in polynomial time, IP could support Model Counting by first compiling to cSDD$_T$. Therefore IP cannot compile to cSDD$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1530,
+          "derivationOrder": 1532,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12645,7 +12676,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_43a33aec}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uOBDD$_<$ in polynomial time, IP could support Model Counting by first compiling to uOBDD$_<$. Therefore IP cannot compile to uOBDD$_<$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1531,
+          "derivationOrder": 1533,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",

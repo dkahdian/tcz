@@ -709,6 +709,14 @@ To forget a variable, replace each decision node labeled by that variable with a
 Disjunction of \langfam{nOBDD}{<} formulas is obtained by adding a top-level nondeterministic $\lor$-node whose children are the input formulas. Since all inputs respect the same fixed order $<$, the result is still a \langfam{nOBDD}{<} formula.
 \end{claimdescription}
 
+% lang=lang_e827cf31, op=AND_BC
+\begin{claim}
+\langfam{nOBDD}{<} supports Bounded Conjunction in polynomial time \citet{Wegener_2000}
+\end{claim}
+\begin{claimdescription}
+The usual product algorithm for conjoining OBDDs respecting the same variable order works for nondeterministic OBDDs. Run the two diagrams in parallel according to the fixed order $<$, and accept exactly when both components accept. The resulting diagram still respects $<$. \citet{Wegener_2000} gives the analogous construction for EXOR-OBDDs in Theorem 10.5.1.
+\end{claimdescription}
+
 % lang=lang_e827cf31, op=CD
 \begin{claim}
 \langfam{nOBDD}{<} supports Conditioning in polynomial time \citet{Wegener_2000}
@@ -747,6 +755,14 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 \end{claim}
 \begin{claimdescription}
 Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The fixed order $<$ is preserved, and the operation cannot create two accepting paths for a remaining assignment. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
+\end{claimdescription}
+
+% lang=lang_43a33aec, op=AND_BC
+\begin{claim}
+\langfam{uOBDD}{<} supports Bounded Conjunction in polynomial time \citet{Wegener_2000}
+\end{claim}
+\begin{claimdescription}
+The usual product algorithm for conjoining OBDDs respecting the same variable order works for unambiguous nondeterministic OBDDs. Run the two diagrams in parallel according to the fixed order $<$, and accept exactly when both components accept. The result is still unambiguous: for any satisfying assignment, each input has at most one accepting path, so the product has at most one accepting path. \citet{Wegener_2000} gives the analogous construction for EXOR-OBDDs in Theorem 10.5.1.
 \end{claimdescription}
 
 % lang=lang_981b62f0, op=CD
