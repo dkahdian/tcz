@@ -125,12 +125,14 @@ As a result, because \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{S
 
 \begin{batchclaim}[id=tcz-obdd-d-dnnf-bounded-disjunction-lower-bound, op=OR_BC, status=no-quasi]
 For each language $\mathcal{L}$ such that \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{d-DNNF},
-$\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \citet{TCZ_Forthcoming}.
+$\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \citet{TCZ_Forthcoming,Vinall-Smeeth_2024}.
 \end{batchclaim}
 \begin{claimdescription}
 There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by OBDDs of size $O(n)$, such that any d-DNNF computing $f\lor g$ has size $2^{\Omega(\sqrt{n})}$ \citep{TCZ_Forthcoming}.
 
 As a result, because \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{d-DNNF}, $\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.
+
+Note that a quasipolynomial lower bound for bounded disjunction of \langref{d-SDNNF} was shown by \citet{Vinall-Smeeth_2024}.
 \end{claimdescription}
 
 \begin{batchclaim}[id=vinall-smeeth-unambiguous-dnf-bounded-disjunction-lower-bound, op=OR_BC, status=no-poly-unknown-quasi]
@@ -145,6 +147,21 @@ $\mathcal{L}$ supports Bounded Disjunction not in polynomial time (quasipolynomi
 \end{batchclaim}
 \begin{claimdescription}
 The proof of Theorem 5 of \citet{Vinall-Smeeth_2024} gives unambiguous DNFs $f$ and $g$ of polynomial size such that $f \lor g$ requires $d$-SDNNF size $s^{\widetilde{\Omega}(\log s)}$. An unambiguous DNF can be transformed into a polynomial-size $\mathcal{L}$ representation, and every $\mathcal{L}$ representation can be transformed into polynomial-size $d$-SDNNF. Thus polynomial-time bounded disjunction for $\mathcal{L}$ would contradict the lower bound.
+\end{claimdescription}
+
+\begin{batchclaim}[id=tcz-bounded-disjunction-singleton-forgetting-lower-bound, op=SFO, status=no-quasi]
+For each language $\mathcal{L}$ in
+\[
+\{
+  \langfam{d-SDNNF}{T},
+  \langfam{uOBDD}{<},
+  \langfam{dec-SDNNF}{T}
+\},
+\]
+$\mathcal{L}$ supports Singleton Forgetting not in quasipolynomial time \citet{TCZ_Forthcoming}.
+\end{batchclaim}
+\begin{claimdescription}
+If $\mathcal{L}$ supported Singleton Forgetting in quasipolynomial time, then the reduction from Bounded Disjunction to Singleton Forgetting would give quasipolynomial-time Bounded Disjunction for $\mathcal{L}$, contradicting the lower bound of \citet{TCZ_Forthcoming}.
 \end{claimdescription}
 
 \begin{batchclaim}[id=darwiche-or-c-term-dnf-lower-bound, op=OR_C, status=no-quasi]
@@ -909,6 +926,22 @@ Structured deterministic DNNF (\langref{d-SDNNF}) is not closed under negation i
 \end{claim}
 \begin{claimdescription}
 The proof of Theorem 2 of \citet{Vinall-Smeeth_2024} gives unambiguous DNFs whose negations require quasipolynomially larger $d$-SDNNF size. An unambiguous DNF can be transformed into a polynomial-size \langref{uOBDD}, and every \langref{uOBDD} can be transformed into polynomial-size \langref{d-SDNNF}. Thus polynomial-time negation for \langref{uOBDD} would contradict the lower bound.
+\end{claimdescription}
+
+% lang=lang_ea9b5299, op=SFO
+\begin{claim}
+\langref{d-SDNNF} supports Singleton Forgetting not in polynomial time (quasipolynomial unknown) \citet{Vinall-Smeeth_2024}
+\end{claim}
+\begin{claimdescription}
+Corollary 1 of \citet{Vinall-Smeeth_2024} gives d-SDNNF formulas of size $s$ whose existential quantification of one variable requires d-SDNNF size $s^{\widetilde{\Omega}(\log s)}$. Hence \langref{d-SDNNF} does not support singleton forgetting in polynomial time.
+\end{claimdescription}
+
+% lang=lang_c2df8c2b, op=SFO
+\begin{claim}
+\langref{uOBDD} supports Singleton Forgetting not in polynomial time (quasipolynomial unknown) \citet{Vinall-Smeeth_2024}
+\end{claim}
+\begin{claimdescription}
+The proof of Corollary 1 of \citet{Vinall-Smeeth_2024} shows the intractability of SFO for \langref{d-SDNNF}, but also immediately applies to \langref{uOBDD}.
 \end{claimdescription}
 
 
