@@ -921,6 +921,14 @@ Conditioning is easy on OBDD$_<$: replace each decision node labeled by a condit
 \section{G. Van den Broeck and A. Darwiche, "On the Role of Canonicity in Knowledge Compi...}
 % Reference ID: VanDenBroeck_2015
 % =============================
+% lang=lang_83e3b023, op=NOT_C
+\begin{claim}
+\langref{cSDD} supports Negation in polynomial time \citet{VanDenBroeck_2015}
+\end{claim}
+\begin{claimdescription}
+Every \langref{cSDD} respects some vtree $T$. Apply the fixed-vtree negation procedure for \langfam{cSDD}{T}: \citet{VanDenBroeck_2015} proved that reduced \langfam{SDD}{T} formulas support negation in polynomial time by passing negation through the subs. The result is still a \langfam{cSDD}{T} formula, hence a \langref{cSDD} formula.
+\end{claimdescription}
+
 % lang=lang_82fa749e, op=NOT_C
 \begin{claim}
 \langfam{cSDD}{T} supports Negation in polynomial time \citet{VanDenBroeck_2015}

@@ -811,6 +811,13 @@
               "pivotOp": "FO",
               "level": "quasi"
             }
+          },
+          "NOT_C": {
+            "complexity": "poly",
+            "refs": [
+              "VanDenBroeck_2015"
+            ],
+            "description": "Every \\langref{cSDD} respects some vtree $T$. Apply the fixed-vtree negation procedure for \\langfam{cSDD}{T}: \\citet{VanDenBroeck_2015} proved that reduced \\langfam{SDD}{T} formulas support negation in polynomial time by passing negation through the subs. The result is still a \\langfam{cSDD}{T} formula, hence a \\langref{cSDD} formula."
           }
         }
       },
