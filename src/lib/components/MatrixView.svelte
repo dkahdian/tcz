@@ -72,7 +72,41 @@
     );
   });
 
+  const CONDITIONAL_STATUS_SHORT_HTML = $derived.by<Record<string, string>>(() => {
+    return Object.fromEntries(
+      Object.values(graphData.complexities).map((c) => {
+        const notation = getConditionalNotation(c.code, c.notation);
+        const result = renderMathText(notation);
+        return [c.code, result.html ?? notation];
+      })
+    );
+  });
+
   const UNKNOWN_STATUS = 'unknown-both';
+
+  function getConditionalNotation(status: string, notation: string): string {
+    switch (status) {
+      case 'poly':
+        return '$\\leq_p^\\ast$';
+      case 'no-poly-unknown-quasi':
+        return '$\\not\\leq_p^\\ast \\ \\leq_q^?$';
+      case 'no-poly-quasi':
+        return '$\\not\\leq_p^\\ast \\ \\leq_q$';
+      case 'unknown-poly-quasi':
+        return '$\\leq_p^? \\ \\leq_q^\\ast$';
+      case 'no-quasi':
+        return '$\\not\\leq_q^\\ast$';
+      default:
+        return notation;
+    }
+  }
+
+  function getStatusHtml(status: string, hasAssumption = false): string {
+    if (hasAssumption) {
+      return CONDITIONAL_STATUS_SHORT_HTML[status] ?? STATUS_SHORT_HTML[status] ?? '';
+    }
+    return STATUS_SHORT_HTML[status] ?? '';
+  }
 
   const languageLookup = $derived.by<Map<string, KCLanguage>>(() => {
     const map = new Map<string, KCLanguage>();
@@ -378,7 +412,7 @@
                       onclick={() => handleCellClick(colLanguage.id, rowLanguage.id, relation)}
                       title={getCellTitle(rowLanguage.language, colLanguage.language, relation)}
                     >
-                      <span class="cell-short">{@html STATUS_SHORT_HTML[relation.status]}{#if relation.assumption}*{/if}</span>
+                      <span class="cell-short">{@html getStatusHtml(relation.status, Boolean(relation.assumption))}</span>
                     </button>
                     {#if isSandboxEditing(colLanguage.id, rowLanguage.id)}
                       {@const currentValue = getSandboxCellValue(relation)}
