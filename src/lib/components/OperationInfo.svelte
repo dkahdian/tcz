@@ -177,8 +177,7 @@
       <div class="welcome-message">
         <h3 class="panel-title">{panelTitle}</h3>
         <p class="text-gray-600 text-sm mb-4">
-          Click on a language name to see its details, an operation code to learn about it, 
-          or a cell to see the complexity of that operation for that language.
+          Click on any cell for more information.
         </p>
       </div>
     {/if}
