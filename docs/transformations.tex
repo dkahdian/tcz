@@ -153,15 +153,29 @@ The proof of Theorem 5 of \citet{Vinall-Smeeth_2024} gives unambiguous DNFs $f$ 
 For each language $\mathcal{L}$ in
 \[
 \{
+  \langref{cSDD},
+  \langref{d-DNNF},
   \langfam{d-SDNNF}{T},
-  \langfam{uOBDD}{<},
-  \langfam{dec-SDNNF}{T}
+  \langref{dec-DNNF},
+  \langref{dec-SDNNF},
+  \langfam{dec-SDNNF}{T},
+  \langref{SDD},
+  \langref{uFBDD},
+  \langfam{uOBDD}{<}
 \},
 \]
 $\mathcal{L}$ supports Singleton Forgetting not in quasipolynomial time \citet{TCZ_Forthcoming}.
 \end{batchclaim}
 \begin{claimdescription}
-If $\mathcal{L}$ supported Singleton Forgetting in quasipolynomial time, then the reduction from Bounded Disjunction to Singleton Forgetting would give quasipolynomial-time Bounded Disjunction for $\mathcal{L}$, contradicting the lower bound of \citet{TCZ_Forthcoming}.
+If $\mathcal{L}$ supported Singleton Forgetting in quasipolynomial time, then given two $\mathcal{L}$ circuits $f$ and $g$ we could form the polynomial-size decision $(x \land f) \lor (\neg x \land g)$ and forget $x$, yielding $f \lor g$. This would give quasipolynomial-time Bounded Disjunction for $\mathcal{L}$, contradicting the lower bound of \citet{TCZ_Forthcoming}.
+\end{claimdescription}
+
+\begin{batchclaim}[id=bova-dnf-dnnf-negation-lower-bound, op=NOT_C, status=no-quasi]
+For each language $\mathcal{L}$ such that \edgeref{DNF}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{DNNF},
+$\mathcal{L}$ supports Negation not in quasipolynomial time \citet{Bova_2014}.
+\end{batchclaim}
+\begin{claimdescription}
+Lemma 5 of \citet{Bova_2014} gives 2-DNF formulas $D$ whose negations require DNNF size $2^{\Omega(\operatorname{size}(D))}$. If $\mathcal{L}$ supported Negation in quasipolynomial time, then \edgeref{DNF}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{DNNF} would yield quasipolynomial-size DNNFs for those negations, contradicting the lower bound.
 \end{claimdescription}
 
 \begin{batchclaim}[id=darwiche-or-c-term-dnf-lower-bound, op=OR_C, status=no-quasi]
@@ -270,14 +284,6 @@ Since OBDD $\subseteq$ d-DNNF and d-DNNF satisfies CO, the NP-completeness of co
 \end{claim}
 \begin{claimdescription}
 Conditioning preserves both decomposability and determinism. If $\alpha \land \beta \models \bot$ then $(\alpha|\gamma) \land (\beta|\gamma) \models \bot$ for any consistent term $\gamma$, since $((\alpha \land \beta)|\gamma) \land \gamma \models \bot$ and $\gamma$ is consistent (\citet{Darwiche_2002}, Proposition 5.1).
-\end{claimdescription}
-
-% lang=lang_6c130090, op=SFO
-\begin{claim}
-\langref{d-DNNF} supports Singleton Forgetting not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citet{Darwiche_2002}
-\end{claim}
-\begin{claimdescription}
-If d-DNNF satisfies SFO, then it satisfies $\lor$BC (since $\alpha_1 \lor \alpha_2 \equiv \exists x . ((x \land \alpha_1) \lor (\neg x \land \alpha_2))$ for fresh $x$). But d-DNNF does not satisfy $\lor$BC assuming P \neq NP (\citet{Darwiche_2002}, Proposition 5.1).
 \end{claimdescription}
 
 % lang=lang_4c204bf3, op=AND_BC
