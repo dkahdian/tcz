@@ -339,7 +339,7 @@ Negation of an FBDD is achieved by switching the labels of the 0-sink and 1-sink
 \langref{FBDD} supports Conditioning in polynomial time \citet{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Conditioning on FBDD is the restrict operation: replace each node labeled by a variable in the conditioning term with one of its children. This preserves the free (read-once) property (\citet{Darwiche_2002}, Proposition 5.1).
+Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the free read-once property (\citet{Darwiche_2002}, Proposition 5.1).
 \end{claimdescription}
 
 % lang=lang_684b1ca7, op=OR_BC
@@ -491,7 +491,7 @@ Checking consistency of two OBDDs (which may possess different underlying orderi
 \langref{OBDD} supports Conditioning in polynomial time \citet{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Since OBDD $\subseteq$ FBDD and FBDD satisfies CD (the restrict operation), OBDD also satisfies CD. The variable ordering is preserved under conditioning (\citet{Darwiche_2002}, Proposition 5.1).
+Since OBDD $\subseteq$ FBDD and conditioning preserves the variable ordering, OBDD also satisfies CD (\citet{Darwiche_2002}, Proposition 5.1).
 \end{claimdescription}
 
 % lang=lang_b9d72a7c, op=SFO
@@ -671,10 +671,10 @@ Disjunction of \langref{nFBDD} formulas is obtained by adding a top-level nondet
 
 % lang=lang_1df07cc3, op=CD
 \begin{claim}
-\langref{nFBDD} supports Conditioning in polynomial time \citet{TCZ_Forthcoming}
+\langref{nFBDD} supports Conditioning in polynomial time \citet{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. This preserves the free read-once property.
+Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the free read-once property. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
 \end{claimdescription}
 
 % lang=lang_1df07cc3, op=FO
@@ -687,10 +687,10 @@ To forget a variable, replace each decision node labeled by that variable with a
 
 % lang=lang_d24efe0e, op=CD
 \begin{claim}
-\langref{nOBDD} supports Conditioning in polynomial time \citet{TCZ_Forthcoming}
+\langref{nOBDD} supports Conditioning in polynomial time \citet{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. This preserves the ordered decision-diagram property.
+Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the ordered decision-diagram property. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
 \end{claimdescription}
 
 % lang=lang_d24efe0e, op=FO
@@ -711,10 +711,10 @@ Disjunction of \langfam{nOBDD}{<} formulas is obtained by adding a top-level non
 
 % lang=lang_e827cf31, op=CD
 \begin{claim}
-\langfam{nOBDD}{<} supports Conditioning in polynomial time \citet{TCZ_Forthcoming}
+\langfam{nOBDD}{<} supports Conditioning in polynomial time \citet{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. The fixed order $<$ is preserved.
+Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The fixed order $<$ is preserved. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
 \end{claimdescription}
 
 % lang=lang_e827cf31, op=FO
@@ -727,26 +727,50 @@ To forget a variable, replace each decision node labeled by that variable with a
 
 % lang=lang_4e62a038, op=CD
 \begin{claim}
-\langref{uFBDD} supports Conditioning in polynomial time \citet{TCZ_Forthcoming}
+\langref{uFBDD} supports Conditioning in polynomial time \citet{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. This preserves the free read-once property and cannot create two accepting paths for a remaining assignment.
+Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the free read-once property and cannot create two accepting paths for a remaining assignment. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
 \end{claimdescription}
 
 % lang=lang_c2df8c2b, op=CD
 \begin{claim}
-\langref{uOBDD} supports Conditioning in polynomial time \citet{TCZ_Forthcoming,Wegener_2000}
+\langref{uOBDD} supports Conditioning in polynomial time \citet{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. This preserves the ordered decision-diagram property and cannot create two accepting paths for a remaining assignment. For a similar closure property for parity nondeterminism, see Theorem~10.5.1 of \citet{Wegener_2000}.
+Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the ordered decision-diagram property and cannot create two accepting paths for a remaining assignment. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
 \end{claimdescription}
 
 % lang=lang_43a33aec, op=CD
 \begin{claim}
-\langfam{uOBDD}{<} supports Conditioning in polynomial time \citet{TCZ_Forthcoming}
+\langfam{uOBDD}{<} supports Conditioning in polynomial time \citet{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. The fixed order $<$ is preserved, and the restriction cannot create two accepting paths for a remaining assignment.
+Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The fixed order $<$ is preserved, and the operation cannot create two accepting paths for a remaining assignment. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
+\end{claimdescription}
+
+% lang=lang_981b62f0, op=CD
+\begin{claim}
+\langref{dec-DNNF} supports Conditioning in polynomial time \citet{Wegener_2000}
+\end{claim}
+\begin{claimdescription}
+A \langref{dec-DNNF} can be viewed as an \langref{FBDD} with additional decomposable $\land$-nodes. Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The extra $\land$-nodes cause no problem: recurse through them, and decomposability is preserved because conditioning only removes variables from subcircuits. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
+\end{claimdescription}
+
+% lang=lang_0f27d539, op=CD
+\begin{claim}
+\langref{dec-SDNNF} supports Conditioning in polynomial time \citet{Wegener_2000}
+\end{claim}
+\begin{claimdescription}
+A \langref{dec-SDNNF} can be viewed as a structured \langref{FBDD}-style decision representation with additional structured decomposable $\land$-nodes. Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The extra $\land$-nodes cause no problem: recurse through them, and structured decomposability is preserved because conditioning only removes variables from subcircuits. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
+\end{claimdescription}
+
+% lang=lang_4ae03bc8, op=CD
+\begin{claim}
+\langfam{dec-SDNNF}{T} supports Conditioning in polynomial time \citet{Wegener_2000}
+\end{claim}
+\begin{claimdescription}
+For each fixed vtree $T$, a \langfam{dec-SDNNF}{T} can be viewed as a fixed-structure \langref{FBDD}-style decision representation with additional decomposable $\land$-nodes respecting $T$. Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The extra $\land$-nodes cause no problem: recurse through them, and the fixed vtree is preserved because conditioning only removes variables from subcircuits. \citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1.
 \end{claimdescription}
 
 
@@ -873,7 +897,7 @@ The Apply algorithm computes the disjunction of two OBDD$_<$ sentences sharing t
 \langfam{OBDD}{<} supports Conditioning in polynomial time \citet{Bryant_1986}
 \end{claim}
 \begin{claimdescription}
-Conditioning (the restrict operation) on OBDD$_<$ replaces each node labeled by a variable in the conditioning term with one of its children, according to the sign of the variable. The result is a valid OBDD$_<$ \citet{Bryant_1986}.
+Conditioning is easy on OBDD$_<$: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The fixed order $<$ is preserved \citet{Bryant_1986}.
 \end{claimdescription}
 
 

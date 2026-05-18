@@ -594,7 +594,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_83e3b023}{lang_6c130090} in polynomial time, and \\opref{lang_6c130090}{CE} in polynomial time. Therefore cSDD supports Clausal Entailment in polynomial time.",
-            "derivationOrder": 1382,
+            "derivationOrder": 1388,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_83e3b023",
@@ -651,7 +651,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_83e3b023}{lang_1afefbe2} in polynomial time, and \\opref{lang_1afefbe2}{IM} in polynomial time. Therefore cSDD supports Implicant in polynomial time.",
-            "derivationOrder": 1389,
+            "derivationOrder": 1392,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_83e3b023",
@@ -670,7 +670,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_83e3b023}{lang_6c130090} in polynomial time, and \\opref{lang_6c130090}{ME} in polynomial time. Therefore cSDD supports Model Enumeration in polynomial time.",
-            "derivationOrder": 1394,
+            "derivationOrder": 1397,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_83e3b023",
@@ -1640,7 +1640,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_4c204bf3}{lang_3bebcab7} in polynomial time, and \\opref{lang_3bebcab7}{CE} in polynomial time. Therefore DNF supports Clausal Entailment in polynomial time.",
-            "derivationOrder": 1388,
+            "derivationOrder": 1391,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_4c204bf3",
@@ -2104,7 +2104,7 @@
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Conditioning on FBDD is the restrict operation: replace each node labeled by a variable in the conditioning term with one of its children. This preserves the free (read-once) property (\\citet{Darwiche_2002}, Proposition 5.1)."
+            "description": "Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the free read-once property (\\citet{Darwiche_2002}, Proposition 5.1)."
           },
           "SFO": {
             "complexity": "no-quasi",
@@ -2408,7 +2408,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_e02902d0}{lang_6c130090} in polynomial time, and \\opref{lang_6c130090}{CE} in polynomial time. Therefore MODS supports Clausal Entailment in polynomial time.",
-            "derivationOrder": 1383,
+            "derivationOrder": 1389,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_e02902d0",
@@ -2700,7 +2700,7 @@
               "Darwiche_2002",
               "Darwiche_2001a",
               "Amarilli_2018",
-              "TCZ_Forthcoming"
+              "Wegener_2000"
             ],
             "derived": true,
             "description": "Since \\opref{lang_1df07cc3}{CO} in polynomial time, \\opref{lang_1df07cc3}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citet{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_1df07cc3} supports Clausal Entailment.",
@@ -2718,7 +2718,7 @@
               "Darwiche_2002",
               "Amarilli_2018",
               "Darwiche_2001a",
-              "TCZ_Forthcoming"
+              "Wegener_2000"
             ],
             "derived": true,
             "description": "Since \\opref{lang_1df07cc3}{CO} in polynomial time, \\opref{lang_1df07cc3}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citet{Darwiche_2002}. Therefore \\langref{lang_1df07cc3} supports Model Enumeration.",
@@ -2758,9 +2758,9 @@
           "CD": {
             "complexity": "poly",
             "refs": [
-              "TCZ_Forthcoming"
+              "Wegener_2000"
             ],
-            "description": "Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. This preserves the free read-once property."
+            "description": "Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the free read-once property. \\citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1."
           },
           "FO": {
             "complexity": "poly",
@@ -3192,7 +3192,7 @@
               "Darwiche_2002",
               "Darwiche_2001a",
               "Amarilli_2018",
-              "TCZ_Forthcoming"
+              "Wegener_2000"
             ],
             "derived": true,
             "description": "Since \\opref{lang_d24efe0e}{CO} in polynomial time, \\opref{lang_d24efe0e}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citet{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_d24efe0e} supports Clausal Entailment.",
@@ -3210,7 +3210,7 @@
               "Darwiche_2002",
               "Amarilli_2018",
               "Darwiche_2001a",
-              "TCZ_Forthcoming"
+              "Wegener_2000"
             ],
             "derived": true,
             "description": "Since \\opref{lang_d24efe0e}{CO} in polynomial time, \\opref{lang_d24efe0e}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citet{Darwiche_2002}. Therefore \\langref{lang_d24efe0e} supports Model Enumeration.",
@@ -3250,9 +3250,9 @@
           "CD": {
             "complexity": "poly",
             "refs": [
-              "TCZ_Forthcoming"
+              "Wegener_2000"
             ],
-            "description": "Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. This preserves the ordered decision-diagram property."
+            "description": "Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the ordered decision-diagram property. \\citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1."
           },
           "FO": {
             "complexity": "poly",
@@ -3462,7 +3462,7 @@
             "refs": [
               "Bryant_1986"
             ],
-            "description": "Conditioning (the restrict operation) on OBDD$_<$ replaces each node labeled by a variable in the conditioning term with one of its children, according to the sign of the variable. The result is a valid OBDD$_<$ \\citet{Bryant_1986}."
+            "description": "Conditioning is easy on OBDD$_<$: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The fixed order $<$ is preserved \\citet{Bryant_1986}."
           },
           "SFO": {
             "complexity": "poly",
@@ -4736,7 +4736,7 @@
               "Darwiche_2002",
               "Darwiche_2001a",
               "Amarilli_2018",
-              "TCZ_Forthcoming"
+              "Wegener_2000"
             ],
             "derived": true,
             "description": "Since \\opref{lang_4e62a038}{CO} in polynomial time, \\opref{lang_4e62a038}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citet{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_4e62a038} supports Clausal Entailment.",
@@ -4806,7 +4806,7 @@
               "Darwiche_2002",
               "Amarilli_2018",
               "Darwiche_2001b",
-              "TCZ_Forthcoming"
+              "Wegener_2000"
             ],
             "derived": true,
             "description": "Since \\opref{lang_4e62a038}{VA} in polynomial time, \\opref{lang_4e62a038}{CD} in polynomial time, Validity ∧ Conditioning implies Implicant \\citet{Darwiche_2002}. Therefore \\langref{lang_4e62a038} supports Implicant.",
@@ -4824,7 +4824,7 @@
               "Darwiche_2002",
               "Amarilli_2018",
               "Darwiche_2001a",
-              "TCZ_Forthcoming"
+              "Wegener_2000"
             ],
             "derived": true,
             "description": "Since \\opref{lang_4e62a038}{CO} in polynomial time, \\opref{lang_4e62a038}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citet{Darwiche_2002}. Therefore \\langref{lang_4e62a038} supports Model Enumeration.",
@@ -4900,9 +4900,9 @@
           "CD": {
             "complexity": "poly",
             "refs": [
-              "TCZ_Forthcoming"
+              "Wegener_2000"
             ],
-            "description": "Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. This preserves the free read-once property and cannot create two accepting paths for a remaining assignment."
+            "description": "Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the free read-once property and cannot create two accepting paths for a remaining assignment. \\citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1."
           },
           "OR_BC": {
             "complexity": "no-quasi",
@@ -4978,7 +4978,6 @@
               "Darwiche_2002",
               "Darwiche_2001a",
               "Amarilli_2018",
-              "TCZ_Forthcoming",
               "Wegener_2000"
             ],
             "derived": true,
@@ -5049,7 +5048,6 @@
               "Darwiche_2002",
               "Amarilli_2018",
               "Darwiche_2001b",
-              "TCZ_Forthcoming",
               "Wegener_2000"
             ],
             "derived": true,
@@ -5068,7 +5066,6 @@
               "Darwiche_2002",
               "Amarilli_2018",
               "Darwiche_2001a",
-              "TCZ_Forthcoming",
               "Wegener_2000"
             ],
             "derived": true,
@@ -5156,10 +5153,9 @@
           "CD": {
             "complexity": "poly",
             "refs": [
-              "TCZ_Forthcoming",
               "Wegener_2000"
             ],
-            "description": "Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. This preserves the ordered decision-diagram property and cannot create two accepting paths for a remaining assignment. For a similar closure property for parity nondeterminism, see Theorem~10.5.1 of \\citet{Wegener_2000}."
+            "description": "Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. This preserves the ordered decision-diagram property and cannot create two accepting paths for a remaining assignment. \\citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1."
           },
           "OR_BC": {
             "complexity": "no-quasi",
@@ -5352,7 +5348,7 @@
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "Since OBDD $\\subseteq$ FBDD and FBDD satisfies CD (the restrict operation), OBDD also satisfies CD. The variable ordering is preserved under conditioning (\\citet{Darwiche_2002}, Proposition 5.1)."
+            "description": "Since OBDD $\\subseteq$ FBDD and conditioning preserves the variable ordering, OBDD also satisfies CD (\\citet{Darwiche_2002}, Proposition 5.1)."
           },
           "SFO": {
             "complexity": "poly",
@@ -5426,18 +5422,18 @@
           "CE": {
             "complexity": "poly",
             "refs": [
-              "Amarilli_2018",
               "Darwiche_2002",
-              "Darwiche_2001a"
+              "Darwiche_2001a",
+              "Amarilli_2018",
+              "Wegener_2000"
             ],
             "derived": true,
-            "description": "\\edgeref{lang_981b62f0}{lang_6c130090} in polynomial time, and \\opref{lang_6c130090}{CE} in polynomial time. Therefore dec-DNNF supports Clausal Entailment in polynomial time.",
-            "derivationOrder": 1384,
+            "description": "Since \\opref{lang_981b62f0}{CO} in polynomial time, \\opref{lang_981b62f0}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citet{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_981b62f0} supports Clausal Entailment.",
+            "derivationOrder": 1367,
             "proofTrace": {
-              "rule": "query-via-succinctness",
-              "sourceLanguageId": "lang_981b62f0",
-              "targetLanguageId": "lang_6c130090",
-              "operation": "CE",
+              "rule": "lemma-forward",
+              "lemmaId": "co-cd-ce",
+              "languageId": "lang_981b62f0",
               "level": "poly"
             }
           },
@@ -5485,7 +5481,7 @@
             ],
             "derived": true,
             "description": "Since \\opref{lang_981b62f0}{CT} in polynomial time, Model Counting implies Validity \\citet{Darwiche_2002}. Therefore \\langref{lang_981b62f0} supports Validity.",
-            "derivationOrder": 1367,
+            "derivationOrder": 1369,
             "proofTrace": {
               "rule": "lemma-forward",
               "lemmaId": "ct-va",
@@ -5496,36 +5492,36 @@
           "IM": {
             "complexity": "poly",
             "refs": [
-              "Amarilli_2018",
               "Darwiche_2002",
-              "Darwiche_2001b"
+              "Amarilli_2018",
+              "Darwiche_2001b",
+              "Wegener_2000"
             ],
             "derived": true,
-            "description": "\\edgeref{lang_981b62f0}{lang_6c130090} in polynomial time, and \\opref{lang_6c130090}{IM} in polynomial time. Therefore dec-DNNF supports Implicant in polynomial time.",
-            "derivationOrder": 1413,
+            "description": "Since \\opref{lang_981b62f0}{VA} in polynomial time, \\opref{lang_981b62f0}{CD} in polynomial time, Validity ∧ Conditioning implies Implicant \\citet{Darwiche_2002}. Therefore \\langref{lang_981b62f0} supports Implicant.",
+            "derivationOrder": 1409,
             "proofTrace": {
-              "rule": "query-via-succinctness",
-              "sourceLanguageId": "lang_981b62f0",
-              "targetLanguageId": "lang_6c130090",
-              "operation": "IM",
+              "rule": "lemma-forward",
+              "lemmaId": "va-cd-im",
+              "languageId": "lang_981b62f0",
               "level": "poly"
             }
           },
           "ME": {
             "complexity": "poly",
             "refs": [
-              "Amarilli_2018",
               "Darwiche_2002",
-              "Darwiche_2001a"
+              "Amarilli_2018",
+              "Darwiche_2001a",
+              "Wegener_2000"
             ],
             "derived": true,
-            "description": "\\edgeref{lang_981b62f0}{lang_6c130090} in polynomial time, and \\opref{lang_6c130090}{ME} in polynomial time. Therefore dec-DNNF supports Model Enumeration in polynomial time.",
-            "derivationOrder": 1395,
+            "description": "Since \\opref{lang_981b62f0}{CO} in polynomial time, \\opref{lang_981b62f0}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citet{Darwiche_2002}. Therefore \\langref{lang_981b62f0} supports Model Enumeration.",
+            "derivationOrder": 1366,
             "proofTrace": {
-              "rule": "query-via-succinctness",
-              "sourceLanguageId": "lang_981b62f0",
-              "targetLanguageId": "lang_6c130090",
-              "operation": "ME",
+              "rule": "lemma-forward",
+              "lemmaId": "co-cd-me",
+              "languageId": "lang_981b62f0",
               "level": "poly"
             }
           },
@@ -5641,6 +5637,13 @@
               "pivotOp": "FO",
               "level": "quasi"
             }
+          },
+          "CD": {
+            "complexity": "poly",
+            "refs": [
+              "Wegener_2000"
+            ],
+            "description": "A \\langref{dec-DNNF} can be viewed as an \\langref{FBDD} with additional decomposable $\\land$-nodes. Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The extra $\\land$-nodes cause no problem: recurse through them, and decomposability is preserved because conditioning only removes variables from subcircuits. \\citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1."
           }
         }
       },
@@ -5657,18 +5660,18 @@
           "CE": {
             "complexity": "poly",
             "refs": [
-              "Amarilli_2018",
               "Darwiche_2002",
-              "Darwiche_2001a"
+              "Darwiche_2001a",
+              "Amarilli_2018",
+              "Wegener_2000"
             ],
             "derived": true,
-            "description": "\\edgeref{lang_0f27d539}{lang_6c130090} in polynomial time, and \\opref{lang_6c130090}{CE} in polynomial time. Therefore dec-SDNNF supports Clausal Entailment in polynomial time.",
-            "derivationOrder": 1385,
+            "description": "Since \\opref{lang_0f27d539}{CO} in polynomial time, \\opref{lang_0f27d539}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citet{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_0f27d539} supports Clausal Entailment.",
+            "derivationOrder": 1371,
             "proofTrace": {
-              "rule": "query-via-succinctness",
-              "sourceLanguageId": "lang_0f27d539",
-              "targetLanguageId": "lang_6c130090",
-              "operation": "CE",
+              "rule": "lemma-forward",
+              "lemmaId": "co-cd-ce",
+              "languageId": "lang_0f27d539",
               "level": "poly"
             }
           },
@@ -5716,7 +5719,7 @@
             ],
             "derived": true,
             "description": "Since \\opref{lang_0f27d539}{CT} in polynomial time, Model Counting implies Validity \\citet{Darwiche_2002}. Therefore \\langref{lang_0f27d539} supports Validity.",
-            "derivationOrder": 1369,
+            "derivationOrder": 1373,
             "proofTrace": {
               "rule": "lemma-forward",
               "lemmaId": "ct-va",
@@ -5727,36 +5730,36 @@
           "IM": {
             "complexity": "poly",
             "refs": [
-              "Amarilli_2018",
               "Darwiche_2002",
-              "Darwiche_2001b"
+              "Amarilli_2018",
+              "Darwiche_2001b",
+              "Wegener_2000"
             ],
             "derived": true,
-            "description": "\\edgeref{lang_0f27d539}{lang_6c130090} in polynomial time, and \\opref{lang_6c130090}{IM} in polynomial time. Therefore dec-SDNNF supports Implicant in polynomial time.",
-            "derivationOrder": 1414,
+            "description": "Since \\opref{lang_0f27d539}{VA} in polynomial time, \\opref{lang_0f27d539}{CD} in polynomial time, Validity ∧ Conditioning implies Implicant \\citet{Darwiche_2002}. Therefore \\langref{lang_0f27d539} supports Implicant.",
+            "derivationOrder": 1410,
             "proofTrace": {
-              "rule": "query-via-succinctness",
-              "sourceLanguageId": "lang_0f27d539",
-              "targetLanguageId": "lang_6c130090",
-              "operation": "IM",
+              "rule": "lemma-forward",
+              "lemmaId": "va-cd-im",
+              "languageId": "lang_0f27d539",
               "level": "poly"
             }
           },
           "ME": {
             "complexity": "poly",
             "refs": [
-              "Amarilli_2018",
               "Darwiche_2002",
-              "Darwiche_2001a"
+              "Amarilli_2018",
+              "Darwiche_2001a",
+              "Wegener_2000"
             ],
             "derived": true,
-            "description": "\\edgeref{lang_0f27d539}{lang_6c130090} in polynomial time, and \\opref{lang_6c130090}{ME} in polynomial time. Therefore dec-SDNNF supports Model Enumeration in polynomial time.",
-            "derivationOrder": 1396,
+            "description": "Since \\opref{lang_0f27d539}{CO} in polynomial time, \\opref{lang_0f27d539}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citet{Darwiche_2002}. Therefore \\langref{lang_0f27d539} supports Model Enumeration.",
+            "derivationOrder": 1370,
             "proofTrace": {
-              "rule": "query-via-succinctness",
-              "sourceLanguageId": "lang_0f27d539",
-              "targetLanguageId": "lang_6c130090",
-              "operation": "ME",
+              "rule": "lemma-forward",
+              "lemmaId": "co-cd-me",
+              "languageId": "lang_0f27d539",
               "level": "poly"
             }
           },
@@ -5887,6 +5890,13 @@
               "pivotOp": "FO",
               "level": "quasi"
             }
+          },
+          "CD": {
+            "complexity": "poly",
+            "refs": [
+              "Wegener_2000"
+            ],
+            "description": "A \\langref{dec-SDNNF} can be viewed as a structured \\langref{FBDD}-style decision representation with additional structured decomposable $\\land$-nodes. Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The extra $\\land$-nodes cause no problem: recurse through them, and structured decomposability is preserved because conditioning only removes variables from subcircuits. \\citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1."
           }
         }
       },
@@ -5903,19 +5913,19 @@
           "CE": {
             "complexity": "poly",
             "refs": [
+              "Darwiche_2002",
+              "Darwiche_2001a",
               "Oztok_2014",
               "Amarilli_2018",
-              "Darwiche_2002",
-              "Darwiche_2001a"
+              "Wegener_2000"
             ],
             "derived": true,
-            "description": "\\edgeref{lang_4ae03bc8}{lang_6c130090} in polynomial time, and \\opref{lang_6c130090}{CE} in polynomial time. Therefore dec-SDNNF$_T$ supports Clausal Entailment in polynomial time.",
-            "derivationOrder": 1386,
+            "description": "Since \\opref{lang_4ae03bc8}{CO} in polynomial time, \\opref{lang_4ae03bc8}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citet{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_4ae03bc8} supports Clausal Entailment.",
+            "derivationOrder": 1375,
             "proofTrace": {
-              "rule": "query-via-succinctness",
-              "sourceLanguageId": "lang_4ae03bc8",
-              "targetLanguageId": "lang_6c130090",
-              "operation": "CE",
+              "rule": "lemma-forward",
+              "lemmaId": "co-cd-ce",
+              "languageId": "lang_4ae03bc8",
               "level": "poly"
             }
           },
@@ -5929,7 +5939,7 @@
             ],
             "derived": true,
             "description": "Since \\opref{lang_4ae03bc8}{SE} in polynomial time, Sentential Entailment implies Equivalence \\citet{Darwiche_2002}. Therefore \\langref{lang_4ae03bc8} supports Equivalence.",
-            "derivationOrder": 1409,
+            "derivationOrder": 1412,
             "proofTrace": {
               "rule": "lemma-forward",
               "lemmaId": "se-eq",
@@ -5984,7 +5994,7 @@
             ],
             "derived": true,
             "description": "Since \\opref{lang_4ae03bc8}{CT} in polynomial time, Model Counting implies Validity \\citet{Darwiche_2002}. Therefore \\langref{lang_4ae03bc8} supports Validity.",
-            "derivationOrder": 1371,
+            "derivationOrder": 1377,
             "proofTrace": {
               "rule": "lemma-forward",
               "lemmaId": "ct-va",
@@ -6001,7 +6011,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_4ae03bc8}{lang_91f812d0} in polynomial time, and \\opref{lang_91f812d0}{SE} in polynomial time. Therefore dec-SDNNF$_T$ supports Sentential Entailment in polynomial time.",
-            "derivationOrder": 1391,
+            "derivationOrder": 1394,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_4ae03bc8",
@@ -6013,38 +6023,38 @@
           "IM": {
             "complexity": "poly",
             "refs": [
+              "Darwiche_2002",
               "Oztok_2014",
               "Amarilli_2018",
-              "Darwiche_2002",
-              "Darwiche_2001b"
+              "Darwiche_2001b",
+              "Wegener_2000"
             ],
             "derived": true,
-            "description": "\\edgeref{lang_4ae03bc8}{lang_6c130090} in polynomial time, and \\opref{lang_6c130090}{IM} in polynomial time. Therefore dec-SDNNF$_T$ supports Implicant in polynomial time.",
-            "derivationOrder": 1415,
+            "description": "Since \\opref{lang_4ae03bc8}{VA} in polynomial time, \\opref{lang_4ae03bc8}{CD} in polynomial time, Validity ∧ Conditioning implies Implicant \\citet{Darwiche_2002}. Therefore \\langref{lang_4ae03bc8} supports Implicant.",
+            "derivationOrder": 1411,
             "proofTrace": {
-              "rule": "query-via-succinctness",
-              "sourceLanguageId": "lang_4ae03bc8",
-              "targetLanguageId": "lang_6c130090",
-              "operation": "IM",
+              "rule": "lemma-forward",
+              "lemmaId": "va-cd-im",
+              "languageId": "lang_4ae03bc8",
               "level": "poly"
             }
           },
           "ME": {
             "complexity": "poly",
             "refs": [
+              "Darwiche_2002",
               "Oztok_2014",
               "Amarilli_2018",
-              "Darwiche_2002",
-              "Darwiche_2001a"
+              "Darwiche_2001a",
+              "Wegener_2000"
             ],
             "derived": true,
-            "description": "\\edgeref{lang_4ae03bc8}{lang_6c130090} in polynomial time, and \\opref{lang_6c130090}{ME} in polynomial time. Therefore dec-SDNNF$_T$ supports Model Enumeration in polynomial time.",
-            "derivationOrder": 1397,
+            "description": "Since \\opref{lang_4ae03bc8}{CO} in polynomial time, \\opref{lang_4ae03bc8}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citet{Darwiche_2002}. Therefore \\langref{lang_4ae03bc8} supports Model Enumeration.",
+            "derivationOrder": 1374,
             "proofTrace": {
-              "rule": "query-via-succinctness",
-              "sourceLanguageId": "lang_4ae03bc8",
-              "targetLanguageId": "lang_6c130090",
-              "operation": "ME",
+              "rule": "lemma-forward",
+              "lemmaId": "co-cd-me",
+              "languageId": "lang_4ae03bc8",
               "level": "poly"
             }
           }
@@ -6110,6 +6120,31 @@
               "pivotOp": "FO",
               "level": "quasi"
             }
+          },
+          "CD": {
+            "complexity": "poly",
+            "refs": [
+              "Wegener_2000"
+            ],
+            "description": "For each fixed vtree $T$, a \\langfam{dec-SDNNF}{T} can be viewed as a fixed-structure \\langref{FBDD}-style decision representation with additional decomposable $\\land$-nodes respecting $T$. Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The extra $\\land$-nodes cause no problem: recurse through them, and the fixed vtree is preserved because conditioning only removes variables from subcircuits. \\citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1."
+          },
+          "OR_BC": {
+            "complexity": "no-quasi",
+            "refs": [
+              "Darwiche_2002",
+              "TCZ_Forthcoming",
+              "Wegener_2000"
+            ],
+            "derived": true,
+            "description": "Since Conditioning ∧ Bounded Disjunction implies Singleton Forgetting \\citet{Darwiche_2002}, and since \\nopref{lang_4ae03bc8}{SFO} in quasipolynomial time, and since \\opref{lang_4ae03bc8}{CD} in quasipolynomial time, then Bounded Disjunction is unsupported by dec-SDNNF$_T$ in quasipolynomial time as well.",
+            "derivationOrder": 1514,
+            "proofTrace": {
+              "rule": "lemma-contrapositive",
+              "lemmaId": "cd-or-bc-sfo",
+              "languageId": "lang_4ae03bc8",
+              "pivotOp": "OR_BC",
+              "level": "quasi"
+            }
           }
         }
       },
@@ -6136,7 +6171,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_82fa749e}{lang_6c130090} in polynomial time, and \\opref{lang_6c130090}{CE} in polynomial time. Therefore cSDD$_T$ supports Clausal Entailment in polynomial time.",
-            "derivationOrder": 1387,
+            "derivationOrder": 1390,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_82fa749e",
@@ -6156,7 +6191,7 @@
             ],
             "derived": true,
             "description": "Since \\opref{lang_82fa749e}{SE} in polynomial time, Sentential Entailment implies Equivalence \\citet{Darwiche_2002}. Therefore \\langref{lang_82fa749e} supports Equivalence.",
-            "derivationOrder": 1410,
+            "derivationOrder": 1413,
             "proofTrace": {
               "rule": "lemma-forward",
               "lemmaId": "se-eq",
@@ -6214,7 +6249,7 @@
             ],
             "derived": true,
             "description": "Since \\opref{lang_82fa749e}{CT} in polynomial time, Model Counting implies Validity \\citet{Darwiche_2002}. Therefore \\langref{lang_82fa749e} supports Validity.",
-            "derivationOrder": 1373,
+            "derivationOrder": 1379,
             "proofTrace": {
               "rule": "lemma-forward",
               "lemmaId": "ct-va",
@@ -6233,7 +6268,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_82fa749e}{lang_1afefbe2} in polynomial time, and \\opref{lang_1afefbe2}{IM} in polynomial time. Therefore cSDD$_T$ supports Implicant in polynomial time.",
-            "derivationOrder": 1390,
+            "derivationOrder": 1393,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_82fa749e",
@@ -6252,7 +6287,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_82fa749e}{lang_91f812d0} in polynomial time, and \\opref{lang_91f812d0}{SE} in polynomial time. Therefore cSDD$_T$ supports Sentential Entailment in polynomial time.",
-            "derivationOrder": 1392,
+            "derivationOrder": 1395,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_82fa749e",
@@ -6346,7 +6381,7 @@
             ],
             "derived": true,
             "description": "Since Negation ∧ Bounded Disjunction implies Bounded Conjunction \\citet{Darwiche_2002}, and since \\nopref{lang_82fa749e}{AND_BC}, and since \\opref{lang_82fa749e}{NOT_C} in polynomial time, then Bounded Disjunction is unsupported by cSDD$_T$ as well.",
-            "derivationOrder": 1513,
+            "derivationOrder": 1515,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-bc-and-bc",
@@ -6430,7 +6465,7 @@
             ],
             "derived": true,
             "description": "Since Equivalence implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_e827cf31}{VA} assuming P \\neq NP, then Equivalence is unsupported by nOBDD$_<$ as well assuming P \\neq NP.",
-            "derivationOrder": 1514,
+            "derivationOrder": 1516,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -6449,7 +6484,7 @@
             ],
             "derived": true,
             "description": "Since Sentential Entailment implies Equivalence \\citet{Darwiche_2002}, and since \\nopref{lang_e827cf31}{EQ} assuming P \\neq NP, then Sentential Entailment is unsupported by nOBDD$_<$ as well assuming P \\neq NP.",
-            "derivationOrder": 1515,
+            "derivationOrder": 1517,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "se-eq",
@@ -6468,7 +6503,7 @@
             ],
             "derived": true,
             "description": "Since Implicant implies Validity \\citet{Darwiche_2002}, and since \\nopref{lang_e827cf31}{VA} assuming P \\neq NP, then Implicant is unsupported by nOBDD$_<$ as well assuming P \\neq NP.",
-            "derivationOrder": 1516,
+            "derivationOrder": 1518,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -6504,11 +6539,11 @@
               "Darwiche_2001a",
               "Amarilli_2018",
               "Pipatsrisawat_2008",
-              "TCZ_Forthcoming"
+              "Wegener_2000"
             ],
             "derived": true,
             "description": "Since \\opref{lang_e827cf31}{CO} in polynomial time, \\opref{lang_e827cf31}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citet{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_e827cf31} supports Clausal Entailment.",
-            "derivationOrder": 1375,
+            "derivationOrder": 1381,
             "proofTrace": {
               "rule": "lemma-forward",
               "lemmaId": "co-cd-ce",
@@ -6523,11 +6558,11 @@
               "Amarilli_2018",
               "Pipatsrisawat_2008",
               "Darwiche_2001a",
-              "TCZ_Forthcoming"
+              "Wegener_2000"
             ],
             "derived": true,
             "description": "Since \\opref{lang_e827cf31}{CO} in polynomial time, \\opref{lang_e827cf31}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citet{Darwiche_2002}. Therefore \\langref{lang_e827cf31} supports Model Enumeration.",
-            "derivationOrder": 1374,
+            "derivationOrder": 1380,
             "proofTrace": {
               "rule": "lemma-forward",
               "lemmaId": "co-cd-me",
@@ -6565,9 +6600,9 @@
           "CD": {
             "complexity": "poly",
             "refs": [
-              "TCZ_Forthcoming"
+              "Wegener_2000"
             ],
-            "description": "Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. The fixed order $<$ is preserved."
+            "description": "Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The fixed order $<$ is preserved. \\citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1."
           },
           "FO": {
             "complexity": "poly",
@@ -6591,7 +6626,7 @@
             ],
             "derived": true,
             "description": "Since \\opref{lang_e827cf31}{OR_C} in polynomial time, Disjunction implies Bounded Disjunction \\citet{Darwiche_2002}. Therefore \\langref{lang_e827cf31} supports Bounded Disjunction.",
-            "derivationOrder": 1376,
+            "derivationOrder": 1382,
             "proofTrace": {
               "rule": "lemma-forward",
               "lemmaId": "or-c-or-bc",
@@ -6607,7 +6642,7 @@
             ],
             "derived": true,
             "description": "Since \\opref{lang_e827cf31}{FO} in polynomial time, Forgetting implies Singleton Forgetting \\citet{Darwiche_2002}. Therefore \\langref{lang_e827cf31} supports Singleton Forgetting.",
-            "derivationOrder": 1377,
+            "derivationOrder": 1383,
             "proofTrace": {
               "rule": "lemma-forward",
               "lemmaId": "fo-sfo",
@@ -6634,12 +6669,11 @@
               "Darwiche_2001a",
               "Amarilli_2018",
               "Wegener_2000",
-              "Pipatsrisawat_2008",
-              "TCZ_Forthcoming"
+              "Pipatsrisawat_2008"
             ],
             "derived": true,
             "description": "Since \\opref{lang_43a33aec}{CO} in polynomial time, \\opref{lang_43a33aec}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citet{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_43a33aec} supports Clausal Entailment.",
-            "derivationOrder": 1379,
+            "derivationOrder": 1385,
             "proofTrace": {
               "rule": "lemma-forward",
               "lemmaId": "co-cd-ce",
@@ -6657,7 +6691,7 @@
             ],
             "derived": true,
             "description": "Since \\opref{lang_43a33aec}{SE} in polynomial time, Sentential Entailment implies Equivalence \\citet{Darwiche_2002}. Therefore \\langref{lang_43a33aec} supports Equivalence.",
-            "derivationOrder": 1412,
+            "derivationOrder": 1415,
             "proofTrace": {
               "rule": "lemma-forward",
               "lemmaId": "se-eq",
@@ -6713,7 +6747,7 @@
             ],
             "derived": true,
             "description": "Since \\opref{lang_43a33aec}{CT} in polynomial time, Model Counting implies Validity \\citet{Darwiche_2002}. Therefore \\langref{lang_43a33aec} supports Validity.",
-            "derivationOrder": 1381,
+            "derivationOrder": 1387,
             "proofTrace": {
               "rule": "lemma-forward",
               "lemmaId": "ct-va",
@@ -6730,7 +6764,7 @@
             ],
             "derived": true,
             "description": "\\edgeref{lang_43a33aec}{lang_91f812d0} in polynomial time, and \\opref{lang_91f812d0}{SE} in polynomial time. Therefore uOBDD$_<$ supports Sentential Entailment in polynomial time.",
-            "derivationOrder": 1393,
+            "derivationOrder": 1396,
             "proofTrace": {
               "rule": "query-via-succinctness",
               "sourceLanguageId": "lang_43a33aec",
@@ -6745,12 +6779,11 @@
               "Darwiche_2002",
               "Wegener_2000",
               "Amarilli_2018",
-              "Darwiche_2001b",
-              "TCZ_Forthcoming"
+              "Darwiche_2001b"
             ],
             "derived": true,
             "description": "Since \\opref{lang_43a33aec}{VA} in polynomial time, \\opref{lang_43a33aec}{CD} in polynomial time, Validity ∧ Conditioning implies Implicant \\citet{Darwiche_2002}. Therefore \\langref{lang_43a33aec} supports Implicant.",
-            "derivationOrder": 1411,
+            "derivationOrder": 1414,
             "proofTrace": {
               "rule": "lemma-forward",
               "lemmaId": "va-cd-im",
@@ -6765,12 +6798,11 @@
               "Amarilli_2018",
               "Wegener_2000",
               "Pipatsrisawat_2008",
-              "Darwiche_2001a",
-              "TCZ_Forthcoming"
+              "Darwiche_2001a"
             ],
             "derived": true,
             "description": "Since \\opref{lang_43a33aec}{CO} in polynomial time, \\opref{lang_43a33aec}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citet{Darwiche_2002}. Therefore \\langref{lang_43a33aec} supports Model Enumeration.",
-            "derivationOrder": 1378,
+            "derivationOrder": 1384,
             "proofTrace": {
               "rule": "lemma-forward",
               "lemmaId": "co-cd-me",
@@ -6808,19 +6840,20 @@
           "CD": {
             "complexity": "poly",
             "refs": [
-              "TCZ_Forthcoming"
+              "Wegener_2000"
             ],
-            "description": "Conditioning is the restrict operation: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term, or equivalently prune inconsistent edges and simplify. The fixed order $<$ is preserved, and the restriction cannot create two accepting paths for a remaining assignment."
+            "description": "Conditioning is easy on branching programs: replace each decision node labeled by a conditioned variable with the child consistent with the conditioning term. The fixed order $<$ is preserved, and the operation cannot create two accepting paths for a remaining assignment. \\citet{Wegener_2000} gives this argument for EXOR-OBDDs in Theorem 10.5.1."
           },
           "OR_BC": {
             "complexity": "no-quasi",
             "refs": [
               "Darwiche_2002",
-              "TCZ_Forthcoming"
+              "TCZ_Forthcoming",
+              "Wegener_2000"
             ],
             "derived": true,
             "description": "Since Conditioning ∧ Bounded Disjunction implies Singleton Forgetting \\citet{Darwiche_2002}, and since \\nopref{lang_43a33aec}{SFO} in quasipolynomial time, and since \\opref{lang_43a33aec}{CD} in quasipolynomial time, then Bounded Disjunction is unsupported by uOBDD$_<$ in quasipolynomial time as well.",
-            "derivationOrder": 1519,
+            "derivationOrder": 1521,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "cd-or-bc-sfo",
@@ -6846,7 +6879,7 @@
             ],
             "derived": true,
             "description": "Since Forgetting implies Singleton Forgetting \\citet{Darwiche_2002}, and since \\nopref{lang_43a33aec}{SFO} in quasipolynomial time, then Forgetting is unsupported by uOBDD$_<$ in quasipolynomial time as well.",
-            "derivationOrder": 1518,
+            "derivationOrder": 1520,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -12116,7 +12149,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_83e3b023}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to cSDD in polynomial time, IP could support Model Counting by first compiling to cSDD. Therefore IP cannot compile to cSDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1520,
+          "derivationOrder": 1522,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12135,7 +12168,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_6c130090}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-DNNF in polynomial time, IP could support Model Counting by first compiling to d-DNNF. Therefore IP cannot compile to d-DNNF in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1521,
+          "derivationOrder": 1523,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12155,7 +12188,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_ea9b5299}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-SDNNF in polynomial time, IP could support Model Counting by first compiling to d-SDNNF. Therefore IP cannot compile to d-SDNNF in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1522,
+          "derivationOrder": 1524,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12176,7 +12209,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_91f812d0}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-SDNNF$_T$ in polynomial time, IP could support Model Counting by first compiling to d-SDNNF$_T$. Therefore IP cannot compile to d-SDNNF$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1523,
+          "derivationOrder": 1525,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12351,7 +12384,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_1afefbe2}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to SDD in polynomial time, IP could support Model Counting by first compiling to SDD. Therefore IP cannot compile to SDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1524,
+          "derivationOrder": 1526,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12373,7 +12406,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_9c84a267}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to SDD$_T$ in polynomial time, IP could support Model Counting by first compiling to SDD$_T$. Therefore IP cannot compile to SDD$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1525,
+          "derivationOrder": 1527,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12439,7 +12472,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_4e62a038}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uFBDD in polynomial time, IP could support Model Counting by first compiling to uFBDD. Therefore IP cannot compile to uFBDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1526,
+          "derivationOrder": 1528,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12459,7 +12492,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_c2df8c2b}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uOBDD in polynomial time, IP could support Model Counting by first compiling to uOBDD. Therefore IP cannot compile to uOBDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1527,
+          "derivationOrder": 1529,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12570,7 +12603,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_82fa749e}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to cSDD$_T$ in polynomial time, IP could support Model Counting by first compiling to cSDD$_T$. Therefore IP cannot compile to cSDD$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1528,
+          "derivationOrder": 1530,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12612,7 +12645,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_43a33aec}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uOBDD$_<$ in polynomial time, IP could support Model Counting by first compiling to uOBDD$_<$. Therefore IP cannot compile to uOBDD$_<$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1529,
+          "derivationOrder": 1531,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
