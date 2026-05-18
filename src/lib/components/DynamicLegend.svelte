@@ -141,6 +141,42 @@
     return false;
   });
 
+  const hasVisibleDerivedCells = $derived.by(() => {
+    if (viewMode === 'succinctness') {
+      const { matrix, languageIds } = filteredData.adjacencyMatrix;
+      for (let i = 0; i < languageIds.length; i++) {
+        for (let j = 0; j < languageIds.length; j++) {
+          const relation = matrix[i][j];
+          if (!relation?.derived && !relation?.dimmed) continue;
+          const edgeId = `${languageIds[i]}->${languageIds[j]}`;
+          if (filteredData.visibleEdgeIds.has(edgeId)) return true;
+        }
+      }
+      return false;
+    }
+
+    if (viewMode === 'queries' || viewMode === 'transforms') {
+      const isQueries = viewMode === 'queries';
+      const visibleOperationIds = isQueries
+        ? filteredData.visibleQueryIds
+        : filteredData.visibleTransformationIds;
+
+      for (const lang of filteredData.languages) {
+        const supportMap = isQueries
+          ? lang.properties.queries
+          : lang.properties.transformations;
+        if (!supportMap) continue;
+
+        for (const [opId, support] of Object.entries(supportMap)) {
+          if (!visibleOperationIds.has(opId)) continue;
+          if (support.derived || support.dimmed) return true;
+        }
+      }
+    }
+
+    return false;
+  });
+
   // Determine which operation tractability symbols are visible on graph nodes
   // Only show when operation filters are active (nodes have labelSuffix)
   const visibleOperationDisplays = $derived.by(() => {
@@ -360,6 +396,15 @@
       {/each}
     </div>
   {/if}
+
+  {#if hasVisibleDerivedCells}
+    <div class="legend-section">
+      <div class="legend-row">
+        <span class="derived-swatch" aria-hidden="true"></span>
+        <span>Derived automatically</span>
+      </div>
+    </div>
+  {/if}
 </div>
 
 <style>
@@ -446,6 +491,21 @@
     font-family: KaTeX_Main, "Times New Roman", serif;
     font-size: 1rem;
     font-weight: 700;
+  }
+
+  .derived-swatch {
+    display: inline-block;
+    width: 1.65rem;
+    height: 1.35rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.2rem;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 6px,
+      rgba(156, 163, 175, 0.3) 6px,
+      rgba(156, 163, 175, 0.3) 7px
+    );
   }
 
   /* Matrix view legend styles */

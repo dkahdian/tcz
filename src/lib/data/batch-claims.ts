@@ -248,7 +248,7 @@ function clearExpandedBatchClaims(database: BatchExpansionData): void {
       const supportMap = language.properties?.[opType];
       if (!supportMap) continue;
       for (const [op, support] of Object.entries(supportMap)) {
-        if (support?.derived === true && support.batchId) {
+        if (support?.batchId) {
           supportMap[op] = {
             complexity: 'unknown-to-us',
             refs: []
@@ -290,7 +290,7 @@ export function expandBatchClaims(database: BatchExpansionData): number {
         complexity: batch.status,
         refs,
         description: citedDescription.text,
-        derived: true,
+        derived: false,
         batchId: batch.id
       };
       if (batch.assumption) support.assumption = batch.assumption;

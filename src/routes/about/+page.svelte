@@ -184,7 +184,7 @@
 		<section>
 			<h2>Automated reasoning</h2>
 			<p>
-				Not all of folklore is explicitly documented. We use automated reasoning to derive portions of the zoo, and provide sketch proofs. Such results are shown with gray diagonal stripes.
+				Not all of folklore is explicitly documented. We use automated reasoning to derive portions of the zoo, and provide sketch proofs.
 			</p>
 		</section>
 	</main>

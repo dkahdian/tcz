@@ -135,8 +135,8 @@ export interface KCOpSupport {
 }
 
 /**
- * A human-authored grouped operation claim, expanded into ordinary derived
- * operation support entries before propagation.
+ * A human-authored grouped operation claim, expanded into ordinary operation
+ * support entries before propagation.
  */
 export type KCBatchLanguageRef =
   | { kind: 'current' }

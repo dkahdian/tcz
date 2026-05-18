@@ -196,7 +196,7 @@
         ]
       },
       "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langfam{d-SDNNF}{T},\n  \\langfam{uOBDD}{<}\n\\},\n\\]\n$\\mathcal{L}$ supports Bounded Disjunction not in polynomial time (quasipolynomial unknown) \\citet{Vinall-Smeeth_2024}.",
-      "descriptionTemplate": "The proof of Theorem 5 of \\citet{Vinall-Smeeth_2024} gives unambiguous DNFs $f$ and $g$ of polynomial size such that $f \\lor g$ requires $d$-SDNNF size $s^{\\widetilde{\\Omega}(\\log s)}$. An unambiguous DNF can be transformed into a polynomial-size $\\mathcal{L}$ representation, and every $\\mathcal{L}$ representation can be transformed into polynomial-size $d$-SDNNF. Thus polynomial-time bounded disjunction for $\\mathcal{L}$ would contradict the lower bound.",
+      "descriptionTemplate": "The proof of Theorem 5 of \\citet{Vinall-Smeeth_2024} gives unambiguous DNF representations of functions $f$ and $g$ such that, measured in the size $s$ of the corresponding source representations, $f \\lor g$ requires $d$-SDNNF size $s^{\\widetilde{\\Omega}(\\log s)}$. The unambiguous DNF representations can be transformed into $\\mathcal{L}$ representations with only polynomial overhead, and every $\\mathcal{L}$ representation can be transformed into $d$-SDNNF with only polynomial overhead. Thus polynomial-time bounded disjunction for $\\mathcal{L}$ would contradict the lower bound.",
       "refs": [
         "Vinall-Smeeth_2024"
       ]
@@ -232,7 +232,7 @@
         ]
       },
       "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langref{cSDD},\n  \\langref{d-DNNF},\n  \\langfam{d-SDNNF}{T},\n  \\langref{dec-DNNF},\n  \\langref{dec-SDNNF},\n  \\langfam{dec-SDNNF}{T},\n  \\langref{SDD},\n  \\langref{uFBDD},\n  \\langfam{uOBDD}{<}\n\\},\n\\]\n$\\mathcal{L}$ supports Singleton Forgetting not in quasipolynomial time \\citet{TCZ_Forthcoming}.",
-      "descriptionTemplate": "If $\\mathcal{L}$ supported Singleton Forgetting in quasipolynomial time, then given two $\\mathcal{L}$ circuits $f$ and $g$ we could form the polynomial-size decision $(x \\land f) \\lor (\\neg x \\land g)$ and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for $\\mathcal{L}$, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
+      "descriptionTemplate": "If $\\mathcal{L}$ supported Singleton Forgetting in quasipolynomial time, then given two $\\mathcal{L}$ circuits $f$ and $g$ we could form the decision $(x \\land f) \\lor (\\neg x \\land g)$ with only constant overhead and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for $\\mathcal{L}$, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
       "refs": [
         "TCZ_Forthcoming"
       ]
@@ -365,7 +365,7 @@
         ]
       },
       "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langref{OBDD},\n  \\langfam{OBDD}{<},\n  \\langfam{SDD}{T},\n  \\langfam{cSDD}{T}\n\\},\n\\]\n$\\mathcal{L}$ supports Forgetting not in polynomial time (quasipolynomial unknown) \\citet{Darwiche_2002,VanDenBroeck_2015}.",
-      "descriptionTemplate": "A polynomial-time forgetting procedure for $\\mathcal{L}$ would turn every \\langref{DNF} sentence into an equivalent polynomial-size $\\mathcal{L}$ representation after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{$\\mathcal{L}$} \\citet{TCZ_Forthcoming}.",
+      "descriptionTemplate": "A polynomial-time forgetting procedure for $\\mathcal{L}$ would turn every \\langref{DNF} sentence into an equivalent $\\mathcal{L}$ representation of size polynomial in the input DNF after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{$\\mathcal{L}$} \\citet{TCZ_Forthcoming}.",
       "refs": [
         "Darwiche_2002",
         "VanDenBroeck_2015"
@@ -571,7 +571,7 @@
               "Darwiche_2002"
             ],
             "description": "If \\langref{CNF} supported FO, then the consistency of any CNF sentence $\\Sigma$ could be tested in polynomial time: represent $\\Sigma$ in \\langref{CNF}, compute $\\exists\\text{Vars}(\\Sigma).\\Sigma$, and check the resulting constant sentence. This would decide CNF consistency in polynomial time, implying P = NP (\\citet{Darwiche_2002}, Proposition 5.1).",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-fo-cnf-consistency-lower-bound",
             "assumption": "P \\neq NP"
           }
@@ -747,7 +747,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langref{cSDD}, every clause has a polynomial-size representation. If \\langref{cSDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{cSDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{cSDD} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "OR_C": {
@@ -759,7 +759,7 @@
               "Amarilli_2018"
             ],
             "description": "In the language \\langref{cSDD}, every term has a polynomial-size representation. If \\langref{cSDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{cSDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{cSDD} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
           "AND_BC": {
@@ -771,7 +771,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{cSDD} and \\edgeref{cSDD}{DNNF}, \\langref{cSDD} cannot support bounded conjunction.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
           "OR_BC": {
@@ -783,7 +783,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{cSDD} and \\edgeref{cSDD}{SDNNF}, \\langref{cSDD} cannot support bounded disjunction in quasipolynomial time.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
           "SFO": {
@@ -791,8 +791,8 @@
             "refs": [
               "TCZ_Forthcoming"
             ],
-            "description": "If \\langref{cSDD} supported Singleton Forgetting in quasipolynomial time, then given two \\langref{cSDD} circuits $f$ and $g$ we could form the polynomial-size decision $(x \\land f) \\lor (\\neg x \\land g)$ and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langref{cSDD}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "description": "If \\langref{cSDD} supported Singleton Forgetting in quasipolynomial time, then given two \\langref{cSDD} circuits $f$ and $g$ we could form the decision $(x \\land f) \\lor (\\neg x \\land g)$ with only constant overhead and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langref{cSDD}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
+            "derived": false,
             "batchId": "tcz-bounded-disjunction-singleton-forgetting-lower-bound"
           },
           "FO": {
@@ -957,7 +957,7 @@
               "Darwiche_2001a"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{d-DNNF} and \\edgeref{d-DNNF}{DNNF}, \\langref{d-DNNF} cannot support bounded conjunction.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
           "CD": {
@@ -994,7 +994,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any d-DNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{d-DNNF} and \\langref{d-DNNF} compiles to itself, \\langref{d-DNNF} cannot support bounded disjunction in quasipolynomial time.\n\nNote that a quasipolynomial lower bound for bounded disjunction of \\langref{d-SDNNF} was shown by \\citet{Vinall-Smeeth_2024}.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-d-dnnf-bounded-disjunction-lower-bound"
           },
           "OR_C": {
@@ -1038,8 +1038,8 @@
             "refs": [
               "TCZ_Forthcoming"
             ],
-            "description": "If \\langref{d-DNNF} supported Singleton Forgetting in quasipolynomial time, then given two \\langref{d-DNNF} circuits $f$ and $g$ we could form the polynomial-size decision $(x \\land f) \\lor (\\neg x \\land g)$ and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langref{d-DNNF}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "description": "If \\langref{d-DNNF} supported Singleton Forgetting in quasipolynomial time, then given two \\langref{d-DNNF} circuits $f$ and $g$ we could form the decision $(x \\land f) \\lor (\\neg x \\land g)$ with only constant overhead and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langref{d-DNNF}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
+            "derived": false,
             "batchId": "tcz-bounded-disjunction-singleton-forgetting-lower-bound"
           }
         }
@@ -1218,7 +1218,7 @@
             "refs": [
               "Pipatsrisawat_2008"
             ],
-            "description": "If \\langref{d-SDNNF} satisfied FO, then every \\langref{DNF} could be compiled to an equivalent \\langref{d-SDNNF} of polynomial size (using fresh selector variables and applying FO). Since specific \\langref{DNF}s require exponential-size \\langref{d-SDNNF} representations (unconditionally), this is impossible. This unconditional result applies to the fixed-vtree case (\\citet{Pipatsrisawat_2008}, Proposition 4)."
+            "description": "If \\langref{d-SDNNF} satisfied FO, then every \\langref{DNF} could be compiled to an equivalent \\langref{d-SDNNF} of size polynomial in the input DNF (using fresh selector variables and applying FO). Since specific \\langref{DNF}s require exponential-size \\langref{d-SDNNF} representations (unconditionally), this is impossible. This unconditional result applies to the fixed-vtree case (\\citet{Pipatsrisawat_2008}, Proposition 4)."
           },
           "AND_C": {
             "complexity": "no-quasi",
@@ -1229,7 +1229,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langref{d-SDNNF}, every clause has a polynomial-size representation. If \\langref{d-SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{d-SDNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{d-SDNNF} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "OR_C": {
@@ -1240,7 +1240,7 @@
               "Amarilli_2018"
             ],
             "description": "In the language \\langref{d-SDNNF}, every term has a polynomial-size representation. If \\langref{d-SDNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{d-SDNNF} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{d-SDNNF} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
           "AND_BC": {
@@ -1250,7 +1250,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{d-SDNNF} and \\edgeref{d-SDNNF}{DNNF}, \\langref{d-SDNNF} cannot support bounded conjunction.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
           "OR_BC": {
@@ -1260,7 +1260,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{d-SDNNF} and \\edgeref{d-SDNNF}{SDNNF}, \\langref{d-SDNNF} cannot support bounded disjunction in quasipolynomial time.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
           "SFO": {
@@ -1444,7 +1444,7 @@
               "Amarilli_2018"
             ],
             "description": "In the language \\langfam{d-SDNNF}{T}, every term has a polynomial-size representation. If \\langfam{d-SDNNF}{T} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{d-SDNNF}{T} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{d-SDNNF_T} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
           "AND_C": {
@@ -1457,7 +1457,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langfam{d-SDNNF}{T}, every clause has a polynomial-size representation. If \\langfam{d-SDNNF}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{d-SDNNF}{T} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{d-SDNNF_T} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "CD": {
@@ -1525,8 +1525,8 @@
             "refs": [
               "TCZ_Forthcoming"
             ],
-            "description": "If \\langfam{d-SDNNF}{T} supported Singleton Forgetting in quasipolynomial time, then given two \\langfam{d-SDNNF}{T} circuits $f$ and $g$ we could form the polynomial-size decision $(x \\land f) \\lor (\\neg x \\land g)$ and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langfam{d-SDNNF}{T}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "description": "If \\langfam{d-SDNNF}{T} supported Singleton Forgetting in quasipolynomial time, then given two \\langfam{d-SDNNF}{T} circuits $f$ and $g$ we could form the decision $(x \\land f) \\lor (\\neg x \\land g)$ with only constant overhead and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langfam{d-SDNNF}{T}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
+            "derived": false,
             "batchId": "tcz-bounded-disjunction-singleton-forgetting-lower-bound"
           }
         }
@@ -1682,7 +1682,7 @@
               "Darwiche_2002"
             ],
             "description": "Lemma 5 of \\citet{Bova_2014} gives 2-DNF formulas $D$ whose negations require DNNF size $2^{\\Omega(\\operatorname{size}(D))}$. If \\langref{DNF} supported Negation in quasipolynomial time, then \\langref{DNF} compiles to itself and \\edgeref{DNF}{DNNF} would yield quasipolynomial-size DNNFs for those negations, contradicting the lower bound.",
-            "derived": true,
+            "derived": false,
             "batchId": "bova-dnf-dnnf-negation-lower-bound"
           },
           "AND_BC": {
@@ -1700,7 +1700,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langref{DNF}, every clause has a polynomial-size representation. If \\langref{DNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{DNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{DNF} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "OR_C": {
@@ -1910,7 +1910,7 @@
               "Darwiche_2002"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{DNNF} and \\langref{DNNF} compiles to itself, \\langref{DNNF} cannot support bounded conjunction.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
           "OR_C": {
@@ -1973,7 +1973,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langref{DNNF}, every clause has a polynomial-size representation. If \\langref{DNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{DNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{DNNF} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "NOT_C": {
@@ -2151,7 +2151,7 @@
               "Darwiche_2002"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{FBDD} and \\edgeref{FBDD}{DNNF}, \\langref{FBDD} cannot support bounded conjunction.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
           "AND_C": {
@@ -2162,7 +2162,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langref{FBDD}, every clause has a polynomial-size representation. If \\langref{FBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{FBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{FBDD} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "OR_C": {
@@ -2173,7 +2173,7 @@
               "Wegener_1987"
             ],
             "description": "In the language \\langref{FBDD}, every term has a polynomial-size representation. If \\langref{FBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{FBDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{FBDD} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           }
         }
@@ -2748,7 +2748,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langref{nFBDD}, every clause has a polynomial-size representation. If \\langref{nFBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{nFBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{nFBDD} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "NOT_C": {
@@ -2759,7 +2759,7 @@
               "Wegener_2000"
             ],
             "description": "Lemma 5 of \\citet{Bova_2014} gives 2-DNF formulas $D$ whose negations require DNNF size $2^{\\Omega(\\operatorname{size}(D))}$. If \\langref{nFBDD} supported Negation in quasipolynomial time, then \\edgeref{DNF}{nFBDD} and \\edgeref{nFBDD}{DNNF} would yield quasipolynomial-size DNNFs for those negations, contradicting the lower bound.",
-            "derived": true,
+            "derived": false,
             "batchId": "bova-dnf-dnnf-negation-lower-bound"
           },
           "CD": {
@@ -2783,7 +2783,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{nFBDD} and \\edgeref{nFBDD}{DNNF}, \\langref{nFBDD} cannot support bounded conjunction.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
           "OR_C": {
@@ -3064,7 +3064,7 @@
               "Darwiche_2002"
             ],
             "description": "If \\langref{NNF} supported FO, then the consistency of any CNF sentence $\\Sigma$ could be tested in polynomial time: represent $\\Sigma$ in \\langref{NNF}, compute $\\exists\\text{Vars}(\\Sigma).\\Sigma$, and check the resulting constant sentence. This would decide CNF consistency in polynomial time, implying P = NP (\\citet{Darwiche_2002}, Proposition 5.1).",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-fo-cnf-consistency-lower-bound",
             "assumption": "P \\neq NP"
           }
@@ -3240,7 +3240,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langref{nOBDD}, every clause has a polynomial-size representation. If \\langref{nOBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{nOBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{nOBDD} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "NOT_C": {
@@ -3251,7 +3251,7 @@
               "Wegener_2000"
             ],
             "description": "Lemma 5 of \\citet{Bova_2014} gives 2-DNF formulas $D$ whose negations require DNNF size $2^{\\Omega(\\operatorname{size}(D))}$. If \\langref{nOBDD} supported Negation in quasipolynomial time, then \\edgeref{DNF}{nOBDD} and \\edgeref{nOBDD}{DNNF} would yield quasipolynomial-size DNNFs for those negations, contradicting the lower bound.",
-            "derived": true,
+            "derived": false,
             "batchId": "bova-dnf-dnnf-negation-lower-bound"
           },
           "CD": {
@@ -3275,7 +3275,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{nOBDD} and \\edgeref{nOBDD}{DNNF}, \\langref{nOBDD} cannot support bounded conjunction.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
           "SFO": {
@@ -3301,7 +3301,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{nOBDD} and \\edgeref{nOBDD}{SDNNF}, \\langref{nOBDD} cannot support bounded disjunction in quasipolynomial time.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
           "OR_C": {
@@ -3497,7 +3497,7 @@
               "Amarilli_2018"
             ],
             "description": "In the language \\langfam{OBDD}{<}, every term has a polynomial-size representation. If \\langfam{OBDD}{<} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{OBDD}{<} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{OBDD_<} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
           "FO": {
@@ -3508,8 +3508,8 @@
               "Darwiche_2011",
               "Amarilli_2018"
             ],
-            "description": "A polynomial-time forgetting procedure for \\langfam{OBDD}{<} would turn every \\langref{DNF} sentence into an equivalent polynomial-size \\langfam{OBDD}{<} representation after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{OBDD_<} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "description": "A polynomial-time forgetting procedure for \\langfam{OBDD}{<} would turn every \\langref{DNF} sentence into an equivalent \\langfam{OBDD}{<} representation of size polynomial in the input DNF after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{OBDD_<} \\citet{TCZ_Forthcoming}.",
+            "derived": false,
             "batchId": "darwiche-fo-dnf-selector-lower-bound"
           }
         }
@@ -3890,7 +3890,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langref{SDD}, every clause has a polynomial-size representation. If \\langref{SDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{SDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{SDD} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "OR_C": {
@@ -3922,7 +3922,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{SDD} and \\edgeref{SDD}{DNNF}, \\langref{SDD} cannot support bounded conjunction.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
           "OR_BC": {
@@ -3934,7 +3934,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{SDD} and \\edgeref{SDD}{SDNNF}, \\langref{SDD} cannot support bounded disjunction in quasipolynomial time.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
           "SFO": {
@@ -3942,8 +3942,8 @@
             "refs": [
               "TCZ_Forthcoming"
             ],
-            "description": "If \\langref{SDD} supported Singleton Forgetting in quasipolynomial time, then given two \\langref{SDD} circuits $f$ and $g$ we could form the polynomial-size decision $(x \\land f) \\lor (\\neg x \\land g)$ and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langref{SDD}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "description": "If \\langref{SDD} supported Singleton Forgetting in quasipolynomial time, then given two \\langref{SDD} circuits $f$ and $g$ we could form the decision $(x \\land f) \\lor (\\neg x \\land g)$ with only constant overhead and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langref{SDD}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
+            "derived": false,
             "batchId": "tcz-bounded-disjunction-singleton-forgetting-lower-bound"
           },
           "FO": {
@@ -4185,7 +4185,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langfam{SDD}{T}, every clause has a polynomial-size representation. If \\langfam{SDD}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{SDD}{T} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{SDD_T} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "OR_C": {
@@ -4198,7 +4198,7 @@
               "Amarilli_2018"
             ],
             "description": "In the language \\langfam{SDD}{T}, every term has a polynomial-size representation. If \\langfam{SDD}{T} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{SDD}{T} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{SDD_T} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
           "FO": {
@@ -4209,8 +4209,8 @@
               "Darwiche_2011",
               "Amarilli_2018"
             ],
-            "description": "A polynomial-time forgetting procedure for \\langfam{SDD}{T} would turn every \\langref{DNF} sentence into an equivalent polynomial-size \\langfam{SDD}{T} representation after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{SDD_T} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "description": "A polynomial-time forgetting procedure for \\langfam{SDD}{T} would turn every \\langref{DNF} sentence into an equivalent \\langfam{SDD}{T} representation of size polynomial in the input DNF after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{SDD_T} \\citet{TCZ_Forthcoming}.",
+            "derived": false,
             "batchId": "darwiche-fo-dnf-selector-lower-bound"
           }
         }
@@ -4398,7 +4398,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langref{SDNNF}, every clause has a polynomial-size representation. If \\langref{SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{SDNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{SDNNF} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "SFO": {
@@ -4426,7 +4426,7 @@
               "Pipatsrisawat_2008"
             ],
             "description": "Lemma 5 of \\citet{Bova_2014} gives 2-DNF formulas $D$ whose negations require DNNF size $2^{\\Omega(\\operatorname{size}(D))}$. If \\langref{SDNNF} supported Negation in quasipolynomial time, then \\edgeref{DNF}{SDNNF} and \\edgeref{SDNNF}{DNNF} would yield quasipolynomial-size DNNFs for those negations, contradicting the lower bound.",
-            "derived": true,
+            "derived": false,
             "batchId": "bova-dnf-dnnf-negation-lower-bound"
           },
           "CD": {
@@ -4434,7 +4434,7 @@
             "refs": [
               "Pipatsrisawat_2008"
             ],
-            "description": "Conditioning preserves structured decomposability: replacing conditioned literals by constants and simplifying can only remove variables from subformulas, so every decomposable split continues to respect the original vtree. Therefore the result remains an \\langref{SDNNF} formula of polynomial size (\\citet{Pipatsrisawat_2008}, Proposition 4)."
+            "description": "Conditioning preserves structured decomposability: replacing conditioned literals by constants and simplifying can only remove variables from subformulas, so every decomposable split continues to respect the original vtree. Therefore the result remains an \\langref{SDNNF} formula of size polynomial in the input formula (\\citet{Pipatsrisawat_2008}, Proposition 4)."
           },
           "AND_BC": {
             "complexity": "no-quasi",
@@ -4443,7 +4443,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{SDNNF} and \\edgeref{SDNNF}{DNNF}, \\langref{SDNNF} cannot support bounded conjunction.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
           "OR_BC": {
@@ -4453,7 +4453,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{SDNNF} and \\langref{SDNNF} compiles to itself, \\langref{SDNNF} cannot support bounded disjunction in quasipolynomial time.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
           "OR_C": {
@@ -4678,7 +4678,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langfam{SDNNF}{T}, every clause has a polynomial-size representation. If \\langfam{SDNNF}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{SDNNF}{T} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{SDNNF_T} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "NOT_C": {
@@ -4690,7 +4690,7 @@
               "Pipatsrisawat_2008"
             ],
             "description": "Lemma 5 of \\citet{Bova_2014} gives 2-DNF formulas $D$ whose negations require DNNF size $2^{\\Omega(\\operatorname{size}(D))}$. If \\langfam{SDNNF}{T} supported Negation in quasipolynomial time, then \\edgeref{DNF}{SDNNF_T} and \\edgeref{SDNNF_T}{DNNF} would yield quasipolynomial-size DNNFs for those negations, contradicting the lower bound.",
-            "derived": true,
+            "derived": false,
             "batchId": "bova-dnf-dnnf-negation-lower-bound"
           },
           "CD": {
@@ -4891,7 +4891,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langref{uFBDD}, every clause has a polynomial-size representation. If \\langref{uFBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{uFBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{uFBDD} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "AND_BC": {
@@ -4901,7 +4901,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{uFBDD} and \\edgeref{uFBDD}{DNNF}, \\langref{uFBDD} cannot support bounded conjunction.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
           "CD": {
@@ -4919,7 +4919,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any d-DNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{uFBDD} and \\edgeref{uFBDD}{d-DNNF}, \\langref{uFBDD} cannot support bounded disjunction in quasipolynomial time.\n\nNote that a quasipolynomial lower bound for bounded disjunction of \\langref{d-SDNNF} was shown by \\citet{Vinall-Smeeth_2024}.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-d-dnnf-bounded-disjunction-lower-bound"
           },
           "OR_C": {
@@ -4946,8 +4946,8 @@
             "refs": [
               "TCZ_Forthcoming"
             ],
-            "description": "If \\langref{uFBDD} supported Singleton Forgetting in quasipolynomial time, then given two \\langref{uFBDD} circuits $f$ and $g$ we could form the polynomial-size decision $(x \\land f) \\lor (\\neg x \\land g)$ and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langref{uFBDD}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "description": "If \\langref{uFBDD} supported Singleton Forgetting in quasipolynomial time, then given two \\langref{uFBDD} circuits $f$ and $g$ we could form the decision $(x \\land f) \\lor (\\neg x \\land g)$ with only constant overhead and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langref{uFBDD}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
+            "derived": false,
             "batchId": "tcz-bounded-disjunction-singleton-forgetting-lower-bound"
           },
           "FO": {
@@ -5132,7 +5132,7 @@
               "Amarilli_2018"
             ],
             "description": "In the language \\langref{uOBDD}, every term has a polynomial-size representation. If \\langref{uOBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{uOBDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{uOBDD} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
           "AND_C": {
@@ -5144,7 +5144,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langref{uOBDD}, every clause has a polynomial-size representation. If \\langref{uOBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{uOBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{uOBDD} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "AND_BC": {
@@ -5154,7 +5154,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{uOBDD} and \\edgeref{uOBDD}{DNNF}, \\langref{uOBDD} cannot support bounded conjunction.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
           "CD": {
@@ -5171,7 +5171,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{uOBDD} and \\edgeref{uOBDD}{SDNNF}, \\langref{uOBDD} cannot support bounded disjunction in quasipolynomial time.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
           "NOT_C": {
@@ -5179,7 +5179,7 @@
             "refs": [
               "Vinall-Smeeth_2024"
             ],
-            "description": "The proof of Theorem 2 of \\citet{Vinall-Smeeth_2024} gives unambiguous DNFs whose negations require quasipolynomially larger $d$-SDNNF size. An unambiguous DNF can be transformed into a polynomial-size \\langref{uOBDD}, and every \\langref{uOBDD} can be transformed into polynomial-size \\langref{d-SDNNF}. Thus polynomial-time negation for \\langref{uOBDD} would contradict the lower bound."
+            "description": "The proof of Theorem 2 of \\citet{Vinall-Smeeth_2024} gives unambiguous DNF representations whose negations require quasipolynomially larger $d$-SDNNF size. An unambiguous DNF can be transformed into a \\langref{uOBDD} with only polynomial overhead, and every \\langref{uOBDD} can be transformed into \\langref{d-SDNNF} with only polynomial overhead. Thus polynomial-time negation for \\langref{uOBDD} would contradict the lower bound."
           },
           "SFO": {
             "complexity": "no-poly-unknown-quasi",
@@ -5347,7 +5347,7 @@
               "Darwiche_2002"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\langref{OBDD} compiles to itself and \\edgeref{OBDD}{DNNF}, \\langref{OBDD} cannot support bounded conjunction.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
           "CD": {
@@ -5375,7 +5375,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langref{OBDD}, every clause has a polynomial-size representation. If \\langref{OBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{OBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{OBDD} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "OR_C": {
@@ -5386,7 +5386,7 @@
               "Devadas_1993"
             ],
             "description": "In the language \\langref{OBDD}, every term has a polynomial-size representation. If \\langref{OBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{OBDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{OBDD} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
           "OR_BC": {
@@ -5396,7 +5396,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\langref{OBDD} compiles to itself and \\edgeref{OBDD}{SDNNF}, \\langref{OBDD} cannot support bounded disjunction in quasipolynomial time.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
           "FO": {
@@ -5406,8 +5406,8 @@
               "VanDenBroeck_2015",
               "Devadas_1993"
             ],
-            "description": "A polynomial-time forgetting procedure for \\langref{OBDD} would turn every \\langref{DNF} sentence into an equivalent polynomial-size \\langref{OBDD} representation after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{OBDD} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "description": "A polynomial-time forgetting procedure for \\langref{OBDD} would turn every \\langref{DNF} sentence into an equivalent \\langref{OBDD} representation of size polynomial in the input DNF after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{OBDD} \\citet{TCZ_Forthcoming}.",
+            "derived": false,
             "batchId": "darwiche-fo-dnf-selector-lower-bound"
           }
         }
@@ -5580,7 +5580,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langref{dec-DNNF}, every clause has a polynomial-size representation. If \\langref{dec-DNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{dec-DNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{dec-DNNF} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "OR_C": {
@@ -5594,7 +5594,7 @@
               "Wegener_1987"
             ],
             "description": "In the language \\langref{dec-DNNF}, every term has a polynomial-size representation. If \\langref{dec-DNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{dec-DNNF} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{dec-DNNF} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
           "AND_BC": {
@@ -5605,7 +5605,7 @@
               "Darwiche_2002"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{dec-DNNF} and \\edgeref{dec-DNNF}{DNNF}, \\langref{dec-DNNF} cannot support bounded conjunction.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
           "OR_BC": {
@@ -5616,7 +5616,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any d-DNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{dec-DNNF} and \\edgeref{dec-DNNF}{d-DNNF}, \\langref{dec-DNNF} cannot support bounded disjunction in quasipolynomial time.\n\nNote that a quasipolynomial lower bound for bounded disjunction of \\langref{d-SDNNF} was shown by \\citet{Vinall-Smeeth_2024}.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-d-dnnf-bounded-disjunction-lower-bound"
           },
           "SFO": {
@@ -5624,8 +5624,8 @@
             "refs": [
               "TCZ_Forthcoming"
             ],
-            "description": "If \\langref{dec-DNNF} supported Singleton Forgetting in quasipolynomial time, then given two \\langref{dec-DNNF} circuits $f$ and $g$ we could form the polynomial-size decision $(x \\land f) \\lor (\\neg x \\land g)$ and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langref{dec-DNNF}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "description": "If \\langref{dec-DNNF} supported Singleton Forgetting in quasipolynomial time, then given two \\langref{dec-DNNF} circuits $f$ and $g$ we could form the decision $(x \\land f) \\lor (\\neg x \\land g)$ with only constant overhead and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langref{dec-DNNF}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
+            "derived": false,
             "batchId": "tcz-bounded-disjunction-singleton-forgetting-lower-bound"
           },
           "FO": {
@@ -5830,7 +5830,7 @@
               "Beame_2013"
             ],
             "description": "In the language \\langref{dec-SDNNF}, every term has a polynomial-size representation. If \\langref{dec-SDNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{dec-SDNNF} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{dec-SDNNF} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
           "AND_C": {
@@ -5848,7 +5848,7 @@
               "Beame_2013"
             ],
             "description": "In the language \\langref{dec-SDNNF}, every clause has a polynomial-size representation. If \\langref{dec-SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{dec-SDNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{dec-SDNNF} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "AND_BC": {
@@ -5859,7 +5859,7 @@
               "Darwiche_2002"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any DNNF computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{dec-SDNNF} and \\edgeref{dec-SDNNF}{DNNF}, \\langref{dec-SDNNF} cannot support bounded conjunction.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
           "OR_BC": {
@@ -5869,7 +5869,7 @@
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by OBDDs of size $O(n)$, such that any SDNNF computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{dec-SDNNF} and \\edgeref{dec-SDNNF}{SDNNF}, \\langref{dec-SDNNF} cannot support bounded disjunction in quasipolynomial time.",
-            "derived": true,
+            "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
           "SFO": {
@@ -5877,8 +5877,8 @@
             "refs": [
               "TCZ_Forthcoming"
             ],
-            "description": "If \\langref{dec-SDNNF} supported Singleton Forgetting in quasipolynomial time, then given two \\langref{dec-SDNNF} circuits $f$ and $g$ we could form the polynomial-size decision $(x \\land f) \\lor (\\neg x \\land g)$ and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langref{dec-SDNNF}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "description": "If \\langref{dec-SDNNF} supported Singleton Forgetting in quasipolynomial time, then given two \\langref{dec-SDNNF} circuits $f$ and $g$ we could form the decision $(x \\land f) \\lor (\\neg x \\land g)$ with only constant overhead and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langref{dec-SDNNF}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
+            "derived": false,
             "batchId": "tcz-bounded-disjunction-singleton-forgetting-lower-bound"
           },
           "FO": {
@@ -6081,7 +6081,7 @@
               "Beame_2013"
             ],
             "description": "In the language \\langfam{dec-SDNNF}{T}, every term has a polynomial-size representation. If \\langfam{dec-SDNNF}{T} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{dec-SDNNF}{T} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{dec-SDNNF_T} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
           "AND_C": {
@@ -6099,7 +6099,7 @@
               "Beame_2013"
             ],
             "description": "In the language \\langfam{dec-SDNNF}{T}, every clause has a polynomial-size representation. If \\langfam{dec-SDNNF}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{dec-SDNNF}{T} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{dec-SDNNF_T} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "SFO": {
@@ -6107,8 +6107,8 @@
             "refs": [
               "TCZ_Forthcoming"
             ],
-            "description": "If \\langfam{dec-SDNNF}{T} supported Singleton Forgetting in quasipolynomial time, then given two \\langfam{dec-SDNNF}{T} circuits $f$ and $g$ we could form the polynomial-size decision $(x \\land f) \\lor (\\neg x \\land g)$ and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langfam{dec-SDNNF}{T}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "description": "If \\langfam{dec-SDNNF}{T} supported Singleton Forgetting in quasipolynomial time, then given two \\langfam{dec-SDNNF}{T} circuits $f$ and $g$ we could form the decision $(x \\land f) \\lor (\\neg x \\land g)$ with only constant overhead and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langfam{dec-SDNNF}{T}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
+            "derived": false,
             "batchId": "tcz-bounded-disjunction-singleton-forgetting-lower-bound"
           },
           "FO": {
@@ -6357,7 +6357,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langfam{cSDD}{T}, every clause has a polynomial-size representation. If \\langfam{cSDD}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{cSDD}{T} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{cSDD_T} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "AND_BC": {
@@ -6377,7 +6377,7 @@
               "Amarilli_2018"
             ],
             "description": "In the language \\langfam{cSDD}{T}, every term has a polynomial-size representation. If \\langfam{cSDD}{T} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{cSDD}{T} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{cSDD_T} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
           "OR_BC": {
@@ -6405,8 +6405,8 @@
               "Darwiche_2011",
               "Amarilli_2018"
             ],
-            "description": "A polynomial-time forgetting procedure for \\langfam{cSDD}{T} would turn every \\langref{DNF} sentence into an equivalent polynomial-size \\langfam{cSDD}{T} representation after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{cSDD_T} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "description": "A polynomial-time forgetting procedure for \\langfam{cSDD}{T} would turn every \\langref{DNF} sentence into an equivalent \\langfam{cSDD}{T} representation of size polynomial in the input DNF after introducing fresh selectors and forgetting them. This contradicts \\nedgeref{DNF}{cSDD_T} \\citet{TCZ_Forthcoming}.",
+            "derived": false,
             "batchId": "darwiche-fo-dnf-selector-lower-bound"
           }
         }
@@ -6589,7 +6589,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langfam{nOBDD}{<}, every clause has a polynomial-size representation. If \\langfam{nOBDD}{<} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{nOBDD}{<} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{nOBDD_<} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "NOT_C": {
@@ -6601,7 +6601,7 @@
               "Pipatsrisawat_2008"
             ],
             "description": "Lemma 5 of \\citet{Bova_2014} gives 2-DNF formulas $D$ whose negations require DNNF size $2^{\\Omega(\\operatorname{size}(D))}$. If \\langfam{nOBDD}{<} supported Negation in quasipolynomial time, then \\edgeref{DNF}{nOBDD_<} and \\edgeref{nOBDD_<}{DNNF} would yield quasipolynomial-size DNNFs for those negations, contradicting the lower bound.",
-            "derived": true,
+            "derived": false,
             "batchId": "bova-dnf-dnnf-negation-lower-bound"
           },
           "CD": {
@@ -6834,7 +6834,7 @@
               "Amarilli_2018"
             ],
             "description": "In the language \\langfam{uOBDD}{<}, every term has a polynomial-size representation. If \\langfam{uOBDD}{<} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{uOBDD}{<} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{uOBDD_<} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound"
           },
           "AND_C": {
@@ -6847,7 +6847,7 @@
               "Bova_2014"
             ],
             "description": "In the language \\langfam{uOBDD}{<}, every clause has a polynomial-size representation. If \\langfam{uOBDD}{<} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{uOBDD}{<} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{uOBDD_<} \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound"
           },
           "CD": {
@@ -6880,8 +6880,8 @@
             "refs": [
               "TCZ_Forthcoming"
             ],
-            "description": "If \\langfam{uOBDD}{<} supported Singleton Forgetting in quasipolynomial time, then given two \\langfam{uOBDD}{<} circuits $f$ and $g$ we could form the polynomial-size decision $(x \\land f) \\lor (\\neg x \\land g)$ and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langfam{uOBDD}{<}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
-            "derived": true,
+            "description": "If \\langfam{uOBDD}{<} supported Singleton Forgetting in quasipolynomial time, then given two \\langfam{uOBDD}{<} circuits $f$ and $g$ we could form the decision $(x \\land f) \\lor (\\neg x \\land g)$ with only constant overhead and forget $x$, yielding $f \\lor g$. This would give quasipolynomial-time Bounded Disjunction for \\langfam{uOBDD}{<}, contradicting the lower bound of \\citet{TCZ_Forthcoming}.",
+            "derived": false,
             "batchId": "tcz-bounded-disjunction-singleton-forgetting-lower-bound"
           },
           "FO": {
