@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
 	import MathText from '$lib/components/MathText.svelte';
+	import ReferenceList from '$lib/components/ReferenceList.svelte';
 	import { initialGraphData } from '$lib/data/index.js';
+	import { getGlobalRefNumber } from '$lib/data/references.js';
+	import { extractCitationKeys } from '$lib/utils/math-text.js';
+	import type { KCReference } from '$lib/types.js';
 
 	type Definition = NonNullable<typeof initialGraphData.definitions>[number];
 
@@ -40,8 +44,34 @@
 	const queryDefinitions = definitions.filter(isQueryDefinition);
 	const transformationDefinitions = definitions.filter(isTransformationDefinition);
 	const definitionIds = new Set(definitions.map((definition) => definition.id));
+	const definitionReferences = collectDefinitionReferences(definitions);
 
 	let definitionsDetails: HTMLDetailsElement | null = null;
+	let definitionsReferencesSection: HTMLElement | null = null;
+
+	function collectDefinitionReferences(items: Definition[]): KCReference[] {
+		const refIds = new Set<string>();
+		const referencesById = new Map(initialGraphData.references.map((reference) => [reference.id, reference]));
+
+		for (const definition of items) {
+			for (const refId of definition.refs ?? []) {
+				refIds.add(refId);
+			}
+			extractCitationKeys(definition.statement).forEach((refId) => refIds.add(refId));
+			if (definition.explanation) {
+				extractCitationKeys(definition.explanation).forEach((refId) => refIds.add(refId));
+			}
+		}
+
+		return Array.from(refIds)
+			.map((refId) => referencesById.get(refId))
+			.filter((reference): reference is KCReference => Boolean(reference))
+			.sort((a, b) => (getGlobalRefNumber(a.id) ?? Infinity) - (getGlobalRefNumber(b.id) ?? Infinity));
+	}
+
+	function handleDefinitionCitationClick(_key: string) {
+		definitionsReferencesSection?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+	}
 
 	async function openDefinitionsForHash() {
 		const hash = decodeURIComponent(window.location.hash.slice(1));
@@ -125,7 +155,7 @@
 							{#each coreDefinitions as definition}
 								<article class="definition-block" id={definition.id}>
 									<h4><MathText text={definition.title} as="span" /></h4>
-									<MathText text={definition.statement} as="p" className="definition-text" />
+									<MathText text={definition.statement} as="p" className="definition-text" onCitationClick={handleDefinitionCitationClick} />
 								</article>
 							{/each}
 						</div>
@@ -135,7 +165,7 @@
 						<h3>Queries</h3>
 						{#if queryIntro}
 							<div class="definition-intro" id={queryIntro.id}>
-								<MathText text={queryIntro.statement} as="p" className="definition-text" />
+								<MathText text={queryIntro.statement} as="p" className="definition-text" onCitationClick={handleDefinitionCitationClick} />
 							</div>
 						{/if}
 						<div class="operation-list">
@@ -144,7 +174,7 @@
 									<h4 class="operation-name">
 										<MathText text={definition.title} as="span" />
 									</h4>
-									<MathText text={definition.statement} as="p" className="operation-description" />
+									<MathText text={definition.statement} as="p" className="operation-description" onCitationClick={handleDefinitionCitationClick} />
 								</article>
 							{/each}
 						</div>
@@ -154,7 +184,7 @@
 						<h3>Transformations</h3>
 						{#if transformationIntro}
 							<div class="definition-intro" id={transformationIntro.id}>
-								<MathText text={transformationIntro.statement} as="p" className="definition-text" />
+								<MathText text={transformationIntro.statement} as="p" className="definition-text" onCitationClick={handleDefinitionCitationClick} />
 							</div>
 						{/if}
 						<div class="operation-list">
@@ -163,11 +193,13 @@
 									<h4 class="operation-name">
 										<MathText text={definition.title} as="span" />
 									</h4>
-									<MathText text={definition.statement} as="p" className="operation-description" />
+									<MathText text={definition.statement} as="p" className="operation-description" onCitationClick={handleDefinitionCitationClick} />
 								</article>
 							{/each}
 						</div>
 					</section>
+
+					<ReferenceList references={definitionReferences} bind:anchorElement={definitionsReferencesSection} />
 				</div>
 			</details>
 		</section>
