@@ -1,7 +1,7 @@
 % =============================
 % Tractable Circuit Zoo - Separating Functions
 % Auto-generated from database.json
-% Generated: 2026-05-14T22:07:29.280Z
+% Generated: 2026-05-19T04:49:27.207Z
 %
 % EDITING INSTRUCTIONS:
 % - Short names in brackets are auto-generated identifiers. Do NOT edit.
@@ -54,19 +54,24 @@
 \begin{document}
 \maketitle
 
+\begin{definition}[$EQ_n$]\label{sf:-eq-n-}
+\textbf{Equality function} \\
+The equality function $EQ_n(x,y)$ is true iff $x_i = y_i$ for every $i \in \{1,\ldots,n\}$. It has linear-size OBDDs for interleaved variable orders, but can require exponential OBDD size for separated orders. \citep{Wegener_2000}
+\end{definition}
+
 \begin{definition}[$OR_n$]\label{sf:-or-n-}
 \textbf{$OR_n = \bigvee_{i=1}^{n} x_i$} \\
 Separates languages that compactly represent disjunctions from those that cannot. \citep{Darwiche_2002}
 \end{definition}
 
+\begin{definition}[$WS_n$]\label{sf:-ws-n-}
+\textbf{Weighted sum function} \\
+The weighted sum function $WS_n$ is the standard OBDD/FBDD separation family whose output is selected by the Hamming-weight-weighted index of the input. It has polynomial-size nondeterministic OBDDs under every variable order, but requires exponential FBDD size. \citep{Wegener_2000,Savicky_Zak_1996}
+\end{definition}
+
 \begin{definition}[Clique]\label{sf:clique}
 \textbf{Clique Detection Instances} \\
 Tests whether a directed graph on $n$ vertices (encoded as $I \in \{0,1\}^{n^2}$) contains a bidirectional clique of size $k$: $\Sigma_{n,k}(I) = 1 \iff I$ contains such a clique. Has $O(n^3)$ prime implicants but exponential \langref{FBDD} size for suitable $k$. \citep{Darwiche_2002,Wegener_1987}
-\end{definition}
-
-\begin{definition}[$EQ_n$]\label{sf:-eq-n-}
-\textbf{Equality function} \\
-The equality function $EQ_n(x,y)$ is true iff $x_i = y_i$ for every $i \in \{1,\ldots,n\}$. It has linear-size OBDDs for interleaved variable orders, but can require exponential OBDD size for separated orders. \citep{Wegener_2000}
 \end{definition}
 
 \begin{definition}[Generalized_HWB]\label{sf:generalized-hwb}
@@ -107,11 +112,6 @@ $O_n = \bigoplus_{i=0}^{n-1} x_i$ has linear size $OBBD_<$ representations but e
 \begin{definition}[Sauerhoff]\label{sf:sauerhoff}
 \textbf{Sauerhoff function} \\
 Let $g_n: \{0,1\}^{2n} \to \{0,1\}$ be the function evaluating to 1 if and only if the sum of its inputs is divisible by 3. The Sauerhoff function $S_n: \{0,1\}^{n^2} \to \{0,1\}$ is defined on the $n \times n$ matrix $X = (x_{i,j})$ as $S_n(X) = R_n(X) \vee C_n(X)$, where $R_n, C_n : \{0,1\}^{n^2} \to \{0,1\}$ are defined by $R_n(X) = \bigplus_{i=1}^n g_n(x_{i1},x_{i2},...,x_{in}$ and $C_n(X) = R_n(X^T)$. \citep{Sauerhoff_2003,Bova_2016}
-\end{definition}
-
-\begin{definition}[$WS_n$]\label{sf:-ws-n-}
-\textbf{Weighted sum function} \\
-The weighted sum function $WS_n$ is the standard OBDD/FBDD separation family whose output is selected by the Hamming-weight-weighted index of the input. It has polynomial-size nondeterministic OBDDs under every variable order, but requires exponential FBDD size. \citep{Wegener_2000,Savicky_Zak_1996}
 \end{definition}
 
 % =============================

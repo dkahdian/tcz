@@ -1,97 +1,8 @@
 <script lang="ts">
-	import { onMount, tick } from 'svelte';
 	import MathText from '$lib/components/MathText.svelte';
-	import ReferenceList from '$lib/components/ReferenceList.svelte';
-	import { initialGraphData } from '$lib/data/index.js';
-	import { getGlobalRefNumber } from '$lib/data/references.js';
-	import { extractCitationKeys } from '$lib/utils/math-text.js';
-	import type { KCReference } from '$lib/types.js';
+	import { getGlobalRefNumber, getReferences } from '$lib/data/references.js';
 
-	type Definition = NonNullable<typeof initialGraphData.definitions>[number];
-
-	// Definitions are edited in docs/definitions.tex and synced into database.json.
-	const definitions = (initialGraphData.definitions ?? []) as Definition[];
-	const definitionById = new Map(definitions.map((definition) => [definition.id, definition]));
-
-	const coreDefinitionIds = [
-		'representation-language',
-		'language-family',
-		'succinctness-language',
-		'succinctness-family',
-		'tractability'
-	];
-
-	function definitionsById(ids: string[]): Definition[] {
-		return ids
-			.map((id) => definitionById.get(id))
-			.filter((definition): definition is Definition => Boolean(definition));
-	}
-
-	function isQueryDefinition(definition: Definition): boolean {
-		return definition.id.startsWith('query-') && definition.id !== 'query-operation';
-	}
-
-	function isTransformationDefinition(definition: Definition): boolean {
-		return (
-			definition.id.startsWith('transformation-') &&
-			definition.id !== 'transformation-operation'
-		);
-	}
-
-	const coreDefinitions = definitionsById(coreDefinitionIds);
-	const queryIntro = definitionById.get('query-operation');
-	const transformationIntro = definitionById.get('transformation-operation');
-	const queryDefinitions = definitions.filter(isQueryDefinition);
-	const transformationDefinitions = definitions.filter(isTransformationDefinition);
-	const definitionIds = new Set(definitions.map((definition) => definition.id));
-	const definitionReferences = collectDefinitionReferences(definitions);
-
-	let definitionsDetails: HTMLDetailsElement | null = null;
-	let definitionsReferencesSection: HTMLElement | null = null;
-
-	function collectDefinitionReferences(items: Definition[]): KCReference[] {
-		const refIds = new Set<string>();
-		const referencesById = new Map(initialGraphData.references.map((reference) => [reference.id, reference]));
-
-		for (const definition of items) {
-			for (const refId of definition.refs ?? []) {
-				refIds.add(refId);
-			}
-			extractCitationKeys(definition.statement).forEach((refId) => refIds.add(refId));
-			if (definition.explanation) {
-				extractCitationKeys(definition.explanation).forEach((refId) => refIds.add(refId));
-			}
-		}
-
-		return Array.from(refIds)
-			.map((refId) => referencesById.get(refId))
-			.filter((reference): reference is KCReference => Boolean(reference))
-			.sort((a, b) => (getGlobalRefNumber(a.id) ?? Infinity) - (getGlobalRefNumber(b.id) ?? Infinity));
-	}
-
-	function handleDefinitionCitationClick(_key: string) {
-		definitionsReferencesSection?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-	}
-
-	async function openDefinitionsForHash() {
-		const hash = decodeURIComponent(window.location.hash.slice(1));
-		if (!hash || (hash !== 'definitions' && !definitionIds.has(hash))) return;
-
-		if (definitionsDetails) {
-			definitionsDetails.open = true;
-			await tick();
-			document.getElementById(hash)?.scrollIntoView();
-		}
-	}
-
-	onMount(() => {
-		openDefinitionsForHash();
-		window.addEventListener('hashchange', openDefinitionsForHash);
-
-		return () => {
-			window.removeEventListener('hashchange', openDefinitionsForHash);
-		};
-	});
+	const aboutReferences = getReferences('Darwiche_2002', 'TCZ_Forthcoming');
 </script>
 
 <svelte:head>
@@ -101,122 +12,102 @@
 <div class="about-page">
 	<header class="about-header">
 		<a href="/" class="back-link">&lt;- Back to Zoo</a>
-		<h1>About the Tractable Circuit Zoo</h1>
+		<h1>Welcome to the Tractable Circuit Zoo</h1>
 	</header>
 
 	<main class="about-content">
 		<section>
-			<h2>What is this?</h2>
+			<MathText
+				as="p"
+				text={`Boolean functions are one of the most basic objects in computer science, with countless applications demanding their efficient representation, manipulation, and querying. However, the \\emph{succinctness} of a representation is usually in tension with its \\emph{tractability} for manipulation and querying. The \\emph{tractable circuit zoo} catalogs known representation languages together with their relations in terms of succinctness and tractability. While research in the area spans many decades, lots of progress has been made just recently, and much work remains. We hope the zoo may serve as an open source survey of the area that grows as our understanding does.`}
+			/>
+		</section>
+
+		<section>
+			<h2>Zoo Features</h2>
+			<MathText
+				as="p"
+				text={`In addition to the manually maintained database of representation languages and their succinctness and tractability relations, the zoo performs automated reasoning using simple inference rules. For example, succinctness is transitive: if A compiles to B and B compiles to C, then A compiles to C. Throughout the zoo, \\emph{zebra} cells—i.e., cells with a striped background—denote results which were derived automatically in this way.`}
+			/>
 			<p>
-				The Tractable Circuit Zoo is a visual guide to tractable circuit languages.
-				We display succinctness relations between languages and the queries and transformations they support tractably.
-				We build on the foundational work of
-				<a href="https://arxiv.org/abs/1106.1819" target="_blank" rel="noopener">
-					Darwiche &amp; Marquis (2002)
+				This makes it easy to check consistency of the database, and reduces the number of
+				relations that need to be manually entered. It also makes it fun to consider
+				“possible worlds”. By entering “sandbox mode” the user can enter hypothetical
+				(yet unproven) relations and immediately visualize what other relations follow
+				from their hypotheses. The zoo is
+				<a href="https://github.com/dkahdian/tcz" target="_blank" rel="noopener noreferrer">
+					open source
 				</a>
-				with results from subsequent research.
+				and will soon have a user interface for contributing directly through the website.
 			</p>
 		</section>
 
 		<section>
-			<h2>How to read the zoo</h2>
-			<p>
-				A <strong>representation language</strong> is a restricted circuit or formula format for Boolean functions. The zoo compares these languages in two ways: how succinctly one language can simulate another, and which queries and transformations can be performed tractably once a function has been compiled into a language.
-			</p>
-			<p>
-				Some entries are ordinary languages, while others are <strong>families</strong> or <strong>unions</strong>. A family fixes a structural parameter, such as an order or tree shape, and a union language allows any member of that family. For example, <MathText text={`\\langfam{OBDD}{<}`} className="inline" /> fixes an order, while <MathText text={`\\langref{OBDD}`} className="inline" /> ranges over all orders.
-			</p>
+			<h2>Central Concepts</h2>
+			<MathText
+				as="p"
+				text={`We give informal descriptions of some central concepts, leaving formal definitions to the literature (see, e.g., \\citet{Darwiche_2002,TCZ_Forthcoming}).`}
+			/>
+
+			<MathText
+				as="p"
+				text={`\\textbf{Representation Language} A representation language is a method of expressing Boolean functions, such as a truth table or a class of Boolean circuits. Slightly more formally, a representation language is a pair $(R,I)$ where $R$ is a set of strings (over some fixed alphabet) and $I$ is an \\emph{interpretation function} that maps each $r\\in R$ to the Boolean function that $r$ \\emph{represents}. The \\emph{size} of a representation $r\\in R$ is its length (number of symbols) denoted $|r|$.`}
+			/>
+
+			<MathText
+				as="p"
+				text={`\\textbf{Succinctness} Let $A$ and $B$ be representation languages. We say $a\\in A$ and $b\\in B$ are \\emph{equivalent} if they represent the same function. We say $A$ is \\emph{at least as succinct as} $B$, denoted $A\\le B$, if for every $b\\in B$ there is an equivalent and not too much larger $a\\in A$, specifically, $|a|\\le |b|^{O(1)}$.`}
+			/>
+
+			<MathText
+				as="p"
+				text={`\\textbf{Tractability} We say a query (such as "is $f$ satisfiable?") is \\emph{tractable} for a representation language $A$ if there exists an algorithm which given any $a\\in A$ answers the query in polynomial time (in the input length $|a|$). Similarly, a transformation (such as "negate $f$" or "conjoin $f$ and $g$") is tractable for representation language $A$ if there exists an algorithm which given input representation(s) in $A$ computes a correct output representation in $A$ in polynomial time (in the length of the input).`}
+			/>
 		</section>
 
 		<section>
-			<h2>Succinctness and operations</h2>
-			<p>
-				A language <MathText text={`A`} className="inline" /> is <strong>at least as succinct as</strong> a language <MathText text={`B`} className="inline" /> when every <MathText text={`B`} className="inline" /> representation has an equivalent <MathText text={`A`} className="inline" /> representation with only polynomial size blowup.
-			</p>
-			<p>
-				For queries and transformations, "polynomial time" is in terms of the input size.
-			</p>
+			<h2>Some Technical Notes</h2>
+			<MathText
+				as="p"
+				text={`\\emph{Non-Strings} For representation languages not directly defined as strings, e.g. circuits or decision diagrams, one may freely take a reasonable encoding of the object into a string, and the theory will be unaffected (since it does not distinguish between polynomial changes in size). Equivalently, one may think of a separate size measure defined directly on such objects (e.g, the number of nodes) which is polynomially related to the length of reasonable encodings.`}
+			/>
+
+			<MathText
+				as="p"
+				text={`\\emph{Families of Representation Languages} We’d like to include representation languages like $OBDD_<$, which contains all OBDDs respecting a specific variable order $<$. However, there are infinitely many different $OBDD_<$ languages, one for every choice of $<$. Therefore we include \\emph{families of representation languages} in the zoo. For example, $\\{OBDD_<\\}_{orders <}$. We extend the definition of succinctness to families as follows. We say family $\\mathcal{B}$ is at least as succinct as family $\\mathcal{A}$, denoted $\\mathcal{B}\\le \\mathcal{A}$, if for every $A\\in \\mathcal{A}$ there exists a $B\\in \\mathcal{B}$ such that $B\\le A$. In the special case of singleton families (families containing a single representation language), this recovers the behavior of the usual definition of succinctness. For larger families, it behaves in the intuitive way. For example $OBDD\\le \\{OBDD_<\\}$ but $\\{OBDD_<\\}\\not\\le OBDD$, and $\\{SDNNF_T\\}\\le \\{OBDD_<\\}$ but $\\{OBDD_<\\}\\not\\le\\{SDNNF_T\\}$. Such a definition allows us to consider representation languages and families of representation languages in a common way. To avoid excessive braces throughout the zoo, we just write $OBDD_<$ to mean the family $\\{OBDD_<\\}$ (and similar for families involving vtrees).`}
+			/>
+
+			<MathText
+				as="p"
+				text={`\\emph{Quasipolynomial Succinctness} Actually, we further distinguish between polynomial and quasipolynomial size since some central languages are known to support quasipolynomial compilations, whereas others have exponential separations. See the succinctness table for notation. Recall that functions with \\emph{polynomial} growth are in $n^{O(1)}$ whereas functions with \\emph{quasipolynomial} growth are in $n^{\\log^{O(1)} n}$.`}
+			/>
 		</section>
 
-		<section>
-			<details class="definitions-panel" id="definitions" bind:this={definitionsDetails}>
-				<summary>
-					<h2>Definitions</h2>
-				</summary>
+		<section class="references-section">
+			<h2>
+				References
+				<a class="full-bibliography-link" href="/bibliography">(full bibliography)</a>
+			</h2>
 
-				<div class="definitions-content">
-					<p class="definitions-description">
-						These are informal definitions of some core concepts used in the zoo. For precise definitions, see the papers we reference.
-					</p>
-
-					<section>
-						<h3>Core Concepts</h3>
-						<div class="definition-flow">
-							{#each coreDefinitions as definition}
-								<article class="definition-block" id={definition.id}>
-									<h4><MathText text={definition.title} as="span" /></h4>
-									<MathText text={definition.statement} as="p" className="definition-text" onCitationClick={handleDefinitionCitationClick} />
-								</article>
-							{/each}
-						</div>
-					</section>
-
-					<section>
-						<h3>Queries</h3>
-						{#if queryIntro}
-							<div class="definition-intro" id={queryIntro.id}>
-								<MathText text={queryIntro.statement} as="p" className="definition-text" onCitationClick={handleDefinitionCitationClick} />
-							</div>
+			<ol class="reference-list">
+				{#each aboutReferences as reference}
+					<li class="reference-item">
+						<span class="reference-number">[{getGlobalRefNumber(reference.id) ?? '?'}]</span>
+						{#if reference.href && reference.href !== '#'}
+							<a
+								class="reference-link"
+								href={reference.href}
+								target="_blank"
+								rel="noreferrer noopener"
+							>
+								{reference.title}
+							</a>
+						{:else}
+							<span>{reference.title}</span>
 						{/if}
-						<div class="operation-list">
-							{#each queryDefinitions as definition}
-								<article class="operation-row" id={definition.id}>
-									<h4 class="operation-name">
-										<MathText text={definition.title} as="span" />
-									</h4>
-									<MathText text={definition.statement} as="p" className="operation-description" onCitationClick={handleDefinitionCitationClick} />
-								</article>
-							{/each}
-						</div>
-					</section>
-
-					<section>
-						<h3>Transformations</h3>
-						{#if transformationIntro}
-							<div class="definition-intro" id={transformationIntro.id}>
-								<MathText text={transformationIntro.statement} as="p" className="definition-text" onCitationClick={handleDefinitionCitationClick} />
-							</div>
-						{/if}
-						<div class="operation-list">
-							{#each transformationDefinitions as definition}
-								<article class="operation-row" id={definition.id}>
-									<h4 class="operation-name">
-										<MathText text={definition.title} as="span" />
-									</h4>
-									<MathText text={definition.statement} as="p" className="operation-description" onCitationClick={handleDefinitionCitationClick} />
-								</article>
-							{/each}
-						</div>
-					</section>
-
-					<ReferenceList references={definitionReferences} bind:anchorElement={definitionsReferencesSection} />
-				</div>
-			</details>
-		</section>
-
-		<section>
-			<h2>References</h2>
-			<p>
-				The full bibliography lists the references used across the zoo.
-				<a href="/bibliography">Open the full bibliography</a>.
-			</p>
-		</section>
-
-		<section>
-			<h2>Automated reasoning</h2>
-			<p>
-				We use automated reasoning algorithms to derive large portions of the zoo and provide sketch proofs of correctness. For the most part, proofs are immediate consequences of explicit results and some simple lemmas.
-			</p>
+					</li>
+				{/each}
+			</ol>
 		</section>
 	</main>
 </div>
@@ -259,120 +150,15 @@
 		margin: 0 0 0.5rem;
 	}
 
-	h3 {
-		font-size: 1rem;
-		font-weight: 700;
-		color: #1e293b;
-		margin: 0 0 0.6rem;
-	}
-
-	h4 {
-		font-size: 0.98rem;
-		font-weight: 700;
-		color: #0f172a;
-		margin: 0 0 0.35rem;
-	}
-
 	.about-content section {
 		margin-bottom: 1.5rem;
 	}
 
-	p {
+	p,
+	:global(.math-text) {
 		line-height: 1.65;
 		margin: 0 0 0.75rem;
 		color: #475569;
-	}
-
-	.definitions-panel {
-		border-top: 1px solid #e2e8f0;
-		border-bottom: 1px solid #e2e8f0;
-		padding: 0.8rem 0;
-		scroll-margin-top: 1rem;
-	}
-
-	.definitions-panel summary {
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: 1rem;
-		cursor: pointer;
-		list-style: none;
-	}
-
-	.definitions-panel summary::-webkit-details-marker {
-		display: none;
-	}
-
-	.definitions-panel summary::after {
-		content: "+";
-		flex: 0 0 auto;
-		color: #2563eb;
-		font-weight: 700;
-	}
-
-	.definitions-panel[open] summary::after {
-		content: "-";
-	}
-
-	.definitions-panel summary h2 {
-		margin: 0;
-	}
-
-	.definitions-content {
-		margin-top: 1rem;
-	}
-
-	.definitions-content section {
-		margin-bottom: 1.65rem;
-	}
-
-	.definitions-content section:last-child {
-		margin-bottom: 0;
-	}
-
-	.definitions-description,
-	:global(.definition-text),
-	:global(.operation-description) {
-		line-height: 1.6;
-		margin: 0 0 0.85rem;
-		color: #475569;
-	}
-
-	.definition-flow {
-		display: grid;
-		gap: 1.1rem;
-	}
-
-	.definition-block,
-	.definition-intro,
-	.operation-row {
-		scroll-margin-top: 1rem;
-	}
-
-	.definition-intro {
-		margin-bottom: 0.75rem;
-	}
-
-	.operation-list {
-		display: grid;
-		gap: 0.45rem;
-	}
-
-	.operation-row {
-		display: grid;
-		grid-template-columns: minmax(10rem, 14rem) minmax(0, 1fr);
-		gap: 0.8rem;
-		padding: 0.55rem 0;
-		border-top: 1px solid #e2e8f0;
-	}
-
-	.operation-row:first-child {
-		border-top: none;
-	}
-
-	.operation-name {
-		align-self: start;
-		margin: 0;
 	}
 
 	a {
@@ -384,14 +170,40 @@
 		text-decoration: underline;
 	}
 
-	@media (max-width: 640px) {
-		.definitions-panel summary {
-			align-items: flex-start;
-		}
+	.references-section {
+		border-top: 1px solid #e2e8f0;
+		padding-top: 1rem;
+	}
 
-		.operation-row {
-			grid-template-columns: 1fr;
-			gap: 0.18rem;
-		}
+	.full-bibliography-link {
+		font-size: 0.8125rem;
+		font-weight: 500;
+		margin-left: 0.35rem;
+	}
+
+	.reference-list {
+		display: grid;
+		gap: 0.55rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.reference-item {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr);
+		gap: 0.5rem;
+		color: #475569;
+		font-size: 0.875rem;
+		line-height: 1.5;
+	}
+
+	.reference-number {
+		color: #0f172a;
+		font-weight: 600;
+	}
+
+	.reference-link {
+		overflow-wrap: anywhere;
 	}
 </style>

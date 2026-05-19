@@ -1,7 +1,7 @@
 % =============================
 % Tractable Circuit Zoo - Query Support Claims
 % Auto-generated from database.json
-% Generated: 2026-05-14T22:07:29.275Z
+% Generated: 2026-05-19T04:49:27.184Z
 %
 % EDITING INSTRUCTIONS:
 % - Claim environments are auto-generated. Do NOT edit.
@@ -172,7 +172,7 @@ Any query concerning \langref{OBDD} is equivalent to the corresponding query con
 \langref{OBDD} supports Sentential Entailment not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citep{Darwiche_2002,Meinel_Theobald_1998}
 \end{claim}
 \begin{claimdescription}
-Sentential entailment for \langref{OBDD} is coNP-complete. Darwiche and Marquis use the result that checking consistency of two \langfam{OBDD}{<} formulas using different variable orders is NP-complete \citet[Lemma 8.14]{Meinel_Theobald_1998}. Since \langref{OBDD} supports negation, consistency of $\alpha \land \beta$ is equivalent to $\alpha \not\models \neg\beta$, so polynomial-time SE for arbitrary OBDDs would imply polynomial-time consistency for such pairs \citep{Darwiche_2002}.
+Sentential entailment for \langref{OBDD} is coNP-complete. \citet[Lemma 8.14]{Meinel_Theobald_1998} prove that checking consistency of two \langfam{OBDD}{<} formulas using different variable orders is NP-complete . Since \langref{OBDD} supports negation, consistency of $\alpha \land \beta$ is equivalent to $\alpha \not\models \neg\beta$, so polynomial-time SE for arbitrary OBDDs would imply polynomial-time consistency for such pairs \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_27fffab2, op=CE

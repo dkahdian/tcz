@@ -188,8 +188,7 @@ export function formatAssumptionForMathText(input?: string | null): string {
  */
 export function renderTextWithCitations(
   html: string,
-  keyToNumber: (key: string) => number | null,
-  onCitationClick?: (key: string) => void
+  keyToNumber: (key: string) => number | null
 ): string {
   // \cite and \citep render as compact superscript citations.
   // \citet renders inline so it can be used as a noun, including locators

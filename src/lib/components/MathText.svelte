@@ -14,6 +14,9 @@
   import { initialGraphData } from '$lib/data/index.js';
   import type { EntityRefResolver } from '$lib/utils/math-text';
 
+  const processedHtmlCache = new Map<string, string | null>();
+  const PROCESSED_HTML_CACHE_MAX = 1024;
+
   function opCodeToLabel(code: string): string {
     return QUERIES[code]?.label ?? TRANSFORMATIONS[code]?.label ?? code;
   }
@@ -115,11 +118,25 @@
     [key: string]: unknown;
   } = $props();
 
+  function cacheProcessedHtml(cacheKey: string, html: string | null): string | null {
+    if (processedHtmlCache.size >= PROCESSED_HTML_CACHE_MAX) {
+      const firstKey = processedHtmlCache.keys().next().value;
+      if (firstKey !== undefined) processedHtmlCache.delete(firstKey);
+    }
+    processedHtmlCache.set(cacheKey, html);
+    return html;
+  }
+
   const result = $derived(renderMathText(text));
-  
-  // Process HTML to replace citations and entity links with clickable elements
+
+  // Process HTML once per unique input string; MathText is used heavily in tables
+  // and sidebars, and citation/entity expansion is pure over the static dataset.
   const processedHtml = $derived.by(() => {
-    if (!result.html) return null;
+    const cacheKey = text ?? '';
+    if (processedHtmlCache.has(cacheKey)) {
+      return processedHtmlCache.get(cacheKey) ?? null;
+    }
+    if (!result.html) return cacheProcessedHtml(cacheKey, null);
     let html = result.html;
 
     if (containsLatexTextFormatting(text ?? '')) {
@@ -134,7 +151,7 @@
       html = renderTextWithCitations(html, getGlobalRefNumber);
     }
     
-    return html;
+    return cacheProcessedHtml(cacheKey, html);
   });
 
   const resolvedElement = $derived((href ? 'a' : as) as keyof HTMLElementTagNameMap | 'span');

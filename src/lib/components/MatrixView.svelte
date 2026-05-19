@@ -661,12 +661,12 @@
 
   .matrix-cell--button {
     cursor: pointer;
-    transition: background 0.15s ease, box-shadow 0.15s ease;
     padding: 0;
   }
 
   .matrix-cell--button:is(:hover, :focus-visible) {
-    box-shadow: inset 0 0 0 2px rgba(15, 23, 42, 0.2);
+    outline: 2px solid rgba(15, 23, 42, 0.2);
+    outline-offset: -2px;
   }
 
   .matrix-cell.is-row-highlighted,

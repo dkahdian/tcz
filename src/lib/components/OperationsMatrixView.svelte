@@ -1,5 +1,4 @@
 <script lang="ts">
-  import MathText from './MathText.svelte';
   import type {
     GraphData,
     FilteredGraphData,
@@ -12,6 +11,7 @@
   import { measureCellSize } from '$lib/utils/matrix-cell-size.js';
   import { compareByCanonicalOrder } from '$lib/utils/canonical-order.js';
   import { getOperationTractabilityDisplay } from '$lib/utils/operation-tractability.js';
+  import { renderMathText } from '$lib/utils/math-text.js';
 
   type OperationType = 'queries' | 'transformations';
   type SandboxOperationOption = {
@@ -107,13 +107,24 @@
       .filter((lang): lang is KCLanguage => lang !== undefined);
   });
 
+  const languageNameHtml = $derived.by<Map<string, string>>(() => {
+    const map = new Map<string, string>();
+    for (const language of visibleLanguages) {
+      const result = renderMathText(language.name);
+      map.set(language.id, result.html ?? language.name);
+    }
+    return map;
+  });
+
   // Get operation support for a language
   function getOperationSupport(
     language: KCLanguage,
     opCode: string,
     sourceData: GraphData | FilteredGraphData = graphData
   ): KCOpEntry | null {
-    const sourceLanguage = sourceData.languages.find((candidate) => candidate.id === language.id) ?? language;
+    const sourceLanguage = sourceData === graphData
+      ? language
+      : sourceData.languages.find((candidate) => candidate.id === language.id) ?? language;
     const supportMap = operationType === 'queries'
       ? sourceLanguage.properties.queries
       : sourceLanguage.properties.transformations;
@@ -377,7 +388,7 @@
           <tr>
             <th class={`row-header ${isLanguageSelected(language) ? 'is-active' : ''}`}>
               <button type="button" onclick={() => handleLanguageClick(language)} title={`Select ${language.name}`}>
-                <MathText text={language.name} className="inline" />
+                <span class="math-text inline" aria-label={language.name}>{@html languageNameHtml.get(language.id) ?? language.name}</span>
               </button>
             </th>
             {#each operationCodes as opCode}
@@ -611,12 +622,12 @@
 
   .matrix-cell--button {
     cursor: pointer;
-    transition: background 0.15s ease, box-shadow 0.15s ease;
     padding: 0.2rem 0.25rem;
   }
 
   .matrix-cell--button:is(:hover, :focus-visible) {
-    box-shadow: inset 0 0 0 2px rgba(15, 23, 42, 0.2);
+    outline: 2px solid rgba(15, 23, 42, 0.2);
+    outline-offset: -2px;
   }
 
   .matrix-cell--empty {

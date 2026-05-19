@@ -1,7 +1,7 @@
 % =============================
 % Tractable Circuit Zoo - Succinctness Claims and Descriptions
 % Auto-generated from database.json
-% Generated: 2026-05-14T22:07:29.266Z
+% Generated: 2026-05-19T04:49:27.165Z
 % 
 % EDITING INSTRUCTIONS:
 % - Claim environments are auto-generated. Do NOT edit.
@@ -165,7 +165,7 @@ For any fixed vtree $T$, \langfam{dec-SDNNF}{T} is the subset of \langfam{d-SDNN
 \langfam{dec-SDNNF}{T} is not polynomial-time compilable to \langref{nFBDD} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
-This is the fixed-vtree form of \citet[Proposition 3.10]{Amarilli_2018}.
+This is the fixed-vtree form of Proposition 3.10 of \citet{Amarilli_2018}.
 \end{claimdescription}
 
 \begin{claim}
@@ -273,13 +273,6 @@ Construct a right-linear v-tree from the variable order, then rewrite each decis
 \end{claim}
 \begin{claimdescription}
 As defined by \citet{Amarilli_2018}, \langref{OBDD} is the subset of \langref{uOBDD} without any $\vee$-node.
-\end{claimdescription}
-
-\begin{claim}
-\langref{OBDD} is not quasipolynomial-time compilable to \langfam{SDNNF}{T} \citep{TCZ_Forthcoming}
-\end{claim}
-\begin{claimdescription}
-For any fixed vtree $T$, a simple function can be chosen so that every \langfam{SDNNF}{T} representation is exponentially large, while some \langref{OBDD} represents it in linear size. Therefore \langref{OBDD} cannot compile to \langfam{SDNNF}{T} in quasipolynomial size \citep{TCZ_Forthcoming}.
 \end{claimdescription}
 
 \begin{claim}
@@ -651,6 +644,18 @@ By \citet[Corollary 3]{Bollig_2018}, the weighted sum function $WS_n$ can be rep
 
 
 % =============================
+\section{T. C. Zoo, "Tractable Circuit Zoo", forthcoming.}
+% Reference ID: TCZ_Forthcoming
+% =============================
+\begin{claim}
+\langref{OBDD} is not quasipolynomial-time compilable to \langfam{SDNNF}{T} \citep{TCZ_Forthcoming}
+\end{claim}
+\begin{claimdescription}
+For any fixed vtree $T$, a simple function can be chosen so that every \langfam{SDNNF}{T} representation is exponentially large, while some \langref{OBDD} represents it in linear size. Therefore \langref{OBDD} cannot compile to \langfam{SDNNF}{T} in quasipolynomial size \citep{TCZ_Forthcoming}.
+\end{claimdescription}
+
+
+% =============================
 \section{P. Beame and J. Li and S. Roy and D. Suciu, "Model Counting of Query Expressions...}
 % Reference ID: Beame_2013
 % =============================
@@ -760,14 +765,23 @@ Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. 
 
 
 % =============================
-\section{S. Bova and F. Capelli and S. Mengel and F. Slivovsky, "Expander CNFs have exponential DNNF size", Unpublished manuscript, 2014.}
-% Reference ID: Bova_2014
+\section{S. Bova, "SDDs Are Exponentially More Succinct than OBDDs", Proceedings of the A...}
+% Reference ID: Bova_2016_a
 % =============================
+% separators=Generalized_HWB
 \begin{claim}
-\langref{CNF} is not quasipolynomial-time compilable to \langref{DNNF} \citep{Bova_2014}
+\langref{cSDD} is not quasipolynomial-time compilable to \langref{OBDD} \citep{Bova_2016_a}
 \end{claim}
 \begin{claimdescription}
-\citet[Theorem 1]{Bova_2014} gives a family of \langref{CNF} formulas whose every \langref{DNNF} representation has exponential size, so \langref{CNF} cannot compile to \langref{DNNF} in quasipolynomial size.
+\citet[Theorem 4]{Bova_2016_a} constructs a generalized hidden weighted bit function $F_n$ on $2n+1$ variables with \langref{cSDD} size $O(n^3)$ but \langref{OBDD} size $2^{\Omega(n)}$. The function $F_n$ augments $HWB_n$ with fresh variables $y_0, \ldots, y_n$ to ensure the resulting SDD is compressed; conditioning $F_n$ on $y_i = 1$ recovers $HWB_n$, preserving Bryant's exponential \langref{OBDD} lower bound.
+\end{claimdescription}
+
+% separators=Generalized_HWB
+\begin{claim}
+\langfam{cSDD}{T} is not quasipolynomial-time compilable to \langref{OBDD} \citep{Bova_2016_a}
+\end{claim}
+\begin{claimdescription}
+\citet[Theorem 4]{Bova_2016_a} constructs a generalized hidden weighted bit function $F_n$ with polynomial-size compressed SDDs respecting explicit vtrees, but every \langref{OBDD} for $F_n$ has size $2^{\Omega(n)}$. Hence \langfam{cSDD}{T} is not quasipolynomial-time compilable to \langref{OBDD}.
 \end{claimdescription}
 
 
@@ -805,27 +819,6 @@ The Quine-McCluskey algorithm generates an \langref{IP} formula in polynomial ti
 
 
 % =============================
-\section{S. Bova, "SDDs Are Exponentially More Succinct than OBDDs", Proceedings of the A...}
-% Reference ID: Bova_2016_a
-% =============================
-% separators=Generalized_HWB
-\begin{claim}
-\langfam{cSDD}{T} is not quasipolynomial-time compilable to \langref{OBDD} \citep{Bova_2016_a}
-\end{claim}
-\begin{claimdescription}
-\citet[Theorem 4]{Bova_2016_a} constructs a generalized hidden weighted bit function $F_n$ with polynomial-size compressed SDDs respecting explicit vtrees, but every \langref{OBDD} for $F_n$ has size $2^{\Omega(n)}$. Hence \langfam{cSDD}{T} is not quasipolynomial-time compilable to \langref{OBDD}.
-\end{claimdescription}
-
-% separators=Generalized_HWB
-\begin{claim}
-\langref{cSDD} is not quasipolynomial-time compilable to \langref{OBDD} \citep{Bova_2016_a}
-\end{claim}
-\begin{claimdescription}
-\citet[Theorem 4]{Bova_2016_a} constructs a generalized hidden weighted bit function $F_n$ on $2n+1$ variables with \langref{cSDD} size $O(n^3)$ but \langref{OBDD} size $2^{\Omega(n)}$. The function $F_n$ augments $HWB_n$ with fresh variables $y_0, \ldots, y_n$ to ensure the resulting SDD is compressed; conditioning $F_n$ on $y_i = 1$ recovers $HWB_n$, preserving Bryant's exponential \langref{OBDD} lower bound.
-\end{claimdescription}
-
-
-% =============================
 \section{H. Vinall-Smeeth, "Structured d-DNNF Is Not Closed Under Negation", Proceedings ...}
 % Reference ID: Vinall-Smeeth_2024
 % =============================
@@ -841,6 +834,18 @@ The Quine-McCluskey algorithm generates an \langref{IP} formula in polynomial ti
 \end{claim}
 \begin{claimdescription}
 The Vinall-Smeeth construction gives small source circuits that are explicitly structured: for the hard unambiguous DNF $\psi'$, the proof fixes a vtree $T$ over $\operatorname{var}(\psi')$, compiles each term as a d-DNNF respecting $T$, and takes their deterministic disjunction. Thus the source side can be stated as \langfam{d-SDNNF}{T}. The lower bound is against every equivalent \langref{SDD}; since \langfam{SDD}{T} is a subfamily of \langref{SDD}, it also rules out every target vtree family member.
+\end{claimdescription}
+
+
+% =============================
+\section{S. Bova and F. Capelli and S. Mengel and F. Slivovsky, "Expander CNFs have expon...}
+% Reference ID: Bova_2014
+% =============================
+\begin{claim}
+\langref{CNF} is not quasipolynomial-time compilable to \langref{DNNF} \citep{Bova_2014}
+\end{claim}
+\begin{claimdescription}
+\citet[Theorem 1]{Bova_2014} gives a family of \langref{CNF} formulas whose every \langref{DNNF} representation has exponential size, so \langref{CNF} cannot compile to \langref{DNNF} in quasipolynomial size.
 \end{claimdescription}
 
 
