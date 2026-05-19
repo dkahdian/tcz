@@ -89,6 +89,21 @@ function opLabel(code: string): string {
   return code;
 }
 
+function joinWithAnd(items: string[]): string {
+  if (items.length === 0) return '';
+  if (items.length === 1) return items[0];
+  if (items.length === 2) return `${items[0]} and ${items[1]}`;
+  return `${items.slice(0, -1).join(', ')}, and ${items[items.length - 1]}`;
+}
+
+function antecedentText(lemma: OperationLemma): string {
+  return joinWithAnd(lemma.antecedent.map(opLabel));
+}
+
+function implicationVerb(lemma: OperationLemma): string {
+  return lemma.antecedent.length === 1 ? 'implies' : 'together imply';
+}
+
 /** Statuses that assert "no polynomial" */
 const NO_POLY_QUERY_STATUSES = new Set<string>(['no-poly-unknown-quasi', 'no-poly-quasi', 'no-quasi']);
 /** Statuses that assert "no quasipolynomial" (only no-quasi; no-poly-quasi means quasi EXISTS) */
@@ -347,10 +362,10 @@ export function propagateQueriesViaLemmas(
         const premiseLevel = polyOnly ? 'in polynomial time' : 'in quasipolynomial time';
         const antecedentPremises = lemma.antecedent
           .map((op, idx) => `\\opref{${language.id}}{${op}} ${premiseLevel}${formatInlineAssumption(antecedentAssumptions[idx])}`)
-          .join(', ');
+          .join(' and ');
         const antecedentRefs = lemma.antecedent.map((op) => getOperationSupport(language, op)?.refs ?? []);
         const refs = uniqueRefs(lemma.refs, ...antecedentRefs);
-        const description = `Since ${antecedentPremises}, ${lemma.antecedent.map(opLabel).join(' ∧ ')} implies ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}. Therefore \\langref{${language.id}} supports ${opLabel(lemma.consequent)}.`;
+        const description = `Here, ${antecedentPremises}. Since ${antecedentText(lemma)} ${implicationVerb(lemma)} ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}, \\langref{${language.id}} supports ${opLabel(lemma.consequent)}.`;
 
         if (DEBUG_PROPAGATION) {
           const reason = canImproveAssumption ? 'ASSUMPTION-IMPROVE' : 'LEMMA';
@@ -523,8 +538,8 @@ export function propagateQueryDowngrades(
 /**
  * Phase 5b: Propagate query downgrades via lemma contrapositives.
  * 
- * For a lemma A1 ∧ A2 ∧ ... ∧ An -> C (all antecedents together imply consequent):
- * Contrapositive: ¬C -> ¬A1 ∨ ¬A2 ∨ ... ∨ ¬An
+ * For a lemma A1 and A2 and ... and An -> C (all antecedents together imply consequent):
+ * Contrapositive: not C -> not A1 or not A2 or ... or not An
  * 
  * We can only infer a specific antecedent is false when:
  * - C is false (no-poly or no-quasi)
@@ -593,10 +608,10 @@ export function propagateDowngradesViaLemmaContrapositives(
           if (queryAssertsNoPoly(targetComplexity) && assumption) continue;
 
           const refs = uniqueRefs(lemma.refs, consequentRefs, ...otherRefs);
-          const othersDesc = otherAntecedents.length > 0 
-            ? ` and since ${otherAntecedents.map((op, idx) => `\\opref{${language.id}}{${op}} in polynomial time${formatInlineAssumption(otherAssumptions[idx])}`).join(' and ')},`
+          const othersDesc = otherAntecedents.length > 0
+            ? ` Also, ${joinWithAnd(otherAntecedents.map((op, idx) => `\\opref{${language.id}}{${op}} in polynomial time${formatInlineAssumption(otherAssumptions[idx])}`))}.`
             : '';
-          const description = `Since ${lemma.antecedent.map(opLabel).join(' ∧ ')} implies ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}, and since \\nopref{${language.id}}{${lemma.consequent}}${formatInlineAssumption(consequentSupport?.assumption)},${othersDesc} then ${opLabel(targetOp)} is unsupported by ${idToName(language.id)} as well${formatInlineAssumption(assumption)}.`;
+          const description = `${antecedentText(lemma)} ${implicationVerb(lemma)} ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}. However, \\nopref{${language.id}}{${lemma.consequent}}${formatInlineAssumption(consequentSupport?.assumption)}.${othersDesc} Therefore ${opLabel(targetOp)} is unsupported by ${idToName(language.id)}${formatInlineAssumption(assumption)}.`;
 
           if (DEBUG_PROPAGATION) {
             const reason = queryAssertsNoPoly(targetComplexity) ? 'ASSUMPTION-IMPROVE' : 'CONTRAPOSITIVE';
@@ -675,10 +690,10 @@ export function propagateDowngradesViaLemmaContrapositives(
           if (queryAssertsNoQuasi(targetComplexity) && assumption) continue;
 
           const refs = uniqueRefs(lemma.refs, consequentRefs, ...otherRefs);
-          const othersDesc = otherAntecedents.length > 0 
-            ? ` and since ${otherAntecedents.map((op, idx) => `\\opref{${language.id}}{${op}} in quasipolynomial time${formatInlineAssumption(otherAssumptions[idx])}`).join(' and ')},`
+          const othersDesc = otherAntecedents.length > 0
+            ? ` Also, ${joinWithAnd(otherAntecedents.map((op, idx) => `\\opref{${language.id}}{${op}} in quasipolynomial time${formatInlineAssumption(otherAssumptions[idx])}`))}.`
             : '';
-          const description = `Since ${lemma.antecedent.map(opLabel).join(' ∧ ')} implies ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}, and since \\nopref{${language.id}}{${lemma.consequent}} in quasipolynomial time${formatInlineAssumption(consequentSupport?.assumption)},${othersDesc} then ${opLabel(targetOp)} is unsupported by ${idToName(language.id)} in quasipolynomial time as well${formatInlineAssumption(assumption)}.`;
+          const description = `${antecedentText(lemma)} ${implicationVerb(lemma)} ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}. However, \\nopref{${language.id}}{${lemma.consequent}} in quasipolynomial time${formatInlineAssumption(consequentSupport?.assumption)}.${othersDesc} Therefore ${opLabel(targetOp)} is unsupported by ${idToName(language.id)} in quasipolynomial time${formatInlineAssumption(assumption)}.`;
 
           if (DEBUG_PROPAGATION) {
             const reason = queryAssertsNoQuasi(targetComplexity) ? 'ASSUMPTION-IMPROVE' : 'CONTRAPOSITIVE';

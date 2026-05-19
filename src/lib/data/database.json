@@ -427,7 +427,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Equivalence implies Consistency \\citep{Darwiche_2002}, and since \\nopref{lang_89649e36}{CO} assuming P \\neq NP, then Equivalence is unsupported by CNF as well assuming P \\neq NP.",
+            "description": "Equivalence implies Consistency \\citep{Darwiche_2002}. However, \\nopref{lang_89649e36}{CO} assuming P \\neq NP. Therefore Equivalence is unsupported by CNF assuming P \\neq NP.",
             "derivationOrder": 1447,
             "proofTrace": {
               "rule": "lemma-contrapositive",
@@ -444,7 +444,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Sentential Entailment implies Equivalence \\citep{Darwiche_2002}, and since \\nopref{lang_89649e36}{EQ} assuming P \\neq NP, then Sentential Entailment is unsupported by CNF as well assuming P \\neq NP.",
+            "description": "Sentential Entailment implies Equivalence \\citep{Darwiche_2002}. However, \\nopref{lang_89649e36}{EQ} assuming P \\neq NP. Therefore Sentential Entailment is unsupported by CNF assuming P \\neq NP.",
             "derivationOrder": 1448,
             "proofTrace": {
               "rule": "lemma-contrapositive",
@@ -461,7 +461,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Clausal Entailment implies Consistency \\citep{Darwiche_2002}, and since \\nopref{lang_89649e36}{CO} assuming P \\neq NP, then Clausal Entailment is unsupported by CNF as well assuming P \\neq NP.",
+            "description": "Clausal Entailment implies Consistency \\citep{Darwiche_2002}. However, \\nopref{lang_89649e36}{CO} assuming P \\neq NP. Therefore Clausal Entailment is unsupported by CNF assuming P \\neq NP.",
             "derivationOrder": 1449,
             "proofTrace": {
               "rule": "lemma-contrapositive",
@@ -478,7 +478,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Model Enumeration implies Consistency \\citep{Darwiche_2002}, and since \\nopref{lang_89649e36}{CO} assuming P \\neq NP, then Model Enumeration is unsupported by CNF as well assuming P \\neq NP.",
+            "description": "Model Enumeration implies Consistency \\citep{Darwiche_2002}. However, \\nopref{lang_89649e36}{CO} assuming P \\neq NP. Therefore Model Enumeration is unsupported by CNF assuming P \\neq NP.",
             "derivationOrder": 1450,
             "proofTrace": {
               "rule": "lemma-contrapositive",
@@ -535,7 +535,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_89649e36}{AND_C} in polynomial time, Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}. Therefore \\langref{lang_89649e36} supports Bounded Conjunction.",
+            "description": "Here, \\opref{lang_89649e36}{AND_C} in polynomial time. Since Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, \\langref{lang_89649e36} supports Bounded Conjunction.",
             "derivationOrder": 1286,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -550,7 +550,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_89649e36}{CD} in polynomial time, \\opref{lang_89649e36}{OR_BC} in polynomial time, Conditioning ∧ Bounded Disjunction implies Singleton Forgetting \\citep{Darwiche_2002}. Therefore \\langref{lang_89649e36} supports Singleton Forgetting.",
+            "description": "Here, \\opref{lang_89649e36}{CD} in polynomial time and \\opref{lang_89649e36}{OR_BC} in polynomial time. Since Conditioning and Bounded Disjunction together imply Singleton Forgetting \\citep{Darwiche_2002}, \\langref{lang_89649e36} supports Singleton Forgetting.",
             "derivationOrder": 1287,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -565,7 +565,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Negation ∧ Conjunction implies Disjunction \\citep{Darwiche_2002}, and since \\nopref{lang_89649e36}{OR_C}, and since \\opref{lang_89649e36}{AND_C} in polynomial time, then Negation is unsupported by CNF as well.",
+            "description": "Negation and Conjunction together imply Disjunction \\citep{Darwiche_2002}. However, \\nopref{lang_89649e36}{OR_C}. Also, \\opref{lang_89649e36}{AND_C} in polynomial time. Therefore Negation is unsupported by CNF.",
             "derivationOrder": 1451,
             "proofTrace": {
               "rule": "lemma-contrapositive",
@@ -649,7 +649,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_83e3b023}{CT} in polynomial time, Model Counting implies Validity \\citep{Darwiche_2002}. Therefore \\langref{lang_83e3b023} supports Validity.",
+            "description": "Here, \\opref{lang_83e3b023}{CT} in polynomial time. Since Model Counting implies Validity \\citep{Darwiche_2002}, \\langref{lang_83e3b023} supports Validity.",
             "derivationOrder": 1289,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -802,7 +802,7 @@
               "TCZ_Forthcoming"
             ],
             "derived": true,
-            "description": "Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, and since \\nopref{lang_83e3b023}{SFO} in quasipolynomial time, then Forgetting is unsupported by cSDD in quasipolynomial time as well.",
+            "description": "Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_83e3b023}{SFO} in quasipolynomial time. Therefore Forgetting is unsupported by cSDD in quasipolynomial time.",
             "derivationOrder": 1453,
             "proofTrace": {
               "rule": "lemma-contrapositive",
@@ -870,7 +870,7 @@
               "Darwiche_2001a"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_6c130090}{CO} in polynomial time, \\opref{lang_6c130090}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_6c130090} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_6c130090}{CO} in polynomial time and \\opref{lang_6c130090}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_6c130090} supports Model Enumeration.",
             "derivationOrder": 1290,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -886,7 +886,7 @@
               "Darwiche_2001a"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_6c130090}{CO} in polynomial time, \\opref{lang_6c130090}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_6c130090} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_6c130090}{CO} in polynomial time and \\opref{lang_6c130090}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_6c130090} supports Clausal Entailment.",
             "derivationOrder": 1291,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -902,7 +902,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_6c130090}{CT} in polynomial time, Model Counting implies Validity \\citep{Darwiche_2002}. Therefore \\langref{lang_6c130090} supports Validity.",
+            "description": "Here, \\opref{lang_6c130090}{CT} in polynomial time. Since Model Counting implies Validity \\citep{Darwiche_2002}, \\langref{lang_6c130090} supports Validity.",
             "derivationOrder": 1293,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -918,7 +918,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_6c130090}{VA} in polynomial time, \\opref{lang_6c130090}{CD} in polynomial time, Validity ∧ Conditioning implies Implicant \\citep{Darwiche_2002}. Therefore \\langref{lang_6c130090} supports Implicant.",
+            "description": "Here, \\opref{lang_6c130090}{VA} in polynomial time and \\opref{lang_6c130090}{CD} in polynomial time. Since Validity and Conditioning together imply Implicant \\citep{Darwiche_2002}, \\langref{lang_6c130090} supports Implicant.",
             "derivationOrder": 1400,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -969,7 +969,7 @@
               "Darwiche_2001a"
             ],
             "derived": true,
-            "description": "Since Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, and since \\nopref{lang_6c130090}{AND_BC} in quasipolynomial time, then Conjunction is unsupported by d-DNNF in quasipolynomial time as well.",
+            "description": "Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}. However, \\nopref{lang_6c130090}{AND_BC} in quasipolynomial time. Therefore Conjunction is unsupported by d-DNNF in quasipolynomial time.",
             "derivationOrder": 1455,
             "proofTrace": {
               "rule": "lemma-contrapositive",
@@ -999,7 +999,7 @@
               "Amarilli_2018"
             ],
             "derived": true,
-            "description": "Since Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, and since \\nopref{lang_6c130090}{OR_BC} in quasipolynomial time, then Disjunction is unsupported by d-DNNF in quasipolynomial time as well.",
+            "description": "Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}. However, \\nopref{lang_6c130090}{OR_BC} in quasipolynomial time. Therefore Disjunction is unsupported by d-DNNF in quasipolynomial time.",
             "derivationOrder": 1457,
             "proofTrace": {
               "rule": "lemma-contrapositive",
@@ -1016,7 +1016,7 @@
               "TCZ_Forthcoming"
             ],
             "derived": true,
-            "description": "Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, and since \\nopref{lang_6c130090}{SFO} in quasipolynomial time, then Forgetting is unsupported by d-DNNF in quasipolynomial time as well.",
+            "description": "Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_6c130090}{SFO} in quasipolynomial time. Therefore Forgetting is unsupported by d-DNNF in quasipolynomial time.",
             "derivationOrder": 1459,
             "proofTrace": {
               "rule": "lemma-contrapositive",
@@ -1116,7 +1116,7 @@
               "Pipatsrisawat_2008"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_ea9b5299}{CO} in polynomial time, \\opref{lang_ea9b5299}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_ea9b5299} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_ea9b5299}{CO} in polynomial time and \\opref{lang_ea9b5299}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_ea9b5299} supports Model Enumeration.",
             "derivationOrder": 1294,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -1134,7 +1134,7 @@
               "Pipatsrisawat_2008"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_ea9b5299}{CO} in polynomial time, \\opref{lang_ea9b5299}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_ea9b5299} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_ea9b5299}{CO} in polynomial time and \\opref{lang_ea9b5299}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_ea9b5299} supports Clausal Entailment.",
             "derivationOrder": 1295,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -1151,7 +1151,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_ea9b5299}{CT} in polynomial time, Model Counting implies Validity \\citep{Darwiche_2002}. Therefore \\langref{lang_ea9b5299} supports Validity.",
+            "description": "Here, \\opref{lang_ea9b5299}{CT} in polynomial time. Since Model Counting implies Validity \\citep{Darwiche_2002}, \\langref{lang_ea9b5299} supports Validity.",
             "derivationOrder": 1297,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -1169,7 +1169,7 @@
               "Pipatsrisawat_2008"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_ea9b5299}{VA} in polynomial time, \\opref{lang_ea9b5299}{CD} in polynomial time, Validity ∧ Conditioning implies Implicant \\citep{Darwiche_2002}. Therefore \\langref{lang_ea9b5299} supports Implicant.",
+            "description": "Here, \\opref{lang_ea9b5299}{VA} in polynomial time and \\opref{lang_ea9b5299}{CD} in polynomial time. Since Validity and Conditioning together imply Implicant \\citep{Darwiche_2002}, \\langref{lang_ea9b5299} supports Implicant.",
             "derivationOrder": 1401,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -1310,7 +1310,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_91f812d0}{SE} in polynomial time, Sentential Entailment implies Equivalence \\citep{Darwiche_2002}. Therefore \\langref{lang_91f812d0} supports Equivalence.",
+            "description": "Here, \\opref{lang_91f812d0}{SE} in polynomial time. Since Sentential Entailment implies Equivalence \\citep{Darwiche_2002}, \\langref{lang_91f812d0} supports Equivalence.",
             "derivationOrder": 1403,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -1346,7 +1346,7 @@
               "Darwiche_2001a"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_91f812d0}{CO} in polynomial time, \\opref{lang_91f812d0}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_91f812d0} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_91f812d0}{CO} in polynomial time and \\opref{lang_91f812d0}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_91f812d0} supports Model Enumeration.",
             "derivationOrder": 1298,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -1364,7 +1364,7 @@
               "Pipatsrisawat_2008"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_91f812d0}{CO} in polynomial time, \\opref{lang_91f812d0}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_91f812d0} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_91f812d0}{CO} in polynomial time and \\opref{lang_91f812d0}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_91f812d0} supports Clausal Entailment.",
             "derivationOrder": 1299,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -1382,7 +1382,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_91f812d0}{CT} in polynomial time, Model Counting implies Validity \\citep{Darwiche_2002}. Therefore \\langref{lang_91f812d0} supports Validity.",
+            "description": "Here, \\opref{lang_91f812d0}{CT} in polynomial time. Since Model Counting implies Validity \\citep{Darwiche_2002}, \\langref{lang_91f812d0} supports Validity.",
             "derivationOrder": 1301,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -1399,7 +1399,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_91f812d0}{CT} in polynomial time, \\opref{lang_91f812d0}{AND_BC} in polynomial time, Model Counting ∧ Bounded Conjunction implies Sentential Entailment. Therefore \\langref{lang_91f812d0} supports Sentential Entailment.",
+            "description": "Here, \\opref{lang_91f812d0}{CT} in polynomial time and \\opref{lang_91f812d0}{AND_BC} in polynomial time. Since Model Counting and Bounded Conjunction together imply Sentential Entailment, \\langref{lang_91f812d0} supports Sentential Entailment.",
             "derivationOrder": 1302,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -1417,7 +1417,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_91f812d0}{VA} in polynomial time, \\opref{lang_91f812d0}{CD} in polynomial time, Validity ∧ Conditioning implies Implicant \\citep{Darwiche_2002}. Therefore \\langref{lang_91f812d0} supports Implicant.",
+            "description": "Here, \\opref{lang_91f812d0}{VA} in polynomial time and \\opref{lang_91f812d0}{CD} in polynomial time. Since Validity and Conditioning together imply Implicant \\citep{Darwiche_2002}, \\langref{lang_91f812d0} supports Implicant.",
             "derivationOrder": 1402,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -1460,8 +1460,8 @@
               "TCZ_Forthcoming"
             ],
             "derived": true,
-            "description": "Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, and since \\nopref{lang_91f812d0}{SFO} in quasipolynomial time, then Forgetting is unsupported by d-SDNNF$_T$ in quasipolynomial time as well.",
-            "derivationOrder": 1460,
+            "description": "Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_91f812d0}{SFO} in quasipolynomial time. Therefore Forgetting is unsupported by d-SDNNF$_T$ in quasipolynomial time.",
+            "derivationOrder": 1461,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -1478,8 +1478,8 @@
               "Pipatsrisawat_2008"
             ],
             "derived": true,
-            "description": "Since Conditioning ∧ Bounded Disjunction implies Singleton Forgetting \\citep{Darwiche_2002}, and since \\nopref{lang_91f812d0}{SFO} in quasipolynomial time, and since \\opref{lang_91f812d0}{CD} in quasipolynomial time, then Bounded Disjunction is unsupported by d-SDNNF$_T$ in quasipolynomial time as well.",
-            "derivationOrder": 1461,
+            "description": "Conditioning and Bounded Disjunction together imply Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_91f812d0}{SFO} in quasipolynomial time. Also, \\opref{lang_91f812d0}{CD} in quasipolynomial time. Therefore Bounded Disjunction is unsupported by d-SDNNF$_T$ in quasipolynomial time.",
+            "derivationOrder": 1462,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "cd-or-bc-sfo",
@@ -1519,8 +1519,8 @@
               "Pipatsrisawat_2008"
             ],
             "derived": true,
-            "description": "Since Negation ∧ Bounded Conjunction implies Bounded Disjunction \\citep{Darwiche_2002}, and since \\nopref{lang_91f812d0}{OR_BC} in quasipolynomial time, and since \\opref{lang_91f812d0}{AND_BC} in quasipolynomial time, then Negation is unsupported by d-SDNNF$_T$ in quasipolynomial time as well.",
-            "derivationOrder": 1463,
+            "description": "Negation and Bounded Conjunction together imply Bounded Disjunction \\citep{Darwiche_2002}. However, \\nopref{lang_91f812d0}{OR_BC} in quasipolynomial time. Also, \\opref{lang_91f812d0}{AND_BC} in quasipolynomial time. Therefore Negation is unsupported by d-SDNNF$_T$ in quasipolynomial time.",
+            "derivationOrder": 1464,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-and-bc-or-bc",
@@ -1626,8 +1626,8 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Equivalence implies Validity \\citep{Darwiche_2002}, and since \\nopref{lang_4c204bf3}{VA} assuming P \\neq NP, then Equivalence is unsupported by DNF as well assuming P \\neq NP.",
-            "derivationOrder": 1464,
+            "description": "Equivalence implies Validity \\citep{Darwiche_2002}. However, \\nopref{lang_4c204bf3}{VA} assuming P \\neq NP. Therefore Equivalence is unsupported by DNF assuming P \\neq NP.",
+            "derivationOrder": 1465,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -1643,8 +1643,8 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Sentential Entailment implies Equivalence \\citep{Darwiche_2002}, and since \\nopref{lang_4c204bf3}{EQ} assuming P \\neq NP, then Sentential Entailment is unsupported by DNF as well assuming P \\neq NP.",
-            "derivationOrder": 1465,
+            "description": "Sentential Entailment implies Equivalence \\citep{Darwiche_2002}. However, \\nopref{lang_4c204bf3}{EQ} assuming P \\neq NP. Therefore Sentential Entailment is unsupported by DNF assuming P \\neq NP.",
+            "derivationOrder": 1466,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "se-eq",
@@ -1660,8 +1660,8 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Implicant implies Validity \\citep{Darwiche_2002}, and since \\nopref{lang_4c204bf3}{VA} assuming P \\neq NP, then Implicant is unsupported by DNF as well assuming P \\neq NP.",
-            "derivationOrder": 1466,
+            "description": "Implicant implies Validity \\citep{Darwiche_2002}. However, \\nopref{lang_4c204bf3}{VA} assuming P \\neq NP. Therefore Implicant is unsupported by DNF assuming P \\neq NP.",
+            "derivationOrder": 1467,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -1721,7 +1721,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_4c204bf3}{OR_C} in polynomial time, Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}. Therefore \\langref{lang_4c204bf3} supports Bounded Disjunction.",
+            "description": "Here, \\opref{lang_4c204bf3}{OR_C} in polynomial time. Since Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, \\langref{lang_4c204bf3} supports Bounded Disjunction.",
             "derivationOrder": 1303,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -1737,7 +1737,7 @@
               "Lang_2003"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_4c204bf3}{FO} in polynomial time, Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. Therefore \\langref{lang_4c204bf3} supports Singleton Forgetting.",
+            "description": "Here, \\opref{lang_4c204bf3}{FO} in polynomial time. Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, \\langref{lang_4c204bf3} supports Singleton Forgetting.",
             "derivationOrder": 1304,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -1753,7 +1753,7 @@
               "Lang_2003"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_4c204bf3}{AND_BC} in polynomial time, \\opref{lang_4c204bf3}{SFO} in polynomial time, Bounded Conjunction ∧ Singleton Forgetting implies Conditioning \\citep{Darwiche_2002}. Therefore \\langref{lang_4c204bf3} supports Conditioning.",
+            "description": "Here, \\opref{lang_4c204bf3}{AND_BC} in polynomial time and \\opref{lang_4c204bf3}{SFO} in polynomial time. Since Bounded Conjunction and Singleton Forgetting together imply Conditioning \\citep{Darwiche_2002}, \\langref{lang_4c204bf3} supports Conditioning.",
             "derivationOrder": 1305,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -1786,7 +1786,7 @@
               "Darwiche_2001a"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_3bebcab7}{CO} in polynomial time, \\opref{lang_3bebcab7}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_3bebcab7} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_3bebcab7}{CO} in polynomial time and \\opref{lang_3bebcab7}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_3bebcab7} supports Model Enumeration.",
             "derivationOrder": 1306,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -1802,7 +1802,7 @@
               "Darwiche_2001a"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_3bebcab7}{CO} in polynomial time, \\opref{lang_3bebcab7}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_3bebcab7} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_3bebcab7}{CO} in polynomial time and \\opref{lang_3bebcab7}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_3bebcab7} supports Clausal Entailment.",
             "derivationOrder": 1307,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -1870,8 +1870,8 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Equivalence implies Validity \\citep{Darwiche_2002}, and since \\nopref{lang_3bebcab7}{VA} assuming P \\neq NP, then Equivalence is unsupported by DNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1467,
+            "description": "Equivalence implies Validity \\citep{Darwiche_2002}. However, \\nopref{lang_3bebcab7}{VA} assuming P \\neq NP. Therefore Equivalence is unsupported by DNNF assuming P \\neq NP.",
+            "derivationOrder": 1468,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -1887,8 +1887,8 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Implicant implies Validity \\citep{Darwiche_2002}, and since \\nopref{lang_3bebcab7}{VA} assuming P \\neq NP, then Implicant is unsupported by DNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1468,
+            "description": "Implicant implies Validity \\citep{Darwiche_2002}. However, \\nopref{lang_3bebcab7}{VA} assuming P \\neq NP. Therefore Implicant is unsupported by DNNF assuming P \\neq NP.",
+            "derivationOrder": 1469,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -1959,7 +1959,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_3bebcab7}{OR_C} in polynomial time, Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}. Therefore \\langref{lang_3bebcab7} supports Bounded Disjunction.",
+            "description": "Here, \\opref{lang_3bebcab7}{OR_C} in polynomial time. Since Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, \\langref{lang_3bebcab7} supports Bounded Disjunction.",
             "derivationOrder": 1308,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -1975,7 +1975,7 @@
               "Darwiche_2001a"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_3bebcab7}{FO} in polynomial time, Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. Therefore \\langref{lang_3bebcab7} supports Singleton Forgetting.",
+            "description": "Here, \\opref{lang_3bebcab7}{FO} in polynomial time. Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, \\langref{lang_3bebcab7} supports Singleton Forgetting.",
             "derivationOrder": 1309,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -2036,7 +2036,7 @@
               "Bryant_1992"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_684b1ca7}{CO} in polynomial time, \\opref{lang_684b1ca7}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_684b1ca7} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_684b1ca7}{CO} in polynomial time and \\opref{lang_684b1ca7}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_684b1ca7} supports Model Enumeration.",
             "derivationOrder": 1310,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -2054,7 +2054,7 @@
               "Bryant_1992"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_684b1ca7}{CO} in polynomial time, \\opref{lang_684b1ca7}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_684b1ca7} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_684b1ca7}{CO} in polynomial time and \\opref{lang_684b1ca7}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_684b1ca7} supports Clausal Entailment.",
             "derivationOrder": 1311,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -2071,7 +2071,7 @@
               "Bryant_1992"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_684b1ca7}{VA} in polynomial time, \\opref{lang_684b1ca7}{CD} in polynomial time, Validity ∧ Conditioning implies Implicant \\citep{Darwiche_2002}. Therefore \\langref{lang_684b1ca7} supports Implicant.",
+            "description": "Here, \\opref{lang_684b1ca7}{VA} in polynomial time and \\opref{lang_684b1ca7}{CD} in polynomial time. Since Validity and Conditioning together imply Implicant \\citep{Darwiche_2002}, \\langref{lang_684b1ca7} supports Implicant.",
             "derivationOrder": 1312,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -2171,8 +2171,8 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, and since \\nopref{lang_684b1ca7}{SFO} in quasipolynomial time, then Forgetting is unsupported by FBDD in quasipolynomial time as well.",
-            "derivationOrder": 1470,
+            "description": "Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_684b1ca7}{SFO} in quasipolynomial time. Therefore Forgetting is unsupported by FBDD in quasipolynomial time.",
+            "derivationOrder": 1471,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -2239,7 +2239,7 @@
               "Darwiche_2001a"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_6ae90adc}{CO} in polynomial time, \\opref{lang_6ae90adc}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_6ae90adc} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_6ae90adc}{CO} in polynomial time and \\opref{lang_6ae90adc}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_6ae90adc} supports Model Enumeration.",
             "derivationOrder": 1313,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -2255,7 +2255,7 @@
               "Darwiche_2001a"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_6ae90adc}{CO} in polynomial time, \\opref{lang_6ae90adc}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_6ae90adc} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_6ae90adc}{CO} in polynomial time and \\opref{lang_6ae90adc}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_6ae90adc} supports Clausal Entailment.",
             "derivationOrder": 1314,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -2270,7 +2270,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_6ae90adc}{SE} in polynomial time, Sentential Entailment implies Equivalence \\citep{Darwiche_2002}. Therefore \\langref{lang_6ae90adc} supports Equivalence.",
+            "description": "Here, \\opref{lang_6ae90adc}{SE} in polynomial time. Since Sentential Entailment implies Equivalence \\citep{Darwiche_2002}, \\langref{lang_6ae90adc} supports Equivalence.",
             "derivationOrder": 1315,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -2285,7 +2285,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_6ae90adc}{IM} in polynomial time, Implicant implies Validity \\citep{Darwiche_2002}. Therefore \\langref{lang_6ae90adc} supports Validity.",
+            "description": "Here, \\opref{lang_6ae90adc}{IM} in polynomial time. Since Implicant implies Validity \\citep{Darwiche_2002}, \\langref{lang_6ae90adc} supports Validity.",
             "derivationOrder": 1316,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -2344,8 +2344,8 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, and since \\nopref{lang_6ae90adc}{OR_BC} in quasipolynomial time, then Disjunction is unsupported by IP in quasipolynomial time as well.",
-            "derivationOrder": 1472,
+            "description": "Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}. However, \\nopref{lang_6ae90adc}{OR_BC} in quasipolynomial time. Therefore Disjunction is unsupported by IP in quasipolynomial time.",
+            "derivationOrder": 1473,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
@@ -2360,8 +2360,8 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, and since \\nopref{lang_6ae90adc}{SFO} in quasipolynomial time, then Forgetting is unsupported by IP in quasipolynomial time as well.",
-            "derivationOrder": 1474,
+            "description": "Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_6ae90adc}{SFO} in quasipolynomial time. Therefore Forgetting is unsupported by IP in quasipolynomial time.",
+            "derivationOrder": 1475,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -2541,7 +2541,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_e02902d0}{FO} in polynomial time, Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. Therefore \\langref{lang_e02902d0} supports Singleton Forgetting.",
+            "description": "Here, \\opref{lang_e02902d0}{FO} in polynomial time. Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, \\langref{lang_e02902d0} supports Singleton Forgetting.",
             "derivationOrder": 1317,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -2556,7 +2556,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_e02902d0}{AND_BC} in polynomial time, \\opref{lang_e02902d0}{SFO} in polynomial time, Bounded Conjunction ∧ Singleton Forgetting implies Conditioning \\citep{Darwiche_2002}. Therefore \\langref{lang_e02902d0} supports Conditioning.",
+            "description": "Here, \\opref{lang_e02902d0}{AND_BC} in polynomial time and \\opref{lang_e02902d0}{SFO} in polynomial time. Since Bounded Conjunction and Singleton Forgetting together imply Conditioning \\citep{Darwiche_2002}, \\langref{lang_e02902d0} supports Conditioning.",
             "derivationOrder": 1318,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -2571,8 +2571,8 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, and since \\nopref{lang_e02902d0}{OR_BC} in quasipolynomial time, then Disjunction is unsupported by MODS in quasipolynomial time as well.",
-            "derivationOrder": 1476,
+            "description": "Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}. However, \\nopref{lang_e02902d0}{OR_BC} in quasipolynomial time. Therefore Disjunction is unsupported by MODS in quasipolynomial time.",
+            "derivationOrder": 1477,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
@@ -2620,7 +2620,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_1df07cc3}{CO} in polynomial time, \\opref{lang_1df07cc3}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_1df07cc3} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_1df07cc3}{CO} in polynomial time and \\opref{lang_1df07cc3}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_1df07cc3} supports Model Enumeration.",
             "derivationOrder": 1319,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -2638,7 +2638,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_1df07cc3}{CO} in polynomial time, \\opref{lang_1df07cc3}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_1df07cc3} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_1df07cc3}{CO} in polynomial time and \\opref{lang_1df07cc3}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_1df07cc3} supports Clausal Entailment.",
             "derivationOrder": 1320,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -2712,8 +2712,8 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since Equivalence implies Validity \\citep{Darwiche_2002}, and since \\nopref{lang_1df07cc3}{VA} assuming P \\neq NP, then Equivalence is unsupported by nFBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1477,
+            "description": "Equivalence implies Validity \\citep{Darwiche_2002}. However, \\nopref{lang_1df07cc3}{VA} assuming P \\neq NP. Therefore Equivalence is unsupported by nFBDD assuming P \\neq NP.",
+            "derivationOrder": 1478,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -2731,8 +2731,8 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since Implicant implies Validity \\citep{Darwiche_2002}, and since \\nopref{lang_1df07cc3}{VA} assuming P \\neq NP, then Implicant is unsupported by nFBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1478,
+            "description": "Implicant implies Validity \\citep{Darwiche_2002}. However, \\nopref{lang_1df07cc3}{VA} assuming P \\neq NP. Therefore Implicant is unsupported by nFBDD assuming P \\neq NP.",
+            "derivationOrder": 1479,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -2805,7 +2805,7 @@
               "TCZ_Forthcoming"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_1df07cc3}{OR_C} in polynomial time, Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}. Therefore \\langref{lang_1df07cc3} supports Bounded Disjunction.",
+            "description": "Here, \\opref{lang_1df07cc3}{OR_C} in polynomial time. Since Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, \\langref{lang_1df07cc3} supports Bounded Disjunction.",
             "derivationOrder": 1321,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -2821,7 +2821,7 @@
               "TCZ_Forthcoming"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_1df07cc3}{FO} in polynomial time, Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. Therefore \\langref{lang_1df07cc3} supports Singleton Forgetting.",
+            "description": "Here, \\opref{lang_1df07cc3}{FO} in polynomial time. Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, \\langref{lang_1df07cc3} supports Singleton Forgetting.",
             "derivationOrder": 1322,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -2918,8 +2918,8 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Equivalence implies Consistency \\citep{Darwiche_2002}, and since \\nopref{lang_5bf00851}{CO} assuming P \\neq NP, then Equivalence is unsupported by NNF as well assuming P \\neq NP.",
-            "derivationOrder": 1479,
+            "description": "Equivalence implies Consistency \\citep{Darwiche_2002}. However, \\nopref{lang_5bf00851}{CO} assuming P \\neq NP. Therefore Equivalence is unsupported by NNF assuming P \\neq NP.",
+            "derivationOrder": 1480,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-co",
@@ -2935,8 +2935,8 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Implicant implies Validity \\citep{Darwiche_2002}, and since \\nopref{lang_5bf00851}{VA} assuming P \\neq NP, then Implicant is unsupported by NNF as well assuming P \\neq NP.",
-            "derivationOrder": 1480,
+            "description": "Implicant implies Validity \\citep{Darwiche_2002}. However, \\nopref{lang_5bf00851}{VA} assuming P \\neq NP. Therefore Implicant is unsupported by NNF assuming P \\neq NP.",
+            "derivationOrder": 1481,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -2952,8 +2952,8 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Clausal Entailment implies Consistency \\citep{Darwiche_2002}, and since \\nopref{lang_5bf00851}{CO} assuming P \\neq NP, then Clausal Entailment is unsupported by NNF as well assuming P \\neq NP.",
-            "derivationOrder": 1481,
+            "description": "Clausal Entailment implies Consistency \\citep{Darwiche_2002}. However, \\nopref{lang_5bf00851}{CO} assuming P \\neq NP. Therefore Clausal Entailment is unsupported by NNF assuming P \\neq NP.",
+            "derivationOrder": 1482,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "ce-co",
@@ -2969,8 +2969,8 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Model Enumeration implies Consistency \\citep{Darwiche_2002}, and since \\nopref{lang_5bf00851}{CO} assuming P \\neq NP, then Model Enumeration is unsupported by NNF as well assuming P \\neq NP.",
-            "derivationOrder": 1482,
+            "description": "Model Enumeration implies Consistency \\citep{Darwiche_2002}. However, \\nopref{lang_5bf00851}{CO} assuming P \\neq NP. Therefore Model Enumeration is unsupported by NNF assuming P \\neq NP.",
+            "derivationOrder": 1483,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "me-co",
@@ -3019,7 +3019,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_5bf00851}{AND_C} in polynomial time, Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}. Therefore \\langref{lang_5bf00851} supports Bounded Conjunction.",
+            "description": "Here, \\opref{lang_5bf00851}{AND_C} in polynomial time. Since Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, \\langref{lang_5bf00851} supports Bounded Conjunction.",
             "derivationOrder": 1323,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3034,7 +3034,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_5bf00851}{NOT_C} in polynomial time, \\opref{lang_5bf00851}{AND_C} in polynomial time, Negation ∧ Conjunction implies Disjunction \\citep{Darwiche_2002}. Therefore \\langref{lang_5bf00851} supports Disjunction.",
+            "description": "Here, \\opref{lang_5bf00851}{NOT_C} in polynomial time and \\opref{lang_5bf00851}{AND_C} in polynomial time. Since Negation and Conjunction together imply Disjunction \\citep{Darwiche_2002}, \\langref{lang_5bf00851} supports Disjunction.",
             "derivationOrder": 1324,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3049,7 +3049,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_5bf00851}{NOT_C} in polynomial time, \\opref{lang_5bf00851}{AND_BC} in polynomial time, Negation ∧ Bounded Conjunction implies Bounded Disjunction \\citep{Darwiche_2002}. Therefore \\langref{lang_5bf00851} supports Bounded Disjunction.",
+            "description": "Here, \\opref{lang_5bf00851}{NOT_C} in polynomial time and \\opref{lang_5bf00851}{AND_BC} in polynomial time. Since Negation and Bounded Conjunction together imply Bounded Disjunction \\citep{Darwiche_2002}, \\langref{lang_5bf00851} supports Bounded Disjunction.",
             "derivationOrder": 1325,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3064,7 +3064,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_5bf00851}{CD} in polynomial time, \\opref{lang_5bf00851}{OR_BC} in polynomial time, Conditioning ∧ Bounded Disjunction implies Singleton Forgetting \\citep{Darwiche_2002}. Therefore \\langref{lang_5bf00851} supports Singleton Forgetting.",
+            "description": "Here, \\opref{lang_5bf00851}{CD} in polynomial time and \\opref{lang_5bf00851}{OR_BC} in polynomial time. Since Conditioning and Bounded Disjunction together imply Singleton Forgetting \\citep{Darwiche_2002}, \\langref{lang_5bf00851} supports Singleton Forgetting.",
             "derivationOrder": 1404,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3112,7 +3112,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_d24efe0e}{CO} in polynomial time, \\opref{lang_d24efe0e}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_d24efe0e} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_d24efe0e}{CO} in polynomial time and \\opref{lang_d24efe0e}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_d24efe0e} supports Model Enumeration.",
             "derivationOrder": 1326,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3130,7 +3130,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_d24efe0e}{CO} in polynomial time, \\opref{lang_d24efe0e}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_d24efe0e} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_d24efe0e}{CO} in polynomial time and \\opref{lang_d24efe0e}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_d24efe0e} supports Clausal Entailment.",
             "derivationOrder": 1327,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3204,8 +3204,8 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since Equivalence implies Validity \\citep{Darwiche_2002}, and since \\nopref{lang_d24efe0e}{VA} assuming P \\neq NP, then Equivalence is unsupported by nOBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1483,
+            "description": "Equivalence implies Validity \\citep{Darwiche_2002}. However, \\nopref{lang_d24efe0e}{VA} assuming P \\neq NP. Therefore Equivalence is unsupported by nOBDD assuming P \\neq NP.",
+            "derivationOrder": 1484,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -3223,8 +3223,8 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since Implicant implies Validity \\citep{Darwiche_2002}, and since \\nopref{lang_d24efe0e}{VA} assuming P \\neq NP, then Implicant is unsupported by nOBDD as well assuming P \\neq NP.",
-            "derivationOrder": 1484,
+            "description": "Implicant implies Validity \\citep{Darwiche_2002}. However, \\nopref{lang_d24efe0e}{VA} assuming P \\neq NP. Therefore Implicant is unsupported by nOBDD assuming P \\neq NP.",
+            "derivationOrder": 1485,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -3287,8 +3287,8 @@
               "Amarilli_2018"
             ],
             "derived": true,
-            "description": "Since Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, and since \\nopref{lang_d24efe0e}{OR_BC} in quasipolynomial time, then Disjunction is unsupported by nOBDD in quasipolynomial time as well.",
-            "derivationOrder": 1486,
+            "description": "Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}. However, \\nopref{lang_d24efe0e}{OR_BC} in quasipolynomial time. Therefore Disjunction is unsupported by nOBDD in quasipolynomial time.",
+            "derivationOrder": 1487,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
@@ -3318,7 +3318,7 @@
               "TCZ_Forthcoming"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_d24efe0e}{FO} in polynomial time, Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. Therefore \\langref{lang_d24efe0e} supports Singleton Forgetting.",
+            "description": "Here, \\opref{lang_d24efe0e}{FO} in polynomial time. Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, \\langref{lang_d24efe0e} supports Singleton Forgetting.",
             "derivationOrder": 1328,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3384,7 +3384,7 @@
               "Bryant_1986"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_d69995dd}{CO} in polynomial time, \\opref{lang_d69995dd}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_d69995dd} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_d69995dd}{CO} in polynomial time and \\opref{lang_d69995dd}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_d69995dd} supports Clausal Entailment.",
             "derivationOrder": 1329,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3400,7 +3400,7 @@
               "Bryant_1986"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_d69995dd}{VA} in polynomial time, \\opref{lang_d69995dd}{CD} in polynomial time, Validity ∧ Conditioning implies Implicant \\citep{Darwiche_2002}. Therefore \\langref{lang_d69995dd} supports Implicant.",
+            "description": "Here, \\opref{lang_d69995dd}{VA} in polynomial time and \\opref{lang_d69995dd}{CD} in polynomial time. Since Validity and Conditioning together imply Implicant \\citep{Darwiche_2002}, \\langref{lang_d69995dd} supports Implicant.",
             "derivationOrder": 1330,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3416,7 +3416,7 @@
               "Bryant_1986"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_d69995dd}{NOT_C} in polynomial time, \\opref{lang_d69995dd}{AND_BC} in polynomial time, \\opref{lang_d69995dd}{CO} in polynomial time, Negation ∧ Bounded Conjunction ∧ Consistency implies Sentential Entailment \\citep{Darwiche_2002}. Therefore \\langref{lang_d69995dd} supports Sentential Entailment.",
+            "description": "Here, \\opref{lang_d69995dd}{NOT_C} in polynomial time and \\opref{lang_d69995dd}{AND_BC} in polynomial time and \\opref{lang_d69995dd}{CO} in polynomial time. Since Negation, Bounded Conjunction, and Consistency together imply Sentential Entailment \\citep{Darwiche_2002}, \\langref{lang_d69995dd} supports Sentential Entailment.",
             "derivationOrder": 1332,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3487,7 +3487,7 @@
               "Bryant_1986"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_d69995dd}{CD} in polynomial time, \\opref{lang_d69995dd}{OR_BC} in polynomial time, Conditioning ∧ Bounded Disjunction implies Singleton Forgetting \\citep{Darwiche_2002}. Therefore \\langref{lang_d69995dd} supports Singleton Forgetting.",
+            "description": "Here, \\opref{lang_d69995dd}{CD} in polynomial time and \\opref{lang_d69995dd}{OR_BC} in polynomial time. Since Conditioning and Bounded Disjunction together imply Singleton Forgetting \\citep{Darwiche_2002}, \\langref{lang_d69995dd} supports Singleton Forgetting.",
             "derivationOrder": 1331,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3507,8 +3507,8 @@
               "Amarilli_2018"
             ],
             "derived": true,
-            "description": "Since Negation ∧ Conjunction implies Disjunction \\citep{Darwiche_2002}, and since \\nopref{lang_d69995dd}{OR_C} in quasipolynomial time, and since \\opref{lang_d69995dd}{NOT_C} in quasipolynomial time, then Conjunction is unsupported by OBDD$_<$ in quasipolynomial time as well.",
-            "derivationOrder": 1488,
+            "description": "Negation and Conjunction together imply Disjunction \\citep{Darwiche_2002}. However, \\nopref{lang_d69995dd}{OR_C} in quasipolynomial time. Also, \\opref{lang_d69995dd}{NOT_C} in quasipolynomial time. Therefore Conjunction is unsupported by OBDD$_<$ in quasipolynomial time.",
+            "derivationOrder": 1489,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-and-c-or-c",
@@ -3590,7 +3590,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_27fffab2}{SE} in polynomial time, Sentential Entailment implies Equivalence \\citep{Darwiche_2002}. Therefore \\langref{lang_27fffab2} supports Equivalence.",
+            "description": "Here, \\opref{lang_27fffab2}{SE} in polynomial time. Since Sentential Entailment implies Equivalence \\citep{Darwiche_2002}, \\langref{lang_27fffab2} supports Equivalence.",
             "derivationOrder": 1333,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3605,7 +3605,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_27fffab2}{CE} in polynomial time, Clausal Entailment implies Consistency \\citep{Darwiche_2002}. Therefore \\langref{lang_27fffab2} supports Consistency.",
+            "description": "Here, \\opref{lang_27fffab2}{CE} in polynomial time. Since Clausal Entailment implies Consistency \\citep{Darwiche_2002}, \\langref{lang_27fffab2} supports Consistency.",
             "derivationOrder": 1334,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3620,7 +3620,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_27fffab2}{CO} in polynomial time, \\opref{lang_27fffab2}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_27fffab2} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_27fffab2}{CO} in polynomial time and \\opref{lang_27fffab2}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_27fffab2} supports Model Enumeration.",
             "derivationOrder": 1405,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3679,7 +3679,7 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_27fffab2}{FO} in polynomial time, Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. Therefore \\langref{lang_27fffab2} supports Singleton Forgetting.",
+            "description": "Here, \\opref{lang_27fffab2}{FO} in polynomial time. Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, \\langref{lang_27fffab2} supports Singleton Forgetting.",
             "derivationOrder": 1335,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3694,8 +3694,8 @@
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "Since Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, and since \\nopref{lang_27fffab2}{AND_BC} in quasipolynomial time, then Conjunction is unsupported by PI in quasipolynomial time as well.",
-            "derivationOrder": 1490,
+            "description": "Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}. However, \\nopref{lang_27fffab2}{AND_BC} in quasipolynomial time. Therefore Conjunction is unsupported by PI in quasipolynomial time.",
+            "derivationOrder": 1491,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "and-c-and-bc",
@@ -3782,7 +3782,7 @@
               "Darwiche_2011"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_1afefbe2}{CO} in polynomial time, \\opref{lang_1afefbe2}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_1afefbe2} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_1afefbe2}{CO} in polynomial time and \\opref{lang_1afefbe2}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_1afefbe2} supports Model Enumeration.",
             "derivationOrder": 1336,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3801,7 +3801,7 @@
               "Darwiche_2011"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_1afefbe2}{CO} in polynomial time, \\opref{lang_1afefbe2}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_1afefbe2} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_1afefbe2}{CO} in polynomial time and \\opref{lang_1afefbe2}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_1afefbe2} supports Clausal Entailment.",
             "derivationOrder": 1337,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3819,7 +3819,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_1afefbe2}{CT} in polynomial time, Model Counting implies Validity \\citep{Darwiche_2002}. Therefore \\langref{lang_1afefbe2} supports Validity.",
+            "description": "Here, \\opref{lang_1afefbe2}{CT} in polynomial time. Since Model Counting implies Validity \\citep{Darwiche_2002}, \\langref{lang_1afefbe2} supports Validity.",
             "derivationOrder": 1339,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3838,7 +3838,7 @@
               "Amarilli_2018"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_1afefbe2}{NOT_C} in polynomial time, \\opref{lang_1afefbe2}{CE} in polynomial time, Negation ∧ Clausal Entailment implies Implicant \\citep{Darwiche_2002}. Therefore \\langref{lang_1afefbe2} supports Implicant.",
+            "description": "Here, \\opref{lang_1afefbe2}{NOT_C} in polynomial time and \\opref{lang_1afefbe2}{CE} in polynomial time. Since Negation and Clausal Entailment together imply Implicant \\citep{Darwiche_2002}, \\langref{lang_1afefbe2} supports Implicant.",
             "derivationOrder": 1340,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -3892,8 +3892,8 @@
               "Amarilli_2018"
             ],
             "derived": true,
-            "description": "Since Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, and since \\nopref{lang_1afefbe2}{OR_BC} in quasipolynomial time, then Disjunction is unsupported by SDD in quasipolynomial time as well.",
-            "derivationOrder": 1492,
+            "description": "Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}. However, \\nopref{lang_1afefbe2}{OR_BC} in quasipolynomial time. Therefore Disjunction is unsupported by SDD in quasipolynomial time.",
+            "derivationOrder": 1493,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
@@ -3942,8 +3942,8 @@
               "TCZ_Forthcoming"
             ],
             "derived": true,
-            "description": "Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, and since \\nopref{lang_1afefbe2}{SFO} in quasipolynomial time, then Forgetting is unsupported by SDD in quasipolynomial time as well.",
-            "derivationOrder": 1494,
+            "description": "Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_1afefbe2}{SFO} in quasipolynomial time. Therefore Forgetting is unsupported by SDD in quasipolynomial time.",
+            "derivationOrder": 1495,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -4008,7 +4008,7 @@
               "Darwiche_2001a"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_9c84a267}{SE} in polynomial time, Sentential Entailment implies Equivalence \\citep{Darwiche_2002}. Therefore \\langref{lang_9c84a267} supports Equivalence.",
+            "description": "Here, \\opref{lang_9c84a267}{SE} in polynomial time. Since Sentential Entailment implies Equivalence \\citep{Darwiche_2002}, \\langref{lang_9c84a267} supports Equivalence.",
             "derivationOrder": 1406,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4046,7 +4046,7 @@
               "Darwiche_2001a"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_9c84a267}{CO} in polynomial time, \\opref{lang_9c84a267}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_9c84a267} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_9c84a267}{CO} in polynomial time and \\opref{lang_9c84a267}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_9c84a267} supports Model Enumeration.",
             "derivationOrder": 1341,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4065,7 +4065,7 @@
               "Amarilli_2018"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_9c84a267}{CO} in polynomial time, \\opref{lang_9c84a267}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_9c84a267} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_9c84a267}{CO} in polynomial time and \\opref{lang_9c84a267}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_9c84a267} supports Clausal Entailment.",
             "derivationOrder": 1342,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4084,7 +4084,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_9c84a267}{CT} in polynomial time, Model Counting implies Validity \\citep{Darwiche_2002}. Therefore \\langref{lang_9c84a267} supports Validity.",
+            "description": "Here, \\opref{lang_9c84a267}{CT} in polynomial time. Since Model Counting implies Validity \\citep{Darwiche_2002}, \\langref{lang_9c84a267} supports Validity.",
             "derivationOrder": 1344,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4103,7 +4103,7 @@
               "Amarilli_2018"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_9c84a267}{NOT_C} in polynomial time, \\opref{lang_9c84a267}{CE} in polynomial time, Negation ∧ Clausal Entailment implies Implicant \\citep{Darwiche_2002}. Therefore \\langref{lang_9c84a267} supports Implicant.",
+            "description": "Here, \\opref{lang_9c84a267}{NOT_C} in polynomial time and \\opref{lang_9c84a267}{CE} in polynomial time. Since Negation and Clausal Entailment together imply Implicant \\citep{Darwiche_2002}, \\langref{lang_9c84a267} supports Implicant.",
             "derivationOrder": 1346,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4122,7 +4122,7 @@
               "Darwiche_2001a"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_9c84a267}{NOT_C} in polynomial time, \\opref{lang_9c84a267}{AND_BC} in polynomial time, \\opref{lang_9c84a267}{CO} in polynomial time, Negation ∧ Bounded Conjunction ∧ Consistency implies Sentential Entailment \\citep{Darwiche_2002}. Therefore \\langref{lang_9c84a267} supports Sentential Entailment.",
+            "description": "Here, \\opref{lang_9c84a267}{NOT_C} in polynomial time and \\opref{lang_9c84a267}{AND_BC} in polynomial time and \\opref{lang_9c84a267}{CO} in polynomial time. Since Negation, Bounded Conjunction, and Consistency together imply Sentential Entailment \\citep{Darwiche_2002}, \\langref{lang_9c84a267} supports Sentential Entailment.",
             "derivationOrder": 1347,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4207,7 +4207,7 @@
               "Darwiche_2011"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_9c84a267}{CD} in polynomial time, \\opref{lang_9c84a267}{OR_BC} in polynomial time, Conditioning ∧ Bounded Disjunction implies Singleton Forgetting \\citep{Darwiche_2002}. Therefore \\langref{lang_9c84a267} supports Singleton Forgetting.",
+            "description": "Here, \\opref{lang_9c84a267}{CD} in polynomial time and \\opref{lang_9c84a267}{OR_BC} in polynomial time. Since Conditioning and Bounded Disjunction together imply Singleton Forgetting \\citep{Darwiche_2002}, \\langref{lang_9c84a267} supports Singleton Forgetting.",
             "derivationOrder": 1345,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4255,7 +4255,7 @@
               "Pipatsrisawat_2008"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_b13b0d78}{CO} in polynomial time, \\opref{lang_b13b0d78}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_b13b0d78} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_b13b0d78}{CO} in polynomial time and \\opref{lang_b13b0d78}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_b13b0d78} supports Model Enumeration.",
             "derivationOrder": 1348,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4273,7 +4273,7 @@
               "Pipatsrisawat_2008"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_b13b0d78}{CO} in polynomial time, \\opref{lang_b13b0d78}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_b13b0d78} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_b13b0d78}{CO} in polynomial time and \\opref{lang_b13b0d78}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_b13b0d78} supports Clausal Entailment.",
             "derivationOrder": 1349,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4350,8 +4350,8 @@
               "Pipatsrisawat_2008"
             ],
             "derived": true,
-            "description": "Since Equivalence implies Validity \\citep{Darwiche_2002}, and since \\nopref{lang_b13b0d78}{VA} assuming P \\neq NP, then Equivalence is unsupported by SDNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1495,
+            "description": "Equivalence implies Validity \\citep{Darwiche_2002}. However, \\nopref{lang_b13b0d78}{VA} assuming P \\neq NP. Therefore Equivalence is unsupported by SDNNF assuming P \\neq NP.",
+            "derivationOrder": 1496,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -4370,8 +4370,8 @@
               "Pipatsrisawat_2008"
             ],
             "derived": true,
-            "description": "Since Implicant implies Validity \\citep{Darwiche_2002}, and since \\nopref{lang_b13b0d78}{VA} assuming P \\neq NP, then Implicant is unsupported by SDNNF as well assuming P \\neq NP.",
-            "derivationOrder": 1496,
+            "description": "Implicant implies Validity \\citep{Darwiche_2002}. However, \\nopref{lang_b13b0d78}{VA} assuming P \\neq NP. Therefore Implicant is unsupported by SDNNF assuming P \\neq NP.",
+            "derivationOrder": 1497,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -4435,8 +4435,8 @@
               "Amarilli_2018"
             ],
             "derived": true,
-            "description": "Since Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, and since \\nopref{lang_b13b0d78}{OR_BC} in quasipolynomial time, then Disjunction is unsupported by SDNNF in quasipolynomial time as well.",
-            "derivationOrder": 1498,
+            "description": "Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}. However, \\nopref{lang_b13b0d78}{OR_BC} in quasipolynomial time. Therefore Disjunction is unsupported by SDNNF in quasipolynomial time.",
+            "derivationOrder": 1499,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
@@ -4466,7 +4466,7 @@
               "Pipatsrisawat_2008"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_b13b0d78}{FO} in polynomial time, Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. Therefore \\langref{lang_b13b0d78} supports Singleton Forgetting.",
+            "description": "Here, \\opref{lang_b13b0d78}{FO} in polynomial time. Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, \\langref{lang_b13b0d78} supports Singleton Forgetting.",
             "derivationOrder": 1350,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4515,7 +4515,7 @@
               "Darwiche_2001a"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_3c803ba1}{CO} in polynomial time, \\opref{lang_3c803ba1}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_3c803ba1} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_3c803ba1}{CO} in polynomial time and \\opref{lang_3c803ba1}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_3c803ba1} supports Model Enumeration.",
             "derivationOrder": 1351,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4533,7 +4533,7 @@
               "Amarilli_2018"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_3c803ba1}{CO} in polynomial time, \\opref{lang_3c803ba1}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_3c803ba1} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_3c803ba1}{CO} in polynomial time and \\opref{lang_3c803ba1}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_3c803ba1} supports Clausal Entailment.",
             "derivationOrder": 1352,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4588,8 +4588,8 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since Equivalence implies Validity \\citep{Darwiche_2002}, and since \\nopref{lang_3c803ba1}{VA} assuming P \\neq NP, then Equivalence is unsupported by SDNNF$_T$ as well assuming P \\neq NP.",
-            "derivationOrder": 1499,
+            "description": "Equivalence implies Validity \\citep{Darwiche_2002}. However, \\nopref{lang_3c803ba1}{VA} assuming P \\neq NP. Therefore Equivalence is unsupported by SDNNF$_T$ assuming P \\neq NP.",
+            "derivationOrder": 1500,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -4607,8 +4607,8 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since Sentential Entailment implies Equivalence \\citep{Darwiche_2002}, and since \\nopref{lang_3c803ba1}{EQ} assuming P \\neq NP, then Sentential Entailment is unsupported by SDNNF$_T$ as well assuming P \\neq NP.",
-            "derivationOrder": 1500,
+            "description": "Sentential Entailment implies Equivalence \\citep{Darwiche_2002}. However, \\nopref{lang_3c803ba1}{EQ} assuming P \\neq NP. Therefore Sentential Entailment is unsupported by SDNNF$_T$ assuming P \\neq NP.",
+            "derivationOrder": 1501,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "se-eq",
@@ -4626,8 +4626,8 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since Implicant implies Validity \\citep{Darwiche_2002}, and since \\nopref{lang_3c803ba1}{VA} assuming P \\neq NP, then Implicant is unsupported by SDNNF$_T$ as well assuming P \\neq NP.",
-            "derivationOrder": 1501,
+            "description": "Implicant implies Validity \\citep{Darwiche_2002}. However, \\nopref{lang_3c803ba1}{VA} assuming P \\neq NP. Therefore Implicant is unsupported by SDNNF$_T$ assuming P \\neq NP.",
+            "derivationOrder": 1502,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -4699,7 +4699,7 @@
               "Pipatsrisawat_2008"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_3c803ba1}{OR_C} in polynomial time, Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}. Therefore \\langref{lang_3c803ba1} supports Bounded Disjunction.",
+            "description": "Here, \\opref{lang_3c803ba1}{OR_C} in polynomial time. Since Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, \\langref{lang_3c803ba1} supports Bounded Disjunction.",
             "derivationOrder": 1353,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4715,7 +4715,7 @@
               "Pipatsrisawat_2008"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_3c803ba1}{FO} in polynomial time, Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. Therefore \\langref{lang_3c803ba1} supports Singleton Forgetting.",
+            "description": "Here, \\opref{lang_3c803ba1}{FO} in polynomial time. Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, \\langref{lang_3c803ba1} supports Singleton Forgetting.",
             "derivationOrder": 1354,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4798,7 +4798,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_4e62a038}{CO} in polynomial time, \\opref{lang_4e62a038}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_4e62a038} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_4e62a038}{CO} in polynomial time and \\opref{lang_4e62a038}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_4e62a038} supports Model Enumeration.",
             "derivationOrder": 1355,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4816,7 +4816,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_4e62a038}{CO} in polynomial time, \\opref{lang_4e62a038}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_4e62a038} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_4e62a038}{CO} in polynomial time and \\opref{lang_4e62a038}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_4e62a038} supports Clausal Entailment.",
             "derivationOrder": 1356,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4833,7 +4833,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_4e62a038}{CT} in polynomial time, Model Counting implies Validity \\citep{Darwiche_2002}. Therefore \\langref{lang_4e62a038} supports Validity.",
+            "description": "Here, \\opref{lang_4e62a038}{CT} in polynomial time. Since Model Counting implies Validity \\citep{Darwiche_2002}, \\langref{lang_4e62a038} supports Validity.",
             "derivationOrder": 1358,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4851,7 +4851,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_4e62a038}{VA} in polynomial time, \\opref{lang_4e62a038}{CD} in polynomial time, Validity ∧ Conditioning implies Implicant \\citep{Darwiche_2002}. Therefore \\langref{lang_4e62a038} supports Implicant.",
+            "description": "Here, \\opref{lang_4e62a038}{VA} in polynomial time and \\opref{lang_4e62a038}{CD} in polynomial time. Since Validity and Conditioning together imply Implicant \\citep{Darwiche_2002}, \\langref{lang_4e62a038} supports Implicant.",
             "derivationOrder": 1407,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -4923,8 +4923,8 @@
               "Amarilli_2018"
             ],
             "derived": true,
-            "description": "Since Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, and since \\nopref{lang_4e62a038}{OR_BC} in quasipolynomial time, then Disjunction is unsupported by uFBDD in quasipolynomial time as well.",
-            "derivationOrder": 1503,
+            "description": "Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}. However, \\nopref{lang_4e62a038}{OR_BC} in quasipolynomial time. Therefore Disjunction is unsupported by uFBDD in quasipolynomial time.",
+            "derivationOrder": 1504,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
@@ -4949,8 +4949,8 @@
               "TCZ_Forthcoming"
             ],
             "derived": true,
-            "description": "Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, and since \\nopref{lang_4e62a038}{SFO} in quasipolynomial time, then Forgetting is unsupported by uFBDD in quasipolynomial time as well.",
-            "derivationOrder": 1505,
+            "description": "Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_4e62a038}{SFO} in quasipolynomial time. Therefore Forgetting is unsupported by uFBDD in quasipolynomial time.",
+            "derivationOrder": 1506,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -5040,7 +5040,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_c2df8c2b}{CO} in polynomial time, \\opref{lang_c2df8c2b}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_c2df8c2b} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_c2df8c2b}{CO} in polynomial time and \\opref{lang_c2df8c2b}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_c2df8c2b} supports Model Enumeration.",
             "derivationOrder": 1359,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -5058,7 +5058,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_c2df8c2b}{CO} in polynomial time, \\opref{lang_c2df8c2b}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_c2df8c2b} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_c2df8c2b}{CO} in polynomial time and \\opref{lang_c2df8c2b}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_c2df8c2b} supports Clausal Entailment.",
             "derivationOrder": 1360,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -5075,7 +5075,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_c2df8c2b}{CT} in polynomial time, Model Counting implies Validity \\citep{Darwiche_2002}. Therefore \\langref{lang_c2df8c2b} supports Validity.",
+            "description": "Here, \\opref{lang_c2df8c2b}{CT} in polynomial time. Since Model Counting implies Validity \\citep{Darwiche_2002}, \\langref{lang_c2df8c2b} supports Validity.",
             "derivationOrder": 1362,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -5093,7 +5093,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_c2df8c2b}{VA} in polynomial time, \\opref{lang_c2df8c2b}{CD} in polynomial time, Validity ∧ Conditioning implies Implicant \\citep{Darwiche_2002}. Therefore \\langref{lang_c2df8c2b} supports Implicant.",
+            "description": "Here, \\opref{lang_c2df8c2b}{VA} in polynomial time and \\opref{lang_c2df8c2b}{CD} in polynomial time. Since Validity and Conditioning together imply Implicant \\citep{Darwiche_2002}, \\langref{lang_c2df8c2b} supports Implicant.",
             "derivationOrder": 1408,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -5194,8 +5194,8 @@
               "Vinall-Smeeth_2024"
             ],
             "derived": true,
-            "description": "Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, and since \\nopref{lang_c2df8c2b}{SFO}, then Forgetting is unsupported by uOBDD as well.",
-            "derivationOrder": 1506,
+            "description": "Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_c2df8c2b}{SFO}. Therefore Forgetting is unsupported by uOBDD.",
+            "derivationOrder": 1507,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -5286,7 +5286,7 @@
               "Darwiche_2001a"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_b9d72a7c}{CO} in polynomial time, \\opref{lang_b9d72a7c}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_b9d72a7c} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_b9d72a7c}{CO} in polynomial time and \\opref{lang_b9d72a7c}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_b9d72a7c} supports Model Enumeration.",
             "derivationOrder": 1363,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -5303,7 +5303,7 @@
               "Amarilli_2018"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_b9d72a7c}{CO} in polynomial time, \\opref{lang_b9d72a7c}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_b9d72a7c} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_b9d72a7c}{CO} in polynomial time and \\opref{lang_b9d72a7c}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_b9d72a7c} supports Clausal Entailment.",
             "derivationOrder": 1364,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -5320,7 +5320,7 @@
               "Bryant_1992"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_b9d72a7c}{VA} in polynomial time, \\opref{lang_b9d72a7c}{CD} in polynomial time, Validity ∧ Conditioning implies Implicant \\citep{Darwiche_2002}. Therefore \\langref{lang_b9d72a7c} supports Implicant.",
+            "description": "Here, \\opref{lang_b9d72a7c}{VA} in polynomial time and \\opref{lang_b9d72a7c}{CD} in polynomial time. Since Validity and Conditioning together imply Implicant \\citep{Darwiche_2002}, \\langref{lang_b9d72a7c} supports Implicant.",
             "derivationOrder": 1365,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -5484,7 +5484,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_981b62f0}{CO} in polynomial time, \\opref{lang_981b62f0}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_981b62f0} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_981b62f0}{CO} in polynomial time and \\opref{lang_981b62f0}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_981b62f0} supports Model Enumeration.",
             "derivationOrder": 1366,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -5502,7 +5502,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_981b62f0}{CO} in polynomial time, \\opref{lang_981b62f0}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_981b62f0} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_981b62f0}{CO} in polynomial time and \\opref{lang_981b62f0}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_981b62f0} supports Clausal Entailment.",
             "derivationOrder": 1367,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -5519,7 +5519,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_981b62f0}{CT} in polynomial time, Model Counting implies Validity \\citep{Darwiche_2002}. Therefore \\langref{lang_981b62f0} supports Validity.",
+            "description": "Here, \\opref{lang_981b62f0}{CT} in polynomial time. Since Model Counting implies Validity \\citep{Darwiche_2002}, \\langref{lang_981b62f0} supports Validity.",
             "derivationOrder": 1369,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -5537,7 +5537,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_981b62f0}{VA} in polynomial time, \\opref{lang_981b62f0}{CD} in polynomial time, Validity ∧ Conditioning implies Implicant \\citep{Darwiche_2002}. Therefore \\langref{lang_981b62f0} supports Implicant.",
+            "description": "Here, \\opref{lang_981b62f0}{VA} in polynomial time and \\opref{lang_981b62f0}{CD} in polynomial time. Since Validity and Conditioning together imply Implicant \\citep{Darwiche_2002}, \\langref{lang_981b62f0} supports Implicant.",
             "derivationOrder": 1409,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -5631,8 +5631,8 @@
               "TCZ_Forthcoming"
             ],
             "derived": true,
-            "description": "Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, and since \\nopref{lang_981b62f0}{SFO} in quasipolynomial time, then Forgetting is unsupported by dec-DNNF in quasipolynomial time as well.",
-            "derivationOrder": 1508,
+            "description": "Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_981b62f0}{SFO} in quasipolynomial time. Therefore Forgetting is unsupported by dec-DNNF in quasipolynomial time.",
+            "derivationOrder": 1509,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -5729,7 +5729,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_0f27d539}{CO} in polynomial time, \\opref{lang_0f27d539}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_0f27d539} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_0f27d539}{CO} in polynomial time and \\opref{lang_0f27d539}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_0f27d539} supports Model Enumeration.",
             "derivationOrder": 1370,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -5747,7 +5747,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_0f27d539}{CO} in polynomial time, \\opref{lang_0f27d539}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_0f27d539} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_0f27d539}{CO} in polynomial time and \\opref{lang_0f27d539}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_0f27d539} supports Clausal Entailment.",
             "derivationOrder": 1371,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -5764,7 +5764,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_0f27d539}{CT} in polynomial time, Model Counting implies Validity \\citep{Darwiche_2002}. Therefore \\langref{lang_0f27d539} supports Validity.",
+            "description": "Here, \\opref{lang_0f27d539}{CT} in polynomial time. Since Model Counting implies Validity \\citep{Darwiche_2002}, \\langref{lang_0f27d539} supports Validity.",
             "derivationOrder": 1373,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -5782,7 +5782,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_0f27d539}{VA} in polynomial time, \\opref{lang_0f27d539}{CD} in polynomial time, Validity ∧ Conditioning implies Implicant \\citep{Darwiche_2002}. Therefore \\langref{lang_0f27d539} supports Implicant.",
+            "description": "Here, \\opref{lang_0f27d539}{VA} in polynomial time and \\opref{lang_0f27d539}{CD} in polynomial time. Since Validity and Conditioning together imply Implicant \\citep{Darwiche_2002}, \\langref{lang_0f27d539} supports Implicant.",
             "derivationOrder": 1410,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -5884,8 +5884,8 @@
               "TCZ_Forthcoming"
             ],
             "derived": true,
-            "description": "Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, and since \\nopref{lang_0f27d539}{SFO} in quasipolynomial time, then Forgetting is unsupported by dec-SDNNF in quasipolynomial time as well.",
-            "derivationOrder": 1510,
+            "description": "Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_0f27d539}{SFO} in quasipolynomial time. Therefore Forgetting is unsupported by dec-SDNNF in quasipolynomial time.",
+            "derivationOrder": 1511,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -5941,7 +5941,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_4ae03bc8}{SE} in polynomial time, Sentential Entailment implies Equivalence \\citep{Darwiche_2002}. Therefore \\langref{lang_4ae03bc8} supports Equivalence.",
+            "description": "Here, \\opref{lang_4ae03bc8}{SE} in polynomial time. Since Sentential Entailment implies Equivalence \\citep{Darwiche_2002}, \\langref{lang_4ae03bc8} supports Equivalence.",
             "derivationOrder": 1412,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -5978,7 +5978,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_4ae03bc8}{CO} in polynomial time, \\opref{lang_4ae03bc8}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_4ae03bc8} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_4ae03bc8}{CO} in polynomial time and \\opref{lang_4ae03bc8}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_4ae03bc8} supports Model Enumeration.",
             "derivationOrder": 1374,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -5997,7 +5997,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_4ae03bc8}{CO} in polynomial time, \\opref{lang_4ae03bc8}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_4ae03bc8} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_4ae03bc8}{CO} in polynomial time and \\opref{lang_4ae03bc8}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_4ae03bc8} supports Clausal Entailment.",
             "derivationOrder": 1375,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -6015,7 +6015,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_4ae03bc8}{CT} in polynomial time, Model Counting implies Validity \\citep{Darwiche_2002}. Therefore \\langref{lang_4ae03bc8} supports Validity.",
+            "description": "Here, \\opref{lang_4ae03bc8}{CT} in polynomial time. Since Model Counting implies Validity \\citep{Darwiche_2002}, \\langref{lang_4ae03bc8} supports Validity.",
             "derivationOrder": 1377,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -6052,7 +6052,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_4ae03bc8}{VA} in polynomial time, \\opref{lang_4ae03bc8}{CD} in polynomial time, Validity ∧ Conditioning implies Implicant \\citep{Darwiche_2002}. Therefore \\langref{lang_4ae03bc8} supports Implicant.",
+            "description": "Here, \\opref{lang_4ae03bc8}{VA} in polynomial time and \\opref{lang_4ae03bc8}{CD} in polynomial time. Since Validity and Conditioning together imply Implicant \\citep{Darwiche_2002}, \\langref{lang_4ae03bc8} supports Implicant.",
             "derivationOrder": 1411,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -6114,8 +6114,8 @@
               "TCZ_Forthcoming"
             ],
             "derived": true,
-            "description": "Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, and since \\nopref{lang_4ae03bc8}{SFO} in quasipolynomial time, then Forgetting is unsupported by dec-SDNNF$_T$ in quasipolynomial time as well.",
-            "derivationOrder": 1512,
+            "description": "Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_4ae03bc8}{SFO} in quasipolynomial time. Therefore Forgetting is unsupported by dec-SDNNF$_T$ in quasipolynomial time.",
+            "derivationOrder": 1513,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -6139,8 +6139,8 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since Conditioning ∧ Bounded Disjunction implies Singleton Forgetting \\citep{Darwiche_2002}, and since \\nopref{lang_4ae03bc8}{SFO} in quasipolynomial time, and since \\opref{lang_4ae03bc8}{CD} in quasipolynomial time, then Bounded Disjunction is unsupported by dec-SDNNF$_T$ in quasipolynomial time as well.",
-            "derivationOrder": 1514,
+            "description": "Conditioning and Bounded Disjunction together imply Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_4ae03bc8}{SFO} in quasipolynomial time. Also, \\opref{lang_4ae03bc8}{CD} in quasipolynomial time. Therefore Bounded Disjunction is unsupported by dec-SDNNF$_T$ in quasipolynomial time.",
+            "derivationOrder": 1515,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "cd-or-bc-sfo",
@@ -6191,7 +6191,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_82fa749e}{SE} in polynomial time, Sentential Entailment implies Equivalence \\citep{Darwiche_2002}. Therefore \\langref{lang_82fa749e} supports Equivalence.",
+            "description": "Here, \\opref{lang_82fa749e}{SE} in polynomial time. Since Sentential Entailment implies Equivalence \\citep{Darwiche_2002}, \\langref{lang_82fa749e} supports Equivalence.",
             "derivationOrder": 1413,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -6229,7 +6229,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_82fa749e}{CT} in polynomial time, Model Counting implies Validity \\citep{Darwiche_2002}. Therefore \\langref{lang_82fa749e} supports Validity.",
+            "description": "Here, \\opref{lang_82fa749e}{CT} in polynomial time. Since Model Counting implies Validity \\citep{Darwiche_2002}, \\langref{lang_82fa749e} supports Validity.",
             "derivationOrder": 1379,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -6393,8 +6393,8 @@
               "VanDenBroeck_2015"
             ],
             "derived": true,
-            "description": "Since Negation ∧ Bounded Disjunction implies Bounded Conjunction \\citep{Darwiche_2002}, and since \\nopref{lang_82fa749e}{AND_BC}, and since \\opref{lang_82fa749e}{NOT_C} in polynomial time, then Bounded Disjunction is unsupported by cSDD$_T$ as well.",
-            "derivationOrder": 1515,
+            "description": "Negation and Bounded Disjunction together imply Bounded Conjunction \\citep{Darwiche_2002}. However, \\nopref{lang_82fa749e}{AND_BC}. Also, \\opref{lang_82fa749e}{NOT_C} in polynomial time. Therefore Bounded Disjunction is unsupported by cSDD$_T$.",
+            "derivationOrder": 1516,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-bc-and-bc",
@@ -6446,7 +6446,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_e827cf31}{CO} in polynomial time, \\opref{lang_e827cf31}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_e827cf31} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_e827cf31}{CO} in polynomial time and \\opref{lang_e827cf31}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_e827cf31} supports Model Enumeration.",
             "derivationOrder": 1380,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -6465,7 +6465,7 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_e827cf31}{CO} in polynomial time, \\opref{lang_e827cf31}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_e827cf31} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_e827cf31}{CO} in polynomial time and \\opref{lang_e827cf31}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_e827cf31} supports Clausal Entailment.",
             "derivationOrder": 1381,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -6520,8 +6520,8 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since Equivalence implies Validity \\citep{Darwiche_2002}, and since \\nopref{lang_e827cf31}{VA} assuming P \\neq NP, then Equivalence is unsupported by nOBDD$_<$ as well assuming P \\neq NP.",
-            "derivationOrder": 1516,
+            "description": "Equivalence implies Validity \\citep{Darwiche_2002}. However, \\nopref{lang_e827cf31}{VA} assuming P \\neq NP. Therefore Equivalence is unsupported by nOBDD$_<$ assuming P \\neq NP.",
+            "derivationOrder": 1517,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -6539,8 +6539,8 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since Sentential Entailment implies Equivalence \\citep{Darwiche_2002}, and since \\nopref{lang_e827cf31}{EQ} assuming P \\neq NP, then Sentential Entailment is unsupported by nOBDD$_<$ as well assuming P \\neq NP.",
-            "derivationOrder": 1517,
+            "description": "Sentential Entailment implies Equivalence \\citep{Darwiche_2002}. However, \\nopref{lang_e827cf31}{EQ} assuming P \\neq NP. Therefore Sentential Entailment is unsupported by nOBDD$_<$ assuming P \\neq NP.",
+            "derivationOrder": 1518,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "se-eq",
@@ -6558,8 +6558,8 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since Implicant implies Validity \\citep{Darwiche_2002}, and since \\nopref{lang_e827cf31}{VA} assuming P \\neq NP, then Implicant is unsupported by nOBDD$_<$ as well assuming P \\neq NP.",
-            "derivationOrder": 1518,
+            "description": "Implicant implies Validity \\citep{Darwiche_2002}. However, \\nopref{lang_e827cf31}{VA} assuming P \\neq NP. Therefore Implicant is unsupported by nOBDD$_<$ assuming P \\neq NP.",
+            "derivationOrder": 1519,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -6631,7 +6631,7 @@
               "TCZ_Forthcoming"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_e827cf31}{OR_C} in polynomial time, Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}. Therefore \\langref{lang_e827cf31} supports Bounded Disjunction.",
+            "description": "Here, \\opref{lang_e827cf31}{OR_C} in polynomial time. Since Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, \\langref{lang_e827cf31} supports Bounded Disjunction.",
             "derivationOrder": 1382,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -6647,7 +6647,7 @@
               "TCZ_Forthcoming"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_e827cf31}{FO} in polynomial time, Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. Therefore \\langref{lang_e827cf31} supports Singleton Forgetting.",
+            "description": "Here, \\opref{lang_e827cf31}{FO} in polynomial time. Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, \\langref{lang_e827cf31} supports Singleton Forgetting.",
             "derivationOrder": 1383,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -6697,7 +6697,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_43a33aec}{SE} in polynomial time, Sentential Entailment implies Equivalence \\citep{Darwiche_2002}. Therefore \\langref{lang_43a33aec} supports Equivalence.",
+            "description": "Here, \\opref{lang_43a33aec}{SE} in polynomial time. Since Sentential Entailment implies Equivalence \\citep{Darwiche_2002}, \\langref{lang_43a33aec} supports Equivalence.",
             "derivationOrder": 1415,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -6734,7 +6734,7 @@
               "Darwiche_2001a"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_43a33aec}{CO} in polynomial time, \\opref{lang_43a33aec}{CD} in polynomial time, Consistency ∧ Conditioning implies Model Enumeration \\citep{Darwiche_2002}. Therefore \\langref{lang_43a33aec} supports Model Enumeration.",
+            "description": "Here, \\opref{lang_43a33aec}{CO} in polynomial time and \\opref{lang_43a33aec}{CD} in polynomial time. Since Consistency and Conditioning together imply Model Enumeration \\citep{Darwiche_2002}, \\langref{lang_43a33aec} supports Model Enumeration.",
             "derivationOrder": 1384,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -6753,7 +6753,7 @@
               "Pipatsrisawat_2008"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_43a33aec}{CO} in polynomial time, \\opref{lang_43a33aec}{CD} in polynomial time, Consistency ∧ Conditioning implies Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}. Therefore \\langref{lang_43a33aec} supports Clausal Entailment.",
+            "description": "Here, \\opref{lang_43a33aec}{CO} in polynomial time and \\opref{lang_43a33aec}{CD} in polynomial time. Since Consistency and Conditioning together imply Clausal Entailment \\citep{Darwiche_2002,Darwiche_2001a}, \\langref{lang_43a33aec} supports Clausal Entailment.",
             "derivationOrder": 1385,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -6771,7 +6771,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_43a33aec}{CT} in polynomial time, Model Counting implies Validity \\citep{Darwiche_2002}. Therefore \\langref{lang_43a33aec} supports Validity.",
+            "description": "Here, \\opref{lang_43a33aec}{CT} in polynomial time. Since Model Counting implies Validity \\citep{Darwiche_2002}, \\langref{lang_43a33aec} supports Validity.",
             "derivationOrder": 1387,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -6788,7 +6788,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_43a33aec}{CT} in polynomial time, \\opref{lang_43a33aec}{AND_BC} in polynomial time, Model Counting ∧ Bounded Conjunction implies Sentential Entailment. Therefore \\langref{lang_43a33aec} supports Sentential Entailment.",
+            "description": "Here, \\opref{lang_43a33aec}{CT} in polynomial time and \\opref{lang_43a33aec}{AND_BC} in polynomial time. Since Model Counting and Bounded Conjunction together imply Sentential Entailment, \\langref{lang_43a33aec} supports Sentential Entailment.",
             "derivationOrder": 1388,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -6806,7 +6806,7 @@
               "Darwiche_2001b"
             ],
             "derived": true,
-            "description": "Since \\opref{lang_43a33aec}{VA} in polynomial time, \\opref{lang_43a33aec}{CD} in polynomial time, Validity ∧ Conditioning implies Implicant \\citep{Darwiche_2002}. Therefore \\langref{lang_43a33aec} supports Implicant.",
+            "description": "Here, \\opref{lang_43a33aec}{VA} in polynomial time and \\opref{lang_43a33aec}{CD} in polynomial time. Since Validity and Conditioning together imply Implicant \\citep{Darwiche_2002}, \\langref{lang_43a33aec} supports Implicant.",
             "derivationOrder": 1414,
             "proofTrace": {
               "rule": "lemma-forward",
@@ -6850,8 +6850,8 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since Conditioning ∧ Bounded Disjunction implies Singleton Forgetting \\citep{Darwiche_2002}, and since \\nopref{lang_43a33aec}{SFO} in quasipolynomial time, and since \\opref{lang_43a33aec}{CD} in quasipolynomial time, then Bounded Disjunction is unsupported by uOBDD$_<$ in quasipolynomial time as well.",
-            "derivationOrder": 1521,
+            "description": "Conditioning and Bounded Disjunction together imply Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_43a33aec}{SFO} in quasipolynomial time. Also, \\opref{lang_43a33aec}{CD} in quasipolynomial time. Therefore Bounded Disjunction is unsupported by uOBDD$_<$ in quasipolynomial time.",
+            "derivationOrder": 1522,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "cd-or-bc-sfo",
@@ -6876,8 +6876,8 @@
               "TCZ_Forthcoming"
             ],
             "derived": true,
-            "description": "Since Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}, and since \\nopref{lang_43a33aec}{SFO} in quasipolynomial time, then Forgetting is unsupported by uOBDD$_<$ in quasipolynomial time as well.",
-            "derivationOrder": 1520,
+            "description": "Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_43a33aec}{SFO} in quasipolynomial time. Therefore Forgetting is unsupported by uOBDD$_<$ in quasipolynomial time.",
+            "derivationOrder": 1521,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -6908,8 +6908,8 @@
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "Since Negation ∧ Bounded Conjunction implies Bounded Disjunction \\citep{Darwiche_2002}, and since \\nopref{lang_43a33aec}{OR_BC} in quasipolynomial time, and since \\opref{lang_43a33aec}{AND_BC} in quasipolynomial time, then Negation is unsupported by uOBDD$_<$ in quasipolynomial time as well.",
-            "derivationOrder": 1523,
+            "description": "Negation and Bounded Conjunction together imply Bounded Disjunction \\citep{Darwiche_2002}. However, \\nopref{lang_43a33aec}{OR_BC} in quasipolynomial time. Also, \\opref{lang_43a33aec}{AND_BC} in quasipolynomial time. Therefore Negation is unsupported by uOBDD$_<$ in quasipolynomial time.",
+            "derivationOrder": 1524,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-and-bc-or-bc",
@@ -12192,7 +12192,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_83e3b023}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to cSDD in polynomial time, IP could support Model Counting by first compiling to cSDD. Therefore IP cannot compile to cSDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1524,
+          "derivationOrder": 1525,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12211,7 +12211,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_6c130090}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-DNNF in polynomial time, IP could support Model Counting by first compiling to d-DNNF. Therefore IP cannot compile to d-DNNF in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1525,
+          "derivationOrder": 1526,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12231,7 +12231,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_ea9b5299}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-SDNNF in polynomial time, IP could support Model Counting by first compiling to d-SDNNF. Therefore IP cannot compile to d-SDNNF in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1526,
+          "derivationOrder": 1527,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12252,7 +12252,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_91f812d0}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-SDNNF$_T$ in polynomial time, IP could support Model Counting by first compiling to d-SDNNF$_T$. Therefore IP cannot compile to d-SDNNF$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1527,
+          "derivationOrder": 1528,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12427,7 +12427,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_1afefbe2}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to SDD in polynomial time, IP could support Model Counting by first compiling to SDD. Therefore IP cannot compile to SDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1528,
+          "derivationOrder": 1529,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12449,7 +12449,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_9c84a267}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to SDD$_T$ in polynomial time, IP could support Model Counting by first compiling to SDD$_T$. Therefore IP cannot compile to SDD$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1529,
+          "derivationOrder": 1530,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12515,7 +12515,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_4e62a038}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uFBDD in polynomial time, IP could support Model Counting by first compiling to uFBDD. Therefore IP cannot compile to uFBDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1530,
+          "derivationOrder": 1531,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12535,7 +12535,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_c2df8c2b}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uOBDD in polynomial time, IP could support Model Counting by first compiling to uOBDD. Therefore IP cannot compile to uOBDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1531,
+          "derivationOrder": 1532,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12646,7 +12646,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_82fa749e}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to cSDD$_T$ in polynomial time, IP could support Model Counting by first compiling to cSDD$_T$. Therefore IP cannot compile to cSDD$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1532,
+          "derivationOrder": 1533,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -12688,7 +12688,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_43a33aec}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uOBDD$_<$ in polynomial time, IP could support Model Counting by first compiling to uOBDD$_<$. Therefore IP cannot compile to uOBDD$_<$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1533,
+          "derivationOrder": 1534,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
