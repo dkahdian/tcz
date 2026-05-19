@@ -53,7 +53,7 @@ To further validate our results, we encode the knowledge base as a propositional
 \section{Setup}
 
 \subsection{Data representation}
-Data was primarily sourced from the knowledge compilation map and related works. \citep{Darwiche_2002,Amarilli_2018,Bova_2016}
+Data was primarily sourced from \citep{Darwiche_2002}, \citep{Amarilli_2018}, \citep{Bova_2016}, and related works.
 
 The knowledge base stores a set of KC languages~$\textbf{L}$ and some relations on $\textbf{L}$ as defined below.
 
@@ -133,7 +133,7 @@ The propagation logic relies on the following simple lemmas. We always assume $L
 Warning: a similar result does not apply for transformations.
 
 \paragraph{Operation implication lemmas.}
-We additionally have a \emph{family} of lemmas $F_l \subset \mathcal{P}(O) \times O$ of the form $o_1 \wedge \cdots \wedge o_n \Rightarrow o_{n+1}$, for $o_i\in \textbf{O}$, in the sense that if a language $L$ supports all the operations $o_1, \cdots, o_n$, it also supports $o_{n+1}$. For example, $\text{CO} \wedge \lnot\text{C} \Rightarrow \text{VA}$. Their contrapositives are also exploited, i.e. $\neg(\text{VA}) \wedge (\neg \text{C}) \Rightarrow \neg(\text{CO})$. These lemmas are obvious from definitions and are mostly sourced from the knowledge compilation map. \citep{Darwiche_2002}
+We additionally have a \emph{family} of lemmas $F_l \subset \mathcal{P}(O) \times O$ of the form $o_1 \wedge \cdots \wedge o_n \Rightarrow o_{n+1}$, for $o_i\in \textbf{O}$, in the sense that if a language $L$ supports all the operations $o_1, \cdots, o_n$, it also supports $o_{n+1}$. For example, $\text{CO} \wedge \lnot\text{C} \Rightarrow \text{VA}$. Their contrapositives are also exploited, i.e. $\neg(\text{VA}) \wedge (\neg \text{C}) \Rightarrow \neg(\text{CO})$. These lemmas are obvious from definitions and are mostly sourced from \citep{Darwiche_2002}.
 
 \section{Validation}
 

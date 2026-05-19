@@ -72,8 +72,7 @@ We overload notation in two controlled ways. When the text says ``for each fixed
 \textbf{Succinctness Between Languages} \\
 There are two intuitive definitions of succinctness: a \emph{time} requirement, i.e. that an efficient compilation algorithm exists between two languages; or the \emph{space} requirement, that formulas remain ``small'' in the new language. Since, for any computation, runtime is lower-bounded by output size, the latter definition is weaker.
 
-We fix the convention that succinctness between representation languages is a size-only relation, with no requirement that a conversion algorithm exist. \citep{Gogic_1995}
-However, to the best of our knowledge, all known proofs of succinctness use a compilation algorithm to establish the size relationship; and all proofs that \emph{no} time-efficient compilation algorithm exists use space complexity bounds. An example to the contrary would be highly interesting.
+We fix the convention that succinctness between representation languages is a size-only relation, with no requirement that a conversion algorithm exist \citep{Gogic_1995}. However, to the best of our knowledge, all known proofs of succinctness use a compilation algorithm to establish the size relationship; and all proofs that \emph{no} time-efficient compilation algorithm exists use space complexity bounds. An example to the contrary would be highly interesting.
 
 Formally, let $L_1$ and $L_2$ be two languages. $L_1$ is \emph{at least as succinct as} $L_2$, written $L_1 \leq_p L_2$, if there exists a polynomial $p$ such that for every $\alpha \in L_2$ there exists an equivalent $\beta \in L_1$ with $|\beta| \leq p(|\alpha|)$.
 
