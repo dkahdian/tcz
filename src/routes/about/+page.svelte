@@ -51,17 +51,17 @@
 
 			<MathText
 				as="p"
-				text={`\\textbf{Representation Language} A representation language is a method of expressing Boolean functions, such as a truth table or a class of Boolean circuits. Slightly more formally, a representation language is a pair $(R,I)$ where $R$ is a set of strings (over some fixed alphabet) and $I$ is an \\emph{interpretation function} that maps each $r\\in R$ to the Boolean function that $r$ \\emph{represents}. The \\emph{size} of a representation $r\\in R$ is its length (number of symbols) denoted $|r|$.`}
+				text={`\\textbf{Representation Language}: A representation language is a method of expressing Boolean functions, such as a truth table or a class of Boolean circuits. Slightly more formally, a representation language is a pair $(R,I)$ where $R$ is a set of strings (over some fixed alphabet) and $I$ is an \\emph{interpretation function} that maps each $r\\in R$ to the Boolean function that $r$ \\emph{represents}. The \\emph{size} of a representation $r\\in R$ is its length (number of symbols) denoted $|r|$.`}
 			/>
 
 			<MathText
 				as="p"
-				text={`\\textbf{Succinctness} Let $A$ and $B$ be representation languages. We say $a\\in A$ and $b\\in B$ are \\emph{equivalent} if they represent the same function. We say $A$ is \\emph{at least as succinct as} $B$, denoted $A\\le B$, if for every $b\\in B$ there is an equivalent and not too much larger $a\\in A$, specifically, $|a|\\le |b|^{O(1)}$.`}
+				text={`\\textbf{Succinctness}: Let $A$ and $B$ be representation languages. We say $a\\in A$ and $b\\in B$ are \\emph{equivalent} if they represent the same function. We say $A$ is \\emph{at least as succinct as} $B$, denoted $A\\le B$, if for every $b\\in B$ there is an equivalent and not too much larger $a\\in A$, specifically, $|a|\\le |b|^{O(1)}$.`}
 			/>
 
 			<MathText
 				as="p"
-				text={`\\textbf{Tractability} We say a query (such as "is $f$ satisfiable?") is \\emph{tractable} for a representation language $A$ if there exists an algorithm which given any $a\\in A$ answers the query in polynomial time (in the input length $|a|$). Similarly, a transformation (such as "negate $f$" or "conjoin $f$ and $g$") is tractable for representation language $A$ if there exists an algorithm which given input representation(s) in $A$ computes a correct output representation in $A$ in polynomial time (in the length of the input).`}
+				text={`\\textbf{Tractability}: We say a query (such as "is $f$ satisfiable?") is \\emph{tractable} for a representation language $A$ if there exists an algorithm which given any $a\\in A$ answers the query in polynomial time (in the input length $|a|$). Similarly, a transformation (such as "negate $f$" or "conjoin $f$ and $g$") is tractable for representation language $A$ if there exists an algorithm which given input representation(s) in $A$ computes a correct output representation in $A$ in polynomial time (in the length of the input).`}
 			/>
 		</section>
 
@@ -69,17 +69,17 @@
 			<h2>Some Technical Notes</h2>
 			<MathText
 				as="p"
-				text={`\\emph{Non-Strings} For representation languages not directly defined as strings, e.g. circuits or decision diagrams, one may freely take a reasonable encoding of the object into a string, and the theory will be unaffected (since it does not distinguish between polynomial changes in size). Equivalently, one may think of a separate size measure defined directly on such objects (e.g, the number of nodes) which is polynomially related to the length of reasonable encodings.`}
+				text={`\\textbf{Non-Strings}: For representation languages not directly defined as strings, e.g. circuits or decision diagrams, one may freely take a reasonable encoding of the object into a string, and the theory will be unaffected (since it does not distinguish between polynomial changes in size). Equivalently, one may think of a separate size measure defined directly on such objects (e.g, the number of nodes) which is polynomially related to the length of reasonable encodings.`}
 			/>
 
 			<MathText
 				as="p"
-				text={`\\emph{Families of Representation Languages} We’d like to include representation languages like $OBDD_<$, which contains all OBDDs respecting a specific variable order $<$. However, there are infinitely many different $OBDD_<$ languages, one for every choice of $<$. Therefore we include \\emph{families of representation languages} in the zoo. For example, $\\{OBDD_<\\}_{orders <}$. We extend the definition of succinctness to families as follows. We say family $\\mathcal{B}$ is at least as succinct as family $\\mathcal{A}$, denoted $\\mathcal{B}\\le \\mathcal{A}$, if for every $A\\in \\mathcal{A}$ there exists a $B\\in \\mathcal{B}$ such that $B\\le A$. In the special case of singleton families (families containing a single representation language), this recovers the behavior of the usual definition of succinctness. For larger families, it behaves in the intuitive way. For example $OBDD\\le \\{OBDD_<\\}$ but $\\{OBDD_<\\}\\not\\le OBDD$, and $\\{SDNNF_T\\}\\le \\{OBDD_<\\}$ but $\\{OBDD_<\\}\\not\\le\\{SDNNF_T\\}$. Such a definition allows us to consider representation languages and families of representation languages in a common way. To avoid excessive braces throughout the zoo, we just write $OBDD_<$ to mean the family $\\{OBDD_<\\}$ (and similar for families involving vtrees).`}
+				text={`\\textbf{Families of Representation Languages}: We’d like to include representation languages like $OBDD_<$, which contains all OBDDs respecting a specific variable order $<$. However, there are infinitely many different $OBDD_<$ languages, one for every choice of $<$. Therefore we include \\emph{families of representation languages} in the zoo. For example, $\\{OBDD_<\\}_{orders <}$. We extend the definition of succinctness to families as follows. We say family $\\mathcal{B}$ is at least as succinct as family $\\mathcal{A}$, denoted $\\mathcal{B}\\le \\mathcal{A}$, if for every $A\\in \\mathcal{A}$ there exists a $B\\in \\mathcal{B}$ such that $B\\le A$. In the special case of singleton families (families containing a single representation language), this recovers the behavior of the usual definition of succinctness. For larger families, it behaves in the intuitive way. For example $OBDD\\le \\{OBDD_<\\}$ but $\\{OBDD_<\\}\\not\\le OBDD$, and $\\{SDNNF_T\\}\\le \\{OBDD_<\\}$ but $\\{OBDD_<\\}\\not\\le\\{SDNNF_T\\}$. Such a definition allows us to consider representation languages and families of representation languages in a common way. To avoid excessive braces throughout the zoo, we just write $OBDD_<$ to mean the family $\\{OBDD_<\\}$ (and similar for families involving vtrees).`}
 			/>
 
 			<MathText
 				as="p"
-				text={`\\emph{Quasipolynomial Succinctness} Actually, we further distinguish between polynomial and quasipolynomial size since some central languages are known to support quasipolynomial compilations, whereas others have exponential separations. See the succinctness table for notation. Recall that functions with \\emph{polynomial} growth are in $n^{O(1)}$ whereas functions with \\emph{quasipolynomial} growth are in $n^{\\log^{O(1)} n}$.`}
+				text={`\\textbf{Quasipolynomial Succinctness}: Actually, we further distinguish between polynomial and quasipolynomial size since some central languages are known to support quasipolynomial compilations, whereas others have exponential separations. See the succinctness table for notation. Recall that functions with \\emph{polynomial} growth are in $n^{O(1)}$ whereas functions with \\emph{quasipolynomial} growth are in $n^{\\log^{O(1)} n}$.`}
 			/>
 		</section>
 
