@@ -1298,7 +1298,7 @@ function extractUrlFromBibtex(bibtex: string): string | null {
  * Format:
  *   \begin{definition}[$NAME$]\label{def:ID}
  *   \textbf{FULL_NAME} \\
- *   DEFINITION_CONTENT \citep{REFS}?
+ *   DEFINITION_CONTENT
  *   \end{definition}
  */
 function generateLanguageDefinition(lang: KCLanguage): string {
@@ -1307,13 +1307,8 @@ function generateLanguageDefinition(lang: KCLanguage): string {
     ? lang.definition 
     : '(Definition needed)';
   
-  let content = `\\textbf{${escapeLatex(lang.fullName)}} \\\\
+  const content = `\\textbf{${escapeLatex(lang.fullName)}} \\\\
 ${definition}`;
-  
-  // Add references at the end
-  if (lang.definitionRefs && lang.definitionRefs.length > 0) {
-    content += ` \\citep{${lang.definitionRefs.join(',')}}`;
-  }
   
   return `\\begin{definition}[${nameLatex}]\\label{def:${lang.id}}
 ${content}
@@ -1426,7 +1421,7 @@ interface ParsedLanguageDefinition {
  * Expected format:
  *   \begin{definition}[$NAME$]\label{def:ID}
  *   \textbf{FULL_NAME} \\
- *   DEFINITION_CONTENT \citep{REFS}?
+ *   DEFINITION_CONTENT
  *   \end{definition}
  */
 function parseLanguagesLatex(latexContent: string): ParsedLanguageDefinition[] {
@@ -1465,20 +1460,12 @@ function parseLanguagesLatex(latexContent: string): ParsedLanguageDefinition[] {
         content = extracted.rest.replace(/^\s*\\\\\s*/, '').trim();
       }
       
-      // Extract references from the end
-      let definitionRefs: string[] = [];
-      const citeMatch = content.match(/\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}\s*$/);
-      if (citeMatch) {
-        definitionRefs = citeMatch[1].split(',').map(s => s.trim());
-        content = content.slice(0, citeMatch.index).trim();
-      }
-      
       definitions.push({
         id,
         name,
         fullName,
         definition: content,
-        definitionRefs
+        definitionRefs: []
       });
       
       continue;
@@ -1527,7 +1514,7 @@ function updateLanguagesFromLatex(database: DatabaseSchema, parsedDefs: ParsedLa
         name: def.name,
         fullName: def.fullName || '-',
         definition: def.definition && def.definition !== '(Definition needed)' ? def.definition : '-',
-        definitionRefs: def.definitionRefs,
+        definitionRefs: [],
         properties: {
           queries: {},
           transformations: {}
@@ -1554,10 +1541,10 @@ function updateLanguagesFromLatex(database: DatabaseSchema, parsedDefs: ParsedLa
       lang.definition = def.definition;
     }
     
-    // Update definition refs
-    if (def.definitionRefs.length > 0) {
-      lang.definitionRefs = def.definitionRefs;
-    }
+    // Language definition citations are kept inline in the editable definition
+    // text. The legacy definitionRefs field remains empty for schema
+    // compatibility.
+    lang.definitionRefs = [];
     
     updated++;
   }

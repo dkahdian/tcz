@@ -4,8 +4,6 @@
     KCLanguage, 
     GraphData, 
     KCOpEntry, 
-    KCOpSupportMap, 
-    SelectedEdge,
     FilteredGraphData,
     KCLanguagePropertiesResolved,
     KCReference,
@@ -23,14 +21,12 @@
     selectedLanguage,
     graphData,
     filteredGraphData,
-    onEdgeSelect,
     onOperationCellSelect,
     viewMode = 'graph' as ViewMode
   }: {
     selectedLanguage: KCLanguage | null;
     graphData: GraphData | FilteredGraphData;
     filteredGraphData?: GraphData | FilteredGraphData;
-    onEdgeSelect: (edge: SelectedEdge) => void;
     onOperationCellSelect?: (cell: SelectedOperationCell) => void;
     viewMode?: ViewMode;
   } = $props();
@@ -113,105 +109,6 @@
     return refs;
   });
 
-  interface RelationshipStatement {
-    target: string;
-    linkText: string;
-    suffixText: string;
-    refs: string[];
-  }
-
-  const languageLookup = $derived.by<Map<string, KCLanguage>>(() => {
-    const lookup = new Map<string, KCLanguage>();
-    for (const language of graphData.languages) {
-      lookup.set(language.id, language);
-    }
-    return lookup;
-  });
-
-  // Helper to generate a descriptive statement from a transformation status
-  function getStatusDescription(status: string, fromLangId: string, toLangId: string): { linkText: string; suffixText: string } {
-    const from = languageLookup.get(fromLangId)?.name ?? fromLangId;
-    const to = languageLookup.get(toLangId)?.name ?? toLangId;
-    const linkText = `${from} converts to ${to}`;
-    
-    switch (status) {
-      case 'poly':
-        return { linkText, suffixText: ' in polynomial time' };
-      case 'not-poly':
-        return { linkText: `No polynomial compilation from ${from} to ${to}`, suffixText: '' };
-      case 'no-quasi':
-        return { linkText: `Exponential gap between ${from} and ${to}`, suffixText: '' };
-      case 'no-poly-quasi':
-        return { linkText, suffixText: ' in quasipolynomial time only' };
-      case 'no-poly-unknown-quasi':
-        return { linkText: `No polynomial compilation from ${from} to ${to}`, suffixText: '; quasipolynomial unknown' };
-      case 'unknown-poly-quasi':
-        return { linkText: `Polynomial compilation unknown from ${from} to ${to}`, suffixText: '; quasipolynomial exists' };
-      case 'unknown-both':
-        return { linkText: `Complexity of compilation from ${from} to ${to}`, suffixText: ' is unknown' };
-      case 'unknown':
-        return { linkText: `Complexity of compilation from ${from} to ${to}`, suffixText: ' is unknown' };
-      default:
-        return { linkText: `${from} relates to ${to}`, suffixText: '' };
-    }
-  }
-
-  const languageRelationships = $derived.by<RelationshipStatement[]>(() => {
-    if (!selectedLanguage) return [];
-    const { id, name } = selectedLanguage;
-    const { adjacencyMatrix } = graphData;
-
-    const statements: RelationshipStatement[] = [];
-    const forwardStatuses = new Map<string, string>();
-
-    const sourceIndex = adjacencyMatrix.indexByLanguage[id];
-    if (sourceIndex === undefined) return statements;
-
-    const { languageIds, matrix } = adjacencyMatrix;
-
-    for (let targetIndex = 0; targetIndex < languageIds.length; targetIndex += 1) {
-      const relation = matrix[sourceIndex]?.[targetIndex];
-      if (!relation) continue;
-
-      const target = languageIds[targetIndex];
-      forwardStatuses.set(target, relation.status);
-      const desc = getStatusDescription(relation.status, id, target);
-      statements.push({
-        target,
-        linkText: desc.linkText,
-        suffixText: desc.suffixText,
-        refs: relation.refs ?? []
-      });
-    }
-
-    for (let sourceIndexIter = 0; sourceIndexIter < languageIds.length; sourceIndexIter += 1) {
-      if (sourceIndexIter === sourceIndex) continue;
-
-      const relation = matrix[sourceIndexIter]?.[sourceIndex];
-      if (!relation) continue;
-
-      const source = languageIds[sourceIndexIter];
-      const forwardStatus = forwardStatuses.get(source);
-      if (forwardStatus && forwardStatus === relation.status) {
-        continue;
-      }
-
-      const desc = getStatusDescription(relation.status, source, id);
-      statements.push({
-        target: source,
-        linkText: desc.linkText,
-        suffixText: desc.suffixText,
-        refs: relation.refs ?? []
-      });
-    }
-
-    return statements.sort((a, b) => {
-      const aName = languageLookup.get(a.target)?.name ?? a.target;
-      const bName = languageLookup.get(b.target)?.name ?? b.target;
-      return aName.localeCompare(bName);
-    });
-  });
-
   function scrollToReferences(e: MouseEvent | KeyboardEvent) {
     e.preventDefault();
     referencesSection?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -221,45 +118,6 @@
   function handleCitationClick(_key: string) {
     referencesSection?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
-
-  function selectEdge(targetId: string) {
-    if (!selectedLanguage || !onEdgeSelect) return;
-    
-    const sourceId = selectedLanguage.id;
-    const nodeA = sourceId < targetId ? sourceId : targetId;
-    const nodeB = sourceId < targetId ? targetId : sourceId;
-    
-    const sourceIndex = graphData.adjacencyMatrix.indexByLanguage[nodeA];
-    const targetIndex = graphData.adjacencyMatrix.indexByLanguage[nodeB];
-    
-    const forwardRelation = sourceIndex !== undefined && targetIndex !== undefined 
-      ? graphData.adjacencyMatrix.matrix[sourceIndex]?.[targetIndex] ?? null
-      : null;
-    const backwardRelation = sourceIndex !== undefined && targetIndex !== undefined
-      ? graphData.adjacencyMatrix.matrix[targetIndex]?.[sourceIndex] ?? null
-      : null;
-    
-    const sourceLang = languageLookup.get(nodeA);
-    const targetLang = languageLookup.get(nodeB);
-    
-    if (sourceLang && targetLang) {
-      onEdgeSelect({
-        id: `${nodeA}-${nodeB}`,
-        source: nodeA,
-        target: nodeB,
-        sourceName: sourceLang.name,
-        targetName: targetLang.name,
-        forward: forwardRelation,
-        backward: backwardRelation,
-        refs: [...(forwardRelation?.refs || []), ...(backwardRelation?.refs || [])]
-      });
-    }
-  }
-
-  const handleRelationshipClick = (targetId: string) => (event: MouseEvent) => {
-    event.preventDefault();
-    selectEdge(targetId);
-  };
 
   function selectOperationCell(op: KCOpEntry, type: 'query' | 'transformation') {
     if (!selectedLanguage || !onOperationCellSelect) return;
@@ -366,39 +224,6 @@
           {@render operationSection('Queries', (resolvedProperties?.queries ?? []).filter(isStudiedOperation), 'query')}
           {@render operationSection('Transformations', (resolvedProperties?.transformations ?? []).filter(isStudiedOperation), 'transformation')}
         </div>
-        {#if !isOperationsView && languageRelationships.length}
-          <!-- TODO: Fix multi-line link text causing newline injection before suffix -->
-          <div class="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
-            <h5 class="font-semibold text-gray-900 mb-2">Relationships</h5>
-            <div class="space-y-1 text-sm">
-              {#each languageRelationships as statement}
-                <div class="flex items-start gap-2">
-                  <div class="flex-1 text-gray-700">
-                    <MathText
-                      as="a"
-                      href="#"
-                      className="edge-link inline"
-                      text={statement.linkText}
-                      title="View edge details"
-                      onclick={handleRelationshipClick(statement.target)}
-                    />
-                    <span> </span>
-                    <MathText text={statement.suffixText} className="inline" />
-                    {#if statement.refs?.length}
-                      {#each statement.refs as refId}
-                        <button 
-                          class="ref-badge"
-                          onclick={scrollToReferences}
-                          title="View reference"
-                        >[{getGlobalRefNumber(refId) ?? '?'}]</button>
-                      {/each}
-                    {/if}
-                  </div>
-                </div>
-              {/each}
-            </div>
-          </div>
-        {/if}
         
         <ReferenceList references={allReferences} bind:anchorElement={referencesSection} />
       </div>

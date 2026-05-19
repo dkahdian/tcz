@@ -2,6 +2,7 @@ import type { KCLanguage } from '../types.js';
 import database from './database.json';
 import { getReferences } from './references.js';
 import { LANGUAGE_CLASSIFICATIONS } from './language-classifications.js';
+import { extractCitationKeys } from '../utils/math-text.js';
 
 const rawLanguages = database.languages as any[];
 
@@ -12,6 +13,10 @@ function enrichLanguage(langJson: any): KCLanguage {
   // Collect all reference IDs
   if (langJson.definitionRefs) {
     langJson.definitionRefs.forEach((id: string) => refIds.add(id));
+  }
+
+  if (langJson.definition) {
+    extractCitationKeys(langJson.definition).forEach((id) => refIds.add(id));
   }
   
   if (langJson.properties?.queries) {

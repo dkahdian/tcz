@@ -63,7 +63,7 @@ A CNF is a conjunction of clauses $\bigwedge_{i=1}^mC_i$. A clause is a disjunct
 
 \begin{definition}[\langref{cSDD}]\label{def:lang_83e3b023}
 \textbf{Compressed Sentential Decision Diagrams} \\
-\langref{cSDD} $= \bigcup_T \langfam{cSDD}{T}$
+\langref{cSDD} $= \bigcup_T \langfam{cSDD}{T}$. \citep{VanDenBroeck_2015,Darwiche_2011}
 \end{definition}
 
 \begin{definition}[\langfam{cSDD}{T}]\label{def:lang_82fa749e}
@@ -78,7 +78,7 @@ Boolean circuits with AND and OR gates; literals as inputs; and whose AND gates 
 
 \begin{definition}[\langref{d-SDNNF}]\label{def:lang_ea9b5299}
 \textbf{Deterministic Structured Decomposable Negation Normal Form} \\
-\langref{d-SDNNF} $= \bigcup_T \langfam{d-SDNNF}{T}$
+\langref{d-SDNNF} $= \bigcup_T \langfam{d-SDNNF}{T}$. \citep{Pipatsrisawat_2008}
 \end{definition}
 
 \begin{definition}[\langfam{d-SDNNF}{T}]\label{def:lang_91f812d0}
@@ -92,7 +92,7 @@ Equivalently, \langfam{d-SDNNF}{T} formulas are \langfam{SDNNF}{T} formulas that
 
 \begin{definition}[\langref{dec-DNNF}]\label{def:lang_981b62f0}
 \textbf{Decision Decomposable Negation Normal Form} \\
-Boolean circuits with AND and OR gates; literals as inputs; and whose AND gates are \emph{decomposable} (children mention disjoint sets of variables) and whose OR gates must appear in the form of \emph{decisions/tests} (subcircuits of the form $(x\land f)\lor (\bar{x}\land g)$ where $x$ is a variable).\citep{darwiche2007language}
+Boolean circuits with AND and OR gates; literals as inputs; and whose AND gates are \emph{decomposable} (children mention disjoint sets of variables) and whose OR gates must appear in the form of \emph{decisions/tests} (subcircuits of the form $(x\land f)\lor (\bar{x}\land g)$ where $x$ is a variable).\citep{darwiche2007language,Oztok_2014}
 
 Equivalently, \langref{dec-DNNF} formulas are \langref{d-DNNF} formulas whose OR-gates may only appear in \emph{decisions/tests}.
 
@@ -101,12 +101,12 @@ Equivalently, \langref{dec-DNNF} formulas are (up to syntax) \langref{FBDD} form
 
 \begin{definition}[\langref{dec-SDNNF}]\label{def:lang_0f27d539}
 \textbf{Decision Structured Decomposable Negation Normal Form} \\
-\langfam{dec-SDNNF} $= \bigcup_T$ \langfam{dec-SDNNF}{T}
+\langfam{dec-SDNNF} $= \bigcup_T$ \langfam{dec-SDNNF}{T}. \citep{Oztok_2014}
 \end{definition}
 
 \begin{definition}[\langfam{dec-SDNNF}{T}]\label{def:lang_4ae03bc8}
 \textbf{Decision Structured Decomposable Negation Normal Form (wrt a fixed vtree)} \\
-For each fixed vtree $T$, \langfam{dec-SDNNF}{T} is the subset of \langref{dec-DNNF} that respects $T$.\citep{darwiche2007language}
+For each fixed vtree $T$, \langfam{dec-SDNNF}{T} is the subset of \langref{dec-DNNF} that respects $T$.\citep{darwiche2007language,Oztok_2014}
 
 Equivalently, \langfam{dec-SDNNF}{T} formulas are \langfam{SDNNF}{T} formulas whose OR-gates may only appear in \emph{decisions/tests}.
 \end{definition}
@@ -130,7 +130,7 @@ Binary decision diagrams such that on any root-to-sink path tests each variable 
 
 \begin{definition}[\langref{IP}]\label{def:lang_6ae90adc}
 \textbf{Prime Implicants} \\
-A \langref{DNF} that is the disjunction of all minimal entailing terms (prime implicants).
+A \langref{DNF} that is the disjunction of all minimal entailing terms (prime implicants). \citep{Quine_1952}
 \end{definition}
 
 \begin{definition}[\langref{MODS}]\label{def:lang_e02902d0}
@@ -149,12 +149,12 @@ Also known as a nondeterministic read-once branching program.
 
 \begin{definition}[\langref{NNF}]\label{def:lang_5bf00851}
 \textbf{Negation Normal Form} \\
-A Boolean circuit with AND and OR gates with literals as inputs (i.e., negations may only appear at leaves). Also called \emph{De Morgan circuits}. 
+A Boolean circuit with AND and OR gates with literals as inputs (i.e., negations may only appear at leaves). Also called \emph{De Morgan circuits}. \citep{Darwiche_2002}
 \end{definition}
 
 \begin{definition}[\langref{nOBDD}]\label{def:lang_d24efe0e}
 \textbf{Nondeterministic Ordered Binary Decision Diagram} \\
-\langref{nOBDD} $= \bigcup_{<}$ \langfam{nOBDD}{<}
+\langref{nOBDD} $= \bigcup_{<}$ \langfam{nOBDD}{<}. \citep{Wegener_2000}
 \end{definition}
 
 \begin{definition}[\langfam{nOBDD}{<}]\label{def:lang_e827cf31}
@@ -189,7 +189,7 @@ The subset of \langref{CNF} where formulas represent exactly the disjunction of 
 
 \begin{definition}[\langref{SDD}]\label{def:lang_1afefbe2}
 \textbf{Sentential Decision Diagram} \\
-\langref{SDD} $= \bigcup_T$ \langfam{SDD}{T}
+\langref{SDD} $= \bigcup_T$ \langfam{SDD}{T}. \citep{Darwiche_2011}
 \end{definition}
 
 \begin{definition}[\langfam{SDD}{T}]\label{def:lang_9c84a267}
@@ -201,7 +201,7 @@ Equivalently, an \langfam{SDD}{T} is a \langfam{d-SDNNF}{T} in which determinism
 
 \begin{definition}[\langref{SDNNF}]\label{def:lang_b13b0d78}
 \textbf{Structured Decomposable Negation Normal Form} \\
-\langref{SDNNF} $= \bigcup_T$ \langfam{SDNNF}{T}
+\langref{SDNNF} $= \bigcup_T$ \langfam{SDNNF}{T}. \citep{Pipatsrisawat_2008}
 \end{definition}
 
 \begin{definition}[\langfam{SDNNF}{T}]\label{def:lang_3c803ba1}

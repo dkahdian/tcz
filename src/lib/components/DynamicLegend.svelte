@@ -380,12 +380,20 @@
               <span class="matrix-description">conditional result (assuming the listed condition)</span>
             </div>
           {/if}
+          {#if hasVisibleDerivedCells}
+            <div class="legend-row matrix-row">
+              <span class="matrix-notation">
+                <span class="derived-swatch" aria-hidden="true"></span>
+              </span>
+              <span class="matrix-description">Derived automatically</span>
+            </div>
+          {/if}
         </div>
       {/if}
     </div>
   {/if}
   
-  {#if visibleOperationDisplays.length > 0}
+  {#if visibleOperationDisplays.length > 0 || (hasVisibleDerivedCells && (viewMode === 'queries' || viewMode === 'transforms'))}
     <div class="legend-section">
       <h5>{operationLegendTitle}</h5>
       {#each visibleOperationDisplays as display}
@@ -394,15 +402,12 @@
           <span title={display.description}>{display.label}</span>
         </div>
       {/each}
-    </div>
-  {/if}
-
-  {#if hasVisibleDerivedCells}
-    <div class="legend-section">
-      <div class="legend-row">
-        <span class="derived-swatch" aria-hidden="true"></span>
-        <span>Derived automatically</span>
-      </div>
+      {#if hasVisibleDerivedCells}
+        <div class="legend-row">
+          <span class="derived-swatch" aria-hidden="true"></span>
+          <span>Derived automatically</span>
+        </div>
+      {/if}
     </div>
   {/if}
 </div>

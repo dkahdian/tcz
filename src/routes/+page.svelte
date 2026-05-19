@@ -883,9 +883,6 @@
             selectedLanguage={selectedNode} 
             graphData={baseGraphData}
             filteredGraphData={filteredGraphData}
-            onEdgeSelect={(edge) => { 
-              selectedEdge = edge; 
-            }}
             onOperationCellSelect={(cell) => {
               selectedNode = null;
               selectedOperationCell = cell;
@@ -908,9 +905,6 @@
           selectedLanguage={selectedNode} 
           graphData={baseGraphData}
           filteredGraphData={filteredGraphData}
-          onEdgeSelect={(edge) => { 
-            selectedEdge = edge; 
-          }}
           viewMode={viewMode}
         />
       {:else}
@@ -918,9 +912,6 @@
           selectedLanguage={null} 
           graphData={baseGraphData}
           filteredGraphData={filteredGraphData}
-          onEdgeSelect={(edge) => { 
-            selectedEdge = edge; 
-          }}
           viewMode={viewMode}
         />
       {/if}
