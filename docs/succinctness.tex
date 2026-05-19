@@ -830,10 +830,10 @@ The Quine-McCluskey algorithm generates an \langref{IP} formula in polynomial ti
 \end{claimdescription}
 
 \begin{claim}
-\langfam{d-SDNNF}{T} is not polynomial-time compilable to \langfam{SDD}{T} \citep{Vinall-Smeeth_2024}
+\langfam{d-SDNNF}{T} is not polynomial-time compilable to \langfam{SDD}{T} \citep[Theorem 1 and proof of Theorem 2]{Vinall-Smeeth_2024}
 \end{claim}
 \begin{claimdescription}
-The Vinall-Smeeth construction gives small source circuits that are explicitly structured: for the hard unambiguous DNF $\psi'$, the proof fixes a vtree $T$ over $\operatorname{var}(\psi')$, compiles each term as a d-DNNF respecting $T$, and takes their deterministic disjunction. Thus the source side can be stated as \langfam{d-SDNNF}{T}. The lower bound is against every equivalent \langref{SDD}; since \langfam{SDD}{T} is a subfamily of \langref{SDD}, it also rules out every target vtree family member.
+\citet[Theorem 1 and proof of Theorem 2]{Vinall-Smeeth_2024} gives small source circuits that are explicitly structured: for the hard unambiguous DNF $\psi'$, the proof fixes a vtree $T$ over $\operatorname{var}(\psi')$, compiles each term as a d-DNNF respecting $T$, and takes their deterministic disjunction. Thus the source side can be stated as \langfam{d-SDNNF}{T}. The lower bound is against every equivalent \langref{SDD}; since \langfam{SDD}{T} is a subfamily of \langref{SDD}, it also rules out every target vtree family member.
 \end{claimdescription}
 
 
