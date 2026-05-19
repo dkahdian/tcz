@@ -1271,7 +1271,7 @@
       },
       "tags": [],
       "id": "lang_ea9b5299",
-      "definition": "\\langref{d-SDNNF} $= \\bigcup_T \\langfam{d-SDNNF}{T}$. \\citep{Pipatsrisawat_2008}",
+      "definition": "\\langref{d-SDNNF} $= \\bigcup_T$ \\langfam{d-SDNNF}{T}. \\citep{Pipatsrisawat_2008}",
       "definitionRefs": []
     },
     {
