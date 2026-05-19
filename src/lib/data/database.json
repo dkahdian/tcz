@@ -7153,6 +7153,12 @@
       "href": "https://www.sciencedirect.com/science/article/pii/S0304397502005686"
     },
     {
+      "id": "Savicky_Zak_1996",
+      "title": "P. Savicky and S. Zak, \"A Large Lower Bound for 1-Branching Programs\", 1996.",
+      "href": "https://eccc.weizmann.ac.il/report/1996/036/",
+      "bibtex": "@techreport{Savicky_Zak_1996,\n  title={A Large Lower Bound for 1-Branching Programs},\n  author={Savicky, Petr and Zak, Stanislav},\n  institution={Electronic Colloquium on Computational Complexity},\n  number={TR96-036},\n  year={1996},\n  url={https://eccc.weizmann.ac.il/report/1996/036/}\n}"
+    },
+    {
       "id": "Selman_1996",
       "bibtex": "@article{Selman_1996,\nauthor = {Selman, Bart and Kautz, Henry},\ntitle = {Knowledge compilation and theory approximation},\nyear = {1996},\nissue_date = {March 1996},\npublisher = {Association for Computing Machinery},\naddress = {New York, NY, USA},\nvolume = {43},\nnumber = {2},\nissn = {0004-5411},\nurl = {https://doi.org/10.1145/226643.226644},\ndoi = {10.1145/226643.226644},\nabstract = {Computational efficiency is a central concern in the design of knowledge representation systems. In order to obtain efficient systems, it has been suggested that one should limit the form of the statements in the knowledge base or use an incomplete inference mechanism. The former approach is often too restrictive for practical applications, whereas the latter leads to uncertainty about exactly what can and cannot be inferred from the knowledge base. We present a third alternative, in which knowledge given in a general representation language is translated (compiled) into a tractable form—allowing for efficient subsequent query answering.We show how propositional logical theories can be compiled into Horn theories that approximate the original information. The approximations bound the original theory from below and above in terms of logical strength. The procedures are extended to other tractable languages (for example, binary clauses) and to the first-order case. Finally, we demonstrate the generality of our approach by compiling concept descriptions in a general frame-based language into a tractable form.},\njournal = {J. ACM},\nmonth = mar,\npages = {193–224},\nnumpages = {32},\nkeywords = {Horn clauses, efficient reasoning methods, knowledge compilation, knowledge-base optimization, query evaluation, theory approximation}\n}",
       "title": "B. Selman and H. Kautz, \"Knowledge compilation and theory approximation\", J. ACM, vol. 43, pp. 193–224, 1996.",
@@ -7163,6 +7169,12 @@
       "title": "A. Shpilka and A. Yehudayoff, \"Arithmetic circuits: A survey of recent results and open questions\", Foundations and Trends\\textregistered in Theoretical Computer Science, vol. 5, pp. 207–388, 2010.",
       "href": "#",
       "bibtex": "@article{shpilka2010arithmetic,\n  title={Arithmetic circuits: A survey of recent results and open questions},\n  author={Shpilka, Amir and Yehudayoff, Amir},\n  journal={Foundations and Trends{\\textregistered} in Theoretical Computer Science},\n  volume={5},\n  number={3-4},\n  pages={207--388},\n  year={2010},\n  publisher={Emerald Publishing Limited}\n}"
+    },
+    {
+      "id": "TCZ_Forthcoming",
+      "title": "T. C. Zoo, \"Tractable Circuit Zoo\", forthcoming.",
+      "href": "#",
+      "bibtex": "@misc{TCZ_Forthcoming,\n  title={Tractable Circuit Zoo},\n  author={{Tractable Circuit Zoo}},\n  year={forthcoming},\n  note={Forthcoming}\n}"
     },
     {
       "id": "VanDenBroeck_2015",
