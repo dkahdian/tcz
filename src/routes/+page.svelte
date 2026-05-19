@@ -732,6 +732,9 @@
             {submittingPreview ? 'Submitting...' : 'Submit'}
           </button>
         {:else}
+          <a href="/about" class="about-link">
+            About
+          </a>
           {#if isSandboxMode}
             <button type="button" class="sandbox-reset" disabled={sandboxEdits.length === 0} onclick={handleResetSandbox}>
               Reset
@@ -748,9 +751,6 @@
               <strong>{sandboxEdits.length}</strong>
             {/if}
           </button>
-          <a href="/about" class="about-link">
-            About
-          </a>
         {/if}
         <div class="view-toggle" role="group" aria-label="Visualization mode">
           {#each VIEW_MODES as mode}

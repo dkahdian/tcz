@@ -19,6 +19,7 @@ const LANG_PLACEHOLDER = '\\mathcal{L}';
 const EDGE_REF_PATTERN = /\\(n?edgeref)\{([^}]+)\}\{([^}]+)\}/g;
 const LANG_PLACEHOLDER_ARG = String.raw`\$?\\mathcal\{L\}\$?`;
 const CITATION_PATTERN = /\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}/g;
+const SELF_COMPILATION_MARKER = '__TCZ_SELF_COMPILATION__';
 
 function languageRef(language: KCLanguage): string {
   const familyMatch = language.name.match(/^(.+)\$_(.+)\$$/);
@@ -127,19 +128,31 @@ function edgeRefs(
 }
 
 function replaceEdgePlaceholders(text: string, language: KCLanguage): string {
-  return text
+  return cleanSelfCompilationGaps(text
     .replace(new RegExp(String.raw`\\(n?edgeref)\{((?:[^{}]|\{[^{}]*\})+)\}\{${LANG_PLACEHOLDER_ARG}\}`, 'g'), (_match, command: string, sourceName: string) => {
       if (command === 'edgeref' && isLanguageRef(language, sourceName)) {
-        return `${languageRef(language)} compiles to itself`;
+        return SELF_COMPILATION_MARKER;
       }
       return `\\${command}{${sourceName.trim()}}{${edgeRefLanguageName(language)}}`;
     })
     .replace(new RegExp(String.raw`\\(n?edgeref)\{${LANG_PLACEHOLDER_ARG}\}\{((?:[^{}]|\{[^{}]*\})+)\}`, 'g'), (_match, command: string, targetName: string) => {
       if (command === 'edgeref' && isLanguageRef(language, targetName)) {
-        return `${languageRef(language)} compiles to itself`;
+        return SELF_COMPILATION_MARKER;
       }
       return `\\${command}{${edgeRefLanguageName(language)}}{${targetName.trim()}}`;
-    });
+    }));
+}
+
+function cleanSelfCompilationGaps(text: string): string {
+  const marker = SELF_COMPILATION_MARKER;
+  return text
+    .replace(new RegExp(`${marker}\\s+and\\s+`, 'g'), '')
+    .replace(new RegExp(`\\s+and\\s+${marker}`, 'g'), '')
+    .replace(new RegExp(`${marker}\\s*,\\s*`, 'g'), '')
+    .replace(new RegExp(`,\\s*${marker}`, 'g'), '')
+    .replace(new RegExp(marker, 'g'), '')
+    .replace(/[ \t]{2,}/g, ' ')
+    .replace(/[ \t]+([,.;])/g, '$1');
 }
 
 export function expandBatchTemplate(template: string, language: KCLanguage): string {
