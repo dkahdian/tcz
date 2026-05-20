@@ -2,7 +2,7 @@
 	import MathText from '$lib/components/MathText.svelte';
 	import { getGlobalRefNumber, getReferences } from '$lib/data/references.js';
 
-	const aboutReferences = getReferences('10.5555/2540128.2540255', 'TCZ_Forthcoming');
+	const aboutReferences = getReferences('Fargier_2013', 'TCZ_Forthcoming');
 </script>
 
 <svelte:head>
@@ -46,7 +46,7 @@
 			<h2>Central Concepts</h2>
 			<MathText
 				as="p"
-				text={`We give informal descriptions of some central concepts, leaving formal definitions to the literature (see, e.g., \\citet{10.5555/2540128.2540255,TCZ_Forthcoming}).`}
+				text={`We give informal descriptions of some central concepts, leaving formal definitions to the literature (see, e.g., \\citet{Fargier_2013,TCZ_Forthcoming}).`}
 			/>
 
 			<MathText
@@ -154,8 +154,13 @@
 		margin-bottom: 1.5rem;
 	}
 
-	p,
-	:global(.math-text) {
+	p {
+		line-height: 1.65;
+		margin: 0 0 0.75rem;
+		color: #475569;
+	}
+
+	.about-content :global(.math-text) {
 		line-height: 1.65;
 		margin: 0 0 0.75rem;
 		color: #475569;

@@ -287,6 +287,8 @@
     align-items: center;
     min-width: 0;
     line-height: 1;
+    margin: 0;
+    color: inherit;
   }
 
   .claim-divider {

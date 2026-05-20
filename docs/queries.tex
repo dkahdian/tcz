@@ -140,7 +140,7 @@ $IP \subseteq DNF$ and \langref{IP} satisfies IM, so checking sentential entailm
 \langref{MODS} supports Consistency in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-A sentence $\Sigma$ is consistent iff it has at least one model. Given the set of models, we need only check non-emptyness of the set \citep{Darwiche_2002}.
+A sentence $\Sigma$ is consistent iff it has at least one model. Given the set of models, we need only check nonemptiness of the set \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_e02902d0, op=CT
@@ -172,7 +172,7 @@ Any query concerning \langref{OBDD} is equivalent to the corresponding query con
 \langref{OBDD} supports Sentential Entailment not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citep{Darwiche_2002,Meinel_Theobald_1998}
 \end{claim}
 \begin{claimdescription}
-Sentential entailment for \langref{OBDD} is coNP-complete. \citet[Lemma 8.14]{Meinel_Theobald_1998} prove that checking consistency of two \langfam{OBDD}{<} formulas using different variable orders is NP-complete . Since \langref{OBDD} supports negation, consistency of $\alpha \land \beta$ is equivalent to $\alpha \not\models \neg\beta$, so polynomial-time SE for arbitrary OBDDs would imply polynomial-time consistency for such pairs \citep{Darwiche_2002}.
+Sentential entailment for \langref{OBDD} is coNP-complete. \citet[Lemma 8.14]{Meinel_Theobald_1998} prove that checking consistency of two \langfam{OBDD}{<} formulas using different variable orders is NP-complete. Since \langref{OBDD} supports negation, consistency of $\alpha \land \beta$ is equivalent to $\alpha \not\models \neg\beta$, so polynomial-time SE for arbitrary OBDDs would imply polynomial-time consistency for such pairs \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_27fffab2, op=CE

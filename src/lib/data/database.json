@@ -1537,7 +1537,7 @@
       "id": "lang_4c204bf3",
       "name": "DNF",
       "fullName": "Disjunctive Normal Form",
-      "definition": "A \\langref{DNF} is a disjunciton of terms $\\bigwedge_{i=1}^mT_i$. A term is a conjunction of literals $T_i=\\bigwedge_{j=1}^{k_i}l_j$ where a literal $l_j$ is a variable $x$ or its negation $\\lnot x$. For example, $(x \\land y \\land \\lnot z)\\lor (x\\land \\lnot y)\\lor (z\\lor w)$.\n\nEquivalently, a \\langref{DNF} is a \\langref{DNNF} of depth two with an output OR gate, whose children are AND gates, whose children are literals.",
+      "definition": "A \\langref{DNF} is a disjunction of terms $\\bigvee_{i=1}^mT_i$. A term is a conjunction of literals $T_i=\\bigwedge_{j=1}^{k_i}l_j$ where a literal $l_j$ is a variable $x$ or its negation $\\lnot x$. For example, $(x \\land y \\land \\lnot z)\\lor (x\\land \\lnot y)\\lor (z\\land w)$.\n\nEquivalently, a \\langref{DNF} is a \\langref{DNNF} of depth two with an output OR gate whose children are AND gates over literals.",
       "definitionRefs": [],
       "properties": {
         "queries": {
@@ -2181,7 +2181,7 @@
       },
       "tags": [],
       "id": "lang_684b1ca7",
-      "definition": "Binary decision diagrams such that on any root-to-sink path tests each variable at most once. Also known as read-once branching programs.\\citep{Wegener_2000}",
+      "definition": "Binary decision diagrams such that each root-to-sink path tests each variable at most once. Also known as read-once branching programs.\\citep{Wegener_2000}",
       "definitionRefs": []
     },
     {
@@ -2383,7 +2383,7 @@
             "refs": [
               "Darwiche_2002"
             ],
-            "description": "A sentence $\\Sigma$ is consistent iff it has at least one model. Given the set of models, we need only check non-emptyness of the set \\citep{Darwiche_2002}."
+            "description": "A sentence $\\Sigma$ is consistent iff it has at least one model. Given the set of models, we need only check nonemptiness of the set \\citep{Darwiche_2002}."
           },
           "CT": {
             "complexity": "poly",
@@ -2830,7 +2830,7 @@
       },
       "tags": [],
       "id": "lang_1df07cc3",
-      "definition": "An \\langref{nFBDD} is a \\emph{nondeterministic} \\langref{FBDD}, i.e., an \\langref{FBDD} that is additionally allowed \\emph{guess} nodes.\\citep{Wegener_2000}\n\nAlso known as a nondeterministic read-once branching program.",
+      "definition": "An \\langref{nFBDD} is a \\emph{nondeterministic} \\langref{FBDD}, i.e., an \\langref{FBDD} that is additionally allowed to contain \\emph{guess} nodes.\\citep{Wegener_2000}\n\nAlso known as a nondeterministic read-once branching program.",
       "definitionRefs": []
     },
     {
@@ -3348,7 +3348,7 @@
             "refs": [
               "Bryant_1986"
             ],
-            "description": "Consistency is trivial for OBDDs: check if the diagram root is not the terminal 0 node \\citep{Bryant_1986}."
+            "description": "Consistency can be checked in polynomial time by graph reachability: verify that there exists a path from the root to a terminal 1 node \\citep{Bryant_1986}."
           },
           "CT": {
             "complexity": "poly",
@@ -3712,7 +3712,7 @@
       },
       "tags": [],
       "id": "lang_27fffab2",
-      "definition": "The subset of \\langref{CNF} where formulas represent exactly the disjunction of all minimal entailed clauses (prime implicates). \\citep{Quine_1952}.",
+      "definition": "The subset of \\langref{CNF} where formulas are the conjunction of all minimal entailed clauses (prime implicates). \\citep{Quine_1952}.",
       "definitionRefs": []
     },
     {
@@ -5242,7 +5242,7 @@
               "Meinel_Theobald_1998"
             ],
             "assumption": "P \\neq NP",
-            "description": "Sentential entailment for \\langref{OBDD} is coNP-complete. \\citet[Lemma 8.14]{Meinel_Theobald_1998} prove that checking consistency of two \\langfam{OBDD}{<} formulas using different variable orders is NP-complete . Since \\langref{OBDD} supports negation, consistency of $\\alpha \\land \\beta$ is equivalent to $\\alpha \\not\\models \\neg\\beta$, so polynomial-time SE for arbitrary OBDDs would imply polynomial-time consistency for such pairs \\citep{Darwiche_2002}."
+            "description": "Sentential entailment for \\langref{OBDD} is coNP-complete. \\citet[Lemma 8.14]{Meinel_Theobald_1998} prove that checking consistency of two \\langfam{OBDD}{<} formulas using different variable orders is NP-complete. Since \\langref{OBDD} supports negation, consistency of $\\alpha \\land \\beta$ is equivalent to $\\alpha \\not\\models \\neg\\beta$, so polynomial-time SE for arbitrary OBDDs would imply polynomial-time consistency for such pairs \\citep{Darwiche_2002}."
           },
           "CO": {
             "complexity": "poly",
@@ -5415,7 +5415,7 @@
       },
       "tags": [],
       "id": "lang_b9d72a7c",
-      "definition": "Binary decision diagrams such that on any root-to-sink path tests each variable at most once and the variables appear in the same order.\\citep{Bryant_1986}\n\nAlso known as oblivious read-once branching programs.\\citep{Wegener_2000}\n\nEquivalently, \\langref{OBDD} $=\\bigcup_{<}$ \\langfam{OBDD}{<}.\\citep{Darwiche_2002}",
+      "definition": "Binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the same order.\\citep{Bryant_1986}\n\nAlso known as oblivious read-once branching programs.\\citep{Wegener_2000}\n\nEquivalently, \\langref{OBDD} $=\\bigcup_{<}$ \\langfam{OBDD}{<}.\\citep{Darwiche_2002}",
       "definitionRefs": []
     },
     {
@@ -6414,7 +6414,7 @@
       "id": "lang_e827cf31",
       "name": "nOBDD$_<$",
       "fullName": "Nondeterministic Ordered Binary Decision Diagram (wrt a fixed variable order)",
-      "definition": "An \\langfam{nOBDD}{<} is a \\emph{nondeterministic} \\langfam{OBDD}{<}, i.e., an \\langfam{OBDD}{<} that is additionally allowed \\emph{guess} nodes.\\citep{Wegener_2000}\n\nAlso known as a nondeterministic oblivious read-once branching program respecting variable order $<$.",
+      "definition": "An \\langfam{nOBDD}{<} is a \\emph{nondeterministic} \\langfam{OBDD}{<}, i.e., an \\langfam{OBDD}{<} that is additionally allowed to contain \\emph{guess} nodes.\\citep{Wegener_2000}\n\nAlso known as a nondeterministic oblivious read-once branching program respecting variable order $<$.",
       "definitionRefs": [],
       "properties": {
         "queries": {
@@ -6917,16 +6917,10 @@
   ],
   "references": [
     {
-      "id": "10.5555/2540128.2540255",
-      "title": "H. Fargier and P. Marquis and A. Niveau, \"Towards a knowledge compilation map for heterogeneous representation languages\", Proceedings of the Twenty-Third International Joint Conference on Artificial Intelligence, pp. 877–883, 2013.",
-      "href": "#",
-      "bibtex": "@inproceedings{10.5555/2540128.2540255,\nauthor = {Fargier, H\\'{e}l\\`{e}ne and Marquis, Pierre and Niveau, Alexandre},\ntitle = {Towards a knowledge compilation map for heterogeneous representation languages},\nyear = {2013},\nisbn = {9781577356332},\npublisher = {AAAI Press},\nabstract = {The knowledge compilation map introduced by Darwiche and Marquis takes advantage of a number of concepts (mainly queries, transformations, expressiveness, and succinctness) to compare the relative adequacy of representation languages to some AI problems. However, the framework is limited to the comparison of languages that are interpreted in a homogeneous way (formul\\ae{} are interpreted as Boolean functions). This prevents one from comparing, on a formal basis, languages that are close in essence, such as OBDD, MDD, and ADD. To fill the gap, we present a generalized framework into which comparing formally heterogeneous representation languages becomes feasible. In particular, we explain how the key notions of queries and transformations, expressiveness, and succinctness can be lifted to the generalized setting.},\nbooktitle = {Proceedings of the Twenty-Third International Joint Conference on Artificial Intelligence},\npages = {877–883},\nnumpages = {7},\nlocation = {Beijing, China},\nseries = {IJCAI '13}\n}"
-    },
-    {
       "id": "Amarilli_2018",
-      "bibtex": "@article{Amarilli_2018,\n  author       = {Antoine Amarilli and\n                  Florent Capelli and\n                  Mika{\\\"{e}}l Monet and\n                  Pierre Senellart},\n  title        = {Connecting Knowledge Compilation Classes and Width Parameters},\n  journal      = {CoRR},\n  volume       = {abs/1811.02944},\n  year         = {2018},\n  url          = {http://arxiv.org/abs/1811.02944},\n  eprinttype    = {arXiv},\n  eprint       = {1811.02944},\n  timestamp    = {Thu, 22 Nov 2018 17:58:30 +0100},\n  biburl       = {https://dblp.org/rec/journals/corr/abs-1811-02944.bib},\n  bibsource    = {dblp computer science bibliography, https://dblp.org}\n}",
+      "bibtex": "@article{Amarilli_2018,\n  author       = {Antoine Amarilli and\n                  Florent Capelli and\n                  Mika{\\\"{e}}l Monet and\n                  Pierre Senellart},\n  title        = {Connecting Knowledge Compilation Classes and Width Parameters},\n  journal      = {CoRR},\n  volume       = {abs/1811.02944},\n  year         = {2018},\n  url          = {https://arxiv.org/abs/1811.02944},\n  eprinttype    = {arXiv},\n  eprint       = {1811.02944},\n  timestamp    = {Thu, 22 Nov 2018 17:58:30 +0100},\n  biburl       = {https://dblp.org/rec/journals/corr/abs-1811-02944.bib},\n  bibsource    = {dblp computer science bibliography, https://dblp.org}\n}",
       "title": "A. Amarilli and F. Capelli and M. Monet and P. Senellart, \"Connecting Knowledge Compilation Classes and Width Parameters\", CoRR, vol. abs/1811.02944, 2018.",
-      "href": "http://arxiv.org/abs/1811.02944"
+      "href": "https://arxiv.org/abs/1811.02944"
     },
     {
       "id": "Beame_2013",
@@ -6966,7 +6960,7 @@
     },
     {
       "id": "Bova_2016",
-      "bibtex": "@inproceedings{Bova_2016,\n  TITLE = {{Knowledge Compilation Meets Communication Complexity}},\n  AUTHOR = {Bova, Simone and Capelli, Florent and Mengel, Stefan and Slivovsky, Friedrich},\n  URL = {https://univ-artois.hal.science/hal-03301001},\n  BOOKTITLE = {{25th International Joint Conference on Artificial Intelligence (IJCAI'16)}},\n  ADDRESS = {New York, NY, USA, Unknown Region},\n  EDITOR = {Subbarao Kambhampati},\n  PUBLISHER = {{IJCAI/AAAI Press}},\n  PAGES = {1008--1014},\n  YEAR = {2016},\n  HAL_ID = {hal-03301001},\n  HAL_VERSION = {v1},\n}",
+      "bibtex": "@inproceedings{Bova_2016,\n  TITLE = {{Knowledge Compilation Meets Communication Complexity}},\n  AUTHOR = {Bova, Simone and Capelli, Florent and Mengel, Stefan and Slivovsky, Friedrich},\n  URL = {https://univ-artois.hal.science/hal-03301001},\n  BOOKTITLE = {{25th International Joint Conference on Artificial Intelligence (IJCAI'16)}},\n  ADDRESS = {New York, NY, USA},\n  EDITOR = {Subbarao Kambhampati},\n  PUBLISHER = {{IJCAI/AAAI Press}},\n  PAGES = {1008--1014},\n  YEAR = {2016},\n  HAL_ID = {hal-03301001},\n  HAL_VERSION = {v1},\n}",
       "title": "S. Bova and F. Capelli and S. Mengel and F. Slivovsky, \"Knowledge Compilation Meets Communication Complexity\", 25th International Joint Conference on Artificial Intelligence (IJCAI'16), pp. 1008–1014, 2016.",
       "href": "https://univ-artois.hal.science/hal-03301001"
     },
@@ -7026,13 +7020,13 @@
     },
     {
       "id": "Darwiche_2002",
-      "bibtex": "@article{Darwiche_2002,\n   title={A Knowledge Compilation Map},\n   volume={17},\n   ISSN={1076-9757},\n   url={http://dx.doi.org/10.1613/jair.989},\n   DOI={10.1613/jair.989},\n   journal={Journal of Artificial Intelligence Research},\n   publisher={AI Access Foundation},\n   author={Darwiche, A. and Marquis, P.},\n   year={2002},\n   month=sep, pages={229–264} }",
+      "bibtex": "@article{Darwiche_2002,\n   title={A Knowledge Compilation Map},\n   volume={17},\n   ISSN={1076-9757},\n   url={http://dx.doi.org/10.1613/jair.989},\n   DOI={10.1613/jair.989},\n   journal={Journal of Artificial Intelligence Research},\n   publisher={AI Access Foundation},\n   author={Darwiche, A. and Marquis, P.},\n   year={2002},\n   month=sep, pages={229--264} }",
       "title": "A. Darwiche and P. Marquis, \"A Knowledge Compilation Map\", Journal of Artificial Intelligence Research, vol. 17, pp. 229–264, 2002.",
       "href": "http://dx.doi.org/10.1613/jair.989"
     },
     {
       "id": "Darwiche_2011",
-      "bibtex": "@inproceedings{Darwiche_2011,\nauthor = {Darwiche, Adnan},\ntitle = {SDD: a new canonical representation of propositional knowledge bases},\nyear = {2011},\nisbn = {9781577355144},\npublisher = {AAAI Press},\nabstract = {We identify a new representation of propositional knowledge bases, the Sentential Decision Diagram (SDD), which is interesting for a number of reasons. First, it is canonical in the presence of additional properties that resemble reduction rules of OBDDs. Second, SDDs can be combined using any Boolean operator in polytime. Third, CNFs with n variables and treewidth w have canonical SDDs of size O(n2w), which is tighter than the bound on OBDDs based on pathwidth. Finally, every OBDD is an SDD. Hence, working with the latter does not preclude the former.},\nbooktitle = {Proceedings of the Twenty-Second International Joint Conference on Artificial Intelligence - Volume Two},\npages = {819–826},\nnumpages = {8},\nlocation = {Barcelona, Catalonia, Spain},\nseries = {IJCAI'11},\ndoi = {10.5591/978-1-57735-516-8/IJCAI11-143}\n}",
+      "bibtex": "@inproceedings{Darwiche_2011,\nauthor = {Darwiche, Adnan},\ntitle = {SDD: a new canonical representation of propositional knowledge bases},\nyear = {2011},\nisbn = {9781577355144},\npublisher = {AAAI Press},\nabstract = {We identify a new representation of propositional knowledge bases, the Sentential Decision Diagram (SDD), which is interesting for a number of reasons. First, it is canonical in the presence of additional properties that resemble reduction rules of OBDDs. Second, SDDs can be combined using any Boolean operator in polytime. Third, CNFs with n variables and treewidth w have canonical SDDs of size O(n2w), which is tighter than the bound on OBDDs based on pathwidth. Finally, every OBDD is an SDD. Hence, working with the latter does not preclude the former.},\nbooktitle = {Proceedings of the Twenty-Second International Joint Conference on Artificial Intelligence - Volume Two},\npages = {819--826},\nnumpages = {8},\nlocation = {Barcelona, Catalonia, Spain},\nseries = {IJCAI'11},\ndoi = {10.5591/978-1-57735-516-8/IJCAI11-143}\n}",
       "title": "A. Darwiche, \"SDD: a new canonical representation of propositional knowledge bases\", Proceedings of the Twenty-Second International Joint Conference on Artificial Intelligence - Volume Two, pp. 819–826, 2011.",
       "href": "https://doi.org/10.5591/978-1-57735-516-8/IJCAI11-143"
     },
@@ -7044,15 +7038,21 @@
     },
     {
       "id": "darwiche2007language",
-      "title": "A. Darwiche and J. Huang, \"The Language of Search\", Journal Of Artificial Intelligence Research, 2007.",
-      "href": "#",
-      "bibtex": "@article{darwiche2007language,\n  title={The Language of Search},\n  author={Darwiche, Adnan and Huang, Jinbo},\n  journal={Journal Of Artificial Intelligence Research},\n  year={2007}\n}"
+      "title": "J. Huang and A. Darwiche, \"The Language of Search\", Journal of Artificial Intelligence Research, vol. 29, pp. 191–219, 2007.",
+      "href": "https://users.cecs.anu.edu.au/~jinbo/07-jair-los.pdf",
+      "bibtex": "@article{darwiche2007language,\n  title={The Language of Search},\n  author={Huang, Jinbo and Darwiche, Adnan},\n  journal={Journal of Artificial Intelligence Research},\n  volume={29},\n  pages={191--219},\n  year={2007},\n  doi={10.1613/jair.2097},\n  url={https://users.cecs.anu.edu.au/~jinbo/07-jair-los.pdf}\n}"
     },
     {
       "id": "Devadas_1993",
       "title": "S. Devadas, \"Comparing two-level and ordered binary decision diagram representations of logic functions\", IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems, vol. 12, pp. 722–723, 1993.",
       "href": "https://doi.org/10.1109/43.277617",
       "bibtex": "@article{Devadas_1993,\n  title={Comparing two-level and ordered binary decision diagram representations of logic functions},\n  author={Devadas, Srinivas},\n  journal={IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems},\n  volume={12},\n  number={5},\n  pages={722--723},\n  year={1993},\n  publisher={IEEE},\n  doi={10.1109/43.277617}\n}"
+    },
+    {
+      "id": "Fargier_2013",
+      "title": "H. Fargier and P. Marquis and A. Niveau, \"Towards a knowledge compilation map for heterogeneous representation languages\", Proceedings of the Twenty-Third International Joint Conference on Artificial Intelligence, pp. 877–883, 2013.",
+      "href": "https://dl.acm.org/doi/10.5555/2540128.2540255",
+      "bibtex": "@inproceedings{Fargier_2013,\nauthor = {Fargier, H\\'{e}l\\`{e}ne and Marquis, Pierre and Niveau, Alexandre},\ntitle = {Towards a knowledge compilation map for heterogeneous representation languages},\nyear = {2013},\nisbn = {9781577356332},\nurl = {https://dl.acm.org/doi/10.5555/2540128.2540255},\npublisher = {AAAI Press},\nabstract = {The knowledge compilation map introduced by Darwiche and Marquis takes advantage of a number of concepts (mainly queries, transformations, expressiveness, and succinctness) to compare the relative adequacy of representation languages to some AI problems. However, the framework is limited to the comparison of languages that are interpreted in a homogeneous way (formul\\ae{} are interpreted as Boolean functions). This prevents one from comparing, on a formal basis, languages that are close in essence, such as OBDD, MDD, and ADD. To fill the gap, we present a generalized framework into which comparing formally heterogeneous representation languages becomes feasible. In particular, we explain how the key notions of queries and transformations, expressiveness, and succinctness can be lifted to the generalized setting.},\nbooktitle = {Proceedings of the Twenty-Third International Joint Conference on Artificial Intelligence},\npages = {877--883},\nnumpages = {7},\nlocation = {Beijing, China},\nseries = {IJCAI '13}\n}"
     },
     {
       "id": "Fortune_1978",
@@ -7062,8 +7062,8 @@
     },
     {
       "id": "Gergov_1994",
-      "bibtex": "@ARTICLE{Gergov_1994,\n  author={Gergov, J. and Meinel, C.},\n  journal={IEEE Transactions on Computers}, \n  title={Efficient Boolean manipulation with OBDD's can be extended to FBDD's}, \n  year={1994},\n  volume={43},\n  number={10},\n  pages={1197-1209},\n  keywords={Boolean functions;Circuit testing;Data structures;Performance evaluation;Circuit synthesis;Input variables;Design optimization;Logic;Hardware design languages},\n  doi={10.1109/12.324545}}",
-      "title": "J. Gergov and C. Meinel, \"Efficient Boolean manipulation with OBDD's can be extended to FBDD's\", IEEE Transactions on Computers, vol. 43, pp. 1197-1209, 1994.",
+      "bibtex": "@ARTICLE{Gergov_1994,\n  author={Gergov, J. and Meinel, C.},\n  journal={IEEE Transactions on Computers}, \n  title={Efficient Boolean manipulation with OBDD's can be extended to FBDD's}, \n  year={1994},\n  volume={43},\n  number={10},\n  pages={1197--1209},\n  keywords={Boolean functions;Circuit testing;Data structures;Performance evaluation;Circuit synthesis;Input variables;Design optimization;Logic;Hardware design languages},\n  doi={10.1109/12.324545}}",
+      "title": "J. Gergov and C. Meinel, \"Efficient Boolean manipulation with OBDD's can be extended to FBDD's\", IEEE Transactions on Computers, vol. 43, pp. 1197–1209, 1994.",
       "href": "https://doi.org/10.1109/12.324545"
     },
     {
@@ -7074,13 +7074,13 @@
     },
     {
       "id": "Jukna_2002",
-      "bibtex": "@article{Jukna_2002, title={Triangle-Freeness is Hard to Detect}, volume={11}, DOI={10.1017/S0963548302005333}, number={6}, journal={Combinatorics, Probability and Computing}, author={Jukna, S. and Schnitger, G.}, year={2002}, pages={549–569}}",
+      "bibtex": "@article{Jukna_2002, title={Triangle-Freeness is Hard to Detect}, volume={11}, DOI={10.1017/S0963548302005333}, number={6}, journal={Combinatorics, Probability and Computing}, author={Jukna, S. and Schnitger, G.}, year={2002}, pages={549--569}}",
       "title": "S. Jukna and G. Schnitger, \"Triangle-Freeness is Hard to Detect\", Combinatorics, Probability and Computing, vol. 11, pp. 549–569, 2002.",
       "href": "https://doi.org/10.1017/S0963548302005333"
     },
     {
       "id": "Kaleyski_2016",
-      "bibtex": "@mastersthesis{Kaleyski_2016,\n  author       = {Kaleyski, Nikolay Stoyanov},\n  title        = {Boolean methods in knowledge compilation},\n  school       = {Charles University, Faculty of Mathematics and Physics},\n  year         = {2016},\n  address      = {Prague, Czech Republic},\n  type         = {Master’s thesis},\n  keywords     = {Boolean functions, knowledge compilation, PI, MODS, prime implicants},\n  note         = {Master’s thesis, Department of Theoretical Computer Science and Mathematical Logic},\n  url          = {https://dspace.cuni.cz/bitstream/handle/20.500.11956/83080/DPTX_2014_2_11320_0_450653_0_169085.pdf?sequence=1}\n}",
+      "bibtex": "@mastersthesis{Kaleyski_2016,\n  author       = {Kaleyski, Nikolay Stoyanov},\n  title        = {Boolean methods in knowledge compilation},\n  school       = {Charles University, Faculty of Mathematics and Physics},\n  year         = {2016},\n  address      = {Prague, Czech Republic},\n  type         = {Master's thesis},\n  keywords     = {Boolean functions, knowledge compilation, PI, MODS, prime implicants},\n  note         = {Master's thesis, Department of Theoretical Computer Science and Mathematical Logic},\n  url          = {https://dspace.cuni.cz/bitstream/handle/20.500.11956/83080/DPTX_2014_2_11320_0_450653_0_169085.pdf?sequence=1}\n}",
       "title": "N. S. Kaleyski, \"Boolean methods in knowledge compilation\", 2016.",
       "href": "https://dspace.cuni.cz/bitstream/handle/20.500.11956/83080/DPTX_2014_2_11320_0_450653_0_169085.pdf?sequence=1"
     },
@@ -7122,9 +7122,9 @@
     },
     {
       "id": "Pipatsrisawat_2010",
-      "bibtex": "@phdthesis{Pipatsrisawat_2010,\n  author       = {Thammanit Pipatsrisawat},\n  title        = {Reasoning with Propositional Knowledge: Frameworks for Boolean Satisfiability and Knowledge Compilation},\n  school       = {University of California, Los Angeles},\n  year         = {2010},\n  address      = {Los Angeles, CA, USA},\n  note         = {PhD thesis},\n  doi          = {10.5555/3020847.3020862},\n  url          = {https://dl.acm.org/doi/10.5555/3020847.3020862}\n}",
+      "bibtex": "@phdthesis{Pipatsrisawat_2010,\n  author       = {Pipatsrisawat, Thammanit},\n  title        = {Reasoning with Propositional Knowledge: Frameworks for Boolean Satisfiability and Knowledge Compilation},\n  school       = {University of California, Los Angeles},\n  year         = {2010},\n  address      = {Los Angeles, CA, USA},\n  type         = {{Ph.D.} dissertation},\n  url          = {https://dl.acm.org/doi/10.5555/2049015}\n}",
       "title": "T. Pipatsrisawat, \"Reasoning with Propositional Knowledge: Frameworks for Boolean Satisfiability and Knowledge Compilation\", 2010.",
-      "href": "https://dl.acm.org/doi/10.5555/3020847.3020862"
+      "href": "https://dl.acm.org/doi/10.5555/2049015"
     },
     {
       "id": "Quine_1952",
@@ -7140,8 +7140,8 @@
     },
     {
       "id": "Sauerhoff_2003",
-      "bibtex": "@article{Sauerhoff_2003,\ntitle = {Approximation of boolean functions by combinatorial rectangles},\njournal = {Theoretical Computer Science},\nvolume = {301},\nnumber = {1},\npages = {45-78},\nyear = {2003},\nissn = {0304-3975},\ndoi = {10.1016/S0304-3975(02)00568-6},\nurl = {https://www.sciencedirect.com/science/article/pii/S0304397502005686},\nauthor = {Martin Sauerhoff},\nkeywords = {Branching programs, Communication complexity, Lower bounds, Approximation, Nondeterminism, Randomness},\nabstract = {This paper deals with the number of monochromatic combinatorial rectangles required to approximate a boolean function on a constant fraction of all inputs, where each rectangle may use its own partition of the input variables. The main result of the paper is that the number of rectangles required for the approximation of boolean functions in this model is very sensitive to the allowed error. There is an explicitly defined sequence of boolean functions fn on n variables such that fn has rectangle approximations with a constant number of rectangles and one-sided error 13+o(1) or two-sided error 14+o(1), but, on the other hand, fn requires exponentially many rectangles if the error bounds are decreased by an arbitrarily small constant. As applications of this result, the following separation results for read-once branching programs are obtained. The functions from the main result require only linear size for nondeterministic read-once branching programs and randomized read-once branching programs with two-sided error 13+o(1), while randomized read-once branching programs with constant two-sided error smaller than 13 and unambiguous nondeterministic read-once branching programs require exponential size.}\n}",
-      "title": "M. Sauerhoff, \"Approximation of boolean functions by combinatorial rectangles\", Theoretical Computer Science, vol. 301, pp. 45-78, 2003.",
+      "bibtex": "@article{Sauerhoff_2003,\ntitle = {Approximation of boolean functions by combinatorial rectangles},\njournal = {Theoretical Computer Science},\nvolume = {301},\nnumber = {1},\npages = {45--78},\nyear = {2003},\nissn = {0304-3975},\ndoi = {10.1016/S0304-3975(02)00568-6},\nurl = {https://www.sciencedirect.com/science/article/pii/S0304397502005686},\nauthor = {Martin Sauerhoff},\nkeywords = {Branching programs, Communication complexity, Lower bounds, Approximation, Nondeterminism, Randomness},\nabstract = {This paper deals with the number of monochromatic combinatorial rectangles required to approximate a boolean function on a constant fraction of all inputs, where each rectangle may use its own partition of the input variables. The main result of the paper is that the number of rectangles required for the approximation of boolean functions in this model is very sensitive to the allowed error. There is an explicitly defined sequence of boolean functions fn on n variables such that fn has rectangle approximations with a constant number of rectangles and one-sided error 13+o(1) or two-sided error 14+o(1), but, on the other hand, fn requires exponentially many rectangles if the error bounds are decreased by an arbitrarily small constant. As applications of this result, the following separation results for read-once branching programs are obtained. The functions from the main result require only linear size for nondeterministic read-once branching programs and randomized read-once branching programs with two-sided error 13+o(1), while randomized read-once branching programs with constant two-sided error smaller than 13 and unambiguous nondeterministic read-once branching programs require exponential size.}\n}",
+      "title": "M. Sauerhoff, \"Approximation of boolean functions by combinatorial rectangles\", Theoretical Computer Science, vol. 301, pp. 45–78, 2003.",
       "href": "https://www.sciencedirect.com/science/article/pii/S0304397502005686"
     },
     {
@@ -7152,21 +7152,21 @@
     },
     {
       "id": "Selman_1996",
-      "bibtex": "@article{Selman_1996,\nauthor = {Selman, Bart and Kautz, Henry},\ntitle = {Knowledge compilation and theory approximation},\nyear = {1996},\nissue_date = {March 1996},\npublisher = {Association for Computing Machinery},\naddress = {New York, NY, USA},\nvolume = {43},\nnumber = {2},\nissn = {0004-5411},\nurl = {https://doi.org/10.1145/226643.226644},\ndoi = {10.1145/226643.226644},\nabstract = {Computational efficiency is a central concern in the design of knowledge representation systems. In order to obtain efficient systems, it has been suggested that one should limit the form of the statements in the knowledge base or use an incomplete inference mechanism. The former approach is often too restrictive for practical applications, whereas the latter leads to uncertainty about exactly what can and cannot be inferred from the knowledge base. We present a third alternative, in which knowledge given in a general representation language is translated (compiled) into a tractable form—allowing for efficient subsequent query answering.We show how propositional logical theories can be compiled into Horn theories that approximate the original information. The approximations bound the original theory from below and above in terms of logical strength. The procedures are extended to other tractable languages (for example, binary clauses) and to the first-order case. Finally, we demonstrate the generality of our approach by compiling concept descriptions in a general frame-based language into a tractable form.},\njournal = {J. ACM},\nmonth = mar,\npages = {193–224},\nnumpages = {32},\nkeywords = {Horn clauses, efficient reasoning methods, knowledge compilation, knowledge-base optimization, query evaluation, theory approximation}\n}",
+      "bibtex": "@article{Selman_1996,\nauthor = {Selman, Bart and Kautz, Henry},\ntitle = {Knowledge compilation and theory approximation},\nyear = {1996},\nissue_date = {March 1996},\npublisher = {Association for Computing Machinery},\naddress = {New York, NY, USA},\nvolume = {43},\nnumber = {2},\nissn = {0004-5411},\nurl = {https://doi.org/10.1145/226643.226644},\ndoi = {10.1145/226643.226644},\nabstract = {Computational efficiency is a central concern in the design of knowledge representation systems. In order to obtain efficient systems, it has been suggested that one should limit the form of the statements in the knowledge base or use an incomplete inference mechanism. The former approach is often too restrictive for practical applications, whereas the latter leads to uncertainty about exactly what can and cannot be inferred from the knowledge base. We present a third alternative, in which knowledge given in a general representation language is translated (compiled) into a tractable form--allowing for efficient subsequent query answering.We show how propositional logical theories can be compiled into Horn theories that approximate the original information. The approximations bound the original theory from below and above in terms of logical strength. The procedures are extended to other tractable languages (for example, binary clauses) and to the first-order case. Finally, we demonstrate the generality of our approach by compiling concept descriptions in a general frame-based language into a tractable form.},\njournal = {J. ACM},\nmonth = mar,\npages = {193--224},\nnumpages = {32},\nkeywords = {Horn clauses, efficient reasoning methods, knowledge compilation, knowledge-base optimization, query evaluation, theory approximation}\n}",
       "title": "B. Selman and H. Kautz, \"Knowledge compilation and theory approximation\", J. ACM, vol. 43, pp. 193–224, 1996.",
       "href": "https://doi.org/10.1145/226643.226644"
     },
     {
       "id": "shpilka2010arithmetic",
-      "title": "A. Shpilka and A. Yehudayoff, \"Arithmetic circuits: A survey of recent results and open questions\", Foundations and Trends\\textregistered in Theoretical Computer Science, vol. 5, pp. 207–388, 2010.",
-      "href": "#",
-      "bibtex": "@article{shpilka2010arithmetic,\n  title={Arithmetic circuits: A survey of recent results and open questions},\n  author={Shpilka, Amir and Yehudayoff, Amir},\n  journal={Foundations and Trends{\\textregistered} in Theoretical Computer Science},\n  volume={5},\n  number={3-4},\n  pages={207--388},\n  year={2010},\n  publisher={Emerald Publishing Limited}\n}"
+      "title": "A. Shpilka and A. Yehudayoff, \"Arithmetic circuits: A survey of recent results and open questions\", Foundations and Trends in Theoretical Computer Science, vol. 5, pp. 207–388, 2010.",
+      "href": "https://doi.org/10.1561/0400000039",
+      "bibtex": "@article{shpilka2010arithmetic,\n  title={Arithmetic circuits: A survey of recent results and open questions},\n  author={Shpilka, Amir and Yehudayoff, Amir},\n  journal={Foundations and Trends in Theoretical Computer Science},\n  volume={5},\n  number={3-4},\n  pages={207--388},\n  year={2010},\n  publisher={Now Publishers},\n  doi={10.1561/0400000039}\n}"
     },
     {
       "id": "TCZ_Forthcoming",
-      "title": "D. Kahdian and O. Broadrick and R. Geh and G. Van den Broeck, \"Tractable Circuit Zoo\", forthcoming.",
+      "title": "D. Kahdian and O. Broadrick and R. Geh and G. Van den Broeck, \"A Tractable Circuit Zoo\", forthcoming.",
       "href": "#",
-      "bibtex": "@misc{TCZ_Forthcoming,\n  title={Tractable Circuit Zoo},\n  author={Kahdian, David and Broadrick, Oliver and Geh, Renato and {Van den Broeck}, Guy},\n  year={forthcoming},\n  note={Forthcoming}\n}"
+      "bibtex": "@misc{TCZ_Forthcoming,\n  title={A Tractable Circuit Zoo},\n  author={Kahdian, David and Broadrick, Oliver and Geh, Renato and {Van den Broeck}, Guy},\n  year={forthcoming},\n  note={Forthcoming}\n}"
     },
     {
       "id": "VanDenBroeck_2015",

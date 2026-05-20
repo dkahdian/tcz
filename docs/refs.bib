@@ -7,7 +7,7 @@
   journal      = {CoRR},
   volume       = {abs/1811.02944},
   year         = {2018},
-  url          = {http://arxiv.org/abs/1811.02944},
+  url          = {https://arxiv.org/abs/1811.02944},
   eprinttype    = {arXiv},
   eprint       = {1811.02944},
   timestamp    = {Thu, 22 Nov 2018 17:58:30 +0100},
@@ -77,7 +77,7 @@ booktitle = "Proceedings of the Twenty-fifth Annual ACM Symposium on Theory of C
   AUTHOR = {Bova, Simone and Capelli, Florent and Mengel, Stefan and Slivovsky, Friedrich},
   URL = {https://univ-artois.hal.science/hal-03301001},
   BOOKTITLE = {{25th International Joint Conference on Artificial Intelligence (IJCAI'16)}},
-  ADDRESS = {New York, NY, USA, Unknown Region},
+  ADDRESS = {New York, NY, USA},
   EDITOR = {Subbarao Kambhampati},
   PUBLISHER = {{IJCAI/AAAI Press}},
   PAGES = {1008--1014},
@@ -187,16 +187,17 @@ booktitle = "Proceedings of the Twenty-fifth Annual ACM Symposium on Theory of C
    publisher={AI Access Foundation},
    author={Darwiche, A. and Marquis, P.},
    year={2002},
-   month=sep, pages={229–264} }
-@inproceedings{10.5555/2540128.2540255,
+   month=sep, pages={229--264} }
+@inproceedings{Fargier_2013,
 author = {Fargier, H\'{e}l\`{e}ne and Marquis, Pierre and Niveau, Alexandre},
 title = {Towards a knowledge compilation map for heterogeneous representation languages},
 year = {2013},
 isbn = {9781577356332},
+url = {https://dl.acm.org/doi/10.5555/2540128.2540255},
 publisher = {AAAI Press},
 abstract = {The knowledge compilation map introduced by Darwiche and Marquis takes advantage of a number of concepts (mainly queries, transformations, expressiveness, and succinctness) to compare the relative adequacy of representation languages to some AI problems. However, the framework is limited to the comparison of languages that are interpreted in a homogeneous way (formul\ae{} are interpreted as Boolean functions). This prevents one from comparing, on a formal basis, languages that are close in essence, such as OBDD, MDD, and ADD. To fill the gap, we present a generalized framework into which comparing formally heterogeneous representation languages becomes feasible. In particular, we explain how the key notions of queries and transformations, expressiveness, and succinctness can be lifted to the generalized setting.},
 booktitle = {Proceedings of the Twenty-Third International Joint Conference on Artificial Intelligence},
-pages = {877–883},
+pages = {877--883},
 numpages = {7},
 location = {Beijing, China},
 series = {IJCAI '13}
@@ -209,7 +210,7 @@ isbn = {9781577355144},
 publisher = {AAAI Press},
 abstract = {We identify a new representation of propositional knowledge bases, the Sentential Decision Diagram (SDD), which is interesting for a number of reasons. First, it is canonical in the presence of additional properties that resemble reduction rules of OBDDs. Second, SDDs can be combined using any Boolean operator in polytime. Third, CNFs with n variables and treewidth w have canonical SDDs of size O(n2w), which is tighter than the bound on OBDDs based on pathwidth. Finally, every OBDD is an SDD. Hence, working with the latter does not preclude the former.},
 booktitle = {Proceedings of the Twenty-Second International Joint Conference on Artificial Intelligence - Volume Two},
-pages = {819–826},
+pages = {819--826},
 numpages = {8},
 location = {Barcelona, Catalonia, Spain},
 series = {IJCAI'11},
@@ -225,9 +226,13 @@ doi = {10.5591/978-1-57735-516-8/IJCAI11-143}
 }
 @article{darwiche2007language,
   title={The Language of Search},
-  author={Darwiche, Adnan and Huang, Jinbo},
-  journal={Journal Of Artificial Intelligence Research},
-  year={2007}
+  author={Huang, Jinbo and Darwiche, Adnan},
+  journal={Journal of Artificial Intelligence Research},
+  volume={29},
+  pages={191--219},
+  year={2007},
+  doi={10.1613/jair.2097},
+  url={https://users.cecs.anu.edu.au/~jinbo/07-jair-los.pdf}
 }
 @article{Devadas_1993,
   title={Comparing two-level and ordered binary decision diagram representations of logic functions},
@@ -258,7 +263,7 @@ doi = {10.5591/978-1-57735-516-8/IJCAI11-143}
   year={1994},
   volume={43},
   number={10},
-  pages={1197-1209},
+  pages={1197--1209},
   keywords={Boolean functions;Circuit testing;Data structures;Performance evaluation;Circuit synthesis;Input variables;Design optimization;Logic;Hardware design languages},
   doi={10.1109/12.324545}}
 @inproceedings{Gogic_1995,
@@ -270,16 +275,16 @@ doi = {10.5591/978-1-57735-516-8/IJCAI11-143}
   publisher={Morgan Kaufmann},
   url={http://ijcai.org/Proceedings/95-1/Papers/111.pdf}
 }
-@article{Jukna_2002, title={Triangle-Freeness is Hard to Detect}, volume={11}, DOI={10.1017/S0963548302005333}, number={6}, journal={Combinatorics, Probability and Computing}, author={Jukna, S. and Schnitger, G.}, year={2002}, pages={549–569}}
+@article{Jukna_2002, title={Triangle-Freeness is Hard to Detect}, volume={11}, DOI={10.1017/S0963548302005333}, number={6}, journal={Combinatorics, Probability and Computing}, author={Jukna, S. and Schnitger, G.}, year={2002}, pages={549--569}}
 @mastersthesis{Kaleyski_2016,
   author       = {Kaleyski, Nikolay Stoyanov},
   title        = {Boolean methods in knowledge compilation},
   school       = {Charles University, Faculty of Mathematics and Physics},
   year         = {2016},
   address      = {Prague, Czech Republic},
-  type         = {Master’s thesis},
+  type         = {Master's thesis},
   keywords     = {Boolean functions, knowledge compilation, PI, MODS, prime implicants},
-  note         = {Master’s thesis, Department of Theoretical Computer Science and Mathematical Logic},
+  note         = {Master's thesis, Department of Theoretical Computer Science and Mathematical Logic},
   url          = {https://dspace.cuni.cz/bitstream/handle/20.500.11956/83080/DPTX_2014_2_11320_0_450653_0_169085.pdf?sequence=1}
 }
 @article{Lang_2003,
@@ -329,14 +334,13 @@ doi = {10.5591/978-1-57735-516-8/IJCAI11-143}
   url={https://cdn.aaai.org/AAAI/2008/AAAI08-082.pdf}
 }
 @phdthesis{Pipatsrisawat_2010,
-  author       = {Thammanit Pipatsrisawat},
+  author       = {Pipatsrisawat, Thammanit},
   title        = {Reasoning with Propositional Knowledge: Frameworks for Boolean Satisfiability and Knowledge Compilation},
   school       = {University of California, Los Angeles},
   year         = {2010},
   address      = {Los Angeles, CA, USA},
-  note         = {PhD thesis},
-  doi          = {10.5555/3020847.3020862},
-  url          = {https://dl.acm.org/doi/10.5555/3020847.3020862}
+  type         = {{Ph.D.} dissertation},
+  url          = {https://dl.acm.org/doi/10.5555/2049015}
 }
 @article{Quine_1952,
   title={The Problem of Simplifying Truth Functions},
@@ -365,7 +369,7 @@ title = {Approximation of boolean functions by combinatorial rectangles},
 journal = {Theoretical Computer Science},
 volume = {301},
 number = {1},
-pages = {45-78},
+pages = {45--78},
 year = {2003},
 issn = {0304-3975},
 doi = {10.1016/S0304-3975(02)00568-6},
@@ -394,25 +398,26 @@ number = {2},
 issn = {0004-5411},
 url = {https://doi.org/10.1145/226643.226644},
 doi = {10.1145/226643.226644},
-abstract = {Computational efficiency is a central concern in the design of knowledge representation systems. In order to obtain efficient systems, it has been suggested that one should limit the form of the statements in the knowledge base or use an incomplete inference mechanism. The former approach is often too restrictive for practical applications, whereas the latter leads to uncertainty about exactly what can and cannot be inferred from the knowledge base. We present a third alternative, in which knowledge given in a general representation language is translated (compiled) into a tractable form—allowing for efficient subsequent query answering.We show how propositional logical theories can be compiled into Horn theories that approximate the original information. The approximations bound the original theory from below and above in terms of logical strength. The procedures are extended to other tractable languages (for example, binary clauses) and to the first-order case. Finally, we demonstrate the generality of our approach by compiling concept descriptions in a general frame-based language into a tractable form.},
+abstract = {Computational efficiency is a central concern in the design of knowledge representation systems. In order to obtain efficient systems, it has been suggested that one should limit the form of the statements in the knowledge base or use an incomplete inference mechanism. The former approach is often too restrictive for practical applications, whereas the latter leads to uncertainty about exactly what can and cannot be inferred from the knowledge base. We present a third alternative, in which knowledge given in a general representation language is translated (compiled) into a tractable form--allowing for efficient subsequent query answering.We show how propositional logical theories can be compiled into Horn theories that approximate the original information. The approximations bound the original theory from below and above in terms of logical strength. The procedures are extended to other tractable languages (for example, binary clauses) and to the first-order case. Finally, we demonstrate the generality of our approach by compiling concept descriptions in a general frame-based language into a tractable form.},
 journal = {J. ACM},
 month = mar,
-pages = {193–224},
+pages = {193--224},
 numpages = {32},
 keywords = {Horn clauses, efficient reasoning methods, knowledge compilation, knowledge-base optimization, query evaluation, theory approximation}
 }
 @article{shpilka2010arithmetic,
   title={Arithmetic circuits: A survey of recent results and open questions},
   author={Shpilka, Amir and Yehudayoff, Amir},
-  journal={Foundations and Trends{\textregistered} in Theoretical Computer Science},
+  journal={Foundations and Trends in Theoretical Computer Science},
   volume={5},
   number={3-4},
   pages={207--388},
   year={2010},
-  publisher={Emerald Publishing Limited}
+  publisher={Now Publishers},
+  doi={10.1561/0400000039}
 }
 @misc{TCZ_Forthcoming,
-  title={Tractable Circuit Zoo},
+  title={A Tractable Circuit Zoo},
   author={Kahdian, David and Broadrick, Oliver and Geh, Renato and {Van den Broeck}, Guy},
   year={forthcoming},
   note={Forthcoming}

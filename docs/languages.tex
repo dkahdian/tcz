@@ -111,9 +111,9 @@ Equivalently, \langfam{dec-SDNNF}{T} formulas are \langfam{SDNNF}{T} formulas wh
 
 \begin{definition}[\langref{DNF}]\label{def:lang_4c204bf3}
 \textbf{Disjunctive Normal Form} \\
-A \langref{DNF} is a disjunciton of terms $\bigwedge_{i=1}^mT_i$. A term is a conjunction of literals $T_i=\bigwedge_{j=1}^{k_i}l_j$ where a literal $l_j$ is a variable $x$ or its negation $\lnot x$. For example, $(x \land y \land \lnot z)\lor (x\land \lnot y)\lor (z\lor w)$.
+A \langref{DNF} is a disjunction of terms $\bigvee_{i=1}^mT_i$. A term is a conjunction of literals $T_i=\bigwedge_{j=1}^{k_i}l_j$ where a literal $l_j$ is a variable $x$ or its negation $\lnot x$. For example, $(x \land y \land \lnot z)\lor (x\land \lnot y)\lor (z\land w)$.
 
-Equivalently, a \langref{DNF} is a \langref{DNNF} of depth two with an output OR gate, whose children are AND gates, whose children are literals.
+Equivalently, a \langref{DNF} is a \langref{DNNF} of depth two with an output OR gate whose children are AND gates over literals.
 \end{definition}
 
 \begin{definition}[\langref{DNNF}]\label{def:lang_3bebcab7}
@@ -123,7 +123,7 @@ Boolean circuits with AND and OR gates, literals as inputs, and whose AND gates 
 
 \begin{definition}[\langref{FBDD}]\label{def:lang_684b1ca7}
 \textbf{Free Binary Decision Diagram} \\
-Binary decision diagrams such that on any root-to-sink path tests each variable at most once. Also known as read-once branching programs.\citep{Wegener_2000}
+Binary decision diagrams such that each root-to-sink path tests each variable at most once. Also known as read-once branching programs.\citep{Wegener_2000}
 \end{definition}
 
 \begin{definition}[\langref{IP}]\label{def:lang_6ae90adc}
@@ -140,7 +140,7 @@ Equivalently, a suitably restricted DNF whose terms are in one-to-one correspond
 
 \begin{definition}[\langref{nFBDD}]\label{def:lang_1df07cc3}
 \textbf{Nondeterministic Free Binary Decision Diagram} \\
-An \langref{nFBDD} is a \emph{nondeterministic} \langref{FBDD}, i.e., an \langref{FBDD} that is additionally allowed \emph{guess} nodes.\citep{Wegener_2000}
+An \langref{nFBDD} is a \emph{nondeterministic} \langref{FBDD}, i.e., an \langref{FBDD} that is additionally allowed to contain \emph{guess} nodes.\citep{Wegener_2000}
 
 Also known as a nondeterministic read-once branching program.
 \end{definition}
@@ -157,14 +157,14 @@ A Boolean circuit with AND and OR gates with literals as inputs (i.e., negations
 
 \begin{definition}[\langfam{nOBDD}{<}]\label{def:lang_e827cf31}
 \textbf{Nondeterministic Ordered Binary Decision Diagram (wrt a fixed variable order)} \\
-An \langfam{nOBDD}{<} is a \emph{nondeterministic} \langfam{OBDD}{<}, i.e., an \langfam{OBDD}{<} that is additionally allowed \emph{guess} nodes.\citep{Wegener_2000}
+An \langfam{nOBDD}{<} is a \emph{nondeterministic} \langfam{OBDD}{<}, i.e., an \langfam{OBDD}{<} that is additionally allowed to contain \emph{guess} nodes.\citep{Wegener_2000}
 
 Also known as a nondeterministic oblivious read-once branching program respecting variable order $<$.
 \end{definition}
 
 \begin{definition}[\langref{OBDD}]\label{def:lang_b9d72a7c}
 \textbf{Ordered Binary Decision Diagram} \\
-Binary decision diagrams such that on any root-to-sink path tests each variable at most once and the variables appear in the same order.\citep{Bryant_1986}
+Binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the same order.\citep{Bryant_1986}
 
 Also known as oblivious read-once branching programs.\citep{Wegener_2000}
 
@@ -182,7 +182,7 @@ Equivalently, \langfam{OBDD}{<} formulas are \langref{FBDD} formulas required to
 
 \begin{definition}[\langref{PI}]\label{def:lang_27fffab2}
 \textbf{Prime Implicates} \\
-The subset of \langref{CNF} where formulas represent exactly the disjunction of all minimal entailed clauses (prime implicates). \citep{Quine_1952}.
+The subset of \langref{CNF} where formulas are the conjunction of all minimal entailed clauses (prime implicates). \citep{Quine_1952}.
 \end{definition}
 
 \begin{definition}[\langref{SDD}]\label{def:lang_1afefbe2}
