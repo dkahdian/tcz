@@ -383,10 +383,11 @@
           "CO": {
             "complexity": "no-poly-unknown-quasi",
             "refs": [
-              "Darwiche_2002"
+              "Cook_1971",
+              "Levin_1973"
             ],
             "assumption": "P \\neq NP",
-            "description": "Consistency checking for \\langref{CNF} is NP-complete (the classic SAT problem). This is one of the foundational intractability results \\citep{Darwiche_2002}."
+            "description": "Consistency checking for \\langref{CNF} is NP-complete by the Cook--Levin theorem, the classic foundational result for SAT \\citep{Cook_1971,Levin_1973}."
           },
           "IM": {
             "complexity": "poly",
@@ -423,7 +424,9 @@
           "EQ": {
             "complexity": "no-poly-unknown-quasi",
             "refs": [
-              "Darwiche_2002"
+              "Darwiche_2002",
+              "Cook_1971",
+              "Levin_1973"
             ],
             "derived": true,
             "description": "Equivalence implies Consistency \\citep{Darwiche_2002}. However, \\nopref{lang_89649e36}{CO} assuming P \\neq NP. Therefore Equivalence is unsupported by CNF assuming P \\neq NP.",
@@ -440,7 +443,9 @@
           "SE": {
             "complexity": "no-poly-unknown-quasi",
             "refs": [
-              "Darwiche_2002"
+              "Darwiche_2002",
+              "Cook_1971",
+              "Levin_1973"
             ],
             "derived": true,
             "description": "Sentential Entailment implies Equivalence \\citep{Darwiche_2002}. However, \\nopref{lang_89649e36}{EQ} assuming P \\neq NP. Therefore Sentential Entailment is unsupported by CNF assuming P \\neq NP.",
@@ -457,7 +462,9 @@
           "CE": {
             "complexity": "no-poly-unknown-quasi",
             "refs": [
-              "Darwiche_2002"
+              "Darwiche_2002",
+              "Cook_1971",
+              "Levin_1973"
             ],
             "derived": true,
             "description": "Clausal Entailment implies Consistency \\citep{Darwiche_2002}. However, \\nopref{lang_89649e36}{CO} assuming P \\neq NP. Therefore Clausal Entailment is unsupported by CNF assuming P \\neq NP.",
@@ -474,7 +481,9 @@
           "ME": {
             "complexity": "no-poly-unknown-quasi",
             "refs": [
-              "Darwiche_2002"
+              "Darwiche_2002",
+              "Cook_1971",
+              "Levin_1973"
             ],
             "derived": true,
             "description": "Model Enumeration implies Consistency \\citep{Darwiche_2002}. However, \\nopref{lang_89649e36}{CO} assuming P \\neq NP. Therefore Model Enumeration is unsupported by CNF assuming P \\neq NP.",
@@ -2832,6 +2841,8 @@
           "CO": {
             "complexity": "no-poly-unknown-quasi",
             "refs": [
+              "Cook_1971",
+              "Levin_1973",
               "Darwiche_2002"
             ],
             "derived": true,
@@ -2902,7 +2913,9 @@
           "EQ": {
             "complexity": "no-poly-unknown-quasi",
             "refs": [
-              "Darwiche_2002"
+              "Darwiche_2002",
+              "Cook_1971",
+              "Levin_1973"
             ],
             "derived": true,
             "description": "Equivalence implies Consistency \\citep{Darwiche_2002}. However, \\nopref{lang_5bf00851}{CO} assuming P \\neq NP. Therefore Equivalence is unsupported by NNF assuming P \\neq NP.",
@@ -2936,7 +2949,9 @@
           "CE": {
             "complexity": "no-poly-unknown-quasi",
             "refs": [
-              "Darwiche_2002"
+              "Darwiche_2002",
+              "Cook_1971",
+              "Levin_1973"
             ],
             "derived": true,
             "description": "Clausal Entailment implies Consistency \\citep{Darwiche_2002}. However, \\nopref{lang_5bf00851}{CO} assuming P \\neq NP. Therefore Clausal Entailment is unsupported by NNF assuming P \\neq NP.",
@@ -2953,7 +2968,9 @@
           "ME": {
             "complexity": "no-poly-unknown-quasi",
             "refs": [
-              "Darwiche_2002"
+              "Darwiche_2002",
+              "Cook_1971",
+              "Levin_1973"
             ],
             "derived": true,
             "description": "Model Enumeration implies Consistency \\citep{Darwiche_2002}. However, \\nopref{lang_5bf00851}{CO} assuming P \\neq NP. Therefore Model Enumeration is unsupported by NNF assuming P \\neq NP.",
@@ -3347,7 +3364,7 @@
               "Bryant_1992",
               "Meinel_Theobald_1998"
             ],
-            "description": "OBDDs with a fixed variable ordering are canonical: two functions are equivalent iff their reduced OBDDs are identical. This makes EQ trivial (structural isomorphism check) \\citep{Bryant_1986, Bryant_1992, Meinel_Theobald_1998} (Theorem 8.11)."
+            "description": "After reducing both diagrams, OBDDs with a fixed variable ordering are canonical: two functions are equivalent iff their reduced OBDDs are identical. This makes EQ a structural isomorphism check \\citep{Bryant_1986, Bryant_1992, Meinel_Theobald_1998} (Theorem 8.11)."
           },
           "ME": {
             "complexity": "poly",
@@ -3361,7 +3378,7 @@
             "refs": [
               "Bryant_1986"
             ],
-            "description": "Validity is trivial for OBDDs: check if the diagram root equals the terminal 1 node \\citep{Bryant_1986}."
+            "description": "Validity can be checked in polynomial time by graph reachability: verify that no path from the root reaches the terminal 0 node, equivalently that every reachable terminal is 1 \\citep{Bryant_1986}."
           },
           "CE": {
             "complexity": "poly",
@@ -6984,6 +7001,12 @@
       "href": "https://doi.org/10.1016/0012-365X(78)90168-1"
     },
     {
+      "id": "Cook_1971",
+      "title": "S. A. Cook, \"The Complexity of Theorem-Proving Procedures\", Proceedings of the Third Annual ACM Symposium on Theory of Computing, pp. 151–158, 1971.",
+      "href": "https://doi.org/10.1145/800157.805047",
+      "bibtex": "@inproceedings{Cook_1971,\n  author = {Cook, Stephen A.},\n  title = {The Complexity of Theorem-Proving Procedures},\n  booktitle = {Proceedings of the Third Annual ACM Symposium on Theory of Computing},\n  pages = {151--158},\n  year = {1971},\n  publisher = {Association for Computing Machinery},\n  doi = {10.1145/800157.805047}\n}"
+    },
+    {
       "id": "Darwiche_2000",
       "bibtex": "@misc{Darwiche_2000,\n      title={On the tractable counting of theory models and its application to belief revision and truth maintenance}, \n      author={Adnan Darwiche},\n      year={2000},\n      eprint={cs/0003044},\n      archivePrefix={arXiv},\n      primaryClass={cs.AI},\n      url={https://arxiv.org/abs/cs/0003044}, \n}",
       "title": "A. Darwiche, \"On the tractable counting of theory models and its application to belief revision and truth maintenance\", 2000.",
@@ -7066,6 +7089,12 @@
       "title": "J. Lang and P. Liberatore and P. Marquis, \"Propositional Independence: Formula-Variable Independence and Forgetting\", Journal of Artificial Intelligence Research, vol. 18, pp. 391–443, 2003.",
       "href": "https://doi.org/10.1613/jair.1113",
       "bibtex": "@article{Lang_2003,\n  author = {Lang, J\\'er\\^ome and Liberatore, Paolo and Marquis, Pierre},\n  title = {Propositional Independence: Formula-Variable Independence and Forgetting},\n  journal = {Journal of Artificial Intelligence Research},\n  volume = {18},\n  pages = {391--443},\n  year = {2003},\n  publisher = {AAAI Press},\n  doi={10.1613/jair.1113}\n}"
+    },
+    {
+      "id": "Levin_1973",
+      "title": "L. A. Levin, \"Universal Search Problems\", Problems of Information Transmission, vol. 9, pp. 265–266, 1973.",
+      "href": "#",
+      "bibtex": "@article{Levin_1973,\n  author = {Levin, Leonid A.},\n  title = {Universal Search Problems},\n  journal = {Problems of Information Transmission},\n  volume = {9},\n  number = {3},\n  pages = {265--266},\n  year = {1973}\n}"
     },
     {
       "id": "Marquis_2000",

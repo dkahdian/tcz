@@ -329,8 +329,10 @@
   let tableEl: HTMLTableElement;
   let cellSize = $state({ width: 0, height: 0, headerWidth: 0 });
   let measured = $state(false);
+  let measureRequest = 0;
 
   function updateCellSize() {
+    if (!matrixScrollEl || !tableEl) return;
     const numCols = operationCodes.length + 1; // +1 for header
     const numRows = visibleLanguages.length + 1; // +1 for header
     const result = measureCellSize(matrixScrollEl, tableEl, numCols, numRows);
@@ -340,19 +342,42 @@
     }
   }
 
+  function scheduleCellSizeUpdate() {
+    if (typeof window === 'undefined') {
+      updateCellSize();
+      return;
+    }
+
+    if (measureRequest) {
+      cancelAnimationFrame(measureRequest);
+    }
+
+    measureRequest = requestAnimationFrame(() => {
+      measureRequest = requestAnimationFrame(() => {
+        measureRequest = 0;
+        updateCellSize();
+      });
+    });
+  }
+
   $effect(() => {
     visibleLanguages;
     operationCodes;
     measured = false;
-    queueMicrotask(() => updateCellSize());
+    queueMicrotask(() => scheduleCellSizeUpdate());
   });
 
   import { onMount } from 'svelte';
   onMount(() => {
-    updateCellSize();
-    const resizeObserver = new ResizeObserver(() => updateCellSize());
+    scheduleCellSizeUpdate();
+    const resizeObserver = new ResizeObserver(() => scheduleCellSizeUpdate());
     if (matrixScrollEl) resizeObserver.observe(matrixScrollEl);
-    return () => resizeObserver.disconnect();
+    document.fonts?.ready.then(() => scheduleCellSizeUpdate()).catch(() => {});
+
+    return () => {
+      resizeObserver.disconnect();
+      if (measureRequest) cancelAnimationFrame(measureRequest);
+    };
   });
 </script>
 
@@ -574,6 +599,19 @@
     font-weight: 600;
     color: #1f2937;
     font-size: 0.8rem;
+  }
+
+  .row-header button {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .row-header button :global(.math-text) {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .col-header button {

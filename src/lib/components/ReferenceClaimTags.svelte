@@ -35,6 +35,7 @@
   let collapsedLimit = $state<number | null>(null);
 
   let containerEl: HTMLDivElement | null = $state(null);
+  let measureRequest = 0;
 
   const hiddenCount = $derived.by(() => {
     if (!shouldCollapse || expanded || collapsedLimit === null) return 0;
@@ -118,7 +119,7 @@
     }
 
     const lineCount = computeLineCount(tagWidths, availableWidth, gapPx);
-    if (lineCount <= 2) {
+    if (lineCount <= 1) {
       shouldCollapse = false;
       collapsedLimit = null;
       expanded = false;
@@ -133,22 +134,45 @@
     collapsedLimit = Math.min(limit, claimTags.length);
   }
 
+  function scheduleMeasureCollapseState() {
+    if (typeof window === 'undefined') {
+      measureCollapseState();
+      return;
+    }
+
+    if (measureRequest) {
+      cancelAnimationFrame(measureRequest);
+    }
+
+    measureRequest = requestAnimationFrame(() => {
+      measureRequest = requestAnimationFrame(() => {
+        measureRequest = 0;
+        measureCollapseState();
+      });
+    });
+  }
+
   $effect(() => {
     claimTags;
-    queueMicrotask(() => measureCollapseState());
+    queueMicrotask(() => scheduleMeasureCollapseState());
   });
 
   onMount(() => {
     if (!containerEl) return;
 
     const observer = new ResizeObserver(() => {
-      measureCollapseState();
+      scheduleMeasureCollapseState();
     });
 
     observer.observe(containerEl);
-    queueMicrotask(() => measureCollapseState());
+    queueMicrotask(() => scheduleMeasureCollapseState());
 
-    return () => observer.disconnect();
+    document.fonts?.ready.then(() => scheduleMeasureCollapseState()).catch(() => {});
+
+    return () => {
+      observer.disconnect();
+      if (measureRequest) cancelAnimationFrame(measureRequest);
+    };
   });
 </script>
 
@@ -226,12 +250,13 @@
     --claim-tag-border-style: solid;
     display: inline-flex;
     align-items: center;
-    gap: 0.2rem;
+    gap: 0.14rem;
     font-size: 0.625rem;
     font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: 0.01em;
-    padding: 0.16rem 0.36rem;
+    line-height: 1;
+    letter-spacing: 0;
+    min-height: 1.25rem;
+    padding: 0.12rem 0.34rem;
     border-radius: 999px;
     border: 1px var(--claim-tag-border-style) var(--claim-tag-border);
     background: var(--claim-tag-bg);
@@ -253,16 +278,26 @@
   }
 
   .claim-tag :global(.katex) {
-    font-size: 0.92em;
+    font-size: 0.9em;
+    line-height: 1;
+  }
+
+  .claim-tag :global(.math-text) {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    line-height: 1;
   }
 
   .claim-divider {
     opacity: 0.85;
+    line-height: 1;
   }
 
   .claim-op {
     font-family: 'SFMono-Regular', 'Consolas', monospace;
-    font-size: 0.92em;
+    font-size: 0.9em;
+    line-height: 1;
   }
 
   .claim-toggle {
@@ -270,7 +305,7 @@
     width: auto;
     min-width: 2.2rem;
     padding: 0 0.34rem;
-    height: 1.15rem;
+    height: 1.25rem;
     border-radius: 999px;
     border: 1px solid #cbd5e1;
     background: #e2e8f0;

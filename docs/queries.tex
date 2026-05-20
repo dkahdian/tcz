@@ -73,10 +73,10 @@
 % =============================
 % lang=lang_89649e36, op=CO
 \begin{claim}
-\langref{CNF} supports Consistency not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citep{Darwiche_2002}
+\langref{CNF} supports Consistency not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citep{Cook_1971,Levin_1973}
 \end{claim}
 \begin{claimdescription}
-Consistency checking for \langref{CNF} is NP-complete (the classic SAT problem). This is one of the foundational intractability results \citep{Darwiche_2002}.
+Consistency checking for \langref{CNF} is NP-complete by the Cook--Levin theorem, the classic foundational result for SAT \citep{Cook_1971,Levin_1973}.
 \end{claimdescription}
 
 % lang=lang_89649e36, op=IM
@@ -209,7 +209,7 @@ $PI \subseteq CNF$ and \langref{PI} satisfies CE, so checking $\Sigma_1 \models 
 \langfam{OBDD}{<} supports Consistency in polynomial time \citep{Bryant_1986}
 \end{claim}
 \begin{claimdescription}
-Consistency is trivial for OBDDs: check if the diagram root is not the terminal 0 node \citep{Bryant_1986}.
+Consistency can be checked in polynomial time by graph reachability: verify that there exists a path from the root to a terminal 1 node \citep{Bryant_1986}.
 \end{claimdescription}
 
 % lang=lang_d69995dd, op=CT
@@ -225,7 +225,7 @@ Model counting on OBDDs can be done in polynomial time by a single bottom-up pas
 \langfam{OBDD}{<} supports Equivalence in polynomial time \citep{Bryant_1986,Bryant_1992,Meinel_Theobald_1998}
 \end{claim}
 \begin{claimdescription}
-OBDDs with a fixed variable ordering are canonical: two functions are equivalent iff their reduced OBDDs are identical. This makes EQ trivial (structural isomorphism check) \citep{Bryant_1986, Bryant_1992, Meinel_Theobald_1998} (Theorem 8.11).
+After reducing both diagrams, OBDDs with a fixed variable ordering are canonical: two functions are equivalent iff their reduced OBDDs are identical. This makes EQ a structural isomorphism check \citep{Bryant_1986, Bryant_1992, Meinel_Theobald_1998} (Theorem 8.11).
 \end{claimdescription}
 
 % lang=lang_d69995dd, op=ME
@@ -241,7 +241,7 @@ Models of an OBDD can be enumerated in time polynomial in the output size by tra
 \langfam{OBDD}{<} supports Validity in polynomial time \citep{Bryant_1986}
 \end{claim}
 \begin{claimdescription}
-Validity is trivial for OBDDs: check if the diagram root equals the terminal 1 node \citep{Bryant_1986}.
+Validity can be checked in polynomial time by graph reachability: verify that no path from the root reaches the terminal 0 node, equivalently that every reachable terminal is 1 \citep{Bryant_1986}.
 \end{claimdescription}
 
 

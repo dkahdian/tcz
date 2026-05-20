@@ -106,7 +106,10 @@ export function measureCellSize(
 	const fitDataWidth = numDataCols > 0 ? Math.floor(availableDataWidth / numDataCols) : 0;
 
 	const finalWidth = Math.max(maxDataWidth, fitDataWidth);
-	const finalHeaderWidth = maxHeaderWidth;
+	// Add a small guard band: browser table measurement can be exact while
+	// sticky row headers still lose a few pixels to borders, padding, and KaTeX
+	// subscript boxes. Without this, labels such as dec-SDNNF_T can clip.
+	const finalHeaderWidth = Math.ceil(maxHeaderWidth) + 8;
 	const finalHeight = Math.max(maxHeight, Math.floor(availableHeight / numBodyRows));
 
 	return { width: finalWidth, height: finalHeight, headerWidth: finalHeaderWidth };
