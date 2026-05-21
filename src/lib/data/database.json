@@ -5587,7 +5587,6 @@
               "Darwiche_2002",
               "TCZ_Forthcoming",
               "Beame_2013",
-              "Oztok_2014",
               "Amarilli_2018",
               "Wegener_1987"
             ],
@@ -5689,7 +5688,6 @@
               "Darwiche_2002",
               "Fortune_1978",
               "Meinel_Theobald_1998",
-              "Oztok_2014",
               "Beame_2013"
             ],
             "derived": true,
@@ -5823,7 +5821,6 @@
               "Beame_2015",
               "Darwiche_2011",
               "VanDenBroeck_2015",
-              "Oztok_2014",
               "Beame_2013"
             ],
             "description": "In the language \\langref{dec-SDNNF}, every term has a polynomial-size representation. If \\langref{dec-SDNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{dec-SDNNF} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{dec-SDNNF} \\citep{TCZ_Forthcoming}.",
@@ -5841,7 +5838,6 @@
               "Darwiche_2011",
               "VanDenBroeck_2015",
               "Bova_2014",
-              "Oztok_2014",
               "Beame_2013"
             ],
             "description": "In the language \\langref{dec-SDNNF}, every clause has a polynomial-size representation. If \\langref{dec-SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{dec-SDNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{dec-SDNNF} \\citep{TCZ_Forthcoming}.",
@@ -5905,7 +5901,7 @@
         }
       },
       "tags": [],
-      "definition": "\\langref{dec-SDNNF} $= \\bigcup_T$ \\langfam{dec-SDNNF}{T}. \\citep{Oztok_2014}",
+      "definition": "\\langref{dec-SDNNF} $= \\bigcup_T$ \\langfam{dec-SDNNF}{T}. \\citep{Amarilli_2018}",
       "definitionRefs": []
     },
     {
@@ -5917,7 +5913,6 @@
           "CO": {
             "complexity": "poly",
             "refs": [
-              "Oztok_2014",
               "Amarilli_2018",
               "Darwiche_2002",
               "Darwiche_2001a"
@@ -5954,7 +5949,6 @@
           "CT": {
             "complexity": "poly",
             "refs": [
-              "Oztok_2014",
               "Amarilli_2018",
               "Darwiche_2001b"
             ],
@@ -5973,7 +5967,6 @@
             "complexity": "poly",
             "refs": [
               "Darwiche_2002",
-              "Oztok_2014",
               "Amarilli_2018",
               "Darwiche_2001a",
               "Wegener_2000"
@@ -5993,7 +5986,6 @@
             "refs": [
               "Darwiche_2002",
               "Darwiche_2001a",
-              "Oztok_2014",
               "Amarilli_2018",
               "Wegener_2000"
             ],
@@ -6011,7 +6003,6 @@
             "complexity": "poly",
             "refs": [
               "Darwiche_2002",
-              "Oztok_2014",
               "Amarilli_2018",
               "Darwiche_2001b"
             ],
@@ -6047,7 +6038,6 @@
             "complexity": "poly",
             "refs": [
               "Darwiche_2002",
-              "Oztok_2014",
               "Amarilli_2018",
               "Darwiche_2001b",
               "Wegener_2000"
@@ -6069,7 +6059,6 @@
             "refs": [
               "Darwiche_2002",
               "TCZ_Forthcoming",
-              "Oztok_2014",
               "Amarilli_2018",
               "Bollig_2018",
               "Beame_2015",
@@ -6086,7 +6075,6 @@
             "refs": [
               "Darwiche_2002",
               "TCZ_Forthcoming",
-              "Oztok_2014",
               "Amarilli_2018",
               "Bollig_2018",
               "Beame_2015",
@@ -6153,7 +6141,7 @@
         }
       },
       "tags": [],
-      "definition": "For each fixed vtree $T$, \\langfam{dec-SDNNF}{T} is the subset of \\langref{dec-DNNF} that respects $T$.\\citep{darwiche2007language,Oztok_2014}\n\nEquivalently, \\langfam{dec-SDNNF}{T} formulas are \\langfam{SDNNF}{T} formulas whose OR-gates may only appear in \\emph{decisions/tests}.",
+      "definition": "For each fixed vtree $T$, \\langfam{dec-SDNNF}{T} is the subset of \\langref{dec-DNNF} that respects $T$.\\citep{darwiche2007language,Amarilli_2018}\n\nEquivalently, \\langfam{dec-SDNNF}{T} formulas are \\langfam{SDNNF}{T} formulas whose OR-gates may only appear in \\emph{decisions/tests}.",
       "definitionRefs": []
     },
     {
@@ -7109,12 +7097,6 @@
       "href": "https://doi.org/10.1007/978-3-642-58940-9"
     },
     {
-      "id": "Oztok_2014",
-      "bibtex": "@inproceedings{Oztok_2014,\n  title={On Compiling CNF into Decision-DNNF},\n  author={Oztok, Umut and Darwiche, Adnan},\n  booktitle={International Conference on Principles and Practice of Constraint Programming},\n  pages={42--57},\n  year={2014},\n  publisher={Springer},\n  doi={10.1007/978-3-319-10428-7_7}\n}",
-      "title": "U. Oztok and A. Darwiche, \"On Compiling CNF into Decision-DNNF\", International Conference on Principles and Practice of Constraint Programming, pp. 42–57, 2014.",
-      "href": "https://doi.org/10.1007/978-3-319-10428-7_7"
-    },
-    {
       "id": "Pipatsrisawat_2008",
       "bibtex": "@inproceedings{Pipatsrisawat_2008,\n  title={New Compilation Languages Based on Structured Decomposability},\n  author={Pipatsrisawat, Knot and Darwiche, Adnan},\n  booktitle={Proceedings of the 23rd AAAI Conference on Artificial Intelligence (AAAI-08)},\n  pages={517--522},\n  year={2008},\n  publisher={AAAI Press},\n  url={https://cdn.aaai.org/AAAI/2008/AAAI08-082.pdf}\n}",
       "title": "K. Pipatsrisawat and A. Darwiche, \"New Compilation Languages Based on Structured Decomposability\", Proceedings of the 23rd AAAI Conference on Artificial Intelligence (AAAI-08), pp. 517–522, 2008.",
@@ -7906,7 +7888,6 @@
             "VanDenBroeck_2015",
             "Bova_2014",
             "Darwiche_2002",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -7926,7 +7907,6 @@
         {
           "status": "no-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
@@ -8448,7 +8428,6 @@
             "Beame_2015",
             "Darwiche_2002",
             "Bova_2016_a",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -9048,7 +9027,6 @@
             "Beame_2015",
             "Darwiche_2002",
             "Bova_2016_a",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -9713,7 +9691,6 @@
             "Darwiche_2011",
             "VanDenBroeck_2015",
             "Beame_2013",
-            "Oztok_2014",
             "Amarilli_2018",
             "Pipatsrisawat_2008",
             "Bollig_2018"
@@ -9741,7 +9718,6 @@
             "Beame_2015",
             "Darwiche_2002",
             "Bova_2016_a",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -10349,7 +10325,6 @@
           "refs": [
             "VanDenBroeck_2015",
             "Beame_2013",
-            "Oztok_2014",
             "Amarilli_2018",
             "Bollig_2018"
           ],
@@ -10371,7 +10346,6 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
-            "Oztok_2014",
             "Beame_2013",
             "VanDenBroeck_2015",
             "Bollig_2018"
@@ -10393,7 +10367,6 @@
         {
           "status": "no-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Beame_2013",
             "VanDenBroeck_2015",
@@ -10906,7 +10879,6 @@
           "refs": [
             "Darwiche_2002",
             "Beame_2013",
-            "Oztok_2014",
             "Amarilli_2018",
             "Wegener_1987"
           ],
@@ -10933,7 +10905,6 @@
             "Darwiche_2011",
             "VanDenBroeck_2015",
             "Darwiche_2002",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -10953,7 +10924,6 @@
         {
           "status": "no-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
@@ -11506,7 +11476,6 @@
           "refs": [
             "Darwiche_2002",
             "Beame_2013",
-            "Oztok_2014",
             "Amarilli_2018",
             "Darwiche_2000"
           ],
@@ -11534,7 +11503,6 @@
             "Beame_2015",
             "Darwiche_2002",
             "Bova_2016_a",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -12045,7 +12013,6 @@
             "Darwiche_2011",
             "VanDenBroeck_2015",
             "Darwiche_2002",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -12065,7 +12032,6 @@
         {
           "status": "no-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
@@ -12554,7 +12520,6 @@
           "status": "no-quasi",
           "refs": [
             "Beame_2013",
-            "Oztok_2014",
             "Amarilli_2018",
             "Darwiche_2002",
             "Wegener_1987"
@@ -12578,7 +12543,6 @@
           "refs": [
             "Amarilli_2018",
             "Beame_2013",
-            "Oztok_2014",
             "Darwiche_2002",
             "Wegener_1987"
           ],
@@ -12599,7 +12563,6 @@
         {
           "status": "no-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Beame_2013",
             "Darwiche_2002",
@@ -13079,8 +13042,7 @@
           "status": "poly",
           "refs": [
             "Darwiche_2002",
-            "Amarilli_2018",
-            "Oztok_2014"
+            "Amarilli_2018"
           ],
           "hidden": false,
           "derived": true,
@@ -13102,8 +13064,7 @@
           "status": "poly",
           "refs": [
             "Darwiche_2002",
-            "Amarilli_2018",
-            "Oztok_2014"
+            "Amarilli_2018"
           ],
           "hidden": false,
           "derived": true,
@@ -13714,7 +13675,6 @@
             "Darwiche_2002",
             "Bodlaender_1993",
             "Beame_2013",
-            "Oztok_2014",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
@@ -13748,7 +13708,6 @@
             "Pipatsrisawat_2008",
             "TCZ_Forthcoming",
             "Wegener_2000",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -13773,7 +13732,6 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Oztok_2014",
             "Darwiche_2011",
             "TCZ_Forthcoming",
             "Pipatsrisawat_2008",
@@ -14372,7 +14330,6 @@
             "Darwiche_2011",
             "VanDenBroeck_2015",
             "Bova_2014",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -14394,7 +14351,6 @@
           "status": "no-quasi",
           "refs": [
             "Darwiche_2002",
-            "Oztok_2014",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
@@ -14980,7 +14936,6 @@
             "Bollig_2018",
             "Beame_2015",
             "Wegener_2000",
-            "Oztok_2014",
             "Beame_2013",
             "Pipatsrisawat_2008",
             "TCZ_Forthcoming",
@@ -15014,7 +14969,6 @@
             "Pipatsrisawat_2008",
             "TCZ_Forthcoming",
             "Wegener_2000",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -15039,7 +14993,6 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Oztok_2014",
             "Darwiche_2011",
             "TCZ_Forthcoming",
             "Pipatsrisawat_2008",
@@ -15553,8 +15506,7 @@
         {
           "status": "poly",
           "refs": [
-            "Amarilli_2018",
-            "Oztok_2014"
+            "Amarilli_2018"
           ],
           "hidden": false,
           "derived": true,
@@ -15574,8 +15526,7 @@
         {
           "status": "poly",
           "refs": [
-            "Amarilli_2018",
-            "Oztok_2014"
+            "Amarilli_2018"
           ],
           "hidden": false,
           "derived": true,
@@ -16056,7 +16007,6 @@
             "VanDenBroeck_2015",
             "Bova_2016",
             "Darwiche_2002",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -16076,7 +16026,6 @@
         {
           "status": "no-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
@@ -16608,7 +16557,6 @@
           "refs": [
             "Darwiche_2011",
             "Beame_2013",
-            "Oztok_2014",
             "Amarilli_2018",
             "Bollig_2018"
           ],
@@ -16635,7 +16583,6 @@
             "Beame_2015",
             "Darwiche_2002",
             "Bova_2016_a",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -17169,7 +17116,6 @@
           "status": "no-quasi",
           "refs": [
             "Beame_2013",
-            "Oztok_2014",
             "Amarilli_2018",
             "Bollig_2018"
           ],
@@ -17192,7 +17138,6 @@
           "refs": [
             "Amarilli_2018",
             "Beame_2013",
-            "Oztok_2014",
             "Bollig_2018"
           ],
           "hidden": false,
@@ -17212,7 +17157,6 @@
         {
           "status": "no-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Beame_2013",
             "Bollig_2018"
@@ -17803,7 +17747,6 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
-            "Oztok_2014",
             "Beame_2013",
             "Darwiche_2011",
             "VanDenBroeck_2015",
@@ -17834,7 +17777,6 @@
             "Beame_2015",
             "Darwiche_2002",
             "Bova_2016_a",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -18463,7 +18405,6 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
-            "Oztok_2014",
             "Beame_2013",
             "VanDenBroeck_2015",
             "Bollig_2018"
@@ -18487,7 +18428,6 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
-            "Oztok_2014",
             "Beame_2013",
             "VanDenBroeck_2015",
             "Bollig_2018"
@@ -18511,7 +18451,6 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
-            "Oztok_2014",
             "Beame_2013",
             "VanDenBroeck_2015",
             "Bollig_2018"
@@ -19104,7 +19043,6 @@
             "Darwiche_2011",
             "VanDenBroeck_2015",
             "Beame_2013",
-            "Oztok_2014",
             "Pipatsrisawat_2008",
             "TCZ_Forthcoming",
             "Wegener_2000"
@@ -19136,7 +19074,6 @@
             "Pipatsrisawat_2008",
             "TCZ_Forthcoming",
             "Wegener_2000",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -19161,7 +19098,6 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Oztok_2014",
             "Darwiche_2011",
             "TCZ_Forthcoming",
             "Pipatsrisawat_2008",
@@ -19670,7 +19606,6 @@
             "Darwiche_2011",
             "VanDenBroeck_2015",
             "Beame_2013",
-            "Oztok_2014",
             "Pipatsrisawat_2008",
             "TCZ_Forthcoming",
             "Wegener_2000"
@@ -19702,7 +19637,6 @@
             "Pipatsrisawat_2008",
             "TCZ_Forthcoming",
             "Wegener_2000",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -19727,7 +19661,6 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Oztok_2014",
             "Darwiche_2011",
             "TCZ_Forthcoming",
             "Pipatsrisawat_2008",
@@ -20445,7 +20378,6 @@
         {
           "status": "no-poly-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Beame_2013"
           ],
@@ -20454,7 +20386,6 @@
           "noPolyDescription": {
             "description": "\\edgeref{lang_4ae03bc8}{lang_981b62f0} in polynomial time. \\edgeref{lang_684b1ca7}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_1df07cc3} in polynomial time. If dec-DNNF compiled to FBDD in polynomial time, then dec-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore dec-DNNF cannot compile to FBDD in polynomial time.",
             "refs": [
-              "Oztok_2014",
               "Amarilli_2018",
               "Beame_2013"
             ],
@@ -20529,7 +20460,6 @@
         {
           "status": "no-poly-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Beame_2013"
           ],
@@ -20538,7 +20468,6 @@
           "noPolyDescription": {
             "description": "\\edgeref{lang_4ae03bc8}{lang_981b62f0} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_1df07cc3} in polynomial time. If dec-DNNF compiled to nFBDD in polynomial time, then dec-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore dec-DNNF cannot compile to nFBDD in polynomial time.",
             "refs": [
-              "Oztok_2014",
               "Amarilli_2018",
               "Beame_2013"
             ],
@@ -20558,8 +20487,7 @@
             "description": "\\edgeref{lang_981b62f0}{lang_684b1ca7} in at worst quasipolynomial time. \\edgeref{lang_684b1ca7}{lang_4e62a038} in polynomial time. \\edgeref{lang_4e62a038}{lang_1df07cc3} in polynomial time. Therefore dec-DNNF compiles to nFBDD in quasipolynomial time.",
             "refs": [
               "Beame_2013",
-              "Amarilli_2018",
-              "Oztok_2014"
+              "Amarilli_2018"
             ],
             "derived": true,
             "derivationOrder": 127,
@@ -20767,8 +20695,7 @@
           "status": "no-poly-quasi",
           "refs": [
             "Beame_2013",
-            "Amarilli_2018",
-            "Oztok_2014"
+            "Amarilli_2018"
           ],
           "hidden": false,
           "derived": true,
@@ -20776,8 +20703,7 @@
             "description": "\\edgeref{lang_4e62a038}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_981b62f0}{lang_1df07cc3} in polynomial time. If dec-DNNF compiled to uFBDD in polynomial time, then dec-DNNF would compile to nFBDD in polynomial time, contradicting the above. Therefore dec-DNNF cannot compile to uFBDD in polynomial time.",
             "refs": [
               "Beame_2013",
-              "Amarilli_2018",
-              "Oztok_2014"
+              "Amarilli_2018"
             ],
             "derived": true,
             "derivationOrder": 721,
@@ -20795,8 +20721,7 @@
             "description": "\\edgeref{lang_981b62f0}{lang_684b1ca7} in at worst quasipolynomial time. \\edgeref{lang_684b1ca7}{lang_4e62a038} in polynomial time. Therefore dec-DNNF compiles to uFBDD in quasipolynomial time.",
             "refs": [
               "Beame_2013",
-              "Amarilli_2018",
-              "Oztok_2014"
+              "Amarilli_2018"
             ],
             "derived": true,
             "derivationOrder": 129,
@@ -20867,7 +20792,6 @@
             "Darwiche_2011",
             "VanDenBroeck_2015",
             "Darwiche_2002",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -20889,7 +20813,6 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
-            "Oztok_2014",
             "Bollig_2018",
             "Beame_2015",
             "Darwiche_2011",
@@ -20987,7 +20910,6 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
-            "Oztok_2014",
             "Darwiche_2002"
           ],
           "hidden": false,
@@ -21012,7 +20934,6 @@
             "Beame_2015",
             "Darwiche_2011",
             "Darwiche_2002",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -21080,7 +21001,6 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
-            "Oztok_2014",
             "Darwiche_2002"
           ],
           "hidden": false,
@@ -21121,7 +21041,6 @@
         {
           "status": "no-poly-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Beame_2013"
           ],
@@ -21130,7 +21049,6 @@
           "noPolyDescription": {
             "description": "\\edgeref{lang_4ae03bc8}{lang_0f27d539} in polynomial time. \\edgeref{lang_684b1ca7}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_1df07cc3} in polynomial time. If dec-SDNNF compiled to FBDD in polynomial time, then dec-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore dec-SDNNF cannot compile to FBDD in polynomial time.",
             "refs": [
-              "Oztok_2014",
               "Amarilli_2018",
               "Beame_2013"
             ],
@@ -21151,8 +21069,7 @@
             "description": "\\edgeref{lang_0f27d539}{lang_981b62f0} in polynomial time. \\edgeref{lang_981b62f0}{lang_684b1ca7} in at worst quasipolynomial time. Therefore dec-SDNNF compiles to FBDD in quasipolynomial time.",
             "refs": [
               "Amarilli_2018",
-              "Beame_2013",
-              "Oztok_2014"
+              "Beame_2013"
             ],
             "derived": true,
             "derivationOrder": 133,
@@ -21172,7 +21089,6 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
-            "Oztok_2014",
             "Darwiche_2002"
           ],
           "hidden": false,
@@ -21194,7 +21110,6 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
-            "Oztok_2014",
             "Darwiche_2002"
           ],
           "hidden": false,
@@ -21215,7 +21130,6 @@
         {
           "status": "no-poly-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Beame_2013"
           ],
@@ -21224,7 +21138,6 @@
           "noPolyDescription": {
             "description": "\\edgeref{lang_4ae03bc8}{lang_0f27d539} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_1df07cc3} in polynomial time. If dec-SDNNF compiled to nFBDD in polynomial time, then dec-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore dec-SDNNF cannot compile to nFBDD in polynomial time.",
             "refs": [
-              "Oztok_2014",
               "Amarilli_2018",
               "Beame_2013"
             ],
@@ -21244,8 +21157,7 @@
             "description": "\\edgeref{lang_0f27d539}{lang_981b62f0} in polynomial time. \\edgeref{lang_981b62f0}{lang_684b1ca7} in at worst quasipolynomial time. \\edgeref{lang_684b1ca7}{lang_4e62a038} in polynomial time. \\edgeref{lang_4e62a038}{lang_1df07cc3} in polynomial time. Therefore dec-SDNNF compiles to nFBDD in quasipolynomial time.",
             "refs": [
               "Amarilli_2018",
-              "Beame_2013",
-              "Oztok_2014"
+              "Beame_2013"
             ],
             "derived": true,
             "derivationOrder": 134,
@@ -21291,7 +21203,6 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Oztok_2014",
             "Beame_2013",
             "Darwiche_2002"
           ],
@@ -21303,7 +21214,6 @@
               "Amarilli_2018",
               "Bollig_2018",
               "Beame_2015",
-              "Oztok_2014",
               "Beame_2013"
             ],
             "derived": true,
@@ -21325,7 +21235,6 @@
               "Bollig_2018",
               "Beame_2015",
               "Darwiche_2002",
-              "Oztok_2014",
               "Beame_2013"
             ],
             "derived": true,
@@ -21369,7 +21278,6 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
-            "Oztok_2014",
             "Darwiche_2002"
           ],
           "hidden": false,
@@ -21396,7 +21304,6 @@
             "Darwiche_2011",
             "VanDenBroeck_2015",
             "Darwiche_2002",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -21479,8 +21386,7 @@
           "status": "no-poly-quasi",
           "refs": [
             "Amarilli_2018",
-            "Beame_2013",
-            "Oztok_2014"
+            "Beame_2013"
           ],
           "hidden": false,
           "derived": true,
@@ -21488,8 +21394,7 @@
             "description": "\\edgeref{lang_4e62a038}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_0f27d539}{lang_1df07cc3} in polynomial time. If dec-SDNNF compiled to uFBDD in polynomial time, then dec-SDNNF would compile to nFBDD in polynomial time, contradicting the above. Therefore dec-SDNNF cannot compile to uFBDD in polynomial time.",
             "refs": [
               "Amarilli_2018",
-              "Beame_2013",
-              "Oztok_2014"
+              "Beame_2013"
             ],
             "derived": true,
             "derivationOrder": 741,
@@ -21507,8 +21412,7 @@
             "description": "\\edgeref{lang_0f27d539}{lang_981b62f0} in polynomial time. \\edgeref{lang_981b62f0}{lang_684b1ca7} in at worst quasipolynomial time. \\edgeref{lang_684b1ca7}{lang_4e62a038} in polynomial time. Therefore dec-SDNNF compiles to uFBDD in quasipolynomial time.",
             "refs": [
               "Amarilli_2018",
-              "Beame_2013",
-              "Oztok_2014"
+              "Beame_2013"
             ],
             "derived": true,
             "derivationOrder": 139,
@@ -21531,7 +21435,6 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Oztok_2014",
             "Beame_2013",
             "Darwiche_2002"
           ],
@@ -21543,7 +21446,6 @@
               "Amarilli_2018",
               "Bollig_2018",
               "Beame_2015",
-              "Oztok_2014",
               "Beame_2013"
             ],
             "derived": true,
@@ -21565,7 +21467,6 @@
               "Bollig_2018",
               "Beame_2015",
               "Darwiche_2002",
-              "Oztok_2014",
               "Beame_2013"
             ],
             "derived": true,
@@ -21589,7 +21490,6 @@
             "Bollig_2018",
             "Beame_2015",
             "Darwiche_2002",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -21601,7 +21501,6 @@
               "Bollig_2018",
               "Beame_2015",
               "Darwiche_2002",
-              "Oztok_2014",
               "Beame_2013"
             ],
             "derived": true,
@@ -21746,7 +21645,6 @@
         {
           "status": "unknown-poly-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
@@ -21772,7 +21670,6 @@
         {
           "status": "poly",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018"
           ],
           "hidden": false,
@@ -21793,7 +21690,6 @@
         {
           "status": "poly",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018"
           ],
           "hidden": false,
@@ -21841,7 +21737,6 @@
         {
           "status": "poly",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Darwiche_2002"
           ],
@@ -21864,7 +21759,6 @@
         {
           "status": "no-poly-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Beame_2013"
           ],
@@ -21873,7 +21767,6 @@
           "noPolyDescription": {
             "description": "\\edgeref{lang_684b1ca7}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_1df07cc3} in polynomial time. If dec-SDNNF$_T$ compiled to FBDD in polynomial time, then dec-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore dec-SDNNF$_T$ cannot compile to FBDD in polynomial time.",
             "refs": [
-              "Oztok_2014",
               "Amarilli_2018",
               "Beame_2013"
             ],
@@ -21892,7 +21785,6 @@
           "quasiDescription": {
             "description": "\\edgeref{lang_4ae03bc8}{lang_0f27d539} in polynomial time. \\edgeref{lang_0f27d539}{lang_981b62f0} in polynomial time. \\edgeref{lang_981b62f0}{lang_684b1ca7} in at worst quasipolynomial time. Therefore dec-SDNNF$_T$ compiles to FBDD in quasipolynomial time.",
             "refs": [
-              "Oztok_2014",
               "Amarilli_2018",
               "Beame_2013"
             ],
@@ -21957,7 +21849,6 @@
           "status": "no-poly-quasi",
           "refs": [
             "Amarilli_2018",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -21972,7 +21863,6 @@
           "quasiDescription": {
             "description": "\\edgeref{lang_4ae03bc8}{lang_0f27d539} in polynomial time. \\edgeref{lang_0f27d539}{lang_981b62f0} in polynomial time. \\edgeref{lang_981b62f0}{lang_684b1ca7} in at worst quasipolynomial time. \\edgeref{lang_684b1ca7}{lang_4e62a038} in polynomial time. \\edgeref{lang_4e62a038}{lang_1df07cc3} in polynomial time. Therefore dec-SDNNF$_T$ compiles to nFBDD in quasipolynomial time.",
             "refs": [
-              "Oztok_2014",
               "Amarilli_2018",
               "Beame_2013"
             ],
@@ -21996,7 +21886,6 @@
         {
           "status": "poly",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Darwiche_2002"
           ],
@@ -22020,7 +21909,6 @@
         {
           "status": "no-poly-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
@@ -22032,7 +21920,6 @@
           "noPolyDescription": {
             "description": "\\edgeref{lang_d24efe0e}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_1df07cc3} in polynomial time. If dec-SDNNF$_T$ compiled to nOBDD in polynomial time, then dec-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore dec-SDNNF$_T$ cannot compile to nOBDD in polynomial time.",
             "refs": [
-              "Oztok_2014",
               "Amarilli_2018",
               "Bollig_2018",
               "Beame_2015",
@@ -22053,7 +21940,6 @@
           "quasiDescription": {
             "description": "\\edgeref{lang_4ae03bc8}{lang_0f27d539} in polynomial time. \\edgeref{lang_0f27d539}{lang_b9d72a7c} in at worst quasipolynomial time. \\edgeref{lang_b9d72a7c}{lang_c2df8c2b} in polynomial time. \\edgeref{lang_c2df8c2b}{lang_d24efe0e} in polynomial time. Therefore dec-SDNNF$_T$ compiles to nOBDD in quasipolynomial time.",
             "refs": [
-              "Oztok_2014",
               "Amarilli_2018",
               "Bollig_2018",
               "Beame_2015",
@@ -22084,7 +21970,6 @@
             "Beame_2015",
             "TCZ_Forthcoming",
             "Darwiche_2002",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -22097,7 +21982,6 @@
               "Beame_2015",
               "TCZ_Forthcoming",
               "Darwiche_2002",
-              "Oztok_2014",
               "Beame_2013"
             ],
             "derived": true,
@@ -22148,7 +22032,6 @@
         {
           "status": "unknown-poly-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
@@ -22183,7 +22066,6 @@
             "Darwiche_2011",
             "VanDenBroeck_2015",
             "Darwiche_2002",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -22204,7 +22086,6 @@
         {
           "status": "poly",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018"
           ],
           "hidden": false,
@@ -22244,7 +22125,6 @@
         {
           "status": "no-poly-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Beame_2013"
           ],
@@ -22253,7 +22133,6 @@
           "noPolyDescription": {
             "description": "\\edgeref{lang_4e62a038}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_1df07cc3} in polynomial time. If dec-SDNNF$_T$ compiled to uFBDD in polynomial time, then dec-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore dec-SDNNF$_T$ cannot compile to uFBDD in polynomial time.",
             "refs": [
-              "Oztok_2014",
               "Amarilli_2018",
               "Beame_2013"
             ],
@@ -22272,7 +22151,6 @@
           "quasiDescription": {
             "description": "\\edgeref{lang_4ae03bc8}{lang_0f27d539} in polynomial time. \\edgeref{lang_0f27d539}{lang_981b62f0} in polynomial time. \\edgeref{lang_981b62f0}{lang_684b1ca7} in at worst quasipolynomial time. \\edgeref{lang_684b1ca7}{lang_4e62a038} in polynomial time. Therefore dec-SDNNF$_T$ compiles to uFBDD in quasipolynomial time.",
             "refs": [
-              "Oztok_2014",
               "Amarilli_2018",
               "Beame_2013"
             ],
@@ -22295,7 +22173,6 @@
         {
           "status": "no-poly-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
@@ -22307,7 +22184,6 @@
           "noPolyDescription": {
             "description": "\\edgeref{lang_c2df8c2b}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_1df07cc3} in polynomial time. If dec-SDNNF$_T$ compiled to uOBDD in polynomial time, then dec-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore dec-SDNNF$_T$ cannot compile to uOBDD in polynomial time.",
             "refs": [
-              "Oztok_2014",
               "Amarilli_2018",
               "Bollig_2018",
               "Beame_2015",
@@ -22328,7 +22204,6 @@
           "quasiDescription": {
             "description": "\\edgeref{lang_4ae03bc8}{lang_0f27d539} in polynomial time. \\edgeref{lang_0f27d539}{lang_b9d72a7c} in at worst quasipolynomial time. \\edgeref{lang_b9d72a7c}{lang_c2df8c2b} in polynomial time. Therefore dec-SDNNF$_T$ compiles to uOBDD in quasipolynomial time.",
             "refs": [
-              "Oztok_2014",
               "Amarilli_2018",
               "Bollig_2018",
               "Beame_2015",
@@ -22353,7 +22228,6 @@
         {
           "status": "no-poly-quasi",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
@@ -22365,7 +22239,6 @@
           "noPolyDescription": {
             "description": "\\edgeref{lang_b9d72a7c}{lang_684b1ca7} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_684b1ca7} in polynomial time. If dec-SDNNF$_T$ compiled to OBDD in polynomial time, then dec-SDNNF$_T$ would compile to FBDD in polynomial time, contradicting the above. Therefore dec-SDNNF$_T$ cannot compile to OBDD in polynomial time.",
             "refs": [
-              "Oztok_2014",
               "Amarilli_2018",
               "Bollig_2018",
               "Beame_2015",
@@ -22387,7 +22260,6 @@
           "quasiDescription": {
             "description": "\\edgeref{lang_4ae03bc8}{lang_0f27d539} in polynomial time. \\edgeref{lang_0f27d539}{lang_b9d72a7c} in at worst quasipolynomial time. Therefore dec-SDNNF$_T$ compiles to OBDD in quasipolynomial time.",
             "refs": [
-              "Oztok_2014",
               "Amarilli_2018",
               "Bollig_2018",
               "Beame_2015",
@@ -22411,7 +22283,6 @@
         {
           "status": "poly",
           "refs": [
-            "Oztok_2014",
             "Amarilli_2018"
           ],
           "hidden": false,
@@ -22432,7 +22303,7 @@
           "status": "poly",
           "description": "\\langref{dec-SDNNF} is the union of fixed-vtree \\langfam{dec-SDNNF}{T} languages. Hence any fixed-family formula is already a \\langref{dec-SDNNF} formula, so the compilation is trivial and polynomial-time.",
           "refs": [
-            "Oztok_2014"
+            "Amarilli_2018"
           ],
           "derived": false
         },
@@ -22446,7 +22317,6 @@
             "TCZ_Forthcoming",
             "Darwiche_2011",
             "Darwiche_2002",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -22471,7 +22341,6 @@
             "Beame_2015",
             "TCZ_Forthcoming",
             "Wegener_2000",
-            "Oztok_2014",
             "Beame_2013",
             "Darwiche_2002"
           ],
@@ -22485,7 +22354,6 @@
               "Beame_2015",
               "TCZ_Forthcoming",
               "Wegener_2000",
-              "Oztok_2014",
               "Beame_2013"
             ],
             "derived": true,
@@ -22509,7 +22377,6 @@
               "TCZ_Forthcoming",
               "Wegener_2000",
               "Darwiche_2002",
-              "Oztok_2014",
               "Beame_2013"
             ],
             "derived": true,
@@ -22535,7 +22402,6 @@
             "Beame_2015",
             "TCZ_Forthcoming",
             "Wegener_2000",
-            "Oztok_2014",
             "Beame_2013",
             "Darwiche_2002"
           ],
@@ -22549,7 +22415,6 @@
               "Beame_2015",
               "TCZ_Forthcoming",
               "Wegener_2000",
-              "Oztok_2014",
               "Beame_2013"
             ],
             "derived": true,
@@ -22573,7 +22438,6 @@
               "TCZ_Forthcoming",
               "Wegener_2000",
               "Darwiche_2002",
-              "Oztok_2014",
               "Beame_2013"
             ],
             "derived": true,
@@ -23037,7 +22901,6 @@
             "Bollig_2018",
             "Beame_2015",
             "Darwiche_2002",
-            "Oztok_2014",
             "Beame_2013",
             "Bova_2016_a"
           ],
@@ -23063,7 +22926,6 @@
             "Beame_2015",
             "TCZ_Forthcoming",
             "Darwiche_2002",
-            "Oztok_2014",
             "Beame_2013",
             "Bova_2016_a",
             "Bryant_1986",
@@ -23620,7 +23482,6 @@
             "Beame_2015",
             "TCZ_Forthcoming",
             "Wegener_2000",
-            "Oztok_2014",
             "Beame_2013",
             "VanDenBroeck_2015"
           ],
@@ -23647,7 +23508,6 @@
             "Beame_2015",
             "TCZ_Forthcoming",
             "Wegener_2000",
-            "Oztok_2014",
             "Beame_2013",
             "VanDenBroeck_2015"
           ],
@@ -23674,7 +23534,6 @@
             "Beame_2015",
             "TCZ_Forthcoming",
             "Wegener_2000",
-            "Oztok_2014",
             "Beame_2013",
             "VanDenBroeck_2015"
           ],
@@ -24159,7 +24018,6 @@
             "TCZ_Forthcoming",
             "Wegener_2000",
             "VanDenBroeck_2015",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -24186,7 +24044,6 @@
             "TCZ_Forthcoming",
             "Wegener_2000",
             "VanDenBroeck_2015",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,
@@ -24213,7 +24070,6 @@
             "TCZ_Forthcoming",
             "Wegener_2000",
             "VanDenBroeck_2015",
-            "Oztok_2014",
             "Beame_2013"
           ],
           "hidden": false,

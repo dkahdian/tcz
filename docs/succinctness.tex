@@ -162,6 +162,13 @@ For any fixed vtree $T$, \langfam{dec-SDNNF}{T} is the subset of \langfam{d-SDNN
 \end{claimdescription}
 
 \begin{claim}
+\langfam{dec-SDNNF}{T} is polynomial-time compilable to \langref{dec-SDNNF} \citep{Amarilli_2018}
+\end{claim}
+\begin{claimdescription}
+\langref{dec-SDNNF} is the union of fixed-vtree \langfam{dec-SDNNF}{T} languages. Hence any fixed-family formula is already a \langref{dec-SDNNF} formula, so the compilation is trivial and polynomial-time.
+\end{claimdescription}
+
+\begin{claim}
 \langfam{dec-SDNNF}{T} is not polynomial-time compilable to \langref{nFBDD} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
@@ -675,18 +682,6 @@ Shown by \citet[Corollary 3.5]{Beame_2013}.
 \end{claim}
 \begin{claimdescription}
 \langref{SDNNF} is the union of the fixed-vtree families \langfam{SDNNF}{T}. Hence any \langfam{SDNNF}{T} formula is already an \langref{SDNNF} formula, so the compilation is trivial and polynomial-time.
-\end{claimdescription}
-
-
-% =============================
-\section{U. Oztok and A. Darwiche, "On Compiling CNF into Decision-DNNF", International C...}
-% Reference ID: Oztok_2014
-% =============================
-\begin{claim}
-\langfam{dec-SDNNF}{T} is polynomial-time compilable to \langref{dec-SDNNF} \citep{Oztok_2014}
-\end{claim}
-\begin{claimdescription}
-\langref{dec-SDNNF} is the union of fixed-vtree \langfam{dec-SDNNF}{T} languages. Hence any fixed-family formula is already a \langref{dec-SDNNF} formula, so the compilation is trivial and polynomial-time.
 \end{claimdescription}
 
 
