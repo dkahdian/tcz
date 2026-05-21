@@ -132,7 +132,7 @@ By definition, \langref{IP} is the set of prime implicants of a formula. A consi
 \langref{IP} supports Sentential Entailment in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-$IP \subseteq DNF$ and \langref{IP} satisfies IM, so checking sentential entailment reduces to checking implication between prime implicant forms. Two formulas are equivalent iff they share the same prime implicants (canonical form), giving SE \citep{Darwiche_2002}.
+\langref{IP} is a subset of \langref{DNF} and \langref{IP} satisfies IM, so checking sentential entailment reduces to checking implication between prime implicant forms. Two formulas are equivalent iff they share the same prime implicants (canonical form), giving SE \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_e02902d0, op=CO
@@ -172,7 +172,7 @@ Any query concerning \langref{OBDD} is equivalent to the corresponding query con
 \langref{OBDD} supports Sentential Entailment not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citep{Darwiche_2002,Meinel_Theobald_1998}
 \end{claim}
 \begin{claimdescription}
-Sentential entailment for \langref{OBDD} is coNP-complete. \citet[Lemma 8.14]{Meinel_Theobald_1998} prove that checking consistency of two \langfam{OBDD}{<} formulas using different variable orders is NP-complete. Since \langref{OBDD} supports negation, consistency of $\alpha \land \beta$ is equivalent to $\alpha \not\models \neg\beta$, so polynomial-time SE for arbitrary OBDDs would imply polynomial-time consistency for such pairs \citep{Darwiche_2002}.
+Sentential entailment for \langref{OBDD} is coNP-complete. \citet[Lemma 8.14]{Meinel_Theobald_1998} prove that checking consistency of two \langfam{OBDD}{<} formulas using different variable orders is NP-complete. Since \langref{OBDD} supports negation, consistency of $\alpha \land \beta$ is equivalent to $\alpha \not\models \neg\beta$, so polynomial-time SE for arbitrary \langref{OBDD} formulas would imply polynomial-time consistency for such pairs \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_27fffab2, op=CE
@@ -196,7 +196,7 @@ The model counting problem for monotone Krom formulas (conjunctions of clauses w
 \langref{PI} supports Sentential Entailment in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-$PI \subseteq CNF$ and \langref{PI} satisfies CE, so checking $\Sigma_1 \models \Sigma_2$ for \langref{CNF} $\Sigma_2$ reduces to checking each clause of $\Sigma_2$ against the prime implicates of $\Sigma_1$. Two formulas are equivalent iff they share the same prime implicates (canonical form), giving SE \citep{Darwiche_2002}.
+\langref{PI} is a subset of \langref{CNF} and \langref{PI} satisfies CE, so checking $\Sigma_1 \models \Sigma_2$ for \langref{CNF} $\Sigma_2$ reduces to checking each clause of $\Sigma_2$ against the prime implicates of $\Sigma_1$. Two formulas are equivalent iff they share the same prime implicates (canonical form), giving SE \citep{Darwiche_2002}.
 \end{claimdescription}
 
 
@@ -217,7 +217,7 @@ Consistency can be checked in polynomial time by graph reachability: verify that
 \langfam{OBDD}{<} supports Model Counting in polynomial time \citep{Bryant_1986}
 \end{claim}
 \begin{claimdescription}
-Model counting on OBDDs can be done in polynomial time by a single bottom-up pass \citep{Bryant_1986, Bryant_1992}.
+Model counting on \langfam{OBDD}{<} formulas can be done in polynomial time by a single bottom-up pass \citep{Bryant_1986, Bryant_1992}.
 \end{claimdescription}
 
 % lang=lang_d69995dd, op=EQ
@@ -225,7 +225,7 @@ Model counting on OBDDs can be done in polynomial time by a single bottom-up pas
 \langfam{OBDD}{<} supports Equivalence in polynomial time \citep{Bryant_1986,Bryant_1992,Meinel_Theobald_1998}
 \end{claim}
 \begin{claimdescription}
-After reducing both diagrams, OBDDs with a fixed variable ordering are canonical: two functions are equivalent iff their reduced OBDDs are identical. This makes EQ a structural isomorphism check \citep{Bryant_1986, Bryant_1992, Meinel_Theobald_1998} (Theorem 8.11).
+After reducing both diagrams, \langfam{OBDD}{<} formulas are canonical: two functions are equivalent iff their reduced \langfam{OBDD}{<} diagrams are identical. This makes EQ a structural isomorphism check \citep{Bryant_1986, Bryant_1992, Meinel_Theobald_1998} (Theorem 8.11).
 \end{claimdescription}
 
 % lang=lang_d69995dd, op=ME
@@ -233,7 +233,7 @@ After reducing both diagrams, OBDDs with a fixed variable ordering are canonical
 \langfam{OBDD}{<} supports Model Enumeration in polynomial time \citep{Bryant_1986}
 \end{claim}
 \begin{claimdescription}
-Models of an OBDD can be enumerated in time polynomial in the output size by traversing all root-to-1-sink paths. Each path corresponds to a (partial) assignment that can be expanded to full models.
+Models of an \langfam{OBDD}{<} formula can be enumerated in time polynomial in the output size by traversing all root-to-1-sink paths. Each path corresponds to a (partial) assignment that can be expanded to full models.
 \end{claimdescription}
 
 % lang=lang_d69995dd, op=VA
@@ -254,7 +254,7 @@ Validity can be checked in polynomial time by graph reachability: verify that no
 \langref{FBDD} supports Consistency in polynomial time \citep{Gergov_1994,Bryant_1992}
 \end{claim}
 \begin{claimdescription}
-Consistency means existence of a satisfying root-to-1 path. For a general FBDD, run graph reachability from the root to terminal 1 in linear time \citep{Gergov_1994,Bryant_1992}.
+Consistency means existence of a satisfying root-to-1 path. For a general \langref{FBDD}, run graph reachability from the root to terminal 1 in linear time \citep{Gergov_1994,Bryant_1992}.
 \end{claimdescription}
 
 % lang=lang_684b1ca7, op=CT
@@ -270,7 +270,7 @@ Model counting is done by dynamic programming over the DAG representation of the
 \langref{FBDD} supports Validity in polynomial time \citep{Gergov_1994,Bryant_1992}
 \end{claim}
 \begin{claimdescription}
-Validity is equivalent to absence of any falsifying path. For a general FBDD, check that terminal 0 is unreachable from the root (equivalently, all root-to-terminal paths evaluate to true); this is graph reachability in polynomial time \citep{Gergov_1994,Bryant_1992}.
+Validity is equivalent to absence of any falsifying path. For a general \langref{FBDD}, check that terminal 0 is unreachable from the root (equivalently, all root-to-terminal paths evaluate to true); this is graph reachability in polynomial time \citep{Gergov_1994,Bryant_1992}.
 \end{claimdescription}
 
 
@@ -283,7 +283,7 @@ Validity is equivalent to absence of any falsifying path. For a general FBDD, ch
 \langref{d-DNNF} supports Equivalence in polynomial time assuming $P = \mathrm{BPP}$ \citep{Darwiche_Huang_2002}
 \end{claim}
 \begin{claimdescription}
-\citet{Darwiche_Huang_2002} showed that equivalence of d-DNNF sentences can be tested in randomized polynomial time by reducing it to the problem of checking whether two d-DNNFs agree on a randomly chosen assignment. Under the derandomization hypothesis P = BPP, this yields a deterministic polynomial-time algorithm and hence \langref{d-DNNF} satisfies EQ.
+\citet{Darwiche_Huang_2002} showed that equivalence of \langref{d-DNNF} sentences can be tested in randomized polynomial time by reducing it to the problem of checking whether two \langref{d-DNNF} sentences agree on a randomly chosen assignment. Under the derandomization hypothesis P = BPP, this yields a deterministic polynomial-time algorithm and hence \langref{d-DNNF} satisfies EQ.
 \end{claimdescription}
 
 

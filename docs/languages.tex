@@ -56,7 +56,7 @@
 
 \begin{definition}[\langref{CNF}]\label{def:lang_89649e36}
 \textbf{Conjunctive Normal Form} \\
-A CNF is a conjunction of clauses $\bigwedge_{i=1}^mC_i$. A clause is a disjunction of literals $C_i=\bigvee_{j=1}^{k_i}l_j$ where a literal $l_j$ is a variable $x$ or its negation $\lnot x$. For example, $(x \lor y \lor \lnot z)\land (x\lor \lnot y)\land (z\lor w)$.
+A \langref{CNF} is a conjunction of clauses $\bigwedge_{i=1}^mC_i$. A clause is a disjunction of literals $C_i=\bigvee_{j=1}^{k_i}l_j$ where a literal $l_j$ is a variable $x$ or its negation $\lnot x$. For example, $(x \lor y \lor \lnot z)\land (x\lor \lnot y)\land (z\lor w)$.
 \end{definition}
 
 \begin{definition}[\langref{cSDD}]\label{def:lang_83e3b023}
@@ -99,7 +99,7 @@ Equivalently, \langref{dec-DNNF} formulas are (up to syntax) \langref{FBDD} form
 
 \begin{definition}[\langref{dec-SDNNF}]\label{def:lang_0f27d539}
 \textbf{Decision Structured Decomposable Negation Normal Form} \\
-\langfam{dec-SDNNF} $= \bigcup_T$ \langfam{dec-SDNNF}{T}. \citep{Oztok_2014}
+\langref{dec-SDNNF} $= \bigcup_T$ \langfam{dec-SDNNF}{T}. \citep{Oztok_2014}
 \end{definition}
 
 \begin{definition}[\langfam{dec-SDNNF}{T}]\label{def:lang_4ae03bc8}
@@ -135,7 +135,7 @@ A \langref{DNF} that is the disjunction of all minimal entailing terms (prime im
 \textbf{Models} \\
 The set of satisfying assignments (models) of the function.\citep{Darwiche_2002}
 
-Equivalently, a suitably restricted DNF whose terms are in one-to-one correspondence with the models.
+Equivalently, a suitably restricted \langref{DNF} whose terms are in one-to-one correspondence with the models.
 \end{definition}
 
 \begin{definition}[\langref{nFBDD}]\label{def:lang_1df07cc3}
@@ -192,7 +192,7 @@ The subset of \langref{CNF} where formulas are the conjunction of all minimal en
 
 \begin{definition}[\langfam{SDD}{T}]\label{def:lang_9c84a267}
 \textbf{Sentential Decision Diagram (wrt a fixed vtree)} \\
-\langfam{SDD}{T} generalizes \langfam{OBDD}{<} by allowing decisions, not only on variables, but on sentences (i.e., recursively defined SDDs).\citep{Darwiche_2011} 
+\langfam{SDD}{T} generalizes \langfam{OBDD}{<} by allowing decisions, not only on variables, but on sentences (i.e., recursively defined \langref{SDD} formulas).\citep{Darwiche_2011}
 
 Equivalently, an \langfam{SDD}{T} is a \langfam{d-SDNNF}{T} in which determinism is replaced by \emph{strong determinism}, where $\lor$-gates must take the form $ f(x,y) = \bigvee_{i=1}^{m}(p_i(x) \land s_i(y))$, where the $p_i$ are mutually exclusive and exhaustive.
 \end{definition}

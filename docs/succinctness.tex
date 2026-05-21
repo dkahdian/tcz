@@ -179,7 +179,7 @@ The common-order quasipolynomial simulation of \citep{TCZ_Forthcoming} specializ
 \langref{DNF} is not quasipolynomial-time compilable to \langref{d-SDNNF} \citep{Amarilli_2018}
 \end{claim}
 \begin{claimdescription}
-\citet[Corollary 7.6]{Amarilli_2018} gives a lower bound of $2^{\Omega(tw(\phi))}$ on the smallest \langref{d-SDNNF} computing any monotone \langref{DNF} of constant arity and degree. In particular, DNF families whose treewidth grows linearly with their size force exponential-size \langref{d-SDNNF} representations.
+\citet[Corollary 7.6]{Amarilli_2018} gives a lower bound of $2^{\Omega(tw(\phi))}$ on the smallest \langref{d-SDNNF} computing any monotone \langref{DNF} of constant arity and degree. In particular, \langref{DNF} families whose treewidth grows linearly with their size force exponential-size \langref{d-SDNNF} representations.
 \end{claimdescription}
 
 \begin{claim}
@@ -286,7 +286,7 @@ Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. 
 \langfam{OBDD}{<} is polynomial-time compilable to \langfam{uOBDD}{<} \citep{Amarilli_2018,Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-For any fixed variable order $<$, every \langfam{OBDD}{<} is already an unambiguous nondeterministic OBDD respecting the same order. Thus \langfam{OBDD}{<} is a subset of \langfam{uOBDD}{<}, and the compilation is the identity.
+For any fixed variable order $<$, every \langfam{OBDD}{<} is already a \langfam{uOBDD}{<} formula respecting the same order $<$. Thus, for each $<$, \langfam{OBDD}{<} $\subset$ \langfam{uOBDD}{<}, and the compilation is the identity.
 \end{claimdescription}
 
 \begin{claim}
@@ -363,7 +363,7 @@ Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. 
 \langfam{uOBDD}{<} is polynomial-time compilable to \langfam{nOBDD}{<} \citep{Amarilli_2018,Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-For any fixed variable order $<$, every unambiguous nondeterministic OBDD respecting $<$ is a nondeterministic OBDD respecting the same order. Thus \langfam{uOBDD}{<} is a subset of \langfam{nOBDD}{<}, and the compilation is the identity.
+For any fixed variable order $<$, every \langfam{uOBDD}{<} formula is a \langfam{nOBDD}{<} formula respecting the same order $<$. Thus, for each $<$, \langfam{uOBDD}{<} $\subset$ \langfam{nOBDD}{<}, and the compilation is the identity.
 \end{claimdescription}
 
 
@@ -442,7 +442,7 @@ As defined by \citet{Darwiche_2002}, \langref{FBDD} is a subset of \langref{d-DN
 \langref{IP} is not quasipolynomial-time compilable to \langref{CNF} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Consider the \langref{DNF} formula $\Pi_n=\bigvee_{i=0}^{n-1}(x_{2i} \wedge x_{2i+1})$. This formula is in prime implicants form and each clause in $\Pi_n$ is an essential prime implicant of it. Hence its negation $\neg\Pi_n\in IP$.
+Consider the \langref{DNF} formula $\Pi_n=\bigvee_{i=0}^{n-1}(x_{2i} \wedge x_{2i+1})$. This formula is in prime implicants form and each clause in $\Pi_n$ is an essential prime implicant of it. Hence its negation $\neg\Pi_n$ lies in \langref{IP}.
 
 Since the early work of Quine, we know that the number of essential prime implicates of a formula is a lower bound on the number of clauses that can be found in any \langref{CNF} representation of it. However, since $\Pi_n$ has $2^n$ prime implicants, $\neg\Pi_n$ has $2^n$ prime implicates, so any \langref{CNF} representation of $\neg\Pi_n$ must have at least $2^n$ clauses.
 \end{claimdescription}
@@ -540,7 +540,7 @@ As defined by \citet{Darwiche_2002}, \langref{PI} is a subset of \langref{CNF}. 
 \langref{PI} is not quasipolynomial-time compilable to \langref{DNF} \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-The pairwise CNF $\Sigma_n = \bigwedge_{i=0}^{n-1}(x_{2i} \vee x_{2i+1})$ has $2^n$ prime implicates; its negation $\neg\Sigma_n \in PI$ therefore has $2^n$ essential prime implicants, forcing any \langref{DNF} representation to have at least $2^n$ terms \citep{Darwiche_2002}.
+The Pairwise \langref{CNF} formula $\Sigma_n = \bigwedge_{i=0}^{n-1}(x_{2i} \vee x_{2i+1})$ has $2^n$ prime implicates; its negation $\neg\Sigma_n$ lies in \langref{PI} and therefore has $2^n$ essential prime implicants, forcing any \langref{DNF} representation to have at least $2^n$ terms \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % separators=Clique
@@ -584,7 +584,7 @@ The $OR_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \lang
 \langref{OBDD} is not quasipolynomial-time compilable to \langfam{OBDD}{<} \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-Suppose an order $<$ existed so that \langref{OBDD} compiled to \langfam{OBDD}{<}. Take the first $2n$ variables in that order, call the first half $x_1,\ldots,x_n$ and the second half $y_1,\ldots,y_n$, and consider $EQ_n(x,y)$. This function has linear-size OBDDs under the interleaved order $x_1,y_1,\ldots,x_n,y_n$, but exponential-size \langfam{OBDD}{<} representations \citep{Wegener_2000}. Thus no order $<$ can exist, and \langref{OBDD} is not quasipolynomial-time compilable to \langfam{OBDD}{<}.
+Suppose an order $<$ existed so that \langref{OBDD} compiled to \langfam{OBDD}{<}. Take the first $2n$ variables in that order, call the first half $x_1,\ldots,x_n$ and the second half $y_1,\ldots,y_n$, and consider $EQ_n(x,y)$. This function has linear-size \langref{OBDD} formulas under the interleaved order $x_1,y_1,\ldots,x_n,y_n$, but exponential-size \langfam{OBDD}{<} representations \citep{Wegener_2000}. Thus no order $<$ can exist, and \langref{OBDD} is not quasipolynomial-time compilable to \langfam{OBDD}{<}.
 \end{claimdescription}
 
 % separators=$WS_n$
@@ -600,15 +600,7 @@ The weighted sum function $WS_n$ has polynomial-size \langref{uOBDD} formulas: \
 \langref{uOBDD} is not quasipolynomial-time compilable to \langref{OBDD} \citep{Bryant_1986,Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-The hidden weighted bit function $HWB_n$ has polynomial-size unambiguous nondeterministic OBDDs under a fixed order: $HWB_n = \bigvee_{k=1}^n(E_k^n(x) \wedge x_k)$, where each branch for $k$ tests the variables in the same order to verify the exact Hamming weight and $x_k=1$, and the branches are disjoint. Thus the representation is unambiguous and has polynomial size, as in the 2-OBDD/FBDD constructions discussed by \citet{Wegener_2000}. Bryant's hidden-weighted-bit lower bound says every OBDD for $HWB_n$, over every variable order, has exponential size \citep{Bryant_1986,Wegener_2000}. Hence no quasipolynomial compilation to OBDD is possible.
-\end{claimdescription}
-
-% separators=HWB
-\begin{claim}
-\langfam{uOBDD}{<} is not quasipolynomial-time compilable to \langfam{OBDD}{<} \citep{Bryant_1986,Wegener_2000}
-\end{claim}
-\begin{claimdescription}
-Use the same $HWB_n$ family as for \langref{uOBDD} versus \langref{OBDD}. The polynomial unambiguous construction can be taken to respect one fixed order for each $n$, and the finite hard instances can be renamed into disjoint variable blocks of one global order. On the target side, Bryant's lower bound is order-independent: every OBDD for $HWB_n$, and hence every \langfam{OBDD}{<} for every fixed order $<$, has exponential size \citep{Bryant_1986,Wegener_2000}. Therefore \langfam{uOBDD}{<} is not quasipolynomial-time compilable to \langfam{OBDD}{<}.
+The hidden weighted bit function $HWB_n$ has polynomial-size \langref{uOBDD} representations under a fixed order $<$: $HWB_n = \bigvee_{k=1}^n(E_k^n(x) \wedge x_k)$, where each branch for $k$ tests the variables in the same order to verify the exact Hamming weight and $x_k=1$, and the branches are disjoint. Thus the representation is unambiguous and has polynomial size, as in the 2-\langref{OBDD}/\langref{FBDD} constructions discussed by \citet{Wegener_2000}. Bryant's hidden-weighted-bit lower bound says every \langref{OBDD} formula for $HWB_n$, regardless of variable order $<$, has exponential size \citep{Bryant_1986,Wegener_2000}. Hence no quasipolynomial compilation to \langref{OBDD} is possible.
 \end{claimdescription}
 
 \begin{claim}
@@ -627,7 +619,7 @@ Use the same $HWB_n$ family as for \langref{uOBDD} versus \langref{OBDD}. The po
 \langfam{SDD}{T} is not quasipolynomial-time compilable to \langref{FBDD} \citep{Bollig_2018}
 \end{claim}
 \begin{claimdescription}
-By \citet[Corollary 3]{Bollig_2018}, the weighted sum function $WS_n$ can be represented by SDDs of size $O(n^3)$ respecting the vtrees used in the construction, but has exponential \langref{FBDD} size. Hence \langfam{SDD}{T} does not compile to \langref{FBDD} in quasipolynomial size. The union-level lower bound \langref{SDD} $\not\to$ \langref{FBDD} then follows from the polynomial inclusion \langfam{SDD}{T} $\subseteq$ \langref{SDD}.
+By \citet[Corollary 3]{Bollig_2018}, the weighted sum function $WS_n$ can be represented by \langfam{SDD}{T} formulas of size $O(n^3)$ respecting the vtrees used in the construction, but has exponential \langref{FBDD} size. Hence \langfam{SDD}{T} does not compile to \langref{FBDD} in quasipolynomial size.
 \end{claimdescription}
 
 
@@ -639,7 +631,7 @@ By \citet[Corollary 3]{Bollig_2018}, the weighted sum function $WS_n$ can be rep
 \langref{FBDD} is not quasipolynomial-time compilable to \langref{SDD} \citep{Beame_2015}
 \end{claim}
 \begin{claimdescription}
-\citep{Beame_2015} relate the size of SDD representations to best-partition communication complexity and derive simple examples for which FBDDs are exponentially more concise than SDDs. This establishes $P(\langref{FBDD}) \not\subseteq P(\langref{SDD})$.
+\citep{Beame_2015} relates the size of \langref{SDD} representations to best-partition communication complexity and derive simple examples for which \langref{FBDD} representations are exponentially more concise than \langref{SDD} representations. This establishes $P(\langref{FBDD}) \not\subseteq P(\langref{SDD})$.
 \end{claimdescription}
 
 
@@ -706,7 +698,7 @@ Shown by \citet[Corollary 3.5]{Beame_2013}.
 \langref{cSDD} is polynomial-time compilable to \langref{SDD} \citep{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
-As defined by \citet{VanDenBroeck_2015}, \langref{cSDD} is the compressed subset of \langref{SDD}, so compilation is trivial.
+For each fixed vtree $T$, \langfam{cSDD}{T} is the compressed subset of \langfam{SDD}{T}, so compilation between \langref{cSDD} and \langref{SDD} is trivial.
 \end{claimdescription}
 
 \begin{claim}
@@ -720,7 +712,7 @@ For any fixed vtree $T$, \langfam{cSDD}{T} is the compressed subset of \langfam{
 \langref{SDD} is polynomial-time compilable to \langref{d-SDNNF} \citep{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
-\langref{SDD} is a strict subset of \langref{d-SDNNF}.
+For each fixed vtree $T$, \langfam{SDD}{T} $\subset$ \langfam{d-SDNNF}{T}, so compilation is trivial.
 \end{claimdescription}
 
 \begin{claim}
@@ -773,7 +765,7 @@ Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. 
 \langref{cSDD} is not quasipolynomial-time compilable to \langref{OBDD} \citep{Bova_2016_a}
 \end{claim}
 \begin{claimdescription}
-\citet[Theorem 4]{Bova_2016_a} constructs a generalized hidden weighted bit function $F_n$ on $2n+1$ variables with \langref{cSDD} size $O(n^3)$ but \langref{OBDD} size $2^{\Omega(n)}$. The function $F_n$ augments $HWB_n$ with fresh variables $y_0, \ldots, y_n$ to ensure the resulting SDD is compressed; conditioning $F_n$ on $y_i = 1$ recovers $HWB_n$, preserving Bryant's exponential \langref{OBDD} lower bound.
+\citet[Theorem 4]{Bova_2016_a} constructs a generalized hidden weighted bit function $F_n$ on $2n+1$ variables with \langref{cSDD} size $O(n^3)$ but \langref{OBDD} size $2^{\Omega(n)}$. The function $F_n$ augments $HWB_n$ with fresh variables $y_0, \ldots, y_n$ to ensure the resulting \langref{SDD} is compressed; conditioning $F_n$ on $y_i = 1$ recovers $HWB_n$, preserving Bryant's exponential \langref{OBDD} lower bound.
 \end{claimdescription}
 
 % separators=Generalized_HWB
@@ -781,7 +773,7 @@ Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. 
 \langfam{cSDD}{T} is not quasipolynomial-time compilable to \langref{OBDD} \citep{Bova_2016_a}
 \end{claim}
 \begin{claimdescription}
-\citet[Theorem 4]{Bova_2016_a} constructs a generalized hidden weighted bit function $F_n$ with polynomial-size compressed SDDs respecting explicit vtrees, but every \langref{OBDD} for $F_n$ has size $2^{\Omega(n)}$. Hence \langfam{cSDD}{T} is not quasipolynomial-time compilable to \langref{OBDD}.
+\citet[Theorem 4]{Bova_2016_a} constructs a generalized hidden weighted bit function $F_n$ with polynomial-size \langfam{cSDD}{T} representations respecting explicit vtrees, but every \langref{OBDD} for $F_n$ has size $2^{\Omega(n)}$. Hence \langfam{cSDD}{T} is not quasipolynomial-time compilable to \langref{OBDD}.
 \end{claimdescription}
 
 
@@ -826,14 +818,14 @@ The Quine-McCluskey algorithm generates an \langref{IP} formula in polynomial ti
 \langref{d-SDNNF} is not polynomial-time compilable to \langref{SDD} \citep{Vinall-Smeeth_2024}
 \end{claim}
 \begin{claimdescription}
-\citet[Theorem 1]{Vinall-Smeeth_2024} proves that there are functions with structured deterministic DNNFs of size $s$ but whose every equivalent \langref{SDD} has size $s^{\widetilde{\Omega}(\log s)}$. The source side is genuinely structured: in the proof of Theorem 2, the hard function is an unambiguous DNF $\psi'$, and the authors fix a vtree $T$ over $\operatorname{var}(\psi')$; each term of $\psi'$ is compiled as a d-DNNF respecting $T$, and their disjunction still respects $T$, with determinism following from unambiguity of $\psi'$. Theorem 1 then transfers this to an SDD lower bound using closure of SDDs under negation.
+\citet[Theorem 1]{Vinall-Smeeth_2024} proves that there are functions with structured deterministic \langref{DNNF} representations of size $s$ but whose every equivalent \langref{SDD} has size $s^{\widetilde{\Omega}(\log s)}$. The source side is genuinely structured: in the proof of Theorem 2, the hard function is an unambiguous \langref{DNF} $\psi'$, and the authors fix a vtree $T$ over $\operatorname{var}(\psi')$; each term of $\psi'$ is compiled as a \langref{d-DNNF} respecting $T$, and their disjunction still respects $T$, with determinism following from unambiguity of $\psi'$. Theorem 1 then transfers this to a \langref{SDD} lower bound using closure of \langref{SDD}s under negation.
 \end{claimdescription}
 
 \begin{claim}
 \langfam{d-SDNNF}{T} is not polynomial-time compilable to \langfam{SDD}{T} \citep[Theorem 1 and proof of Theorem 2]{Vinall-Smeeth_2024}
 \end{claim}
 \begin{claimdescription}
-\citet[Theorem 1 and proof of Theorem 2]{Vinall-Smeeth_2024} gives small source circuits that are explicitly structured: for the hard unambiguous DNF $\psi'$, the proof fixes a vtree $T$ over $\operatorname{var}(\psi')$, compiles each term as a d-DNNF respecting $T$, and takes their deterministic disjunction. Thus the source side can be stated as \langfam{d-SDNNF}{T}. The lower bound is against every equivalent \langref{SDD}; since \langfam{SDD}{T} is a subfamily of \langref{SDD}, it also rules out every target vtree family member.
+\citet[Theorem 1 and proof of Theorem 2]{Vinall-Smeeth_2024} gives small source circuits that are explicitly structured: for the hard unambiguous \langref{DNF} $\psi'$, the proof fixes a vtree $T$ over $\operatorname{var}(\psi')$, compiles each term as a \langref{d-DNNF} respecting $T$, and takes their deterministic disjunction. Thus the source side can be stated as \langfam{d-SDNNF}{T}. The lower bound is against every equivalent \langref{SDD}; since \langfam{SDD}{T} is a subfamily of \langref{SDD}, it also rules out every target vtree family member.
 \end{claimdescription}
 
 
@@ -857,7 +849,7 @@ The Quine-McCluskey algorithm generates an \langref{IP} formula in polynomial ti
 \langref{d-DNNF} is not quasipolynomial-time compilable to \langref{FBDD} \citep{Darwiche_2000}
 \end{claim}
 \begin{claimdescription}
-\langref{d-DNNF}s can polynomially represent the disjunction of two functions with conflicting variable orders, which forces \langref{FBDD}s to grow exponentially to track the state of both orders within a single "read-once" path.
+\langref{d-DNNF} formulas can polynomially represent the disjunction of two functions with conflicting variable orders, which forces \langref{FBDD} formulas to grow exponentially to track the state of both orders within a single "read-once" path.
 \end{claimdescription}
 
 
@@ -869,7 +861,7 @@ The Quine-McCluskey algorithm generates an \langref{IP} formula in polynomial ti
 \langref{DNF} is not quasipolynomial-time compilable to \langref{OBDD} \citep{Devadas_1993}
 \end{claim}
 \begin{claimdescription}
-\citet{Devadas_1993} showed that there exist Boolean functions with polynomial-size \langref{DNF} representations but requiring exponential-size \langref{OBDD} representations for any variable ordering. This establishes $P(\langref{DNF}) \not\subseteq P(\langref{OBDD})$.
+\citet{Devadas_1993} showed that there exist Boolean functions with polynomial-size \langref{DNF} representations but requiring exponential-size \langref{OBDD} representations for any variable ordering.
 \end{claimdescription}
 
 
