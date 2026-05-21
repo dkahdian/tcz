@@ -5652,7 +5652,7 @@
         }
       },
       "tags": [],
-      "definition": "Boolean circuits with AND and OR gates; literals as inputs; and whose AND gates are \\emph{decomposable} (children mention disjoint sets of variables) and whose OR gates must appear in the form of \\emph{decisions/tests} (subcircuits of the form $(x\\land f)\\lor (\\bar{x}\\land g)$ where $x$ is a variable).\\citep{darwiche2007language,Oztok_2014}\n\nEquivalently, \\langref{dec-DNNF} formulas are \\langref{d-DNNF} formulas whose OR-gates may only appear in \\emph{decisions/tests}.\n\nEquivalently, \\langref{dec-DNNF} formulas are (up to syntax) \\langref{FBDD} formulas that may additionally contain decomposable AND-gates.",
+      "definition": "Boolean circuits with AND and OR gates; literals as inputs; and whose AND gates are \\emph{decomposable} (children mention disjoint sets of variables) and whose OR gates must appear in the form of \\emph{decisions/tests} (subcircuits of the form $(x\\land f)\\lor (\\bar{x}\\land g)$ where $x$ is a variable).\\citep{darwiche2007language}\n\nEquivalently, \\langref{dec-DNNF} formulas are \\langref{d-DNNF} formulas whose OR-gates may only appear in \\emph{decisions/tests}.\n\nEquivalently, \\langref{dec-DNNF} formulas are (up to syntax) \\langref{FBDD} formulas that may additionally contain decomposable AND-gates.",
       "definitionRefs": []
     },
     {
