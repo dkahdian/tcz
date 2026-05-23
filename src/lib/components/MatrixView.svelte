@@ -24,6 +24,7 @@
     highlightedEdgeIds = new Set<string>(),
     directEditedEdgeIds = new Set<string>(),
     sandboxMode = false,
+    showQuasipolynomialSandboxOptions = true,
     sandboxSelectedEdgeId = null,
     sandboxBaselineGraphData = null,
     onSandboxEdgeEdit,
@@ -35,14 +36,20 @@
     highlightedEdgeIds?: Set<string>;
     directEditedEdgeIds?: Set<string>;
     sandboxMode?: boolean;
+    showQuasipolynomialSandboxOptions?: boolean;
     sandboxSelectedEdgeId?: string | null;
     sandboxBaselineGraphData?: GraphData | FilteredGraphData | null;
     onSandboxEdgeEdit?: (sourceId: string, targetId: string) => void;
     onSandboxEdgeStatusChange?: (sourceId: string, targetId: string, status: string | null) => boolean;
   } = $props();
 
+  const DEFAULT_SANDBOX_EDGE_OPTIONS = [
+    'no-poly-unknown-quasi',
+    'poly',
+    'unknown-both'
+  ];
+
   const ALL_SANDBOX_EDGE_OPTIONS = [
-    '',
     'poly',
     'no-poly-unknown-quasi',
     'no-poly-quasi',
@@ -106,6 +113,38 @@
       return CONDITIONAL_STATUS_SHORT_HTML[status] ?? STATUS_SHORT_HTML[status] ?? '';
     }
     return STATUS_SHORT_HTML[status] ?? '';
+  }
+
+  function getSandboxDisplayStatus(status: string): string {
+    if (showQuasipolynomialSandboxOptions) return status;
+    switch (status) {
+      case 'no-poly-unknown-quasi':
+      case 'no-poly-quasi':
+      case 'no-quasi':
+      case 'not-poly':
+        return 'not-poly';
+      case 'unknown-poly-quasi':
+      case 'unknown-both':
+      case 'unknown':
+        return 'unknown';
+      default:
+        return status;
+    }
+  }
+
+  function getSandboxOptionClass(status: string): string {
+    const displayStatus = getSandboxDisplayStatus(status);
+    return STATUS_CLASSES[displayStatus] ?? STATUS_CLASSES[status] ?? '';
+  }
+
+  function getSandboxOptionHtml(status: string): string {
+    const displayStatus = getSandboxDisplayStatus(status);
+    return getStatusHtml(displayStatus) || getStatusHtml(status);
+  }
+
+  function isOriginalSandboxOption(status: string, baselineValue: string): boolean {
+    const originalStatus = baselineValue || UNKNOWN_STATUS;
+    return getSandboxDisplayStatus(status) === getSandboxDisplayStatus(originalStatus);
   }
 
   const languageLookup = $derived.by<Map<string, KCLanguage>>(() => {
@@ -262,15 +301,19 @@
   }
 
   function validSandboxOptions(currentValue: string): string[] {
+    if (!showQuasipolynomialSandboxOptions) {
+      return DEFAULT_SANDBOX_EDGE_OPTIONS;
+    }
+
     switch (currentValue) {
       case 'poly':
       case 'no-quasi':
       case 'no-poly-quasi':
         return [];
       case 'no-poly-unknown-quasi':
-        return ['', 'no-poly-unknown-quasi', 'no-poly-quasi', 'no-quasi'];
+        return ['no-poly-unknown-quasi', 'no-poly-quasi', 'no-quasi'];
       case 'unknown-poly-quasi':
-        return ['', 'unknown-poly-quasi', 'no-poly-quasi', 'poly'];
+        return ['unknown-poly-quasi', 'no-poly-quasi', 'poly'];
       case 'unknown-both':
       case '':
       default:
@@ -283,10 +326,15 @@
     sourceId: string,
     targetId: string,
     status: string,
-    currentValue: string
+    currentValue: string,
+    baselineValue: string
   ) {
     event.stopPropagation();
-    if (status === currentValue) {
+    if (isOriginalSandboxOption(status, baselineValue)) {
+      onSandboxEdgeStatusChange?.(sourceId, targetId, null);
+      return;
+    }
+    if (getSandboxDisplayStatus(status) === getSandboxDisplayStatus(currentValue)) {
       onSandboxEdgeEdit?.(sourceId, targetId);
       return;
     }
@@ -423,13 +471,13 @@
                           {#each options as option}
                             <button
                               type="button"
-                              class={`sandbox-option ${option ? STATUS_CLASSES[option] : 'sandbox-option--blank'}`}
-                              title={option ? STATUS_LABELS[option] : 'Blank'}
-                              aria-label={option ? STATUS_LABELS[option] : 'Blank'}
-                              onclick={(event) => handleSandboxStatusClick(event, colLanguage.id, rowLanguage.id, option, currentValue)}
+                              class={`sandbox-option ${option ? getSandboxOptionClass(option) : 'sandbox-option--blank'} ${isOriginalSandboxOption(option, baselineValue) ? 'is-original' : ''}`}
+                              title={option ? STATUS_LABELS[getSandboxDisplayStatus(option)] ?? STATUS_LABELS[option] : 'Blank'}
+                              aria-label={option ? STATUS_LABELS[getSandboxDisplayStatus(option)] ?? STATUS_LABELS[option] : 'Blank'}
+                              onclick={(event) => handleSandboxStatusClick(event, colLanguage.id, rowLanguage.id, option, currentValue, baselineValue)}
                             >
                               {#if option}
-                                <span class="cell-short">{@html STATUS_SHORT_HTML[option]}</span>
+                                <span class="cell-short">{@html getSandboxOptionHtml(option)}</span>
                               {/if}
                             </button>
                           {/each}
@@ -442,11 +490,13 @@
                     {#if sandboxMode}
                       <button
                         type="button"
-                        class={`matrix-cell matrix-cell--button matrix-cell--empty ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted' : ''} ${isLanguageHighlighted(colLanguage.id) ? 'is-col-highlighted' : ''} ${isPreviewHighlighted(colLanguage.id, rowLanguage.id) ? 'is-preview-highlighted' : ''} ${isDirectSandboxEdit(colLanguage.id, rowLanguage.id) ? 'is-sandbox-direct' : ''}`}
+                        class={`matrix-cell matrix-cell--button matrix-cell--unknown ${STATUS_CLASSES[UNKNOWN_STATUS]} ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted' : ''} ${isLanguageHighlighted(colLanguage.id) ? 'is-col-highlighted' : ''} ${isPreviewHighlighted(colLanguage.id, rowLanguage.id) ? 'is-preview-highlighted' : ''} ${isDirectSandboxEdit(colLanguage.id, rowLanguage.id) ? 'is-sandbox-direct' : ''}`}
                         onclick={() => handleCellClick(colLanguage.id, rowLanguage.id, null)}
                         aria-label={`Edit ${colLanguage.language.name} to ${rowLanguage.language.name}`}
                         title={getCellTitle(rowLanguage.language, colLanguage.language, null)}
-                      >&nbsp;</button>
+                      >
+                        <span class="cell-short">{@html STATUS_SHORT_HTML[UNKNOWN_STATUS] ?? '?'}</span>
+                      </button>
                       {#if isSandboxEditing(colLanguage.id, rowLanguage.id)}
                         {@const currentValue = getSandboxCellValue(null)}
                         {@const baselineValue = getSandboxCellValue(getBaselineRelation(colLanguage.id, rowLanguage.id))}
@@ -456,13 +506,13 @@
                             {#each options as option}
                               <button
                                 type="button"
-                                class={`sandbox-option ${option ? STATUS_CLASSES[option] : 'sandbox-option--blank'}`}
-                                title={option ? STATUS_LABELS[option] : 'Blank'}
-                                aria-label={option ? STATUS_LABELS[option] : 'Blank'}
-                                onclick={(event) => handleSandboxStatusClick(event, colLanguage.id, rowLanguage.id, option, currentValue)}
+                                class={`sandbox-option ${option ? getSandboxOptionClass(option) : 'sandbox-option--blank'} ${isOriginalSandboxOption(option, baselineValue) ? 'is-original' : ''}`}
+                                title={option ? STATUS_LABELS[getSandboxDisplayStatus(option)] ?? STATUS_LABELS[option] : 'Blank'}
+                                aria-label={option ? STATUS_LABELS[getSandboxDisplayStatus(option)] ?? STATUS_LABELS[option] : 'Blank'}
+                                onclick={(event) => handleSandboxStatusClick(event, colLanguage.id, rowLanguage.id, option, currentValue, baselineValue)}
                               >
                                 {#if option}
-                                  <span class="cell-short">{@html STATUS_SHORT_HTML[option]}</span>
+                                  <span class="cell-short">{@html getSandboxOptionHtml(option)}</span>
                                 {/if}
                               </button>
                             {/each}
@@ -773,6 +823,19 @@
   .sandbox-option:focus-visible {
     border-color: #0284c7;
     box-shadow: inset 0 0 0 1px #0284c7;
+  }
+
+  .sandbox-option.is-original {
+    border-color: #eab308;
+    box-shadow: inset 0 0 0 2px #eab308;
+  }
+
+  .sandbox-option.is-original:hover,
+  .sandbox-option.is-original:focus-visible {
+    border-color: #ca8a04;
+    box-shadow:
+      inset 0 0 0 2px #eab308,
+      0 0 0 1px #ca8a04;
   }
 
   .sandbox-option--blank {

@@ -367,6 +367,7 @@
   // Compute filtered graph data reactively
   const baseGraphData = $derived(activeSandboxGraphData || previewGraphData || initialGraphData);
   const filteredGraphData = $derived(applyFiltersWithParams(baseGraphData, languageFilters, edgeFilters, filterStates, viewMode));
+  const showQuasipolynomialSandboxOptions = $derived(filterStates.get('poly-display') === true);
 
   function hasBaseEdge(sourceId: string, targetId: string) {
     const { adjacencyMatrix } = baseGraphData;
@@ -793,6 +794,7 @@
             highlightedEdgeIds={highlightedSuccinctnessCellIds}
             directEditedEdgeIds={directSandboxEdgeIds}
             sandboxMode={isSandboxMode}
+            showQuasipolynomialSandboxOptions={showQuasipolynomialSandboxOptions}
             sandboxSelectedEdgeId={sandboxSelectedEdgeId}
             sandboxBaselineGraphData={initialGraphData}
             onSandboxEdgeEdit={handleSandboxEdgeEdit}
@@ -836,7 +838,7 @@
     <aside class="side-panel">
       {#if isSandboxMode && sandboxError}
         <div class="sandbox-error" role="alert">
-          <strong>Sandbox error</strong>
+          <strong>Sandbox contradiction</strong>
           <div class="sandbox-error-message">
             <MathText text={sandboxError} />
           </div>
