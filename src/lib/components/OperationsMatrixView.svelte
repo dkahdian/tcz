@@ -560,13 +560,13 @@
     position: sticky;
     top: 0;
     background: #f8fafc;
-    z-index: 5;
+    z-index: 50;
     border-bottom: 1px solid #e5e7eb;
   }
 
   .corner-cell {
     background: #e5e7eb;
-    z-index: 6;
+    z-index: 60;
     border-left: 1px solid #e5e7eb;
   }
 
@@ -584,7 +584,7 @@
   .row-header {
     position: sticky;
     left: 0;
-    z-index: 4;
+    z-index: 50;
     background: #f8fafc;
     border-left: 1px solid #e5e7eb;
   }
@@ -699,7 +699,7 @@
     position: absolute;
     left: 50%;
     top: calc(100% + 0.2rem);
-    z-index: 30;
+    z-index: 40;
     display: grid;
     grid-auto-flow: row;
     gap: 0.15rem;
