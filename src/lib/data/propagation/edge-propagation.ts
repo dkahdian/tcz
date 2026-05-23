@@ -271,6 +271,42 @@ export function tryDowngrade(
   const srcName = idToName(srcId);
   const tgtName = idToName(tgtId);
 
+  const isTestedEdge = (fromId: string, toId: string): boolean => fromId === srcId && toId === tgtId;
+
+  const collectWitnessPathRefs = (witnessIds: string[]): string[] => {
+    const refs = new Set<string>();
+    for (let i = 0; i < witnessIds.length - 1; i++) {
+      const fromId = witnessIds[i];
+      const toId = witnessIds[i + 1];
+      if (isTestedEdge(fromId, toId)) continue;
+      const fromIdx = languageIds.indexOf(fromId);
+      const toIdx = languageIds.indexOf(toId);
+      const edgeRelation = adjacencyMatrix.matrix[fromIdx]?.[toIdx];
+      for (const ref of edgeRelation?.refs ?? []) {
+        refs.add(ref);
+      }
+    }
+    return Array.from(refs);
+  };
+
+  const collectWitnessPathAssumption = (witnessIds: string[]): string | undefined => {
+    const assumptions = new Set<string>();
+    for (let i = 0; i < witnessIds.length - 1; i++) {
+      const fromId = witnessIds[i];
+      const toId = witnessIds[i + 1];
+      if (isTestedEdge(fromId, toId)) continue;
+      const fromIdx = languageIds.indexOf(fromId);
+      const toIdx = languageIds.indexOf(toId);
+      const edgeAssumption = adjacencyMatrix.matrix[fromIdx]?.[toIdx]?.assumption;
+      if (edgeAssumption) {
+        for (const c of edgeAssumption.split(' AND ')) {
+          assumptions.add(c.trim());
+        }
+      }
+    }
+    return assumptions.size > 0 ? Array.from(assumptions).join(' AND ') : undefined;
+  };
+
   const runConsistency = (nextStatus: string): { ok: boolean; witnessPath?: string[]; error?: string } => {
     const original = adjacencyMatrix.matrix[source][target];
     adjacencyMatrix.matrix[source][target] = {
@@ -338,15 +374,16 @@ export function tryDowngrade(
    * This should be called before buildContradictionDescription.
    */
   const calculateMergedAssumption = (witnessIds: string[]): string | undefined => {
-    const pathIndices = witnessIds.map((id) => languageIds.indexOf(id)).filter((i) => i >= 0);
-    const pathAssumption = collectAssumptionsUnion(pathIndices, adjacencyMatrix);
+    const pathAssumption = collectWitnessPathAssumption(witnessIds);
     
     // Get the contradicting edge (from path start to path end)
     const pathStart = witnessIds[0];
     const pathEnd = witnessIds[witnessIds.length - 1];
     const startIdx = languageIds.indexOf(pathStart);
     const endIdx = languageIds.indexOf(pathEnd);
-    const contradictingEdge = adjacencyMatrix.matrix[startIdx]?.[endIdx];
+    const contradictingEdge = isTestedEdge(pathStart, pathEnd)
+      ? null
+      : adjacencyMatrix.matrix[startIdx]?.[endIdx];
     const contradictingAssumption = contradictingEdge?.assumption;
     
     // Merge all assumptions
@@ -367,8 +404,16 @@ export function tryDowngrade(
     triedStatus: string,
     witnessIds: string[]
   ): void => {
-    const pathIndices = witnessIds.map((id) => languageIds.indexOf(id)).filter((i) => i >= 0);
-    const refs = collectRefsUnion(pathIndices, adjacencyMatrix);
+    const refs = new Set(collectWitnessPathRefs(witnessIds));
+    const pathStart = witnessIds[0];
+    const pathEnd = witnessIds[witnessIds.length - 1];
+    const startIdx = languageIds.indexOf(pathStart);
+    const endIdx = languageIds.indexOf(pathEnd);
+    if (!isTestedEdge(pathStart, pathEnd)) {
+      for (const ref of adjacencyMatrix.matrix[startIdx]?.[endIdx]?.refs ?? []) {
+        refs.add(ref);
+      }
+    }
     
     // Calculate merged assumption from path + contradicting edge
     const assumption = calculateMergedAssumption(witnessIds);
@@ -380,7 +425,7 @@ export function tryDowngrade(
     }
     adjacencyMatrix.matrix[source][target] = {
       status: nextStatus,
-      refs,
+      refs: Array.from(refs),
       assumption,
       hidden: false,
       derived: true,
@@ -405,9 +450,8 @@ export function tryDowngrade(
       derived: relation?.derived ?? false
     };
     
-    // Calculate merged assumption first (for both the field and description text)
-    // Merge assumptions: original assumption + path assumptions + contradicting edge assumption
-    const pathIndices = witnessIds.map((id) => languageIds.indexOf(id)).filter((i) => i >= 0);
+    // Relation-level assumptions still include the original quasi half, but the
+    // newly derived no-poly proof should only use its own witness assumptions.
     const baseMergedAssumption = calculateMergedAssumption(witnessIds);
     const originalAssumption = relation?.assumption;
     const allAssumptions = new Set<string>();
@@ -420,8 +464,8 @@ export function tryDowngrade(
     const mergedAssumption = allAssumptions.size > 0 ? Array.from(allAssumptions).join(' AND ') : undefined;
     
     // Create derived noPolyDescription from contradiction (with merged assumption)
-    const noPolyDesc = buildContradictionDescription('poly', witnessIds, mergedAssumption);
-    const noPolyRefs = collectRefsUnion(pathIndices, adjacencyMatrix);
+    const noPolyDesc = buildContradictionDescription('poly', witnessIds, baseMergedAssumption);
+    const noPolyRefs = collectWitnessPathRefs(witnessIds);
     const noPolyDerivOrder = nextDerivationOrder();
     const noPolyDescription: DescriptionComponent = {
       description: noPolyDesc,

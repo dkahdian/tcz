@@ -330,6 +330,28 @@
   let cellSize = $state({ width: 0, height: 0, headerWidth: 0 });
   let measured = $state(false);
   let measureRequest = 0;
+  let savedScrollPosition = { left: 0, top: 0 };
+  let restoringScroll = false;
+
+  function rememberScrollPosition() {
+    if (!matrixScrollEl || restoringScroll) return;
+    savedScrollPosition = {
+      left: matrixScrollEl.scrollLeft,
+      top: matrixScrollEl.scrollTop
+    };
+  }
+
+  function restoreScrollPosition() {
+    if (!matrixScrollEl) return;
+    const maxLeft = Math.max(0, matrixScrollEl.scrollWidth - matrixScrollEl.clientWidth);
+    const maxTop = Math.max(0, matrixScrollEl.scrollHeight - matrixScrollEl.clientHeight);
+    restoringScroll = true;
+    matrixScrollEl.scrollLeft = Math.min(savedScrollPosition.left, maxLeft);
+    matrixScrollEl.scrollTop = Math.min(savedScrollPosition.top, maxTop);
+    queueMicrotask(() => {
+      restoringScroll = false;
+    });
+  }
 
   function updateCellSize() {
     if (!matrixScrollEl || !tableEl) return;
@@ -341,6 +363,7 @@
     if (result) {
       cellSize = result;
       measured = true;
+      queueMicrotask(() => restoreScrollPosition());
     }
   }
 
@@ -365,6 +388,7 @@
   $effect(() => {
     visibleLanguages;
     operationCodes;
+    rememberScrollPosition();
     measured = false;
     queueMicrotask(() => scheduleCellSizeUpdate());
   });
@@ -384,7 +408,7 @@
 </script>
 
 <div class="matrix-view" aria-live="polite">
-  <div class="matrix-scroll" bind:this={matrixScrollEl} role="region" aria-label="{operationType === 'queries' ? 'Queries' : 'Transformations'} matrix view">
+  <div class="matrix-scroll" bind:this={matrixScrollEl} onscroll={rememberScrollPosition} role="region" aria-label="{operationType === 'queries' ? 'Queries' : 'Transformations'} matrix view">
     <table 
       class="matrix-table" 
       bind:this={tableEl}

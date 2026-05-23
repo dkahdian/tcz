@@ -945,22 +945,20 @@ function deriveNoQuasiEdge(
 
   const aRefs = aSupport?.refs ?? [];
   const bRefs = bSupport?.refs ?? [];
-  const queryAssumption = mergeAssumptions(aSupport?.assumption, bSupport?.assumption);
-  // Merge with existing edge assumption (e.g., from a prior no-poly-unknown-quasi derivation)
-  const assumption = mergeAssumptions(queryAssumption, currentRelation?.assumption);
+  const assumption = mergeAssumptions(aSupport?.assumption, bSupport?.assumption);
   const description =
     `\\opref{${langA.id}}{${queryCode}} in quasipolynomial time${formatInlineAssumption(aSupport?.assumption)}, but ` +
     `\\nopref{${langB.id}}{${queryCode}} in quasipolynomial time${formatInlineAssumption(bSupport?.assumption)}. If ${idToName(langB.id)} could compile to ${idToName(langA.id)} in ` +
     `quasipolynomial time, ${idToName(langB.id)} could support ${opLabel(queryCode)} by first compiling to ${idToName(langA.id)}. ` +
     `Therefore ${idToName(langB.id)} cannot compile to ${idToName(langA.id)} in quasipolynomial time${formatInlineAssumption(assumption)}.`;
-  const refs = uniqueRefs(aRefs, bRefs, currentRelation?.refs);
+  const refs = uniqueRefs(aRefs, bRefs);
 
   // Transition: null / unknown-both / no-poly-unknown-quasi → no-quasi
   adjacencyMatrix.matrix[bIdx][aIdx] = {
     status: 'no-quasi',
     refs,
     assumption,
-    separatingFunctionIds: currentRelation?.separatingFunctionIds,
+    separatingFunctionIds: undefined,
     hidden: false,
     derived: true,
     description,
