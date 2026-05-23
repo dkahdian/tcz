@@ -103,6 +103,8 @@
         return '$\\leq_p^? \\ \\leq_q^\\ast$';
       case 'no-quasi':
         return '$\\not\\leq_q^\\ast$';
+      case 'not-poly':
+        return '$\\not\\leq^\\ast$';
       default:
         return notation;
     }
@@ -137,9 +139,9 @@
     return STATUS_CLASSES[displayStatus] ?? STATUS_CLASSES[status] ?? '';
   }
 
-  function getSandboxOptionHtml(status: string): string {
+  function getSandboxOptionHtml(status: string, hasAssumption = false): string {
     const displayStatus = getSandboxDisplayStatus(status);
-    return getStatusHtml(displayStatus) || getStatusHtml(status);
+    return getStatusHtml(displayStatus, hasAssumption) || getStatusHtml(status, hasAssumption);
   }
 
   function isOriginalSandboxOption(status: string, baselineValue: string): boolean {
@@ -302,7 +304,8 @@
 
   function validSandboxOptions(currentValue: string): string[] {
     if (!showQuasipolynomialSandboxOptions) {
-      return DEFAULT_SANDBOX_EDGE_OPTIONS;
+      const displayValue = getSandboxDisplayStatus(currentValue || UNKNOWN_STATUS);
+      return displayValue === 'unknown' ? DEFAULT_SANDBOX_EDGE_OPTIONS : [];
     }
 
     switch (currentValue) {
@@ -464,20 +467,22 @@
                     </button>
                     {#if isSandboxEditing(colLanguage.id, rowLanguage.id)}
                       {@const currentValue = getSandboxCellValue(relation)}
-                      {@const baselineValue = getSandboxCellValue(getBaselineRelation(colLanguage.id, rowLanguage.id))}
+                      {@const baselineRelation = getBaselineRelation(colLanguage.id, rowLanguage.id)}
+                      {@const baselineValue = getSandboxCellValue(baselineRelation)}
                       {@const options = validSandboxOptions(baselineValue)}
                       {#if options.length > 0}
                         <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${colLanguage.language.name} to ${rowLanguage.language.name}`}>
                           {#each options as option}
+                            {@const isOriginalOption = isOriginalSandboxOption(option, baselineValue)}
                             <button
                               type="button"
-                              class={`sandbox-option ${option ? getSandboxOptionClass(option) : 'sandbox-option--blank'} ${isOriginalSandboxOption(option, baselineValue) ? 'is-original' : ''}`}
+                              class={`sandbox-option ${option ? getSandboxOptionClass(option) : 'sandbox-option--blank'} ${isOriginalOption ? 'is-original' : ''}`}
                               title={option ? STATUS_LABELS[getSandboxDisplayStatus(option)] ?? STATUS_LABELS[option] : 'Blank'}
                               aria-label={option ? STATUS_LABELS[getSandboxDisplayStatus(option)] ?? STATUS_LABELS[option] : 'Blank'}
                               onclick={(event) => handleSandboxStatusClick(event, colLanguage.id, rowLanguage.id, option, currentValue, baselineValue)}
                             >
                               {#if option}
-                                <span class="cell-short">{@html getSandboxOptionHtml(option)}</span>
+                                <span class="cell-short">{@html getSandboxOptionHtml(option, isOriginalOption && Boolean(baselineRelation?.assumption))}</span>
                               {/if}
                             </button>
                           {/each}
@@ -499,20 +504,22 @@
                       </button>
                       {#if isSandboxEditing(colLanguage.id, rowLanguage.id)}
                         {@const currentValue = getSandboxCellValue(null)}
-                        {@const baselineValue = getSandboxCellValue(getBaselineRelation(colLanguage.id, rowLanguage.id))}
+                        {@const baselineRelation = getBaselineRelation(colLanguage.id, rowLanguage.id)}
+                        {@const baselineValue = getSandboxCellValue(baselineRelation)}
                         {@const options = validSandboxOptions(baselineValue)}
                         {#if options.length > 0}
                           <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${colLanguage.language.name} to ${rowLanguage.language.name}`}>
                             {#each options as option}
+                              {@const isOriginalOption = isOriginalSandboxOption(option, baselineValue)}
                               <button
                                 type="button"
-                                class={`sandbox-option ${option ? getSandboxOptionClass(option) : 'sandbox-option--blank'} ${isOriginalSandboxOption(option, baselineValue) ? 'is-original' : ''}`}
+                                class={`sandbox-option ${option ? getSandboxOptionClass(option) : 'sandbox-option--blank'} ${isOriginalOption ? 'is-original' : ''}`}
                                 title={option ? STATUS_LABELS[getSandboxDisplayStatus(option)] ?? STATUS_LABELS[option] : 'Blank'}
                                 aria-label={option ? STATUS_LABELS[getSandboxDisplayStatus(option)] ?? STATUS_LABELS[option] : 'Blank'}
                                 onclick={(event) => handleSandboxStatusClick(event, colLanguage.id, rowLanguage.id, option, currentValue, baselineValue)}
                               >
                                 {#if option}
-                                  <span class="cell-short">{@html getSandboxOptionHtml(option)}</span>
+                                  <span class="cell-short">{@html getSandboxOptionHtml(option, isOriginalOption && Boolean(baselineRelation?.assumption))}</span>
                                 {/if}
                               </button>
                             {/each}
