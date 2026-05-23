@@ -335,7 +335,9 @@
     if (!matrixScrollEl || !tableEl) return;
     const numCols = operationCodes.length + 1; // +1 for header
     const numRows = visibleLanguages.length + 1; // +1 for header
-    const result = measureCellSize(matrixScrollEl, tableEl, numCols, numRows);
+    const result = measureCellSize(matrixScrollEl, tableEl, numCols, numRows, {
+      heightMode: 'uniform'
+    });
     if (result) {
       cellSize = result;
       measured = true;
