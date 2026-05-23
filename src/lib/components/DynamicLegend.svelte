@@ -58,49 +58,49 @@
     {
       arrow: 'triangle',
       filled: true,
-      description: 'polynomial time.',
+      description: 'A compiles to B with polynomial size increase.',
       status: 'poly'
     },
     {
       arrow: 'square',
       filled: true,
-      description: 'exponential time.',
+      description: 'A cannot compile to B with quasipolynomial size increase.',
       status: 'no-quasi'
     },
     {
       arrow: 'tee',
       filled: true,
-      description: 'quasipolynomial time.',
+      description: 'A compiles to B with quasipolynomial size increase.',
       status: 'no-poly-quasi'
     },
     {
       arrow: 'square',
       filled: true,
-      description: 'not polynomial time.',
+      description: 'A does not compile to B with polynomial size increase.',
       status: 'not-poly'
     },
     {
       arrow: 'tee',
       filled: false,
-      description: 'quasi (?). Not poly.',
+      description: 'A does not compile to B with polynomial size increase; quasipolynomial is unknown.',
       status: 'no-poly-unknown-quasi'
     },
     {
       arrow: 'triangle-cross',
       filled: false,
-      description: 'quasi. Poly (?).',
+      description: 'A compiles to B with quasipolynomial size increase; polynomial is unknown.',
       status: 'unknown-poly-quasi'
     },
     {
       arrow: 'square',
       filled: false,
-      description: 'unknown.',
+      description: 'Unknown whether A compiles to B.',
       status: 'unknown-both'
     },
     {
       arrow: 'square',
       filled: false,
-      description: 'unknown.',
+      description: 'Unknown whether A compiles to B.',
       status: 'unknown'
     }
   ];
@@ -126,6 +126,37 @@
     
     // Return only edge types that appear in the visible graph
     return allEdgeTypes.filter(et => statusesInGraph.has(et.status));
+  });
+
+  const displayedGraphEdgeTypes = $derived.by(() => {
+    const statuses = new Set(visibleEdgeTypes.map((edge) => edge.status));
+    const rows: EdgeType[] = [];
+    const byStatus = new Map(allEdgeTypes.map((edge) => [edge.status, edge]));
+
+    const add = (status: string, description?: string) => {
+      const edge = byStatus.get(status);
+      if (!edge) return;
+      rows.push(description ? { ...edge, description } : edge);
+    };
+
+    if (statuses.has('poly')) {
+      add('poly');
+    }
+    if (statuses.has('no-poly-quasi') || statuses.has('unknown-poly-quasi')) {
+      add('no-poly-quasi', 'A compiles to B with quasipolynomial size increase.');
+    }
+    if (statuses.has('no-quasi')) {
+      add('no-quasi');
+    }
+    if (
+      statuses.has('unknown') ||
+      statuses.has('unknown-both') ||
+      statuses.has('no-poly-unknown-quasi')
+    ) {
+      add('unknown-both', 'Unknown whether A compiles to B.');
+    }
+
+    return rows;
   });
 
   const hasVisibleConditionalSuccinctness = $derived.by(() => {
@@ -264,7 +295,7 @@
   });
 
   function renderAllGraphs() {
-    visibleEdgeTypes.forEach((edge) => {
+    displayedGraphEdgeTypes.forEach((edge) => {
       const container = containerRefs[edge.status];
       if (!container) {
         return;
@@ -328,7 +359,7 @@
   // Re-render when visible edge types change
   $effect(() => {
     // Access visibleEdgeTypes to create dependency
-    const types = visibleEdgeTypes;
+    const types = displayedGraphEdgeTypes;
     if (Object.keys(containerRefs).length > 0 && viewMode === 'graph') {
       setTimeout(() => {
         renderAllGraphs();
@@ -338,17 +369,14 @@
 </script>
 
 <div class="legends-container">
-  {#if visibleEdgeTypes.length > 0 && (viewMode === 'graph' || viewMode === 'succinctness')}
+  {#if (viewMode === 'graph' && displayedGraphEdgeTypes.length > 0) || (viewMode === 'succinctness' && visibleEdgeTypes.length > 0)}
     <div class="legend">
       <h3 class="text-lg font-semibold text-gray-700 mb-2">Succinctness</h3>
       
       {#if viewMode === 'graph'}
         <!-- Graph view: show arrowhead examples -->
-        <p class="text-gray-600 text-sm mb-4">
-          A compiles to B in _______
-        </p>
         <div class="legend-items">
-          {#each visibleEdgeTypes as edge (edge.status)}
+          {#each displayedGraphEdgeTypes as edge (edge.status)}
             <div class="legend-row">
               <div class="edge-example">
                 <div class="cyto-container" bind:this={containerRefs[edge.status]}></div>
@@ -360,32 +388,41 @@
       {:else}
         <!-- Matrix view: show LaTeX notation with descriptions -->
         <p class="text-gray-600 text-sm mb-4">
-          For (Row A, Col B), A ___ B implies ________ from language B to A:
+          In row A and column B,
         </p>
         <div class="legend-items matrix-legend">
-          {#each visibleEdgeTypes as edge (edge.status)}
-            {@const complexity = filteredData.complexities[edge.status]}
-            {#if complexity}
-              <div class="legend-row matrix-row">
-                <span class="matrix-notation" style="color: {complexity.color}">
-                  <MathText text={complexity.notation} className="inline" />
-                </span>
-                <span class="matrix-description">{complexity.description}</span>
-              </div>
-            {/if}
-          {/each}
-          {#if hasVisibleConditionalSuccinctness}
-            <div class="legend-row matrix-row assumption-row">
-              <span class="matrix-notation assumption-marker">*</span>
-              <span class="matrix-description">conditional result (assuming the listed condition)</span>
-            </div>
-          {/if}
+          <div class="legend-row matrix-row">
+            <span class="matrix-notation" style="color: {filteredData.complexities.poly?.color ?? '#22c55e'}">
+              <MathText text={'$A \\leq_p B$'} className="inline" />
+            </span>
+            <span class="matrix-description">B compiles to A with polynomial size increase.</span>
+          </div>
+          <div class="legend-row matrix-row">
+            <span class="matrix-notation" style="color: {filteredData.complexities['no-poly-quasi']?.color ?? '#f97316'}">
+              <MathText text={'$A \\leq_q B$'} className="inline" />
+            </span>
+            <span class="matrix-description">B compiles to A with quasipolynomial size increase.</span>
+          </div>
+          <div class="legend-row matrix-row assumption-row">
+            <span class="matrix-notation assumption-marker">
+              <MathText text={'$\\leq^*$'} className="inline" />
+            </span>
+            <span class="matrix-description">
+              Relation <MathText text={'$\\leq$'} className="inline" /> holds under complexity assumption.
+            </span>
+          </div>
+          <div class="legend-row matrix-row">
+            <span class="matrix-notation">
+              <MathText text={'$\\leq^?$'} className="inline" />
+            </span>
+            <span class="matrix-description">Unknown whether <MathText text={'$\\leq$'} className="inline" /> holds.</span>
+          </div>
           {#if hasVisibleDerivedCells}
             <div class="legend-row matrix-row">
               <span class="matrix-notation">
                 <span class="derived-swatch" aria-hidden="true"></span>
               </span>
-              <span class="matrix-description">Derived automatically</span>
+              <span class="matrix-description">Automated reasoning was used.</span>
             </div>
           {/if}
         </div>
@@ -405,7 +442,7 @@
       {#if hasVisibleDerivedCells}
         <div class="legend-row">
           <span class="derived-swatch" aria-hidden="true"></span>
-          <span>Derived automatically</span>
+          <span>Automated reasoning was used.</span>
         </div>
       {/if}
     </div>
