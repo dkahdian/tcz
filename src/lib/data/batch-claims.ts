@@ -55,8 +55,8 @@ function citationRefs(text?: string): string[] {
 function normalizeEdgeRefArg(value: string): string {
   return value
     .trim()
-    .replace(/^\\langref\{([^{}]+)\}$/i, '$1')
-    .replace(/^\\langfam\{([^{}]+)\}\{([^{}]+)\}$/i, '$1_$2')
+    .replace(/^\\langref\{([^{}]+)\}(?:\{[^{}]*\})?$/i, '$1')
+    .replace(/^\\langfam\{([^{}]+)\}\{([^{}]+)\}(?:\{[^{}]*\})?$/i, '$1_$2')
     .replace(/\\textless\{\}/gi, '<')
     .replace(/\\textless(?![A-Za-z])/gi, '<')
     .replace(/\$<\$/g, '<')

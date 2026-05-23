@@ -39,8 +39,8 @@
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\eps}{\varepsilon}
 % Cross-reference commands (rendered as links in the web UI)
-\newcommand{\langref}[1]{\textbf{#1}}
-\newcommand{\langfam}[2]{\textbf{#1$_{#2}$}}
+\NewDocumentCommand{\langref}{m g}{\textbf{#1\IfNoValueF{#2}{#2}}}
+\NewDocumentCommand{\langfam}{m m g}{\textbf{#1$_{#2}$\IfNoValueF{#3}{#3}}}
 \NewDocumentCommand{\defref}{m g}{\hyperref[kdef:#1]{\textbf{\IfNoValueTF{#2}{#1}{#2}}}}
 \newcommand{\edgeref}[2]{#1 compiles to #2}
 \newcommand{\nedgeref}[2]{#1 cannot compile to #2}
@@ -94,7 +94,7 @@ Boolean circuits with AND and OR gates; literals as inputs; and whose AND gates 
 
 Equivalently, \langref{dec-DNNF} formulas are \langref{d-DNNF} formulas whose OR-gates may only appear in \emph{decisions/tests}.
 
-Equivalently, \langref{dec-DNNF} formulas are (up to syntax) \langref{FBDD} formulas that may additionally contain decomposable AND-gates.
+Equivalently, \langref{dec-DNNF} formulas are (up to syntax) \langref{FBDD}{s} that may additionally contain decomposable AND-gates.
 \end{definition}
 
 \begin{definition}[\langref{dec-SDNNF}]\label{def:lang_0f27d539}
@@ -177,7 +177,7 @@ For each fixed variable order $<$, binary decision diagrams such that each root-
 
 Equivalently, oblivious read-once branching programs respecting the variable order $<$.\citep{Wegener_2000}
 
-Equivalently, \langfam{OBDD}{<} formulas are \langref{FBDD} formulas required to respect the order $<$ on every root-to-sink path.
+Equivalently, \langfam{OBDD}{<}{s} are \langref{FBDD}{s} required to respect the order $<$ on every root-to-sink path.
 \end{definition}
 
 \begin{definition}[\langref{PI}]\label{def:lang_27fffab2}

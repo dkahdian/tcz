@@ -95,7 +95,7 @@
         ]
       },
       "claimTemplate": "For each language $\\mathcal{L}$ such that \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{DNNF},\n$\\mathcal{L}$ supports Bounded Conjunction not in quasipolynomial time \\citep{TCZ_Forthcoming}.",
-      "descriptionTemplate": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{DNNF}, $\\mathcal{L}$ cannot support bounded conjunction.",
+      "descriptionTemplate": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{DNNF}, $\\mathcal{L}$ cannot support bounded conjunction.",
       "refs": [
         "TCZ_Forthcoming"
       ]
@@ -134,7 +134,7 @@
         ]
       },
       "claimTemplate": "For each language $\\mathcal{L}$ such that \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{SDNNF},\n$\\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \\citep{TCZ_Forthcoming}.",
-      "descriptionTemplate": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{SDNNF}, $\\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.",
+      "descriptionTemplate": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{SDNNF}, $\\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.",
       "refs": [
         "TCZ_Forthcoming"
       ]
@@ -173,7 +173,7 @@
         ]
       },
       "claimTemplate": "For each language $\\mathcal{L}$ such that \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{d-DNNF},\n$\\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \\citep{TCZ_Forthcoming}.",
-      "descriptionTemplate": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{d-DNNF}, $\\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.",
+      "descriptionTemplate": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{d-DNNF}, $\\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.",
       "refs": [
         "TCZ_Forthcoming"
       ]
@@ -778,7 +778,7 @@
               "VanDenBroeck_2015",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{cSDD} and \\edgeref{cSDD}{DNNF}, \\langref{cSDD} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{cSDD} and \\edgeref{cSDD}{DNNF}, \\langref{cSDD} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -790,7 +790,7 @@
               "VanDenBroeck_2015",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{cSDD} and \\edgeref{cSDD}{SDNNF}, \\langref{cSDD} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{cSDD} and \\edgeref{cSDD}{SDNNF}, \\langref{cSDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
@@ -825,7 +825,7 @@
             "refs": [
               "VanDenBroeck_2015"
             ],
-            "description": "Every \\langref{cSDD} respects some vtree $T$. Apply the fixed-vtree negation procedure for \\langfam{cSDD}{T}: \\citet{VanDenBroeck_2015} proved that reduced \\langfam{SDD}{T} formulas support negation in polynomial time by passing negation through the subs. The result is still a \\langfam{cSDD}{T} formula, hence a \\langref{cSDD} formula."
+            "description": "Every \\langref{cSDD} respects some vtree $T$. Apply the fixed-vtree negation procedure for \\langfam{cSDD}{T}: \\citet{VanDenBroeck_2015} proved that reduced \\langfam{SDD}{T}{s} support negation in polynomial time by passing negation through the subs. The result is still a \\langfam{cSDD}{T} formula, hence a \\langref{cSDD} formula."
           }
         }
       },
@@ -964,7 +964,7 @@
               "Darwiche_2002",
               "Darwiche_2001a"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{d-DNNF} and \\edgeref{d-DNNF}{DNNF}, \\langref{d-DNNF} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{d-DNNF} and \\edgeref{d-DNNF}{DNNF}, \\langref{d-DNNF} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -993,7 +993,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{d-DNNF}, \\langref{d-DNNF} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{d-DNNF}, \\langref{d-DNNF} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-d-dnnf-bounded-disjunction-lower-bound"
           },
@@ -1234,7 +1234,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{d-SDNNF} and \\edgeref{d-SDNNF}{DNNF}, \\langref{d-SDNNF} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{d-SDNNF} and \\edgeref{d-SDNNF}{DNNF}, \\langref{d-SDNNF} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -1244,7 +1244,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{d-SDNNF} and \\edgeref{d-SDNNF}{SDNNF}, \\langref{d-SDNNF} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{d-SDNNF} and \\edgeref{d-SDNNF}{SDNNF}, \\langref{d-SDNNF} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
@@ -1904,7 +1904,7 @@
               "Amarilli_2018",
               "Darwiche_2002"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{DNNF}, \\langref{DNNF} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{DNNF}, \\langref{DNNF} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -2103,7 +2103,7 @@
               "TCZ_Forthcoming",
               "Darwiche_2002"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{FBDD} and \\edgeref{FBDD}{DNNF}, \\langref{FBDD} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{FBDD} and \\edgeref{FBDD}{DNNF}, \\langref{FBDD} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -2135,7 +2135,7 @@
               "TCZ_Forthcoming",
               "Darwiche_2002"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{FBDD} and \\edgeref{FBDD}{d-DNNF}, \\langref{FBDD} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{FBDD} and \\edgeref{FBDD}{d-DNNF}, \\langref{FBDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-d-dnnf-bounded-disjunction-lower-bound"
           },
@@ -2158,7 +2158,7 @@
             "refs": [
               "Wegener_2000"
             ],
-            "description": "Let $ROW_n$ and $COL_n$ test whether an $n \\times n$ Boolean matrix has an all-1 row or an all-1 column. The selector construction $(s \\land ROW_n) \\lor (\\neg s \\land COL_n)$ has polynomial-size \\langref{FBDD} formulas: the top variable $s$ chooses a rowwise or columnwise computation. Forgetting $s$ yields $ROW_n \\lor COL_n$, whose \\langref{FBDD} size is $\\Omega(n^{-7/2}2^n)$ by \\citet[Theorem 6.2.13]{Wegener_2000}."
+            "description": "Let $ROW_n$ and $COL_n$ test whether an $n \\times n$ Boolean matrix has an all-1 row or an all-1 column. The selector construction $(s \\land ROW_n) \\lor (\\neg s \\land COL_n)$ has polynomial-size \\langref{FBDD}{s}: the top variable $s$ chooses a rowwise or columnwise computation. Forgetting $s$ yields $ROW_n \\lor COL_n$, whose \\langref{FBDD} size is $\\Omega(n^{-7/2}2^n)$ by \\citet[Theorem 6.2.13]{Wegener_2000}."
           },
           "FO": {
             "complexity": "no-quasi",
@@ -2769,7 +2769,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{nFBDD} and \\edgeref{nFBDD}{DNNF}, \\langref{nFBDD} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{nFBDD} and \\edgeref{nFBDD}{DNNF}, \\langref{nFBDD} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -3269,7 +3269,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{nOBDD} and \\edgeref{nOBDD}{DNNF}, \\langref{nOBDD} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{nOBDD} and \\edgeref{nOBDD}{DNNF}, \\langref{nOBDD} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -3279,7 +3279,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{nOBDD} and \\edgeref{nOBDD}{SDNNF}, \\langref{nOBDD} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{nOBDD} and \\edgeref{nOBDD}{SDNNF}, \\langref{nOBDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
@@ -3355,7 +3355,7 @@
             "refs": [
               "Bryant_1986"
             ],
-            "description": "Model counting on \\langfam{OBDD}{<} formulas can be done in polynomial time by a single bottom-up pass \\citep{Bryant_1986, Bryant_1992}."
+            "description": "Model counting on \\langfam{OBDD}{<}{s} can be done in polynomial time by a single bottom-up pass \\citep{Bryant_1986, Bryant_1992}."
           },
           "EQ": {
             "complexity": "poly",
@@ -3364,7 +3364,7 @@
               "Bryant_1992",
               "Meinel_Theobald_1998"
             ],
-            "description": "After reducing both diagrams, \\langfam{OBDD}{<} formulas are canonical: two functions are equivalent iff their reduced \\langfam{OBDD}{<} diagrams are identical. This makes EQ a structural isomorphism check \\citep{Bryant_1986, Bryant_1992, Meinel_Theobald_1998} (Theorem 8.11)."
+            "description": "After reducing both diagrams, \\langfam{OBDD}{<}{s} are canonical: two functions are equivalent iff their reduced \\langfam{OBDD}{<} diagrams are identical. This makes EQ a structural isomorphism check \\citep{Bryant_1986, Bryant_1992, Meinel_Theobald_1998} (Theorem 8.11)."
           },
           "ME": {
             "complexity": "poly",
@@ -3525,7 +3525,7 @@
       },
       "tags": [],
       "id": "lang_d69995dd",
-      "definition": "For each fixed variable order $<$, binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the order $<$.\\citep{Bryant_1986}\n\nEquivalently, oblivious read-once branching programs respecting the variable order $<$.\\citep{Wegener_2000}\n\nEquivalently, \\langfam{OBDD}{<} formulas are \\langref{FBDD} formulas required to respect the order $<$ on every root-to-sink path.",
+      "definition": "For each fixed variable order $<$, binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the order $<$.\\citep{Bryant_1986}\n\nEquivalently, oblivious read-once branching programs respecting the variable order $<$.\\citep{Wegener_2000}\n\nEquivalently, \\langfam{OBDD}{<}{s} are \\langref{FBDD}{s} required to respect the order $<$ on every root-to-sink path.",
       "definitionRefs": []
     },
     {
@@ -3914,7 +3914,7 @@
               "VanDenBroeck_2015",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{SDD} and \\edgeref{SDD}{DNNF}, \\langref{SDD} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{SDD} and \\edgeref{SDD}{DNNF}, \\langref{SDD} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -3926,7 +3926,7 @@
               "VanDenBroeck_2015",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{SDD} and \\edgeref{SDD}{SDNNF}, \\langref{SDD} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{SDD} and \\edgeref{SDD}{SDNNF}, \\langref{SDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
@@ -4188,14 +4188,14 @@
             "refs": [
               "Darwiche_2011"
             ],
-            "description": "The Apply algorithm combines two \\langfam{SDD}{T} sentences using any Boolean operator in polytime. In particular, two \\langfam{SDD}{T} formulas can be conjoined in polytime via Apply \\citep{Darwiche_2011}."
+            "description": "The Apply algorithm combines two \\langfam{SDD}{T} sentences using any Boolean operator in polytime. In particular, two \\langfam{SDD}{T}{s} can be conjoined in polytime via Apply \\citep{Darwiche_2011}."
           },
           "OR_BC": {
             "complexity": "poly",
             "refs": [
               "Darwiche_2011"
             ],
-            "description": "The Apply algorithm combines two \\langfam{SDD}{T} sentences using any Boolean operator in polytime. In particular, two \\langfam{SDD}{T} formulas can be disjoined in polytime via Apply \\citep{Darwiche_2011}."
+            "description": "The Apply algorithm combines two \\langfam{SDD}{T} sentences using any Boolean operator in polytime. In particular, two \\langfam{SDD}{T}{s} can be disjoined in polytime via Apply \\citep{Darwiche_2011}."
           },
           "CD": {
             "complexity": "poly",
@@ -4417,7 +4417,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{SDNNF} and \\edgeref{SDNNF}{DNNF}, \\langref{SDNNF} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{SDNNF} and \\edgeref{SDNNF}{DNNF}, \\langref{SDNNF} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -4427,7 +4427,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{SDNNF}, \\langref{SDNNF} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{SDNNF}, \\langref{SDNNF} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
@@ -4903,7 +4903,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{uFBDD} and \\edgeref{uFBDD}{DNNF}, \\langref{uFBDD} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{uFBDD} and \\edgeref{uFBDD}{DNNF}, \\langref{uFBDD} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -4913,7 +4913,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{uFBDD} and \\edgeref{uFBDD}{d-DNNF}, \\langref{uFBDD} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{uFBDD} and \\edgeref{uFBDD}{d-DNNF}, \\langref{uFBDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-d-dnnf-bounded-disjunction-lower-bound"
           },
@@ -5154,7 +5154,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{uOBDD} and \\edgeref{uOBDD}{DNNF}, \\langref{uOBDD} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{uOBDD} and \\edgeref{uOBDD}{DNNF}, \\langref{uOBDD} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -5164,7 +5164,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{uOBDD} and \\edgeref{uOBDD}{SDNNF}, \\langref{uOBDD} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{uOBDD} and \\edgeref{uOBDD}{SDNNF}, \\langref{uOBDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
@@ -5242,7 +5242,7 @@
               "Meinel_Theobald_1998"
             ],
             "assumption": "P \\neq NP",
-            "description": "Sentential entailment for \\langref{OBDD} is coNP-complete. \\citet[Lemma 8.14]{Meinel_Theobald_1998} prove that checking consistency of two \\langfam{OBDD}{<} formulas using different variable orders is NP-complete. Since \\langref{OBDD} supports negation, consistency of $\\alpha \\land \\beta$ is equivalent to $\\alpha \\not\\models \\neg\\beta$, so polynomial-time SE for arbitrary \\langref{OBDD} formulas would imply polynomial-time consistency for such pairs \\citep{Darwiche_2002}."
+            "description": "Sentential entailment for \\langref{OBDD} is coNP-complete. \\citet[Lemma 8.14]{Meinel_Theobald_1998} prove that checking consistency of two \\langfam{OBDD}{<}{s} using different variable orders is NP-complete. Since \\langref{OBDD} supports negation, consistency of $\\alpha \\land \\beta$ is equivalent to $\\alpha \\not\\models \\neg\\beta$, so polynomial-time SE for arbitrary \\langref{OBDD}{s} would imply polynomial-time consistency for such pairs \\citep{Darwiche_2002}."
           },
           "CO": {
             "complexity": "poly",
@@ -5340,7 +5340,7 @@
               "Amarilli_2018",
               "Darwiche_2002"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{DNNF}, \\langref{OBDD} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{DNNF}, \\langref{OBDD} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -5375,7 +5375,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{SDNNF}, \\langref{OBDD} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{SDNNF}, \\langref{OBDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
@@ -5601,7 +5601,7 @@
               "Amarilli_2018",
               "Darwiche_2002"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{dec-DNNF} and \\edgeref{dec-DNNF}{DNNF}, \\langref{dec-DNNF} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{dec-DNNF} and \\edgeref{dec-DNNF}{DNNF}, \\langref{dec-DNNF} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -5611,7 +5611,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{dec-DNNF} and \\edgeref{dec-DNNF}{d-DNNF}, \\langref{dec-DNNF} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{dec-DNNF} and \\edgeref{dec-DNNF}{d-DNNF}, \\langref{dec-DNNF} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-d-dnnf-bounded-disjunction-lower-bound"
           },
@@ -5651,7 +5651,7 @@
         }
       },
       "tags": [],
-      "definition": "Boolean circuits with AND and OR gates; literals as inputs; and whose AND gates are \\emph{decomposable} (children mention disjoint sets of variables) and whose OR gates must appear in the form of \\emph{decisions/tests} (subcircuits of the form $(x\\land f)\\lor (\\bar{x}\\land g)$ where $x$ is a variable).\\citep{darwiche2007language}\n\nEquivalently, \\langref{dec-DNNF} formulas are \\langref{d-DNNF} formulas whose OR-gates may only appear in \\emph{decisions/tests}.\n\nEquivalently, \\langref{dec-DNNF} formulas are (up to syntax) \\langref{FBDD} formulas that may additionally contain decomposable AND-gates.",
+      "definition": "Boolean circuits with AND and OR gates; literals as inputs; and whose AND gates are \\emph{decomposable} (children mention disjoint sets of variables) and whose OR gates must appear in the form of \\emph{decisions/tests} (subcircuits of the form $(x\\land f)\\lor (\\bar{x}\\land g)$ where $x$ is a variable).\\citep{darwiche2007language}\n\nEquivalently, \\langref{dec-DNNF} formulas are \\langref{d-DNNF} formulas whose OR-gates may only appear in \\emph{decisions/tests}.\n\nEquivalently, \\langref{dec-DNNF} formulas are (up to syntax) \\langref{FBDD}{s} that may additionally contain decomposable AND-gates.",
       "definitionRefs": []
     },
     {
@@ -5851,7 +5851,7 @@
               "Amarilli_2018",
               "Darwiche_2002"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{dec-SDNNF} and \\edgeref{dec-SDNNF}{DNNF}, \\langref{dec-SDNNF} cannot support bounded conjunction.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{dec-SDNNF} and \\edgeref{dec-SDNNF}{DNNF}, \\langref{dec-SDNNF} cannot support bounded conjunction.",
             "derived": false,
             "batchId": "tcz-obdd-dnnf-bounded-conjunction-lower-bound"
           },
@@ -5861,7 +5861,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD} formulas of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{dec-SDNNF} and \\edgeref{dec-SDNNF}{SDNNF}, \\langref{dec-SDNNF} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{dec-SDNNF} and \\edgeref{dec-SDNNF}{SDNNF}, \\langref{dec-SDNNF} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
             "batchId": "tcz-obdd-sdnnf-bounded-disjunction-lower-bound"
           },
@@ -6352,7 +6352,7 @@
             "refs": [
               "VanDenBroeck_2015"
             ],
-            "description": "\\citet{VanDenBroeck_2015} proved that reduced \\langfam{SDD}{T} formulas support negation in polynomial time, by passing negation through the subs."
+            "description": "\\citet{VanDenBroeck_2015} proved that reduced \\langfam{SDD}{T}{s} support negation in polynomial time, by passing negation through the subs."
           },
           "AND_BC": {
             "complexity": "no-poly-unknown-quasi",
@@ -6590,14 +6590,14 @@
             "refs": [
               "TCZ_Forthcoming"
             ],
-            "description": "Disjunction of \\langfam{nOBDD}{<} formulas is obtained by adding a top-level nondeterministic $\\lor$-node whose children are the input formulas. Since all inputs respect the same fixed order $<$, the result is still a \\langfam{nOBDD}{<} formula."
+            "description": "Disjunction of \\langfam{nOBDD}{<}{s} is obtained by adding a top-level nondeterministic $\\lor$-node whose children are the input formulas. Since all inputs respect the same fixed order $<$, the result is still a \\langfam{nOBDD}{<} formula."
           },
           "AND_BC": {
             "complexity": "poly",
             "refs": [
               "Wegener_2000"
             ],
-            "description": "The usual product algorithm for conjoining \\langfam{OBDD}{<} formulas respecting the same variable order works for \\langfam{nOBDD}{<} formulas. Run the two diagrams in parallel according to the fixed order $<$, and accept exactly when both components accept. The resulting diagram still respects $<$. \\citet{Wegener_2000} gives the analogous construction for EXOR-OBDDs in Theorem 10.5.1."
+            "description": "The usual product algorithm for conjoining \\langfam{OBDD}{<}{s} respecting the same variable order works for \\langfam{nOBDD}{<}{s}. Run the two diagrams in parallel according to the fixed order $<$, and accept exactly when both components accept. The resulting diagram still respects $<$. \\citet{Wegener_2000} gives the analogous construction for EXOR-OBDDs in Theorem 10.5.1."
           },
           "CD": {
             "complexity": "poly",
@@ -6878,7 +6878,7 @@
             "refs": [
               "Wegener_2000"
             ],
-            "description": "The usual product algorithm for conjoining \\langfam{OBDD}{<} formulas respecting the same variable order works for \\langfam{uOBDD}{<} formulas. Run the two diagrams in parallel according to the fixed order $<$, and accept exactly when both components accept. The result is still unambiguous: for any satisfying assignment, each input has at most one accepting path, so the product has at most one accepting path. \\citet{Wegener_2000} gives the analogous construction for EXOR-OBDDs in Theorem 10.5.1."
+            "description": "The usual product algorithm for conjoining \\langfam{OBDD}{<}{s} respecting the same variable order works for \\langfam{uOBDD}{<}{s}. Run the two diagrams in parallel according to the fixed order $<$, and accept exactly when both components accept. The result is still unambiguous: for any satisfying assignment, each input has at most one accepting path, so the product has at most one accepting path. \\citet{Wegener_2000} gives the analogous construction for EXOR-OBDDs in Theorem 10.5.1."
           },
           "NOT_C": {
             "complexity": "no-poly-unknown-quasi",
@@ -8653,7 +8653,7 @@
         },
         {
           "status": "no-quasi",
-          "description": "\\langref{d-DNNF} formulas can polynomially represent the disjunction of two functions with conflicting variable orders, which forces \\langref{FBDD} formulas to grow exponentially to track the state of both orders within a single \"read-once\" path.",
+          "description": "\\langref{d-DNNF} formulas can polynomially represent the disjunction of two functions with conflicting variable orders, which forces \\langref{FBDD}{s} to grow exponentially to track the state of both orders within a single \"read-once\" path.",
           "refs": [
             "Darwiche_2000"
           ],
@@ -16812,7 +16812,7 @@
         },
         {
           "status": "no-quasi",
-          "description": "By \\citet[Corollary 3]{Bollig_2018}, the weighted sum function $WS_n$ can be represented by \\langfam{SDD}{T} formulas of size $O(n^3)$ respecting the vtrees used in the construction, but has exponential \\langref{FBDD} size. Hence \\langfam{SDD}{T} does not compile to \\langref{FBDD} in quasipolynomial size.",
+          "description": "By \\citet[Corollary 3]{Bollig_2018}, the weighted sum function $WS_n$ can be represented by \\langfam{SDD}{T}{s} of size $O(n^3)$ respecting the vtrees used in the construction, but has exponential \\langref{FBDD} size. Hence \\langfam{SDD}{T} does not compile to \\langref{FBDD} in quasipolynomial size.",
           "refs": [
             "Bollig_2018"
           ],
@@ -20007,7 +20007,7 @@
           ],
           "hidden": false,
           "derived": false,
-          "description": "Suppose an order $<$ existed so that \\langref{OBDD} compiled to \\langfam{OBDD}{<}. Take the first $2n$ variables in that order, call the first half $x_1,\\ldots,x_n$ and the second half $y_1,\\ldots,y_n$, and consider $EQ_n(x,y)$. This function has linear-size \\langref{OBDD} formulas under the interleaved order $x_1,y_1,\\ldots,x_n,y_n$, but exponential-size \\langfam{OBDD}{<} representations \\citep{Wegener_2000}. Thus no order $<$ can exist, and \\langref{OBDD} is not quasipolynomial-time compilable to \\langfam{OBDD}{<}.",
+          "description": "Suppose an order $<$ existed so that \\langref{OBDD} compiled to \\langfam{OBDD}{<}. Take the first $2n$ variables in that order, call the first half $x_1,\\ldots,x_n$ and the second half $y_1,\\ldots,y_n$, and consider $EQ_n(x,y)$. This function has linear-size \\langref{OBDD}{s} under the interleaved order $x_1,y_1,\\ldots,x_n,y_n$, but exponential-size \\langfam{OBDD}{<} representations \\citep{Wegener_2000}. Thus no order $<$ can exist, and \\langref{OBDD} is not quasipolynomial-time compilable to \\langfam{OBDD}{<}.",
           "separatingFunctionIds": [
             "$EQ_n$"
           ]

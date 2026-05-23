@@ -49,8 +49,8 @@
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\eps}{\varepsilon}
 % Cross-reference commands (rendered as links in the web UI)
-\newcommand{\langref}[1]{\textbf{#1}}
-\newcommand{\langfam}[2]{\textbf{#1$_{#2}$}}
+\NewDocumentCommand{\langref}{m g}{\textbf{#1\IfNoValueF{#2}{#2}}}
+\NewDocumentCommand{\langfam}{m m g}{\textbf{#1$_{#2}$\IfNoValueF{#3}{#3}}}
 \NewDocumentCommand{\defref}{m g}{\hyperref[kdef:#1]{\textbf{\IfNoValueTF{#2}{#1}{#2}}}}
 \newcommand{\edgeref}[2]{#1 compiles to #2}
 \newcommand{\nedgeref}[2]{#1 cannot compile to #2}
@@ -108,7 +108,7 @@ For each language $\mathcal{L}$ such that \edgeref{OBDD}{$\mathcal{L}$} and \edg
 $\mathcal{L}$ supports Bounded Conjunction not in quasipolynomial time \citep{TCZ_Forthcoming}.
 \end{batchclaim}
 \begin{claimdescription}
-There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by \langref{OBDD} formulas of size $O(n)$, such that any \langref{DNNF} computing $f\land g$ has size $2^{\Omega(\sqrt{n})}$ \citep{TCZ_Forthcoming}.
+There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by \langref{OBDD}{s} of size $O(n)$, such that any \langref{DNNF} computing $f\land g$ has size $2^{\Omega(\sqrt{n})}$ \citep{TCZ_Forthcoming}.
 
 As a result, because \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{DNNF}, $\mathcal{L}$ cannot support bounded conjunction.
 \end{claimdescription}
@@ -118,7 +118,7 @@ For each language $\mathcal{L}$ such that \edgeref{OBDD}{$\mathcal{L}$} and \edg
 $\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \citep{TCZ_Forthcoming}.
 \end{batchclaim}
 \begin{claimdescription}
-There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by \langref{OBDD} formulas of size $O(n)$, such that any \langref{SDNNF} computing $f\lor g$ has size $2^{\Omega(\sqrt{n})}$ \citep{TCZ_Forthcoming}.
+There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by \langref{OBDD}{s} of size $O(n)$, such that any \langref{SDNNF} computing $f\lor g$ has size $2^{\Omega(\sqrt{n})}$ \citep{TCZ_Forthcoming}.
 
 As a result, because \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{SDNNF}, $\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.
 \end{claimdescription}
@@ -128,7 +128,7 @@ For each language $\mathcal{L}$ such that \edgeref{OBDD}{$\mathcal{L}$} and \edg
 $\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \citep{TCZ_Forthcoming}.
 \end{batchclaim}
 \begin{claimdescription}
-There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by \langref{OBDD} formulas of size $O(n)$, such that any \langref{d-DNNF} computing $f\lor g$ has size $2^{\Omega(\sqrt{n})}$ \citep{TCZ_Forthcoming}.
+There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by \langref{OBDD}{s} of size $O(n)$, such that any \langref{d-DNNF} computing $f\lor g$ has size $2^{\Omega(\sqrt{n})}$ \citep{TCZ_Forthcoming}.
 
 As a result, because \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{d-DNNF}, $\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.
 \end{claimdescription}
@@ -544,7 +544,7 @@ For each fixed vtree $T$, a \langfam{dec-SDNNF}{T} can be viewed as a decision d
 \langref{FBDD} supports Singleton Forgetting not in quasipolynomial time \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-Let $ROW_n$ and $COL_n$ test whether an $n \times n$ Boolean matrix has an all-1 row or an all-1 column. The selector construction $(s \land ROW_n) \lor (\neg s \land COL_n)$ has polynomial-size \langref{FBDD} formulas: the top variable $s$ chooses a rowwise or columnwise computation. Forgetting $s$ yields $ROW_n \lor COL_n$, whose \langref{FBDD} size is $\Omega(n^{-7/2}2^n)$ by \citet[Theorem 6.2.13]{Wegener_2000}.
+Let $ROW_n$ and $COL_n$ test whether an $n \times n$ Boolean matrix has an all-1 row or an all-1 column. The selector construction $(s \land ROW_n) \lor (\neg s \land COL_n)$ has polynomial-size \langref{FBDD}{s}: the top variable $s$ chooses a rowwise or columnwise computation. Forgetting $s$ yields $ROW_n \lor COL_n$, whose \langref{FBDD} size is $\Omega(n^{-7/2}2^n)$ by \citet[Theorem 6.2.13]{Wegener_2000}.
 \end{claimdescription}
 
 % lang=lang_1df07cc3, op=CD
@@ -568,7 +568,7 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 \langfam{nOBDD}{<} supports Bounded Conjunction in polynomial time \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-The usual product algorithm for conjoining \langfam{OBDD}{<} formulas respecting the same variable order works for \langfam{nOBDD}{<} formulas. Run the two diagrams in parallel according to the fixed order $<$, and accept exactly when both components accept. The resulting diagram still respects $<$. \citet{Wegener_2000} gives the analogous construction for EXOR-OBDDs in Theorem 10.5.1.
+The usual product algorithm for conjoining \langfam{OBDD}{<}{s} respecting the same variable order works for \langfam{nOBDD}{<}{s}. Run the two diagrams in parallel according to the fixed order $<$, and accept exactly when both components accept. The resulting diagram still respects $<$. \citet{Wegener_2000} gives the analogous construction for EXOR-OBDDs in Theorem 10.5.1.
 \end{claimdescription}
 
 % lang=lang_e827cf31, op=CD
@@ -600,7 +600,7 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 \langfam{uOBDD}{<} supports Bounded Conjunction in polynomial time \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-The usual product algorithm for conjoining \langfam{OBDD}{<} formulas respecting the same variable order works for \langfam{uOBDD}{<} formulas. Run the two diagrams in parallel according to the fixed order $<$, and accept exactly when both components accept. The result is still unambiguous: for any satisfying assignment, each input has at most one accepting path, so the product has at most one accepting path. \citet{Wegener_2000} gives the analogous construction for EXOR-OBDDs in Theorem 10.5.1.
+The usual product algorithm for conjoining \langfam{OBDD}{<}{s} respecting the same variable order works for \langfam{uOBDD}{<}{s}. Run the two diagrams in parallel according to the fixed order $<$, and accept exactly when both components accept. The result is still unambiguous: for any satisfying assignment, each input has at most one accepting path, so the product has at most one accepting path. \citet{Wegener_2000} gives the analogous construction for EXOR-OBDDs in Theorem 10.5.1.
 \end{claimdescription}
 
 % lang=lang_43a33aec, op=CD
@@ -730,7 +730,7 @@ Negation of an \langfam{SDD}{T} can be computed in polytime by applying exclusiv
 \langfam{SDD}{T} supports Bounded Conjunction in polynomial time \citep{Darwiche_2011}
 \end{claim}
 \begin{claimdescription}
-The Apply algorithm combines two \langfam{SDD}{T} sentences using any Boolean operator in polytime. In particular, two \langfam{SDD}{T} formulas can be conjoined in polytime via Apply \citep{Darwiche_2011}.
+The Apply algorithm combines two \langfam{SDD}{T} sentences using any Boolean operator in polytime. In particular, two \langfam{SDD}{T}{s} can be conjoined in polytime via Apply \citep{Darwiche_2011}.
 \end{claimdescription}
 
 % lang=lang_9c84a267, op=OR_BC
@@ -738,7 +738,7 @@ The Apply algorithm combines two \langfam{SDD}{T} sentences using any Boolean op
 \langfam{SDD}{T} supports Bounded Disjunction in polynomial time \citep{Darwiche_2011}
 \end{claim}
 \begin{claimdescription}
-The Apply algorithm combines two \langfam{SDD}{T} sentences using any Boolean operator in polytime. In particular, two \langfam{SDD}{T} formulas can be disjoined in polytime via Apply \citep{Darwiche_2011}.
+The Apply algorithm combines two \langfam{SDD}{T} sentences using any Boolean operator in polytime. In particular, two \langfam{SDD}{T}{s} can be disjoined in polytime via Apply \citep{Darwiche_2011}.
 \end{claimdescription}
 
 % lang=lang_9c84a267, op=CD
@@ -759,7 +759,7 @@ Conditioning an \langfam{SDD}{T} sentence $f$ on a literal $l$ is equivalent to 
 \langref{cSDD} supports Negation in polynomial time \citep{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
-Every \langref{cSDD} respects some vtree $T$. Apply the fixed-vtree negation procedure for \langfam{cSDD}{T}: \citet{VanDenBroeck_2015} proved that reduced \langfam{SDD}{T} formulas support negation in polynomial time by passing negation through the subs. The result is still a \langfam{cSDD}{T} formula, hence a \langref{cSDD} formula.
+Every \langref{cSDD} respects some vtree $T$. Apply the fixed-vtree negation procedure for \langfam{cSDD}{T}: \citet{VanDenBroeck_2015} proved that reduced \langfam{SDD}{T}{s} support negation in polynomial time by passing negation through the subs. The result is still a \langfam{cSDD}{T} formula, hence a \langref{cSDD} formula.
 \end{claimdescription}
 
 % lang=lang_82fa749e, op=NOT_C
@@ -767,7 +767,7 @@ Every \langref{cSDD} respects some vtree $T$. Apply the fixed-vtree negation pro
 \langfam{cSDD}{T} supports Negation in polynomial time \citep{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
-\citet{VanDenBroeck_2015} proved that reduced \langfam{SDD}{T} formulas support negation in polynomial time, by passing negation through the subs.
+\citet{VanDenBroeck_2015} proved that reduced \langfam{SDD}{T}{s} support negation in polynomial time, by passing negation through the subs.
 \end{claimdescription}
 
 % lang=lang_82fa749e, op=AND_BC
@@ -828,7 +828,7 @@ To forget a variable, replace each decision node labeled by that variable with a
 \langfam{nOBDD}{<} supports Disjunction in polynomial time \citep{TCZ_Forthcoming}
 \end{claim}
 \begin{claimdescription}
-Disjunction of \langfam{nOBDD}{<} formulas is obtained by adding a top-level nondeterministic $\lor$-node whose children are the input formulas. Since all inputs respect the same fixed order $<$, the result is still a \langfam{nOBDD}{<} formula.
+Disjunction of \langfam{nOBDD}{<}{s} is obtained by adding a top-level nondeterministic $\lor$-node whose children are the input formulas. Since all inputs respect the same fixed order $<$, the result is still a \langfam{nOBDD}{<} formula.
 \end{claimdescription}
 
 % lang=lang_e827cf31, op=FO

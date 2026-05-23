@@ -15,8 +15,8 @@ const database = JSON.parse(
 const languages = database.languages as Array<{ id: string; name: string }>;
 initNameMap(languages);
 
-const LANGREF_PATTERN = /\\langref\{((?:[^{}]|\{[^{}]*\})+)\}/g;
-const LANGFAM_PATTERN = /\\langfam\{([^}]+)\}\{([^}]+)\}/g;
+const LANGREF_PATTERN = /\\langref\{((?:[^{}]|\{[^{}]*\})+)\}(?:\{([^{}]*)\})?/g;
+const LANGFAM_PATTERN = /\\langfam\{([^}]+)\}\{([^}]+)\}(?:\{([^{}]*)\})?/g;
 
 function normalize(value: string): string {
   return value
@@ -24,8 +24,8 @@ function normalize(value: string): string {
     .replace(/&gt;/gi, '>')
     .replace(/&amp;/gi, '&')
     .trim()
-    .replace(/^\\langfam\{([^{}]+)\}\{([^{}]+)\}$/i, '$1_$2')
-    .replace(/^\\langref\{([\s\S]+)\}$/i, '$1')
+    .replace(/^\\langfam\{([^{}]+)\}\{([^{}]+)\}(?:\{[^{}]*\})?$/i, '$1_$2')
+    .replace(/^\\langref\{((?:[^{}]|\{[^{}]*\})+)\}(?:\{[^{}]*\})?$/i, '$1')
     .replace(/\\textless\{\}/gi, '<')
     .replace(/\\textless(?![A-Za-z])/gi, '<')
     .replace(/\$<\$/g, '<')

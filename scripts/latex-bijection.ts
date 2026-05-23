@@ -153,8 +153,8 @@ function languageToLatex(name: string): string {
 function normalizeLanguageName(value: string): string {
   let normalized = value
     .trim()
-    .replace(/^\\langfam\{([^{}]+)\}\{([^{}]+)\}$/i, '$1_$2')
-    .replace(/^\\langref\{([\s\S]+)\}$/i, '$1')
+    .replace(/^\\langfam\{([^{}]+)\}\{([^{}]+)\}(?:\{[^{}]*\})?$/i, '$1_$2')
+    .replace(/^\\langref\{((?:[^{}]|\{[^{}]*\})+)\}(?:\{[^{}]*\})?$/i, '$1')
     .replace(/\\textless\{\}/gi, '<')
     .replace(/\\textless(?![A-Za-z])/gi, '<')
     .replace(/\$<\$/g, '<')
@@ -658,8 +658,8 @@ function generateLatex(database: DatabaseSchema): string {
 \\newcommand{\\N}{\\mathbb{N}}
 \\newcommand{\\eps}{\\varepsilon}
 % Cross-reference commands (rendered as links in the web UI)
-\\newcommand{\\langref}[1]{\\textbf{#1}}
-\\newcommand{\\langfam}[2]{\\textbf{#1$_{#2}$}}
+\\NewDocumentCommand{\\langref}{m g}{\\textbf{#1\\IfNoValueF{#2}{#2}}}
+\\NewDocumentCommand{\\langfam}{m m g}{\\textbf{#1$_{#2}$\\IfNoValueF{#3}{#3}}}
 \\NewDocumentCommand{\\defref}{m g}{\\hyperref[kdef:#1]{\\textbf{\\IfNoValueTF{#2}{#1}{#2}}}}
 \\newcommand{\\edgeref}[2]{#1 compiles to #2}
 \\newcommand{\\nedgeref}[2]{#1 cannot compile to #2}
@@ -765,7 +765,7 @@ function parseCanonicalClaim(
   
   // Build regex to match: LANG1 TRANSFORMATION_TYPE LANG2
   // LANG can be legacy $NNF$, $d$-$DNNF$ or \langref{NNF}, \langref{$OBDD_<$}
-  const langPattern = '(\\\\langfam\\{[^{}]+\\}\\{[^{}]+\\}|\\\\langref\\{(?:[^{}]|\\{[^{}]*\\})+\\}|\\$[^$]+\\$(?:-\\$[^$]+\\$)*)';
+  const langPattern = '(\\\\langfam\\{[^{}]+\\}\\{[^{}]+\\}(?:\\{[^{}]*\\})?|\\\\langref\\{(?:[^{}]|\\{[^{}]*\\})+\\}(?:\\{[^{}]*\\})?|\\$[^$]+\\$(?:-\\$[^$]+\\$)*)';
   const claimRegex = new RegExp(
     `^${langPattern}\\s+${escapeRegex(transformText)}\\s+${langPattern}$`
   );
@@ -1374,8 +1374,8 @@ function generateLanguagesLatex(database: DatabaseSchema): string {
 \\newcommand{\\N}{\\mathbb{N}}
 \\newcommand{\\eps}{\\varepsilon}
 % Cross-reference commands (rendered as links in the web UI)
-\\newcommand{\\langref}[1]{\\textbf{#1}}
-\\newcommand{\\langfam}[2]{\\textbf{#1$_{#2}$}}
+\\NewDocumentCommand{\\langref}{m g}{\\textbf{#1\\IfNoValueF{#2}{#2}}}
+\\NewDocumentCommand{\\langfam}{m m g}{\\textbf{#1$_{#2}$\\IfNoValueF{#3}{#3}}}
 \\NewDocumentCommand{\\defref}{m g}{\\hyperref[kdef:#1]{\\textbf{\\IfNoValueTF{#2}{#1}{#2}}}}
 \\newcommand{\\edgeref}[2]{#1 compiles to #2}
 \\newcommand{\\nedgeref}[2]{#1 cannot compile to #2}
@@ -1658,8 +1658,8 @@ function generateDefinitionsLatex(database: DatabaseSchema): string {
 \\newcommand{\\N}{\\mathbb{N}}
 \\newcommand{\\eps}{\\varepsilon}
 % Cross-reference commands (rendered as links in the web UI)
-\\newcommand{\\langref}[1]{\\textbf{#1}}
-\\newcommand{\\langfam}[2]{\\textbf{#1$_{#2}$}}
+\\NewDocumentCommand{\\langref}{m g}{\\textbf{#1\\IfNoValueF{#2}{#2}}}
+\\NewDocumentCommand{\\langfam}{m m g}{\\textbf{#1$_{#2}$\\IfNoValueF{#3}{#3}}}
 \\NewDocumentCommand{\\defref}{m g}{\\hyperref[kdef:#1]{\\textbf{\\IfNoValueTF{#2}{#1}{#2}}}}
 \\newcommand{\\edgeref}[2]{#1 compiles to #2}
 \\newcommand{\\nedgeref}[2]{#1 cannot compile to #2}
@@ -1888,8 +1888,8 @@ function generateSepFuncsLatex(database: DatabaseSchema): string {
 \\newcommand{\\N}{\\mathbb{N}}
 \\newcommand{\\eps}{\\varepsilon}
 % Cross-reference commands (rendered as links in the web UI)
-\\newcommand{\\langref}[1]{\\textbf{#1}}
-\\newcommand{\\langfam}[2]{\\textbf{#1$_{#2}$}}
+\\NewDocumentCommand{\\langref}{m g}{\\textbf{#1\\IfNoValueF{#2}{#2}}}
+\\NewDocumentCommand{\\langfam}{m m g}{\\textbf{#1$_{#2}$\\IfNoValueF{#3}{#3}}}
 \\NewDocumentCommand{\\defref}{m g}{\\hyperref[kdef:#1]{\\textbf{\\IfNoValueTF{#2}{#1}{#2}}}}
 \\newcommand{\\edgeref}[2]{#1 compiles to #2}
 \\newcommand{\\nedgeref}[2]{#1 cannot compile to #2}
@@ -2114,10 +2114,10 @@ function languageIdsFromBatchClaim(claimTemplate: string, languages: KCLanguage[
     if (!ids.includes(id)) ids.push(id);
   };
 
-  for (const match of claimTemplate.matchAll(/\\langref\{((?:[^{}]|\{[^{}]*\})+)\}/g)) {
+  for (const match of claimTemplate.matchAll(/\\langref\{((?:[^{}]|\{[^{}]*\})+)\}(?:\{[^{}]*\})?/g)) {
     addLanguage(`\\langref{${match[1]}}`);
   }
-  for (const match of claimTemplate.matchAll(/\\langfam\{([^{}]+)\}\{([^{}]+)\}/g)) {
+  for (const match of claimTemplate.matchAll(/\\langfam\{([^{}]+)\}\{([^{}]+)\}(?:\{[^{}]*\})?/g)) {
     addLanguage(`\\langfam{${match[1]}}{${match[2]}}`);
   }
 
@@ -2446,8 +2446,8 @@ function generateOpsLatex(database: DatabaseSchema, opType: 'queries' | 'transfo
 \\newcommand{\\N}{\\mathbb{N}}
 \\newcommand{\\eps}{\\varepsilon}
 % Cross-reference commands (rendered as links in the web UI)
-\\newcommand{\\langref}[1]{\\textbf{#1}}
-\\newcommand{\\langfam}[2]{\\textbf{#1$_{#2}$}}
+\\NewDocumentCommand{\\langref}{m g}{\\textbf{#1\\IfNoValueF{#2}{#2}}}
+\\NewDocumentCommand{\\langfam}{m m g}{\\textbf{#1$_{#2}$\\IfNoValueF{#3}{#3}}}
 \\NewDocumentCommand{\\defref}{m g}{\\hyperref[kdef:#1]{\\textbf{\\IfNoValueTF{#2}{#1}{#2}}}}
 \\newcommand{\\edgeref}[2]{#1 compiles to #2}
 \\newcommand{\\nedgeref}[2]{#1 cannot compile to #2}

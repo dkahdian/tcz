@@ -7,8 +7,8 @@ const CITATION_RENDER_PATTERN = /\\(cite|citet|citep)((?:\[[^\]]*\]){0,2})\{([^}
 
 // Entity link patterns (processed after HTML rendering)
 const DEFREF_PATTERN = /\\defref\{((?:[^{}]|\{[^{}]*\})+)\}(?:\{((?:[^{}]|\{[^{}]*\})+)\})?/g;
-const LANGREF_PATTERN = /\\langref\{((?:[^{}]|\{[^{}]*\})+)\}/g;
-const LANGFAM_PATTERN = /\\langfam\{([^}]+)\}\{([^}]+)\}/g;
+const LANGREF_PATTERN = /\\langref\{((?:[^{}]|\{[^{}]*\})+)\}(?:\{([^{}]*)\})?/g;
+const LANGFAM_PATTERN = /\\langfam\{([^}]+)\}\{([^}]+)\}(?:\{([^{}]*)\})?/g;
 const EDGEREF_PATTERN = /\\edgeref\{([^}]+)\}\{([^}]+)\}/g;
 const NEDGEREF_PATTERN = /\\nedgeref\{([^}]+)\}\{([^}]+)\}/g;
 const OPREF_PATTERN = /\\opref\{([^}]+)\}\{([^}]+)\}/g;
@@ -299,6 +299,11 @@ function renderEntityLabelHtml(label: string): string {
   return renderNameHtml(label);
 }
 
+function renderEntitySuffixHtml(suffix: string | undefined): string {
+  if (!suffix) return '';
+  return escapeHtml(decodeMinimalEntities(suffix));
+}
+
 function decodeMinimalEntities(value: string): string {
   return value
     .replace(/&lt;/gi, '<')
@@ -309,7 +314,8 @@ function decodeMinimalEntities(value: string): string {
 function normalizeLangRefArg(ref: string): string {
   return decodeMinimalEntities(ref)
     .trim()
-    .replace(/^\\langfam\{([^{}]+)\}\{([^{}]+)\}$/i, '$1_$2')
+    .replace(/^\\langfam\{([^{}]+)\}\{([^{}]+)\}(?:\{[^{}]*\})?$/i, '$1_$2')
+    .replace(/^\\langref\{((?:[^{}]|\{[^{}]*\})+)\}(?:\{[^{}]*\})?$/i, '$1')
     .replace(/\\textless\{\}/gi, '<')
     .replace(/\\textless(?![A-Za-z])/gi, '<')
     .replace(/\$<\$/g, '<')
@@ -399,9 +405,9 @@ export function renderEntityLinks(
   });
 
   // Replace \langref{langId or langName}
-  result = result.replace(LANGREF_PATTERN, (_match, langRef: string) => {
+  result = result.replace(LANGREF_PATTERN, (_match, langRef: string, suffix: string | undefined) => {
     const { id, name } = resolveLang(langRef);
-    const nameHtml = renderNameHtml(name);
+    const nameHtml = `${renderNameHtml(name)}${renderEntitySuffixHtml(suffix)}`;
     if (!id.startsWith('lang_')) {
       return nameHtml;
     }
@@ -410,10 +416,10 @@ export function renderEntityLinks(
   });
 
   // Replace \langfam{Base}{Index} with linked family language names.
-  result = result.replace(LANGFAM_PATTERN, (_match, base: string, index: string) => {
+  result = result.replace(LANGFAM_PATTERN, (_match, base: string, index: string, suffix: string | undefined) => {
     const familyRef = `${base}_${index}`;
     const { id, name } = resolveLang(familyRef);
-    const nameHtml = renderNameHtml(name);
+    const nameHtml = `${renderNameHtml(name)}${renderEntitySuffixHtml(suffix)}`;
     if (!id.startsWith('lang_')) {
       return nameHtml;
     }

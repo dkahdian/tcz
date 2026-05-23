@@ -49,8 +49,8 @@
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\eps}{\varepsilon}
 % Cross-reference commands (rendered as links in the web UI)
-\newcommand{\langref}[1]{\textbf{#1}}
-\newcommand{\langfam}[2]{\textbf{#1$_{#2}$}}
+\NewDocumentCommand{\langref}{m g}{\textbf{#1\IfNoValueF{#2}{#2}}}
+\NewDocumentCommand{\langfam}{m m g}{\textbf{#1$_{#2}$\IfNoValueF{#3}{#3}}}
 \NewDocumentCommand{\defref}{m g}{\hyperref[kdef:#1]{\textbf{\IfNoValueTF{#2}{#1}{#2}}}}
 \newcommand{\edgeref}[2]{#1 compiles to #2}
 \newcommand{\nedgeref}[2]{#1 cannot compile to #2}
@@ -172,7 +172,7 @@ Any query concerning \langref{OBDD} is equivalent to the corresponding query con
 \langref{OBDD} supports Sentential Entailment not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citep{Darwiche_2002,Meinel_Theobald_1998}
 \end{claim}
 \begin{claimdescription}
-Sentential entailment for \langref{OBDD} is coNP-complete. \citet[Lemma 8.14]{Meinel_Theobald_1998} prove that checking consistency of two \langfam{OBDD}{<} formulas using different variable orders is NP-complete. Since \langref{OBDD} supports negation, consistency of $\alpha \land \beta$ is equivalent to $\alpha \not\models \neg\beta$, so polynomial-time SE for arbitrary \langref{OBDD} formulas would imply polynomial-time consistency for such pairs \citep{Darwiche_2002}.
+Sentential entailment for \langref{OBDD} is coNP-complete. \citet[Lemma 8.14]{Meinel_Theobald_1998} prove that checking consistency of two \langfam{OBDD}{<}{s} using different variable orders is NP-complete. Since \langref{OBDD} supports negation, consistency of $\alpha \land \beta$ is equivalent to $\alpha \not\models \neg\beta$, so polynomial-time SE for arbitrary \langref{OBDD}{s} would imply polynomial-time consistency for such pairs \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_27fffab2, op=CE
@@ -217,7 +217,7 @@ Consistency can be checked in polynomial time by graph reachability: verify that
 \langfam{OBDD}{<} supports Model Counting in polynomial time \citep{Bryant_1986}
 \end{claim}
 \begin{claimdescription}
-Model counting on \langfam{OBDD}{<} formulas can be done in polynomial time by a single bottom-up pass \citep{Bryant_1986, Bryant_1992}.
+Model counting on \langfam{OBDD}{<}{s} can be done in polynomial time by a single bottom-up pass \citep{Bryant_1986, Bryant_1992}.
 \end{claimdescription}
 
 % lang=lang_d69995dd, op=EQ
@@ -225,7 +225,7 @@ Model counting on \langfam{OBDD}{<} formulas can be done in polynomial time by a
 \langfam{OBDD}{<} supports Equivalence in polynomial time \citep{Bryant_1986,Bryant_1992,Meinel_Theobald_1998}
 \end{claim}
 \begin{claimdescription}
-After reducing both diagrams, \langfam{OBDD}{<} formulas are canonical: two functions are equivalent iff their reduced \langfam{OBDD}{<} diagrams are identical. This makes EQ a structural isomorphism check \citep{Bryant_1986, Bryant_1992, Meinel_Theobald_1998} (Theorem 8.11).
+After reducing both diagrams, \langfam{OBDD}{<}{s} are canonical: two functions are equivalent iff their reduced \langfam{OBDD}{<} diagrams are identical. This makes EQ a structural isomorphism check \citep{Bryant_1986, Bryant_1992, Meinel_Theobald_1998} (Theorem 8.11).
 \end{claimdescription}
 
 % lang=lang_d69995dd, op=ME

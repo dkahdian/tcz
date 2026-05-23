@@ -131,6 +131,18 @@ assertIncludes(mixed, 'data-entity-type="lang"', 'language links should still re
 assertIncludes(mixed, 'data-entity-type="edge"', 'edge links should still render');
 assertIncludes(mixed, 'data-entity-type="op"', 'operation links should still render');
 
+const suffixedLang = renderEntityLinks(
+  '\\langref{CNF}{s} and \\langfam{OBDD}{<}{s}',
+  (id) => (id === 'lang_cnf' ? 'CNF' : id === 'lang_obdd_lt' ? 'OBDD$_<$' : id),
+  undefined,
+  (name) => (name === 'CNF' ? 'lang_cnf' : name === 'OBDD$_<$' || name === 'OBDD_<' ? 'lang_obdd_lt' : undefined),
+  resolveDefinitionRef
+);
+assertIncludes(suffixedLang, 'href="/#lang/lang_cnf"', 'suffixed langref should keep the language target');
+assertIncludes(suffixedLang, '>CNFs</a>', 'suffixed langref should include suffix inside the link label');
+assertIncludes(suffixedLang, 'href="/#lang/lang_obdd_lt"', 'suffixed langfam should keep the family target');
+assertIncludes(suffixedLang, '<sub>&lt;</sub>s</a>', 'suffixed langfam should render suffix after the subscript inside the link');
+
 // Escaped LaTeX literals in prose should render as plain characters.
 const renderedHash = renderMathText('This is \\#P-complete.').html ?? '';
 assertIncludes(renderedHash, '#P-complete', 'escaped # should render without a leading backslash');

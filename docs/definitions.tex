@@ -39,8 +39,8 @@
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\eps}{\varepsilon}
 % Cross-reference commands (rendered as links in the web UI)
-\newcommand{\langref}[1]{\textbf{#1}}
-\newcommand{\langfam}[2]{\textbf{#1$_{#2}$}}
+\NewDocumentCommand{\langref}{m g}{\textbf{#1\IfNoValueF{#2}{#2}}}
+\NewDocumentCommand{\langfam}{m m g}{\textbf{#1$_{#2}$\IfNoValueF{#3}{#3}}}
 \NewDocumentCommand{\defref}{m g}{\hyperref[kdef:#1]{\textbf{\IfNoValueTF{#2}{#1}{#2}}}}
 \newcommand{\edgeref}[2]{#1 compiles to #2}
 \newcommand{\nedgeref}[2]{#1 cannot compile to #2}

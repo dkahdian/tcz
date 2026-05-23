@@ -4,10 +4,11 @@
 \usepackage{amsmath,amssymb}
 \usepackage{enumitem}
 \usepackage{hyperref}
+\usepackage{xparse}
 \usepackage{natbib}
 
-\newcommand{\langref}[1]{\textbf{#1}}
-\newcommand{\langfam}[2]{\textbf{#1$_{#2}$}}
+\NewDocumentCommand{\langref}{m g}{\textbf{#1\IfNoValueF{#2}{#2}}}
+\NewDocumentCommand{\langfam}{m m g}{\textbf{#1$_{#2}$\IfNoValueF{#3}{#3}}}
 
 \title{Transformation Notes}
 \date{\today}

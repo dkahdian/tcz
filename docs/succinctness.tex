@@ -55,8 +55,8 @@
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\eps}{\varepsilon}
 % Cross-reference commands (rendered as links in the web UI)
-\newcommand{\langref}[1]{\textbf{#1}}
-\newcommand{\langfam}[2]{\textbf{#1$_{#2}$}}
+\NewDocumentCommand{\langref}{m g}{\textbf{#1\IfNoValueF{#2}{#2}}}
+\NewDocumentCommand{\langfam}{m m g}{\textbf{#1$_{#2}$\IfNoValueF{#3}{#3}}}
 \NewDocumentCommand{\defref}{m g}{\hyperref[kdef:#1]{\textbf{\IfNoValueTF{#2}{#1}{#2}}}}
 \newcommand{\edgeref}[2]{#1 compiles to #2}
 \newcommand{\nedgeref}[2]{#1 cannot compile to #2}
@@ -591,7 +591,7 @@ The $OR_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \lang
 \langref{OBDD} is not quasipolynomial-time compilable to \langfam{OBDD}{<} \citep{Wegener_2000}
 \end{claim}
 \begin{claimdescription}
-Suppose an order $<$ existed so that \langref{OBDD} compiled to \langfam{OBDD}{<}. Take the first $2n$ variables in that order, call the first half $x_1,\ldots,x_n$ and the second half $y_1,\ldots,y_n$, and consider $EQ_n(x,y)$. This function has linear-size \langref{OBDD} formulas under the interleaved order $x_1,y_1,\ldots,x_n,y_n$, but exponential-size \langfam{OBDD}{<} representations \citep{Wegener_2000}. Thus no order $<$ can exist, and \langref{OBDD} is not quasipolynomial-time compilable to \langfam{OBDD}{<}.
+Suppose an order $<$ existed so that \langref{OBDD} compiled to \langfam{OBDD}{<}. Take the first $2n$ variables in that order, call the first half $x_1,\ldots,x_n$ and the second half $y_1,\ldots,y_n$, and consider $EQ_n(x,y)$. This function has linear-size \langref{OBDD}{s} under the interleaved order $x_1,y_1,\ldots,x_n,y_n$, but exponential-size \langfam{OBDD}{<} representations \citep{Wegener_2000}. Thus no order $<$ can exist, and \langref{OBDD} is not quasipolynomial-time compilable to \langfam{OBDD}{<}.
 \end{claimdescription}
 
 % separators=$WS_n$
@@ -626,7 +626,7 @@ The hidden weighted bit function $HWB_n$ has polynomial-size \langref{uOBDD} rep
 \langfam{SDD}{T} is not quasipolynomial-time compilable to \langref{FBDD} \citep{Bollig_2018}
 \end{claim}
 \begin{claimdescription}
-By \citet[Corollary 3]{Bollig_2018}, the weighted sum function $WS_n$ can be represented by \langfam{SDD}{T} formulas of size $O(n^3)$ respecting the vtrees used in the construction, but has exponential \langref{FBDD} size. Hence \langfam{SDD}{T} does not compile to \langref{FBDD} in quasipolynomial size.
+By \citet[Corollary 3]{Bollig_2018}, the weighted sum function $WS_n$ can be represented by \langfam{SDD}{T}{s} of size $O(n^3)$ respecting the vtrees used in the construction, but has exponential \langref{FBDD} size. Hence \langfam{SDD}{T} does not compile to \langref{FBDD} in quasipolynomial size.
 \end{claimdescription}
 
 
@@ -844,7 +844,7 @@ The Quine-McCluskey algorithm generates an \langref{IP} formula in polynomial ti
 \langref{d-DNNF} is not quasipolynomial-time compilable to \langref{FBDD} \citep{Darwiche_2000}
 \end{claim}
 \begin{claimdescription}
-\langref{d-DNNF} formulas can polynomially represent the disjunction of two functions with conflicting variable orders, which forces \langref{FBDD} formulas to grow exponentially to track the state of both orders within a single "read-once" path.
+\langref{d-DNNF} formulas can polynomially represent the disjunction of two functions with conflicting variable orders, which forces \langref{FBDD}{s} to grow exponentially to track the state of both orders within a single "read-once" path.
 \end{claimdescription}
 
 

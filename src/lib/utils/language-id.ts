@@ -37,8 +37,8 @@ function decodeMinimalEntities(value: string): string {
 function normalizeLanguageNameKey(value: string): string {
   let normalized = decodeMinimalEntities(value)
     .trim()
-    .replace(/^\\langfam\{([^{}]+)\}\{([^{}]+)\}$/i, '$1_$2')
-    .replace(/^\\langref\{([\s\S]+)\}$/i, '$1')
+    .replace(/^\\langfam\{([^{}]+)\}\{([^{}]+)\}(?:\{[^{}]*\})?$/i, '$1_$2')
+    .replace(/^\\langref\{((?:[^{}]|\{[^{}]*\})+)\}(?:\{[^{}]*\})?$/i, '$1')
     .replace(/\\textless\{\}/gi, '<')
     .replace(/\\textless(?![A-Za-z])/gi, '<')
     .replace(/\$<\$/g, '<')
@@ -92,4 +92,3 @@ export function nameToId(name: string): string | undefined {
   if (exact) return exact;
   return _normalizedNameToIdMap.get(normalizeLanguageNameKey(name));
 }
-
