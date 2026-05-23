@@ -207,6 +207,8 @@
                 <MathText 
                   text={relation.description} 
                   className="edge-description-text" 
+                  wrapMode="hyphenate"
+                  lang="en"
                   onCitationClick={handleCitationClick}
                 />
               {/if}
@@ -338,5 +340,8 @@
     font-size: 0.875rem;
     font-style: normal;
     line-height: 1.5;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    hyphenate-character: "-";
   }
 </style>

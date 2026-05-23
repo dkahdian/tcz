@@ -150,6 +150,8 @@
             <MathText 
               text={selectedOperationCell.support.description} 
               className="operation-description-text"
+              wrapMode="hyphenate"
+              lang="en"
               onCitationClick={handleCitationClick}
             />
           </div>
@@ -322,6 +324,9 @@
     color: #374151;
     font-size: 0.92rem;
     line-height: 1.55;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    hyphenate-character: "-";
   }
 
   .operation-header {

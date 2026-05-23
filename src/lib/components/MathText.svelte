@@ -99,6 +99,7 @@
     text = '',
     className = '',
     as = 'span',
+    wrapMode = 'normal',
     href,
     target,
     rel,
@@ -111,6 +112,7 @@
     text?: string | null;
     className?: string;
     as?: keyof HTMLElementTagNameMap | 'span';
+    wrapMode?: 'normal' | 'hyphenate';
     href?: string;
     target?: string;
     rel?: string;
@@ -156,6 +158,9 @@
 
   const resolvedElement = $derived((href ? 'a' : as) as keyof HTMLElementTagNameMap | 'span');
   const resolvedRel = $derived(rel ?? (target === '_blank' ? 'noreferrer noopener' : undefined));
+  const rootClass = $derived(
+    `math-text ${wrapMode === 'hyphenate' ? 'math-text--hyphenate' : ''} ${className}`.trim()
+  );
   
   // Handle clicks via event delegation for citations and entity links
   function handleClick(event: MouseEvent) {
@@ -197,7 +202,7 @@
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <svelte:element
     this={resolvedElement}
-    class={`math-text ${className}`.trim()}
+    class={rootClass}
     aria-label={text ?? ''}
     href={href}
     target={target}
@@ -210,7 +215,7 @@
 {:else}
   <svelte:element
     this={resolvedElement}
-    class={`math-text ${className}`.trim()}
+    class={rootClass}
     href={href}
     target={target}
     rel={resolvedRel}
@@ -227,6 +232,20 @@
 
   .math-text :global(.katex) {
     font-size: 0.95em;
+  }
+
+  .math-text--hyphenate {
+    overflow-wrap: break-word;
+    hyphens: auto;
+    hyphenate-character: "-";
+  }
+
+  .math-text--hyphenate :global(.entity-link),
+  .math-text--hyphenate :global(.citation-link),
+  .math-text--hyphenate :global(.citation-inline) {
+    overflow-wrap: break-word;
+    hyphens: auto;
+    hyphenate-character: "-";
   }
 
   :global(.math-text.edge-link) {
