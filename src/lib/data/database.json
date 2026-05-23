@@ -195,7 +195,7 @@
         ]
       },
       "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langfam{d-SDNNF}{T},\n  \\langfam{uOBDD}{<}\n\\},\n\\]\n$\\mathcal{L}$ supports Bounded Disjunction not in polynomial time (quasipolynomial unknown) \\citep{Vinall-Smeeth_2024}.",
-      "descriptionTemplate": "\\citet[Theorem 5]{Vinall-Smeeth_2024} gives unambiguous \\langref{DNF} representations of functions $f$ and $g$ such that, measured in the size $s$ of the corresponding source representations, $f \\lor g$ requires \\langref{d-SDNNF} size $s^{\\widetilde{\\Omega}(\\log s)}$. The unambiguous \\langref{DNF} representations can be transformed into $\\mathcal{L}$ representations with only polynomial overhead, and every $\\mathcal{L}$ representation can be transformed into \\langref{d-SDNNF} with only polynomial overhead. Thus polynomial-time bounded disjunction for $\\mathcal{L}$ would contradict the lower bound.\n\nNote that \\citet{Vinall-Smeeth_2024} showed a quasipolynomial lower bound for bounded disjunction of $\\mathcal{L}$.",
+      "descriptionTemplate": "\\citet[Theorem 5]{Vinall-Smeeth_2024} gives unambiguous \\langref{DNF} representations of functions $f$ and $g$ such that, measured in the size $s$ of the corresponding source representations, $f \\lor g$ requires \\langref{d-SDNNF} size $s^{\\widetilde{\\Omega}(\\log s)}$. The unambiguous \\langref{DNF} representations can be transformed into $\\mathcal{L}$ representations with only polynomial overhead, and every $\\mathcal{L}$ representation can be transformed into \\langref{d-SDNNF} with only polynomial overhead. Thus polynomial-time bounded disjunction for $\\mathcal{L}$ would contradict the lower bound.",
       "refs": [
         "Vinall-Smeeth_2024"
       ]
@@ -387,7 +387,7 @@
               "Levin_1973"
             ],
             "assumption": "P \\neq NP",
-            "description": "Consistency checking for \\langref{CNF} is NP-complete by the Cook--Levin theorem, the classic foundational result for SAT \\citep{Cook_1971,Levin_1973}."
+            "description": "Consistency checking for \\langref{CNF} is NP-complete by the Cook-Levin theorem, the classic foundational result for SAT \\citep{Cook_1971,Levin_1973}."
           },
           "IM": {
             "complexity": "poly",
@@ -1481,7 +1481,7 @@
             "refs": [
               "Vinall-Smeeth_2024"
             ],
-            "description": "\\citet[Theorem 5]{Vinall-Smeeth_2024} gives unambiguous \\langref{DNF} representations of functions $f$ and $g$ such that, measured in the size $s$ of the corresponding source representations, $f \\lor g$ requires \\langref{d-SDNNF} size $s^{\\widetilde{\\Omega}(\\log s)}$. The unambiguous \\langref{DNF} representations can be transformed into \\langfam{d-SDNNF}{T} representations with only polynomial overhead, and every \\langfam{d-SDNNF}{T} representation can be transformed into \\langref{d-SDNNF} with only polynomial overhead. Thus polynomial-time bounded disjunction for \\langfam{d-SDNNF}{T} would contradict the lower bound.\n\nNote that \\citet{Vinall-Smeeth_2024} showed a quasipolynomial lower bound for bounded disjunction of \\langfam{d-SDNNF}{T}.",
+            "description": "\\citet[Theorem 5]{Vinall-Smeeth_2024} gives unambiguous \\langref{DNF} representations of functions $f$ and $g$ such that, measured in the size $s$ of the corresponding source representations, $f \\lor g$ requires \\langref{d-SDNNF} size $s^{\\widetilde{\\Omega}(\\log s)}$. The unambiguous \\langref{DNF} representations can be transformed into \\langfam{d-SDNNF}{T} representations with only polynomial overhead, and every \\langfam{d-SDNNF}{T} representation can be transformed into \\langref{d-SDNNF} with only polynomial overhead. Thus polynomial-time bounded disjunction for \\langfam{d-SDNNF}{T} would contradict the lower bound.",
             "derived": false,
             "batchId": "vinall-smeeth-unambiguous-dnf-bounded-disjunction-lower-bound"
           },
@@ -3506,9 +3506,9 @@
               "Darwiche_2002",
               "TCZ_Forthcoming",
               "Darwiche_2011",
-              "Bryant_1986",
               "VanDenBroeck_2015",
-              "Amarilli_2018"
+              "Amarilli_2018",
+              "Bryant_1986"
             ],
             "derived": true,
             "description": "Negation and Conjunction together imply Disjunction \\citep{Darwiche_2002}. However, \\nopref{lang_d69995dd}{OR_C} in quasipolynomial time. Also, \\opref{lang_d69995dd}{NOT_C} in quasipolynomial time. Therefore Conjunction is unsupported by OBDD$_<$ in quasipolynomial time.",
@@ -5586,8 +5586,8 @@
             "refs": [
               "Darwiche_2002",
               "TCZ_Forthcoming",
-              "Beame_2013",
               "Amarilli_2018",
+              "Beame_2013",
               "Wegener_1987"
             ],
             "description": "In the language \\langref{dec-DNNF}, every term has a polynomial-size representation. If \\langref{dec-DNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{dec-DNNF} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{dec-DNNF} \\citep{TCZ_Forthcoming}.",
@@ -5683,9 +5683,9 @@
             "refs": [
               "Amarilli_2018",
               "Darwiche_Huang_2002",
+              "Darwiche_2002",
               "Bollig_2018",
               "Beame_2015",
-              "Darwiche_2002",
               "Fortune_1978",
               "Meinel_Theobald_1998",
               "Beame_2013"
@@ -6836,7 +6836,7 @@
             "refs": [
               "Vinall-Smeeth_2024"
             ],
-            "description": "\\citet[Theorem 5]{Vinall-Smeeth_2024} gives unambiguous \\langref{DNF} representations of functions $f$ and $g$ such that, measured in the size $s$ of the corresponding source representations, $f \\lor g$ requires \\langref{d-SDNNF} size $s^{\\widetilde{\\Omega}(\\log s)}$. The unambiguous \\langref{DNF} representations can be transformed into \\langfam{uOBDD}{<} representations with only polynomial overhead, and every \\langfam{uOBDD}{<} representation can be transformed into \\langref{d-SDNNF} with only polynomial overhead. Thus polynomial-time bounded disjunction for \\langfam{uOBDD}{<} would contradict the lower bound.\n\nNote that \\citet{Vinall-Smeeth_2024} showed a quasipolynomial lower bound for bounded disjunction of \\langfam{uOBDD}{<}.",
+            "description": "\\citet[Theorem 5]{Vinall-Smeeth_2024} gives unambiguous \\langref{DNF} representations of functions $f$ and $g$ such that, measured in the size $s$ of the corresponding source representations, $f \\lor g$ requires \\langref{d-SDNNF} size $s^{\\widetilde{\\Omega}(\\log s)}$. The unambiguous \\langref{DNF} representations can be transformed into \\langfam{uOBDD}{<} representations with only polynomial overhead, and every \\langfam{uOBDD}{<} representation can be transformed into \\langref{d-SDNNF} with only polynomial overhead. Thus polynomial-time bounded disjunction for \\langfam{uOBDD}{<} would contradict the lower bound.",
             "derived": false,
             "batchId": "vinall-smeeth-unambiguous-dnf-bounded-disjunction-lower-bound"
           },
@@ -8423,10 +8423,10 @@
         {
           "status": "no-quasi",
           "refs": [
+            "Darwiche_2002",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Darwiche_2002",
             "Bova_2016_a",
             "Beame_2013"
           ],
@@ -8557,7 +8557,6 @@
           "status": "no-quasi",
           "refs": [
             "Darwiche_2002",
-            "Amarilli_2018",
             "VanDenBroeck_2015",
             "Beame_2015"
           ],
@@ -8712,8 +8711,6 @@
             "refs": [
               "Pipatsrisawat_2008",
               "Amarilli_2018",
-              "Darwiche_2002",
-              "Bodlaender_1993",
               "Bollig_2018",
               "Beame_2015",
               "TCZ_Forthcoming",
@@ -8895,10 +8892,10 @@
         {
           "status": "no-quasi",
           "refs": [
-            "Darwiche_2002",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
+            "Darwiche_2002",
             "Capelli_2016",
             "Pipatsrisawat_2010",
             "Pipatsrisawat_2008",
@@ -9023,9 +9020,9 @@
           "refs": [
             "VanDenBroeck_2015",
             "Amarilli_2018",
+            "Darwiche_2002",
             "Bollig_2018",
             "Beame_2015",
-            "Darwiche_2002",
             "Bova_2016_a",
             "Beame_2013"
           ],
@@ -9256,8 +9253,6 @@
           "refs": [
             "Darwiche_2011",
             "VanDenBroeck_2015",
-            "Pipatsrisawat_2008",
-            "Amarilli_2018",
             "Bollig_2018"
           ],
           "hidden": false,
@@ -9414,9 +9409,9 @@
             "description": "\\edgeref{lang_d24efe0e}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_ea9b5299}{lang_1df07cc3} in polynomial time. If d-SDNNF compiled to nOBDD in polynomial time, then d-SDNNF would compile to nFBDD in polynomial time, contradicting the above. Therefore d-SDNNF cannot compile to nOBDD in polynomial time.",
             "refs": [
               "Amarilli_2018",
+              "Pipatsrisawat_2008",
               "Bollig_2018",
               "Beame_2015",
-              "Pipatsrisawat_2008",
               "TCZ_Forthcoming",
               "Wegener_2000"
             ],
@@ -9578,9 +9573,9 @@
             "description": "\\edgeref{lang_4e62a038}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_ea9b5299}{lang_1df07cc3} in polynomial time. If d-SDNNF compiled to uFBDD in polynomial time, then d-SDNNF would compile to nFBDD in polynomial time, contradicting the above. Therefore d-SDNNF cannot compile to uFBDD in polynomial time.",
             "refs": [
               "Amarilli_2018",
+              "Pipatsrisawat_2008",
               "Bollig_2018",
               "Beame_2015",
-              "Pipatsrisawat_2008",
               "TCZ_Forthcoming",
               "Wegener_2000"
             ],
@@ -9636,9 +9631,9 @@
             "description": "\\edgeref{lang_c2df8c2b}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_ea9b5299}{lang_1df07cc3} in polynomial time. If d-SDNNF compiled to uOBDD in polynomial time, then d-SDNNF would compile to nFBDD in polynomial time, contradicting the above. Therefore d-SDNNF cannot compile to uOBDD in polynomial time.",
             "refs": [
               "Amarilli_2018",
+              "Pipatsrisawat_2008",
               "Bollig_2018",
               "Beame_2015",
-              "Pipatsrisawat_2008",
               "TCZ_Forthcoming",
               "Wegener_2000"
             ],
@@ -9688,11 +9683,10 @@
         {
           "status": "no-quasi",
           "refs": [
+            "Amarilli_2018",
+            "Beame_2013",
             "Darwiche_2011",
             "VanDenBroeck_2015",
-            "Beame_2013",
-            "Amarilli_2018",
-            "Pipatsrisawat_2008",
             "Bollig_2018"
           ],
           "hidden": false,
@@ -9713,10 +9707,10 @@
           "status": "no-quasi",
           "refs": [
             "VanDenBroeck_2015",
+            "Darwiche_2002",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Darwiche_2002",
             "Bova_2016_a",
             "Beame_2013"
           ],
@@ -9926,7 +9920,6 @@
           "status": "no-quasi",
           "refs": [
             "VanDenBroeck_2015",
-            "Amarilli_2018",
             "Bollig_2018"
           ],
           "hidden": false,
@@ -10112,7 +10105,6 @@
           "refs": [
             "Darwiche_2002",
             "VanDenBroeck_2015",
-            "Amarilli_2018",
             "Bollig_2018"
           ],
           "hidden": false,
@@ -10303,7 +10295,6 @@
           "refs": [
             "Darwiche_2002",
             "VanDenBroeck_2015",
-            "Amarilli_2018",
             "Bollig_2018"
           ],
           "hidden": false,
@@ -10323,9 +10314,9 @@
         {
           "status": "no-quasi",
           "refs": [
-            "VanDenBroeck_2015",
-            "Beame_2013",
             "Amarilli_2018",
+            "Beame_2013",
+            "VanDenBroeck_2015",
             "Bollig_2018"
           ],
           "hidden": false,
@@ -10409,22 +10400,22 @@
         {
           "status": "no-poly-quasi",
           "refs": [
+            "Wegener_2000",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "TCZ_Forthcoming",
-            "Wegener_2000"
+            "TCZ_Forthcoming"
           ],
           "hidden": false,
           "derived": true,
           "noPolyDescription": {
             "description": "\\edgeref{lang_e827cf31}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_91f812d0}{lang_1df07cc3} in polynomial time. If d-SDNNF$_T$ compiled to nOBDD$_<$ in polynomial time, then d-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore d-SDNNF$_T$ cannot compile to nOBDD$_<$ in polynomial time.",
             "refs": [
+              "Wegener_2000",
               "Amarilli_2018",
               "Bollig_2018",
               "Beame_2015",
-              "TCZ_Forthcoming",
-              "Wegener_2000"
+              "TCZ_Forthcoming"
             ],
             "derived": true,
             "derivationOrder": 418,
@@ -10465,10 +10456,10 @@
           "status": "no-poly-quasi",
           "refs": [
             "Amarilli_2018",
+            "Wegener_2000",
             "Bollig_2018",
             "Beame_2015",
-            "TCZ_Forthcoming",
-            "Wegener_2000"
+            "TCZ_Forthcoming"
           ],
           "hidden": false,
           "derived": false,
@@ -10476,10 +10467,10 @@
             "description": "\\edgeref{lang_43a33aec}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_91f812d0}{lang_1df07cc3} in polynomial time. If d-SDNNF$_T$ compiled to uOBDD$_<$ in polynomial time, then d-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore d-SDNNF$_T$ cannot compile to uOBDD$_<$ in polynomial time.",
             "refs": [
               "Amarilli_2018",
+              "Wegener_2000",
               "Bollig_2018",
               "Beame_2015",
-              "TCZ_Forthcoming",
-              "Wegener_2000"
+              "TCZ_Forthcoming"
             ],
             "derived": true,
             "derivationOrder": 419,
@@ -10877,9 +10868,9 @@
         {
           "status": "no-quasi",
           "refs": [
-            "Darwiche_2002",
-            "Beame_2013",
             "Amarilli_2018",
+            "Beame_2013",
+            "Darwiche_2002",
             "Wegener_1987"
           ],
           "hidden": false,
@@ -11024,7 +11015,6 @@
           "status": "no-quasi",
           "refs": [
             "Darwiche_2002",
-            "Amarilli_2018",
             "VanDenBroeck_2015",
             "Beame_2015"
           ],
@@ -11204,9 +11194,9 @@
             "description": "\\edgeref{lang_6c130090}{lang_3bebcab7} in polynomial time. \\nedgeref{lang_6c130090}{lang_1df07cc3} in polynomial time. If DNNF compiled to nFBDD in polynomial time, then d-DNNF would compile to nFBDD in polynomial time, contradicting the above. Therefore DNNF cannot compile to nFBDD in polynomial time.",
             "refs": [
               "Darwiche_2002",
-              "Bodlaender_1993",
               "Pipatsrisawat_2008",
               "Amarilli_2018",
+              "Bodlaender_1993",
               "Bollig_2018",
               "Beame_2015",
               "TCZ_Forthcoming",
@@ -11409,7 +11399,6 @@
         {
           "status": "no-quasi",
           "refs": [
-            "Darwiche_2002",
             "Amarilli_2018",
             "Bova_2016"
           ],
@@ -11475,8 +11464,8 @@
           "status": "no-quasi",
           "refs": [
             "Darwiche_2002",
-            "Beame_2013",
             "Amarilli_2018",
+            "Beame_2013",
             "Darwiche_2000"
           ],
           "hidden": false,
@@ -11499,9 +11488,9 @@
           "refs": [
             "VanDenBroeck_2015",
             "Amarilli_2018",
+            "Darwiche_2002",
             "Bollig_2018",
             "Beame_2015",
-            "Darwiche_2002",
             "Bova_2016_a",
             "Beame_2013"
           ],
@@ -11933,7 +11922,6 @@
         {
           "status": "no-quasi",
           "refs": [
-            "Pipatsrisawat_2008",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
@@ -12519,8 +12507,8 @@
         {
           "status": "no-quasi",
           "refs": [
-            "Beame_2013",
             "Amarilli_2018",
+            "Beame_2013",
             "Darwiche_2002",
             "Wegener_1987"
           ],
@@ -13173,11 +13161,11 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2011",
             "Darwiche_2002",
             "Pipatsrisawat_2008",
-            "TCZ_Forthcoming"
+            "TCZ_Forthcoming",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -13200,11 +13188,11 @@
             "Amarilli_2018",
             "Darwiche_2002",
             "Bodlaender_1993",
-            "Wegener_2000",
-            "Bollig_2018",
+            "VanDenBroeck_2015",
             "Beame_2015",
+            "Bollig_2018",
             "TCZ_Forthcoming",
-            "VanDenBroeck_2015"
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -13238,12 +13226,12 @@
             "Amarilli_2018",
             "Darwiche_2002",
             "Bodlaender_1993",
-            "Wegener_2000",
+            "Capelli_2016",
+            "Pipatsrisawat_2010",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Capelli_2016",
-            "Pipatsrisawat_2010"
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -13266,10 +13254,10 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
-            "Pipatsrisawat_2008",
             "Darwiche_2011",
-            "TCZ_Forthcoming"
+            "TCZ_Forthcoming",
+            "Pipatsrisawat_2008",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -13335,11 +13323,11 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2002",
             "Darwiche_2011",
             "Pipatsrisawat_2008",
-            "TCZ_Forthcoming"
+            "TCZ_Forthcoming",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -13412,12 +13400,12 @@
             "Amarilli_2018",
             "Darwiche_2002",
             "Bodlaender_1993",
+            "Capelli_2016",
+            "Pipatsrisawat_2010",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
-            "Capelli_2016",
-            "Pipatsrisawat_2010"
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -13440,7 +13428,6 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Darwiche_2002",
             "Wegener_2000",
             "Darwiche_2011",
             "TCZ_Forthcoming",
@@ -13468,11 +13455,11 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2002",
             "Darwiche_2011",
             "Pipatsrisawat_2008",
-            "TCZ_Forthcoming"
+            "TCZ_Forthcoming",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -13496,13 +13483,13 @@
             "Amarilli_2018",
             "Darwiche_2002",
             "Bodlaender_1993",
-            "Wegener_2000",
             "VanDenBroeck_2015",
+            "Capelli_2016",
+            "Pipatsrisawat_2010",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Capelli_2016",
-            "Pipatsrisawat_2010"
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -13526,10 +13513,10 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2011",
             "TCZ_Forthcoming",
-            "Pipatsrisawat_2008"
+            "Pipatsrisawat_2008",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -13555,10 +13542,10 @@
             "Bodlaender_1993",
             "Bollig_2018",
             "Beame_2015",
-            "TCZ_Forthcoming",
-            "Wegener_2000",
             "Capelli_2016",
-            "Pipatsrisawat_2010"
+            "Pipatsrisawat_2010",
+            "TCZ_Forthcoming",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -13582,9 +13569,9 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Pipatsrisawat_2008",
             "Darwiche_2011",
             "TCZ_Forthcoming",
+            "Pipatsrisawat_2008",
             "Wegener_2000"
           ],
           "hidden": false,
@@ -13619,12 +13606,12 @@
             "Amarilli_2018",
             "Darwiche_2002",
             "Bodlaender_1993",
-            "Wegener_2000",
+            "Capelli_2016",
+            "Pipatsrisawat_2010",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Capelli_2016",
-            "Pipatsrisawat_2010"
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -13675,11 +13662,11 @@
             "Darwiche_2002",
             "Bodlaender_1993",
             "Beame_2013",
+            "Darwiche_2000",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
-            "Darwiche_2000"
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -13759,10 +13746,10 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2011",
             "TCZ_Forthcoming",
-            "Pipatsrisawat_2008"
+            "Pipatsrisawat_2008",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -13786,10 +13773,10 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2011",
             "TCZ_Forthcoming",
-            "Pipatsrisawat_2008"
+            "Pipatsrisawat_2008",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -13813,10 +13800,10 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2011",
             "TCZ_Forthcoming",
-            "Pipatsrisawat_2008"
+            "Pipatsrisawat_2008",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -14453,11 +14440,11 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2011",
             "Darwiche_2002",
             "Pipatsrisawat_2008",
-            "TCZ_Forthcoming"
+            "TCZ_Forthcoming",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -14543,10 +14530,10 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
-            "Pipatsrisawat_2008",
             "Darwiche_2011",
-            "TCZ_Forthcoming"
+            "TCZ_Forthcoming",
+            "Pipatsrisawat_2008",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -14569,11 +14556,11 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2011",
             "Darwiche_2002",
             "Pipatsrisawat_2008",
-            "TCZ_Forthcoming"
+            "TCZ_Forthcoming",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -14614,11 +14601,11 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
+            "Darwiche_2011",
+            "VanDenBroeck_2015",
             "Pipatsrisawat_2008",
             "TCZ_Forthcoming",
-            "Darwiche_2011",
-            "VanDenBroeck_2015"
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -14641,11 +14628,11 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2002",
             "Darwiche_2011",
             "Pipatsrisawat_2008",
-            "TCZ_Forthcoming"
+            "TCZ_Forthcoming",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -14727,7 +14714,6 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Darwiche_2002",
             "Wegener_2000",
             "Darwiche_2011",
             "TCZ_Forthcoming",
@@ -14755,11 +14741,11 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2002",
             "Darwiche_2011",
             "Pipatsrisawat_2008",
-            "TCZ_Forthcoming"
+            "TCZ_Forthcoming",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -14805,10 +14791,10 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2011",
             "TCZ_Forthcoming",
-            "Pipatsrisawat_2008"
+            "Pipatsrisawat_2008",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -14935,12 +14921,12 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Beame_2013",
+            "Darwiche_2011",
+            "VanDenBroeck_2015",
             "Pipatsrisawat_2008",
             "TCZ_Forthcoming",
-            "Darwiche_2011",
-            "VanDenBroeck_2015"
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -15020,10 +15006,10 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2011",
             "TCZ_Forthcoming",
-            "Pipatsrisawat_2008"
+            "Pipatsrisawat_2008",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -15074,10 +15060,10 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2011",
             "TCZ_Forthcoming",
-            "Pipatsrisawat_2008"
+            "Pipatsrisawat_2008",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -16555,9 +16541,9 @@
         {
           "status": "no-quasi",
           "refs": [
-            "Darwiche_2011",
-            "Beame_2013",
             "Amarilli_2018",
+            "Beame_2013",
+            "Darwiche_2011",
             "Bollig_2018"
           ],
           "hidden": false,
@@ -16578,10 +16564,10 @@
           "status": "no-quasi",
           "refs": [
             "VanDenBroeck_2015",
+            "Darwiche_2002",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Darwiche_2002",
             "Bova_2016_a",
             "Beame_2013"
           ],
@@ -17115,8 +17101,8 @@
         {
           "status": "no-quasi",
           "refs": [
-            "Beame_2013",
             "Amarilli_2018",
+            "Beame_2013",
             "Bollig_2018"
           ],
           "hidden": false,
@@ -17373,7 +17359,6 @@
             "Amarilli_2018",
             "Darwiche_2011",
             "VanDenBroeck_2015",
-            "Pipatsrisawat_2008",
             "Bollig_2018"
           ],
           "hidden": false,
@@ -17452,9 +17437,9 @@
             "description": "\\edgeref{lang_ea9b5299}{lang_b13b0d78} in polynomial time. \\nedgeref{lang_ea9b5299}{lang_1df07cc3} in polynomial time. If SDNNF compiled to nFBDD in polynomial time, then d-SDNNF would compile to nFBDD in polynomial time, contradicting the above. Therefore SDNNF cannot compile to nFBDD in polynomial time.",
             "refs": [
               "Amarilli_2018",
+              "Pipatsrisawat_2008",
               "Bollig_2018",
               "Beame_2015",
-              "Pipatsrisawat_2008",
               "TCZ_Forthcoming",
               "Wegener_2000"
             ],
@@ -17530,9 +17515,9 @@
             "description": "\\edgeref{lang_ea9b5299}{lang_b13b0d78} in polynomial time. \\edgeref{lang_d24efe0e}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_ea9b5299}{lang_1df07cc3} in polynomial time. If SDNNF compiled to nOBDD in polynomial time, then d-SDNNF would compile to nFBDD in polynomial time, contradicting the above. Therefore SDNNF cannot compile to nOBDD in polynomial time.",
             "refs": [
               "Amarilli_2018",
+              "Pipatsrisawat_2008",
               "Bollig_2018",
               "Beame_2015",
-              "Pipatsrisawat_2008",
               "TCZ_Forthcoming",
               "Wegener_2000"
             ],
@@ -17750,7 +17735,6 @@
             "Beame_2013",
             "Darwiche_2011",
             "VanDenBroeck_2015",
-            "Pipatsrisawat_2008",
             "Bollig_2018"
           ],
           "hidden": false,
@@ -17773,9 +17757,9 @@
           "refs": [
             "VanDenBroeck_2015",
             "Amarilli_2018",
+            "Darwiche_2002",
             "Bollig_2018",
             "Beame_2015",
-            "Darwiche_2002",
             "Bova_2016_a",
             "Beame_2013"
           ],
@@ -18475,8 +18459,8 @@
           "refs": [
             "Amarilli_2018",
             "Wegener_2000",
-            "VanDenBroeck_2015",
-            "Darwiche_2011"
+            "Darwiche_2011",
+            "VanDenBroeck_2015"
           ],
           "hidden": false,
           "derived": true,
@@ -18497,10 +18481,10 @@
           "status": "no-poly-quasi",
           "refs": [
             "Amarilli_2018",
+            "Wegener_2000",
             "Bollig_2018",
             "Beame_2015",
-            "TCZ_Forthcoming",
-            "Wegener_2000"
+            "TCZ_Forthcoming"
           ],
           "hidden": false,
           "derived": false,
@@ -18508,10 +18492,10 @@
             "description": "\\edgeref{lang_91f812d0}{lang_3c803ba1} in polynomial time. \\edgeref{lang_e827cf31}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_91f812d0}{lang_1df07cc3} in polynomial time. If SDNNF$_T$ compiled to nOBDD$_<$ in polynomial time, then d-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore SDNNF$_T$ cannot compile to nOBDD$_<$ in polynomial time.",
             "refs": [
               "Amarilli_2018",
+              "Wegener_2000",
               "Bollig_2018",
               "Beame_2015",
-              "TCZ_Forthcoming",
-              "Wegener_2000"
+              "TCZ_Forthcoming"
             ],
             "derived": true,
             "derivationOrder": 655,
@@ -18645,9 +18629,9 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Pipatsrisawat_2008",
             "Darwiche_2011",
             "TCZ_Forthcoming",
+            "Pipatsrisawat_2008",
             "Wegener_2000"
           ],
           "hidden": false,
@@ -18833,7 +18817,6 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Darwiche_2002",
             "Wegener_2000",
             "Darwiche_2011",
             "TCZ_Forthcoming",
@@ -18938,11 +18921,11 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
+            "Capelli_2016",
+            "Pipatsrisawat_2010",
             "Pipatsrisawat_2008",
             "TCZ_Forthcoming",
-            "Wegener_2000",
-            "Capelli_2016",
-            "Pipatsrisawat_2010"
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -18966,9 +18949,9 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Pipatsrisawat_2008",
             "Darwiche_2011",
             "TCZ_Forthcoming",
+            "Pipatsrisawat_2008",
             "Wegener_2000"
           ],
           "hidden": false,
@@ -19040,9 +19023,9 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
+            "Beame_2013",
             "Darwiche_2011",
             "VanDenBroeck_2015",
-            "Beame_2013",
             "Pipatsrisawat_2008",
             "TCZ_Forthcoming",
             "Wegener_2000"
@@ -19152,10 +19135,10 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2011",
             "TCZ_Forthcoming",
-            "Pipatsrisawat_2008"
+            "Pipatsrisawat_2008",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -19179,10 +19162,10 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2011",
             "TCZ_Forthcoming",
-            "Pipatsrisawat_2008"
+            "Pipatsrisawat_2008",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -19208,11 +19191,11 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2011",
             "Darwiche_2002",
             "Pipatsrisawat_2008",
-            "TCZ_Forthcoming"
+            "TCZ_Forthcoming",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -19289,11 +19272,11 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2011",
             "Darwiche_2002",
             "Pipatsrisawat_2008",
-            "TCZ_Forthcoming"
+            "TCZ_Forthcoming",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -19349,11 +19332,11 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Wegener_2000",
             "Darwiche_2002",
             "Darwiche_2011",
             "Pipatsrisawat_2008",
-            "TCZ_Forthcoming"
+            "TCZ_Forthcoming",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -19454,7 +19437,6 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Darwiche_2002",
             "Wegener_2000",
             "Darwiche_2011",
             "TCZ_Forthcoming",
@@ -19483,10 +19465,10 @@
             "Bollig_2018",
             "Beame_2015",
             "Darwiche_2002",
-            "Wegener_2000",
             "Darwiche_2011",
             "Pipatsrisawat_2008",
-            "TCZ_Forthcoming"
+            "TCZ_Forthcoming",
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -19603,9 +19585,9 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
+            "Beame_2013",
             "Darwiche_2011",
             "VanDenBroeck_2015",
-            "Beame_2013",
             "Pipatsrisawat_2008",
             "TCZ_Forthcoming",
             "Wegener_2000"
@@ -20643,11 +20625,11 @@
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
+            "Capelli_2016",
+            "Pipatsrisawat_2010",
             "Pipatsrisawat_2008",
             "TCZ_Forthcoming",
-            "Wegener_2000",
-            "Capelli_2016",
-            "Pipatsrisawat_2010"
+            "Wegener_2000"
           ],
           "hidden": false,
           "derived": true,
@@ -20668,7 +20650,6 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
-            "Pipatsrisawat_2008",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
@@ -20694,16 +20675,16 @@
         {
           "status": "no-poly-quasi",
           "refs": [
-            "Beame_2013",
-            "Amarilli_2018"
+            "Amarilli_2018",
+            "Beame_2013"
           ],
           "hidden": false,
           "derived": true,
           "noPolyDescription": {
             "description": "\\edgeref{lang_4e62a038}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_981b62f0}{lang_1df07cc3} in polynomial time. If dec-DNNF compiled to uFBDD in polynomial time, then dec-DNNF would compile to nFBDD in polynomial time, contradicting the above. Therefore dec-DNNF cannot compile to uFBDD in polynomial time.",
             "refs": [
-              "Beame_2013",
-              "Amarilli_2018"
+              "Amarilli_2018",
+              "Beame_2013"
             ],
             "derived": true,
             "derivationOrder": 721,
@@ -21212,8 +21193,6 @@
             "description": "\\edgeref{lang_d24efe0e}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_0f27d539}{lang_1df07cc3} in polynomial time. If dec-SDNNF compiled to nOBDD in polynomial time, then dec-SDNNF would compile to nFBDD in polynomial time, contradicting the above. Therefore dec-SDNNF cannot compile to nOBDD in polynomial time.",
             "refs": [
               "Amarilli_2018",
-              "Bollig_2018",
-              "Beame_2015",
               "Beame_2013"
             ],
             "derived": true,
@@ -21444,8 +21423,6 @@
             "description": "\\edgeref{lang_c2df8c2b}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_0f27d539}{lang_1df07cc3} in polynomial time. If dec-SDNNF compiled to uOBDD in polynomial time, then dec-SDNNF would compile to nFBDD in polynomial time, contradicting the above. Therefore dec-SDNNF cannot compile to uOBDD in polynomial time.",
             "refs": [
               "Amarilli_2018",
-              "Bollig_2018",
-              "Beame_2015",
               "Beame_2013"
             ],
             "derived": true,
@@ -21486,10 +21463,10 @@
         {
           "status": "no-poly-quasi",
           "refs": [
+            "Darwiche_2002",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Darwiche_2002",
             "Beame_2013"
           ],
           "hidden": false,
@@ -21497,10 +21474,8 @@
           "noPolyDescription": {
             "description": "\\edgeref{lang_b9d72a7c}{lang_684b1ca7} in polynomial time. \\nedgeref{lang_0f27d539}{lang_684b1ca7} in polynomial time. If dec-SDNNF compiled to OBDD in polynomial time, then dec-SDNNF would compile to FBDD in polynomial time, contradicting the above. Therefore dec-SDNNF cannot compile to OBDD in polynomial time.",
             "refs": [
-              "Amarilli_2018",
-              "Bollig_2018",
-              "Beame_2015",
               "Darwiche_2002",
+              "Amarilli_2018",
               "Beame_2013"
             ],
             "derived": true,
@@ -21921,8 +21896,6 @@
             "description": "\\edgeref{lang_d24efe0e}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_1df07cc3} in polynomial time. If dec-SDNNF$_T$ compiled to nOBDD in polynomial time, then dec-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore dec-SDNNF$_T$ cannot compile to nOBDD in polynomial time.",
             "refs": [
               "Amarilli_2018",
-              "Bollig_2018",
-              "Beame_2015",
               "Beame_2013"
             ],
             "derived": true,
@@ -21965,11 +21938,11 @@
         {
           "status": "no-poly-quasi",
           "refs": [
+            "Darwiche_2002",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Darwiche_2002",
             "Beame_2013"
           ],
           "hidden": false,
@@ -21977,11 +21950,8 @@
           "noPolyDescription": {
             "description": "\\edgeref{lang_d69995dd}{lang_684b1ca7} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_684b1ca7} in polynomial time. If dec-SDNNF$_T$ compiled to OBDD$_<$ in polynomial time, then dec-SDNNF$_T$ would compile to FBDD in polynomial time, contradicting the above. Therefore dec-SDNNF$_T$ cannot compile to OBDD$_<$ in polynomial time.",
             "refs": [
-              "Amarilli_2018",
-              "Bollig_2018",
-              "Beame_2015",
-              "TCZ_Forthcoming",
               "Darwiche_2002",
+              "Amarilli_2018",
               "Beame_2013"
             ],
             "derived": true,
@@ -22185,8 +22155,6 @@
             "description": "\\edgeref{lang_c2df8c2b}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_1df07cc3} in polynomial time. If dec-SDNNF$_T$ compiled to uOBDD in polynomial time, then dec-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore dec-SDNNF$_T$ cannot compile to uOBDD in polynomial time.",
             "refs": [
               "Amarilli_2018",
-              "Bollig_2018",
-              "Beame_2015",
               "Beame_2013"
             ],
             "derived": true,
@@ -22228,10 +22196,10 @@
         {
           "status": "no-poly-quasi",
           "refs": [
+            "Darwiche_2002",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Darwiche_2002",
             "Beame_2013"
           ],
           "hidden": false,
@@ -22239,10 +22207,8 @@
           "noPolyDescription": {
             "description": "\\edgeref{lang_b9d72a7c}{lang_684b1ca7} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_684b1ca7} in polynomial time. If dec-SDNNF$_T$ compiled to OBDD in polynomial time, then dec-SDNNF$_T$ would compile to FBDD in polynomial time, contradicting the above. Therefore dec-SDNNF$_T$ cannot compile to OBDD in polynomial time.",
             "refs": [
-              "Amarilli_2018",
-              "Bollig_2018",
-              "Beame_2015",
               "Darwiche_2002",
+              "Amarilli_2018",
               "Beame_2013"
             ],
             "derived": true,
@@ -22336,11 +22302,11 @@
         {
           "status": "no-poly-quasi",
           "refs": [
+            "Wegener_2000",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
             "Beame_2013",
             "Darwiche_2002"
           ],
@@ -22349,11 +22315,8 @@
           "noPolyDescription": {
             "description": "\\edgeref{lang_e827cf31}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_1df07cc3} in polynomial time. If dec-SDNNF$_T$ compiled to nOBDD$_<$ in polynomial time, then dec-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore dec-SDNNF$_T$ cannot compile to nOBDD$_<$ in polynomial time.",
             "refs": [
-              "Amarilli_2018",
-              "Bollig_2018",
-              "Beame_2015",
-              "TCZ_Forthcoming",
               "Wegener_2000",
+              "Amarilli_2018",
               "Beame_2013"
             ],
             "derived": true,
@@ -22398,10 +22361,10 @@
           "status": "no-poly-quasi",
           "refs": [
             "Amarilli_2018",
+            "Wegener_2000",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
             "Beame_2013",
             "Darwiche_2002"
           ],
@@ -22411,9 +22374,6 @@
             "description": "\\edgeref{lang_43a33aec}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_1df07cc3} in polynomial time. If dec-SDNNF$_T$ compiled to uOBDD$_<$ in polynomial time, then dec-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore dec-SDNNF$_T$ cannot compile to uOBDD$_<$ in polynomial time.",
             "refs": [
               "Amarilli_2018",
-              "Bollig_2018",
-              "Beame_2015",
-              "TCZ_Forthcoming",
               "Wegener_2000",
               "Beame_2013"
             ],
@@ -22897,12 +22857,12 @@
         {
           "status": "no-quasi",
           "refs": [
+            "Darwiche_2002",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
-            "Darwiche_2002",
-            "Beame_2013",
-            "Bova_2016_a"
+            "Bova_2016_a",
+            "Beame_2013"
           ],
           "hidden": false,
           "derived": true,
@@ -22921,15 +22881,15 @@
         {
           "status": "no-quasi",
           "refs": [
+            "Darwiche_2002",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Darwiche_2002",
-            "Beame_2013",
             "Bova_2016_a",
             "Bryant_1986",
-            "Wegener_2000"
+            "Wegener_2000",
+            "Beame_2013"
           ],
           "hidden": false,
           "derived": true,
@@ -23002,11 +22962,11 @@
         {
           "status": "no-quasi",
           "refs": [
+            "Wegener_2000",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
             "Darwiche_2002"
           ],
           "hidden": false,
@@ -23111,11 +23071,11 @@
         {
           "status": "no-quasi",
           "refs": [
+            "Wegener_2000",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
             "Darwiche_2002"
           ],
           "hidden": false,
@@ -23156,11 +23116,11 @@
         {
           "status": "no-quasi",
           "refs": [
+            "Wegener_2000",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
             "VanDenBroeck_2015"
           ],
           "hidden": false,
@@ -23180,11 +23140,11 @@
         {
           "status": "no-quasi",
           "refs": [
+            "Wegener_2000",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
             "Darwiche_2002"
           ],
           "hidden": false,
@@ -23205,11 +23165,11 @@
         {
           "status": "no-quasi",
           "refs": [
+            "Wegener_2000",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
             "Darwiche_2002"
           ],
           "hidden": false,
@@ -23281,12 +23241,11 @@
         {
           "status": "no-quasi",
           "refs": [
+            "Wegener_2000",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
-            "Darwiche_2011",
             "Darwiche_2002",
             "VanDenBroeck_2015"
           ],
@@ -23308,11 +23267,11 @@
         {
           "status": "no-quasi",
           "refs": [
+            "Wegener_2000",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
             "Darwiche_2002"
           ],
           "hidden": false,
@@ -23450,12 +23409,11 @@
         {
           "status": "no-quasi",
           "refs": [
+            "Wegener_2000",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
-            "Darwiche_2011",
             "Darwiche_2002",
             "VanDenBroeck_2015"
           ],
@@ -23477,11 +23435,11 @@
         {
           "status": "no-quasi",
           "refs": [
+            "Wegener_2000",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
             "Beame_2013",
             "VanDenBroeck_2015"
           ],
@@ -23503,11 +23461,11 @@
         {
           "status": "no-quasi",
           "refs": [
+            "Wegener_2000",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
             "Beame_2013",
             "VanDenBroeck_2015"
           ],
@@ -23529,11 +23487,11 @@
         {
           "status": "no-quasi",
           "refs": [
+            "Wegener_2000",
             "Amarilli_2018",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
             "Beame_2013",
             "VanDenBroeck_2015"
           ],
@@ -23603,10 +23561,10 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
+            "Wegener_2000",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
             "Darwiche_2002"
           ],
           "hidden": false,
@@ -23677,10 +23635,10 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
+            "Wegener_2000",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
             "Darwiche_2002"
           ],
           "hidden": false,
@@ -23724,10 +23682,10 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
+            "Wegener_2000",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
             "VanDenBroeck_2015"
           ],
           "hidden": false,
@@ -23748,10 +23706,10 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
+            "Wegener_2000",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
             "Darwiche_2002"
           ],
           "hidden": false,
@@ -23773,10 +23731,10 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
+            "Wegener_2000",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
             "Darwiche_2002"
           ],
           "hidden": false,
@@ -23864,12 +23822,12 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
+            "Wegener_2000",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
-            "VanDenBroeck_2015",
-            "Darwiche_2002"
+            "Darwiche_2002",
+            "VanDenBroeck_2015"
           ],
           "hidden": false,
           "derived": true,
@@ -23890,10 +23848,10 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
+            "Wegener_2000",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
             "Darwiche_2002"
           ],
           "hidden": false,
@@ -23987,12 +23945,12 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
+            "Wegener_2000",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
-            "VanDenBroeck_2015",
-            "Darwiche_2002"
+            "Darwiche_2002",
+            "VanDenBroeck_2015"
           ],
           "hidden": false,
           "derived": true,
@@ -24013,12 +23971,12 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
+            "Wegener_2000",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
-            "VanDenBroeck_2015",
-            "Beame_2013"
+            "Beame_2013",
+            "VanDenBroeck_2015"
           ],
           "hidden": false,
           "derived": true,
@@ -24039,12 +23997,12 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
+            "Wegener_2000",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
-            "VanDenBroeck_2015",
-            "Beame_2013"
+            "Beame_2013",
+            "VanDenBroeck_2015"
           ],
           "hidden": false,
           "derived": true,
@@ -24065,12 +24023,12 @@
           "status": "no-quasi",
           "refs": [
             "Amarilli_2018",
+            "Wegener_2000",
             "Bollig_2018",
             "Beame_2015",
             "TCZ_Forthcoming",
-            "Wegener_2000",
-            "VanDenBroeck_2015",
-            "Beame_2013"
+            "Beame_2013",
+            "VanDenBroeck_2015"
           ],
           "hidden": false,
           "derived": true,
