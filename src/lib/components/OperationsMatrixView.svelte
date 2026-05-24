@@ -208,21 +208,20 @@
     };
   }
 
-  function isLanguageSelected(language: KCLanguage): boolean {
-    return selectedNode?.id === language.id;
-  }
-
-  function isOperationSelected(opCode: string): boolean {
-    if (!selectedOperation) return false;
-    const opDef = operations[opCode];
-    return selectedOperation.code === opDef?.code;
-  }
-
   function isCellSelected(language: KCLanguage, opCode: string): boolean {
     if (!selectedOperationCell) return false;
     const opDef = operations[opCode];
     return selectedOperationCell.language.id === language.id && 
            selectedOperationCell.operationCode === opDef?.code;
+  }
+
+  function isLanguageHighlighted(language: KCLanguage): boolean {
+    return selectedNode?.id === language.id || selectedOperationCell?.language.id === language.id;
+  }
+
+  function isOperationHighlighted(opCode: string): boolean {
+    const opDef = operations[opCode];
+    return selectedOperation?.code === opDef?.code || selectedOperationCell?.operationCode === opDef?.code;
   }
 
   function operationCellId(language: KCLanguage, opCode: string): string {
@@ -422,7 +421,7 @@
           <th class="corner-cell" aria-hidden="true"></th>
           {#each operationCodes as opCode}
             {@const opDef = operations[opCode]}
-            <th class={`col-header ${isOperationSelected(opCode) ? 'is-active' : ''}`}>
+            <th class={`col-header ${isOperationHighlighted(opCode) ? 'is-active' : ''}`}>
               <button 
                 type="button" 
                 onclick={() => handleOperationClick(opCode)} 
@@ -437,7 +436,7 @@
       <tbody>
         {#each visibleLanguages as language}
           <tr>
-            <th class={`row-header ${isLanguageSelected(language) ? 'is-active' : ''}`}>
+            <th class={`row-header ${isLanguageHighlighted(language) ? 'is-active' : ''}`}>
               <button type="button" onclick={() => handleLanguageClick(language)} title={`Select ${language.name}`}>
                 <span class="math-text inline" aria-label={language.name}>{@html languageNameHtml.get(language.id) ?? language.name}</span>
               </button>
@@ -453,7 +452,7 @@
                 {#if displayedSupport}
                 <button
                   type="button"
-                  class={`matrix-cell matrix-cell--button ${display.cssClass} ${!support ? 'matrix-cell--unknown' : ''} ${isCellSelected(language, opCode) ? 'is-selected' : ''} ${support?.dimmed ? 'is-dimmed' : ''} ${support?.explicit ? 'is-explicit' : ''} ${isPreviewHighlighted(language, opCode) ? 'is-preview-highlighted' : ''} ${isDirectSandboxEdit(language, opCode) ? 'is-sandbox-direct' : ''}`}
+                  class={`matrix-cell matrix-cell--button ${display.cssClass} ${!support ? 'matrix-cell--unknown' : ''} ${isCellSelected(language, opCode) ? 'is-selected' : ''} ${isLanguageHighlighted(language) ? 'is-row-highlighted' : ''} ${isOperationHighlighted(opCode) ? 'is-col-highlighted' : ''} ${support?.dimmed ? 'is-dimmed' : ''} ${support?.explicit ? 'is-explicit' : ''} ${isPreviewHighlighted(language, opCode) ? 'is-preview-highlighted' : ''} ${isDirectSandboxEdit(language, opCode) ? 'is-sandbox-direct' : ''}`}
                   onclick={() => handleCellClick(language, opCode)}
                   title={getCellTitle(language, opCode, support)}
                 >
@@ -485,7 +484,7 @@
                   {#if sandboxMode}
                     <button
                       type="button"
-                      class={`matrix-cell matrix-cell--button matrix-cell--empty ${isPreviewHighlighted(language, opCode) ? 'is-preview-highlighted' : ''} ${isDirectSandboxEdit(language, opCode) ? 'is-sandbox-direct' : ''}`}
+                      class={`matrix-cell matrix-cell--button matrix-cell--empty ${isLanguageHighlighted(language) ? 'is-row-highlighted' : ''} ${isOperationHighlighted(opCode) ? 'is-col-highlighted' : ''} ${isPreviewHighlighted(language, opCode) ? 'is-preview-highlighted' : ''} ${isDirectSandboxEdit(language, opCode) ? 'is-sandbox-direct' : ''}`}
                       onclick={() => handleCellClick(language, opCode)}
                       aria-label={`Edit ${language.name} ${opCode}`}
                       title={`${language.name}: ${opCode} - no data`}
@@ -513,7 +512,10 @@
                       {/if}
                     {/if}
                   {:else}
-                <span class="matrix-cell matrix-cell--empty" title={`${language.name}: ${opCode} — no data`}>&nbsp;</span>
+                    <span
+                      class={`matrix-cell matrix-cell--empty ${isLanguageHighlighted(language) ? 'is-row-highlighted' : ''} ${isOperationHighlighted(opCode) ? 'is-col-highlighted' : ''}`}
+                      title={`${language.name}: ${opCode} — no data`}
+                    >&nbsp;</span>
                   {/if}
                 {/if}
               </td>
@@ -652,6 +654,7 @@
   .row-header.is-active,
   .col-header.is-active {
     background: #e0f2fe;
+    box-shadow: inset 0 0 0 2px #2563eb;
   }
 
   tbody th {
@@ -700,6 +703,21 @@
 
   .matrix-cell--unknown {
     color: #6b7280;
+  }
+
+  .matrix-cell.is-row-highlighted,
+  .matrix-cell--empty.is-row-highlighted {
+    box-shadow: inset 0 2px 0 #2563eb, inset 0 -2px 0 #2563eb;
+  }
+
+  .matrix-cell.is-col-highlighted,
+  .matrix-cell--empty.is-col-highlighted {
+    box-shadow: inset 2px 0 0 #2563eb, inset -2px 0 0 #2563eb;
+  }
+
+  .matrix-cell.is-row-highlighted.is-col-highlighted,
+  .matrix-cell--empty.is-row-highlighted.is-col-highlighted {
+    box-shadow: inset 0 0 0 2px #2563eb;
   }
 
   .matrix-cell.is-preview-highlighted,
