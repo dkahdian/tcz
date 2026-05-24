@@ -169,7 +169,7 @@
 <style>
   .filter-shell {
     position: relative;
-    z-index: 41;
+    z-index: 1000;
   }
 
   .trigger-btn {
@@ -209,7 +209,7 @@
     position: fixed;
     inset: 0;
     background: rgba(15, 23, 42, 0.28);
-    z-index: 39;
+    z-index: 999;
   }
 
   .drawer-panel {
@@ -222,7 +222,7 @@
     border: 1px solid #cbd5e1;
     border-radius: 0.9rem;
     box-shadow: 0 24px 64px rgba(15, 23, 42, 0.22);
-    z-index: 40;
+    z-index: 1000;
     display: flex;
     flex-direction: column;
     overflow: hidden;
