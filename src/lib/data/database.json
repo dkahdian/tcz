@@ -10485,7 +10485,7 @@
             }
           },
           "quasiDescription": {
-            "description": "The common-order quasipolynomial simulation of \\citep{TCZ_Forthcoming} specializes to \\langfam{d-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$; determinism guarantees that the output is a \\langfam{uOBDD}{<}.",
+            "description": "The common-order quasipolynomial simulation of \\citet{TCZ_Forthcoming} specializes to \\langfam{d-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$; determinism guarantees that the output is a \\langfam{uOBDD}{<}.",
             "refs": [
               "Amarilli_2018",
               "Bollig_2018",
@@ -10494,7 +10494,7 @@
             ],
             "derived": false
           },
-          "description": "First, we show no polynomial compilation exists.\n\\edgeref{lang_43a33aec}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_91f812d0}{lang_1df07cc3} in polynomial time. If d-SDNNF$_T$ compiled to uOBDD$_<$ in polynomial time, then d-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore d-SDNNF$_T$ cannot compile to uOBDD$_<$ in polynomial time.\n\nNow, we show a quasipolynomial compilation exists.\nThe common-order quasipolynomial simulation of \\citep{TCZ_Forthcoming} specializes to \\langfam{d-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$; determinism guarantees that the output is a \\langfam{uOBDD}{<}."
+          "description": "First, we show no polynomial compilation exists.\n\\edgeref{lang_43a33aec}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_91f812d0}{lang_1df07cc3} in polynomial time. If d-SDNNF$_T$ compiled to uOBDD$_<$ in polynomial time, then d-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore d-SDNNF$_T$ cannot compile to uOBDD$_<$ in polynomial time.\n\nNow, we show a quasipolynomial compilation exists.\nThe common-order quasipolynomial simulation of \\citet{TCZ_Forthcoming} specializes to \\langfam{d-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$; determinism guarantees that the output is a \\langfam{uOBDD}{<}."
         }
       ],
       [
@@ -11034,7 +11034,7 @@
         },
         {
           "status": "no-quasi",
-          "description": "\\citet[Proposition 7]{Bova_2016} shows that the Sauerhoff function $S_n$ has \\langref{DNNF} size $O(n^2)$. Theorem 9 shows that $S_n$ has \\langref{d-DNNF} size $2^{\\Omega(n)}$. (Also see \\citep{Bova_2014}.)",
+          "description": "\\citet[Proposition 7]{Bova_2016} shows that the Sauerhoff function $S_n$ has \\langref{DNNF} size $O(n^2)$. Theorem 9 shows that $S_n$ has \\langref{d-DNNF} size $2^{\\Omega(n)}$. (Also see \\citet{Bova_2014}.)",
           "refs": [
             "Bova_2016"
           ],
@@ -11885,7 +11885,7 @@
           ],
           "hidden": false,
           "derived": false,
-          "description": "\\citep{Beame_2015} relates the size of \\langref{SDD} representations to best-partition communication complexity and derive simple examples for which \\langref{FBDD} representations are exponentially more concise than \\langref{SDD} representations. This establishes $P(\\langref{FBDD}) \\not\\subseteq P(\\langref{SDD})$."
+          "description": "\\citet{Beame_2015} relates the size of \\langref{SDD} representations to best-partition communication complexity and derive simple examples for which \\langref{FBDD} representations are exponentially more concise than \\langref{SDD} representations. This establishes $P(\\langref{FBDD}) \\not\\subseteq P(\\langref{SDD})$."
         },
         {
           "status": "no-quasi",
@@ -18511,7 +18511,7 @@
             }
           },
           "quasiDescription": {
-            "description": "The \\langref{SDNNF}-to-\\langref{nOBDD} simulation can be oriented as in \\citep{TCZ_Forthcoming}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and gives a quasipolynomial-size \\langfam{nOBDD}{<}.",
+            "description": "The \\langref{SDNNF}-to-\\langref{nOBDD} simulation can be oriented as in \\citet{TCZ_Forthcoming}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and gives a quasipolynomial-size \\langfam{nOBDD}{<}.",
             "refs": [
               "Amarilli_2018",
               "Bollig_2018",
@@ -18520,7 +18520,7 @@
             ],
             "derived": false
           },
-          "description": "First, we show no polynomial compilation exists.\n\\edgeref{lang_91f812d0}{lang_3c803ba1} in polynomial time. \\edgeref{lang_e827cf31}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_91f812d0}{lang_1df07cc3} in polynomial time. If SDNNF$_T$ compiled to nOBDD$_<$ in polynomial time, then d-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore SDNNF$_T$ cannot compile to nOBDD$_<$ in polynomial time.\n\nNow, we show a quasipolynomial compilation exists.\nThe \\langref{SDNNF}-to-\\langref{nOBDD} simulation can be oriented as in \\citep{TCZ_Forthcoming}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and gives a quasipolynomial-size \\langfam{nOBDD}{<}."
+          "description": "First, we show no polynomial compilation exists.\n\\edgeref{lang_91f812d0}{lang_3c803ba1} in polynomial time. \\edgeref{lang_e827cf31}{lang_1df07cc3} in polynomial time. \\nedgeref{lang_91f812d0}{lang_1df07cc3} in polynomial time. If SDNNF$_T$ compiled to nOBDD$_<$ in polynomial time, then d-SDNNF$_T$ would compile to nFBDD in polynomial time, contradicting the above. Therefore SDNNF$_T$ cannot compile to nOBDD$_<$ in polynomial time.\n\nNow, we show a quasipolynomial compilation exists.\nThe \\langref{SDNNF}-to-\\langref{nOBDD} simulation can be oriented as in \\citet{TCZ_Forthcoming}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and gives a quasipolynomial-size \\langfam{nOBDD}{<}."
         },
         {
           "status": "no-quasi",
@@ -21967,7 +21967,7 @@
             }
           },
           "quasiDescription": {
-            "description": "The common-order quasipolynomial simulation of \\citep{TCZ_Forthcoming} specializes to \\langfam{dec-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and produces a quasipolynomial-size \\langfam{OBDD}{<}.",
+            "description": "The common-order quasipolynomial simulation of \\citet{TCZ_Forthcoming} specializes to \\langfam{dec-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and produces a quasipolynomial-size \\langfam{OBDD}{<}.",
             "refs": [
               "Amarilli_2018",
               "Bollig_2018",
@@ -21976,7 +21976,7 @@
             ],
             "derived": false
           },
-          "description": "First, we show no polynomial compilation exists.\n\\edgeref{lang_d69995dd}{lang_684b1ca7} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_684b1ca7} in polynomial time. If dec-SDNNF$_T$ compiled to OBDD$_<$ in polynomial time, then dec-SDNNF$_T$ would compile to FBDD in polynomial time, contradicting the above. Therefore dec-SDNNF$_T$ cannot compile to OBDD$_<$ in polynomial time.\n\nNow, we show a quasipolynomial compilation exists.\nThe common-order quasipolynomial simulation of \\citep{TCZ_Forthcoming} specializes to \\langfam{dec-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and produces a quasipolynomial-size \\langfam{OBDD}{<}."
+          "description": "First, we show no polynomial compilation exists.\n\\edgeref{lang_d69995dd}{lang_684b1ca7} in polynomial time. \\nedgeref{lang_4ae03bc8}{lang_684b1ca7} in polynomial time. If dec-SDNNF$_T$ compiled to OBDD$_<$ in polynomial time, then dec-SDNNF$_T$ would compile to FBDD in polynomial time, contradicting the above. Therefore dec-SDNNF$_T$ cannot compile to OBDD$_<$ in polynomial time.\n\nNow, we show a quasipolynomial compilation exists.\nThe common-order quasipolynomial simulation of \\citet{TCZ_Forthcoming} specializes to \\langfam{dec-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and produces a quasipolynomial-size \\langfam{OBDD}{<}."
         },
         {
           "status": "no-quasi",
