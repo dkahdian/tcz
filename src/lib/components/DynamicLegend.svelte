@@ -54,56 +54,95 @@
     status: string;
   };
   
-  const allEdgeTypes: EdgeType[] = [
-    {
-      arrow: 'triangle',
-      filled: true,
-      description: 'A compiles to B with polynomial size increase.',
-      status: 'poly'
-    },
-    {
-      arrow: 'square',
-      filled: true,
-      description: 'A cannot compile to B with quasipolynomial size increase.',
-      status: 'no-quasi'
-    },
-    {
-      arrow: 'tee',
-      filled: true,
-      description: 'A compiles to B with quasipolynomial size increase.',
-      status: 'no-poly-quasi'
-    },
-    {
-      arrow: 'square',
-      filled: true,
-      description: 'A does not compile to B with polynomial size increase.',
-      status: 'not-poly'
-    },
-    {
-      arrow: 'tee',
-      filled: false,
-      description: 'A does not compile to B with polynomial size increase; quasipolynomial is unknown.',
-      status: 'no-poly-unknown-quasi'
-    },
-    {
-      arrow: 'triangle-cross',
-      filled: false,
-      description: 'A compiles to B with quasipolynomial size increase; polynomial is unknown.',
-      status: 'unknown-poly-quasi'
-    },
-    {
-      arrow: 'square',
-      filled: false,
-      description: 'Unknown whether A compiles to B.',
-      status: 'unknown-both'
-    },
-    {
-      arrow: 'square',
-      filled: false,
-      description: 'Unknown whether A compiles to B.',
-      status: 'unknown'
-    }
+  const GRAPH_EDGE_LEGEND_ORDER = [
+    'poly',
+    'not-poly',
+    'no-poly-unknown-quasi',
+    'no-poly-quasi',
+    'unknown-poly-quasi',
+    'no-quasi',
+    'unknown',
+    'unknown-both'
   ];
+
+  const edgeTypesByStatus = new Map<string, EdgeType>([
+    [
+      'poly',
+      {
+        arrow: 'triangle',
+        filled: true,
+        description: 'A compiles to B with polynomial size increase.',
+        status: 'poly'
+      }
+    ],
+    [
+      'not-poly',
+      {
+        arrow: 'square',
+        filled: true,
+        description: 'A does not compile to B with polynomial size increase.',
+        status: 'not-poly'
+      }
+    ],
+    [
+      'no-poly-unknown-quasi',
+      {
+        arrow: 'tee',
+        filled: false,
+        description: 'A might compile to B with quasipolynomial size increase at best.',
+        status: 'no-poly-unknown-quasi'
+      }
+    ],
+    [
+      'no-poly-quasi',
+      {
+        arrow: 'tee',
+        filled: true,
+        description: 'A compiles to B with quasipolynomial size increase.',
+        status: 'no-poly-quasi'
+      }
+    ],
+    [
+      'unknown-poly-quasi',
+      {
+        arrow: 'triangle-cross',
+        filled: false,
+        description: 'A compiles to B with quasipolynomial size increase, although possibly less.',
+        status: 'unknown-poly-quasi'
+      }
+    ],
+    [
+      'no-quasi',
+      {
+        arrow: 'square',
+        filled: true,
+        description: 'A cannot compile to B with quasipolynomial size increase.',
+        status: 'no-quasi'
+      }
+    ],
+    [
+      'unknown',
+      {
+        arrow: 'square',
+        filled: false,
+        description: 'Unknown whether A compiles to B with polynomial size increase.',
+        status: 'unknown'
+      }
+    ],
+    [
+      'unknown-both',
+      {
+        arrow: 'square',
+        filled: false,
+        description: 'Unknown whether A compiles to B.',
+        status: 'unknown-both'
+      }
+    ]
+  ]);
+
+  const allEdgeTypes: EdgeType[] = GRAPH_EDGE_LEGEND_ORDER
+    .map((status) => edgeTypesByStatus.get(status))
+    .filter((edge): edge is EdgeType => edge !== undefined);
 
   // Determine which edge types are actually visible
   const visibleEdgeTypes = $derived.by(() => {
@@ -128,36 +167,7 @@
     return allEdgeTypes.filter(et => statusesInGraph.has(et.status));
   });
 
-  const displayedGraphEdgeTypes = $derived.by(() => {
-    const statuses = new Set(visibleEdgeTypes.map((edge) => edge.status));
-    const rows: EdgeType[] = [];
-    const byStatus = new Map(allEdgeTypes.map((edge) => [edge.status, edge]));
-
-    const add = (status: string, description?: string) => {
-      const edge = byStatus.get(status);
-      if (!edge) return;
-      rows.push(description ? { ...edge, description } : edge);
-    };
-
-    if (statuses.has('poly')) {
-      add('poly');
-    }
-    if (statuses.has('no-poly-quasi') || statuses.has('unknown-poly-quasi')) {
-      add('no-poly-quasi', 'A compiles to B with quasipolynomial size increase.');
-    }
-    if (statuses.has('no-quasi')) {
-      add('no-quasi');
-    }
-    if (
-      statuses.has('unknown') ||
-      statuses.has('unknown-both') ||
-      statuses.has('no-poly-unknown-quasi')
-    ) {
-      add('unknown-both', 'Unknown whether A compiles to B.');
-    }
-
-    return rows;
-  });
+  const displayedGraphEdgeTypes = $derived(visibleEdgeTypes);
 
   const hasVisibleConditionalSuccinctness = $derived.by(() => {
     const { matrix, languageIds } = filteredData.adjacencyMatrix;
@@ -171,6 +181,10 @@
     }
     return false;
   });
+
+  const isCollapsedSuccinctnessLegend = $derived(
+    filteredData.complexities.poly?.notation === '$\\leq$'
+  );
 
   const hasVisibleDerivedCells = $derived.by(() => {
     if (viewMode === 'succinctness') {
@@ -391,32 +405,51 @@
           In row A and column B,
         </p>
         <div class="legend-items matrix-legend">
-          <div class="legend-row matrix-row">
-            <span class="matrix-notation" style="color: {filteredData.complexities.poly?.color ?? '#22c55e'}">
-              <MathText text={'$A \\leq_p B$'} className="inline" />
-            </span>
-            <span class="matrix-description">B compiles to A with polynomial size increase.</span>
-          </div>
-          <div class="legend-row matrix-row">
-            <span class="matrix-notation" style="color: {filteredData.complexities['no-poly-quasi']?.color ?? '#f97316'}">
-              <MathText text={'$A \\leq_q B$'} className="inline" />
-            </span>
-            <span class="matrix-description">B compiles to A with quasipolynomial size increase.</span>
-          </div>
-          <div class="legend-row matrix-row assumption-row">
-            <span class="matrix-notation assumption-marker">
-              <MathText text={'$\\leq^*$'} className="inline" />
-            </span>
-            <span class="matrix-description">
-              Relation <MathText text={'$\\leq$'} className="inline" /> holds under complexity assumption.
-            </span>
-          </div>
-          <div class="legend-row matrix-row">
-            <span class="matrix-notation">
-              <MathText text={'$\\leq^?$'} className="inline" />
-            </span>
-            <span class="matrix-description">Unknown whether <MathText text={'$\\leq$'} className="inline" /> holds.</span>
-          </div>
+          {#if isCollapsedSuccinctnessLegend}
+            <div class="legend-row matrix-row">
+              <span class="matrix-notation" style="color: {filteredData.complexities.poly?.color ?? '#22c55e'}">
+                <MathText text={'$A \\leq B$'} className="inline" />
+              </span>
+              <span class="matrix-description">B compiles to A with polynomial size increase.</span>
+            </div>
+            {#if hasVisibleConditionalSuccinctness}
+              <div class="legend-row matrix-row assumption-row">
+                <span class="matrix-notation assumption-marker">
+                  <MathText text={'$\\leq^*$'} className="inline" />
+                </span>
+                <span class="matrix-description">
+                  Relation <MathText text={'$\\leq$'} className="inline" /> holds under complexity assumption.
+                </span>
+              </div>
+            {/if}
+          {:else}
+            <div class="legend-row matrix-row">
+              <span class="matrix-notation" style="color: {filteredData.complexities.poly?.color ?? '#22c55e'}">
+                <MathText text={'$A \\leq_p B$'} className="inline" />
+              </span>
+              <span class="matrix-description">B compiles to A with polynomial size increase.</span>
+            </div>
+            <div class="legend-row matrix-row">
+              <span class="matrix-notation" style="color: {filteredData.complexities['no-poly-quasi']?.color ?? '#f97316'}">
+                <MathText text={'$A \\leq_q B$'} className="inline" />
+              </span>
+              <span class="matrix-description">B compiles to A with quasipolynomial size increase.</span>
+            </div>
+            <div class="legend-row matrix-row assumption-row">
+              <span class="matrix-notation assumption-marker">
+                <MathText text={'$\\leq^*$'} className="inline" />
+              </span>
+              <span class="matrix-description">
+                Relation <MathText text={'$\\leq$'} className="inline" /> holds under complexity assumption.
+              </span>
+            </div>
+            <div class="legend-row matrix-row">
+              <span class="matrix-notation">
+                <MathText text={'$\\leq^?$'} className="inline" />
+              </span>
+              <span class="matrix-description">Unknown whether <MathText text={'$\\leq$'} className="inline" /> holds.</span>
+            </div>
+          {/if}
           {#if hasVisibleDerivedCells}
             <div class="legend-row matrix-row">
               <span class="matrix-notation">
