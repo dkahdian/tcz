@@ -217,7 +217,7 @@ $\mathcal{L}$ supports Forgetting not in polynomial time (quasipolynomial unknow
 If $\mathcal{L}$ supported FO, then the consistency of any \langref{CNF} sentence $\Sigma$ could be tested in polynomial time: represent $\Sigma$ in $\mathcal{L}$, compute $\exists\text{Vars}(\Sigma).\Sigma$, and check the resulting constant sentence. This would decide \langref{CNF} consistency in polynomial time, implying P = NP \citep{Darwiche_2002}.
 \end{claimdescription}
 
-\begin{batchclaim}[id=darwiche-fo-dnf-selector-lower-bound, op=FO, status=no-poly-unknown-quasi]
+\begin{batchclaim}[id=darwiche-fo-dnf-selector-lower-bound, op=FO, status=no-quasi]
 For each language $\mathcal{L}$ in
 \[
 \{
@@ -229,10 +229,10 @@ For each language $\mathcal{L}$ in
   \langfam{TDD}{T}
 \},
 \]
-$\mathcal{L}$ supports Forgetting not in polynomial time (quasipolynomial unknown) \citep{Darwiche_2002,VanDenBroeck_2015}.
+$\mathcal{L}$ supports Forgetting not in quasipolynomial time \citep{Darwiche_2002,VanDenBroeck_2015}.
 \end{batchclaim}
 \begin{claimdescription}
-A polynomial-time forgetting procedure for $\mathcal{L}$ would turn every \langref{DNF} sentence into an equivalent $\mathcal{L}$ representation of size polynomial in the input \langref{DNF} after introducing fresh selectors and forgetting them. This contradicts \nedgeref{DNF}{$\mathcal{L}$} \citep{TCZ_Forthcoming}.
+A quasipolynomial-time forgetting procedure for $\mathcal{L}$ would turn every \langref{DNF} sentence into an equivalent $\mathcal{L}$ representation of quasipolynomial size in the input \langref{DNF} after introducing fresh selectors and forgetting them. This contradicts \nedgeref{DNF}{$\mathcal{L}$} \citep{TCZ_Forthcoming}.
 \end{claimdescription}
 
 
