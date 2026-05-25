@@ -1,7 +1,7 @@
 % =============================
 % Tractable Circuit Zoo - Query Support Claims
 % Auto-generated from database.json
-% Generated: 2026-05-19T04:49:27.184Z
+% Generated: 2026-05-24T22:25:04.399Z
 %
 % EDITING INSTRUCTIONS:
 % - Claim environments are auto-generated. Do NOT edit.
@@ -71,14 +71,6 @@
 \section{A. Darwiche and P. Marquis, "A Knowledge Compilation Map", Journal of Artificial...}
 % Reference ID: Darwiche_2002
 % =============================
-% lang=lang_89649e36, op=CO
-\begin{claim}
-\langref{CNF} supports Consistency not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citep{Cook_1971,Levin_1973}
-\end{claim}
-\begin{claimdescription}
-Consistency checking for \langref{CNF} is NP-complete by the Cook-Levin theorem, the classic foundational result for SAT \citep{Cook_1971,Levin_1973}.
-\end{claimdescription}
-
 % lang=lang_89649e36, op=IM
 \begin{claim}
 \langref{CNF} supports Implicant in polynomial time \citep{Darwiche_2002}
@@ -271,6 +263,19 @@ Model counting is done by dynamic programming over the DAG representation of the
 \end{claim}
 \begin{claimdescription}
 Validity is equivalent to absence of any falsifying path. For a general \langref{FBDD}, check that terminal 0 is unreachable from the root (equivalently, all root-to-terminal paths evaluate to true); this is graph reachability in polynomial time \citep{Gergov_1994,Bryant_1992}.
+\end{claimdescription}
+
+
+% =============================
+\section{S. A. Cook, "The Complexity of Theorem-Proving Procedures", Proceedings of the T...}
+% Reference ID: Cook_1971
+% =============================
+% lang=lang_89649e36, op=CO
+\begin{claim}
+\langref{CNF} supports Consistency not in polynomial time (quasipolynomial unknown) assuming P \neq NP \citep{Cook_1971,Levin_1973}
+\end{claim}
+\begin{claimdescription}
+Consistency checking for \langref{CNF} is NP-complete by the Cook-Levin theorem, the classic foundational result for SAT \citep{Cook_1971,Levin_1973}.
 \end{claimdescription}
 
 

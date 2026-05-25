@@ -114,8 +114,28 @@ function renderFragment(content: string, displayMode: boolean): string {
   }
 }
 
+function normalizeBareInlineMath(value: string): string {
+  LATEX_FRAGMENT.lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let cursor = 0;
+  let normalized = '';
+
+  while ((match = LATEX_FRAGMENT.exec(value)) !== null) {
+    normalized += normalizeBareInlineMathSegment(value.slice(cursor, match.index));
+    normalized += match[0];
+    cursor = match.index + match[0].length;
+  }
+
+  normalized += normalizeBareInlineMathSegment(value.slice(cursor));
+  return normalized;
+}
+
+function normalizeBareInlineMathSegment(value: string): string {
+  return value.replace(/\bP\s*(?:\\neq|\\ne|\u2260)\s*NP\b/g, '$P \\neq NP$');
+}
+
 export function renderMathText(input?: string | null): MathRenderResult {
-  const text = input ?? '';
+  const text = normalizeBareInlineMath(input ?? '');
   if (!text.trim()) {
     return { hasLatex: false, html: null, plainText: text, citationKeys: [] };
   }

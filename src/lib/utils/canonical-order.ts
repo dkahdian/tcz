@@ -30,12 +30,14 @@ export const CANONICAL_ORDER: Record<string, number> = {
 	'lang_0f27d539': 19, // dec-SDNNF
 	'lang_4ae03bc8': 20, // dec-SDNNF_T
 	'lang_b9d72a7c': 21, // OBDD
-	'lang_d69995dd': 22, // OBDD_<
-	'lang_89649e36': 23, // CNF
-	'lang_27fffab2': 24, // PI
-	'lang_4c204bf3': 25, // DNF
-	'lang_6ae90adc': 26, // IP
-	'lang_e02902d0': 27 // MODS
+	'lang_d7403a53': 22, // TDD
+	'lang_d69995dd': 23, // OBDD_<
+	'lang_8cf1da0e': 24, // TDD_T
+	'lang_89649e36': 25, // CNF
+	'lang_27fffab2': 26, // PI
+	'lang_4c204bf3': 27, // DNF
+	'lang_6ae90adc': 28, // IP
+	'lang_e02902d0': 29 // MODS
 };
 
 /**

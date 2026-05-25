@@ -23,6 +23,8 @@ export const LANGUAGE_CLASSIFICATIONS: Record<string, LanguageClassification> = 
   lang_4e62a038: 'plain',
   lang_c2df8c2b: 'union',
   lang_b9d72a7c: 'union',
+  lang_d7403a53: 'union',
+  lang_8cf1da0e: 'family',
   lang_981b62f0: 'plain',
   lang_0f27d539: 'union',
   lang_4ae03bc8: 'family',

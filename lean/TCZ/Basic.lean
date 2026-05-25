@@ -39,6 +39,8 @@ inductive Language where
   | uobdd         -- uOBDD
   | uobdd_lt      -- uOBDD_<
   | obdd          -- OBDD
+  | tdd           -- TDD
+  | tdd_t         -- TDD_T
   | dec_dnnf      -- dec-DNNF
   | dec_sdnnf     -- dec-SDNNF
   | dec_sdnnf_lt  -- dec-SDNNF_<

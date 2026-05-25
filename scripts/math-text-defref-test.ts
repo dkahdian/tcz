@@ -148,6 +148,15 @@ const renderedHash = renderMathText('This is \\#P-complete.').html ?? '';
 assertIncludes(renderedHash, '#P-complete', 'escaped # should render without a leading backslash');
 assert.equal(renderedHash.includes('\\#P'), false, 'escaped # should not keep the backslash in HTML output');
 
+// Common bare complexity assumptions in generated prose should render as math.
+const renderedBareAssumption = renderMathText('assuming P \\neq NP').html ?? '';
+assertIncludes(renderedBareAssumption, 'katex', 'bare P \\neq NP should render as inline math');
+assert.equal(
+  renderMathText('assuming $P \\neq NP$').html,
+  renderedBareAssumption,
+  'already-delimited P \\neq NP should not be double-wrapped'
+);
+
 // Mixed prose + entity/citation commands should preserve command processing while decoding \#.
 const mixedLatex = renderMathText(
   '\\langref{PI} counting is \\#P-hard \\citet{Roth_1996}.'

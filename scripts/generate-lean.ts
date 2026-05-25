@@ -56,6 +56,8 @@ const LANG_CONSTRUCTOR: Record<string, string> = {
   lang_c2df8c2b: 'uobdd',
   lang_43a33aec: 'uobdd_lt',
   lang_b9d72a7c: 'obdd',
+  lang_d7403a53: 'tdd',
+  lang_8cf1da0e: 'tdd_t',
   lang_981b62f0: 'dec_dnnf',
   lang_0f27d539: 'dec_sdnnf',
   lang_4ae03bc8: 'dec_sdnnf_lt',

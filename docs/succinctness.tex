@@ -1,7 +1,7 @@
 % =============================
 % Tractable Circuit Zoo - Succinctness Claims and Descriptions
 % Auto-generated from database.json
-% Generated: 2026-05-19T04:49:27.165Z
+% Generated: 2026-05-24T22:25:04.390Z
 % 
 % EDITING INSTRUCTIONS:
 % - Claim environments are auto-generated. Do NOT edit.
@@ -638,12 +638,80 @@ By \citet[Corollary 3]{Bollig_2018}, the weighted sum function $WS_n$ can be rep
 \langref{FBDD} is not quasipolynomial-time compilable to \langref{SDD} \citep{Beame_2015}
 \end{claim}
 \begin{claimdescription}
-\citet{Beame_2015} relates the size of \langref{SDD} representations to best-partition communication complexity and derive simple examples for which \langref{FBDD} representations are exponentially more concise than \langref{SDD} representations. This establishes $P(\langref{FBDD}) \not\subseteq P(\langref{SDD})$.
+\citet{Beame_2015} relates the size of \langref{SDD} representations to best-partition communication complexity and derive simple examples for which \langref{FBDD} representations are exponentially more concise than \langref{SDD} representations.
 \end{claimdescription}
 
 
 % =============================
-\section{D. Kahdian, O. Broadrick, R. Geh, and G. Van den Broeck, "A Tractable Circuit Zoo", forthcoming.}
+\section{F. Capelli, Y. Choi, S. Mengel, M. Munoz, and G. Van den Broeck, "A canonical ge...}
+% Reference ID: Capelli_2026
+% =============================
+\begin{claim}
+\langref{OBDD} is polynomial-time compilable to \langref{TDD} \citep{Capelli_2026}
+\end{claim}
+\begin{claimdescription}
+\citet[Theorem 7.1]{Capelli_2026} convert every fixed-order \langfam{OBDD}{<} into an equivalent \langfam{TDD}{T} of linear size for the corresponding linear vtree. Taking the union over orders gives a polynomial compilation from \langref{OBDD} to \langref{TDD}.
+\end{claimdescription}
+
+\begin{claim}
+\langfam{OBDD}{<} is polynomial-time compilable to \langfam{TDD}{T} \citep{Capelli_2026}
+\end{claim}
+\begin{claimdescription}
+\citet[Theorem 7.1]{Capelli_2026} show that an \langfam{OBDD}{<} over order $\pi$ can be converted in linear time into an equivalent \langfam{TDD}{T} respecting the corresponding linear vtree $T_{\pi^{-1}}$, with size at most three times the input size.
+\end{claimdescription}
+
+\begin{claim}
+\langref{TDD} is polynomial-time compilable to \langref{d-SDNNF} \citep{Capelli_2026}
+\end{claim}
+\begin{claimdescription}
+\citet[Theorem 3.3]{Capelli_2026} convert every fixed-vtree TDD into an equivalent structured deterministic DNNF respecting the same vtree. Taking the union over vtrees gives a polynomial compilation from \langref{TDD} to \langref{d-SDNNF}.
+\end{claimdescription}
+
+\begin{claim}
+\langref{TDD} is not polynomial-time compilable to \langref{OBDD} \citep{Capelli_2026}
+\end{claim}
+\begin{claimdescription}
+\citet[Theorem 7.2]{Capelli_2026}, using the bounded-treewidth TDD construction and Razgon's OBDD lower bound, give a family of CNF formulas with polynomial-size TDD representations such that every equivalent \langref{OBDD} has size at least $n^{c\log n}$ for some constant $c$. This rules out polynomial compilation to \langref{OBDD}. The paper explicitly leaves quasipolynomial simulation by OBDDs open.
+\end{claimdescription}
+
+\begin{claim}
+\langref{TDD} is polynomial-time compilable to \langref{SDD} \citep{Capelli_2026}
+\end{claim}
+\begin{claimdescription}
+\citet[Theorem 7.5]{Capelli_2026} show that every \langref{TDD} can be converted into an equivalent polynomial-size \langref{SDD}. The construction may change the vtree, which is allowed for the union language.
+\end{claimdescription}
+
+\begin{claim}
+\langfam{TDD}{T} is polynomial-time compilable to \langfam{d-SDNNF}{T} \citep{Capelli_2026}
+\end{claim}
+\begin{claimdescription}
+\citet[Theorem 3.3]{Capelli_2026} show that a \langfam{TDD}{T} can be converted in linear time into an equivalent \langfam{d-SDNNF}{T} respecting the same vtree.
+\end{claimdescription}
+
+\begin{claim}
+\langfam{TDD}{T} is not polynomial-time compilable to \langref{OBDD} \citep{Capelli_2026}
+\end{claim}
+\begin{claimdescription}
+\citet[Theorem 7.2]{Capelli_2026}, using the bounded-treewidth TDD construction and Razgon's OBDD lower bound, give a family of CNF formulas with polynomial-size TDD representations such that every equivalent \langref{OBDD} has size at least $n^{c\log n}$ for some constant $c$. This rules out polynomial compilation to \langref{OBDD}. The paper explicitly leaves quasipolynomial simulation by OBDDs open. The polynomial-size TDD side is obtained from vtrees constructed for the bounded-treewidth family, so the lower bound applies to the fixed-vtree family node under the site's family-level semantics.
+\end{claimdescription}
+
+\begin{claim}
+\langfam{TDD}{T} is polynomial-time compilable to \langfam{SDD}{T} \citep{Capelli_2026}
+\end{claim}
+\begin{claimdescription}
+\citet[Theorem 7.5]{Capelli_2026} convert a TDD respecting a vtree $T$ into a polynomial-size SDD respecting a vtree $T'$. For a fixed source vtree, the construction fixes the corresponding output vtree, so under the family-level convention this gives a polynomial compilation from \langfam{TDD}{T} to a corresponding fixed-vtree \langfam{SDD}{T'}.
+\end{claimdescription}
+
+\begin{claim}
+\langfam{TDD}{T} is polynomial-time compilable to \langref{TDD} \citep{Capelli_2026}
+\end{claim}
+\begin{claimdescription}
+\langref{TDD} is the union of the fixed-vtree languages \langfam{TDD}{T}. Hence any \langfam{TDD}{T} representation is already a \langref{TDD} representation.
+\end{claimdescription}
+
+
+% =============================
+\section{D. Kahdian and O. Broadrick and R. Geh and G. Van den Broeck, "A Tractable Circu...}
 % Reference ID: TCZ_Forthcoming
 % =============================
 \begin{claim}
@@ -817,7 +885,7 @@ The Quine-McCluskey algorithm generates an \langref{IP} formula in polynomial ti
 \end{claimdescription}
 
 \begin{claim}
-\langfam{d-SDNNF}{T} is not polynomial-time compilable to \langfam{SDD}{T} \citep[Theorem 1 and proof of Theorem 2]{Vinall-Smeeth_2024}
+\langfam{d-SDNNF}{T} is not polynomial-time compilable to \langfam{SDD}{T} \citep{Vinall-Smeeth_2024}
 \end{claim}
 \begin{claimdescription}
 \citet[Theorem 1 and proof of Theorem 2]{Vinall-Smeeth_2024} gives small source circuits that are explicitly structured: for the hard unambiguous \langref{DNF} $\psi'$, the proof fixes a vtree $T$ over $\operatorname{var}(\psi')$, compiles each term as a \langref{d-DNNF} respecting $T$, and takes their deterministic disjunction. Thus the source side can be stated as \langfam{d-SDNNF}{T}. The lower bound is against every equivalent \langref{SDD}; since \langfam{SDD}{T} is a subfamily of \langref{SDD}, it also rules out every target vtree family member.

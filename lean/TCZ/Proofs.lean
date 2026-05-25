@@ -90,6 +90,7 @@ axiom lemma_ct_and_bc_se_quasi (l : Language) : supportsInQuasi l .CT → suppor
 -- Section 2: Non-Derived Edge Axioms
 -- ═══════════════════════════════════════════════════════════════
 
+axiom edge_cnf_dnnf_no_quasi : ¬ compilesInQuasi .cnf .dnnf
 axiom edge_cnf_nnf_poly : compilesInPoly .cnf .nnf
 axiom edge_cnf_pi_no_quasi : ¬ compilesInQuasi .cnf .pi
 axiom edge_csdd_sdd_poly : compilesInPoly .csdd .sdd
@@ -148,6 +149,7 @@ axiom edge_obdd_lt_obdd_poly : compilesInPoly .obdd_lt .obdd
 axiom edge_obdd_lt_dec_sdnnf_lt_poly : compilesInPoly .obdd_lt .dec_sdnnf_lt
 axiom edge_obdd_lt_csdd_t_poly : compilesInPoly .obdd_lt .csdd_t
 axiom edge_obdd_lt_uobdd_lt_poly : compilesInPoly .obdd_lt .uobdd_lt
+axiom edge_obdd_lt_tdd_t_poly : compilesInPoly .obdd_lt .tdd_t
 axiom edge_pi_cnf_poly : compilesInPoly .pi .cnf
 axiom edge_pi_dnf_no_quasi : ¬ compilesInQuasi .pi .dnf
 axiom edge_pi_dnnf_no_quasi : ¬ compilesInQuasi .pi .dnnf
@@ -167,14 +169,17 @@ axiom edge_ufbdd_d_dnnf_poly : compilesInPoly .ufbdd .d_dnnf
 axiom edge_ufbdd_fbdd_no_quasi : ¬ compilesInQuasi .ufbdd .fbdd
 axiom edge_ufbdd_nfbdd_poly : compilesInPoly .ufbdd .nfbdd
 axiom edge_uobdd_d_sdnnf_poly : compilesInPoly .uobdd .d_sdnnf
+axiom edge_uobdd_fbdd_no_quasi : ¬ compilesInQuasi .uobdd .fbdd
 axiom edge_uobdd_nobdd_poly : compilesInPoly .uobdd .nobdd
 axiom edge_uobdd_ufbdd_poly : compilesInPoly .uobdd .ufbdd
 axiom edge_uobdd_obdd_no_quasi : ¬ compilesInQuasi .uobdd .obdd
 axiom edge_obdd_csdd_poly : compilesInPoly .obdd .csdd
 axiom edge_obdd_fbdd_poly : compilesInPoly .obdd .fbdd
 axiom edge_obdd_obdd_lt_no_quasi : ¬ compilesInQuasi .obdd .obdd_lt
+axiom edge_obdd_sdnnf_t_no_quasi : ¬ compilesInQuasi .obdd .sdnnf_t
 axiom edge_obdd_uobdd_poly : compilesInPoly .obdd .uobdd
 axiom edge_obdd_dec_sdnnf_poly : compilesInPoly .obdd .dec_sdnnf
+axiom edge_obdd_tdd_poly : compilesInPoly .obdd .tdd
 axiom edge_dec_dnnf_d_dnnf_poly : compilesInPoly .dec_dnnf .d_dnnf
 axiom edge_dec_dnnf_fbdd_no_poly : ¬ compilesInPoly .dec_dnnf .fbdd
 axiom edge_dec_dnnf_fbdd_quasi : compilesInQuasi .dec_dnnf .fbdd
@@ -191,12 +196,19 @@ axiom edge_dec_sdnnf_lt_dec_sdnnf_poly : compilesInPoly .dec_sdnnf_lt .dec_sdnnf
 axiom edge_csdd_t_csdd_poly : compilesInPoly .csdd_t .csdd
 axiom edge_csdd_t_obdd_lt_no_quasi : ¬ compilesInQuasi .csdd_t .obdd_lt
 axiom edge_csdd_t_sdd_t_poly : compilesInPoly .csdd_t .sdd_t
+axiom edge_csdd_t_obdd_no_quasi : ¬ compilesInQuasi .csdd_t .obdd
 axiom edge_nobdd_lt_nobdd_poly : compilesInPoly .nobdd_lt .nobdd
 axiom edge_nobdd_lt_sdnnf_t_poly : compilesInPoly .nobdd_lt .sdnnf_t
 axiom edge_uobdd_lt_d_sdnnf_t_poly : compilesInPoly .uobdd_lt .d_sdnnf_t
-axiom edge_uobdd_lt_obdd_lt_no_quasi : ¬ compilesInQuasi .uobdd_lt .obdd_lt
 axiom edge_uobdd_lt_uobdd_poly : compilesInPoly .uobdd_lt .uobdd
 axiom edge_uobdd_lt_nobdd_lt_poly : compilesInPoly .uobdd_lt .nobdd_lt
+axiom edge_tdd_d_sdnnf_poly : compilesInPoly .tdd .d_sdnnf
+axiom edge_tdd_sdd_poly : compilesInPoly .tdd .sdd
+axiom edge_tdd_obdd_no_poly : ¬ compilesInPoly .tdd .obdd
+axiom edge_tdd_t_d_sdnnf_t_poly : compilesInPoly .tdd_t .d_sdnnf_t
+axiom edge_tdd_t_sdd_t_poly : compilesInPoly .tdd_t .sdd_t
+axiom edge_tdd_t_obdd_no_poly : ¬ compilesInPoly .tdd_t .obdd
+axiom edge_tdd_t_tdd_poly : compilesInPoly .tdd_t .tdd
 
 -- Quasi corollaries from poly edges (via poly_implies_quasi)
 theorem edge_cnf_nnf_quasi : compilesInQuasi .cnf .nnf := poly_implies_quasi edge_cnf_nnf_poly
@@ -225,6 +237,7 @@ theorem edge_obdd_lt_obdd_quasi : compilesInQuasi .obdd_lt .obdd := poly_implies
 theorem edge_obdd_lt_dec_sdnnf_lt_quasi : compilesInQuasi .obdd_lt .dec_sdnnf_lt := poly_implies_quasi edge_obdd_lt_dec_sdnnf_lt_poly
 theorem edge_obdd_lt_csdd_t_quasi : compilesInQuasi .obdd_lt .csdd_t := poly_implies_quasi edge_obdd_lt_csdd_t_poly
 theorem edge_obdd_lt_uobdd_lt_quasi : compilesInQuasi .obdd_lt .uobdd_lt := poly_implies_quasi edge_obdd_lt_uobdd_lt_poly
+theorem edge_obdd_lt_tdd_t_quasi : compilesInQuasi .obdd_lt .tdd_t := poly_implies_quasi edge_obdd_lt_tdd_t_poly
 theorem edge_pi_cnf_quasi : compilesInQuasi .pi .cnf := poly_implies_quasi edge_pi_cnf_poly
 theorem edge_sdd_d_sdnnf_quasi : compilesInQuasi .sdd .d_sdnnf := poly_implies_quasi edge_sdd_d_sdnnf_poly
 theorem edge_sdd_t_d_sdnnf_t_quasi : compilesInQuasi .sdd_t .d_sdnnf_t := poly_implies_quasi edge_sdd_t_d_sdnnf_t_poly
@@ -240,6 +253,7 @@ theorem edge_obdd_csdd_quasi : compilesInQuasi .obdd .csdd := poly_implies_quasi
 theorem edge_obdd_fbdd_quasi : compilesInQuasi .obdd .fbdd := poly_implies_quasi edge_obdd_fbdd_poly
 theorem edge_obdd_uobdd_quasi : compilesInQuasi .obdd .uobdd := poly_implies_quasi edge_obdd_uobdd_poly
 theorem edge_obdd_dec_sdnnf_quasi : compilesInQuasi .obdd .dec_sdnnf := poly_implies_quasi edge_obdd_dec_sdnnf_poly
+theorem edge_obdd_tdd_quasi : compilesInQuasi .obdd .tdd := poly_implies_quasi edge_obdd_tdd_poly
 theorem edge_dec_dnnf_d_dnnf_quasi : compilesInQuasi .dec_dnnf .d_dnnf := poly_implies_quasi edge_dec_dnnf_d_dnnf_poly
 theorem edge_dec_sdnnf_d_sdnnf_quasi : compilesInQuasi .dec_sdnnf .d_sdnnf := poly_implies_quasi edge_dec_sdnnf_d_sdnnf_poly
 theorem edge_dec_sdnnf_dec_dnnf_quasi : compilesInQuasi .dec_sdnnf .dec_dnnf := poly_implies_quasi edge_dec_sdnnf_dec_dnnf_poly
@@ -252,8 +266,14 @@ theorem edge_nobdd_lt_sdnnf_t_quasi : compilesInQuasi .nobdd_lt .sdnnf_t := poly
 theorem edge_uobdd_lt_d_sdnnf_t_quasi : compilesInQuasi .uobdd_lt .d_sdnnf_t := poly_implies_quasi edge_uobdd_lt_d_sdnnf_t_poly
 theorem edge_uobdd_lt_uobdd_quasi : compilesInQuasi .uobdd_lt .uobdd := poly_implies_quasi edge_uobdd_lt_uobdd_poly
 theorem edge_uobdd_lt_nobdd_lt_quasi : compilesInQuasi .uobdd_lt .nobdd_lt := poly_implies_quasi edge_uobdd_lt_nobdd_lt_poly
+theorem edge_tdd_d_sdnnf_quasi : compilesInQuasi .tdd .d_sdnnf := poly_implies_quasi edge_tdd_d_sdnnf_poly
+theorem edge_tdd_sdd_quasi : compilesInQuasi .tdd .sdd := poly_implies_quasi edge_tdd_sdd_poly
+theorem edge_tdd_t_d_sdnnf_t_quasi : compilesInQuasi .tdd_t .d_sdnnf_t := poly_implies_quasi edge_tdd_t_d_sdnnf_t_poly
+theorem edge_tdd_t_sdd_t_quasi : compilesInQuasi .tdd_t .sdd_t := poly_implies_quasi edge_tdd_t_sdd_t_poly
+theorem edge_tdd_t_tdd_quasi : compilesInQuasi .tdd_t .tdd := poly_implies_quasi edge_tdd_t_tdd_poly
 
 -- No-poly corollaries from no-quasi edges (contrapositive of poly_implies_quasi)
+theorem edge_cnf_dnnf_no_poly : ¬ compilesInPoly .cnf .dnnf := fun h => absurd (poly_implies_quasi h) edge_cnf_dnnf_no_quasi
 theorem edge_cnf_pi_no_poly : ¬ compilesInPoly .cnf .pi := fun h => absurd (poly_implies_quasi h) edge_cnf_pi_no_quasi
 theorem edge_csdd_obdd_no_poly : ¬ compilesInPoly .csdd .obdd := fun h => absurd (poly_implies_quasi h) edge_csdd_obdd_no_quasi
 theorem edge_d_dnnf_fbdd_no_poly : ¬ compilesInPoly .d_dnnf .fbdd := fun h => absurd (poly_implies_quasi h) edge_d_dnnf_fbdd_no_quasi
@@ -280,10 +300,12 @@ theorem edge_pi_fbdd_no_poly : ¬ compilesInPoly .pi .fbdd := fun h => absurd (p
 theorem edge_pi_mods_no_poly : ¬ compilesInPoly .pi .mods := fun h => absurd (poly_implies_quasi h) edge_pi_mods_no_quasi
 theorem edge_sdd_t_fbdd_no_poly : ¬ compilesInPoly .sdd_t .fbdd := fun h => absurd (poly_implies_quasi h) edge_sdd_t_fbdd_no_quasi
 theorem edge_ufbdd_fbdd_no_poly : ¬ compilesInPoly .ufbdd .fbdd := fun h => absurd (poly_implies_quasi h) edge_ufbdd_fbdd_no_quasi
+theorem edge_uobdd_fbdd_no_poly : ¬ compilesInPoly .uobdd .fbdd := fun h => absurd (poly_implies_quasi h) edge_uobdd_fbdd_no_quasi
 theorem edge_uobdd_obdd_no_poly : ¬ compilesInPoly .uobdd .obdd := fun h => absurd (poly_implies_quasi h) edge_uobdd_obdd_no_quasi
 theorem edge_obdd_obdd_lt_no_poly : ¬ compilesInPoly .obdd .obdd_lt := fun h => absurd (poly_implies_quasi h) edge_obdd_obdd_lt_no_quasi
+theorem edge_obdd_sdnnf_t_no_poly : ¬ compilesInPoly .obdd .sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_obdd_sdnnf_t_no_quasi
 theorem edge_csdd_t_obdd_lt_no_poly : ¬ compilesInPoly .csdd_t .obdd_lt := fun h => absurd (poly_implies_quasi h) edge_csdd_t_obdd_lt_no_quasi
-theorem edge_uobdd_lt_obdd_lt_no_poly : ¬ compilesInPoly .uobdd_lt .obdd_lt := fun h => absurd (poly_implies_quasi h) edge_uobdd_lt_obdd_lt_no_quasi
+theorem edge_csdd_t_obdd_no_poly : ¬ compilesInPoly .csdd_t .obdd := fun h => absurd (poly_implies_quasi h) edge_csdd_t_obdd_no_quasi
 
 -- ═══════════════════════════════════════════════════════════════
 -- Section 3: Non-Derived Operation Support Axioms
@@ -292,81 +314,104 @@ theorem edge_uobdd_lt_obdd_lt_no_poly : ¬ compilesInPoly .uobdd_lt .obdd_lt := 
 axiom op_cnf_CO_no_poly : ¬ supportsInPoly .cnf .CO
 axiom op_cnf_IM_poly : supportsInPoly .cnf .IM
 axiom op_cnf_VA_poly : supportsInPoly .cnf .VA
+axiom op_cnf_FO_no_poly : ¬ supportsInPoly .cnf .FO
 axiom op_cnf_AND_C_poly : supportsInPoly .cnf .AND_C
 axiom op_cnf_OR_BC_poly : supportsInPoly .cnf .OR_BC
 axiom op_cnf_OR_C_no_poly : ¬ supportsInPoly .cnf .OR_C
 axiom op_cnf_CD_poly : supportsInPoly .cnf .CD
-axiom op_cnf_FO_no_poly : ¬ supportsInPoly .cnf .FO
 axiom op_csdd_AND_C_no_quasi : ¬ supportsInQuasi .csdd .AND_C
 axiom op_csdd_OR_C_no_quasi : ¬ supportsInQuasi .csdd .OR_C
-axiom op_d_dnnf_CT_poly : supportsInPoly .d_dnnf .CT
+axiom op_csdd_AND_BC_no_quasi : ¬ supportsInQuasi .csdd .AND_BC
+axiom op_csdd_OR_BC_no_quasi : ¬ supportsInQuasi .csdd .OR_BC
+axiom op_csdd_SFO_no_poly : ¬ supportsInPoly .csdd .SFO
+axiom op_csdd_NOT_C_poly : supportsInPoly .csdd .NOT_C
 axiom op_d_dnnf_EQ_poly : supportsInPoly .d_dnnf .EQ
-axiom op_d_dnnf_AND_BC_no_poly : ¬ supportsInPoly .d_dnnf .AND_BC
-axiom op_d_dnnf_CD_poly : supportsInPoly .d_dnnf .CD
+axiom op_d_dnnf_CT_poly : supportsInPoly .d_dnnf .CT
+axiom op_d_dnnf_AND_BC_no_quasi : ¬ supportsInQuasi .d_dnnf .AND_BC
+axiom op_d_dnnf_OR_BC_no_quasi : ¬ supportsInQuasi .d_dnnf .OR_BC
 axiom op_d_dnnf_SFO_no_poly : ¬ supportsInPoly .d_dnnf .SFO
-axiom op_d_sdnnf_NOT_C_no_poly : ¬ supportsInPoly .d_sdnnf .NOT_C
-axiom op_d_sdnnf_CD_poly : supportsInPoly .d_sdnnf .CD
-axiom op_d_sdnnf_FO_no_quasi : ¬ supportsInQuasi .d_sdnnf .FO
+axiom op_d_dnnf_CD_poly : supportsInPoly .d_dnnf .CD
 axiom op_d_sdnnf_AND_C_no_quasi : ¬ supportsInQuasi .d_sdnnf .AND_C
 axiom op_d_sdnnf_OR_C_no_quasi : ¬ supportsInQuasi .d_sdnnf .OR_C
-axiom op_d_sdnnf_t_AND_BC_poly : supportsInPoly .d_sdnnf_t .AND_BC
+axiom op_d_sdnnf_AND_BC_no_quasi : ¬ supportsInQuasi .d_sdnnf .AND_BC
+axiom op_d_sdnnf_OR_BC_no_quasi : ¬ supportsInQuasi .d_sdnnf .OR_BC
+axiom op_d_sdnnf_CD_poly : supportsInPoly .d_sdnnf .CD
+axiom op_d_sdnnf_FO_no_quasi : ¬ supportsInQuasi .d_sdnnf .FO
+axiom op_d_sdnnf_NOT_C_no_poly : ¬ supportsInPoly .d_sdnnf .NOT_C
+axiom op_d_sdnnf_SFO_no_poly : ¬ supportsInPoly .d_sdnnf .SFO
 axiom op_d_sdnnf_t_OR_C_no_quasi : ¬ supportsInQuasi .d_sdnnf_t .OR_C
 axiom op_d_sdnnf_t_AND_C_no_quasi : ¬ supportsInQuasi .d_sdnnf_t .AND_C
+axiom op_d_sdnnf_t_OR_BC_no_poly : ¬ supportsInPoly .d_sdnnf_t .OR_BC
+axiom op_d_sdnnf_t_SFO_no_poly : ¬ supportsInPoly .d_sdnnf_t .SFO
+axiom op_d_sdnnf_t_AND_BC_poly : supportsInPoly .d_sdnnf_t .AND_BC
 axiom op_d_sdnnf_t_CD_poly : supportsInPoly .d_sdnnf_t .CD
-axiom op_d_sdnnf_t_FO_no_poly : ¬ supportsInPoly .d_sdnnf_t .FO
 axiom op_dnf_VA_no_poly : ¬ supportsInPoly .dnf .VA
-axiom op_dnf_AND_BC_poly : supportsInPoly .dnf .AND_BC
+axiom op_dnf_NOT_C_no_quasi : ¬ supportsInQuasi .dnf .NOT_C
 axiom op_dnf_AND_C_no_quasi : ¬ supportsInQuasi .dnf .AND_C
+axiom op_dnf_AND_BC_poly : supportsInPoly .dnf .AND_BC
 axiom op_dnf_OR_C_poly : supportsInPoly .dnf .OR_C
 axiom op_dnf_FO_poly : supportsInPoly .dnf .FO
 axiom op_dnnf_CO_poly : supportsInPoly .dnnf .CO
-axiom op_dnnf_AND_BC_no_poly : ¬ supportsInPoly .dnnf .AND_BC
+axiom op_dnnf_AND_BC_no_quasi : ¬ supportsInQuasi .dnnf .AND_BC
+axiom op_dnnf_AND_C_no_quasi : ¬ supportsInQuasi .dnnf .AND_C
+axiom op_dnnf_NOT_C_no_quasi : ¬ supportsInQuasi .dnnf .NOT_C
 axiom op_dnnf_OR_C_poly : supportsInPoly .dnnf .OR_C
 axiom op_dnnf_CD_poly : supportsInPoly .dnnf .CD
 axiom op_dnnf_FO_poly : supportsInPoly .dnnf .FO
-axiom op_dnnf_AND_C_no_quasi : ¬ supportsInQuasi .dnnf .AND_C
 axiom op_fbdd_CO_poly : supportsInPoly .fbdd .CO
 axiom op_fbdd_CT_poly : supportsInPoly .fbdd .CT
 axiom op_fbdd_VA_poly : supportsInPoly .fbdd .VA
 axiom op_fbdd_EQ_poly : supportsInPoly .fbdd .EQ
-axiom op_fbdd_NOT_C_poly : supportsInPoly .fbdd .NOT_C
-axiom op_fbdd_CD_poly : supportsInPoly .fbdd .CD
-axiom op_fbdd_SFO_no_poly : ¬ supportsInPoly .fbdd .SFO
+axiom op_fbdd_AND_BC_no_quasi : ¬ supportsInQuasi .fbdd .AND_BC
 axiom op_fbdd_AND_C_no_quasi : ¬ supportsInQuasi .fbdd .AND_C
 axiom op_fbdd_OR_C_no_quasi : ¬ supportsInQuasi .fbdd .OR_C
+axiom op_fbdd_OR_BC_no_quasi : ¬ supportsInQuasi .fbdd .OR_BC
+axiom op_fbdd_NOT_C_poly : supportsInPoly .fbdd .NOT_C
+axiom op_fbdd_CD_poly : supportsInPoly .fbdd .CD
+axiom op_fbdd_SFO_no_quasi : ¬ supportsInQuasi .fbdd .SFO
 axiom op_ip_CT_no_poly : ¬ supportsInPoly .ip .CT
 axiom op_ip_IM_poly : supportsInPoly .ip .IM
 axiom op_ip_SE_poly : supportsInPoly .ip .SE
+axiom op_ip_NOT_C_no_quasi : ¬ supportsInQuasi .ip .NOT_C
 axiom op_ip_AND_BC_poly : supportsInPoly .ip .AND_BC
 axiom op_ip_AND_C_no_poly : ¬ supportsInPoly .ip .AND_C
+axiom op_ip_OR_BC_no_quasi : ¬ supportsInQuasi .ip .OR_BC
 axiom op_ip_CD_poly : supportsInPoly .ip .CD
 axiom op_ip_SFO_no_quasi : ¬ supportsInQuasi .ip .SFO
-axiom op_ip_OR_BC_no_quasi : ¬ supportsInQuasi .ip .OR_BC
-axiom op_ip_NOT_C_no_quasi : ¬ supportsInQuasi .ip .NOT_C
 axiom op_mods_CO_poly : supportsInPoly .mods .CO
 axiom op_mods_CT_poly : supportsInPoly .mods .CT
 axiom op_mods_NOT_C_no_quasi : ¬ supportsInQuasi .mods .NOT_C
 axiom op_mods_AND_BC_poly : supportsInPoly .mods .AND_BC
 axiom op_mods_AND_C_no_quasi : ¬ supportsInQuasi .mods .AND_C
-axiom op_mods_FO_poly : supportsInPoly .mods .FO
 axiom op_mods_OR_BC_no_quasi : ¬ supportsInQuasi .mods .OR_BC
+axiom op_mods_FO_poly : supportsInPoly .mods .FO
 axiom op_nfbdd_AND_C_no_quasi : ¬ supportsInQuasi .nfbdd .AND_C
+axiom op_nfbdd_NOT_C_no_quasi : ¬ supportsInQuasi .nfbdd .NOT_C
+axiom op_nfbdd_AND_BC_no_quasi : ¬ supportsInQuasi .nfbdd .AND_BC
+axiom op_nfbdd_OR_C_poly : supportsInPoly .nfbdd .OR_C
+axiom op_nfbdd_CD_poly : supportsInPoly .nfbdd .CD
+axiom op_nfbdd_FO_poly : supportsInPoly .nfbdd .FO
+axiom op_nnf_FO_no_poly : ¬ supportsInPoly .nnf .FO
 axiom op_nnf_NOT_C_poly : supportsInPoly .nnf .NOT_C
 axiom op_nnf_AND_C_poly : supportsInPoly .nnf .AND_C
 axiom op_nnf_CD_poly : supportsInPoly .nnf .CD
-axiom op_nnf_FO_no_poly : ¬ supportsInPoly .nnf .FO
 axiom op_nobdd_AND_C_no_quasi : ¬ supportsInQuasi .nobdd .AND_C
+axiom op_nobdd_NOT_C_no_quasi : ¬ supportsInQuasi .nobdd .NOT_C
+axiom op_nobdd_AND_BC_no_quasi : ¬ supportsInQuasi .nobdd .AND_BC
+axiom op_nobdd_OR_BC_no_quasi : ¬ supportsInQuasi .nobdd .OR_BC
+axiom op_nobdd_CD_poly : supportsInPoly .nobdd .CD
+axiom op_nobdd_FO_poly : supportsInPoly .nobdd .FO
 axiom op_obdd_lt_CO_poly : supportsInPoly .obdd_lt .CO
 axiom op_obdd_lt_CT_poly : supportsInPoly .obdd_lt .CT
 axiom op_obdd_lt_EQ_poly : supportsInPoly .obdd_lt .EQ
 axiom op_obdd_lt_ME_poly : supportsInPoly .obdd_lt .ME
 axiom op_obdd_lt_VA_poly : supportsInPoly .obdd_lt .VA
+axiom op_obdd_lt_OR_C_no_quasi : ¬ supportsInQuasi .obdd_lt .OR_C
+axiom op_obdd_lt_FO_no_poly : ¬ supportsInPoly .obdd_lt .FO
 axiom op_obdd_lt_NOT_C_poly : supportsInPoly .obdd_lt .NOT_C
 axiom op_obdd_lt_AND_BC_poly : supportsInPoly .obdd_lt .AND_BC
 axiom op_obdd_lt_OR_BC_poly : supportsInPoly .obdd_lt .OR_BC
 axiom op_obdd_lt_CD_poly : supportsInPoly .obdd_lt .CD
-axiom op_obdd_lt_OR_C_no_quasi : ¬ supportsInQuasi .obdd_lt .OR_C
-axiom op_obdd_lt_FO_no_poly : ¬ supportsInPoly .obdd_lt .FO
 axiom op_pi_CE_poly : supportsInPoly .pi .CE
 axiom op_pi_CT_no_poly : ¬ supportsInPoly .pi .CT
 axiom op_pi_SE_poly : supportsInPoly .pi .SE
@@ -376,53 +421,101 @@ axiom op_pi_OR_BC_poly : supportsInPoly .pi .OR_BC
 axiom op_pi_OR_C_no_poly : ¬ supportsInPoly .pi .OR_C
 axiom op_pi_CD_poly : supportsInPoly .pi .CD
 axiom op_pi_FO_poly : supportsInPoly .pi .FO
+axiom op_sdd_AND_C_no_quasi : ¬ supportsInQuasi .sdd .AND_C
+axiom op_sdd_AND_BC_no_quasi : ¬ supportsInQuasi .sdd .AND_BC
+axiom op_sdd_OR_BC_no_quasi : ¬ supportsInQuasi .sdd .OR_BC
+axiom op_sdd_SFO_no_poly : ¬ supportsInPoly .sdd .SFO
 axiom op_sdd_NOT_C_poly : supportsInPoly .sdd .NOT_C
 axiom op_sdd_CD_poly : supportsInPoly .sdd .CD
-axiom op_sdd_AND_C_no_quasi : ¬ supportsInQuasi .sdd .AND_C
-axiom op_sdd_t_AND_BC_poly : supportsInPoly .sdd_t .AND_BC
-axiom op_sdd_t_OR_BC_poly : supportsInPoly .sdd_t .OR_BC
-axiom op_sdd_t_NOT_C_poly : supportsInPoly .sdd_t .NOT_C
-axiom op_sdd_t_CD_poly : supportsInPoly .sdd_t .CD
 axiom op_sdd_t_AND_C_no_quasi : ¬ supportsInQuasi .sdd_t .AND_C
 axiom op_sdd_t_OR_C_no_quasi : ¬ supportsInQuasi .sdd_t .OR_C
 axiom op_sdd_t_FO_no_poly : ¬ supportsInPoly .sdd_t .FO
-axiom op_sdnnf_FO_poly : supportsInPoly .sdnnf .FO
+axiom op_sdd_t_NOT_C_poly : supportsInPoly .sdd_t .NOT_C
+axiom op_sdd_t_AND_BC_poly : supportsInPoly .sdd_t .AND_BC
+axiom op_sdd_t_OR_BC_poly : supportsInPoly .sdd_t .OR_BC
+axiom op_sdd_t_CD_poly : supportsInPoly .sdd_t .CD
 axiom op_sdnnf_AND_C_no_quasi : ¬ supportsInQuasi .sdnnf .AND_C
+axiom op_sdnnf_NOT_C_no_quasi : ¬ supportsInQuasi .sdnnf .NOT_C
+axiom op_sdnnf_AND_BC_no_quasi : ¬ supportsInQuasi .sdnnf .AND_BC
+axiom op_sdnnf_OR_BC_no_quasi : ¬ supportsInQuasi .sdnnf .OR_BC
 axiom op_sdnnf_CD_poly : supportsInPoly .sdnnf .CD
+axiom op_sdnnf_FO_poly : supportsInPoly .sdnnf .FO
+axiom op_sdnnf_t_AND_C_no_quasi : ¬ supportsInQuasi .sdnnf_t .AND_C
+axiom op_sdnnf_t_NOT_C_no_quasi : ¬ supportsInQuasi .sdnnf_t .NOT_C
 axiom op_sdnnf_t_AND_BC_poly : supportsInPoly .sdnnf_t .AND_BC
 axiom op_sdnnf_t_OR_C_poly : supportsInPoly .sdnnf_t .OR_C
-axiom op_sdnnf_t_AND_C_no_quasi : ¬ supportsInQuasi .sdnnf_t .AND_C
 axiom op_sdnnf_t_CD_poly : supportsInPoly .sdnnf_t .CD
 axiom op_sdnnf_t_FO_poly : supportsInPoly .sdnnf_t .FO
 axiom op_ufbdd_AND_C_no_quasi : ¬ supportsInQuasi .ufbdd .AND_C
+axiom op_ufbdd_AND_BC_no_quasi : ¬ supportsInQuasi .ufbdd .AND_BC
+axiom op_ufbdd_OR_BC_no_quasi : ¬ supportsInQuasi .ufbdd .OR_BC
+axiom op_ufbdd_SFO_no_poly : ¬ supportsInPoly .ufbdd .SFO
+axiom op_ufbdd_CD_poly : supportsInPoly .ufbdd .CD
 axiom op_uobdd_OR_C_no_quasi : ¬ supportsInQuasi .uobdd .OR_C
 axiom op_uobdd_AND_C_no_quasi : ¬ supportsInQuasi .uobdd .AND_C
+axiom op_uobdd_AND_BC_no_quasi : ¬ supportsInQuasi .uobdd .AND_BC
+axiom op_uobdd_OR_BC_no_quasi : ¬ supportsInQuasi .uobdd .OR_BC
+axiom op_uobdd_CD_poly : supportsInPoly .uobdd .CD
+axiom op_uobdd_NOT_C_no_poly : ¬ supportsInPoly .uobdd .NOT_C
+axiom op_uobdd_SFO_no_poly : ¬ supportsInPoly .uobdd .SFO
 axiom op_obdd_CT_poly : supportsInPoly .obdd .CT
 axiom op_obdd_EQ_poly : supportsInPoly .obdd .EQ
 axiom op_obdd_SE_no_poly : ¬ supportsInPoly .obdd .SE
-axiom op_obdd_NOT_C_poly : supportsInPoly .obdd .NOT_C
-axiom op_obdd_AND_BC_no_poly : ¬ supportsInPoly .obdd .AND_BC
-axiom op_obdd_CD_poly : supportsInPoly .obdd .CD
-axiom op_obdd_SFO_poly : supportsInPoly .obdd .SFO
+axiom op_obdd_AND_BC_no_quasi : ¬ supportsInQuasi .obdd .AND_BC
 axiom op_obdd_AND_C_no_quasi : ¬ supportsInQuasi .obdd .AND_C
 axiom op_obdd_OR_C_no_quasi : ¬ supportsInQuasi .obdd .OR_C
+axiom op_obdd_OR_BC_no_quasi : ¬ supportsInQuasi .obdd .OR_BC
 axiom op_obdd_FO_no_poly : ¬ supportsInPoly .obdd .FO
+axiom op_obdd_NOT_C_poly : supportsInPoly .obdd .NOT_C
+axiom op_obdd_CD_poly : supportsInPoly .obdd .CD
+axiom op_obdd_SFO_poly : supportsInPoly .obdd .SFO
+axiom op_tdd_t_CD_poly : supportsInPoly .tdd_t .CD
+axiom op_tdd_t_AND_BC_poly : supportsInPoly .tdd_t .AND_BC
+axiom op_tdd_t_NOT_C_poly : supportsInPoly .tdd_t .NOT_C
+axiom op_tdd_t_AND_C_no_quasi : ¬ supportsInQuasi .tdd_t .AND_C
+axiom op_tdd_t_OR_C_no_quasi : ¬ supportsInQuasi .tdd_t .OR_C
+axiom op_tdd_t_FO_no_poly : ¬ supportsInPoly .tdd_t .FO
+axiom op_tdd_CD_poly : supportsInPoly .tdd .CD
+axiom op_tdd_SFO_poly : supportsInPoly .tdd .SFO
+axiom op_tdd_NOT_C_poly : supportsInPoly .tdd .NOT_C
+axiom op_tdd_AND_BC_no_quasi : ¬ supportsInQuasi .tdd .AND_BC
+axiom op_tdd_OR_BC_no_quasi : ¬ supportsInQuasi .tdd .OR_BC
+axiom op_tdd_FO_no_poly : ¬ supportsInPoly .tdd .FO
 axiom op_dec_dnnf_AND_C_no_quasi : ¬ supportsInQuasi .dec_dnnf .AND_C
 axiom op_dec_dnnf_OR_C_no_quasi : ¬ supportsInQuasi .dec_dnnf .OR_C
+axiom op_dec_dnnf_AND_BC_no_quasi : ¬ supportsInQuasi .dec_dnnf .AND_BC
+axiom op_dec_dnnf_OR_BC_no_quasi : ¬ supportsInQuasi .dec_dnnf .OR_BC
+axiom op_dec_dnnf_SFO_no_poly : ¬ supportsInPoly .dec_dnnf .SFO
+axiom op_dec_dnnf_CD_poly : supportsInPoly .dec_dnnf .CD
 axiom op_dec_sdnnf_OR_C_no_quasi : ¬ supportsInQuasi .dec_sdnnf .OR_C
 axiom op_dec_sdnnf_AND_C_no_quasi : ¬ supportsInQuasi .dec_sdnnf .AND_C
+axiom op_dec_sdnnf_AND_BC_no_quasi : ¬ supportsInQuasi .dec_sdnnf .AND_BC
+axiom op_dec_sdnnf_OR_BC_no_quasi : ¬ supportsInQuasi .dec_sdnnf .OR_BC
+axiom op_dec_sdnnf_SFO_no_poly : ¬ supportsInPoly .dec_sdnnf .SFO
+axiom op_dec_sdnnf_CD_poly : supportsInPoly .dec_sdnnf .CD
 axiom op_dec_sdnnf_lt_OR_C_no_quasi : ¬ supportsInQuasi .dec_sdnnf_lt .OR_C
 axiom op_dec_sdnnf_lt_AND_C_no_quasi : ¬ supportsInQuasi .dec_sdnnf_lt .AND_C
-axiom op_csdd_t_NOT_C_poly : supportsInPoly .csdd_t .NOT_C
-axiom op_csdd_t_CD_no_poly : ¬ supportsInPoly .csdd_t .CD
-axiom op_csdd_t_SFO_no_poly : ¬ supportsInPoly .csdd_t .SFO
+axiom op_dec_sdnnf_lt_SFO_no_poly : ¬ supportsInPoly .dec_sdnnf_lt .SFO
+axiom op_dec_sdnnf_lt_CD_poly : supportsInPoly .dec_sdnnf_lt .CD
 axiom op_csdd_t_AND_C_no_quasi : ¬ supportsInQuasi .csdd_t .AND_C
-axiom op_csdd_t_AND_BC_no_poly : ¬ supportsInPoly .csdd_t .AND_BC
 axiom op_csdd_t_OR_C_no_quasi : ¬ supportsInQuasi .csdd_t .OR_C
 axiom op_csdd_t_FO_no_poly : ¬ supportsInPoly .csdd_t .FO
+axiom op_csdd_t_NOT_C_poly : supportsInPoly .csdd_t .NOT_C
+axiom op_csdd_t_AND_BC_no_poly : ¬ supportsInPoly .csdd_t .AND_BC
+axiom op_csdd_t_CD_no_poly : ¬ supportsInPoly .csdd_t .CD
+axiom op_csdd_t_SFO_no_poly : ¬ supportsInPoly .csdd_t .SFO
 axiom op_nobdd_lt_AND_C_no_quasi : ¬ supportsInQuasi .nobdd_lt .AND_C
+axiom op_nobdd_lt_NOT_C_no_quasi : ¬ supportsInQuasi .nobdd_lt .NOT_C
+axiom op_nobdd_lt_OR_C_poly : supportsInPoly .nobdd_lt .OR_C
+axiom op_nobdd_lt_AND_BC_poly : supportsInPoly .nobdd_lt .AND_BC
+axiom op_nobdd_lt_CD_poly : supportsInPoly .nobdd_lt .CD
+axiom op_nobdd_lt_FO_poly : supportsInPoly .nobdd_lt .FO
 axiom op_uobdd_lt_OR_C_no_quasi : ¬ supportsInQuasi .uobdd_lt .OR_C
 axiom op_uobdd_lt_AND_C_no_quasi : ¬ supportsInQuasi .uobdd_lt .AND_C
+axiom op_uobdd_lt_OR_BC_no_poly : ¬ supportsInPoly .uobdd_lt .OR_BC
+axiom op_uobdd_lt_SFO_no_poly : ¬ supportsInPoly .uobdd_lt .SFO
+axiom op_uobdd_lt_CD_poly : supportsInPoly .uobdd_lt .CD
+axiom op_uobdd_lt_AND_BC_poly : supportsInPoly .uobdd_lt .AND_BC
 
 -- Quasi corollaries from poly operation axioms (via poly_support_implies_quasi)
 theorem op_cnf_IM_quasi : supportsInQuasi .cnf .IM := poly_support_implies_quasi op_cnf_IM_poly
@@ -430,8 +523,9 @@ theorem op_cnf_VA_quasi : supportsInQuasi .cnf .VA := poly_support_implies_quasi
 theorem op_cnf_AND_C_quasi : supportsInQuasi .cnf .AND_C := poly_support_implies_quasi op_cnf_AND_C_poly
 theorem op_cnf_OR_BC_quasi : supportsInQuasi .cnf .OR_BC := poly_support_implies_quasi op_cnf_OR_BC_poly
 theorem op_cnf_CD_quasi : supportsInQuasi .cnf .CD := poly_support_implies_quasi op_cnf_CD_poly
-theorem op_d_dnnf_CT_quasi : supportsInQuasi .d_dnnf .CT := poly_support_implies_quasi op_d_dnnf_CT_poly
+theorem op_csdd_NOT_C_quasi : supportsInQuasi .csdd .NOT_C := poly_support_implies_quasi op_csdd_NOT_C_poly
 theorem op_d_dnnf_EQ_quasi : supportsInQuasi .d_dnnf .EQ := poly_support_implies_quasi op_d_dnnf_EQ_poly
+theorem op_d_dnnf_CT_quasi : supportsInQuasi .d_dnnf .CT := poly_support_implies_quasi op_d_dnnf_CT_poly
 theorem op_d_dnnf_CD_quasi : supportsInQuasi .d_dnnf .CD := poly_support_implies_quasi op_d_dnnf_CD_poly
 theorem op_d_sdnnf_CD_quasi : supportsInQuasi .d_sdnnf .CD := poly_support_implies_quasi op_d_sdnnf_CD_poly
 theorem op_d_sdnnf_t_AND_BC_quasi : supportsInQuasi .d_sdnnf_t .AND_BC := poly_support_implies_quasi op_d_sdnnf_t_AND_BC_poly
@@ -457,9 +551,14 @@ theorem op_mods_CO_quasi : supportsInQuasi .mods .CO := poly_support_implies_qua
 theorem op_mods_CT_quasi : supportsInQuasi .mods .CT := poly_support_implies_quasi op_mods_CT_poly
 theorem op_mods_AND_BC_quasi : supportsInQuasi .mods .AND_BC := poly_support_implies_quasi op_mods_AND_BC_poly
 theorem op_mods_FO_quasi : supportsInQuasi .mods .FO := poly_support_implies_quasi op_mods_FO_poly
+theorem op_nfbdd_OR_C_quasi : supportsInQuasi .nfbdd .OR_C := poly_support_implies_quasi op_nfbdd_OR_C_poly
+theorem op_nfbdd_CD_quasi : supportsInQuasi .nfbdd .CD := poly_support_implies_quasi op_nfbdd_CD_poly
+theorem op_nfbdd_FO_quasi : supportsInQuasi .nfbdd .FO := poly_support_implies_quasi op_nfbdd_FO_poly
 theorem op_nnf_NOT_C_quasi : supportsInQuasi .nnf .NOT_C := poly_support_implies_quasi op_nnf_NOT_C_poly
 theorem op_nnf_AND_C_quasi : supportsInQuasi .nnf .AND_C := poly_support_implies_quasi op_nnf_AND_C_poly
 theorem op_nnf_CD_quasi : supportsInQuasi .nnf .CD := poly_support_implies_quasi op_nnf_CD_poly
+theorem op_nobdd_CD_quasi : supportsInQuasi .nobdd .CD := poly_support_implies_quasi op_nobdd_CD_poly
+theorem op_nobdd_FO_quasi : supportsInQuasi .nobdd .FO := poly_support_implies_quasi op_nobdd_FO_poly
 theorem op_obdd_lt_CO_quasi : supportsInQuasi .obdd_lt .CO := poly_support_implies_quasi op_obdd_lt_CO_poly
 theorem op_obdd_lt_CT_quasi : supportsInQuasi .obdd_lt .CT := poly_support_implies_quasi op_obdd_lt_CT_poly
 theorem op_obdd_lt_EQ_quasi : supportsInQuasi .obdd_lt .EQ := poly_support_implies_quasi op_obdd_lt_EQ_poly
@@ -476,65 +575,120 @@ theorem op_pi_CD_quasi : supportsInQuasi .pi .CD := poly_support_implies_quasi o
 theorem op_pi_FO_quasi : supportsInQuasi .pi .FO := poly_support_implies_quasi op_pi_FO_poly
 theorem op_sdd_NOT_C_quasi : supportsInQuasi .sdd .NOT_C := poly_support_implies_quasi op_sdd_NOT_C_poly
 theorem op_sdd_CD_quasi : supportsInQuasi .sdd .CD := poly_support_implies_quasi op_sdd_CD_poly
+theorem op_sdd_t_NOT_C_quasi : supportsInQuasi .sdd_t .NOT_C := poly_support_implies_quasi op_sdd_t_NOT_C_poly
 theorem op_sdd_t_AND_BC_quasi : supportsInQuasi .sdd_t .AND_BC := poly_support_implies_quasi op_sdd_t_AND_BC_poly
 theorem op_sdd_t_OR_BC_quasi : supportsInQuasi .sdd_t .OR_BC := poly_support_implies_quasi op_sdd_t_OR_BC_poly
-theorem op_sdd_t_NOT_C_quasi : supportsInQuasi .sdd_t .NOT_C := poly_support_implies_quasi op_sdd_t_NOT_C_poly
 theorem op_sdd_t_CD_quasi : supportsInQuasi .sdd_t .CD := poly_support_implies_quasi op_sdd_t_CD_poly
-theorem op_sdnnf_FO_quasi : supportsInQuasi .sdnnf .FO := poly_support_implies_quasi op_sdnnf_FO_poly
 theorem op_sdnnf_CD_quasi : supportsInQuasi .sdnnf .CD := poly_support_implies_quasi op_sdnnf_CD_poly
+theorem op_sdnnf_FO_quasi : supportsInQuasi .sdnnf .FO := poly_support_implies_quasi op_sdnnf_FO_poly
 theorem op_sdnnf_t_AND_BC_quasi : supportsInQuasi .sdnnf_t .AND_BC := poly_support_implies_quasi op_sdnnf_t_AND_BC_poly
 theorem op_sdnnf_t_OR_C_quasi : supportsInQuasi .sdnnf_t .OR_C := poly_support_implies_quasi op_sdnnf_t_OR_C_poly
 theorem op_sdnnf_t_CD_quasi : supportsInQuasi .sdnnf_t .CD := poly_support_implies_quasi op_sdnnf_t_CD_poly
 theorem op_sdnnf_t_FO_quasi : supportsInQuasi .sdnnf_t .FO := poly_support_implies_quasi op_sdnnf_t_FO_poly
+theorem op_ufbdd_CD_quasi : supportsInQuasi .ufbdd .CD := poly_support_implies_quasi op_ufbdd_CD_poly
+theorem op_uobdd_CD_quasi : supportsInQuasi .uobdd .CD := poly_support_implies_quasi op_uobdd_CD_poly
 theorem op_obdd_CT_quasi : supportsInQuasi .obdd .CT := poly_support_implies_quasi op_obdd_CT_poly
 theorem op_obdd_EQ_quasi : supportsInQuasi .obdd .EQ := poly_support_implies_quasi op_obdd_EQ_poly
 theorem op_obdd_NOT_C_quasi : supportsInQuasi .obdd .NOT_C := poly_support_implies_quasi op_obdd_NOT_C_poly
 theorem op_obdd_CD_quasi : supportsInQuasi .obdd .CD := poly_support_implies_quasi op_obdd_CD_poly
 theorem op_obdd_SFO_quasi : supportsInQuasi .obdd .SFO := poly_support_implies_quasi op_obdd_SFO_poly
+theorem op_tdd_t_CD_quasi : supportsInQuasi .tdd_t .CD := poly_support_implies_quasi op_tdd_t_CD_poly
+theorem op_tdd_t_AND_BC_quasi : supportsInQuasi .tdd_t .AND_BC := poly_support_implies_quasi op_tdd_t_AND_BC_poly
+theorem op_tdd_t_NOT_C_quasi : supportsInQuasi .tdd_t .NOT_C := poly_support_implies_quasi op_tdd_t_NOT_C_poly
+theorem op_tdd_CD_quasi : supportsInQuasi .tdd .CD := poly_support_implies_quasi op_tdd_CD_poly
+theorem op_tdd_SFO_quasi : supportsInQuasi .tdd .SFO := poly_support_implies_quasi op_tdd_SFO_poly
+theorem op_tdd_NOT_C_quasi : supportsInQuasi .tdd .NOT_C := poly_support_implies_quasi op_tdd_NOT_C_poly
+theorem op_dec_dnnf_CD_quasi : supportsInQuasi .dec_dnnf .CD := poly_support_implies_quasi op_dec_dnnf_CD_poly
+theorem op_dec_sdnnf_CD_quasi : supportsInQuasi .dec_sdnnf .CD := poly_support_implies_quasi op_dec_sdnnf_CD_poly
+theorem op_dec_sdnnf_lt_CD_quasi : supportsInQuasi .dec_sdnnf_lt .CD := poly_support_implies_quasi op_dec_sdnnf_lt_CD_poly
 theorem op_csdd_t_NOT_C_quasi : supportsInQuasi .csdd_t .NOT_C := poly_support_implies_quasi op_csdd_t_NOT_C_poly
+theorem op_nobdd_lt_OR_C_quasi : supportsInQuasi .nobdd_lt .OR_C := poly_support_implies_quasi op_nobdd_lt_OR_C_poly
+theorem op_nobdd_lt_AND_BC_quasi : supportsInQuasi .nobdd_lt .AND_BC := poly_support_implies_quasi op_nobdd_lt_AND_BC_poly
+theorem op_nobdd_lt_CD_quasi : supportsInQuasi .nobdd_lt .CD := poly_support_implies_quasi op_nobdd_lt_CD_poly
+theorem op_nobdd_lt_FO_quasi : supportsInQuasi .nobdd_lt .FO := poly_support_implies_quasi op_nobdd_lt_FO_poly
+theorem op_uobdd_lt_CD_quasi : supportsInQuasi .uobdd_lt .CD := poly_support_implies_quasi op_uobdd_lt_CD_poly
+theorem op_uobdd_lt_AND_BC_quasi : supportsInQuasi .uobdd_lt .AND_BC := poly_support_implies_quasi op_uobdd_lt_AND_BC_poly
 
 -- No-poly corollaries from no-quasi operation axioms
 theorem op_csdd_AND_C_no_poly : ¬ supportsInPoly .csdd .AND_C := fun h => absurd (poly_support_implies_quasi h) op_csdd_AND_C_no_quasi
 theorem op_csdd_OR_C_no_poly : ¬ supportsInPoly .csdd .OR_C := fun h => absurd (poly_support_implies_quasi h) op_csdd_OR_C_no_quasi
-theorem op_d_sdnnf_FO_no_poly : ¬ supportsInPoly .d_sdnnf .FO := fun h => absurd (poly_support_implies_quasi h) op_d_sdnnf_FO_no_quasi
+theorem op_csdd_AND_BC_no_poly : ¬ supportsInPoly .csdd .AND_BC := fun h => absurd (poly_support_implies_quasi h) op_csdd_AND_BC_no_quasi
+theorem op_csdd_OR_BC_no_poly : ¬ supportsInPoly .csdd .OR_BC := fun h => absurd (poly_support_implies_quasi h) op_csdd_OR_BC_no_quasi
+theorem op_d_dnnf_AND_BC_no_poly : ¬ supportsInPoly .d_dnnf .AND_BC := fun h => absurd (poly_support_implies_quasi h) op_d_dnnf_AND_BC_no_quasi
+theorem op_d_dnnf_OR_BC_no_poly : ¬ supportsInPoly .d_dnnf .OR_BC := fun h => absurd (poly_support_implies_quasi h) op_d_dnnf_OR_BC_no_quasi
 theorem op_d_sdnnf_AND_C_no_poly : ¬ supportsInPoly .d_sdnnf .AND_C := fun h => absurd (poly_support_implies_quasi h) op_d_sdnnf_AND_C_no_quasi
 theorem op_d_sdnnf_OR_C_no_poly : ¬ supportsInPoly .d_sdnnf .OR_C := fun h => absurd (poly_support_implies_quasi h) op_d_sdnnf_OR_C_no_quasi
+theorem op_d_sdnnf_AND_BC_no_poly : ¬ supportsInPoly .d_sdnnf .AND_BC := fun h => absurd (poly_support_implies_quasi h) op_d_sdnnf_AND_BC_no_quasi
+theorem op_d_sdnnf_OR_BC_no_poly : ¬ supportsInPoly .d_sdnnf .OR_BC := fun h => absurd (poly_support_implies_quasi h) op_d_sdnnf_OR_BC_no_quasi
+theorem op_d_sdnnf_FO_no_poly : ¬ supportsInPoly .d_sdnnf .FO := fun h => absurd (poly_support_implies_quasi h) op_d_sdnnf_FO_no_quasi
 theorem op_d_sdnnf_t_OR_C_no_poly : ¬ supportsInPoly .d_sdnnf_t .OR_C := fun h => absurd (poly_support_implies_quasi h) op_d_sdnnf_t_OR_C_no_quasi
 theorem op_d_sdnnf_t_AND_C_no_poly : ¬ supportsInPoly .d_sdnnf_t .AND_C := fun h => absurd (poly_support_implies_quasi h) op_d_sdnnf_t_AND_C_no_quasi
+theorem op_dnf_NOT_C_no_poly : ¬ supportsInPoly .dnf .NOT_C := fun h => absurd (poly_support_implies_quasi h) op_dnf_NOT_C_no_quasi
 theorem op_dnf_AND_C_no_poly : ¬ supportsInPoly .dnf .AND_C := fun h => absurd (poly_support_implies_quasi h) op_dnf_AND_C_no_quasi
+theorem op_dnnf_AND_BC_no_poly : ¬ supportsInPoly .dnnf .AND_BC := fun h => absurd (poly_support_implies_quasi h) op_dnnf_AND_BC_no_quasi
 theorem op_dnnf_AND_C_no_poly : ¬ supportsInPoly .dnnf .AND_C := fun h => absurd (poly_support_implies_quasi h) op_dnnf_AND_C_no_quasi
+theorem op_dnnf_NOT_C_no_poly : ¬ supportsInPoly .dnnf .NOT_C := fun h => absurd (poly_support_implies_quasi h) op_dnnf_NOT_C_no_quasi
+theorem op_fbdd_AND_BC_no_poly : ¬ supportsInPoly .fbdd .AND_BC := fun h => absurd (poly_support_implies_quasi h) op_fbdd_AND_BC_no_quasi
 theorem op_fbdd_AND_C_no_poly : ¬ supportsInPoly .fbdd .AND_C := fun h => absurd (poly_support_implies_quasi h) op_fbdd_AND_C_no_quasi
 theorem op_fbdd_OR_C_no_poly : ¬ supportsInPoly .fbdd .OR_C := fun h => absurd (poly_support_implies_quasi h) op_fbdd_OR_C_no_quasi
-theorem op_ip_SFO_no_poly : ¬ supportsInPoly .ip .SFO := fun h => absurd (poly_support_implies_quasi h) op_ip_SFO_no_quasi
-theorem op_ip_OR_BC_no_poly : ¬ supportsInPoly .ip .OR_BC := fun h => absurd (poly_support_implies_quasi h) op_ip_OR_BC_no_quasi
+theorem op_fbdd_OR_BC_no_poly : ¬ supportsInPoly .fbdd .OR_BC := fun h => absurd (poly_support_implies_quasi h) op_fbdd_OR_BC_no_quasi
+theorem op_fbdd_SFO_no_poly : ¬ supportsInPoly .fbdd .SFO := fun h => absurd (poly_support_implies_quasi h) op_fbdd_SFO_no_quasi
 theorem op_ip_NOT_C_no_poly : ¬ supportsInPoly .ip .NOT_C := fun h => absurd (poly_support_implies_quasi h) op_ip_NOT_C_no_quasi
+theorem op_ip_OR_BC_no_poly : ¬ supportsInPoly .ip .OR_BC := fun h => absurd (poly_support_implies_quasi h) op_ip_OR_BC_no_quasi
+theorem op_ip_SFO_no_poly : ¬ supportsInPoly .ip .SFO := fun h => absurd (poly_support_implies_quasi h) op_ip_SFO_no_quasi
 theorem op_mods_NOT_C_no_poly : ¬ supportsInPoly .mods .NOT_C := fun h => absurd (poly_support_implies_quasi h) op_mods_NOT_C_no_quasi
 theorem op_mods_AND_C_no_poly : ¬ supportsInPoly .mods .AND_C := fun h => absurd (poly_support_implies_quasi h) op_mods_AND_C_no_quasi
 theorem op_mods_OR_BC_no_poly : ¬ supportsInPoly .mods .OR_BC := fun h => absurd (poly_support_implies_quasi h) op_mods_OR_BC_no_quasi
 theorem op_nfbdd_AND_C_no_poly : ¬ supportsInPoly .nfbdd .AND_C := fun h => absurd (poly_support_implies_quasi h) op_nfbdd_AND_C_no_quasi
+theorem op_nfbdd_NOT_C_no_poly : ¬ supportsInPoly .nfbdd .NOT_C := fun h => absurd (poly_support_implies_quasi h) op_nfbdd_NOT_C_no_quasi
+theorem op_nfbdd_AND_BC_no_poly : ¬ supportsInPoly .nfbdd .AND_BC := fun h => absurd (poly_support_implies_quasi h) op_nfbdd_AND_BC_no_quasi
 theorem op_nobdd_AND_C_no_poly : ¬ supportsInPoly .nobdd .AND_C := fun h => absurd (poly_support_implies_quasi h) op_nobdd_AND_C_no_quasi
+theorem op_nobdd_NOT_C_no_poly : ¬ supportsInPoly .nobdd .NOT_C := fun h => absurd (poly_support_implies_quasi h) op_nobdd_NOT_C_no_quasi
+theorem op_nobdd_AND_BC_no_poly : ¬ supportsInPoly .nobdd .AND_BC := fun h => absurd (poly_support_implies_quasi h) op_nobdd_AND_BC_no_quasi
+theorem op_nobdd_OR_BC_no_poly : ¬ supportsInPoly .nobdd .OR_BC := fun h => absurd (poly_support_implies_quasi h) op_nobdd_OR_BC_no_quasi
 theorem op_obdd_lt_OR_C_no_poly : ¬ supportsInPoly .obdd_lt .OR_C := fun h => absurd (poly_support_implies_quasi h) op_obdd_lt_OR_C_no_quasi
 theorem op_pi_NOT_C_no_poly : ¬ supportsInPoly .pi .NOT_C := fun h => absurd (poly_support_implies_quasi h) op_pi_NOT_C_no_quasi
 theorem op_pi_AND_BC_no_poly : ¬ supportsInPoly .pi .AND_BC := fun h => absurd (poly_support_implies_quasi h) op_pi_AND_BC_no_quasi
 theorem op_sdd_AND_C_no_poly : ¬ supportsInPoly .sdd .AND_C := fun h => absurd (poly_support_implies_quasi h) op_sdd_AND_C_no_quasi
+theorem op_sdd_AND_BC_no_poly : ¬ supportsInPoly .sdd .AND_BC := fun h => absurd (poly_support_implies_quasi h) op_sdd_AND_BC_no_quasi
+theorem op_sdd_OR_BC_no_poly : ¬ supportsInPoly .sdd .OR_BC := fun h => absurd (poly_support_implies_quasi h) op_sdd_OR_BC_no_quasi
 theorem op_sdd_t_AND_C_no_poly : ¬ supportsInPoly .sdd_t .AND_C := fun h => absurd (poly_support_implies_quasi h) op_sdd_t_AND_C_no_quasi
 theorem op_sdd_t_OR_C_no_poly : ¬ supportsInPoly .sdd_t .OR_C := fun h => absurd (poly_support_implies_quasi h) op_sdd_t_OR_C_no_quasi
 theorem op_sdnnf_AND_C_no_poly : ¬ supportsInPoly .sdnnf .AND_C := fun h => absurd (poly_support_implies_quasi h) op_sdnnf_AND_C_no_quasi
+theorem op_sdnnf_NOT_C_no_poly : ¬ supportsInPoly .sdnnf .NOT_C := fun h => absurd (poly_support_implies_quasi h) op_sdnnf_NOT_C_no_quasi
+theorem op_sdnnf_AND_BC_no_poly : ¬ supportsInPoly .sdnnf .AND_BC := fun h => absurd (poly_support_implies_quasi h) op_sdnnf_AND_BC_no_quasi
+theorem op_sdnnf_OR_BC_no_poly : ¬ supportsInPoly .sdnnf .OR_BC := fun h => absurd (poly_support_implies_quasi h) op_sdnnf_OR_BC_no_quasi
 theorem op_sdnnf_t_AND_C_no_poly : ¬ supportsInPoly .sdnnf_t .AND_C := fun h => absurd (poly_support_implies_quasi h) op_sdnnf_t_AND_C_no_quasi
+theorem op_sdnnf_t_NOT_C_no_poly : ¬ supportsInPoly .sdnnf_t .NOT_C := fun h => absurd (poly_support_implies_quasi h) op_sdnnf_t_NOT_C_no_quasi
 theorem op_ufbdd_AND_C_no_poly : ¬ supportsInPoly .ufbdd .AND_C := fun h => absurd (poly_support_implies_quasi h) op_ufbdd_AND_C_no_quasi
+theorem op_ufbdd_AND_BC_no_poly : ¬ supportsInPoly .ufbdd .AND_BC := fun h => absurd (poly_support_implies_quasi h) op_ufbdd_AND_BC_no_quasi
+theorem op_ufbdd_OR_BC_no_poly : ¬ supportsInPoly .ufbdd .OR_BC := fun h => absurd (poly_support_implies_quasi h) op_ufbdd_OR_BC_no_quasi
 theorem op_uobdd_OR_C_no_poly : ¬ supportsInPoly .uobdd .OR_C := fun h => absurd (poly_support_implies_quasi h) op_uobdd_OR_C_no_quasi
 theorem op_uobdd_AND_C_no_poly : ¬ supportsInPoly .uobdd .AND_C := fun h => absurd (poly_support_implies_quasi h) op_uobdd_AND_C_no_quasi
+theorem op_uobdd_AND_BC_no_poly : ¬ supportsInPoly .uobdd .AND_BC := fun h => absurd (poly_support_implies_quasi h) op_uobdd_AND_BC_no_quasi
+theorem op_uobdd_OR_BC_no_poly : ¬ supportsInPoly .uobdd .OR_BC := fun h => absurd (poly_support_implies_quasi h) op_uobdd_OR_BC_no_quasi
+theorem op_obdd_AND_BC_no_poly : ¬ supportsInPoly .obdd .AND_BC := fun h => absurd (poly_support_implies_quasi h) op_obdd_AND_BC_no_quasi
 theorem op_obdd_AND_C_no_poly : ¬ supportsInPoly .obdd .AND_C := fun h => absurd (poly_support_implies_quasi h) op_obdd_AND_C_no_quasi
 theorem op_obdd_OR_C_no_poly : ¬ supportsInPoly .obdd .OR_C := fun h => absurd (poly_support_implies_quasi h) op_obdd_OR_C_no_quasi
+theorem op_obdd_OR_BC_no_poly : ¬ supportsInPoly .obdd .OR_BC := fun h => absurd (poly_support_implies_quasi h) op_obdd_OR_BC_no_quasi
+theorem op_tdd_t_AND_C_no_poly : ¬ supportsInPoly .tdd_t .AND_C := fun h => absurd (poly_support_implies_quasi h) op_tdd_t_AND_C_no_quasi
+theorem op_tdd_t_OR_C_no_poly : ¬ supportsInPoly .tdd_t .OR_C := fun h => absurd (poly_support_implies_quasi h) op_tdd_t_OR_C_no_quasi
+theorem op_tdd_AND_BC_no_poly : ¬ supportsInPoly .tdd .AND_BC := fun h => absurd (poly_support_implies_quasi h) op_tdd_AND_BC_no_quasi
+theorem op_tdd_OR_BC_no_poly : ¬ supportsInPoly .tdd .OR_BC := fun h => absurd (poly_support_implies_quasi h) op_tdd_OR_BC_no_quasi
 theorem op_dec_dnnf_AND_C_no_poly : ¬ supportsInPoly .dec_dnnf .AND_C := fun h => absurd (poly_support_implies_quasi h) op_dec_dnnf_AND_C_no_quasi
 theorem op_dec_dnnf_OR_C_no_poly : ¬ supportsInPoly .dec_dnnf .OR_C := fun h => absurd (poly_support_implies_quasi h) op_dec_dnnf_OR_C_no_quasi
+theorem op_dec_dnnf_AND_BC_no_poly : ¬ supportsInPoly .dec_dnnf .AND_BC := fun h => absurd (poly_support_implies_quasi h) op_dec_dnnf_AND_BC_no_quasi
+theorem op_dec_dnnf_OR_BC_no_poly : ¬ supportsInPoly .dec_dnnf .OR_BC := fun h => absurd (poly_support_implies_quasi h) op_dec_dnnf_OR_BC_no_quasi
 theorem op_dec_sdnnf_OR_C_no_poly : ¬ supportsInPoly .dec_sdnnf .OR_C := fun h => absurd (poly_support_implies_quasi h) op_dec_sdnnf_OR_C_no_quasi
 theorem op_dec_sdnnf_AND_C_no_poly : ¬ supportsInPoly .dec_sdnnf .AND_C := fun h => absurd (poly_support_implies_quasi h) op_dec_sdnnf_AND_C_no_quasi
+theorem op_dec_sdnnf_AND_BC_no_poly : ¬ supportsInPoly .dec_sdnnf .AND_BC := fun h => absurd (poly_support_implies_quasi h) op_dec_sdnnf_AND_BC_no_quasi
+theorem op_dec_sdnnf_OR_BC_no_poly : ¬ supportsInPoly .dec_sdnnf .OR_BC := fun h => absurd (poly_support_implies_quasi h) op_dec_sdnnf_OR_BC_no_quasi
 theorem op_dec_sdnnf_lt_OR_C_no_poly : ¬ supportsInPoly .dec_sdnnf_lt .OR_C := fun h => absurd (poly_support_implies_quasi h) op_dec_sdnnf_lt_OR_C_no_quasi
 theorem op_dec_sdnnf_lt_AND_C_no_poly : ¬ supportsInPoly .dec_sdnnf_lt .AND_C := fun h => absurd (poly_support_implies_quasi h) op_dec_sdnnf_lt_AND_C_no_quasi
 theorem op_csdd_t_AND_C_no_poly : ¬ supportsInPoly .csdd_t .AND_C := fun h => absurd (poly_support_implies_quasi h) op_csdd_t_AND_C_no_quasi
 theorem op_csdd_t_OR_C_no_poly : ¬ supportsInPoly .csdd_t .OR_C := fun h => absurd (poly_support_implies_quasi h) op_csdd_t_OR_C_no_quasi
 theorem op_nobdd_lt_AND_C_no_poly : ¬ supportsInPoly .nobdd_lt .AND_C := fun h => absurd (poly_support_implies_quasi h) op_nobdd_lt_AND_C_no_quasi
+theorem op_nobdd_lt_NOT_C_no_poly : ¬ supportsInPoly .nobdd_lt .NOT_C := fun h => absurd (poly_support_implies_quasi h) op_nobdd_lt_NOT_C_no_quasi
 theorem op_uobdd_lt_OR_C_no_poly : ¬ supportsInPoly .uobdd_lt .OR_C := fun h => absurd (poly_support_implies_quasi h) op_uobdd_lt_OR_C_no_quasi
 theorem op_uobdd_lt_AND_C_no_poly : ¬ supportsInPoly .uobdd_lt .AND_C := fun h => absurd (poly_support_implies_quasi h) op_uobdd_lt_AND_C_no_quasi
 
@@ -636,13 +790,16 @@ theorem edge_dec_sdnnf_nobdd_quasi : compilesInQuasi .dec_sdnnf .nobdd :=
   quasi_trans edge_dec_sdnnf_obdd_quasi (quasi_trans edge_obdd_uobdd_quasi edge_uobdd_nobdd_quasi)
 
 theorem edge_dec_sdnnf_sdd_quasi : compilesInQuasi .dec_sdnnf .sdd :=
-  quasi_trans edge_dec_sdnnf_obdd_quasi (quasi_trans edge_obdd_csdd_quasi edge_csdd_sdd_quasi)
+  quasi_trans edge_dec_sdnnf_obdd_quasi (quasi_trans edge_obdd_tdd_quasi edge_tdd_sdd_quasi)
 
 theorem edge_dec_sdnnf_ufbdd_quasi : compilesInQuasi .dec_sdnnf .ufbdd :=
   quasi_trans edge_dec_sdnnf_dec_dnnf_quasi (quasi_trans edge_dec_dnnf_fbdd_quasi edge_fbdd_ufbdd_quasi)
 
 theorem edge_dec_sdnnf_uobdd_quasi : compilesInQuasi .dec_sdnnf .uobdd :=
   quasi_trans edge_dec_sdnnf_obdd_quasi edge_obdd_uobdd_quasi
+
+theorem edge_dec_sdnnf_tdd_quasi : compilesInQuasi .dec_sdnnf .tdd :=
+  quasi_trans edge_dec_sdnnf_obdd_quasi edge_obdd_tdd_quasi
 
 theorem edge_dec_sdnnf_lt_csdd_quasi : compilesInQuasi .dec_sdnnf_lt .csdd :=
   quasi_trans edge_dec_sdnnf_lt_dec_sdnnf_quasi (quasi_trans edge_dec_sdnnf_obdd_quasi edge_obdd_csdd_quasi)
@@ -654,10 +811,10 @@ theorem edge_dec_sdnnf_lt_nobdd_quasi : compilesInQuasi .dec_sdnnf_lt .nobdd :=
   quasi_trans edge_dec_sdnnf_lt_dec_sdnnf_quasi (quasi_trans edge_dec_sdnnf_obdd_quasi (quasi_trans edge_obdd_uobdd_quasi edge_uobdd_nobdd_quasi))
 
 theorem edge_dec_sdnnf_lt_sdd_quasi : compilesInQuasi .dec_sdnnf_lt .sdd :=
-  quasi_trans edge_dec_sdnnf_lt_dec_sdnnf_quasi (quasi_trans edge_dec_sdnnf_obdd_quasi (quasi_trans edge_obdd_csdd_quasi edge_csdd_sdd_quasi))
+  quasi_trans edge_dec_sdnnf_lt_dec_sdnnf_quasi (quasi_trans edge_dec_sdnnf_obdd_quasi (quasi_trans edge_obdd_tdd_quasi edge_tdd_sdd_quasi))
 
 theorem edge_dec_sdnnf_lt_sdd_t_quasi : compilesInQuasi .dec_sdnnf_lt .sdd_t :=
-  quasi_trans edge_dec_sdnnf_lt_obdd_lt_quasi (quasi_trans edge_obdd_lt_csdd_t_quasi edge_csdd_t_sdd_t_quasi)
+  quasi_trans edge_dec_sdnnf_lt_obdd_lt_quasi (quasi_trans edge_obdd_lt_tdd_t_quasi edge_tdd_t_sdd_t_quasi)
 
 theorem edge_dec_sdnnf_lt_ufbdd_quasi : compilesInQuasi .dec_sdnnf_lt .ufbdd :=
   quasi_trans edge_dec_sdnnf_lt_dec_sdnnf_quasi (quasi_trans edge_dec_sdnnf_dec_dnnf_quasi (quasi_trans edge_dec_dnnf_fbdd_quasi edge_fbdd_ufbdd_quasi))
@@ -677,6 +834,12 @@ theorem edge_dec_sdnnf_lt_nobdd_lt_quasi : compilesInQuasi .dec_sdnnf_lt .nobdd_
 theorem edge_dec_sdnnf_lt_uobdd_lt_quasi : compilesInQuasi .dec_sdnnf_lt .uobdd_lt :=
   quasi_trans edge_dec_sdnnf_lt_obdd_lt_quasi edge_obdd_lt_uobdd_lt_quasi
 
+theorem edge_dec_sdnnf_lt_tdd_quasi : compilesInQuasi .dec_sdnnf_lt .tdd :=
+  quasi_trans edge_dec_sdnnf_lt_dec_sdnnf_quasi (quasi_trans edge_dec_sdnnf_obdd_quasi edge_obdd_tdd_quasi)
+
+theorem edge_dec_sdnnf_lt_tdd_t_quasi : compilesInQuasi .dec_sdnnf_lt .tdd_t :=
+  quasi_trans edge_dec_sdnnf_lt_obdd_lt_quasi edge_obdd_lt_tdd_t_quasi
+
 theorem edge_csdd_t_nfbdd_quasi : compilesInQuasi .csdd_t .nfbdd :=
   quasi_trans edge_csdd_t_sdd_t_quasi (quasi_trans edge_sdd_t_sdd_quasi (quasi_trans edge_sdd_d_sdnnf_quasi (quasi_trans edge_d_sdnnf_uobdd_quasi (quasi_trans edge_uobdd_ufbdd_quasi edge_ufbdd_nfbdd_quasi))))
 
@@ -694,6 +857,36 @@ theorem edge_csdd_t_nobdd_lt_quasi : compilesInQuasi .csdd_t .nobdd_lt :=
 
 theorem edge_csdd_t_uobdd_lt_quasi : compilesInQuasi .csdd_t .uobdd_lt :=
   quasi_trans edge_csdd_t_sdd_t_quasi (quasi_trans edge_sdd_t_d_sdnnf_t_quasi edge_d_sdnnf_t_uobdd_lt_quasi)
+
+theorem edge_tdd_nfbdd_quasi : compilesInQuasi .tdd .nfbdd :=
+  quasi_trans edge_tdd_d_sdnnf_quasi (quasi_trans edge_d_sdnnf_uobdd_quasi (quasi_trans edge_uobdd_ufbdd_quasi edge_ufbdd_nfbdd_quasi))
+
+theorem edge_tdd_nobdd_quasi : compilesInQuasi .tdd .nobdd :=
+  quasi_trans edge_tdd_d_sdnnf_quasi (quasi_trans edge_d_sdnnf_uobdd_quasi edge_uobdd_nobdd_quasi)
+
+theorem edge_tdd_ufbdd_quasi : compilesInQuasi .tdd .ufbdd :=
+  quasi_trans edge_tdd_d_sdnnf_quasi (quasi_trans edge_d_sdnnf_uobdd_quasi edge_uobdd_ufbdd_quasi)
+
+theorem edge_tdd_uobdd_quasi : compilesInQuasi .tdd .uobdd :=
+  quasi_trans edge_tdd_d_sdnnf_quasi edge_d_sdnnf_uobdd_quasi
+
+theorem edge_tdd_t_nfbdd_quasi : compilesInQuasi .tdd_t .nfbdd :=
+  quasi_trans edge_tdd_t_tdd_quasi (quasi_trans edge_tdd_d_sdnnf_quasi (quasi_trans edge_d_sdnnf_uobdd_quasi (quasi_trans edge_uobdd_ufbdd_quasi edge_ufbdd_nfbdd_quasi)))
+
+theorem edge_tdd_t_nobdd_quasi : compilesInQuasi .tdd_t .nobdd :=
+  quasi_trans edge_tdd_t_tdd_quasi (quasi_trans edge_tdd_d_sdnnf_quasi (quasi_trans edge_d_sdnnf_uobdd_quasi edge_uobdd_nobdd_quasi))
+
+theorem edge_tdd_t_ufbdd_quasi : compilesInQuasi .tdd_t .ufbdd :=
+  quasi_trans edge_tdd_t_tdd_quasi (quasi_trans edge_tdd_d_sdnnf_quasi (quasi_trans edge_d_sdnnf_uobdd_quasi edge_uobdd_ufbdd_quasi))
+
+theorem edge_tdd_t_uobdd_quasi : compilesInQuasi .tdd_t .uobdd :=
+  quasi_trans edge_tdd_t_tdd_quasi (quasi_trans edge_tdd_d_sdnnf_quasi edge_d_sdnnf_uobdd_quasi)
+
+theorem edge_tdd_t_nobdd_lt_quasi : compilesInQuasi .tdd_t .nobdd_lt :=
+  quasi_trans edge_tdd_t_d_sdnnf_t_quasi (quasi_trans edge_d_sdnnf_t_uobdd_lt_quasi edge_uobdd_lt_nobdd_lt_quasi)
+
+theorem edge_tdd_t_uobdd_lt_quasi : compilesInQuasi .tdd_t .uobdd_lt :=
+  quasi_trans edge_tdd_t_d_sdnnf_t_quasi edge_d_sdnnf_t_uobdd_lt_quasi
 
 theorem edge_csdd_d_dnnf_poly : compilesInPoly .csdd .d_dnnf :=
   poly_trans edge_csdd_sdd_poly (poly_trans edge_sdd_d_sdnnf_poly edge_d_sdnnf_d_dnnf_poly)
@@ -808,15 +1001,15 @@ theorem edge_mods_csdd_poly : compilesInPoly .mods .csdd :=
 theorem edge_mods_csdd_quasi : compilesInQuasi .mods .csdd := poly_implies_quasi edge_mods_csdd_poly
 
 theorem edge_mods_d_sdnnf_poly : compilesInPoly .mods .d_sdnnf :=
-  poly_trans edge_mods_obdd_lt_poly (poly_trans edge_obdd_lt_uobdd_lt_poly (poly_trans edge_uobdd_lt_uobdd_poly edge_uobdd_d_sdnnf_poly))
+  poly_trans edge_mods_obdd_lt_poly (poly_trans edge_obdd_lt_tdd_t_poly (poly_trans edge_tdd_t_tdd_poly edge_tdd_d_sdnnf_poly))
 theorem edge_mods_d_sdnnf_quasi : compilesInQuasi .mods .d_sdnnf := poly_implies_quasi edge_mods_d_sdnnf_poly
 
 theorem edge_mods_d_sdnnf_t_poly : compilesInPoly .mods .d_sdnnf_t :=
-  poly_trans edge_mods_obdd_lt_poly (poly_trans edge_obdd_lt_uobdd_lt_poly edge_uobdd_lt_d_sdnnf_t_poly)
+  poly_trans edge_mods_obdd_lt_poly (poly_trans edge_obdd_lt_tdd_t_poly edge_tdd_t_d_sdnnf_t_poly)
 theorem edge_mods_d_sdnnf_t_quasi : compilesInQuasi .mods .d_sdnnf_t := poly_implies_quasi edge_mods_d_sdnnf_t_poly
 
 theorem edge_mods_dnnf_poly : compilesInPoly .mods .dnnf :=
-  poly_trans edge_mods_obdd_lt_poly (poly_trans edge_obdd_lt_uobdd_lt_poly (poly_trans edge_uobdd_lt_nobdd_lt_poly (poly_trans edge_nobdd_lt_sdnnf_t_poly (poly_trans edge_sdnnf_t_sdnnf_poly edge_sdnnf_dnnf_poly))))
+  poly_trans edge_mods_obdd_lt_poly (poly_trans edge_obdd_lt_tdd_t_poly (poly_trans edge_tdd_t_tdd_poly (poly_trans edge_tdd_d_sdnnf_poly (poly_trans edge_d_sdnnf_sdnnf_poly edge_sdnnf_dnnf_poly))))
 theorem edge_mods_dnnf_quasi : compilesInQuasi .mods .dnnf := poly_implies_quasi edge_mods_dnnf_poly
 
 theorem edge_mods_fbdd_poly : compilesInPoly .mods .fbdd :=
@@ -828,7 +1021,7 @@ theorem edge_mods_nfbdd_poly : compilesInPoly .mods .nfbdd :=
 theorem edge_mods_nfbdd_quasi : compilesInQuasi .mods .nfbdd := poly_implies_quasi edge_mods_nfbdd_poly
 
 theorem edge_mods_nnf_poly : compilesInPoly .mods .nnf :=
-  poly_trans edge_mods_obdd_lt_poly (poly_trans edge_obdd_lt_uobdd_lt_poly (poly_trans edge_uobdd_lt_nobdd_lt_poly (poly_trans edge_nobdd_lt_sdnnf_t_poly (poly_trans edge_sdnnf_t_sdnnf_poly (poly_trans edge_sdnnf_dnnf_poly edge_dnnf_nnf_poly)))))
+  poly_trans edge_mods_obdd_lt_poly (poly_trans edge_obdd_lt_tdd_t_poly (poly_trans edge_tdd_t_tdd_poly (poly_trans edge_tdd_d_sdnnf_poly (poly_trans edge_d_sdnnf_sdnnf_poly (poly_trans edge_sdnnf_dnnf_poly edge_dnnf_nnf_poly)))))
 theorem edge_mods_nnf_quasi : compilesInQuasi .mods .nnf := poly_implies_quasi edge_mods_nnf_poly
 
 theorem edge_mods_nobdd_poly : compilesInPoly .mods .nobdd :=
@@ -836,19 +1029,19 @@ theorem edge_mods_nobdd_poly : compilesInPoly .mods .nobdd :=
 theorem edge_mods_nobdd_quasi : compilesInQuasi .mods .nobdd := poly_implies_quasi edge_mods_nobdd_poly
 
 theorem edge_mods_sdd_poly : compilesInPoly .mods .sdd :=
-  poly_trans edge_mods_obdd_lt_poly (poly_trans edge_obdd_lt_csdd_t_poly (poly_trans edge_csdd_t_sdd_t_poly edge_sdd_t_sdd_poly))
+  poly_trans edge_mods_obdd_lt_poly (poly_trans edge_obdd_lt_tdd_t_poly (poly_trans edge_tdd_t_tdd_poly edge_tdd_sdd_poly))
 theorem edge_mods_sdd_quasi : compilesInQuasi .mods .sdd := poly_implies_quasi edge_mods_sdd_poly
 
 theorem edge_mods_sdd_t_poly : compilesInPoly .mods .sdd_t :=
-  poly_trans edge_mods_obdd_lt_poly (poly_trans edge_obdd_lt_csdd_t_poly edge_csdd_t_sdd_t_poly)
+  poly_trans edge_mods_obdd_lt_poly (poly_trans edge_obdd_lt_tdd_t_poly edge_tdd_t_sdd_t_poly)
 theorem edge_mods_sdd_t_quasi : compilesInQuasi .mods .sdd_t := poly_implies_quasi edge_mods_sdd_t_poly
 
 theorem edge_mods_sdnnf_poly : compilesInPoly .mods .sdnnf :=
-  poly_trans edge_mods_obdd_lt_poly (poly_trans edge_obdd_lt_uobdd_lt_poly (poly_trans edge_uobdd_lt_nobdd_lt_poly (poly_trans edge_nobdd_lt_sdnnf_t_poly edge_sdnnf_t_sdnnf_poly)))
+  poly_trans edge_mods_obdd_lt_poly (poly_trans edge_obdd_lt_tdd_t_poly (poly_trans edge_tdd_t_tdd_poly (poly_trans edge_tdd_d_sdnnf_poly edge_d_sdnnf_sdnnf_poly)))
 theorem edge_mods_sdnnf_quasi : compilesInQuasi .mods .sdnnf := poly_implies_quasi edge_mods_sdnnf_poly
 
 theorem edge_mods_sdnnf_t_poly : compilesInPoly .mods .sdnnf_t :=
-  poly_trans edge_mods_obdd_lt_poly (poly_trans edge_obdd_lt_uobdd_lt_poly (poly_trans edge_uobdd_lt_nobdd_lt_poly edge_nobdd_lt_sdnnf_t_poly))
+  poly_trans edge_mods_obdd_lt_poly (poly_trans edge_obdd_lt_tdd_t_poly (poly_trans edge_tdd_t_d_sdnnf_t_poly edge_d_sdnnf_t_sdnnf_t_poly))
 theorem edge_mods_sdnnf_t_quasi : compilesInQuasi .mods .sdnnf_t := poly_implies_quasi edge_mods_sdnnf_t_poly
 
 theorem edge_mods_ufbdd_poly : compilesInPoly .mods .ufbdd :=
@@ -887,6 +1080,14 @@ theorem edge_mods_uobdd_lt_poly : compilesInPoly .mods .uobdd_lt :=
   poly_trans edge_mods_obdd_lt_poly edge_obdd_lt_uobdd_lt_poly
 theorem edge_mods_uobdd_lt_quasi : compilesInQuasi .mods .uobdd_lt := poly_implies_quasi edge_mods_uobdd_lt_poly
 
+theorem edge_mods_tdd_poly : compilesInPoly .mods .tdd :=
+  poly_trans edge_mods_obdd_lt_poly (poly_trans edge_obdd_lt_tdd_t_poly edge_tdd_t_tdd_poly)
+theorem edge_mods_tdd_quasi : compilesInQuasi .mods .tdd := poly_implies_quasi edge_mods_tdd_poly
+
+theorem edge_mods_tdd_t_poly : compilesInPoly .mods .tdd_t :=
+  poly_trans edge_mods_obdd_lt_poly edge_obdd_lt_tdd_t_poly
+theorem edge_mods_tdd_t_quasi : compilesInQuasi .mods .tdd_t := poly_implies_quasi edge_mods_tdd_t_poly
+
 theorem edge_nfbdd_nnf_poly : compilesInPoly .nfbdd .nnf :=
   poly_trans edge_nfbdd_dnnf_poly edge_dnnf_nnf_poly
 theorem edge_nfbdd_nnf_quasi : compilesInQuasi .nfbdd .nnf := poly_implies_quasi edge_nfbdd_nnf_poly
@@ -904,19 +1105,19 @@ theorem edge_obdd_lt_csdd_poly : compilesInPoly .obdd_lt .csdd :=
 theorem edge_obdd_lt_csdd_quasi : compilesInQuasi .obdd_lt .csdd := poly_implies_quasi edge_obdd_lt_csdd_poly
 
 theorem edge_obdd_lt_d_dnnf_poly : compilesInPoly .obdd_lt .d_dnnf :=
-  poly_trans edge_obdd_lt_uobdd_lt_poly (poly_trans edge_uobdd_lt_uobdd_poly (poly_trans edge_uobdd_ufbdd_poly edge_ufbdd_d_dnnf_poly))
+  poly_trans edge_obdd_lt_tdd_t_poly (poly_trans edge_tdd_t_tdd_poly (poly_trans edge_tdd_d_sdnnf_poly edge_d_sdnnf_d_dnnf_poly))
 theorem edge_obdd_lt_d_dnnf_quasi : compilesInQuasi .obdd_lt .d_dnnf := poly_implies_quasi edge_obdd_lt_d_dnnf_poly
 
 theorem edge_obdd_lt_d_sdnnf_poly : compilesInPoly .obdd_lt .d_sdnnf :=
-  poly_trans edge_obdd_lt_uobdd_lt_poly (poly_trans edge_uobdd_lt_uobdd_poly edge_uobdd_d_sdnnf_poly)
+  poly_trans edge_obdd_lt_tdd_t_poly (poly_trans edge_tdd_t_tdd_poly edge_tdd_d_sdnnf_poly)
 theorem edge_obdd_lt_d_sdnnf_quasi : compilesInQuasi .obdd_lt .d_sdnnf := poly_implies_quasi edge_obdd_lt_d_sdnnf_poly
 
 theorem edge_obdd_lt_d_sdnnf_t_poly : compilesInPoly .obdd_lt .d_sdnnf_t :=
-  poly_trans edge_obdd_lt_uobdd_lt_poly edge_uobdd_lt_d_sdnnf_t_poly
+  poly_trans edge_obdd_lt_tdd_t_poly edge_tdd_t_d_sdnnf_t_poly
 theorem edge_obdd_lt_d_sdnnf_t_quasi : compilesInQuasi .obdd_lt .d_sdnnf_t := poly_implies_quasi edge_obdd_lt_d_sdnnf_t_poly
 
 theorem edge_obdd_lt_dnnf_poly : compilesInPoly .obdd_lt .dnnf :=
-  poly_trans edge_obdd_lt_uobdd_lt_poly (poly_trans edge_uobdd_lt_nobdd_lt_poly (poly_trans edge_nobdd_lt_sdnnf_t_poly (poly_trans edge_sdnnf_t_sdnnf_poly edge_sdnnf_dnnf_poly)))
+  poly_trans edge_obdd_lt_tdd_t_poly (poly_trans edge_tdd_t_tdd_poly (poly_trans edge_tdd_d_sdnnf_poly (poly_trans edge_d_sdnnf_sdnnf_poly edge_sdnnf_dnnf_poly)))
 theorem edge_obdd_lt_dnnf_quasi : compilesInQuasi .obdd_lt .dnnf := poly_implies_quasi edge_obdd_lt_dnnf_poly
 
 theorem edge_obdd_lt_fbdd_poly : compilesInPoly .obdd_lt .fbdd :=
@@ -928,7 +1129,7 @@ theorem edge_obdd_lt_nfbdd_poly : compilesInPoly .obdd_lt .nfbdd :=
 theorem edge_obdd_lt_nfbdd_quasi : compilesInQuasi .obdd_lt .nfbdd := poly_implies_quasi edge_obdd_lt_nfbdd_poly
 
 theorem edge_obdd_lt_nnf_poly : compilesInPoly .obdd_lt .nnf :=
-  poly_trans edge_obdd_lt_uobdd_lt_poly (poly_trans edge_uobdd_lt_nobdd_lt_poly (poly_trans edge_nobdd_lt_sdnnf_t_poly (poly_trans edge_sdnnf_t_sdnnf_poly (poly_trans edge_sdnnf_dnnf_poly edge_dnnf_nnf_poly))))
+  poly_trans edge_obdd_lt_tdd_t_poly (poly_trans edge_tdd_t_tdd_poly (poly_trans edge_tdd_d_sdnnf_poly (poly_trans edge_d_sdnnf_sdnnf_poly (poly_trans edge_sdnnf_dnnf_poly edge_dnnf_nnf_poly))))
 theorem edge_obdd_lt_nnf_quasi : compilesInQuasi .obdd_lt .nnf := poly_implies_quasi edge_obdd_lt_nnf_poly
 
 theorem edge_obdd_lt_nobdd_poly : compilesInPoly .obdd_lt .nobdd :=
@@ -936,19 +1137,19 @@ theorem edge_obdd_lt_nobdd_poly : compilesInPoly .obdd_lt .nobdd :=
 theorem edge_obdd_lt_nobdd_quasi : compilesInQuasi .obdd_lt .nobdd := poly_implies_quasi edge_obdd_lt_nobdd_poly
 
 theorem edge_obdd_lt_sdd_poly : compilesInPoly .obdd_lt .sdd :=
-  poly_trans edge_obdd_lt_csdd_t_poly (poly_trans edge_csdd_t_sdd_t_poly edge_sdd_t_sdd_poly)
+  poly_trans edge_obdd_lt_tdd_t_poly (poly_trans edge_tdd_t_tdd_poly edge_tdd_sdd_poly)
 theorem edge_obdd_lt_sdd_quasi : compilesInQuasi .obdd_lt .sdd := poly_implies_quasi edge_obdd_lt_sdd_poly
 
 theorem edge_obdd_lt_sdd_t_poly : compilesInPoly .obdd_lt .sdd_t :=
-  poly_trans edge_obdd_lt_csdd_t_poly edge_csdd_t_sdd_t_poly
+  poly_trans edge_obdd_lt_tdd_t_poly edge_tdd_t_sdd_t_poly
 theorem edge_obdd_lt_sdd_t_quasi : compilesInQuasi .obdd_lt .sdd_t := poly_implies_quasi edge_obdd_lt_sdd_t_poly
 
 theorem edge_obdd_lt_sdnnf_poly : compilesInPoly .obdd_lt .sdnnf :=
-  poly_trans edge_obdd_lt_uobdd_lt_poly (poly_trans edge_uobdd_lt_nobdd_lt_poly (poly_trans edge_nobdd_lt_sdnnf_t_poly edge_sdnnf_t_sdnnf_poly))
+  poly_trans edge_obdd_lt_tdd_t_poly (poly_trans edge_tdd_t_tdd_poly (poly_trans edge_tdd_d_sdnnf_poly edge_d_sdnnf_sdnnf_poly))
 theorem edge_obdd_lt_sdnnf_quasi : compilesInQuasi .obdd_lt .sdnnf := poly_implies_quasi edge_obdd_lt_sdnnf_poly
 
 theorem edge_obdd_lt_sdnnf_t_poly : compilesInPoly .obdd_lt .sdnnf_t :=
-  poly_trans edge_obdd_lt_uobdd_lt_poly (poly_trans edge_uobdd_lt_nobdd_lt_poly edge_nobdd_lt_sdnnf_t_poly)
+  poly_trans edge_obdd_lt_tdd_t_poly (poly_trans edge_tdd_t_d_sdnnf_t_poly edge_d_sdnnf_t_sdnnf_t_poly)
 theorem edge_obdd_lt_sdnnf_t_quasi : compilesInQuasi .obdd_lt .sdnnf_t := poly_implies_quasi edge_obdd_lt_sdnnf_t_poly
 
 theorem edge_obdd_lt_ufbdd_poly : compilesInPoly .obdd_lt .ufbdd :=
@@ -970,6 +1171,10 @@ theorem edge_obdd_lt_dec_sdnnf_quasi : compilesInQuasi .obdd_lt .dec_sdnnf := po
 theorem edge_obdd_lt_nobdd_lt_poly : compilesInPoly .obdd_lt .nobdd_lt :=
   poly_trans edge_obdd_lt_uobdd_lt_poly edge_uobdd_lt_nobdd_lt_poly
 theorem edge_obdd_lt_nobdd_lt_quasi : compilesInQuasi .obdd_lt .nobdd_lt := poly_implies_quasi edge_obdd_lt_nobdd_lt_poly
+
+theorem edge_obdd_lt_tdd_poly : compilesInPoly .obdd_lt .tdd :=
+  poly_trans edge_obdd_lt_tdd_t_poly edge_tdd_t_tdd_poly
+theorem edge_obdd_lt_tdd_quasi : compilesInQuasi .obdd_lt .tdd := poly_implies_quasi edge_obdd_lt_tdd_poly
 
 theorem edge_pi_nnf_poly : compilesInPoly .pi .nnf :=
   poly_trans edge_pi_cnf_poly edge_cnf_nnf_poly
@@ -1056,15 +1261,15 @@ theorem edge_uobdd_sdnnf_poly : compilesInPoly .uobdd .sdnnf :=
 theorem edge_uobdd_sdnnf_quasi : compilesInQuasi .uobdd .sdnnf := poly_implies_quasi edge_uobdd_sdnnf_poly
 
 theorem edge_obdd_d_dnnf_poly : compilesInPoly .obdd .d_dnnf :=
-  poly_trans edge_obdd_dec_sdnnf_poly (poly_trans edge_dec_sdnnf_dec_dnnf_poly edge_dec_dnnf_d_dnnf_poly)
+  poly_trans edge_obdd_tdd_poly (poly_trans edge_tdd_d_sdnnf_poly edge_d_sdnnf_d_dnnf_poly)
 theorem edge_obdd_d_dnnf_quasi : compilesInQuasi .obdd .d_dnnf := poly_implies_quasi edge_obdd_d_dnnf_poly
 
 theorem edge_obdd_d_sdnnf_poly : compilesInPoly .obdd .d_sdnnf :=
-  poly_trans edge_obdd_dec_sdnnf_poly edge_dec_sdnnf_d_sdnnf_poly
+  poly_trans edge_obdd_tdd_poly edge_tdd_d_sdnnf_poly
 theorem edge_obdd_d_sdnnf_quasi : compilesInQuasi .obdd .d_sdnnf := poly_implies_quasi edge_obdd_d_sdnnf_poly
 
 theorem edge_obdd_dnnf_poly : compilesInPoly .obdd .dnnf :=
-  poly_trans edge_obdd_dec_sdnnf_poly (poly_trans edge_dec_sdnnf_dec_dnnf_poly (poly_trans edge_dec_dnnf_d_dnnf_poly edge_d_dnnf_dnnf_poly))
+  poly_trans edge_obdd_tdd_poly (poly_trans edge_tdd_d_sdnnf_poly (poly_trans edge_d_sdnnf_sdnnf_poly edge_sdnnf_dnnf_poly))
 theorem edge_obdd_dnnf_quasi : compilesInQuasi .obdd .dnnf := poly_implies_quasi edge_obdd_dnnf_poly
 
 theorem edge_obdd_nfbdd_poly : compilesInPoly .obdd .nfbdd :=
@@ -1072,7 +1277,7 @@ theorem edge_obdd_nfbdd_poly : compilesInPoly .obdd .nfbdd :=
 theorem edge_obdd_nfbdd_quasi : compilesInQuasi .obdd .nfbdd := poly_implies_quasi edge_obdd_nfbdd_poly
 
 theorem edge_obdd_nnf_poly : compilesInPoly .obdd .nnf :=
-  poly_trans edge_obdd_dec_sdnnf_poly (poly_trans edge_dec_sdnnf_dec_dnnf_poly (poly_trans edge_dec_dnnf_d_dnnf_poly (poly_trans edge_d_dnnf_dnnf_poly edge_dnnf_nnf_poly)))
+  poly_trans edge_obdd_tdd_poly (poly_trans edge_tdd_d_sdnnf_poly (poly_trans edge_d_sdnnf_sdnnf_poly (poly_trans edge_sdnnf_dnnf_poly edge_dnnf_nnf_poly)))
 theorem edge_obdd_nnf_quasi : compilesInQuasi .obdd .nnf := poly_implies_quasi edge_obdd_nnf_poly
 
 theorem edge_obdd_nobdd_poly : compilesInPoly .obdd .nobdd :=
@@ -1080,11 +1285,11 @@ theorem edge_obdd_nobdd_poly : compilesInPoly .obdd .nobdd :=
 theorem edge_obdd_nobdd_quasi : compilesInQuasi .obdd .nobdd := poly_implies_quasi edge_obdd_nobdd_poly
 
 theorem edge_obdd_sdd_poly : compilesInPoly .obdd .sdd :=
-  poly_trans edge_obdd_csdd_poly edge_csdd_sdd_poly
+  poly_trans edge_obdd_tdd_poly edge_tdd_sdd_poly
 theorem edge_obdd_sdd_quasi : compilesInQuasi .obdd .sdd := poly_implies_quasi edge_obdd_sdd_poly
 
 theorem edge_obdd_sdnnf_poly : compilesInPoly .obdd .sdnnf :=
-  poly_trans edge_obdd_dec_sdnnf_poly (poly_trans edge_dec_sdnnf_d_sdnnf_poly edge_d_sdnnf_sdnnf_poly)
+  poly_trans edge_obdd_tdd_poly (poly_trans edge_tdd_d_sdnnf_poly edge_d_sdnnf_sdnnf_poly)
 theorem edge_obdd_sdnnf_quasi : compilesInQuasi .obdd .sdnnf := poly_implies_quasi edge_obdd_sdnnf_poly
 
 theorem edge_obdd_ufbdd_poly : compilesInPoly .obdd .ufbdd :=
@@ -1231,6 +1436,50 @@ theorem edge_uobdd_lt_ufbdd_poly : compilesInPoly .uobdd_lt .ufbdd :=
   poly_trans edge_uobdd_lt_uobdd_poly edge_uobdd_ufbdd_poly
 theorem edge_uobdd_lt_ufbdd_quasi : compilesInQuasi .uobdd_lt .ufbdd := poly_implies_quasi edge_uobdd_lt_ufbdd_poly
 
+theorem edge_tdd_d_dnnf_poly : compilesInPoly .tdd .d_dnnf :=
+  poly_trans edge_tdd_d_sdnnf_poly edge_d_sdnnf_d_dnnf_poly
+theorem edge_tdd_d_dnnf_quasi : compilesInQuasi .tdd .d_dnnf := poly_implies_quasi edge_tdd_d_dnnf_poly
+
+theorem edge_tdd_dnnf_poly : compilesInPoly .tdd .dnnf :=
+  poly_trans edge_tdd_d_sdnnf_poly (poly_trans edge_d_sdnnf_sdnnf_poly edge_sdnnf_dnnf_poly)
+theorem edge_tdd_dnnf_quasi : compilesInQuasi .tdd .dnnf := poly_implies_quasi edge_tdd_dnnf_poly
+
+theorem edge_tdd_nnf_poly : compilesInPoly .tdd .nnf :=
+  poly_trans edge_tdd_d_sdnnf_poly (poly_trans edge_d_sdnnf_sdnnf_poly (poly_trans edge_sdnnf_dnnf_poly edge_dnnf_nnf_poly))
+theorem edge_tdd_nnf_quasi : compilesInQuasi .tdd .nnf := poly_implies_quasi edge_tdd_nnf_poly
+
+theorem edge_tdd_sdnnf_poly : compilesInPoly .tdd .sdnnf :=
+  poly_trans edge_tdd_d_sdnnf_poly edge_d_sdnnf_sdnnf_poly
+theorem edge_tdd_sdnnf_quasi : compilesInQuasi .tdd .sdnnf := poly_implies_quasi edge_tdd_sdnnf_poly
+
+theorem edge_tdd_t_d_dnnf_poly : compilesInPoly .tdd_t .d_dnnf :=
+  poly_trans edge_tdd_t_tdd_poly (poly_trans edge_tdd_d_sdnnf_poly edge_d_sdnnf_d_dnnf_poly)
+theorem edge_tdd_t_d_dnnf_quasi : compilesInQuasi .tdd_t .d_dnnf := poly_implies_quasi edge_tdd_t_d_dnnf_poly
+
+theorem edge_tdd_t_d_sdnnf_poly : compilesInPoly .tdd_t .d_sdnnf :=
+  poly_trans edge_tdd_t_tdd_poly edge_tdd_d_sdnnf_poly
+theorem edge_tdd_t_d_sdnnf_quasi : compilesInQuasi .tdd_t .d_sdnnf := poly_implies_quasi edge_tdd_t_d_sdnnf_poly
+
+theorem edge_tdd_t_dnnf_poly : compilesInPoly .tdd_t .dnnf :=
+  poly_trans edge_tdd_t_tdd_poly (poly_trans edge_tdd_d_sdnnf_poly (poly_trans edge_d_sdnnf_sdnnf_poly edge_sdnnf_dnnf_poly))
+theorem edge_tdd_t_dnnf_quasi : compilesInQuasi .tdd_t .dnnf := poly_implies_quasi edge_tdd_t_dnnf_poly
+
+theorem edge_tdd_t_nnf_poly : compilesInPoly .tdd_t .nnf :=
+  poly_trans edge_tdd_t_tdd_poly (poly_trans edge_tdd_d_sdnnf_poly (poly_trans edge_d_sdnnf_sdnnf_poly (poly_trans edge_sdnnf_dnnf_poly edge_dnnf_nnf_poly)))
+theorem edge_tdd_t_nnf_quasi : compilesInQuasi .tdd_t .nnf := poly_implies_quasi edge_tdd_t_nnf_poly
+
+theorem edge_tdd_t_sdd_poly : compilesInPoly .tdd_t .sdd :=
+  poly_trans edge_tdd_t_tdd_poly edge_tdd_sdd_poly
+theorem edge_tdd_t_sdd_quasi : compilesInQuasi .tdd_t .sdd := poly_implies_quasi edge_tdd_t_sdd_poly
+
+theorem edge_tdd_t_sdnnf_poly : compilesInPoly .tdd_t .sdnnf :=
+  poly_trans edge_tdd_t_tdd_poly (poly_trans edge_tdd_d_sdnnf_poly edge_d_sdnnf_sdnnf_poly)
+theorem edge_tdd_t_sdnnf_quasi : compilesInQuasi .tdd_t .sdnnf := poly_implies_quasi edge_tdd_t_sdnnf_poly
+
+theorem edge_tdd_t_sdnnf_t_poly : compilesInPoly .tdd_t .sdnnf_t :=
+  poly_trans edge_tdd_t_d_sdnnf_t_poly edge_d_sdnnf_t_sdnnf_t_poly
+theorem edge_tdd_t_sdnnf_t_quasi : compilesInQuasi .tdd_t .sdnnf_t := poly_implies_quasi edge_tdd_t_sdnnf_t_poly
+
 theorem edge_d_dnnf_nfbdd_no_poly : ¬ compilesInPoly .d_dnnf .nfbdd :=
   fun h => absurd (poly_trans edge_d_sdnnf_t_d_dnnf_poly (h)) edge_d_sdnnf_t_nfbdd_no_poly
 
@@ -1246,20 +1495,11 @@ theorem edge_d_sdnnf_nfbdd_no_poly : ¬ compilesInPoly .d_sdnnf .nfbdd :=
 theorem edge_d_sdnnf_nobdd_no_poly : ¬ compilesInPoly .d_sdnnf .nobdd :=
   fun h => absurd (poly_trans h (edge_nobdd_nfbdd_poly)) edge_d_sdnnf_nfbdd_no_poly
 
-theorem edge_d_sdnnf_sdd_t_no_poly : ¬ compilesInPoly .d_sdnnf .sdd_t :=
-  fun h => absurd (poly_trans h (edge_sdd_t_sdd_poly)) edge_d_sdnnf_sdd_no_poly
-
 theorem edge_d_sdnnf_ufbdd_no_poly : ¬ compilesInPoly .d_sdnnf .ufbdd :=
   fun h => absurd (poly_trans h (edge_ufbdd_nfbdd_poly)) edge_d_sdnnf_nfbdd_no_poly
 
-theorem edge_d_sdnnf_csdd_t_no_poly : ¬ compilesInPoly .d_sdnnf .csdd_t :=
-  fun h => absurd (poly_trans h (edge_csdd_t_csdd_poly)) edge_d_sdnnf_csdd_no_poly
-
-theorem edge_d_sdnnf_nobdd_lt_no_poly : ¬ compilesInPoly .d_sdnnf .nobdd_lt :=
-  fun h => absurd (poly_trans h (edge_nobdd_lt_nfbdd_poly)) edge_d_sdnnf_nfbdd_no_poly
-
-theorem edge_d_sdnnf_uobdd_lt_no_poly : ¬ compilesInPoly .d_sdnnf .uobdd_lt :=
-  fun h => absurd (poly_trans h (edge_uobdd_lt_nfbdd_poly)) edge_d_sdnnf_nfbdd_no_poly
+theorem edge_d_sdnnf_tdd_no_poly : ¬ compilesInPoly .d_sdnnf .tdd :=
+  fun h => absurd (poly_trans h (edge_tdd_sdd_poly)) edge_d_sdnnf_sdd_no_poly
 
 theorem edge_d_sdnnf_t_nobdd_no_poly : ¬ compilesInPoly .d_sdnnf_t .nobdd :=
   fun h => absurd (poly_trans h (edge_nobdd_nfbdd_poly)) edge_d_sdnnf_t_nfbdd_no_poly
@@ -1275,6 +1515,9 @@ theorem edge_d_sdnnf_t_csdd_t_no_poly : ¬ compilesInPoly .d_sdnnf_t .csdd_t :=
 
 theorem edge_d_sdnnf_t_nobdd_lt_no_poly : ¬ compilesInPoly .d_sdnnf_t .nobdd_lt :=
   fun h => absurd (poly_trans h (edge_nobdd_lt_nfbdd_poly)) edge_d_sdnnf_t_nfbdd_no_poly
+
+theorem edge_d_sdnnf_t_tdd_t_no_poly : ¬ compilesInPoly .d_sdnnf_t .tdd_t :=
+  fun h => absurd (poly_trans h (edge_tdd_t_sdd_t_poly)) edge_d_sdnnf_t_sdd_t_no_poly
 
 theorem edge_dnf_ufbdd_no_poly : ¬ compilesInPoly .dnf .ufbdd :=
   fun h => absurd (poly_trans h (edge_ufbdd_d_dnnf_poly)) edge_dnf_d_dnnf_no_poly
@@ -1293,9 +1536,6 @@ theorem edge_sdnnf_nfbdd_no_poly : ¬ compilesInPoly .sdnnf .nfbdd :=
 
 theorem edge_sdnnf_ufbdd_no_poly : ¬ compilesInPoly .sdnnf .ufbdd :=
   fun h => absurd (poly_trans edge_d_sdnnf_sdnnf_poly (poly_trans h (edge_ufbdd_nfbdd_poly))) edge_d_sdnnf_nfbdd_no_poly
-
-theorem edge_sdnnf_nobdd_lt_no_poly : ¬ compilesInPoly .sdnnf .nobdd_lt :=
-  fun h => absurd (poly_trans edge_d_sdnnf_sdnnf_poly (poly_trans h (edge_nobdd_lt_nfbdd_poly))) edge_d_sdnnf_nfbdd_no_poly
 
 theorem edge_sdnnf_t_d_dnnf_no_poly : ¬ compilesInPoly .sdnnf_t .d_dnnf :=
   fun h => absurd (poly_trans edge_dnf_sdnnf_t_poly (h)) edge_dnf_d_dnnf_no_poly
@@ -1330,12 +1570,6 @@ theorem edge_dec_sdnnf_ufbdd_no_poly : ¬ compilesInPoly .dec_sdnnf .ufbdd :=
 theorem edge_dec_sdnnf_uobdd_no_poly : ¬ compilesInPoly .dec_sdnnf .uobdd :=
   fun h => absurd (poly_trans h (edge_uobdd_nfbdd_poly)) edge_dec_sdnnf_nfbdd_no_poly
 
-theorem edge_dec_sdnnf_nobdd_lt_no_poly : ¬ compilesInPoly .dec_sdnnf .nobdd_lt :=
-  fun h => absurd (poly_trans h (edge_nobdd_lt_nfbdd_poly)) edge_dec_sdnnf_nfbdd_no_poly
-
-theorem edge_dec_sdnnf_uobdd_lt_no_poly : ¬ compilesInPoly .dec_sdnnf .uobdd_lt :=
-  fun h => absurd (poly_trans h (edge_uobdd_lt_nfbdd_poly)) edge_dec_sdnnf_nfbdd_no_poly
-
 theorem edge_dec_sdnnf_lt_fbdd_no_poly : ¬ compilesInPoly .dec_sdnnf_lt .fbdd :=
   fun h => absurd (poly_trans h (edge_fbdd_nfbdd_poly)) edge_dec_sdnnf_lt_nfbdd_no_poly
 
@@ -1363,12 +1597,15 @@ theorem edge_nobdd_lt_d_dnnf_no_poly : ¬ compilesInPoly .nobdd_lt .d_dnnf :=
 theorem edge_nobdd_lt_ufbdd_no_poly : ¬ compilesInPoly .nobdd_lt .ufbdd :=
   fun h => absurd (poly_trans edge_dnf_nobdd_lt_poly (poly_trans h (edge_ufbdd_d_dnnf_poly))) edge_dnf_d_dnnf_no_poly
 
+theorem edge_tdd_t_obdd_lt_no_poly : ¬ compilesInPoly .tdd_t .obdd_lt :=
+  fun h => absurd (poly_trans h (edge_obdd_lt_obdd_poly)) edge_tdd_t_obdd_no_poly
+
 theorem edge_cnf_csdd_no_quasi : ¬ compilesInQuasi .cnf .csdd :=
-  fun h => absurd (quasi_trans edge_pi_cnf_quasi (quasi_trans h (edge_csdd_dnnf_quasi))) edge_pi_dnnf_no_quasi
+  fun h => absurd (quasi_trans h (edge_csdd_dnnf_quasi)) edge_cnf_dnnf_no_quasi
 theorem edge_cnf_csdd_no_poly : ¬ compilesInPoly .cnf .csdd := fun h => absurd (poly_implies_quasi h) edge_cnf_csdd_no_quasi
 
 theorem edge_cnf_d_dnnf_no_quasi : ¬ compilesInQuasi .cnf .d_dnnf :=
-  fun h => absurd (quasi_trans edge_pi_cnf_quasi (quasi_trans h (edge_d_dnnf_dnnf_quasi))) edge_pi_dnnf_no_quasi
+  fun h => absurd (quasi_trans h (edge_d_dnnf_dnnf_quasi)) edge_cnf_dnnf_no_quasi
 theorem edge_cnf_d_dnnf_no_poly : ¬ compilesInPoly .cnf .d_dnnf := fun h => absurd (poly_implies_quasi h) edge_cnf_d_dnnf_no_quasi
 
 theorem edge_cnf_d_sdnnf_no_quasi : ¬ compilesInQuasi .cnf .d_sdnnf :=
@@ -1380,12 +1617,8 @@ theorem edge_cnf_d_sdnnf_t_no_quasi : ¬ compilesInQuasi .cnf .d_sdnnf_t :=
 theorem edge_cnf_d_sdnnf_t_no_poly : ¬ compilesInPoly .cnf .d_sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_cnf_d_sdnnf_t_no_quasi
 
 theorem edge_cnf_dnf_no_quasi : ¬ compilesInQuasi .cnf .dnf :=
-  fun h => absurd (quasi_trans edge_pi_cnf_quasi (h)) edge_pi_dnf_no_quasi
+  fun h => absurd (quasi_trans h (edge_dnf_dnnf_quasi)) edge_cnf_dnnf_no_quasi
 theorem edge_cnf_dnf_no_poly : ¬ compilesInPoly .cnf .dnf := fun h => absurd (poly_implies_quasi h) edge_cnf_dnf_no_quasi
-
-theorem edge_cnf_dnnf_no_quasi : ¬ compilesInQuasi .cnf .dnnf :=
-  fun h => absurd (quasi_trans edge_pi_cnf_quasi (h)) edge_pi_dnnf_no_quasi
-theorem edge_cnf_dnnf_no_poly : ¬ compilesInPoly .cnf .dnnf := fun h => absurd (poly_implies_quasi h) edge_cnf_dnnf_no_quasi
 
 theorem edge_cnf_fbdd_no_quasi : ¬ compilesInQuasi .cnf .fbdd :=
   fun h => absurd (quasi_trans h (edge_fbdd_d_dnnf_quasi)) edge_cnf_d_dnnf_no_quasi
@@ -1463,9 +1696,21 @@ theorem edge_cnf_uobdd_lt_no_quasi : ¬ compilesInQuasi .cnf .uobdd_lt :=
   fun h => absurd (quasi_trans h (edge_uobdd_lt_d_dnnf_quasi)) edge_cnf_d_dnnf_no_quasi
 theorem edge_cnf_uobdd_lt_no_poly : ¬ compilesInPoly .cnf .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_cnf_uobdd_lt_no_quasi
 
+theorem edge_cnf_tdd_no_quasi : ¬ compilesInQuasi .cnf .tdd :=
+  fun h => absurd (quasi_trans h (edge_tdd_d_dnnf_quasi)) edge_cnf_d_dnnf_no_quasi
+theorem edge_cnf_tdd_no_poly : ¬ compilesInPoly .cnf .tdd := fun h => absurd (poly_implies_quasi h) edge_cnf_tdd_no_quasi
+
+theorem edge_cnf_tdd_t_no_quasi : ¬ compilesInQuasi .cnf .tdd_t :=
+  fun h => absurd (quasi_trans h (edge_tdd_t_d_dnnf_quasi)) edge_cnf_d_dnnf_no_quasi
+theorem edge_cnf_tdd_t_no_poly : ¬ compilesInPoly .cnf .tdd_t := fun h => absurd (poly_implies_quasi h) edge_cnf_tdd_t_no_quasi
+
 theorem edge_csdd_cnf_no_quasi : ¬ compilesInQuasi .csdd .cnf :=
   fun h => absurd (quasi_trans edge_obdd_lt_csdd_quasi (h)) edge_obdd_lt_cnf_no_quasi
 theorem edge_csdd_cnf_no_poly : ¬ compilesInPoly .csdd .cnf := fun h => absurd (poly_implies_quasi h) edge_csdd_cnf_no_quasi
+
+theorem edge_csdd_d_sdnnf_t_no_quasi : ¬ compilesInQuasi .csdd .d_sdnnf_t :=
+  fun h => absurd (quasi_trans edge_obdd_csdd_quasi (quasi_trans h (edge_d_sdnnf_t_sdnnf_t_quasi))) edge_obdd_sdnnf_t_no_quasi
+theorem edge_csdd_d_sdnnf_t_no_poly : ¬ compilesInPoly .csdd .d_sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_csdd_d_sdnnf_t_no_quasi
 
 theorem edge_csdd_dnf_no_quasi : ¬ compilesInQuasi .csdd .dnf :=
   fun h => absurd (quasi_trans edge_obdd_lt_csdd_quasi (h)) edge_obdd_lt_dnf_no_quasi
@@ -1480,20 +1725,44 @@ theorem edge_csdd_mods_no_quasi : ¬ compilesInQuasi .csdd .mods :=
 theorem edge_csdd_mods_no_poly : ¬ compilesInPoly .csdd .mods := fun h => absurd (poly_implies_quasi h) edge_csdd_mods_no_quasi
 
 theorem edge_csdd_obdd_lt_no_quasi : ¬ compilesInQuasi .csdd .obdd_lt :=
-  fun h => absurd (quasi_trans h (edge_obdd_lt_obdd_quasi)) edge_csdd_obdd_no_quasi
+  fun h => absurd (quasi_trans h (edge_obdd_lt_d_sdnnf_t_quasi)) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_csdd_obdd_lt_no_poly : ¬ compilesInPoly .csdd .obdd_lt := fun h => absurd (poly_implies_quasi h) edge_csdd_obdd_lt_no_quasi
 
 theorem edge_csdd_pi_no_quasi : ¬ compilesInQuasi .csdd .pi :=
   fun h => absurd (quasi_trans h (edge_pi_cnf_quasi)) edge_csdd_cnf_no_quasi
 theorem edge_csdd_pi_no_poly : ¬ compilesInPoly .csdd .pi := fun h => absurd (poly_implies_quasi h) edge_csdd_pi_no_quasi
 
+theorem edge_csdd_sdd_t_no_quasi : ¬ compilesInQuasi .csdd .sdd_t :=
+  fun h => absurd (quasi_trans h (edge_sdd_t_d_sdnnf_t_quasi)) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_csdd_sdd_t_no_poly : ¬ compilesInPoly .csdd .sdd_t := fun h => absurd (poly_implies_quasi h) edge_csdd_sdd_t_no_quasi
+
+theorem edge_csdd_sdnnf_t_no_quasi : ¬ compilesInQuasi .csdd .sdnnf_t :=
+  fun h => absurd (quasi_trans edge_obdd_csdd_quasi (h)) edge_obdd_sdnnf_t_no_quasi
+theorem edge_csdd_sdnnf_t_no_poly : ¬ compilesInPoly .csdd .sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_csdd_sdnnf_t_no_quasi
+
 theorem edge_csdd_dec_sdnnf_no_quasi : ¬ compilesInQuasi .csdd .dec_sdnnf :=
   fun h => absurd (quasi_trans h (edge_dec_sdnnf_obdd_quasi)) edge_csdd_obdd_no_quasi
 theorem edge_csdd_dec_sdnnf_no_poly : ¬ compilesInPoly .csdd .dec_sdnnf := fun h => absurd (poly_implies_quasi h) edge_csdd_dec_sdnnf_no_quasi
 
 theorem edge_csdd_dec_sdnnf_lt_no_quasi : ¬ compilesInQuasi .csdd .dec_sdnnf_lt :=
-  fun h => absurd (quasi_trans h (edge_dec_sdnnf_lt_obdd_lt_quasi)) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans h (edge_dec_sdnnf_lt_d_sdnnf_t_quasi)) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_csdd_dec_sdnnf_lt_no_poly : ¬ compilesInPoly .csdd .dec_sdnnf_lt := fun h => absurd (poly_implies_quasi h) edge_csdd_dec_sdnnf_lt_no_quasi
+
+theorem edge_csdd_csdd_t_no_quasi : ¬ compilesInQuasi .csdd .csdd_t :=
+  fun h => absurd (quasi_trans h (edge_csdd_t_d_sdnnf_t_quasi)) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_csdd_csdd_t_no_poly : ¬ compilesInPoly .csdd .csdd_t := fun h => absurd (poly_implies_quasi h) edge_csdd_csdd_t_no_quasi
+
+theorem edge_csdd_nobdd_lt_no_quasi : ¬ compilesInQuasi .csdd .nobdd_lt :=
+  fun h => absurd (quasi_trans h (edge_nobdd_lt_sdnnf_t_quasi)) edge_csdd_sdnnf_t_no_quasi
+theorem edge_csdd_nobdd_lt_no_poly : ¬ compilesInPoly .csdd .nobdd_lt := fun h => absurd (poly_implies_quasi h) edge_csdd_nobdd_lt_no_quasi
+
+theorem edge_csdd_uobdd_lt_no_quasi : ¬ compilesInQuasi .csdd .uobdd_lt :=
+  fun h => absurd (quasi_trans h (edge_uobdd_lt_d_sdnnf_t_quasi)) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_csdd_uobdd_lt_no_poly : ¬ compilesInPoly .csdd .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_csdd_uobdd_lt_no_quasi
+
+theorem edge_csdd_tdd_t_no_quasi : ¬ compilesInQuasi .csdd .tdd_t :=
+  fun h => absurd (quasi_trans h (edge_tdd_t_d_sdnnf_t_quasi)) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_csdd_tdd_t_no_poly : ¬ compilesInPoly .csdd .tdd_t := fun h => absurd (poly_implies_quasi h) edge_csdd_tdd_t_no_quasi
 
 theorem edge_d_dnnf_cnf_no_quasi : ¬ compilesInQuasi .d_dnnf .cnf :=
   fun h => absurd (quasi_trans edge_csdd_d_dnnf_quasi (h)) edge_csdd_cnf_no_quasi
@@ -1508,7 +1777,7 @@ theorem edge_d_dnnf_d_sdnnf_no_quasi : ¬ compilesInQuasi .d_dnnf .d_sdnnf :=
 theorem edge_d_dnnf_d_sdnnf_no_poly : ¬ compilesInPoly .d_dnnf .d_sdnnf := fun h => absurd (poly_implies_quasi h) edge_d_dnnf_d_sdnnf_no_quasi
 
 theorem edge_d_dnnf_d_sdnnf_t_no_quasi : ¬ compilesInQuasi .d_dnnf .d_sdnnf_t :=
-  fun h => absurd (quasi_trans h (edge_d_sdnnf_t_d_sdnnf_quasi)) edge_d_dnnf_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_d_dnnf_quasi (h)) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_d_dnnf_d_sdnnf_t_no_poly : ¬ compilesInPoly .d_dnnf .d_sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_d_dnnf_d_sdnnf_t_no_quasi
 
 theorem edge_d_dnnf_dnf_no_quasi : ¬ compilesInQuasi .d_dnnf .dnf :=
@@ -1524,7 +1793,7 @@ theorem edge_d_dnnf_nobdd_no_quasi : ¬ compilesInQuasi .d_dnnf .nobdd :=
 theorem edge_d_dnnf_nobdd_no_poly : ¬ compilesInPoly .d_dnnf .nobdd := fun h => absurd (poly_implies_quasi h) edge_d_dnnf_nobdd_no_quasi
 
 theorem edge_d_dnnf_obdd_lt_no_quasi : ¬ compilesInQuasi .d_dnnf .obdd_lt :=
-  fun h => absurd (quasi_trans edge_csdd_d_dnnf_quasi (h)) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_d_dnnf_quasi (quasi_trans h (edge_obdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_d_dnnf_obdd_lt_no_poly : ¬ compilesInPoly .d_dnnf .obdd_lt := fun h => absurd (poly_implies_quasi h) edge_d_dnnf_obdd_lt_no_quasi
 
 theorem edge_d_dnnf_pi_no_quasi : ¬ compilesInQuasi .d_dnnf .pi :=
@@ -1536,7 +1805,7 @@ theorem edge_d_dnnf_sdd_no_quasi : ¬ compilesInQuasi .d_dnnf .sdd :=
 theorem edge_d_dnnf_sdd_no_poly : ¬ compilesInPoly .d_dnnf .sdd := fun h => absurd (poly_implies_quasi h) edge_d_dnnf_sdd_no_quasi
 
 theorem edge_d_dnnf_sdd_t_no_quasi : ¬ compilesInQuasi .d_dnnf .sdd_t :=
-  fun h => absurd (quasi_trans h (edge_sdd_t_d_sdnnf_quasi)) edge_d_dnnf_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_d_dnnf_quasi (quasi_trans h (edge_sdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_d_dnnf_sdd_t_no_poly : ¬ compilesInPoly .d_dnnf .sdd_t := fun h => absurd (poly_implies_quasi h) edge_d_dnnf_sdd_t_no_quasi
 
 theorem edge_d_dnnf_sdnnf_no_quasi : ¬ compilesInQuasi .d_dnnf .sdnnf :=
@@ -1544,7 +1813,7 @@ theorem edge_d_dnnf_sdnnf_no_quasi : ¬ compilesInQuasi .d_dnnf .sdnnf :=
 theorem edge_d_dnnf_sdnnf_no_poly : ¬ compilesInPoly .d_dnnf .sdnnf := fun h => absurd (poly_implies_quasi h) edge_d_dnnf_sdnnf_no_quasi
 
 theorem edge_d_dnnf_sdnnf_t_no_quasi : ¬ compilesInQuasi .d_dnnf .sdnnf_t :=
-  fun h => absurd (quasi_trans h (edge_sdnnf_t_nobdd_quasi)) edge_d_dnnf_nobdd_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_d_dnnf_quasi (h)) edge_csdd_sdnnf_t_no_quasi
 theorem edge_d_dnnf_sdnnf_t_no_poly : ¬ compilesInPoly .d_dnnf .sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_d_dnnf_sdnnf_t_no_quasi
 
 theorem edge_d_dnnf_uobdd_no_quasi : ¬ compilesInQuasi .d_dnnf .uobdd :=
@@ -1560,24 +1829,36 @@ theorem edge_d_dnnf_dec_sdnnf_no_quasi : ¬ compilesInQuasi .d_dnnf .dec_sdnnf :
 theorem edge_d_dnnf_dec_sdnnf_no_poly : ¬ compilesInPoly .d_dnnf .dec_sdnnf := fun h => absurd (poly_implies_quasi h) edge_d_dnnf_dec_sdnnf_no_quasi
 
 theorem edge_d_dnnf_dec_sdnnf_lt_no_quasi : ¬ compilesInQuasi .d_dnnf .dec_sdnnf_lt :=
-  fun h => absurd (quasi_trans edge_csdd_d_dnnf_quasi (quasi_trans h (edge_dec_sdnnf_lt_obdd_lt_quasi))) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_d_dnnf_quasi (quasi_trans h (edge_dec_sdnnf_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_d_dnnf_dec_sdnnf_lt_no_poly : ¬ compilesInPoly .d_dnnf .dec_sdnnf_lt := fun h => absurd (poly_implies_quasi h) edge_d_dnnf_dec_sdnnf_lt_no_quasi
 
 theorem edge_d_dnnf_csdd_t_no_quasi : ¬ compilesInQuasi .d_dnnf .csdd_t :=
-  fun h => absurd (quasi_trans h (edge_csdd_t_csdd_quasi)) edge_d_dnnf_csdd_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_d_dnnf_quasi (quasi_trans h (edge_csdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_d_dnnf_csdd_t_no_poly : ¬ compilesInPoly .d_dnnf .csdd_t := fun h => absurd (poly_implies_quasi h) edge_d_dnnf_csdd_t_no_quasi
 
 theorem edge_d_dnnf_nobdd_lt_no_quasi : ¬ compilesInQuasi .d_dnnf .nobdd_lt :=
-  fun h => absurd (quasi_trans h (edge_nobdd_lt_nobdd_quasi)) edge_d_dnnf_nobdd_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_d_dnnf_quasi (quasi_trans h (edge_nobdd_lt_sdnnf_t_quasi))) edge_csdd_sdnnf_t_no_quasi
 theorem edge_d_dnnf_nobdd_lt_no_poly : ¬ compilesInPoly .d_dnnf .nobdd_lt := fun h => absurd (poly_implies_quasi h) edge_d_dnnf_nobdd_lt_no_quasi
 
 theorem edge_d_dnnf_uobdd_lt_no_quasi : ¬ compilesInQuasi .d_dnnf .uobdd_lt :=
-  fun h => absurd (quasi_trans h (edge_uobdd_lt_d_sdnnf_quasi)) edge_d_dnnf_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_d_dnnf_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_d_dnnf_uobdd_lt_no_poly : ¬ compilesInPoly .d_dnnf .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_d_dnnf_uobdd_lt_no_quasi
+
+theorem edge_d_dnnf_tdd_no_quasi : ¬ compilesInQuasi .d_dnnf .tdd :=
+  fun h => absurd (quasi_trans h (edge_tdd_d_sdnnf_quasi)) edge_d_dnnf_d_sdnnf_no_quasi
+theorem edge_d_dnnf_tdd_no_poly : ¬ compilesInPoly .d_dnnf .tdd := fun h => absurd (poly_implies_quasi h) edge_d_dnnf_tdd_no_quasi
+
+theorem edge_d_dnnf_tdd_t_no_quasi : ¬ compilesInQuasi .d_dnnf .tdd_t :=
+  fun h => absurd (quasi_trans edge_csdd_d_dnnf_quasi (quasi_trans h (edge_tdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_d_dnnf_tdd_t_no_poly : ¬ compilesInPoly .d_dnnf .tdd_t := fun h => absurd (poly_implies_quasi h) edge_d_dnnf_tdd_t_no_quasi
 
 theorem edge_d_sdnnf_cnf_no_quasi : ¬ compilesInQuasi .d_sdnnf .cnf :=
   fun h => absurd (quasi_trans edge_csdd_d_sdnnf_quasi (h)) edge_csdd_cnf_no_quasi
 theorem edge_d_sdnnf_cnf_no_poly : ¬ compilesInPoly .d_sdnnf .cnf := fun h => absurd (poly_implies_quasi h) edge_d_sdnnf_cnf_no_quasi
+
+theorem edge_d_sdnnf_d_sdnnf_t_no_quasi : ¬ compilesInQuasi .d_sdnnf .d_sdnnf_t :=
+  fun h => absurd (quasi_trans edge_csdd_d_sdnnf_quasi (h)) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_d_sdnnf_d_sdnnf_t_no_poly : ¬ compilesInPoly .d_sdnnf .d_sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_d_sdnnf_d_sdnnf_t_no_quasi
 
 theorem edge_d_sdnnf_dnf_no_quasi : ¬ compilesInQuasi .d_sdnnf .dnf :=
   fun h => absurd (quasi_trans edge_csdd_d_sdnnf_quasi (h)) edge_csdd_dnf_no_quasi
@@ -1596,12 +1877,20 @@ theorem edge_d_sdnnf_mods_no_quasi : ¬ compilesInQuasi .d_sdnnf .mods :=
 theorem edge_d_sdnnf_mods_no_poly : ¬ compilesInPoly .d_sdnnf .mods := fun h => absurd (poly_implies_quasi h) edge_d_sdnnf_mods_no_quasi
 
 theorem edge_d_sdnnf_obdd_lt_no_quasi : ¬ compilesInQuasi .d_sdnnf .obdd_lt :=
-  fun h => absurd (quasi_trans edge_csdd_d_sdnnf_quasi (h)) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_d_sdnnf_quasi (quasi_trans h (edge_obdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_d_sdnnf_obdd_lt_no_poly : ¬ compilesInPoly .d_sdnnf .obdd_lt := fun h => absurd (poly_implies_quasi h) edge_d_sdnnf_obdd_lt_no_quasi
 
 theorem edge_d_sdnnf_pi_no_quasi : ¬ compilesInQuasi .d_sdnnf .pi :=
   fun h => absurd (quasi_trans edge_csdd_d_sdnnf_quasi (quasi_trans h (edge_pi_cnf_quasi))) edge_csdd_cnf_no_quasi
 theorem edge_d_sdnnf_pi_no_poly : ¬ compilesInPoly .d_sdnnf .pi := fun h => absurd (poly_implies_quasi h) edge_d_sdnnf_pi_no_quasi
+
+theorem edge_d_sdnnf_sdd_t_no_quasi : ¬ compilesInQuasi .d_sdnnf .sdd_t :=
+  fun h => absurd (quasi_trans edge_csdd_d_sdnnf_quasi (quasi_trans h (edge_sdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_d_sdnnf_sdd_t_no_poly : ¬ compilesInPoly .d_sdnnf .sdd_t := fun h => absurd (poly_implies_quasi h) edge_d_sdnnf_sdd_t_no_quasi
+
+theorem edge_d_sdnnf_sdnnf_t_no_quasi : ¬ compilesInQuasi .d_sdnnf .sdnnf_t :=
+  fun h => absurd (quasi_trans edge_csdd_d_sdnnf_quasi (h)) edge_csdd_sdnnf_t_no_quasi
+theorem edge_d_sdnnf_sdnnf_t_no_poly : ¬ compilesInPoly .d_sdnnf .sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_d_sdnnf_sdnnf_t_no_quasi
 
 theorem edge_d_sdnnf_obdd_no_quasi : ¬ compilesInQuasi .d_sdnnf .obdd :=
   fun h => absurd (quasi_trans edge_csdd_d_sdnnf_quasi (h)) edge_csdd_obdd_no_quasi
@@ -1616,8 +1905,24 @@ theorem edge_d_sdnnf_dec_sdnnf_no_quasi : ¬ compilesInQuasi .d_sdnnf .dec_sdnnf
 theorem edge_d_sdnnf_dec_sdnnf_no_poly : ¬ compilesInPoly .d_sdnnf .dec_sdnnf := fun h => absurd (poly_implies_quasi h) edge_d_sdnnf_dec_sdnnf_no_quasi
 
 theorem edge_d_sdnnf_dec_sdnnf_lt_no_quasi : ¬ compilesInQuasi .d_sdnnf .dec_sdnnf_lt :=
-  fun h => absurd (quasi_trans edge_csdd_d_sdnnf_quasi (quasi_trans h (edge_dec_sdnnf_lt_obdd_lt_quasi))) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_d_sdnnf_quasi (quasi_trans h (edge_dec_sdnnf_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_d_sdnnf_dec_sdnnf_lt_no_poly : ¬ compilesInPoly .d_sdnnf .dec_sdnnf_lt := fun h => absurd (poly_implies_quasi h) edge_d_sdnnf_dec_sdnnf_lt_no_quasi
+
+theorem edge_d_sdnnf_csdd_t_no_quasi : ¬ compilesInQuasi .d_sdnnf .csdd_t :=
+  fun h => absurd (quasi_trans edge_csdd_d_sdnnf_quasi (quasi_trans h (edge_csdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_d_sdnnf_csdd_t_no_poly : ¬ compilesInPoly .d_sdnnf .csdd_t := fun h => absurd (poly_implies_quasi h) edge_d_sdnnf_csdd_t_no_quasi
+
+theorem edge_d_sdnnf_nobdd_lt_no_quasi : ¬ compilesInQuasi .d_sdnnf .nobdd_lt :=
+  fun h => absurd (quasi_trans edge_csdd_d_sdnnf_quasi (quasi_trans h (edge_nobdd_lt_sdnnf_t_quasi))) edge_csdd_sdnnf_t_no_quasi
+theorem edge_d_sdnnf_nobdd_lt_no_poly : ¬ compilesInPoly .d_sdnnf .nobdd_lt := fun h => absurd (poly_implies_quasi h) edge_d_sdnnf_nobdd_lt_no_quasi
+
+theorem edge_d_sdnnf_uobdd_lt_no_quasi : ¬ compilesInQuasi .d_sdnnf .uobdd_lt :=
+  fun h => absurd (quasi_trans edge_csdd_d_sdnnf_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_d_sdnnf_uobdd_lt_no_poly : ¬ compilesInPoly .d_sdnnf .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_d_sdnnf_uobdd_lt_no_quasi
+
+theorem edge_d_sdnnf_tdd_t_no_quasi : ¬ compilesInQuasi .d_sdnnf .tdd_t :=
+  fun h => absurd (quasi_trans edge_csdd_d_sdnnf_quasi (quasi_trans h (edge_tdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_d_sdnnf_tdd_t_no_poly : ¬ compilesInPoly .d_sdnnf .tdd_t := fun h => absurd (poly_implies_quasi h) edge_d_sdnnf_tdd_t_no_quasi
 
 theorem edge_d_sdnnf_t_cnf_no_quasi : ¬ compilesInQuasi .d_sdnnf_t .cnf :=
   fun h => absurd (quasi_trans edge_obdd_lt_d_sdnnf_t_quasi (h)) edge_obdd_lt_cnf_no_quasi
@@ -1723,6 +2028,14 @@ theorem edge_dnf_uobdd_lt_no_quasi : ¬ compilesInQuasi .dnf .uobdd_lt :=
   fun h => absurd (quasi_trans h (edge_uobdd_lt_d_sdnnf_quasi)) edge_dnf_d_sdnnf_no_quasi
 theorem edge_dnf_uobdd_lt_no_poly : ¬ compilesInPoly .dnf .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_dnf_uobdd_lt_no_quasi
 
+theorem edge_dnf_tdd_no_quasi : ¬ compilesInQuasi .dnf .tdd :=
+  fun h => absurd (quasi_trans h (edge_tdd_d_sdnnf_quasi)) edge_dnf_d_sdnnf_no_quasi
+theorem edge_dnf_tdd_no_poly : ¬ compilesInPoly .dnf .tdd := fun h => absurd (poly_implies_quasi h) edge_dnf_tdd_no_quasi
+
+theorem edge_dnf_tdd_t_no_quasi : ¬ compilesInQuasi .dnf .tdd_t :=
+  fun h => absurd (quasi_trans h (edge_tdd_t_d_sdnnf_quasi)) edge_dnf_d_sdnnf_no_quasi
+theorem edge_dnf_tdd_t_no_poly : ¬ compilesInPoly .dnf .tdd_t := fun h => absurd (poly_implies_quasi h) edge_dnf_tdd_t_no_quasi
+
 theorem edge_dnnf_cnf_no_quasi : ¬ compilesInQuasi .dnnf .cnf :=
   fun h => absurd (quasi_trans edge_csdd_dnnf_quasi (h)) edge_csdd_cnf_no_quasi
 theorem edge_dnnf_cnf_no_poly : ¬ compilesInPoly .dnnf .cnf := fun h => absurd (poly_implies_quasi h) edge_dnnf_cnf_no_quasi
@@ -1736,7 +2049,7 @@ theorem edge_dnnf_d_sdnnf_no_quasi : ¬ compilesInQuasi .dnnf .d_sdnnf :=
 theorem edge_dnnf_d_sdnnf_no_poly : ¬ compilesInPoly .dnnf .d_sdnnf := fun h => absurd (poly_implies_quasi h) edge_dnnf_d_sdnnf_no_quasi
 
 theorem edge_dnnf_d_sdnnf_t_no_quasi : ¬ compilesInQuasi .dnnf .d_sdnnf_t :=
-  fun h => absurd (quasi_trans edge_d_dnnf_dnnf_quasi (quasi_trans h (edge_d_sdnnf_t_d_sdnnf_quasi))) edge_d_dnnf_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_dnnf_quasi (h)) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_dnnf_d_sdnnf_t_no_poly : ¬ compilesInPoly .dnnf .d_sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_dnnf_d_sdnnf_t_no_quasi
 
 theorem edge_dnnf_dnf_no_quasi : ¬ compilesInQuasi .dnnf .dnf :=
@@ -1760,7 +2073,7 @@ theorem edge_dnnf_nobdd_no_quasi : ¬ compilesInQuasi .dnnf .nobdd :=
 theorem edge_dnnf_nobdd_no_poly : ¬ compilesInPoly .dnnf .nobdd := fun h => absurd (poly_implies_quasi h) edge_dnnf_nobdd_no_quasi
 
 theorem edge_dnnf_obdd_lt_no_quasi : ¬ compilesInQuasi .dnnf .obdd_lt :=
-  fun h => absurd (quasi_trans edge_csdd_dnnf_quasi (h)) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_dnnf_quasi (quasi_trans h (edge_obdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_dnnf_obdd_lt_no_poly : ¬ compilesInPoly .dnnf .obdd_lt := fun h => absurd (poly_implies_quasi h) edge_dnnf_obdd_lt_no_quasi
 
 theorem edge_dnnf_pi_no_quasi : ¬ compilesInQuasi .dnnf .pi :=
@@ -1772,7 +2085,7 @@ theorem edge_dnnf_sdd_no_quasi : ¬ compilesInQuasi .dnnf .sdd :=
 theorem edge_dnnf_sdd_no_poly : ¬ compilesInPoly .dnnf .sdd := fun h => absurd (poly_implies_quasi h) edge_dnnf_sdd_no_quasi
 
 theorem edge_dnnf_sdd_t_no_quasi : ¬ compilesInQuasi .dnnf .sdd_t :=
-  fun h => absurd (quasi_trans edge_d_dnnf_dnnf_quasi (quasi_trans h (edge_sdd_t_d_sdnnf_quasi))) edge_d_dnnf_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_dnnf_quasi (quasi_trans h (edge_sdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_dnnf_sdd_t_no_poly : ¬ compilesInPoly .dnnf .sdd_t := fun h => absurd (poly_implies_quasi h) edge_dnnf_sdd_t_no_quasi
 
 theorem edge_dnnf_sdnnf_no_quasi : ¬ compilesInQuasi .dnnf .sdnnf :=
@@ -1780,7 +2093,7 @@ theorem edge_dnnf_sdnnf_no_quasi : ¬ compilesInQuasi .dnnf .sdnnf :=
 theorem edge_dnnf_sdnnf_no_poly : ¬ compilesInPoly .dnnf .sdnnf := fun h => absurd (poly_implies_quasi h) edge_dnnf_sdnnf_no_quasi
 
 theorem edge_dnnf_sdnnf_t_no_quasi : ¬ compilesInQuasi .dnnf .sdnnf_t :=
-  fun h => absurd (quasi_trans edge_d_dnnf_dnnf_quasi (quasi_trans h (edge_sdnnf_t_nobdd_quasi))) edge_d_dnnf_nobdd_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_dnnf_quasi (h)) edge_csdd_sdnnf_t_no_quasi
 theorem edge_dnnf_sdnnf_t_no_poly : ¬ compilesInPoly .dnnf .sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_dnnf_sdnnf_t_no_quasi
 
 theorem edge_dnnf_ufbdd_no_quasi : ¬ compilesInQuasi .dnnf .ufbdd :=
@@ -1804,20 +2117,28 @@ theorem edge_dnnf_dec_sdnnf_no_quasi : ¬ compilesInQuasi .dnnf .dec_sdnnf :=
 theorem edge_dnnf_dec_sdnnf_no_poly : ¬ compilesInPoly .dnnf .dec_sdnnf := fun h => absurd (poly_implies_quasi h) edge_dnnf_dec_sdnnf_no_quasi
 
 theorem edge_dnnf_dec_sdnnf_lt_no_quasi : ¬ compilesInQuasi .dnnf .dec_sdnnf_lt :=
-  fun h => absurd (quasi_trans edge_csdd_dnnf_quasi (quasi_trans h (edge_dec_sdnnf_lt_obdd_lt_quasi))) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_dnnf_quasi (quasi_trans h (edge_dec_sdnnf_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_dnnf_dec_sdnnf_lt_no_poly : ¬ compilesInPoly .dnnf .dec_sdnnf_lt := fun h => absurd (poly_implies_quasi h) edge_dnnf_dec_sdnnf_lt_no_quasi
 
 theorem edge_dnnf_csdd_t_no_quasi : ¬ compilesInQuasi .dnnf .csdd_t :=
-  fun h => absurd (quasi_trans edge_d_dnnf_dnnf_quasi (quasi_trans h (edge_csdd_t_csdd_quasi))) edge_d_dnnf_csdd_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_dnnf_quasi (quasi_trans h (edge_csdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_dnnf_csdd_t_no_poly : ¬ compilesInPoly .dnnf .csdd_t := fun h => absurd (poly_implies_quasi h) edge_dnnf_csdd_t_no_quasi
 
 theorem edge_dnnf_nobdd_lt_no_quasi : ¬ compilesInQuasi .dnnf .nobdd_lt :=
-  fun h => absurd (quasi_trans edge_d_dnnf_dnnf_quasi (quasi_trans h (edge_nobdd_lt_nobdd_quasi))) edge_d_dnnf_nobdd_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_dnnf_quasi (quasi_trans h (edge_nobdd_lt_sdnnf_t_quasi))) edge_csdd_sdnnf_t_no_quasi
 theorem edge_dnnf_nobdd_lt_no_poly : ¬ compilesInPoly .dnnf .nobdd_lt := fun h => absurd (poly_implies_quasi h) edge_dnnf_nobdd_lt_no_quasi
 
 theorem edge_dnnf_uobdd_lt_no_quasi : ¬ compilesInQuasi .dnnf .uobdd_lt :=
-  fun h => absurd (quasi_trans edge_d_dnnf_dnnf_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_quasi))) edge_d_dnnf_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_dnnf_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_dnnf_uobdd_lt_no_poly : ¬ compilesInPoly .dnnf .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_dnnf_uobdd_lt_no_quasi
+
+theorem edge_dnnf_tdd_no_quasi : ¬ compilesInQuasi .dnnf .tdd :=
+  fun h => absurd (quasi_trans edge_d_dnnf_dnnf_quasi (quasi_trans h (edge_tdd_d_sdnnf_quasi))) edge_d_dnnf_d_sdnnf_no_quasi
+theorem edge_dnnf_tdd_no_poly : ¬ compilesInPoly .dnnf .tdd := fun h => absurd (poly_implies_quasi h) edge_dnnf_tdd_no_quasi
+
+theorem edge_dnnf_tdd_t_no_quasi : ¬ compilesInQuasi .dnnf .tdd_t :=
+  fun h => absurd (quasi_trans edge_csdd_dnnf_quasi (quasi_trans h (edge_tdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_dnnf_tdd_t_no_poly : ¬ compilesInPoly .dnnf .tdd_t := fun h => absurd (poly_implies_quasi h) edge_dnnf_tdd_t_no_quasi
 
 theorem edge_fbdd_cnf_no_quasi : ¬ compilesInQuasi .fbdd .cnf :=
   fun h => absurd (quasi_trans edge_obdd_lt_fbdd_quasi (h)) edge_obdd_lt_cnf_no_quasi
@@ -1891,6 +2212,14 @@ theorem edge_fbdd_uobdd_lt_no_quasi : ¬ compilesInQuasi .fbdd .uobdd_lt :=
   fun h => absurd (quasi_trans h (edge_uobdd_lt_d_sdnnf_quasi)) edge_fbdd_d_sdnnf_no_quasi
 theorem edge_fbdd_uobdd_lt_no_poly : ¬ compilesInPoly .fbdd .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_fbdd_uobdd_lt_no_quasi
 
+theorem edge_fbdd_tdd_no_quasi : ¬ compilesInQuasi .fbdd .tdd :=
+  fun h => absurd (quasi_trans h (edge_tdd_d_sdnnf_quasi)) edge_fbdd_d_sdnnf_no_quasi
+theorem edge_fbdd_tdd_no_poly : ¬ compilesInPoly .fbdd .tdd := fun h => absurd (poly_implies_quasi h) edge_fbdd_tdd_no_quasi
+
+theorem edge_fbdd_tdd_t_no_quasi : ¬ compilesInQuasi .fbdd .tdd_t :=
+  fun h => absurd (quasi_trans h (edge_tdd_t_d_sdnnf_quasi)) edge_fbdd_d_sdnnf_no_quasi
+theorem edge_fbdd_tdd_t_no_poly : ¬ compilesInPoly .fbdd .tdd_t := fun h => absurd (poly_implies_quasi h) edge_fbdd_tdd_t_no_quasi
+
 theorem edge_ip_obdd_lt_no_quasi : ¬ compilesInQuasi .ip .obdd_lt :=
   fun h => absurd (quasi_trans h (edge_obdd_lt_fbdd_quasi)) edge_ip_fbdd_no_quasi
 theorem edge_ip_obdd_lt_no_poly : ¬ compilesInPoly .ip .obdd_lt := fun h => absurd (poly_implies_quasi h) edge_ip_obdd_lt_no_quasi
@@ -1928,7 +2257,7 @@ theorem edge_nfbdd_d_sdnnf_no_quasi : ¬ compilesInQuasi .nfbdd .d_sdnnf :=
 theorem edge_nfbdd_d_sdnnf_no_poly : ¬ compilesInPoly .nfbdd .d_sdnnf := fun h => absurd (poly_implies_quasi h) edge_nfbdd_d_sdnnf_no_quasi
 
 theorem edge_nfbdd_d_sdnnf_t_no_quasi : ¬ compilesInQuasi .nfbdd .d_sdnnf_t :=
-  fun h => absurd (quasi_trans edge_d_dnnf_nfbdd_quasi (quasi_trans h (edge_d_sdnnf_t_d_sdnnf_quasi))) edge_d_dnnf_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_nfbdd_quasi (h)) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_nfbdd_d_sdnnf_t_no_poly : ¬ compilesInPoly .nfbdd .d_sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_nfbdd_d_sdnnf_t_no_quasi
 
 theorem edge_nfbdd_dnf_no_quasi : ¬ compilesInQuasi .nfbdd .dnf :=
@@ -1948,7 +2277,7 @@ theorem edge_nfbdd_nobdd_no_quasi : ¬ compilesInQuasi .nfbdd .nobdd :=
 theorem edge_nfbdd_nobdd_no_poly : ¬ compilesInPoly .nfbdd .nobdd := fun h => absurd (poly_implies_quasi h) edge_nfbdd_nobdd_no_quasi
 
 theorem edge_nfbdd_obdd_lt_no_quasi : ¬ compilesInQuasi .nfbdd .obdd_lt :=
-  fun h => absurd (quasi_trans edge_csdd_nfbdd_quasi (h)) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_nfbdd_quasi (quasi_trans h (edge_obdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_nfbdd_obdd_lt_no_poly : ¬ compilesInPoly .nfbdd .obdd_lt := fun h => absurd (poly_implies_quasi h) edge_nfbdd_obdd_lt_no_quasi
 
 theorem edge_nfbdd_pi_no_quasi : ¬ compilesInQuasi .nfbdd .pi :=
@@ -1960,7 +2289,7 @@ theorem edge_nfbdd_sdd_no_quasi : ¬ compilesInQuasi .nfbdd .sdd :=
 theorem edge_nfbdd_sdd_no_poly : ¬ compilesInPoly .nfbdd .sdd := fun h => absurd (poly_implies_quasi h) edge_nfbdd_sdd_no_quasi
 
 theorem edge_nfbdd_sdd_t_no_quasi : ¬ compilesInQuasi .nfbdd .sdd_t :=
-  fun h => absurd (quasi_trans edge_d_dnnf_nfbdd_quasi (quasi_trans h (edge_sdd_t_d_sdnnf_quasi))) edge_d_dnnf_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_nfbdd_quasi (quasi_trans h (edge_sdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_nfbdd_sdd_t_no_poly : ¬ compilesInPoly .nfbdd .sdd_t := fun h => absurd (poly_implies_quasi h) edge_nfbdd_sdd_t_no_quasi
 
 theorem edge_nfbdd_sdnnf_no_quasi : ¬ compilesInQuasi .nfbdd .sdnnf :=
@@ -1968,7 +2297,7 @@ theorem edge_nfbdd_sdnnf_no_quasi : ¬ compilesInQuasi .nfbdd .sdnnf :=
 theorem edge_nfbdd_sdnnf_no_poly : ¬ compilesInPoly .nfbdd .sdnnf := fun h => absurd (poly_implies_quasi h) edge_nfbdd_sdnnf_no_quasi
 
 theorem edge_nfbdd_sdnnf_t_no_quasi : ¬ compilesInQuasi .nfbdd .sdnnf_t :=
-  fun h => absurd (quasi_trans edge_d_dnnf_nfbdd_quasi (quasi_trans h (edge_sdnnf_t_nobdd_quasi))) edge_d_dnnf_nobdd_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_nfbdd_quasi (h)) edge_csdd_sdnnf_t_no_quasi
 theorem edge_nfbdd_sdnnf_t_no_poly : ¬ compilesInPoly .nfbdd .sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_nfbdd_sdnnf_t_no_quasi
 
 theorem edge_nfbdd_uobdd_no_quasi : ¬ compilesInQuasi .nfbdd .uobdd :=
@@ -1988,20 +2317,28 @@ theorem edge_nfbdd_dec_sdnnf_no_quasi : ¬ compilesInQuasi .nfbdd .dec_sdnnf :=
 theorem edge_nfbdd_dec_sdnnf_no_poly : ¬ compilesInPoly .nfbdd .dec_sdnnf := fun h => absurd (poly_implies_quasi h) edge_nfbdd_dec_sdnnf_no_quasi
 
 theorem edge_nfbdd_dec_sdnnf_lt_no_quasi : ¬ compilesInQuasi .nfbdd .dec_sdnnf_lt :=
-  fun h => absurd (quasi_trans edge_csdd_nfbdd_quasi (quasi_trans h (edge_dec_sdnnf_lt_obdd_lt_quasi))) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_nfbdd_quasi (quasi_trans h (edge_dec_sdnnf_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_nfbdd_dec_sdnnf_lt_no_poly : ¬ compilesInPoly .nfbdd .dec_sdnnf_lt := fun h => absurd (poly_implies_quasi h) edge_nfbdd_dec_sdnnf_lt_no_quasi
 
 theorem edge_nfbdd_csdd_t_no_quasi : ¬ compilesInQuasi .nfbdd .csdd_t :=
-  fun h => absurd (quasi_trans edge_d_dnnf_nfbdd_quasi (quasi_trans h (edge_csdd_t_csdd_quasi))) edge_d_dnnf_csdd_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_nfbdd_quasi (quasi_trans h (edge_csdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_nfbdd_csdd_t_no_poly : ¬ compilesInPoly .nfbdd .csdd_t := fun h => absurd (poly_implies_quasi h) edge_nfbdd_csdd_t_no_quasi
 
 theorem edge_nfbdd_nobdd_lt_no_quasi : ¬ compilesInQuasi .nfbdd .nobdd_lt :=
-  fun h => absurd (quasi_trans edge_d_dnnf_nfbdd_quasi (quasi_trans h (edge_nobdd_lt_nobdd_quasi))) edge_d_dnnf_nobdd_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_nfbdd_quasi (quasi_trans h (edge_nobdd_lt_sdnnf_t_quasi))) edge_csdd_sdnnf_t_no_quasi
 theorem edge_nfbdd_nobdd_lt_no_poly : ¬ compilesInPoly .nfbdd .nobdd_lt := fun h => absurd (poly_implies_quasi h) edge_nfbdd_nobdd_lt_no_quasi
 
 theorem edge_nfbdd_uobdd_lt_no_quasi : ¬ compilesInQuasi .nfbdd .uobdd_lt :=
-  fun h => absurd (quasi_trans edge_d_dnnf_nfbdd_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_quasi))) edge_d_dnnf_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_nfbdd_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_nfbdd_uobdd_lt_no_poly : ¬ compilesInPoly .nfbdd .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_nfbdd_uobdd_lt_no_quasi
+
+theorem edge_nfbdd_tdd_no_quasi : ¬ compilesInQuasi .nfbdd .tdd :=
+  fun h => absurd (quasi_trans edge_d_dnnf_nfbdd_quasi (quasi_trans h (edge_tdd_d_sdnnf_quasi))) edge_d_dnnf_d_sdnnf_no_quasi
+theorem edge_nfbdd_tdd_no_poly : ¬ compilesInPoly .nfbdd .tdd := fun h => absurd (poly_implies_quasi h) edge_nfbdd_tdd_no_quasi
+
+theorem edge_nfbdd_tdd_t_no_quasi : ¬ compilesInQuasi .nfbdd .tdd_t :=
+  fun h => absurd (quasi_trans edge_csdd_nfbdd_quasi (quasi_trans h (edge_tdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_nfbdd_tdd_t_no_poly : ¬ compilesInPoly .nfbdd .tdd_t := fun h => absurd (poly_implies_quasi h) edge_nfbdd_tdd_t_no_quasi
 
 theorem edge_nnf_cnf_no_quasi : ¬ compilesInQuasi .nnf .cnf :=
   fun h => absurd (quasi_trans edge_csdd_nnf_quasi (h)) edge_csdd_cnf_no_quasi
@@ -2111,6 +2448,14 @@ theorem edge_nnf_uobdd_lt_no_quasi : ¬ compilesInQuasi .nnf .uobdd_lt :=
   fun h => absurd (quasi_trans edge_cnf_nnf_quasi (quasi_trans h (edge_uobdd_lt_d_dnnf_quasi))) edge_cnf_d_dnnf_no_quasi
 theorem edge_nnf_uobdd_lt_no_poly : ¬ compilesInPoly .nnf .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_nnf_uobdd_lt_no_quasi
 
+theorem edge_nnf_tdd_no_quasi : ¬ compilesInQuasi .nnf .tdd :=
+  fun h => absurd (quasi_trans edge_cnf_nnf_quasi (quasi_trans h (edge_tdd_d_dnnf_quasi))) edge_cnf_d_dnnf_no_quasi
+theorem edge_nnf_tdd_no_poly : ¬ compilesInPoly .nnf .tdd := fun h => absurd (poly_implies_quasi h) edge_nnf_tdd_no_quasi
+
+theorem edge_nnf_tdd_t_no_quasi : ¬ compilesInQuasi .nnf .tdd_t :=
+  fun h => absurd (quasi_trans edge_cnf_nnf_quasi (quasi_trans h (edge_tdd_t_d_dnnf_quasi))) edge_cnf_d_dnnf_no_quasi
+theorem edge_nnf_tdd_t_no_poly : ¬ compilesInPoly .nnf .tdd_t := fun h => absurd (poly_implies_quasi h) edge_nnf_tdd_t_no_quasi
+
 theorem edge_nobdd_cnf_no_quasi : ¬ compilesInQuasi .nobdd .cnf :=
   fun h => absurd (quasi_trans edge_csdd_nobdd_quasi (h)) edge_csdd_cnf_no_quasi
 theorem edge_nobdd_cnf_no_poly : ¬ compilesInPoly .nobdd .cnf := fun h => absurd (poly_implies_quasi h) edge_nobdd_cnf_no_quasi
@@ -2124,7 +2469,7 @@ theorem edge_nobdd_d_sdnnf_no_quasi : ¬ compilesInQuasi .nobdd .d_sdnnf :=
 theorem edge_nobdd_d_sdnnf_no_poly : ¬ compilesInPoly .nobdd .d_sdnnf := fun h => absurd (poly_implies_quasi h) edge_nobdd_d_sdnnf_no_quasi
 
 theorem edge_nobdd_d_sdnnf_t_no_quasi : ¬ compilesInQuasi .nobdd .d_sdnnf_t :=
-  fun h => absurd (quasi_trans edge_dnf_nobdd_quasi (quasi_trans h (edge_d_sdnnf_t_d_sdnnf_quasi))) edge_dnf_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_nobdd_quasi (h)) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_nobdd_d_sdnnf_t_no_poly : ¬ compilesInPoly .nobdd .d_sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_nobdd_d_sdnnf_t_no_quasi
 
 theorem edge_nobdd_dnf_no_quasi : ¬ compilesInQuasi .nobdd .dnf :=
@@ -2144,7 +2489,7 @@ theorem edge_nobdd_mods_no_quasi : ¬ compilesInQuasi .nobdd .mods :=
 theorem edge_nobdd_mods_no_poly : ¬ compilesInPoly .nobdd .mods := fun h => absurd (poly_implies_quasi h) edge_nobdd_mods_no_quasi
 
 theorem edge_nobdd_obdd_lt_no_quasi : ¬ compilesInQuasi .nobdd .obdd_lt :=
-  fun h => absurd (quasi_trans edge_csdd_nobdd_quasi (h)) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_nobdd_quasi (quasi_trans h (edge_obdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_nobdd_obdd_lt_no_poly : ¬ compilesInPoly .nobdd .obdd_lt := fun h => absurd (poly_implies_quasi h) edge_nobdd_obdd_lt_no_quasi
 
 theorem edge_nobdd_pi_no_quasi : ¬ compilesInQuasi .nobdd .pi :=
@@ -2156,8 +2501,12 @@ theorem edge_nobdd_sdd_no_quasi : ¬ compilesInQuasi .nobdd .sdd :=
 theorem edge_nobdd_sdd_no_poly : ¬ compilesInPoly .nobdd .sdd := fun h => absurd (poly_implies_quasi h) edge_nobdd_sdd_no_quasi
 
 theorem edge_nobdd_sdd_t_no_quasi : ¬ compilesInQuasi .nobdd .sdd_t :=
-  fun h => absurd (quasi_trans edge_dnf_nobdd_quasi (quasi_trans h (edge_sdd_t_d_sdnnf_quasi))) edge_dnf_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_nobdd_quasi (quasi_trans h (edge_sdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_nobdd_sdd_t_no_poly : ¬ compilesInPoly .nobdd .sdd_t := fun h => absurd (poly_implies_quasi h) edge_nobdd_sdd_t_no_quasi
+
+theorem edge_nobdd_sdnnf_t_no_quasi : ¬ compilesInQuasi .nobdd .sdnnf_t :=
+  fun h => absurd (quasi_trans edge_csdd_nobdd_quasi (h)) edge_csdd_sdnnf_t_no_quasi
+theorem edge_nobdd_sdnnf_t_no_poly : ¬ compilesInPoly .nobdd .sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_nobdd_sdnnf_t_no_quasi
 
 theorem edge_nobdd_uobdd_no_quasi : ¬ compilesInQuasi .nobdd .uobdd :=
   fun h => absurd (quasi_trans edge_dnf_nobdd_quasi (quasi_trans h (edge_uobdd_d_sdnnf_quasi))) edge_dnf_d_sdnnf_no_quasi
@@ -2176,16 +2525,28 @@ theorem edge_nobdd_dec_sdnnf_no_quasi : ¬ compilesInQuasi .nobdd .dec_sdnnf :=
 theorem edge_nobdd_dec_sdnnf_no_poly : ¬ compilesInPoly .nobdd .dec_sdnnf := fun h => absurd (poly_implies_quasi h) edge_nobdd_dec_sdnnf_no_quasi
 
 theorem edge_nobdd_dec_sdnnf_lt_no_quasi : ¬ compilesInQuasi .nobdd .dec_sdnnf_lt :=
-  fun h => absurd (quasi_trans edge_csdd_nobdd_quasi (quasi_trans h (edge_dec_sdnnf_lt_obdd_lt_quasi))) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_nobdd_quasi (quasi_trans h (edge_dec_sdnnf_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_nobdd_dec_sdnnf_lt_no_poly : ¬ compilesInPoly .nobdd .dec_sdnnf_lt := fun h => absurd (poly_implies_quasi h) edge_nobdd_dec_sdnnf_lt_no_quasi
 
 theorem edge_nobdd_csdd_t_no_quasi : ¬ compilesInQuasi .nobdd .csdd_t :=
-  fun h => absurd (quasi_trans edge_dnf_nobdd_quasi (quasi_trans h (edge_csdd_t_csdd_quasi))) edge_dnf_csdd_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_nobdd_quasi (quasi_trans h (edge_csdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_nobdd_csdd_t_no_poly : ¬ compilesInPoly .nobdd .csdd_t := fun h => absurd (poly_implies_quasi h) edge_nobdd_csdd_t_no_quasi
 
+theorem edge_nobdd_nobdd_lt_no_quasi : ¬ compilesInQuasi .nobdd .nobdd_lt :=
+  fun h => absurd (quasi_trans edge_csdd_nobdd_quasi (quasi_trans h (edge_nobdd_lt_sdnnf_t_quasi))) edge_csdd_sdnnf_t_no_quasi
+theorem edge_nobdd_nobdd_lt_no_poly : ¬ compilesInPoly .nobdd .nobdd_lt := fun h => absurd (poly_implies_quasi h) edge_nobdd_nobdd_lt_no_quasi
+
 theorem edge_nobdd_uobdd_lt_no_quasi : ¬ compilesInQuasi .nobdd .uobdd_lt :=
-  fun h => absurd (quasi_trans edge_dnf_nobdd_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_quasi))) edge_dnf_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_nobdd_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_nobdd_uobdd_lt_no_poly : ¬ compilesInPoly .nobdd .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_nobdd_uobdd_lt_no_quasi
+
+theorem edge_nobdd_tdd_no_quasi : ¬ compilesInQuasi .nobdd .tdd :=
+  fun h => absurd (quasi_trans edge_dnf_nobdd_quasi (quasi_trans h (edge_tdd_d_sdnnf_quasi))) edge_dnf_d_sdnnf_no_quasi
+theorem edge_nobdd_tdd_no_poly : ¬ compilesInPoly .nobdd .tdd := fun h => absurd (poly_implies_quasi h) edge_nobdd_tdd_no_quasi
+
+theorem edge_nobdd_tdd_t_no_quasi : ¬ compilesInQuasi .nobdd .tdd_t :=
+  fun h => absurd (quasi_trans edge_csdd_nobdd_quasi (quasi_trans h (edge_tdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_nobdd_tdd_t_no_poly : ¬ compilesInPoly .nobdd .tdd_t := fun h => absurd (poly_implies_quasi h) edge_nobdd_tdd_t_no_quasi
 
 theorem edge_obdd_lt_ip_no_quasi : ¬ compilesInQuasi .obdd_lt .ip :=
   fun h => absurd (quasi_trans h (edge_ip_dnf_quasi)) edge_obdd_lt_dnf_no_quasi
@@ -2283,9 +2644,21 @@ theorem edge_pi_uobdd_lt_no_quasi : ¬ compilesInQuasi .pi .uobdd_lt :=
   fun h => absurd (quasi_trans h (edge_uobdd_lt_d_dnnf_quasi)) edge_pi_d_dnnf_no_quasi
 theorem edge_pi_uobdd_lt_no_poly : ¬ compilesInPoly .pi .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_pi_uobdd_lt_no_quasi
 
+theorem edge_pi_tdd_no_quasi : ¬ compilesInQuasi .pi .tdd :=
+  fun h => absurd (quasi_trans h (edge_tdd_d_dnnf_quasi)) edge_pi_d_dnnf_no_quasi
+theorem edge_pi_tdd_no_poly : ¬ compilesInPoly .pi .tdd := fun h => absurd (poly_implies_quasi h) edge_pi_tdd_no_quasi
+
+theorem edge_pi_tdd_t_no_quasi : ¬ compilesInQuasi .pi .tdd_t :=
+  fun h => absurd (quasi_trans h (edge_tdd_t_d_dnnf_quasi)) edge_pi_d_dnnf_no_quasi
+theorem edge_pi_tdd_t_no_poly : ¬ compilesInPoly .pi .tdd_t := fun h => absurd (poly_implies_quasi h) edge_pi_tdd_t_no_quasi
+
 theorem edge_sdd_cnf_no_quasi : ¬ compilesInQuasi .sdd .cnf :=
   fun h => absurd (quasi_trans edge_csdd_sdd_quasi (h)) edge_csdd_cnf_no_quasi
 theorem edge_sdd_cnf_no_poly : ¬ compilesInPoly .sdd .cnf := fun h => absurd (poly_implies_quasi h) edge_sdd_cnf_no_quasi
+
+theorem edge_sdd_d_sdnnf_t_no_quasi : ¬ compilesInQuasi .sdd .d_sdnnf_t :=
+  fun h => absurd (quasi_trans edge_csdd_sdd_quasi (h)) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_sdd_d_sdnnf_t_no_poly : ¬ compilesInPoly .sdd .d_sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_sdd_d_sdnnf_t_no_quasi
 
 theorem edge_sdd_dnf_no_quasi : ¬ compilesInQuasi .sdd .dnf :=
   fun h => absurd (quasi_trans edge_csdd_sdd_quasi (h)) edge_csdd_dnf_no_quasi
@@ -2304,12 +2677,20 @@ theorem edge_sdd_mods_no_quasi : ¬ compilesInQuasi .sdd .mods :=
 theorem edge_sdd_mods_no_poly : ¬ compilesInPoly .sdd .mods := fun h => absurd (poly_implies_quasi h) edge_sdd_mods_no_quasi
 
 theorem edge_sdd_obdd_lt_no_quasi : ¬ compilesInQuasi .sdd .obdd_lt :=
-  fun h => absurd (quasi_trans edge_csdd_sdd_quasi (h)) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_sdd_quasi (quasi_trans h (edge_obdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_sdd_obdd_lt_no_poly : ¬ compilesInPoly .sdd .obdd_lt := fun h => absurd (poly_implies_quasi h) edge_sdd_obdd_lt_no_quasi
 
 theorem edge_sdd_pi_no_quasi : ¬ compilesInQuasi .sdd .pi :=
   fun h => absurd (quasi_trans edge_csdd_sdd_quasi (quasi_trans h (edge_pi_cnf_quasi))) edge_csdd_cnf_no_quasi
 theorem edge_sdd_pi_no_poly : ¬ compilesInPoly .sdd .pi := fun h => absurd (poly_implies_quasi h) edge_sdd_pi_no_quasi
+
+theorem edge_sdd_sdd_t_no_quasi : ¬ compilesInQuasi .sdd .sdd_t :=
+  fun h => absurd (quasi_trans edge_csdd_sdd_quasi (quasi_trans h (edge_sdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_sdd_sdd_t_no_poly : ¬ compilesInPoly .sdd .sdd_t := fun h => absurd (poly_implies_quasi h) edge_sdd_sdd_t_no_quasi
+
+theorem edge_sdd_sdnnf_t_no_quasi : ¬ compilesInQuasi .sdd .sdnnf_t :=
+  fun h => absurd (quasi_trans edge_csdd_sdd_quasi (h)) edge_csdd_sdnnf_t_no_quasi
+theorem edge_sdd_sdnnf_t_no_poly : ¬ compilesInPoly .sdd .sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_sdd_sdnnf_t_no_quasi
 
 theorem edge_sdd_obdd_no_quasi : ¬ compilesInQuasi .sdd .obdd :=
   fun h => absurd (quasi_trans edge_csdd_sdd_quasi (h)) edge_csdd_obdd_no_quasi
@@ -2324,8 +2705,24 @@ theorem edge_sdd_dec_sdnnf_no_quasi : ¬ compilesInQuasi .sdd .dec_sdnnf :=
 theorem edge_sdd_dec_sdnnf_no_poly : ¬ compilesInPoly .sdd .dec_sdnnf := fun h => absurd (poly_implies_quasi h) edge_sdd_dec_sdnnf_no_quasi
 
 theorem edge_sdd_dec_sdnnf_lt_no_quasi : ¬ compilesInQuasi .sdd .dec_sdnnf_lt :=
-  fun h => absurd (quasi_trans edge_csdd_sdd_quasi (quasi_trans h (edge_dec_sdnnf_lt_obdd_lt_quasi))) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_sdd_quasi (quasi_trans h (edge_dec_sdnnf_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_sdd_dec_sdnnf_lt_no_poly : ¬ compilesInPoly .sdd .dec_sdnnf_lt := fun h => absurd (poly_implies_quasi h) edge_sdd_dec_sdnnf_lt_no_quasi
+
+theorem edge_sdd_csdd_t_no_quasi : ¬ compilesInQuasi .sdd .csdd_t :=
+  fun h => absurd (quasi_trans edge_csdd_sdd_quasi (quasi_trans h (edge_csdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_sdd_csdd_t_no_poly : ¬ compilesInPoly .sdd .csdd_t := fun h => absurd (poly_implies_quasi h) edge_sdd_csdd_t_no_quasi
+
+theorem edge_sdd_nobdd_lt_no_quasi : ¬ compilesInQuasi .sdd .nobdd_lt :=
+  fun h => absurd (quasi_trans edge_csdd_sdd_quasi (quasi_trans h (edge_nobdd_lt_sdnnf_t_quasi))) edge_csdd_sdnnf_t_no_quasi
+theorem edge_sdd_nobdd_lt_no_poly : ¬ compilesInPoly .sdd .nobdd_lt := fun h => absurd (poly_implies_quasi h) edge_sdd_nobdd_lt_no_quasi
+
+theorem edge_sdd_uobdd_lt_no_quasi : ¬ compilesInQuasi .sdd .uobdd_lt :=
+  fun h => absurd (quasi_trans edge_csdd_sdd_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_sdd_uobdd_lt_no_poly : ¬ compilesInPoly .sdd .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_sdd_uobdd_lt_no_quasi
+
+theorem edge_sdd_tdd_t_no_quasi : ¬ compilesInQuasi .sdd .tdd_t :=
+  fun h => absurd (quasi_trans edge_csdd_sdd_quasi (quasi_trans h (edge_tdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_sdd_tdd_t_no_poly : ¬ compilesInPoly .sdd .tdd_t := fun h => absurd (poly_implies_quasi h) edge_sdd_tdd_t_no_quasi
 
 theorem edge_sdd_t_cnf_no_quasi : ¬ compilesInQuasi .sdd_t .cnf :=
   fun h => absurd (quasi_trans edge_obdd_lt_sdd_t_quasi (h)) edge_obdd_lt_cnf_no_quasi
@@ -2380,7 +2777,7 @@ theorem edge_sdnnf_d_sdnnf_no_quasi : ¬ compilesInQuasi .sdnnf .d_sdnnf :=
 theorem edge_sdnnf_d_sdnnf_no_poly : ¬ compilesInPoly .sdnnf .d_sdnnf := fun h => absurd (poly_implies_quasi h) edge_sdnnf_d_sdnnf_no_quasi
 
 theorem edge_sdnnf_d_sdnnf_t_no_quasi : ¬ compilesInQuasi .sdnnf .d_sdnnf_t :=
-  fun h => absurd (quasi_trans edge_dnf_sdnnf_quasi (quasi_trans h (edge_d_sdnnf_t_d_sdnnf_quasi))) edge_dnf_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_sdnnf_quasi (h)) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_sdnnf_d_sdnnf_t_no_poly : ¬ compilesInPoly .sdnnf .d_sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_sdnnf_d_sdnnf_t_no_quasi
 
 theorem edge_sdnnf_dnf_no_quasi : ¬ compilesInQuasi .sdnnf .dnf :=
@@ -2400,7 +2797,7 @@ theorem edge_sdnnf_mods_no_quasi : ¬ compilesInQuasi .sdnnf .mods :=
 theorem edge_sdnnf_mods_no_poly : ¬ compilesInPoly .sdnnf .mods := fun h => absurd (poly_implies_quasi h) edge_sdnnf_mods_no_quasi
 
 theorem edge_sdnnf_obdd_lt_no_quasi : ¬ compilesInQuasi .sdnnf .obdd_lt :=
-  fun h => absurd (quasi_trans edge_csdd_sdnnf_quasi (h)) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_sdnnf_quasi (quasi_trans h (edge_obdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_sdnnf_obdd_lt_no_poly : ¬ compilesInPoly .sdnnf .obdd_lt := fun h => absurd (poly_implies_quasi h) edge_sdnnf_obdd_lt_no_quasi
 
 theorem edge_sdnnf_pi_no_quasi : ¬ compilesInQuasi .sdnnf .pi :=
@@ -2412,8 +2809,12 @@ theorem edge_sdnnf_sdd_no_quasi : ¬ compilesInQuasi .sdnnf .sdd :=
 theorem edge_sdnnf_sdd_no_poly : ¬ compilesInPoly .sdnnf .sdd := fun h => absurd (poly_implies_quasi h) edge_sdnnf_sdd_no_quasi
 
 theorem edge_sdnnf_sdd_t_no_quasi : ¬ compilesInQuasi .sdnnf .sdd_t :=
-  fun h => absurd (quasi_trans edge_dnf_sdnnf_quasi (quasi_trans h (edge_sdd_t_d_sdnnf_quasi))) edge_dnf_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_sdnnf_quasi (quasi_trans h (edge_sdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_sdnnf_sdd_t_no_poly : ¬ compilesInPoly .sdnnf .sdd_t := fun h => absurd (poly_implies_quasi h) edge_sdnnf_sdd_t_no_quasi
+
+theorem edge_sdnnf_sdnnf_t_no_quasi : ¬ compilesInQuasi .sdnnf .sdnnf_t :=
+  fun h => absurd (quasi_trans edge_csdd_sdnnf_quasi (h)) edge_csdd_sdnnf_t_no_quasi
+theorem edge_sdnnf_sdnnf_t_no_poly : ¬ compilesInPoly .sdnnf .sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_sdnnf_sdnnf_t_no_quasi
 
 theorem edge_sdnnf_uobdd_no_quasi : ¬ compilesInQuasi .sdnnf .uobdd :=
   fun h => absurd (quasi_trans edge_dnf_sdnnf_quasi (quasi_trans h (edge_uobdd_d_sdnnf_quasi))) edge_dnf_d_sdnnf_no_quasi
@@ -2432,16 +2833,28 @@ theorem edge_sdnnf_dec_sdnnf_no_quasi : ¬ compilesInQuasi .sdnnf .dec_sdnnf :=
 theorem edge_sdnnf_dec_sdnnf_no_poly : ¬ compilesInPoly .sdnnf .dec_sdnnf := fun h => absurd (poly_implies_quasi h) edge_sdnnf_dec_sdnnf_no_quasi
 
 theorem edge_sdnnf_dec_sdnnf_lt_no_quasi : ¬ compilesInQuasi .sdnnf .dec_sdnnf_lt :=
-  fun h => absurd (quasi_trans edge_csdd_sdnnf_quasi (quasi_trans h (edge_dec_sdnnf_lt_obdd_lt_quasi))) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_sdnnf_quasi (quasi_trans h (edge_dec_sdnnf_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_sdnnf_dec_sdnnf_lt_no_poly : ¬ compilesInPoly .sdnnf .dec_sdnnf_lt := fun h => absurd (poly_implies_quasi h) edge_sdnnf_dec_sdnnf_lt_no_quasi
 
 theorem edge_sdnnf_csdd_t_no_quasi : ¬ compilesInQuasi .sdnnf .csdd_t :=
-  fun h => absurd (quasi_trans edge_dnf_sdnnf_quasi (quasi_trans h (edge_csdd_t_csdd_quasi))) edge_dnf_csdd_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_sdnnf_quasi (quasi_trans h (edge_csdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_sdnnf_csdd_t_no_poly : ¬ compilesInPoly .sdnnf .csdd_t := fun h => absurd (poly_implies_quasi h) edge_sdnnf_csdd_t_no_quasi
 
+theorem edge_sdnnf_nobdd_lt_no_quasi : ¬ compilesInQuasi .sdnnf .nobdd_lt :=
+  fun h => absurd (quasi_trans edge_csdd_sdnnf_quasi (quasi_trans h (edge_nobdd_lt_sdnnf_t_quasi))) edge_csdd_sdnnf_t_no_quasi
+theorem edge_sdnnf_nobdd_lt_no_poly : ¬ compilesInPoly .sdnnf .nobdd_lt := fun h => absurd (poly_implies_quasi h) edge_sdnnf_nobdd_lt_no_quasi
+
 theorem edge_sdnnf_uobdd_lt_no_quasi : ¬ compilesInQuasi .sdnnf .uobdd_lt :=
-  fun h => absurd (quasi_trans edge_dnf_sdnnf_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_quasi))) edge_dnf_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_sdnnf_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_sdnnf_uobdd_lt_no_poly : ¬ compilesInPoly .sdnnf .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_sdnnf_uobdd_lt_no_quasi
+
+theorem edge_sdnnf_tdd_no_quasi : ¬ compilesInQuasi .sdnnf .tdd :=
+  fun h => absurd (quasi_trans edge_dnf_sdnnf_quasi (quasi_trans h (edge_tdd_d_sdnnf_quasi))) edge_dnf_d_sdnnf_no_quasi
+theorem edge_sdnnf_tdd_no_poly : ¬ compilesInPoly .sdnnf .tdd := fun h => absurd (poly_implies_quasi h) edge_sdnnf_tdd_no_quasi
+
+theorem edge_sdnnf_tdd_t_no_quasi : ¬ compilesInQuasi .sdnnf .tdd_t :=
+  fun h => absurd (quasi_trans edge_csdd_sdnnf_quasi (quasi_trans h (edge_tdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_sdnnf_tdd_t_no_poly : ¬ compilesInPoly .sdnnf .tdd_t := fun h => absurd (poly_implies_quasi h) edge_sdnnf_tdd_t_no_quasi
 
 theorem edge_sdnnf_t_cnf_no_quasi : ¬ compilesInQuasi .sdnnf_t .cnf :=
   fun h => absurd (quasi_trans edge_d_sdnnf_t_sdnnf_t_quasi (h)) edge_d_sdnnf_t_cnf_no_quasi
@@ -2519,6 +2932,14 @@ theorem edge_sdnnf_t_uobdd_lt_no_quasi : ¬ compilesInQuasi .sdnnf_t .uobdd_lt :
   fun h => absurd (quasi_trans edge_dnf_sdnnf_t_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_quasi))) edge_dnf_d_sdnnf_no_quasi
 theorem edge_sdnnf_t_uobdd_lt_no_poly : ¬ compilesInPoly .sdnnf_t .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_sdnnf_t_uobdd_lt_no_quasi
 
+theorem edge_sdnnf_t_tdd_no_quasi : ¬ compilesInQuasi .sdnnf_t .tdd :=
+  fun h => absurd (quasi_trans edge_dnf_sdnnf_t_quasi (quasi_trans h (edge_tdd_d_sdnnf_quasi))) edge_dnf_d_sdnnf_no_quasi
+theorem edge_sdnnf_t_tdd_no_poly : ¬ compilesInPoly .sdnnf_t .tdd := fun h => absurd (poly_implies_quasi h) edge_sdnnf_t_tdd_no_quasi
+
+theorem edge_sdnnf_t_tdd_t_no_quasi : ¬ compilesInQuasi .sdnnf_t .tdd_t :=
+  fun h => absurd (quasi_trans edge_dnf_sdnnf_t_quasi (quasi_trans h (edge_tdd_t_d_sdnnf_quasi))) edge_dnf_d_sdnnf_no_quasi
+theorem edge_sdnnf_t_tdd_t_no_poly : ¬ compilesInPoly .sdnnf_t .tdd_t := fun h => absurd (poly_implies_quasi h) edge_sdnnf_t_tdd_t_no_quasi
+
 theorem edge_ufbdd_cnf_no_quasi : ¬ compilesInQuasi .ufbdd .cnf :=
   fun h => absurd (quasi_trans edge_csdd_ufbdd_quasi (h)) edge_csdd_cnf_no_quasi
 theorem edge_ufbdd_cnf_no_poly : ¬ compilesInPoly .ufbdd .cnf := fun h => absurd (poly_implies_quasi h) edge_ufbdd_cnf_no_quasi
@@ -2532,7 +2953,7 @@ theorem edge_ufbdd_d_sdnnf_no_quasi : ¬ compilesInQuasi .ufbdd .d_sdnnf :=
 theorem edge_ufbdd_d_sdnnf_no_poly : ¬ compilesInPoly .ufbdd .d_sdnnf := fun h => absurd (poly_implies_quasi h) edge_ufbdd_d_sdnnf_no_quasi
 
 theorem edge_ufbdd_d_sdnnf_t_no_quasi : ¬ compilesInQuasi .ufbdd .d_sdnnf_t :=
-  fun h => absurd (quasi_trans edge_fbdd_ufbdd_quasi (quasi_trans h (edge_d_sdnnf_t_d_sdnnf_quasi))) edge_fbdd_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_ufbdd_quasi (h)) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_ufbdd_d_sdnnf_t_no_poly : ¬ compilesInPoly .ufbdd .d_sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_ufbdd_d_sdnnf_t_no_quasi
 
 theorem edge_ufbdd_dnf_no_quasi : ¬ compilesInQuasi .ufbdd .dnf :=
@@ -2552,7 +2973,7 @@ theorem edge_ufbdd_nobdd_no_quasi : ¬ compilesInQuasi .ufbdd .nobdd :=
 theorem edge_ufbdd_nobdd_no_poly : ¬ compilesInPoly .ufbdd .nobdd := fun h => absurd (poly_implies_quasi h) edge_ufbdd_nobdd_no_quasi
 
 theorem edge_ufbdd_obdd_lt_no_quasi : ¬ compilesInQuasi .ufbdd .obdd_lt :=
-  fun h => absurd (quasi_trans edge_csdd_ufbdd_quasi (h)) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_ufbdd_quasi (quasi_trans h (edge_obdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_ufbdd_obdd_lt_no_poly : ¬ compilesInPoly .ufbdd .obdd_lt := fun h => absurd (poly_implies_quasi h) edge_ufbdd_obdd_lt_no_quasi
 
 theorem edge_ufbdd_pi_no_quasi : ¬ compilesInQuasi .ufbdd .pi :=
@@ -2564,7 +2985,7 @@ theorem edge_ufbdd_sdd_no_quasi : ¬ compilesInQuasi .ufbdd .sdd :=
 theorem edge_ufbdd_sdd_no_poly : ¬ compilesInPoly .ufbdd .sdd := fun h => absurd (poly_implies_quasi h) edge_ufbdd_sdd_no_quasi
 
 theorem edge_ufbdd_sdd_t_no_quasi : ¬ compilesInQuasi .ufbdd .sdd_t :=
-  fun h => absurd (quasi_trans edge_fbdd_ufbdd_quasi (quasi_trans h (edge_sdd_t_d_sdnnf_quasi))) edge_fbdd_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_ufbdd_quasi (quasi_trans h (edge_sdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_ufbdd_sdd_t_no_poly : ¬ compilesInPoly .ufbdd .sdd_t := fun h => absurd (poly_implies_quasi h) edge_ufbdd_sdd_t_no_quasi
 
 theorem edge_ufbdd_sdnnf_no_quasi : ¬ compilesInQuasi .ufbdd .sdnnf :=
@@ -2572,7 +2993,7 @@ theorem edge_ufbdd_sdnnf_no_quasi : ¬ compilesInQuasi .ufbdd .sdnnf :=
 theorem edge_ufbdd_sdnnf_no_poly : ¬ compilesInPoly .ufbdd .sdnnf := fun h => absurd (poly_implies_quasi h) edge_ufbdd_sdnnf_no_quasi
 
 theorem edge_ufbdd_sdnnf_t_no_quasi : ¬ compilesInQuasi .ufbdd .sdnnf_t :=
-  fun h => absurd (quasi_trans edge_fbdd_ufbdd_quasi (quasi_trans h (edge_sdnnf_t_nobdd_quasi))) edge_fbdd_nobdd_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_ufbdd_quasi (h)) edge_csdd_sdnnf_t_no_quasi
 theorem edge_ufbdd_sdnnf_t_no_poly : ¬ compilesInPoly .ufbdd .sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_ufbdd_sdnnf_t_no_quasi
 
 theorem edge_ufbdd_uobdd_no_quasi : ¬ compilesInQuasi .ufbdd .uobdd :=
@@ -2592,32 +3013,40 @@ theorem edge_ufbdd_dec_sdnnf_no_quasi : ¬ compilesInQuasi .ufbdd .dec_sdnnf :=
 theorem edge_ufbdd_dec_sdnnf_no_poly : ¬ compilesInPoly .ufbdd .dec_sdnnf := fun h => absurd (poly_implies_quasi h) edge_ufbdd_dec_sdnnf_no_quasi
 
 theorem edge_ufbdd_dec_sdnnf_lt_no_quasi : ¬ compilesInQuasi .ufbdd .dec_sdnnf_lt :=
-  fun h => absurd (quasi_trans edge_csdd_ufbdd_quasi (quasi_trans h (edge_dec_sdnnf_lt_obdd_lt_quasi))) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_ufbdd_quasi (quasi_trans h (edge_dec_sdnnf_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_ufbdd_dec_sdnnf_lt_no_poly : ¬ compilesInPoly .ufbdd .dec_sdnnf_lt := fun h => absurd (poly_implies_quasi h) edge_ufbdd_dec_sdnnf_lt_no_quasi
 
 theorem edge_ufbdd_csdd_t_no_quasi : ¬ compilesInQuasi .ufbdd .csdd_t :=
-  fun h => absurd (quasi_trans edge_fbdd_ufbdd_quasi (quasi_trans h (edge_csdd_t_csdd_quasi))) edge_fbdd_csdd_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_ufbdd_quasi (quasi_trans h (edge_csdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_ufbdd_csdd_t_no_poly : ¬ compilesInPoly .ufbdd .csdd_t := fun h => absurd (poly_implies_quasi h) edge_ufbdd_csdd_t_no_quasi
 
 theorem edge_ufbdd_nobdd_lt_no_quasi : ¬ compilesInQuasi .ufbdd .nobdd_lt :=
-  fun h => absurd (quasi_trans edge_fbdd_ufbdd_quasi (quasi_trans h (edge_nobdd_lt_nobdd_quasi))) edge_fbdd_nobdd_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_ufbdd_quasi (quasi_trans h (edge_nobdd_lt_sdnnf_t_quasi))) edge_csdd_sdnnf_t_no_quasi
 theorem edge_ufbdd_nobdd_lt_no_poly : ¬ compilesInPoly .ufbdd .nobdd_lt := fun h => absurd (poly_implies_quasi h) edge_ufbdd_nobdd_lt_no_quasi
 
 theorem edge_ufbdd_uobdd_lt_no_quasi : ¬ compilesInQuasi .ufbdd .uobdd_lt :=
-  fun h => absurd (quasi_trans edge_fbdd_ufbdd_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_quasi))) edge_fbdd_d_sdnnf_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_ufbdd_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_ufbdd_uobdd_lt_no_poly : ¬ compilesInPoly .ufbdd .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_ufbdd_uobdd_lt_no_quasi
+
+theorem edge_ufbdd_tdd_no_quasi : ¬ compilesInQuasi .ufbdd .tdd :=
+  fun h => absurd (quasi_trans edge_fbdd_ufbdd_quasi (quasi_trans h (edge_tdd_d_sdnnf_quasi))) edge_fbdd_d_sdnnf_no_quasi
+theorem edge_ufbdd_tdd_no_poly : ¬ compilesInPoly .ufbdd .tdd := fun h => absurd (poly_implies_quasi h) edge_ufbdd_tdd_no_quasi
+
+theorem edge_ufbdd_tdd_t_no_quasi : ¬ compilesInQuasi .ufbdd .tdd_t :=
+  fun h => absurd (quasi_trans edge_csdd_ufbdd_quasi (quasi_trans h (edge_tdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_ufbdd_tdd_t_no_poly : ¬ compilesInPoly .ufbdd .tdd_t := fun h => absurd (poly_implies_quasi h) edge_ufbdd_tdd_t_no_quasi
 
 theorem edge_uobdd_cnf_no_quasi : ¬ compilesInQuasi .uobdd .cnf :=
   fun h => absurd (quasi_trans edge_csdd_uobdd_quasi (h)) edge_csdd_cnf_no_quasi
 theorem edge_uobdd_cnf_no_poly : ¬ compilesInPoly .uobdd .cnf := fun h => absurd (poly_implies_quasi h) edge_uobdd_cnf_no_quasi
 
+theorem edge_uobdd_d_sdnnf_t_no_quasi : ¬ compilesInQuasi .uobdd .d_sdnnf_t :=
+  fun h => absurd (quasi_trans edge_csdd_uobdd_quasi (h)) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_uobdd_d_sdnnf_t_no_poly : ¬ compilesInPoly .uobdd .d_sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_uobdd_d_sdnnf_t_no_quasi
+
 theorem edge_uobdd_dnf_no_quasi : ¬ compilesInQuasi .uobdd .dnf :=
   fun h => absurd (quasi_trans edge_csdd_uobdd_quasi (h)) edge_csdd_dnf_no_quasi
 theorem edge_uobdd_dnf_no_poly : ¬ compilesInPoly .uobdd .dnf := fun h => absurd (poly_implies_quasi h) edge_uobdd_dnf_no_quasi
-
-theorem edge_uobdd_fbdd_no_quasi : ¬ compilesInQuasi .uobdd .fbdd :=
-  fun h => absurd (quasi_trans edge_d_sdnnf_uobdd_quasi (h)) edge_d_sdnnf_fbdd_no_quasi
-theorem edge_uobdd_fbdd_no_poly : ¬ compilesInPoly .uobdd .fbdd := fun h => absurd (poly_implies_quasi h) edge_uobdd_fbdd_no_quasi
 
 theorem edge_uobdd_ip_no_quasi : ¬ compilesInQuasi .uobdd .ip :=
   fun h => absurd (quasi_trans edge_csdd_uobdd_quasi (quasi_trans h (edge_ip_dnf_quasi))) edge_csdd_dnf_no_quasi
@@ -2628,12 +3057,20 @@ theorem edge_uobdd_mods_no_quasi : ¬ compilesInQuasi .uobdd .mods :=
 theorem edge_uobdd_mods_no_poly : ¬ compilesInPoly .uobdd .mods := fun h => absurd (poly_implies_quasi h) edge_uobdd_mods_no_quasi
 
 theorem edge_uobdd_obdd_lt_no_quasi : ¬ compilesInQuasi .uobdd .obdd_lt :=
-  fun h => absurd (quasi_trans edge_csdd_uobdd_quasi (h)) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_uobdd_quasi (quasi_trans h (edge_obdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_uobdd_obdd_lt_no_poly : ¬ compilesInPoly .uobdd .obdd_lt := fun h => absurd (poly_implies_quasi h) edge_uobdd_obdd_lt_no_quasi
 
 theorem edge_uobdd_pi_no_quasi : ¬ compilesInQuasi .uobdd .pi :=
   fun h => absurd (quasi_trans edge_csdd_uobdd_quasi (quasi_trans h (edge_pi_cnf_quasi))) edge_csdd_cnf_no_quasi
 theorem edge_uobdd_pi_no_poly : ¬ compilesInPoly .uobdd .pi := fun h => absurd (poly_implies_quasi h) edge_uobdd_pi_no_quasi
+
+theorem edge_uobdd_sdd_t_no_quasi : ¬ compilesInQuasi .uobdd .sdd_t :=
+  fun h => absurd (quasi_trans edge_csdd_uobdd_quasi (quasi_trans h (edge_sdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_uobdd_sdd_t_no_poly : ¬ compilesInPoly .uobdd .sdd_t := fun h => absurd (poly_implies_quasi h) edge_uobdd_sdd_t_no_quasi
+
+theorem edge_uobdd_sdnnf_t_no_quasi : ¬ compilesInQuasi .uobdd .sdnnf_t :=
+  fun h => absurd (quasi_trans edge_csdd_uobdd_quasi (h)) edge_csdd_sdnnf_t_no_quasi
+theorem edge_uobdd_sdnnf_t_no_poly : ¬ compilesInPoly .uobdd .sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_uobdd_sdnnf_t_no_quasi
 
 theorem edge_uobdd_dec_dnnf_no_quasi : ¬ compilesInQuasi .uobdd .dec_dnnf :=
   fun h => absurd (quasi_trans edge_d_sdnnf_uobdd_quasi (quasi_trans h (edge_dec_dnnf_fbdd_quasi))) edge_d_sdnnf_fbdd_no_quasi
@@ -2644,12 +3081,32 @@ theorem edge_uobdd_dec_sdnnf_no_quasi : ¬ compilesInQuasi .uobdd .dec_sdnnf :=
 theorem edge_uobdd_dec_sdnnf_no_poly : ¬ compilesInPoly .uobdd .dec_sdnnf := fun h => absurd (poly_implies_quasi h) edge_uobdd_dec_sdnnf_no_quasi
 
 theorem edge_uobdd_dec_sdnnf_lt_no_quasi : ¬ compilesInQuasi .uobdd .dec_sdnnf_lt :=
-  fun h => absurd (quasi_trans edge_csdd_uobdd_quasi (quasi_trans h (edge_dec_sdnnf_lt_obdd_lt_quasi))) edge_csdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_csdd_uobdd_quasi (quasi_trans h (edge_dec_sdnnf_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
 theorem edge_uobdd_dec_sdnnf_lt_no_poly : ¬ compilesInPoly .uobdd .dec_sdnnf_lt := fun h => absurd (poly_implies_quasi h) edge_uobdd_dec_sdnnf_lt_no_quasi
+
+theorem edge_uobdd_csdd_t_no_quasi : ¬ compilesInQuasi .uobdd .csdd_t :=
+  fun h => absurd (quasi_trans edge_csdd_uobdd_quasi (quasi_trans h (edge_csdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_uobdd_csdd_t_no_poly : ¬ compilesInPoly .uobdd .csdd_t := fun h => absurd (poly_implies_quasi h) edge_uobdd_csdd_t_no_quasi
+
+theorem edge_uobdd_nobdd_lt_no_quasi : ¬ compilesInQuasi .uobdd .nobdd_lt :=
+  fun h => absurd (quasi_trans edge_csdd_uobdd_quasi (quasi_trans h (edge_nobdd_lt_sdnnf_t_quasi))) edge_csdd_sdnnf_t_no_quasi
+theorem edge_uobdd_nobdd_lt_no_poly : ¬ compilesInPoly .uobdd .nobdd_lt := fun h => absurd (poly_implies_quasi h) edge_uobdd_nobdd_lt_no_quasi
+
+theorem edge_uobdd_uobdd_lt_no_quasi : ¬ compilesInQuasi .uobdd .uobdd_lt :=
+  fun h => absurd (quasi_trans edge_csdd_uobdd_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_uobdd_uobdd_lt_no_poly : ¬ compilesInPoly .uobdd .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_uobdd_uobdd_lt_no_quasi
+
+theorem edge_uobdd_tdd_t_no_quasi : ¬ compilesInQuasi .uobdd .tdd_t :=
+  fun h => absurd (quasi_trans edge_csdd_uobdd_quasi (quasi_trans h (edge_tdd_t_d_sdnnf_t_quasi))) edge_csdd_d_sdnnf_t_no_quasi
+theorem edge_uobdd_tdd_t_no_poly : ¬ compilesInPoly .uobdd .tdd_t := fun h => absurd (poly_implies_quasi h) edge_uobdd_tdd_t_no_quasi
 
 theorem edge_obdd_cnf_no_quasi : ¬ compilesInQuasi .obdd .cnf :=
   fun h => absurd (quasi_trans edge_obdd_lt_obdd_quasi (h)) edge_obdd_lt_cnf_no_quasi
 theorem edge_obdd_cnf_no_poly : ¬ compilesInPoly .obdd .cnf := fun h => absurd (poly_implies_quasi h) edge_obdd_cnf_no_quasi
+
+theorem edge_obdd_d_sdnnf_t_no_quasi : ¬ compilesInQuasi .obdd .d_sdnnf_t :=
+  fun h => absurd (quasi_trans h (edge_d_sdnnf_t_sdnnf_t_quasi)) edge_obdd_sdnnf_t_no_quasi
+theorem edge_obdd_d_sdnnf_t_no_poly : ¬ compilesInPoly .obdd .d_sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_obdd_d_sdnnf_t_no_quasi
 
 theorem edge_obdd_dnf_no_quasi : ¬ compilesInQuasi .obdd .dnf :=
   fun h => absurd (quasi_trans edge_obdd_lt_obdd_quasi (h)) edge_obdd_lt_dnf_no_quasi
@@ -2667,9 +3124,29 @@ theorem edge_obdd_pi_no_quasi : ¬ compilesInQuasi .obdd .pi :=
   fun h => absurd (quasi_trans edge_obdd_lt_obdd_quasi (quasi_trans h (edge_pi_cnf_quasi))) edge_obdd_lt_cnf_no_quasi
 theorem edge_obdd_pi_no_poly : ¬ compilesInPoly .obdd .pi := fun h => absurd (poly_implies_quasi h) edge_obdd_pi_no_quasi
 
+theorem edge_obdd_sdd_t_no_quasi : ¬ compilesInQuasi .obdd .sdd_t :=
+  fun h => absurd (quasi_trans h (edge_sdd_t_d_sdnnf_t_quasi)) edge_obdd_d_sdnnf_t_no_quasi
+theorem edge_obdd_sdd_t_no_poly : ¬ compilesInPoly .obdd .sdd_t := fun h => absurd (poly_implies_quasi h) edge_obdd_sdd_t_no_quasi
+
 theorem edge_obdd_dec_sdnnf_lt_no_quasi : ¬ compilesInQuasi .obdd .dec_sdnnf_lt :=
-  fun h => absurd (quasi_trans h (edge_dec_sdnnf_lt_obdd_lt_quasi)) edge_obdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans h (edge_dec_sdnnf_lt_d_sdnnf_t_quasi)) edge_obdd_d_sdnnf_t_no_quasi
 theorem edge_obdd_dec_sdnnf_lt_no_poly : ¬ compilesInPoly .obdd .dec_sdnnf_lt := fun h => absurd (poly_implies_quasi h) edge_obdd_dec_sdnnf_lt_no_quasi
+
+theorem edge_obdd_csdd_t_no_quasi : ¬ compilesInQuasi .obdd .csdd_t :=
+  fun h => absurd (quasi_trans h (edge_csdd_t_d_sdnnf_t_quasi)) edge_obdd_d_sdnnf_t_no_quasi
+theorem edge_obdd_csdd_t_no_poly : ¬ compilesInPoly .obdd .csdd_t := fun h => absurd (poly_implies_quasi h) edge_obdd_csdd_t_no_quasi
+
+theorem edge_obdd_nobdd_lt_no_quasi : ¬ compilesInQuasi .obdd .nobdd_lt :=
+  fun h => absurd (quasi_trans h (edge_nobdd_lt_sdnnf_t_quasi)) edge_obdd_sdnnf_t_no_quasi
+theorem edge_obdd_nobdd_lt_no_poly : ¬ compilesInPoly .obdd .nobdd_lt := fun h => absurd (poly_implies_quasi h) edge_obdd_nobdd_lt_no_quasi
+
+theorem edge_obdd_uobdd_lt_no_quasi : ¬ compilesInQuasi .obdd .uobdd_lt :=
+  fun h => absurd (quasi_trans h (edge_uobdd_lt_d_sdnnf_t_quasi)) edge_obdd_d_sdnnf_t_no_quasi
+theorem edge_obdd_uobdd_lt_no_poly : ¬ compilesInPoly .obdd .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_obdd_uobdd_lt_no_quasi
+
+theorem edge_obdd_tdd_t_no_quasi : ¬ compilesInQuasi .obdd .tdd_t :=
+  fun h => absurd (quasi_trans h (edge_tdd_t_d_sdnnf_t_quasi)) edge_obdd_d_sdnnf_t_no_quasi
+theorem edge_obdd_tdd_t_no_poly : ¬ compilesInPoly .obdd .tdd_t := fun h => absurd (poly_implies_quasi h) edge_obdd_tdd_t_no_quasi
 
 theorem edge_dec_dnnf_cnf_no_quasi : ¬ compilesInQuasi .dec_dnnf .cnf :=
   fun h => absurd (quasi_trans edge_fbdd_dec_dnnf_quasi (h)) edge_fbdd_cnf_no_quasi
@@ -2755,9 +3232,21 @@ theorem edge_dec_dnnf_uobdd_lt_no_quasi : ¬ compilesInQuasi .dec_dnnf .uobdd_lt
   fun h => absurd (quasi_trans edge_fbdd_dec_dnnf_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_quasi))) edge_fbdd_d_sdnnf_no_quasi
 theorem edge_dec_dnnf_uobdd_lt_no_poly : ¬ compilesInPoly .dec_dnnf .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_dec_dnnf_uobdd_lt_no_quasi
 
+theorem edge_dec_dnnf_tdd_no_quasi : ¬ compilesInQuasi .dec_dnnf .tdd :=
+  fun h => absurd (quasi_trans edge_fbdd_dec_dnnf_quasi (quasi_trans h (edge_tdd_d_sdnnf_quasi))) edge_fbdd_d_sdnnf_no_quasi
+theorem edge_dec_dnnf_tdd_no_poly : ¬ compilesInPoly .dec_dnnf .tdd := fun h => absurd (poly_implies_quasi h) edge_dec_dnnf_tdd_no_quasi
+
+theorem edge_dec_dnnf_tdd_t_no_quasi : ¬ compilesInQuasi .dec_dnnf .tdd_t :=
+  fun h => absurd (quasi_trans edge_fbdd_dec_dnnf_quasi (quasi_trans h (edge_tdd_t_d_sdnnf_quasi))) edge_fbdd_d_sdnnf_no_quasi
+theorem edge_dec_dnnf_tdd_t_no_poly : ¬ compilesInPoly .dec_dnnf .tdd_t := fun h => absurd (poly_implies_quasi h) edge_dec_dnnf_tdd_t_no_quasi
+
 theorem edge_dec_sdnnf_cnf_no_quasi : ¬ compilesInQuasi .dec_sdnnf .cnf :=
   fun h => absurd (quasi_trans edge_obdd_lt_dec_sdnnf_quasi (h)) edge_obdd_lt_cnf_no_quasi
 theorem edge_dec_sdnnf_cnf_no_poly : ¬ compilesInPoly .dec_sdnnf .cnf := fun h => absurd (poly_implies_quasi h) edge_dec_sdnnf_cnf_no_quasi
+
+theorem edge_dec_sdnnf_d_sdnnf_t_no_quasi : ¬ compilesInQuasi .dec_sdnnf .d_sdnnf_t :=
+  fun h => absurd (quasi_trans edge_obdd_dec_sdnnf_quasi (h)) edge_obdd_d_sdnnf_t_no_quasi
+theorem edge_dec_sdnnf_d_sdnnf_t_no_poly : ¬ compilesInPoly .dec_sdnnf .d_sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_dec_sdnnf_d_sdnnf_t_no_quasi
 
 theorem edge_dec_sdnnf_dnf_no_quasi : ¬ compilesInQuasi .dec_sdnnf .dnf :=
   fun h => absurd (quasi_trans edge_obdd_lt_dec_sdnnf_quasi (h)) edge_obdd_lt_dnf_no_quasi
@@ -2772,16 +3261,40 @@ theorem edge_dec_sdnnf_mods_no_quasi : ¬ compilesInQuasi .dec_sdnnf .mods :=
 theorem edge_dec_sdnnf_mods_no_poly : ¬ compilesInPoly .dec_sdnnf .mods := fun h => absurd (poly_implies_quasi h) edge_dec_sdnnf_mods_no_quasi
 
 theorem edge_dec_sdnnf_obdd_lt_no_quasi : ¬ compilesInQuasi .dec_sdnnf .obdd_lt :=
-  fun h => absurd (quasi_trans edge_obdd_dec_sdnnf_quasi (h)) edge_obdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_obdd_dec_sdnnf_quasi (quasi_trans h (edge_obdd_lt_d_sdnnf_t_quasi))) edge_obdd_d_sdnnf_t_no_quasi
 theorem edge_dec_sdnnf_obdd_lt_no_poly : ¬ compilesInPoly .dec_sdnnf .obdd_lt := fun h => absurd (poly_implies_quasi h) edge_dec_sdnnf_obdd_lt_no_quasi
 
 theorem edge_dec_sdnnf_pi_no_quasi : ¬ compilesInQuasi .dec_sdnnf .pi :=
   fun h => absurd (quasi_trans edge_obdd_lt_dec_sdnnf_quasi (quasi_trans h (edge_pi_cnf_quasi))) edge_obdd_lt_cnf_no_quasi
 theorem edge_dec_sdnnf_pi_no_poly : ¬ compilesInPoly .dec_sdnnf .pi := fun h => absurd (poly_implies_quasi h) edge_dec_sdnnf_pi_no_quasi
 
+theorem edge_dec_sdnnf_sdd_t_no_quasi : ¬ compilesInQuasi .dec_sdnnf .sdd_t :=
+  fun h => absurd (quasi_trans edge_obdd_dec_sdnnf_quasi (quasi_trans h (edge_sdd_t_d_sdnnf_t_quasi))) edge_obdd_d_sdnnf_t_no_quasi
+theorem edge_dec_sdnnf_sdd_t_no_poly : ¬ compilesInPoly .dec_sdnnf .sdd_t := fun h => absurd (poly_implies_quasi h) edge_dec_sdnnf_sdd_t_no_quasi
+
+theorem edge_dec_sdnnf_sdnnf_t_no_quasi : ¬ compilesInQuasi .dec_sdnnf .sdnnf_t :=
+  fun h => absurd (quasi_trans edge_obdd_dec_sdnnf_quasi (h)) edge_obdd_sdnnf_t_no_quasi
+theorem edge_dec_sdnnf_sdnnf_t_no_poly : ¬ compilesInPoly .dec_sdnnf .sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_dec_sdnnf_sdnnf_t_no_quasi
+
 theorem edge_dec_sdnnf_dec_sdnnf_lt_no_quasi : ¬ compilesInQuasi .dec_sdnnf .dec_sdnnf_lt :=
-  fun h => absurd (quasi_trans edge_obdd_dec_sdnnf_quasi (quasi_trans h (edge_dec_sdnnf_lt_obdd_lt_quasi))) edge_obdd_obdd_lt_no_quasi
+  fun h => absurd (quasi_trans edge_obdd_dec_sdnnf_quasi (quasi_trans h (edge_dec_sdnnf_lt_d_sdnnf_t_quasi))) edge_obdd_d_sdnnf_t_no_quasi
 theorem edge_dec_sdnnf_dec_sdnnf_lt_no_poly : ¬ compilesInPoly .dec_sdnnf .dec_sdnnf_lt := fun h => absurd (poly_implies_quasi h) edge_dec_sdnnf_dec_sdnnf_lt_no_quasi
+
+theorem edge_dec_sdnnf_csdd_t_no_quasi : ¬ compilesInQuasi .dec_sdnnf .csdd_t :=
+  fun h => absurd (quasi_trans edge_obdd_dec_sdnnf_quasi (quasi_trans h (edge_csdd_t_d_sdnnf_t_quasi))) edge_obdd_d_sdnnf_t_no_quasi
+theorem edge_dec_sdnnf_csdd_t_no_poly : ¬ compilesInPoly .dec_sdnnf .csdd_t := fun h => absurd (poly_implies_quasi h) edge_dec_sdnnf_csdd_t_no_quasi
+
+theorem edge_dec_sdnnf_nobdd_lt_no_quasi : ¬ compilesInQuasi .dec_sdnnf .nobdd_lt :=
+  fun h => absurd (quasi_trans edge_obdd_dec_sdnnf_quasi (quasi_trans h (edge_nobdd_lt_sdnnf_t_quasi))) edge_obdd_sdnnf_t_no_quasi
+theorem edge_dec_sdnnf_nobdd_lt_no_poly : ¬ compilesInPoly .dec_sdnnf .nobdd_lt := fun h => absurd (poly_implies_quasi h) edge_dec_sdnnf_nobdd_lt_no_quasi
+
+theorem edge_dec_sdnnf_uobdd_lt_no_quasi : ¬ compilesInQuasi .dec_sdnnf .uobdd_lt :=
+  fun h => absurd (quasi_trans edge_obdd_dec_sdnnf_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_t_quasi))) edge_obdd_d_sdnnf_t_no_quasi
+theorem edge_dec_sdnnf_uobdd_lt_no_poly : ¬ compilesInPoly .dec_sdnnf .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_dec_sdnnf_uobdd_lt_no_quasi
+
+theorem edge_dec_sdnnf_tdd_t_no_quasi : ¬ compilesInQuasi .dec_sdnnf .tdd_t :=
+  fun h => absurd (quasi_trans edge_obdd_dec_sdnnf_quasi (quasi_trans h (edge_tdd_t_d_sdnnf_t_quasi))) edge_obdd_d_sdnnf_t_no_quasi
+theorem edge_dec_sdnnf_tdd_t_no_poly : ¬ compilesInPoly .dec_sdnnf .tdd_t := fun h => absurd (poly_implies_quasi h) edge_dec_sdnnf_tdd_t_no_quasi
 
 theorem edge_dec_sdnnf_lt_cnf_no_quasi : ¬ compilesInQuasi .dec_sdnnf_lt .cnf :=
   fun h => absurd (quasi_trans edge_obdd_lt_dec_sdnnf_lt_quasi (h)) edge_obdd_lt_cnf_no_quasi
@@ -2822,6 +3335,10 @@ theorem edge_csdd_t_mods_no_poly : ¬ compilesInPoly .csdd_t .mods := fun h => a
 theorem edge_csdd_t_pi_no_quasi : ¬ compilesInQuasi .csdd_t .pi :=
   fun h => absurd (quasi_trans edge_obdd_lt_csdd_t_quasi (quasi_trans h (edge_pi_cnf_quasi))) edge_obdd_lt_cnf_no_quasi
 theorem edge_csdd_t_pi_no_poly : ¬ compilesInPoly .csdd_t .pi := fun h => absurd (poly_implies_quasi h) edge_csdd_t_pi_no_quasi
+
+theorem edge_csdd_t_dec_sdnnf_no_quasi : ¬ compilesInQuasi .csdd_t .dec_sdnnf :=
+  fun h => absurd (quasi_trans h (edge_dec_sdnnf_obdd_quasi)) edge_csdd_t_obdd_no_quasi
+theorem edge_csdd_t_dec_sdnnf_no_poly : ¬ compilesInPoly .csdd_t .dec_sdnnf := fun h => absurd (poly_implies_quasi h) edge_csdd_t_dec_sdnnf_no_quasi
 
 theorem edge_csdd_t_dec_sdnnf_lt_no_quasi : ¬ compilesInQuasi .csdd_t .dec_sdnnf_lt :=
   fun h => absurd (quasi_trans h (edge_dec_sdnnf_lt_obdd_lt_quasi)) edge_csdd_t_obdd_lt_no_quasi
@@ -2903,6 +3420,14 @@ theorem edge_nobdd_lt_uobdd_lt_no_quasi : ¬ compilesInQuasi .nobdd_lt .uobdd_lt
   fun h => absurd (quasi_trans edge_dnf_nobdd_lt_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_quasi))) edge_dnf_d_sdnnf_no_quasi
 theorem edge_nobdd_lt_uobdd_lt_no_poly : ¬ compilesInPoly .nobdd_lt .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_nobdd_lt_uobdd_lt_no_quasi
 
+theorem edge_nobdd_lt_tdd_no_quasi : ¬ compilesInQuasi .nobdd_lt .tdd :=
+  fun h => absurd (quasi_trans edge_dnf_nobdd_lt_quasi (quasi_trans h (edge_tdd_d_sdnnf_quasi))) edge_dnf_d_sdnnf_no_quasi
+theorem edge_nobdd_lt_tdd_no_poly : ¬ compilesInPoly .nobdd_lt .tdd := fun h => absurd (poly_implies_quasi h) edge_nobdd_lt_tdd_no_quasi
+
+theorem edge_nobdd_lt_tdd_t_no_quasi : ¬ compilesInQuasi .nobdd_lt .tdd_t :=
+  fun h => absurd (quasi_trans edge_dnf_nobdd_lt_quasi (quasi_trans h (edge_tdd_t_d_sdnnf_quasi))) edge_dnf_d_sdnnf_no_quasi
+theorem edge_nobdd_lt_tdd_t_no_poly : ¬ compilesInPoly .nobdd_lt .tdd_t := fun h => absurd (poly_implies_quasi h) edge_nobdd_lt_tdd_t_no_quasi
+
 theorem edge_uobdd_lt_cnf_no_quasi : ¬ compilesInQuasi .uobdd_lt .cnf :=
   fun h => absurd (quasi_trans edge_d_sdnnf_t_uobdd_lt_quasi (h)) edge_d_sdnnf_t_cnf_no_quasi
 theorem edge_uobdd_lt_cnf_no_poly : ¬ compilesInPoly .uobdd_lt .cnf := fun h => absurd (poly_implies_quasi h) edge_uobdd_lt_cnf_no_quasi
@@ -2923,6 +3448,10 @@ theorem edge_uobdd_lt_mods_no_quasi : ¬ compilesInQuasi .uobdd_lt .mods :=
   fun h => absurd (quasi_trans edge_d_sdnnf_t_uobdd_lt_quasi (quasi_trans h (edge_mods_cnf_quasi))) edge_d_sdnnf_t_cnf_no_quasi
 theorem edge_uobdd_lt_mods_no_poly : ¬ compilesInPoly .uobdd_lt .mods := fun h => absurd (poly_implies_quasi h) edge_uobdd_lt_mods_no_quasi
 
+theorem edge_uobdd_lt_obdd_lt_no_quasi : ¬ compilesInQuasi .uobdd_lt .obdd_lt :=
+  fun h => absurd (quasi_trans edge_d_sdnnf_t_uobdd_lt_quasi (quasi_trans h (edge_obdd_lt_fbdd_quasi))) edge_d_sdnnf_t_fbdd_no_quasi
+theorem edge_uobdd_lt_obdd_lt_no_poly : ¬ compilesInPoly .uobdd_lt .obdd_lt := fun h => absurd (poly_implies_quasi h) edge_uobdd_lt_obdd_lt_no_quasi
+
 theorem edge_uobdd_lt_pi_no_quasi : ¬ compilesInQuasi .uobdd_lt .pi :=
   fun h => absurd (quasi_trans edge_d_sdnnf_t_uobdd_lt_quasi (quasi_trans h (edge_pi_cnf_quasi))) edge_d_sdnnf_t_cnf_no_quasi
 theorem edge_uobdd_lt_pi_no_poly : ¬ compilesInPoly .uobdd_lt .pi := fun h => absurd (poly_implies_quasi h) edge_uobdd_lt_pi_no_quasi
@@ -2942,6 +3471,82 @@ theorem edge_uobdd_lt_dec_sdnnf_no_poly : ¬ compilesInPoly .uobdd_lt .dec_sdnnf
 theorem edge_uobdd_lt_dec_sdnnf_lt_no_quasi : ¬ compilesInQuasi .uobdd_lt .dec_sdnnf_lt :=
   fun h => absurd (quasi_trans edge_d_sdnnf_t_uobdd_lt_quasi (quasi_trans h (edge_dec_sdnnf_lt_fbdd_quasi))) edge_d_sdnnf_t_fbdd_no_quasi
 theorem edge_uobdd_lt_dec_sdnnf_lt_no_poly : ¬ compilesInPoly .uobdd_lt .dec_sdnnf_lt := fun h => absurd (poly_implies_quasi h) edge_uobdd_lt_dec_sdnnf_lt_no_quasi
+
+theorem edge_tdd_cnf_no_quasi : ¬ compilesInQuasi .tdd .cnf :=
+  fun h => absurd (quasi_trans edge_obdd_lt_tdd_quasi (h)) edge_obdd_lt_cnf_no_quasi
+theorem edge_tdd_cnf_no_poly : ¬ compilesInPoly .tdd .cnf := fun h => absurd (poly_implies_quasi h) edge_tdd_cnf_no_quasi
+
+theorem edge_tdd_d_sdnnf_t_no_quasi : ¬ compilesInQuasi .tdd .d_sdnnf_t :=
+  fun h => absurd (quasi_trans edge_obdd_tdd_quasi (h)) edge_obdd_d_sdnnf_t_no_quasi
+theorem edge_tdd_d_sdnnf_t_no_poly : ¬ compilesInPoly .tdd .d_sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_tdd_d_sdnnf_t_no_quasi
+
+theorem edge_tdd_dnf_no_quasi : ¬ compilesInQuasi .tdd .dnf :=
+  fun h => absurd (quasi_trans edge_obdd_lt_tdd_quasi (h)) edge_obdd_lt_dnf_no_quasi
+theorem edge_tdd_dnf_no_poly : ¬ compilesInPoly .tdd .dnf := fun h => absurd (poly_implies_quasi h) edge_tdd_dnf_no_quasi
+
+theorem edge_tdd_ip_no_quasi : ¬ compilesInQuasi .tdd .ip :=
+  fun h => absurd (quasi_trans edge_obdd_lt_tdd_quasi (quasi_trans h (edge_ip_dnf_quasi))) edge_obdd_lt_dnf_no_quasi
+theorem edge_tdd_ip_no_poly : ¬ compilesInPoly .tdd .ip := fun h => absurd (poly_implies_quasi h) edge_tdd_ip_no_quasi
+
+theorem edge_tdd_mods_no_quasi : ¬ compilesInQuasi .tdd .mods :=
+  fun h => absurd (quasi_trans edge_obdd_lt_tdd_quasi (quasi_trans h (edge_mods_cnf_quasi))) edge_obdd_lt_cnf_no_quasi
+theorem edge_tdd_mods_no_poly : ¬ compilesInPoly .tdd .mods := fun h => absurd (poly_implies_quasi h) edge_tdd_mods_no_quasi
+
+theorem edge_tdd_obdd_lt_no_quasi : ¬ compilesInQuasi .tdd .obdd_lt :=
+  fun h => absurd (quasi_trans edge_obdd_tdd_quasi (quasi_trans h (edge_obdd_lt_d_sdnnf_t_quasi))) edge_obdd_d_sdnnf_t_no_quasi
+theorem edge_tdd_obdd_lt_no_poly : ¬ compilesInPoly .tdd .obdd_lt := fun h => absurd (poly_implies_quasi h) edge_tdd_obdd_lt_no_quasi
+
+theorem edge_tdd_pi_no_quasi : ¬ compilesInQuasi .tdd .pi :=
+  fun h => absurd (quasi_trans edge_obdd_lt_tdd_quasi (quasi_trans h (edge_pi_cnf_quasi))) edge_obdd_lt_cnf_no_quasi
+theorem edge_tdd_pi_no_poly : ¬ compilesInPoly .tdd .pi := fun h => absurd (poly_implies_quasi h) edge_tdd_pi_no_quasi
+
+theorem edge_tdd_sdd_t_no_quasi : ¬ compilesInQuasi .tdd .sdd_t :=
+  fun h => absurd (quasi_trans edge_obdd_tdd_quasi (quasi_trans h (edge_sdd_t_d_sdnnf_t_quasi))) edge_obdd_d_sdnnf_t_no_quasi
+theorem edge_tdd_sdd_t_no_poly : ¬ compilesInPoly .tdd .sdd_t := fun h => absurd (poly_implies_quasi h) edge_tdd_sdd_t_no_quasi
+
+theorem edge_tdd_sdnnf_t_no_quasi : ¬ compilesInQuasi .tdd .sdnnf_t :=
+  fun h => absurd (quasi_trans edge_obdd_tdd_quasi (h)) edge_obdd_sdnnf_t_no_quasi
+theorem edge_tdd_sdnnf_t_no_poly : ¬ compilesInPoly .tdd .sdnnf_t := fun h => absurd (poly_implies_quasi h) edge_tdd_sdnnf_t_no_quasi
+
+theorem edge_tdd_dec_sdnnf_lt_no_quasi : ¬ compilesInQuasi .tdd .dec_sdnnf_lt :=
+  fun h => absurd (quasi_trans edge_obdd_tdd_quasi (quasi_trans h (edge_dec_sdnnf_lt_d_sdnnf_t_quasi))) edge_obdd_d_sdnnf_t_no_quasi
+theorem edge_tdd_dec_sdnnf_lt_no_poly : ¬ compilesInPoly .tdd .dec_sdnnf_lt := fun h => absurd (poly_implies_quasi h) edge_tdd_dec_sdnnf_lt_no_quasi
+
+theorem edge_tdd_csdd_t_no_quasi : ¬ compilesInQuasi .tdd .csdd_t :=
+  fun h => absurd (quasi_trans edge_obdd_tdd_quasi (quasi_trans h (edge_csdd_t_d_sdnnf_t_quasi))) edge_obdd_d_sdnnf_t_no_quasi
+theorem edge_tdd_csdd_t_no_poly : ¬ compilesInPoly .tdd .csdd_t := fun h => absurd (poly_implies_quasi h) edge_tdd_csdd_t_no_quasi
+
+theorem edge_tdd_nobdd_lt_no_quasi : ¬ compilesInQuasi .tdd .nobdd_lt :=
+  fun h => absurd (quasi_trans edge_obdd_tdd_quasi (quasi_trans h (edge_nobdd_lt_sdnnf_t_quasi))) edge_obdd_sdnnf_t_no_quasi
+theorem edge_tdd_nobdd_lt_no_poly : ¬ compilesInPoly .tdd .nobdd_lt := fun h => absurd (poly_implies_quasi h) edge_tdd_nobdd_lt_no_quasi
+
+theorem edge_tdd_uobdd_lt_no_quasi : ¬ compilesInQuasi .tdd .uobdd_lt :=
+  fun h => absurd (quasi_trans edge_obdd_tdd_quasi (quasi_trans h (edge_uobdd_lt_d_sdnnf_t_quasi))) edge_obdd_d_sdnnf_t_no_quasi
+theorem edge_tdd_uobdd_lt_no_poly : ¬ compilesInPoly .tdd .uobdd_lt := fun h => absurd (poly_implies_quasi h) edge_tdd_uobdd_lt_no_quasi
+
+theorem edge_tdd_tdd_t_no_quasi : ¬ compilesInQuasi .tdd .tdd_t :=
+  fun h => absurd (quasi_trans edge_obdd_tdd_quasi (quasi_trans h (edge_tdd_t_d_sdnnf_t_quasi))) edge_obdd_d_sdnnf_t_no_quasi
+theorem edge_tdd_tdd_t_no_poly : ¬ compilesInPoly .tdd .tdd_t := fun h => absurd (poly_implies_quasi h) edge_tdd_tdd_t_no_quasi
+
+theorem edge_tdd_t_cnf_no_quasi : ¬ compilesInQuasi .tdd_t .cnf :=
+  fun h => absurd (quasi_trans edge_obdd_lt_tdd_t_quasi (h)) edge_obdd_lt_cnf_no_quasi
+theorem edge_tdd_t_cnf_no_poly : ¬ compilesInPoly .tdd_t .cnf := fun h => absurd (poly_implies_quasi h) edge_tdd_t_cnf_no_quasi
+
+theorem edge_tdd_t_dnf_no_quasi : ¬ compilesInQuasi .tdd_t .dnf :=
+  fun h => absurd (quasi_trans edge_obdd_lt_tdd_t_quasi (h)) edge_obdd_lt_dnf_no_quasi
+theorem edge_tdd_t_dnf_no_poly : ¬ compilesInPoly .tdd_t .dnf := fun h => absurd (poly_implies_quasi h) edge_tdd_t_dnf_no_quasi
+
+theorem edge_tdd_t_ip_no_quasi : ¬ compilesInQuasi .tdd_t .ip :=
+  fun h => absurd (quasi_trans edge_obdd_lt_tdd_t_quasi (quasi_trans h (edge_ip_dnf_quasi))) edge_obdd_lt_dnf_no_quasi
+theorem edge_tdd_t_ip_no_poly : ¬ compilesInPoly .tdd_t .ip := fun h => absurd (poly_implies_quasi h) edge_tdd_t_ip_no_quasi
+
+theorem edge_tdd_t_mods_no_quasi : ¬ compilesInQuasi .tdd_t .mods :=
+  fun h => absurd (quasi_trans edge_obdd_lt_tdd_t_quasi (quasi_trans h (edge_mods_cnf_quasi))) edge_obdd_lt_cnf_no_quasi
+theorem edge_tdd_t_mods_no_poly : ¬ compilesInPoly .tdd_t .mods := fun h => absurd (poly_implies_quasi h) edge_tdd_t_mods_no_quasi
+
+theorem edge_tdd_t_pi_no_quasi : ¬ compilesInQuasi .tdd_t .pi :=
+  fun h => absurd (quasi_trans edge_obdd_lt_tdd_t_quasi (quasi_trans h (edge_pi_cnf_quasi))) edge_obdd_lt_cnf_no_quasi
+theorem edge_tdd_t_pi_no_poly : ¬ compilesInPoly .tdd_t .pi := fun h => absurd (poly_implies_quasi h) edge_tdd_t_pi_no_quasi
 
 theorem op_csdd_CO_poly : supportsInPoly .csdd .CO :=
   query_via_poly edge_csdd_dnnf_poly op_dnnf_CO_poly
@@ -3002,6 +3607,14 @@ theorem op_uobdd_CO_quasi : supportsInQuasi .uobdd .CO := poly_support_implies_q
 theorem op_obdd_CO_poly : supportsInPoly .obdd .CO :=
   query_via_poly edge_obdd_dnnf_poly op_dnnf_CO_poly
 theorem op_obdd_CO_quasi : supportsInQuasi .obdd .CO := poly_support_implies_quasi op_obdd_CO_poly
+
+theorem op_tdd_t_CO_poly : supportsInPoly .tdd_t .CO :=
+  query_via_poly edge_tdd_t_dnnf_poly op_dnnf_CO_poly
+theorem op_tdd_t_CO_quasi : supportsInQuasi .tdd_t .CO := poly_support_implies_quasi op_tdd_t_CO_poly
+
+theorem op_tdd_CO_poly : supportsInPoly .tdd .CO :=
+  query_via_poly edge_tdd_dnnf_poly op_dnnf_CO_poly
+theorem op_tdd_CO_quasi : supportsInQuasi .tdd .CO := poly_support_implies_quasi op_tdd_CO_poly
 
 theorem op_dec_dnnf_CO_poly : supportsInPoly .dec_dnnf .CO :=
   query_via_poly edge_dec_dnnf_dnnf_poly op_dnnf_CO_poly
@@ -3067,9 +3680,17 @@ theorem op_uobdd_EQ_poly : supportsInPoly .uobdd .EQ :=
   query_via_poly edge_uobdd_d_dnnf_poly op_d_dnnf_EQ_poly
 theorem op_uobdd_EQ_quasi : supportsInQuasi .uobdd .EQ := poly_support_implies_quasi op_uobdd_EQ_poly
 
+theorem op_tdd_EQ_poly : supportsInPoly .tdd .EQ :=
+  query_via_poly edge_tdd_d_dnnf_poly op_d_dnnf_EQ_poly
+theorem op_tdd_EQ_quasi : supportsInQuasi .tdd .EQ := poly_support_implies_quasi op_tdd_EQ_poly
+
 theorem op_dec_dnnf_EQ_poly : supportsInPoly .dec_dnnf .EQ :=
   query_via_poly edge_dec_dnnf_d_dnnf_poly op_d_dnnf_EQ_poly
 theorem op_dec_dnnf_EQ_quasi : supportsInQuasi .dec_dnnf .EQ := poly_support_implies_quasi op_dec_dnnf_EQ_poly
+
+theorem op_dec_sdnnf_EQ_poly : supportsInPoly .dec_sdnnf .EQ :=
+  query_via_poly edge_dec_sdnnf_d_dnnf_poly op_d_dnnf_EQ_poly
+theorem op_dec_sdnnf_EQ_quasi : supportsInQuasi .dec_sdnnf .EQ := poly_support_implies_quasi op_dec_sdnnf_EQ_poly
 
 theorem op_mods_EQ_poly : supportsInPoly .mods .EQ :=
   query_via_poly edge_mods_obdd_lt_poly op_obdd_lt_EQ_poly
@@ -3106,6 +3727,14 @@ theorem op_ufbdd_CT_quasi : supportsInQuasi .ufbdd .CT := poly_support_implies_q
 theorem op_uobdd_CT_poly : supportsInPoly .uobdd .CT :=
   query_via_poly edge_uobdd_d_dnnf_poly op_d_dnnf_CT_poly
 theorem op_uobdd_CT_quasi : supportsInQuasi .uobdd .CT := poly_support_implies_quasi op_uobdd_CT_poly
+
+theorem op_tdd_t_CT_poly : supportsInPoly .tdd_t .CT :=
+  query_via_poly edge_tdd_t_d_dnnf_poly op_d_dnnf_CT_poly
+theorem op_tdd_t_CT_quasi : supportsInQuasi .tdd_t .CT := poly_support_implies_quasi op_tdd_t_CT_poly
+
+theorem op_tdd_CT_poly : supportsInPoly .tdd .CT :=
+  query_via_poly edge_tdd_d_dnnf_poly op_d_dnnf_CT_poly
+theorem op_tdd_CT_quasi : supportsInQuasi .tdd .CT := poly_support_implies_quasi op_tdd_CT_poly
 
 theorem op_dec_dnnf_CT_poly : supportsInPoly .dec_dnnf .CT :=
   query_via_poly edge_dec_dnnf_d_dnnf_poly op_d_dnnf_CT_poly
@@ -3247,6 +3876,22 @@ theorem op_mods_CD_poly : supportsInPoly .mods .CD :=
   lemma_and_bc_sfo_cd_poly .mods op_mods_AND_BC_poly op_mods_SFO_poly
 theorem op_mods_CD_quasi : supportsInQuasi .mods .CD := poly_support_implies_quasi op_mods_CD_poly
 
+theorem op_nfbdd_ME_poly : supportsInPoly .nfbdd .ME :=
+  lemma_co_cd_me_poly .nfbdd op_nfbdd_CO_poly op_nfbdd_CD_poly
+theorem op_nfbdd_ME_quasi : supportsInQuasi .nfbdd .ME := poly_support_implies_quasi op_nfbdd_ME_poly
+
+theorem op_nfbdd_CE_poly : supportsInPoly .nfbdd .CE :=
+  lemma_co_cd_ce_poly .nfbdd op_nfbdd_CO_poly op_nfbdd_CD_poly
+theorem op_nfbdd_CE_quasi : supportsInQuasi .nfbdd .CE := poly_support_implies_quasi op_nfbdd_CE_poly
+
+theorem op_nfbdd_OR_BC_poly : supportsInPoly .nfbdd .OR_BC :=
+  lemma_or_c_or_bc_poly .nfbdd op_nfbdd_OR_C_poly
+theorem op_nfbdd_OR_BC_quasi : supportsInQuasi .nfbdd .OR_BC := poly_support_implies_quasi op_nfbdd_OR_BC_poly
+
+theorem op_nfbdd_SFO_poly : supportsInPoly .nfbdd .SFO :=
+  lemma_fo_sfo_poly .nfbdd op_nfbdd_FO_poly
+theorem op_nfbdd_SFO_quasi : supportsInQuasi .nfbdd .SFO := poly_support_implies_quasi op_nfbdd_SFO_poly
+
 theorem op_nnf_AND_BC_poly : supportsInPoly .nnf .AND_BC :=
   lemma_and_c_and_bc_poly .nnf op_nnf_AND_C_poly
 theorem op_nnf_AND_BC_quasi : supportsInQuasi .nnf .AND_BC := poly_support_implies_quasi op_nnf_AND_BC_poly
@@ -3258,6 +3903,18 @@ theorem op_nnf_OR_C_quasi : supportsInQuasi .nnf .OR_C := poly_support_implies_q
 theorem op_nnf_OR_BC_poly : supportsInPoly .nnf .OR_BC :=
   lemma_not_c_and_bc_or_bc_poly .nnf op_nnf_NOT_C_poly op_nnf_AND_BC_poly
 theorem op_nnf_OR_BC_quasi : supportsInQuasi .nnf .OR_BC := poly_support_implies_quasi op_nnf_OR_BC_poly
+
+theorem op_nobdd_ME_poly : supportsInPoly .nobdd .ME :=
+  lemma_co_cd_me_poly .nobdd op_nobdd_CO_poly op_nobdd_CD_poly
+theorem op_nobdd_ME_quasi : supportsInQuasi .nobdd .ME := poly_support_implies_quasi op_nobdd_ME_poly
+
+theorem op_nobdd_CE_poly : supportsInPoly .nobdd .CE :=
+  lemma_co_cd_ce_poly .nobdd op_nobdd_CO_poly op_nobdd_CD_poly
+theorem op_nobdd_CE_quasi : supportsInQuasi .nobdd .CE := poly_support_implies_quasi op_nobdd_CE_poly
+
+theorem op_nobdd_SFO_poly : supportsInPoly .nobdd .SFO :=
+  lemma_fo_sfo_poly .nobdd op_nobdd_FO_poly
+theorem op_nobdd_SFO_quasi : supportsInQuasi .nobdd .SFO := poly_support_implies_quasi op_nobdd_SFO_poly
 
 theorem op_obdd_lt_CE_poly : supportsInPoly .obdd_lt .CE :=
   lemma_co_cd_ce_poly .obdd_lt op_obdd_lt_CO_poly op_obdd_lt_CD_poly
@@ -3355,9 +4012,25 @@ theorem op_sdnnf_t_SFO_poly : supportsInPoly .sdnnf_t .SFO :=
   lemma_fo_sfo_poly .sdnnf_t op_sdnnf_t_FO_poly
 theorem op_sdnnf_t_SFO_quasi : supportsInQuasi .sdnnf_t .SFO := poly_support_implies_quasi op_sdnnf_t_SFO_poly
 
+theorem op_ufbdd_ME_poly : supportsInPoly .ufbdd .ME :=
+  lemma_co_cd_me_poly .ufbdd op_ufbdd_CO_poly op_ufbdd_CD_poly
+theorem op_ufbdd_ME_quasi : supportsInQuasi .ufbdd .ME := poly_support_implies_quasi op_ufbdd_ME_poly
+
+theorem op_ufbdd_CE_poly : supportsInPoly .ufbdd .CE :=
+  lemma_co_cd_ce_poly .ufbdd op_ufbdd_CO_poly op_ufbdd_CD_poly
+theorem op_ufbdd_CE_quasi : supportsInQuasi .ufbdd .CE := poly_support_implies_quasi op_ufbdd_CE_poly
+
 theorem op_ufbdd_VA_poly : supportsInPoly .ufbdd .VA :=
   lemma_ct_va_poly .ufbdd op_ufbdd_CT_poly
 theorem op_ufbdd_VA_quasi : supportsInQuasi .ufbdd .VA := poly_support_implies_quasi op_ufbdd_VA_poly
+
+theorem op_uobdd_ME_poly : supportsInPoly .uobdd .ME :=
+  lemma_co_cd_me_poly .uobdd op_uobdd_CO_poly op_uobdd_CD_poly
+theorem op_uobdd_ME_quasi : supportsInQuasi .uobdd .ME := poly_support_implies_quasi op_uobdd_ME_poly
+
+theorem op_uobdd_CE_poly : supportsInPoly .uobdd .CE :=
+  lemma_co_cd_ce_poly .uobdd op_uobdd_CO_poly op_uobdd_CD_poly
+theorem op_uobdd_CE_quasi : supportsInQuasi .uobdd .CE := poly_support_implies_quasi op_uobdd_CE_poly
 
 theorem op_uobdd_VA_poly : supportsInPoly .uobdd .VA :=
   lemma_ct_va_poly .uobdd op_uobdd_CT_poly
@@ -3375,13 +4048,77 @@ theorem op_obdd_IM_poly : supportsInPoly .obdd .IM :=
   lemma_va_cd_im_poly .obdd op_obdd_VA_poly op_obdd_CD_poly
 theorem op_obdd_IM_quasi : supportsInQuasi .obdd .IM := poly_support_implies_quasi op_obdd_IM_poly
 
+theorem op_tdd_t_ME_poly : supportsInPoly .tdd_t .ME :=
+  lemma_co_cd_me_poly .tdd_t op_tdd_t_CO_poly op_tdd_t_CD_poly
+theorem op_tdd_t_ME_quasi : supportsInQuasi .tdd_t .ME := poly_support_implies_quasi op_tdd_t_ME_poly
+
+theorem op_tdd_t_CE_poly : supportsInPoly .tdd_t .CE :=
+  lemma_co_cd_ce_poly .tdd_t op_tdd_t_CO_poly op_tdd_t_CD_poly
+theorem op_tdd_t_CE_quasi : supportsInQuasi .tdd_t .CE := poly_support_implies_quasi op_tdd_t_CE_poly
+
+theorem op_tdd_t_VA_poly : supportsInPoly .tdd_t .VA :=
+  lemma_ct_va_poly .tdd_t op_tdd_t_CT_poly
+theorem op_tdd_t_VA_quasi : supportsInQuasi .tdd_t .VA := poly_support_implies_quasi op_tdd_t_VA_poly
+
+theorem op_tdd_t_OR_BC_poly : supportsInPoly .tdd_t .OR_BC :=
+  lemma_not_c_and_bc_or_bc_poly .tdd_t op_tdd_t_NOT_C_poly op_tdd_t_AND_BC_poly
+theorem op_tdd_t_OR_BC_quasi : supportsInQuasi .tdd_t .OR_BC := poly_support_implies_quasi op_tdd_t_OR_BC_poly
+
+theorem op_tdd_t_IM_poly : supportsInPoly .tdd_t .IM :=
+  lemma_not_c_ce_im_poly .tdd_t op_tdd_t_NOT_C_poly op_tdd_t_CE_poly
+theorem op_tdd_t_IM_quasi : supportsInQuasi .tdd_t .IM := poly_support_implies_quasi op_tdd_t_IM_poly
+
+theorem op_tdd_t_SE_poly : supportsInPoly .tdd_t .SE :=
+  lemma_not_c_and_bc_co_se_poly .tdd_t op_tdd_t_NOT_C_poly op_tdd_t_AND_BC_poly op_tdd_t_CO_poly
+theorem op_tdd_t_SE_quasi : supportsInQuasi .tdd_t .SE := poly_support_implies_quasi op_tdd_t_SE_poly
+
+theorem op_tdd_ME_poly : supportsInPoly .tdd .ME :=
+  lemma_co_cd_me_poly .tdd op_tdd_CO_poly op_tdd_CD_poly
+theorem op_tdd_ME_quasi : supportsInQuasi .tdd .ME := poly_support_implies_quasi op_tdd_ME_poly
+
+theorem op_tdd_CE_poly : supportsInPoly .tdd .CE :=
+  lemma_co_cd_ce_poly .tdd op_tdd_CO_poly op_tdd_CD_poly
+theorem op_tdd_CE_quasi : supportsInQuasi .tdd .CE := poly_support_implies_quasi op_tdd_CE_poly
+
+theorem op_tdd_VA_poly : supportsInPoly .tdd .VA :=
+  lemma_ct_va_poly .tdd op_tdd_CT_poly
+theorem op_tdd_VA_quasi : supportsInQuasi .tdd .VA := poly_support_implies_quasi op_tdd_VA_poly
+
+theorem op_tdd_IM_poly : supportsInPoly .tdd .IM :=
+  lemma_not_c_ce_im_poly .tdd op_tdd_NOT_C_poly op_tdd_CE_poly
+theorem op_tdd_IM_quasi : supportsInQuasi .tdd .IM := poly_support_implies_quasi op_tdd_IM_poly
+
+theorem op_dec_dnnf_ME_poly : supportsInPoly .dec_dnnf .ME :=
+  lemma_co_cd_me_poly .dec_dnnf op_dec_dnnf_CO_poly op_dec_dnnf_CD_poly
+theorem op_dec_dnnf_ME_quasi : supportsInQuasi .dec_dnnf .ME := poly_support_implies_quasi op_dec_dnnf_ME_poly
+
+theorem op_dec_dnnf_CE_poly : supportsInPoly .dec_dnnf .CE :=
+  lemma_co_cd_ce_poly .dec_dnnf op_dec_dnnf_CO_poly op_dec_dnnf_CD_poly
+theorem op_dec_dnnf_CE_quasi : supportsInQuasi .dec_dnnf .CE := poly_support_implies_quasi op_dec_dnnf_CE_poly
+
 theorem op_dec_dnnf_VA_poly : supportsInPoly .dec_dnnf .VA :=
   lemma_ct_va_poly .dec_dnnf op_dec_dnnf_CT_poly
 theorem op_dec_dnnf_VA_quasi : supportsInQuasi .dec_dnnf .VA := poly_support_implies_quasi op_dec_dnnf_VA_poly
 
+theorem op_dec_sdnnf_ME_poly : supportsInPoly .dec_sdnnf .ME :=
+  lemma_co_cd_me_poly .dec_sdnnf op_dec_sdnnf_CO_poly op_dec_sdnnf_CD_poly
+theorem op_dec_sdnnf_ME_quasi : supportsInQuasi .dec_sdnnf .ME := poly_support_implies_quasi op_dec_sdnnf_ME_poly
+
+theorem op_dec_sdnnf_CE_poly : supportsInPoly .dec_sdnnf .CE :=
+  lemma_co_cd_ce_poly .dec_sdnnf op_dec_sdnnf_CO_poly op_dec_sdnnf_CD_poly
+theorem op_dec_sdnnf_CE_quasi : supportsInQuasi .dec_sdnnf .CE := poly_support_implies_quasi op_dec_sdnnf_CE_poly
+
 theorem op_dec_sdnnf_VA_poly : supportsInPoly .dec_sdnnf .VA :=
   lemma_ct_va_poly .dec_sdnnf op_dec_sdnnf_CT_poly
 theorem op_dec_sdnnf_VA_quasi : supportsInQuasi .dec_sdnnf .VA := poly_support_implies_quasi op_dec_sdnnf_VA_poly
+
+theorem op_dec_sdnnf_lt_ME_poly : supportsInPoly .dec_sdnnf_lt .ME :=
+  lemma_co_cd_me_poly .dec_sdnnf_lt op_dec_sdnnf_lt_CO_poly op_dec_sdnnf_lt_CD_poly
+theorem op_dec_sdnnf_lt_ME_quasi : supportsInQuasi .dec_sdnnf_lt .ME := poly_support_implies_quasi op_dec_sdnnf_lt_ME_poly
+
+theorem op_dec_sdnnf_lt_CE_poly : supportsInPoly .dec_sdnnf_lt .CE :=
+  lemma_co_cd_ce_poly .dec_sdnnf_lt op_dec_sdnnf_lt_CO_poly op_dec_sdnnf_lt_CD_poly
+theorem op_dec_sdnnf_lt_CE_quasi : supportsInQuasi .dec_sdnnf_lt .CE := poly_support_implies_quasi op_dec_sdnnf_lt_CE_poly
 
 theorem op_dec_sdnnf_lt_VA_poly : supportsInPoly .dec_sdnnf_lt .VA :=
   lemma_ct_va_poly .dec_sdnnf_lt op_dec_sdnnf_lt_CT_poly
@@ -3391,9 +4128,37 @@ theorem op_csdd_t_VA_poly : supportsInPoly .csdd_t .VA :=
   lemma_ct_va_poly .csdd_t op_csdd_t_CT_poly
 theorem op_csdd_t_VA_quasi : supportsInQuasi .csdd_t .VA := poly_support_implies_quasi op_csdd_t_VA_poly
 
+theorem op_nobdd_lt_ME_poly : supportsInPoly .nobdd_lt .ME :=
+  lemma_co_cd_me_poly .nobdd_lt op_nobdd_lt_CO_poly op_nobdd_lt_CD_poly
+theorem op_nobdd_lt_ME_quasi : supportsInQuasi .nobdd_lt .ME := poly_support_implies_quasi op_nobdd_lt_ME_poly
+
+theorem op_nobdd_lt_CE_poly : supportsInPoly .nobdd_lt .CE :=
+  lemma_co_cd_ce_poly .nobdd_lt op_nobdd_lt_CO_poly op_nobdd_lt_CD_poly
+theorem op_nobdd_lt_CE_quasi : supportsInQuasi .nobdd_lt .CE := poly_support_implies_quasi op_nobdd_lt_CE_poly
+
+theorem op_nobdd_lt_OR_BC_poly : supportsInPoly .nobdd_lt .OR_BC :=
+  lemma_or_c_or_bc_poly .nobdd_lt op_nobdd_lt_OR_C_poly
+theorem op_nobdd_lt_OR_BC_quasi : supportsInQuasi .nobdd_lt .OR_BC := poly_support_implies_quasi op_nobdd_lt_OR_BC_poly
+
+theorem op_nobdd_lt_SFO_poly : supportsInPoly .nobdd_lt .SFO :=
+  lemma_fo_sfo_poly .nobdd_lt op_nobdd_lt_FO_poly
+theorem op_nobdd_lt_SFO_quasi : supportsInQuasi .nobdd_lt .SFO := poly_support_implies_quasi op_nobdd_lt_SFO_poly
+
+theorem op_uobdd_lt_ME_poly : supportsInPoly .uobdd_lt .ME :=
+  lemma_co_cd_me_poly .uobdd_lt op_uobdd_lt_CO_poly op_uobdd_lt_CD_poly
+theorem op_uobdd_lt_ME_quasi : supportsInQuasi .uobdd_lt .ME := poly_support_implies_quasi op_uobdd_lt_ME_poly
+
+theorem op_uobdd_lt_CE_poly : supportsInPoly .uobdd_lt .CE :=
+  lemma_co_cd_ce_poly .uobdd_lt op_uobdd_lt_CO_poly op_uobdd_lt_CD_poly
+theorem op_uobdd_lt_CE_quasi : supportsInQuasi .uobdd_lt .CE := poly_support_implies_quasi op_uobdd_lt_CE_poly
+
 theorem op_uobdd_lt_VA_poly : supportsInPoly .uobdd_lt .VA :=
   lemma_ct_va_poly .uobdd_lt op_uobdd_lt_CT_poly
 theorem op_uobdd_lt_VA_quasi : supportsInQuasi .uobdd_lt .VA := poly_support_implies_quasi op_uobdd_lt_VA_poly
+
+theorem op_uobdd_lt_SE_poly : supportsInPoly .uobdd_lt .SE :=
+  lemma_ct_and_bc_se_poly .uobdd_lt op_uobdd_lt_CT_poly op_uobdd_lt_AND_BC_poly
+theorem op_uobdd_lt_SE_quasi : supportsInQuasi .uobdd_lt .SE := poly_support_implies_quasi op_uobdd_lt_SE_poly
 
 theorem op_csdd_CE_poly : supportsInPoly .csdd .CE :=
   query_via_poly edge_csdd_d_dnnf_poly op_d_dnnf_CE_poly
@@ -3403,49 +4168,13 @@ theorem op_mods_CE_poly : supportsInPoly .mods .CE :=
   query_via_poly edge_mods_d_dnnf_poly op_d_dnnf_CE_poly
 theorem op_mods_CE_quasi : supportsInQuasi .mods .CE := poly_support_implies_quasi op_mods_CE_poly
 
-theorem op_ufbdd_CE_poly : supportsInPoly .ufbdd .CE :=
-  query_via_poly edge_ufbdd_d_dnnf_poly op_d_dnnf_CE_poly
-theorem op_ufbdd_CE_quasi : supportsInQuasi .ufbdd .CE := poly_support_implies_quasi op_ufbdd_CE_poly
-
-theorem op_uobdd_CE_poly : supportsInPoly .uobdd .CE :=
-  query_via_poly edge_uobdd_d_dnnf_poly op_d_dnnf_CE_poly
-theorem op_uobdd_CE_quasi : supportsInQuasi .uobdd .CE := poly_support_implies_quasi op_uobdd_CE_poly
-
-theorem op_dec_dnnf_CE_poly : supportsInPoly .dec_dnnf .CE :=
-  query_via_poly edge_dec_dnnf_d_dnnf_poly op_d_dnnf_CE_poly
-theorem op_dec_dnnf_CE_quasi : supportsInQuasi .dec_dnnf .CE := poly_support_implies_quasi op_dec_dnnf_CE_poly
-
-theorem op_dec_sdnnf_CE_poly : supportsInPoly .dec_sdnnf .CE :=
-  query_via_poly edge_dec_sdnnf_d_dnnf_poly op_d_dnnf_CE_poly
-theorem op_dec_sdnnf_CE_quasi : supportsInQuasi .dec_sdnnf .CE := poly_support_implies_quasi op_dec_sdnnf_CE_poly
-
-theorem op_dec_sdnnf_lt_CE_poly : supportsInPoly .dec_sdnnf_lt .CE :=
-  query_via_poly edge_dec_sdnnf_lt_d_dnnf_poly op_d_dnnf_CE_poly
-theorem op_dec_sdnnf_lt_CE_quasi : supportsInQuasi .dec_sdnnf_lt .CE := poly_support_implies_quasi op_dec_sdnnf_lt_CE_poly
-
 theorem op_csdd_t_CE_poly : supportsInPoly .csdd_t .CE :=
   query_via_poly edge_csdd_t_d_dnnf_poly op_d_dnnf_CE_poly
 theorem op_csdd_t_CE_quasi : supportsInQuasi .csdd_t .CE := poly_support_implies_quasi op_csdd_t_CE_poly
 
-theorem op_uobdd_lt_CE_poly : supportsInPoly .uobdd_lt .CE :=
-  query_via_poly edge_uobdd_lt_d_dnnf_poly op_d_dnnf_CE_poly
-theorem op_uobdd_lt_CE_quasi : supportsInQuasi .uobdd_lt .CE := poly_support_implies_quasi op_uobdd_lt_CE_poly
-
 theorem op_dnf_CE_poly : supportsInPoly .dnf .CE :=
   query_via_poly edge_dnf_dnnf_poly op_dnnf_CE_poly
 theorem op_dnf_CE_quasi : supportsInQuasi .dnf .CE := poly_support_implies_quasi op_dnf_CE_poly
-
-theorem op_nfbdd_CE_poly : supportsInPoly .nfbdd .CE :=
-  query_via_poly edge_nfbdd_dnnf_poly op_dnnf_CE_poly
-theorem op_nfbdd_CE_quasi : supportsInQuasi .nfbdd .CE := poly_support_implies_quasi op_nfbdd_CE_poly
-
-theorem op_nobdd_CE_poly : supportsInPoly .nobdd .CE :=
-  query_via_poly edge_nobdd_dnnf_poly op_dnnf_CE_poly
-theorem op_nobdd_CE_quasi : supportsInQuasi .nobdd .CE := poly_support_implies_quasi op_nobdd_CE_poly
-
-theorem op_nobdd_lt_CE_poly : supportsInPoly .nobdd_lt .CE :=
-  query_via_poly edge_nobdd_lt_dnnf_poly op_dnnf_CE_poly
-theorem op_nobdd_lt_CE_quasi : supportsInQuasi .nobdd_lt .CE := poly_support_implies_quasi op_nobdd_lt_CE_poly
 
 theorem op_csdd_IM_poly : supportsInPoly .csdd .IM :=
   query_via_poly edge_csdd_sdd_poly op_sdd_IM_poly
@@ -3463,57 +4192,17 @@ theorem op_csdd_t_SE_poly : supportsInPoly .csdd_t .SE :=
   query_via_poly edge_csdd_t_d_sdnnf_t_poly op_d_sdnnf_t_SE_poly
 theorem op_csdd_t_SE_quasi : supportsInQuasi .csdd_t .SE := poly_support_implies_quasi op_csdd_t_SE_poly
 
-theorem op_uobdd_lt_SE_poly : supportsInPoly .uobdd_lt .SE :=
-  query_via_poly edge_uobdd_lt_d_sdnnf_t_poly op_d_sdnnf_t_SE_poly
-theorem op_uobdd_lt_SE_quasi : supportsInQuasi .uobdd_lt .SE := poly_support_implies_quasi op_uobdd_lt_SE_poly
-
 theorem op_csdd_ME_poly : supportsInPoly .csdd .ME :=
   query_via_poly edge_csdd_d_dnnf_poly op_d_dnnf_ME_poly
 theorem op_csdd_ME_quasi : supportsInQuasi .csdd .ME := poly_support_implies_quasi op_csdd_ME_poly
-
-theorem op_ufbdd_ME_poly : supportsInPoly .ufbdd .ME :=
-  query_via_poly edge_ufbdd_d_dnnf_poly op_d_dnnf_ME_poly
-theorem op_ufbdd_ME_quasi : supportsInQuasi .ufbdd .ME := poly_support_implies_quasi op_ufbdd_ME_poly
-
-theorem op_uobdd_ME_poly : supportsInPoly .uobdd .ME :=
-  query_via_poly edge_uobdd_d_dnnf_poly op_d_dnnf_ME_poly
-theorem op_uobdd_ME_quasi : supportsInQuasi .uobdd .ME := poly_support_implies_quasi op_uobdd_ME_poly
-
-theorem op_dec_dnnf_ME_poly : supportsInPoly .dec_dnnf .ME :=
-  query_via_poly edge_dec_dnnf_d_dnnf_poly op_d_dnnf_ME_poly
-theorem op_dec_dnnf_ME_quasi : supportsInQuasi .dec_dnnf .ME := poly_support_implies_quasi op_dec_dnnf_ME_poly
-
-theorem op_dec_sdnnf_ME_poly : supportsInPoly .dec_sdnnf .ME :=
-  query_via_poly edge_dec_sdnnf_d_dnnf_poly op_d_dnnf_ME_poly
-theorem op_dec_sdnnf_ME_quasi : supportsInQuasi .dec_sdnnf .ME := poly_support_implies_quasi op_dec_sdnnf_ME_poly
-
-theorem op_dec_sdnnf_lt_ME_poly : supportsInPoly .dec_sdnnf_lt .ME :=
-  query_via_poly edge_dec_sdnnf_lt_d_dnnf_poly op_d_dnnf_ME_poly
-theorem op_dec_sdnnf_lt_ME_quasi : supportsInQuasi .dec_sdnnf_lt .ME := poly_support_implies_quasi op_dec_sdnnf_lt_ME_poly
 
 theorem op_csdd_t_ME_poly : supportsInPoly .csdd_t .ME :=
   query_via_poly edge_csdd_t_d_dnnf_poly op_d_dnnf_ME_poly
 theorem op_csdd_t_ME_quasi : supportsInQuasi .csdd_t .ME := poly_support_implies_quasi op_csdd_t_ME_poly
 
-theorem op_uobdd_lt_ME_poly : supportsInPoly .uobdd_lt .ME :=
-  query_via_poly edge_uobdd_lt_d_dnnf_poly op_d_dnnf_ME_poly
-theorem op_uobdd_lt_ME_quasi : supportsInQuasi .uobdd_lt .ME := poly_support_implies_quasi op_uobdd_lt_ME_poly
-
 theorem op_dnf_ME_poly : supportsInPoly .dnf .ME :=
   query_via_poly edge_dnf_dnnf_poly op_dnnf_ME_poly
 theorem op_dnf_ME_quasi : supportsInQuasi .dnf .ME := poly_support_implies_quasi op_dnf_ME_poly
-
-theorem op_nfbdd_ME_poly : supportsInPoly .nfbdd .ME :=
-  query_via_poly edge_nfbdd_dnnf_poly op_dnnf_ME_poly
-theorem op_nfbdd_ME_quasi : supportsInQuasi .nfbdd .ME := poly_support_implies_quasi op_nfbdd_ME_poly
-
-theorem op_nobdd_ME_poly : supportsInPoly .nobdd .ME :=
-  query_via_poly edge_nobdd_dnnf_poly op_dnnf_ME_poly
-theorem op_nobdd_ME_quasi : supportsInQuasi .nobdd .ME := poly_support_implies_quasi op_nobdd_ME_poly
-
-theorem op_nobdd_lt_ME_poly : supportsInPoly .nobdd_lt .ME :=
-  query_via_poly edge_nobdd_lt_dnnf_poly op_dnnf_ME_poly
-theorem op_nobdd_lt_ME_quasi : supportsInQuasi .nobdd_lt .ME := poly_support_implies_quasi op_nobdd_lt_ME_poly
 
 theorem op_d_dnnf_IM_poly : supportsInPoly .d_dnnf .IM :=
   lemma_va_cd_im_poly .d_dnnf op_d_dnnf_VA_poly op_d_dnnf_CD_poly
@@ -3543,6 +4232,34 @@ theorem op_sdd_t_EQ_poly : supportsInPoly .sdd_t .EQ :=
   lemma_se_eq_poly .sdd_t op_sdd_t_SE_poly
 theorem op_sdd_t_EQ_quasi : supportsInQuasi .sdd_t .EQ := poly_support_implies_quasi op_sdd_t_EQ_poly
 
+theorem op_ufbdd_IM_poly : supportsInPoly .ufbdd .IM :=
+  lemma_va_cd_im_poly .ufbdd op_ufbdd_VA_poly op_ufbdd_CD_poly
+theorem op_ufbdd_IM_quasi : supportsInQuasi .ufbdd .IM := poly_support_implies_quasi op_ufbdd_IM_poly
+
+theorem op_uobdd_IM_poly : supportsInPoly .uobdd .IM :=
+  lemma_va_cd_im_poly .uobdd op_uobdd_VA_poly op_uobdd_CD_poly
+theorem op_uobdd_IM_quasi : supportsInQuasi .uobdd .IM := poly_support_implies_quasi op_uobdd_IM_poly
+
+theorem op_tdd_t_EQ_poly : supportsInPoly .tdd_t .EQ :=
+  lemma_se_eq_poly .tdd_t op_tdd_t_SE_poly
+theorem op_tdd_t_EQ_quasi : supportsInQuasi .tdd_t .EQ := poly_support_implies_quasi op_tdd_t_EQ_poly
+
+theorem op_tdd_t_SFO_poly : supportsInPoly .tdd_t .SFO :=
+  lemma_cd_or_bc_sfo_poly .tdd_t op_tdd_t_CD_poly op_tdd_t_OR_BC_poly
+theorem op_tdd_t_SFO_quasi : supportsInQuasi .tdd_t .SFO := poly_support_implies_quasi op_tdd_t_SFO_poly
+
+theorem op_dec_dnnf_IM_poly : supportsInPoly .dec_dnnf .IM :=
+  lemma_va_cd_im_poly .dec_dnnf op_dec_dnnf_VA_poly op_dec_dnnf_CD_poly
+theorem op_dec_dnnf_IM_quasi : supportsInQuasi .dec_dnnf .IM := poly_support_implies_quasi op_dec_dnnf_IM_poly
+
+theorem op_dec_sdnnf_IM_poly : supportsInPoly .dec_sdnnf .IM :=
+  lemma_va_cd_im_poly .dec_sdnnf op_dec_sdnnf_VA_poly op_dec_sdnnf_CD_poly
+theorem op_dec_sdnnf_IM_quasi : supportsInQuasi .dec_sdnnf .IM := poly_support_implies_quasi op_dec_sdnnf_IM_poly
+
+theorem op_dec_sdnnf_lt_IM_poly : supportsInPoly .dec_sdnnf_lt .IM :=
+  lemma_va_cd_im_poly .dec_sdnnf_lt op_dec_sdnnf_lt_VA_poly op_dec_sdnnf_lt_CD_poly
+theorem op_dec_sdnnf_lt_IM_quasi : supportsInQuasi .dec_sdnnf_lt .IM := poly_support_implies_quasi op_dec_sdnnf_lt_IM_poly
+
 theorem op_dec_sdnnf_lt_EQ_poly : supportsInPoly .dec_sdnnf_lt .EQ :=
   lemma_se_eq_poly .dec_sdnnf_lt op_dec_sdnnf_lt_SE_poly
 theorem op_dec_sdnnf_lt_EQ_quasi : supportsInQuasi .dec_sdnnf_lt .EQ := poly_support_implies_quasi op_dec_sdnnf_lt_EQ_poly
@@ -3551,33 +4268,13 @@ theorem op_csdd_t_EQ_poly : supportsInPoly .csdd_t .EQ :=
   lemma_se_eq_poly .csdd_t op_csdd_t_SE_poly
 theorem op_csdd_t_EQ_quasi : supportsInQuasi .csdd_t .EQ := poly_support_implies_quasi op_csdd_t_EQ_poly
 
+theorem op_uobdd_lt_IM_poly : supportsInPoly .uobdd_lt .IM :=
+  lemma_va_cd_im_poly .uobdd_lt op_uobdd_lt_VA_poly op_uobdd_lt_CD_poly
+theorem op_uobdd_lt_IM_quasi : supportsInQuasi .uobdd_lt .IM := poly_support_implies_quasi op_uobdd_lt_IM_poly
+
 theorem op_uobdd_lt_EQ_poly : supportsInPoly .uobdd_lt .EQ :=
   lemma_se_eq_poly .uobdd_lt op_uobdd_lt_SE_poly
 theorem op_uobdd_lt_EQ_quasi : supportsInQuasi .uobdd_lt .EQ := poly_support_implies_quasi op_uobdd_lt_EQ_poly
-
-theorem op_ufbdd_IM_poly : supportsInPoly .ufbdd .IM :=
-  query_via_poly edge_ufbdd_d_dnnf_poly op_d_dnnf_IM_poly
-theorem op_ufbdd_IM_quasi : supportsInQuasi .ufbdd .IM := poly_support_implies_quasi op_ufbdd_IM_poly
-
-theorem op_uobdd_IM_poly : supportsInPoly .uobdd .IM :=
-  query_via_poly edge_uobdd_d_dnnf_poly op_d_dnnf_IM_poly
-theorem op_uobdd_IM_quasi : supportsInQuasi .uobdd .IM := poly_support_implies_quasi op_uobdd_IM_poly
-
-theorem op_dec_dnnf_IM_poly : supportsInPoly .dec_dnnf .IM :=
-  query_via_poly edge_dec_dnnf_d_dnnf_poly op_d_dnnf_IM_poly
-theorem op_dec_dnnf_IM_quasi : supportsInQuasi .dec_dnnf .IM := poly_support_implies_quasi op_dec_dnnf_IM_poly
-
-theorem op_dec_sdnnf_IM_poly : supportsInPoly .dec_sdnnf .IM :=
-  query_via_poly edge_dec_sdnnf_d_dnnf_poly op_d_dnnf_IM_poly
-theorem op_dec_sdnnf_IM_quasi : supportsInQuasi .dec_sdnnf .IM := poly_support_implies_quasi op_dec_sdnnf_IM_poly
-
-theorem op_dec_sdnnf_lt_IM_poly : supportsInPoly .dec_sdnnf_lt .IM :=
-  query_via_poly edge_dec_sdnnf_lt_d_dnnf_poly op_d_dnnf_IM_poly
-theorem op_dec_sdnnf_lt_IM_quasi : supportsInQuasi .dec_sdnnf_lt .IM := poly_support_implies_quasi op_dec_sdnnf_lt_IM_poly
-
-theorem op_uobdd_lt_IM_poly : supportsInPoly .uobdd_lt .IM :=
-  query_via_poly edge_uobdd_lt_d_dnnf_poly op_d_dnnf_IM_poly
-theorem op_uobdd_lt_IM_quasi : supportsInQuasi .uobdd_lt .IM := poly_support_implies_quasi op_uobdd_lt_IM_poly
 
 theorem op_nnf_CO_no_poly : ¬ supportsInPoly .nnf .CO :=
   fun h => absurd (query_via_poly edge_cnf_nnf_poly h) op_cnf_CO_no_poly
@@ -3639,6 +4336,9 @@ theorem op_ufbdd_SE_no_poly : ¬ supportsInPoly .ufbdd .SE :=
 theorem op_uobdd_SE_no_poly : ¬ supportsInPoly .uobdd .SE :=
   fun h => absurd (query_via_poly edge_obdd_uobdd_poly h) op_obdd_SE_no_poly
 
+theorem op_tdd_SE_no_poly : ¬ supportsInPoly .tdd .SE :=
+  fun h => absurd (query_via_poly edge_obdd_tdd_poly h) op_obdd_SE_no_poly
+
 theorem op_dec_dnnf_SE_no_poly : ¬ supportsInPoly .dec_dnnf .SE :=
   fun h => absurd (query_via_poly edge_obdd_dec_dnnf_poly h) op_obdd_SE_no_poly
 
@@ -3687,20 +4387,25 @@ theorem op_cnf_ME_no_poly : ¬ supportsInPoly .cnf .ME :=
 theorem op_cnf_NOT_C_no_poly : ¬ supportsInPoly .cnf .NOT_C :=
   fun h => absurd (lemma_not_c_and_c_or_c_poly .cnf h op_cnf_AND_C_poly) op_cnf_OR_C_no_poly
 
-theorem op_csdd_AND_BC_no_poly : ¬ supportsInPoly .csdd .AND_BC :=
-  fun h => absurd (lemma_ct_and_bc_se_poly .csdd op_csdd_CT_poly h) op_csdd_SE_no_poly
+theorem op_csdd_FO_no_poly : ¬ supportsInPoly .csdd .FO :=
+  fun h => absurd (lemma_fo_sfo_poly .csdd h) op_csdd_SFO_no_poly
 
-theorem op_d_dnnf_AND_C_no_poly : ¬ supportsInPoly .d_dnnf .AND_C :=
-  fun h => absurd (lemma_and_c_and_bc_poly .d_dnnf h) op_d_dnnf_AND_BC_no_poly
+theorem op_d_dnnf_AND_C_no_quasi : ¬ supportsInQuasi .d_dnnf .AND_C :=
+  fun h => absurd (lemma_and_c_and_bc_quasi .d_dnnf h) op_d_dnnf_AND_BC_no_quasi
+theorem op_d_dnnf_AND_C_no_poly : ¬ supportsInPoly .d_dnnf .AND_C := fun h => absurd (poly_support_implies_quasi h) op_d_dnnf_AND_C_no_quasi
+
+theorem op_d_dnnf_OR_C_no_quasi : ¬ supportsInQuasi .d_dnnf .OR_C :=
+  fun h => absurd (lemma_or_c_or_bc_quasi .d_dnnf h) op_d_dnnf_OR_BC_no_quasi
+theorem op_d_dnnf_OR_C_no_poly : ¬ supportsInPoly .d_dnnf .OR_C := fun h => absurd (poly_support_implies_quasi h) op_d_dnnf_OR_C_no_quasi
 
 theorem op_d_dnnf_FO_no_poly : ¬ supportsInPoly .d_dnnf .FO :=
   fun h => absurd (lemma_fo_sfo_poly .d_dnnf h) op_d_dnnf_SFO_no_poly
 
-theorem op_d_dnnf_OR_BC_no_poly : ¬ supportsInPoly .d_dnnf .OR_BC :=
-  fun h => absurd (lemma_cd_or_bc_sfo_poly .d_dnnf op_d_dnnf_CD_poly h) op_d_dnnf_SFO_no_poly
+theorem op_d_sdnnf_t_FO_no_poly : ¬ supportsInPoly .d_sdnnf_t .FO :=
+  fun h => absurd (lemma_fo_sfo_poly .d_sdnnf_t h) op_d_sdnnf_t_SFO_no_poly
 
-theorem op_d_sdnnf_AND_BC_no_poly : ¬ supportsInPoly .d_sdnnf .AND_BC :=
-  fun h => absurd (lemma_ct_and_bc_se_poly .d_sdnnf op_d_sdnnf_CT_poly h) op_d_sdnnf_SE_no_poly
+theorem op_d_sdnnf_t_NOT_C_no_poly : ¬ supportsInPoly .d_sdnnf_t .NOT_C :=
+  fun h => absurd (lemma_not_c_and_bc_or_bc_poly .d_sdnnf_t h op_d_sdnnf_t_AND_BC_poly) op_d_sdnnf_t_OR_BC_no_poly
 
 theorem op_dnf_EQ_no_poly : ¬ supportsInPoly .dnf .EQ :=
   fun h => absurd (lemma_eq_va_poly .dnf h) op_dnf_VA_no_poly
@@ -3711,28 +4416,15 @@ theorem op_dnf_SE_no_poly : ¬ supportsInPoly .dnf .SE :=
 theorem op_dnf_IM_no_poly : ¬ supportsInPoly .dnf .IM :=
   fun h => absurd (lemma_im_va_poly .dnf h) op_dnf_VA_no_poly
 
-theorem op_dnf_NOT_C_no_quasi : ¬ supportsInQuasi .dnf .NOT_C :=
-  fun h => absurd (lemma_not_c_or_c_and_c_quasi .dnf h op_dnf_OR_C_quasi) op_dnf_AND_C_no_quasi
-theorem op_dnf_NOT_C_no_poly : ¬ supportsInPoly .dnf .NOT_C := fun h => absurd (poly_support_implies_quasi h) op_dnf_NOT_C_no_quasi
-
 theorem op_dnnf_EQ_no_poly : ¬ supportsInPoly .dnnf .EQ :=
   fun h => absurd (lemma_eq_va_poly .dnnf h) op_dnnf_VA_no_poly
 
 theorem op_dnnf_IM_no_poly : ¬ supportsInPoly .dnnf .IM :=
   fun h => absurd (lemma_im_va_poly .dnnf h) op_dnnf_VA_no_poly
 
-theorem op_dnnf_NOT_C_no_quasi : ¬ supportsInQuasi .dnnf .NOT_C :=
-  fun h => absurd (lemma_not_c_or_c_and_c_quasi .dnnf h op_dnnf_OR_C_quasi) op_dnnf_AND_C_no_quasi
-theorem op_dnnf_NOT_C_no_poly : ¬ supportsInPoly .dnnf .NOT_C := fun h => absurd (poly_support_implies_quasi h) op_dnnf_NOT_C_no_quasi
-
-theorem op_fbdd_FO_no_poly : ¬ supportsInPoly .fbdd .FO :=
-  fun h => absurd (lemma_fo_sfo_poly .fbdd h) op_fbdd_SFO_no_poly
-
-theorem op_fbdd_OR_BC_no_poly : ¬ supportsInPoly .fbdd .OR_BC :=
-  fun h => absurd (lemma_cd_or_bc_sfo_poly .fbdd op_fbdd_CD_poly h) op_fbdd_SFO_no_poly
-
-theorem op_fbdd_AND_BC_no_poly : ¬ supportsInPoly .fbdd .AND_BC :=
-  fun h => absurd (lemma_not_c_and_bc_or_bc_poly .fbdd op_fbdd_NOT_C_poly h) op_fbdd_OR_BC_no_poly
+theorem op_fbdd_FO_no_quasi : ¬ supportsInQuasi .fbdd .FO :=
+  fun h => absurd (lemma_fo_sfo_quasi .fbdd h) op_fbdd_SFO_no_quasi
+theorem op_fbdd_FO_no_poly : ¬ supportsInPoly .fbdd .FO := fun h => absurd (poly_support_implies_quasi h) op_fbdd_FO_no_quasi
 
 theorem op_ip_OR_C_no_quasi : ¬ supportsInQuasi .ip .OR_C :=
   fun h => absurd (lemma_or_c_or_bc_quasi .ip h) op_ip_OR_BC_no_quasi
@@ -3752,9 +4444,6 @@ theorem op_nfbdd_EQ_no_poly : ¬ supportsInPoly .nfbdd .EQ :=
 theorem op_nfbdd_IM_no_poly : ¬ supportsInPoly .nfbdd .IM :=
   fun h => absurd (lemma_im_va_poly .nfbdd h) op_nfbdd_VA_no_poly
 
-theorem op_nfbdd_NOT_C_no_poly : ¬ supportsInPoly .nfbdd .NOT_C :=
-  fun h => absurd (lemma_not_c_co_va_poly .nfbdd h op_nfbdd_CO_poly) op_nfbdd_VA_no_poly
-
 theorem op_nnf_EQ_no_poly : ¬ supportsInPoly .nnf .EQ :=
   fun h => absurd (lemma_eq_co_poly .nnf h) op_nnf_CO_no_poly
 
@@ -3773,8 +4462,9 @@ theorem op_nobdd_EQ_no_poly : ¬ supportsInPoly .nobdd .EQ :=
 theorem op_nobdd_IM_no_poly : ¬ supportsInPoly .nobdd .IM :=
   fun h => absurd (lemma_im_va_poly .nobdd h) op_nobdd_VA_no_poly
 
-theorem op_nobdd_NOT_C_no_poly : ¬ supportsInPoly .nobdd .NOT_C :=
-  fun h => absurd (lemma_not_c_co_va_poly .nobdd h op_nobdd_CO_poly) op_nobdd_VA_no_poly
+theorem op_nobdd_OR_C_no_quasi : ¬ supportsInQuasi .nobdd .OR_C :=
+  fun h => absurd (lemma_or_c_or_bc_quasi .nobdd h) op_nobdd_OR_BC_no_quasi
+theorem op_nobdd_OR_C_no_poly : ¬ supportsInPoly .nobdd .OR_C := fun h => absurd (poly_support_implies_quasi h) op_nobdd_OR_C_no_quasi
 
 theorem op_obdd_lt_AND_C_no_quasi : ¬ supportsInQuasi .obdd_lt .AND_C :=
   fun h => absurd (lemma_not_c_and_c_or_c_quasi .obdd_lt op_obdd_lt_NOT_C_quasi h) op_obdd_lt_OR_C_no_quasi
@@ -3785,11 +4475,11 @@ theorem op_pi_AND_C_no_quasi : ¬ supportsInQuasi .pi .AND_C :=
 theorem op_pi_AND_C_no_poly : ¬ supportsInPoly .pi .AND_C := fun h => absurd (poly_support_implies_quasi h) op_pi_AND_C_no_quasi
 
 theorem op_sdd_OR_C_no_quasi : ¬ supportsInQuasi .sdd .OR_C :=
-  fun h => absurd (lemma_not_c_or_c_and_c_quasi .sdd op_sdd_NOT_C_quasi h) op_sdd_AND_C_no_quasi
+  fun h => absurd (lemma_or_c_or_bc_quasi .sdd h) op_sdd_OR_BC_no_quasi
 theorem op_sdd_OR_C_no_poly : ¬ supportsInPoly .sdd .OR_C := fun h => absurd (poly_support_implies_quasi h) op_sdd_OR_C_no_quasi
 
-theorem op_sdd_AND_BC_no_poly : ¬ supportsInPoly .sdd .AND_BC :=
-  fun h => absurd (lemma_not_c_and_bc_co_se_poly .sdd op_sdd_NOT_C_poly h op_sdd_CO_poly) op_sdd_SE_no_poly
+theorem op_sdd_FO_no_poly : ¬ supportsInPoly .sdd .FO :=
+  fun h => absurd (lemma_fo_sfo_poly .sdd h) op_sdd_SFO_no_poly
 
 theorem op_sdnnf_EQ_no_poly : ¬ supportsInPoly .sdnnf .EQ :=
   fun h => absurd (lemma_eq_va_poly .sdnnf h) op_sdnnf_VA_no_poly
@@ -3797,8 +4487,9 @@ theorem op_sdnnf_EQ_no_poly : ¬ supportsInPoly .sdnnf .EQ :=
 theorem op_sdnnf_IM_no_poly : ¬ supportsInPoly .sdnnf .IM :=
   fun h => absurd (lemma_im_va_poly .sdnnf h) op_sdnnf_VA_no_poly
 
-theorem op_sdnnf_NOT_C_no_poly : ¬ supportsInPoly .sdnnf .NOT_C :=
-  fun h => absurd (lemma_not_c_co_va_poly .sdnnf h op_sdnnf_CO_poly) op_sdnnf_VA_no_poly
+theorem op_sdnnf_OR_C_no_quasi : ¬ supportsInQuasi .sdnnf .OR_C :=
+  fun h => absurd (lemma_or_c_or_bc_quasi .sdnnf h) op_sdnnf_OR_BC_no_quasi
+theorem op_sdnnf_OR_C_no_poly : ¬ supportsInPoly .sdnnf .OR_C := fun h => absurd (poly_support_implies_quasi h) op_sdnnf_OR_C_no_quasi
 
 theorem op_sdnnf_t_EQ_no_poly : ¬ supportsInPoly .sdnnf_t .EQ :=
   fun h => absurd (lemma_eq_va_poly .sdnnf_t h) op_sdnnf_t_VA_no_poly
@@ -3809,24 +4500,35 @@ theorem op_sdnnf_t_SE_no_poly : ¬ supportsInPoly .sdnnf_t .SE :=
 theorem op_sdnnf_t_IM_no_poly : ¬ supportsInPoly .sdnnf_t .IM :=
   fun h => absurd (lemma_im_va_poly .sdnnf_t h) op_sdnnf_t_VA_no_poly
 
-theorem op_sdnnf_t_NOT_C_no_quasi : ¬ supportsInQuasi .sdnnf_t .NOT_C :=
-  fun h => absurd (lemma_not_c_or_c_and_c_quasi .sdnnf_t h op_sdnnf_t_OR_C_quasi) op_sdnnf_t_AND_C_no_quasi
-theorem op_sdnnf_t_NOT_C_no_poly : ¬ supportsInPoly .sdnnf_t .NOT_C := fun h => absurd (poly_support_implies_quasi h) op_sdnnf_t_NOT_C_no_quasi
+theorem op_ufbdd_OR_C_no_quasi : ¬ supportsInQuasi .ufbdd .OR_C :=
+  fun h => absurd (lemma_or_c_or_bc_quasi .ufbdd h) op_ufbdd_OR_BC_no_quasi
+theorem op_ufbdd_OR_C_no_poly : ¬ supportsInPoly .ufbdd .OR_C := fun h => absurd (poly_support_implies_quasi h) op_ufbdd_OR_C_no_quasi
 
-theorem op_ufbdd_AND_BC_no_poly : ¬ supportsInPoly .ufbdd .AND_BC :=
-  fun h => absurd (lemma_ct_and_bc_se_poly .ufbdd op_ufbdd_CT_poly h) op_ufbdd_SE_no_poly
+theorem op_ufbdd_FO_no_poly : ¬ supportsInPoly .ufbdd .FO :=
+  fun h => absurd (lemma_fo_sfo_poly .ufbdd h) op_ufbdd_SFO_no_poly
 
-theorem op_uobdd_AND_BC_no_poly : ¬ supportsInPoly .uobdd .AND_BC :=
-  fun h => absurd (lemma_ct_and_bc_se_poly .uobdd op_uobdd_CT_poly h) op_uobdd_SE_no_poly
+theorem op_uobdd_FO_no_poly : ¬ supportsInPoly .uobdd .FO :=
+  fun h => absurd (lemma_fo_sfo_poly .uobdd h) op_uobdd_SFO_no_poly
 
-theorem op_obdd_OR_BC_no_poly : ¬ supportsInPoly .obdd .OR_BC :=
-  fun h => absurd (lemma_not_c_or_bc_and_bc_poly .obdd op_obdd_NOT_C_poly h) op_obdd_AND_BC_no_poly
+theorem op_tdd_AND_C_no_quasi : ¬ supportsInQuasi .tdd .AND_C :=
+  fun h => absurd (lemma_and_c_and_bc_quasi .tdd h) op_tdd_AND_BC_no_quasi
+theorem op_tdd_AND_C_no_poly : ¬ supportsInPoly .tdd .AND_C := fun h => absurd (poly_support_implies_quasi h) op_tdd_AND_C_no_quasi
 
-theorem op_dec_dnnf_AND_BC_no_poly : ¬ supportsInPoly .dec_dnnf .AND_BC :=
-  fun h => absurd (lemma_ct_and_bc_se_poly .dec_dnnf op_dec_dnnf_CT_poly h) op_dec_dnnf_SE_no_poly
+theorem op_tdd_OR_C_no_quasi : ¬ supportsInQuasi .tdd .OR_C :=
+  fun h => absurd (lemma_or_c_or_bc_quasi .tdd h) op_tdd_OR_BC_no_quasi
+theorem op_tdd_OR_C_no_poly : ¬ supportsInPoly .tdd .OR_C := fun h => absurd (poly_support_implies_quasi h) op_tdd_OR_C_no_quasi
 
-theorem op_dec_sdnnf_AND_BC_no_poly : ¬ supportsInPoly .dec_sdnnf .AND_BC :=
-  fun h => absurd (lemma_ct_and_bc_se_poly .dec_sdnnf op_dec_sdnnf_CT_poly h) op_dec_sdnnf_SE_no_poly
+theorem op_dec_dnnf_FO_no_poly : ¬ supportsInPoly .dec_dnnf .FO :=
+  fun h => absurd (lemma_fo_sfo_poly .dec_dnnf h) op_dec_dnnf_SFO_no_poly
+
+theorem op_dec_sdnnf_FO_no_poly : ¬ supportsInPoly .dec_sdnnf .FO :=
+  fun h => absurd (lemma_fo_sfo_poly .dec_sdnnf h) op_dec_sdnnf_SFO_no_poly
+
+theorem op_dec_sdnnf_lt_FO_no_poly : ¬ supportsInPoly .dec_sdnnf_lt .FO :=
+  fun h => absurd (lemma_fo_sfo_poly .dec_sdnnf_lt h) op_dec_sdnnf_lt_SFO_no_poly
+
+theorem op_dec_sdnnf_lt_OR_BC_no_poly : ¬ supportsInPoly .dec_sdnnf_lt .OR_BC :=
+  fun h => absurd (lemma_cd_or_bc_sfo_poly .dec_sdnnf_lt op_dec_sdnnf_lt_CD_poly h) op_dec_sdnnf_lt_SFO_no_poly
 
 theorem op_csdd_t_OR_BC_no_poly : ¬ supportsInPoly .csdd_t .OR_BC :=
   fun h => absurd (lemma_not_c_or_bc_and_bc_poly .csdd_t op_csdd_t_NOT_C_poly h) op_csdd_t_AND_BC_no_poly
@@ -3840,74 +4542,11 @@ theorem op_nobdd_lt_SE_no_poly : ¬ supportsInPoly .nobdd_lt .SE :=
 theorem op_nobdd_lt_IM_no_poly : ¬ supportsInPoly .nobdd_lt .IM :=
   fun h => absurd (lemma_im_va_poly .nobdd_lt h) op_nobdd_lt_VA_no_poly
 
-theorem op_nobdd_lt_NOT_C_no_poly : ¬ supportsInPoly .nobdd_lt .NOT_C :=
-  fun h => absurd (lemma_not_c_co_va_poly .nobdd_lt h op_nobdd_lt_CO_poly) op_nobdd_lt_VA_no_poly
+theorem op_uobdd_lt_FO_no_poly : ¬ supportsInPoly .uobdd_lt .FO :=
+  fun h => absurd (lemma_fo_sfo_poly .uobdd_lt h) op_uobdd_lt_SFO_no_poly
 
-theorem op_d_dnnf_OR_C_no_poly : ¬ supportsInPoly .d_dnnf .OR_C :=
-  fun h => absurd (lemma_or_c_or_bc_poly .d_dnnf h) op_d_dnnf_OR_BC_no_poly
-
-theorem op_sdd_OR_BC_no_poly : ¬ supportsInPoly .sdd .OR_BC :=
-  fun h => absurd (lemma_not_c_or_bc_and_bc_poly .sdd op_sdd_NOT_C_poly h) op_sdd_AND_BC_no_poly
-
-theorem edge_csdd_d_sdnnf_t_no_poly : ¬ compilesInPoly .csdd .d_sdnnf_t :=
-  fun h => absurd (query_via_poly h op_d_sdnnf_t_SE_poly) op_csdd_SE_no_poly
-
-theorem edge_d_sdnnf_d_sdnnf_t_no_poly : ¬ compilesInPoly .d_sdnnf .d_sdnnf_t :=
-  fun h => absurd (query_via_poly h op_d_sdnnf_t_SE_poly) op_d_sdnnf_SE_no_poly
-
-theorem edge_sdd_d_sdnnf_t_no_poly : ¬ compilesInPoly .sdd .d_sdnnf_t :=
-  fun h => absurd (query_via_poly h op_d_sdnnf_t_SE_poly) op_sdd_SE_no_poly
-
-theorem edge_uobdd_d_sdnnf_t_no_poly : ¬ compilesInPoly .uobdd .d_sdnnf_t :=
-  fun h => absurd (query_via_poly h op_d_sdnnf_t_SE_poly) op_uobdd_SE_no_poly
-
-theorem edge_obdd_d_sdnnf_t_no_poly : ¬ compilesInPoly .obdd .d_sdnnf_t :=
-  fun h => absurd (query_via_poly h op_d_sdnnf_t_SE_poly) op_obdd_SE_no_poly
-
-theorem edge_dec_sdnnf_d_sdnnf_t_no_poly : ¬ compilesInPoly .dec_sdnnf .d_sdnnf_t :=
-  fun h => absurd (query_via_poly h op_d_sdnnf_t_SE_poly) op_dec_sdnnf_SE_no_poly
-
-theorem edge_csdd_sdd_t_no_poly : ¬ compilesInPoly .csdd .sdd_t :=
-  fun h => absurd (query_via_poly h op_sdd_t_SE_poly) op_csdd_SE_no_poly
-
-theorem edge_sdd_sdd_t_no_poly : ¬ compilesInPoly .sdd .sdd_t :=
-  fun h => absurd (query_via_poly h op_sdd_t_SE_poly) op_sdd_SE_no_poly
-
-theorem edge_uobdd_sdd_t_no_poly : ¬ compilesInPoly .uobdd .sdd_t :=
-  fun h => absurd (query_via_poly h op_sdd_t_SE_poly) op_uobdd_SE_no_poly
-
-theorem edge_obdd_sdd_t_no_poly : ¬ compilesInPoly .obdd .sdd_t :=
-  fun h => absurd (query_via_poly h op_sdd_t_SE_poly) op_obdd_SE_no_poly
-
-theorem edge_dec_sdnnf_sdd_t_no_poly : ¬ compilesInPoly .dec_sdnnf .sdd_t :=
-  fun h => absurd (query_via_poly h op_sdd_t_SE_poly) op_dec_sdnnf_SE_no_poly
-
-theorem edge_csdd_csdd_t_no_poly : ¬ compilesInPoly .csdd .csdd_t :=
-  fun h => absurd (query_via_poly h op_csdd_t_SE_poly) op_csdd_SE_no_poly
-
-theorem edge_sdd_csdd_t_no_poly : ¬ compilesInPoly .sdd .csdd_t :=
-  fun h => absurd (query_via_poly h op_csdd_t_SE_poly) op_sdd_SE_no_poly
-
-theorem edge_uobdd_csdd_t_no_poly : ¬ compilesInPoly .uobdd .csdd_t :=
-  fun h => absurd (query_via_poly h op_csdd_t_SE_poly) op_uobdd_SE_no_poly
-
-theorem edge_obdd_csdd_t_no_poly : ¬ compilesInPoly .obdd .csdd_t :=
-  fun h => absurd (query_via_poly h op_csdd_t_SE_poly) op_obdd_SE_no_poly
-
-theorem edge_dec_sdnnf_csdd_t_no_poly : ¬ compilesInPoly .dec_sdnnf .csdd_t :=
-  fun h => absurd (query_via_poly h op_csdd_t_SE_poly) op_dec_sdnnf_SE_no_poly
-
-theorem edge_csdd_uobdd_lt_no_poly : ¬ compilesInPoly .csdd .uobdd_lt :=
-  fun h => absurd (query_via_poly h op_uobdd_lt_SE_poly) op_csdd_SE_no_poly
-
-theorem edge_sdd_uobdd_lt_no_poly : ¬ compilesInPoly .sdd .uobdd_lt :=
-  fun h => absurd (query_via_poly h op_uobdd_lt_SE_poly) op_sdd_SE_no_poly
-
-theorem edge_uobdd_uobdd_lt_no_poly : ¬ compilesInPoly .uobdd .uobdd_lt :=
-  fun h => absurd (query_via_poly h op_uobdd_lt_SE_poly) op_uobdd_SE_no_poly
-
-theorem edge_obdd_uobdd_lt_no_poly : ¬ compilesInPoly .obdd .uobdd_lt :=
-  fun h => absurd (query_via_poly h op_uobdd_lt_SE_poly) op_obdd_SE_no_poly
+theorem op_uobdd_lt_NOT_C_no_poly : ¬ supportsInPoly .uobdd_lt .NOT_C :=
+  fun h => absurd (lemma_not_c_and_bc_or_bc_poly .uobdd_lt h op_uobdd_lt_AND_BC_poly) op_uobdd_lt_OR_BC_no_poly
 
 theorem edge_ip_csdd_no_poly : ¬ compilesInPoly .ip .csdd :=
   fun h => absurd (query_via_poly h op_csdd_CT_poly) op_ip_CT_no_poly
@@ -3933,12 +4572,15 @@ theorem edge_ip_ufbdd_no_poly : ¬ compilesInPoly .ip .ufbdd :=
 theorem edge_ip_uobdd_no_poly : ¬ compilesInPoly .ip .uobdd :=
   fun h => absurd (query_via_poly h op_uobdd_CT_poly) op_ip_CT_no_poly
 
+theorem edge_ip_tdd_t_no_poly : ¬ compilesInPoly .ip .tdd_t :=
+  fun h => absurd (query_via_poly h op_tdd_t_CT_poly) op_ip_CT_no_poly
+
+theorem edge_ip_tdd_no_poly : ¬ compilesInPoly .ip .tdd :=
+  fun h => absurd (query_via_poly h op_tdd_CT_poly) op_ip_CT_no_poly
+
 theorem edge_ip_csdd_t_no_poly : ¬ compilesInPoly .ip .csdd_t :=
   fun h => absurd (query_via_poly h op_csdd_t_CT_poly) op_ip_CT_no_poly
 
 theorem edge_ip_uobdd_lt_no_poly : ¬ compilesInPoly .ip .uobdd_lt :=
   fun h => absurd (query_via_poly h op_uobdd_lt_CT_poly) op_ip_CT_no_poly
-
-theorem op_dec_sdnnf_EQ_quasi : supportsInQuasi .dec_sdnnf .EQ :=
-  query_via_quasi edge_dec_sdnnf_obdd_quasi op_obdd_EQ_quasi
 

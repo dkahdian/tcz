@@ -1,7 +1,7 @@
 % =============================
 % Tractable Circuit Zoo - Language Definitions
 % Auto-generated from database.json
-% Generated: 2026-05-19T04:49:27.172Z
+% Generated: 2026-05-24T22:25:04.393Z
 % 
 % EDITING INSTRUCTIONS:
 % - Language names in brackets are auto-generated. Do NOT edit.
@@ -207,6 +207,16 @@ Equivalently, an \langfam{SDD}{T} is a \langfam{d-SDNNF}{T} in which determinism
 For each fixed vtree $T$, an \langfam{SDNNF}{T} is a \langref{DNNF} that is additionally structured decomposable, respecting the vtree $T$.\citep{Pipatsrisawat_2008}
 
 Intuitively, all AND gates over the same set of variables must decompose via the same partition, as specified by the vtree.
+\end{definition}
+
+\begin{definition}[\langref{TDD}]\label{def:lang_d7403a53}
+\textbf{Tree Decision Diagram} \\
+\langref{TDD} $= \bigcup_T$ \langfam{TDD}{T}. \citep{Capelli_2026}
+\end{definition}
+
+\begin{definition}[\langfam{TDD}{T}]\label{def:lang_8cf1da0e}
+\textbf{Tree Decision Diagram (wrt a fixed vtree)} \\
+For each fixed vtree $T$, a \langfam{TDD}{T} is a deterministic tree decision diagram respecting $T$, as introduced by \citet{Capelli_2026}.
 \end{definition}
 
 \begin{definition}[\langref{uFBDD}]\label{def:lang_4e62a038}

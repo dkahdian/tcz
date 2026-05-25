@@ -159,7 +159,18 @@ export function formatCitations(refs: string[]): string {
  */
 export function formatInlineAssumption(assumption: string | undefined): string {
   if (!assumption) return '';
-  return ` assuming ${assumption}`;
+  const parts = assumption.split(/\s+AND\s+/);
+  const formatted = parts.map((part) => {
+    const trimmed = part.trim();
+    if (!trimmed) return trimmed;
+    if (/^\$[\s\S]*\$$|^\\\([\s\S]*\\\)$|^\\\[[\s\S]*\\\]$/.test(trimmed)) {
+      return trimmed;
+    }
+    return /\\[a-zA-Z]+|[\u2260\u2264\u2265\u2227\u2228]/.test(trimmed)
+      ? `$${trimmed.replace(/\u2260/g, '\\neq')}$`
+      : trimmed;
+  }).filter(Boolean);
+  return ` assuming ${formatted.join(' and ')}`;
 }
 
 /**
@@ -199,7 +210,7 @@ export function describePath(pathIds: string[], matrix: KCAdjacencyMatrix): stri
 
 /**
  * Format a contradicting relationship as a premise statement with its own
- * inline assumption.  E.g. "A cannot compile to B in polynomial time assuming P \neq NP [refs]".
+ * inline assumption.  E.g. "A cannot compile to B in polynomial time assuming $P \neq NP$ [refs]".
  */
 export function formatContradictingPremise(
   srcId: string,

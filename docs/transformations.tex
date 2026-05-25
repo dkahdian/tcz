@@ -1,7 +1,7 @@
 % =============================
 % Tractable Circuit Zoo - Transformation Support Claims
 % Auto-generated from database.json
-% Generated: 2026-05-19T04:49:27.201Z
+% Generated: 2026-05-24T22:25:04.404Z
 %
 % EDITING INSTRUCTIONS:
 % - Claim environments are auto-generated. Do NOT edit.
@@ -93,6 +93,7 @@ For each language $\mathcal{L}$ in
   \langref{dec-SDNNF},
   \langfam{dec-SDNNF}{T},
   \langfam{cSDD}{T},
+  \langfam{TDD}{T},
   \langfam{nOBDD}{<},
   \langfam{uOBDD}{<}
 \},
@@ -192,6 +193,7 @@ For each language $\mathcal{L}$ in
   \langref{dec-SDNNF},
   \langfam{dec-SDNNF}{T},
   \langfam{cSDD}{T},
+  \langfam{TDD}{T},
   \langfam{uOBDD}{<}
 \},
 \]
@@ -222,7 +224,9 @@ For each language $\mathcal{L}$ in
   \langref{OBDD},
   \langfam{OBDD}{<},
   \langfam{SDD}{T},
-  \langfam{cSDD}{T}
+  \langfam{cSDD}{T},
+  \langref{TDD},
+  \langfam{TDD}{T}
 \},
 \]
 $\mathcal{L}$ supports Forgetting not in polynomial time (quasipolynomial unknown) \citep{Darwiche_2002,VanDenBroeck_2015}.
@@ -611,6 +615,59 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 
 
 % =============================
+\section{F. Capelli, Y. Choi, S. Mengel, M. Munoz, and G. Van den Broeck, "A canonical ge...}
+% Reference ID: Capelli_2026
+% =============================
+% lang=lang_d7403a53, op=NOT_C
+\begin{claim}
+\langref{TDD} supports Negation in polynomial time \citep{Capelli_2026}
+\end{claim}
+\begin{claimdescription}
+\citet[Theorem 4]{Capelli_2026} proves that any \langref{TDD} can be negated in polynomial time.
+\end{claimdescription}
+
+% lang=lang_d7403a53, op=CD
+\begin{claim}
+\langref{TDD} supports Conditioning in polynomial time \citep{Capelli_2026}
+\end{claim}
+\begin{claimdescription}
+\citet[Theorem 4]{Capelli_2026} proves that any \langref{TDD} can be conditioned in polynomial time.
+\end{claimdescription}
+
+% lang=lang_d7403a53, op=SFO
+\begin{claim}
+\langref{TDD} supports Singleton Forgetting in polynomial time \citep{Capelli_2026}
+\end{claim}
+\begin{claimdescription}
+\citet[Theorem 4]{Capelli_2026} proves that any \langref{TDD} can be existentially quantified on a single variable in polynomial time.
+\end{claimdescription}
+
+% lang=lang_8cf1da0e, op=NOT_C
+\begin{claim}
+\langfam{TDD}{T} supports Negation in polynomial time \citep{Capelli_2026}
+\end{claim}
+\begin{claimdescription}
+\citet[Theorem 4]{Capelli_2026} proves that any \langfam{TDD}{T} can be negated in polynomial time while preserving the same vtree.
+\end{claimdescription}
+
+% lang=lang_8cf1da0e, op=AND_BC
+\begin{claim}
+\langfam{TDD}{T} supports Bounded Conjunction in polynomial time \citep{Capelli_2026}
+\end{claim}
+\begin{claimdescription}
+Bounded conjunction is polynomial-time for \langfam{TDD}{T}{s} respecting the same vtree by the apply construction of \citet[Theorem 4]{Capelli_2026}.
+\end{claimdescription}
+
+% lang=lang_8cf1da0e, op=CD
+\begin{claim}
+\langfam{TDD}{T} supports Conditioning in polynomial time \citep{Capelli_2026}
+\end{claim}
+\begin{claimdescription}
+Conditioning a \langfam{TDD}{T} on a literal can be performed in polynomial time while preserving the same vtree, as stated in \citet[Theorem 4]{Capelli_2026}.
+\end{claimdescription}
+
+
+% =============================
 \section{K. Pipatsrisawat and A. Darwiche, "New Compilation Languages Based on Structured...}
 % Reference ID: Pipatsrisawat_2008
 % =============================
@@ -794,7 +851,7 @@ Every \langref{cSDD} respects some vtree $T$. Apply the fixed-vtree negation pro
 
 
 % =============================
-\section{D. Kahdian, O. Broadrick, R. Geh, and G. Van den Broeck, "A Tractable Circuit Zoo", forthcoming.}
+\section{D. Kahdian and O. Broadrick and R. Geh and G. Van den Broeck, "A Tractable Circu...}
 % Reference ID: TCZ_Forthcoming
 % =============================
 % lang=lang_1df07cc3, op=OR_C
