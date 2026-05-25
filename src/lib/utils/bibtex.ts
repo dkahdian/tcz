@@ -97,6 +97,7 @@ export function cleanBibtexText(value: string): string {
     .replace(/\\"([aeiouAEIOU])/g, (_, c) => umlautMap[c] ?? c)
     .replace(/\{?\\'([aeiouAEIOU])\}?/g, (_, c) => acuteMap[c] ?? c)
     .replace(/\{?\\`([aeiouAEIOU])\}?/g, (_, c) => graveMap[c] ?? c)
+    .replace(/\{?\\~\{([nNaAoO])\}\}?/g, (_, c) => tildeMap[c] ?? c)
     .replace(/\{?\\~([nNaAoO])\}?/g, (_, c) => tildeMap[c] ?? c)
     .replace(/\{?\\c\{([cC])\}\}?/g, (_, c) => (c === 'c' ? '\u00E7' : '\u00C7'))
     .replace(/\{?\\v\{([sczSCZ])\}\}?/g, (_, c) => caronMap[c] ?? c)

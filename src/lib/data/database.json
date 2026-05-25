@@ -7507,7 +7507,7 @@
     },
     {
       "id": "Capelli_2026",
-      "title": "F. Capelli and Y. Choi and S. Mengel and M. Mu\\~noz and G. Van den Broeck, \"A canonical generalization of OBDD\", 2026.",
+      "title": "F. Capelli and Y. Choi and S. Mengel and M. Muñoz and G. Van den Broeck, \"A canonical generalization of OBDD\", 2026.",
       "href": "https://arxiv.org/abs/2604.05537",
       "bibtex": "@misc{Capelli_2026,\n  title={A canonical generalization of OBDD},\n  author={Capelli, Florent and Choi, YooJung and Mengel, Stefan and Mu\\~{n}oz, Mart\\'{i}n and {Van den Broeck}, Guy},\n  year={2026},\n  eprint={2604.05537},\n  archivePrefix={arXiv},\n  primaryClass={cs.AI},\n  url={https://arxiv.org/abs/2604.05537}\n}"
     },
