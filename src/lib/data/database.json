@@ -17,6 +17,7 @@
         "lang_4e62a038",
         "lang_c2df8c2b",
         "lang_b9d72a7c",
+        "lang_d7403a53",
         "lang_981b62f0",
         "lang_0f27d539"
       ],
@@ -34,11 +35,12 @@
           "lang_4e62a038",
           "lang_c2df8c2b",
           "lang_b9d72a7c",
+          "lang_d7403a53",
           "lang_981b62f0",
           "lang_0f27d539"
         ]
       },
-      "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langref{cSDD},\n  \\langref{d-SDNNF},\n  \\langref{DNNF},\n  \\langref{FBDD},\n  \\langref{nFBDD},\n  \\langref{nOBDD},\n  \\langref{SDD},\n  \\langref{SDNNF},\n  \\langref{uFBDD},\n  \\langref{uOBDD},\n  \\langref{OBDD},\n  \\langref{dec-DNNF},\n  \\langref{dec-SDNNF}\n\\},\n\\]\n$\\mathcal{L}$ supports Conjunction not in quasipolynomial time \\citep{Darwiche_2002,TCZ_Forthcoming}.",
+      "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langref{cSDD},\n  \\langref{d-SDNNF},\n  \\langref{DNNF},\n  \\langref{FBDD},\n  \\langref{nFBDD},\n  \\langref{nOBDD},\n  \\langref{SDD},\n  \\langref{SDNNF},\n  \\langref{uFBDD},\n  \\langref{uOBDD},\n  \\langref{OBDD},\n  \\langref{TDD},\n  \\langref{dec-DNNF},\n  \\langref{dec-SDNNF}\n\\},\n\\]\n$\\mathcal{L}$ supports Conjunction not in quasipolynomial time \\citep{Darwiche_2002,TCZ_Forthcoming}.",
       "descriptionTemplate": "In the language $\\mathcal{L}$, every clause has a polynomial-size representation. If $\\mathcal{L}$ supported $\\land$C, then every \\langref{CNF} could be compiled into $\\mathcal{L}$ by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{$\\mathcal{L}$} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since $\\mathcal{L}$ does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate.",
       "refs": [
         "Darwiche_2002",
@@ -308,6 +310,7 @@
         "lang_684b1ca7",
         "lang_c2df8c2b",
         "lang_b9d72a7c",
+        "lang_d7403a53",
         "lang_981b62f0",
         "lang_0f27d539"
       ],
@@ -319,11 +322,12 @@
           "lang_684b1ca7",
           "lang_c2df8c2b",
           "lang_b9d72a7c",
+          "lang_d7403a53",
           "lang_981b62f0",
           "lang_0f27d539"
         ]
       },
-      "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langref{cSDD},\n  \\langref{d-SDNNF},\n  \\langref{FBDD},\n  \\langref{uOBDD},\n  \\langref{OBDD},\n  \\langref{dec-DNNF},\n  \\langref{dec-SDNNF}\n\\},\n\\]\n$\\mathcal{L}$ supports Disjunction not in quasipolynomial time \\citep{Darwiche_2002,TCZ_Forthcoming}.",
+      "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langref{cSDD},\n  \\langref{d-SDNNF},\n  \\langref{FBDD},\n  \\langref{uOBDD},\n  \\langref{OBDD},\n  \\langref{TDD},\n  \\langref{dec-DNNF},\n  \\langref{dec-SDNNF}\n\\},\n\\]\n$\\mathcal{L}$ supports Disjunction not in quasipolynomial time \\citep{Darwiche_2002,TCZ_Forthcoming}.",
       "descriptionTemplate": "In the language $\\mathcal{L}$, every term has a polynomial-size representation. If $\\mathcal{L}$ supported $\\lor$C, then every \\langref{DNF} could be compiled into $\\mathcal{L}$ by disjoining the translated terms. This contradicts \\nedgeref{DNF}{$\\mathcal{L}$} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since $\\mathcal{L}$ does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate.",
       "refs": [
         "Darwiche_2002",
@@ -5942,18 +5946,12 @@
               "Darwiche_2002",
               "TCZ_Forthcoming",
               "Capelli_2026",
-              "Amarilli_2018"
+              "Amarilli_2018",
+              "Bova_2014"
             ],
-            "derived": true,
-            "description": "Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}. However, \\nopref{lang_d7403a53}{AND_BC} in quasipolynomial time. Therefore Conjunction is unsupported by TDD in quasipolynomial time.",
-            "derivationOrder": 1676,
-            "proofTrace": {
-              "rule": "lemma-contrapositive",
-              "lemmaId": "and-c-and-bc",
-              "languageId": "lang_d7403a53",
-              "pivotOp": "AND_C",
-              "level": "quasi"
-            }
+            "description": "In the language \\langref{TDD}, every clause has a polynomial-size representation. If \\langref{TDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{TDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{TDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{TDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate.",
+            "derived": false,
+            "batchId": "darwiche-and-c-clause-cnf-lower-bound-bounded-hard"
           },
           "OR_C": {
             "complexity": "no-quasi",
@@ -5963,16 +5961,9 @@
               "Capelli_2026",
               "Amarilli_2018"
             ],
-            "derived": true,
-            "description": "Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}. However, \\nopref{lang_d7403a53}{OR_BC} in quasipolynomial time. Therefore Disjunction is unsupported by TDD in quasipolynomial time.",
-            "derivationOrder": 1678,
-            "proofTrace": {
-              "rule": "lemma-contrapositive",
-              "lemmaId": "or-c-or-bc",
-              "languageId": "lang_d7403a53",
-              "pivotOp": "OR_C",
-              "level": "quasi"
-            }
+            "description": "In the language \\langref{TDD}, every term has a polynomial-size representation. If \\langref{TDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{TDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{TDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{TDD} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate.",
+            "derived": false,
+            "batchId": "darwiche-or-c-term-dnf-lower-bound-bounded-hard"
           },
           "FO": {
             "complexity": "no-quasi",
@@ -6206,7 +6197,7 @@
             ],
             "derived": true,
             "description": "Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_981b62f0}{SFO}. Therefore Forgetting is unsupported by dec-DNNF.",
-            "derivationOrder": 1679,
+            "derivationOrder": 1675,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -6456,7 +6447,7 @@
             ],
             "derived": true,
             "description": "Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_0f27d539}{SFO}. Therefore Forgetting is unsupported by dec-SDNNF.",
-            "derivationOrder": 1680,
+            "derivationOrder": 1676,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -6678,7 +6669,7 @@
             ],
             "derived": true,
             "description": "Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_4ae03bc8}{SFO}. Therefore Forgetting is unsupported by dec-SDNNF$_T$.",
-            "derivationOrder": 1681,
+            "derivationOrder": 1677,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -6703,7 +6694,7 @@
             ],
             "derived": true,
             "description": "Conditioning and Bounded Disjunction together imply Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_4ae03bc8}{SFO}. Also, \\opref{lang_4ae03bc8}{CD} in polynomial time. Therefore Bounded Disjunction is unsupported by dec-SDNNF$_T$.",
-            "derivationOrder": 1682,
+            "derivationOrder": 1678,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "cd-or-bc-sfo",
@@ -6957,7 +6948,7 @@
             ],
             "derived": true,
             "description": "Negation and Bounded Disjunction together imply Bounded Conjunction \\citep{Darwiche_2002}. However, \\nopref{lang_82fa749e}{AND_BC}. Also, \\opref{lang_82fa749e}{NOT_C} in polynomial time. Therefore Bounded Disjunction is unsupported by cSDD$_T$.",
-            "derivationOrder": 1683,
+            "derivationOrder": 1679,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-bc-and-bc",
@@ -7084,7 +7075,7 @@
             ],
             "derived": true,
             "description": "Equivalence implies Validity \\citep{Darwiche_2002}. However, \\nopref{lang_e827cf31}{VA} assuming $P \\neq NP$. Therefore Equivalence is unsupported by nOBDD$_<$ assuming $P \\neq NP$.",
-            "derivationOrder": 1684,
+            "derivationOrder": 1680,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -7103,7 +7094,7 @@
             ],
             "derived": true,
             "description": "Sentential Entailment implies Equivalence \\citep{Darwiche_2002}. However, \\nopref{lang_e827cf31}{EQ} assuming $P \\neq NP$. Therefore Sentential Entailment is unsupported by nOBDD$_<$ assuming $P \\neq NP$.",
-            "derivationOrder": 1685,
+            "derivationOrder": 1681,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "se-eq",
@@ -7122,7 +7113,7 @@
             ],
             "derived": true,
             "description": "Implicant implies Validity \\citep{Darwiche_2002}. However, \\nopref{lang_e827cf31}{VA} assuming $P \\neq NP$. Therefore Implicant is unsupported by nOBDD$_<$ assuming $P \\neq NP$.",
-            "derivationOrder": 1686,
+            "derivationOrder": 1682,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -7431,7 +7422,7 @@
             ],
             "derived": true,
             "description": "Forgetting implies Singleton Forgetting \\citep{Darwiche_2002}. However, \\nopref{lang_43a33aec}{SFO}. Therefore Forgetting is unsupported by uOBDD$_<$.",
-            "derivationOrder": 1687,
+            "derivationOrder": 1683,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -7463,7 +7454,7 @@
             ],
             "derived": true,
             "description": "Negation and Bounded Conjunction together imply Bounded Disjunction \\citep{Darwiche_2002}. However, \\nopref{lang_43a33aec}{OR_BC}. Also, \\opref{lang_43a33aec}{AND_BC} in polynomial time. Therefore Negation is unsupported by uOBDD$_<$.",
-            "derivationOrder": 1688,
+            "derivationOrder": 1684,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-and-bc-or-bc",
@@ -13028,7 +13019,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_83e3b023}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to cSDD in polynomial time, IP could support Model Counting by first compiling to cSDD. Therefore IP cannot compile to cSDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1689,
+          "derivationOrder": 1685,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13047,7 +13038,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_6c130090}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-DNNF in polynomial time, IP could support Model Counting by first compiling to d-DNNF. Therefore IP cannot compile to d-DNNF in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1690,
+          "derivationOrder": 1686,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13067,7 +13058,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_ea9b5299}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-SDNNF in polynomial time, IP could support Model Counting by first compiling to d-SDNNF. Therefore IP cannot compile to d-SDNNF in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1691,
+          "derivationOrder": 1687,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13088,7 +13079,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_91f812d0}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to d-SDNNF$_T$ in polynomial time, IP could support Model Counting by first compiling to d-SDNNF$_T$. Therefore IP cannot compile to d-SDNNF$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1692,
+          "derivationOrder": 1688,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13263,7 +13254,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_1afefbe2}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to SDD in polynomial time, IP could support Model Counting by first compiling to SDD. Therefore IP cannot compile to SDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1693,
+          "derivationOrder": 1689,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13285,7 +13276,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_9c84a267}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to SDD$_T$ in polynomial time, IP could support Model Counting by first compiling to SDD$_T$. Therefore IP cannot compile to SDD$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1694,
+          "derivationOrder": 1690,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13351,7 +13342,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_4e62a038}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uFBDD in polynomial time, IP could support Model Counting by first compiling to uFBDD. Therefore IP cannot compile to uFBDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1695,
+          "derivationOrder": 1691,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13371,7 +13362,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_c2df8c2b}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uOBDD in polynomial time, IP could support Model Counting by first compiling to uOBDD. Therefore IP cannot compile to uOBDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1696,
+          "derivationOrder": 1692,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13479,7 +13470,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_82fa749e}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to cSDD$_T$ in polynomial time, IP could support Model Counting by first compiling to cSDD$_T$. Therefore IP cannot compile to cSDD$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1699,
+          "derivationOrder": 1695,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13521,7 +13512,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_43a33aec}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to uOBDD$_<$ in polynomial time, IP could support Model Counting by first compiling to uOBDD$_<$. Therefore IP cannot compile to uOBDD$_<$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1700,
+          "derivationOrder": 1696,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13542,7 +13533,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_d7403a53}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to TDD in polynomial time, IP could support Model Counting by first compiling to TDD. Therefore IP cannot compile to TDD in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1698,
+          "derivationOrder": 1694,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13563,7 +13554,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\opref{lang_8cf1da0e}{CT} in polynomial time, but \\nopref{lang_6ae90adc}{CT} assuming the polynomial hierarchy does not collapse. If IP could compile to TDD$_T$ in polynomial time, IP could support Model Counting by first compiling to TDD$_T$. Therefore IP cannot compile to TDD$_T$ in polynomial time assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1697,
+          "derivationOrder": 1693,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -27058,7 +27049,7 @@
     {
       "id": "query-me",
       "title": "Model Enumeration (ME)",
-      "statement": "Given a representation $\\alpha$, enumerate all satisfying assignments, i.e., output $\\{X:\\alpha(X)=\\top\\}$.",
+      "statement": "Given a representation $\\alpha$, enumerate all satisfying assignments, i.e., output $\\{X:\\alpha(X)=\\top\\}$, in time polynomial in the input size and in the total size of the output.",
       "refs": [
         "Darwiche_2002"
       ]
