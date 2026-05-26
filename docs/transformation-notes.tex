@@ -24,7 +24,7 @@ The key point is that many unsupported transformation claims do not need a bespo
 \subsection{$\land$C from CNF lower bounds}
 Suppose a language $L$ satisfies both of the following:
 \begin{enumerate}[noitemsep]
-  \item Every clause can be converted into an equivalent sentence of $L$ in polynomial time and polynomial size.
+  \item Every clause can be converted into an equivalent representation of $L$ in polynomial time and polynomial size.
   \item \langref{CNF} does not compile to $L$ in polynomial time.
 \end{enumerate}
 Then $L$ cannot satisfy $\land$C in polynomial time.
@@ -37,7 +37,7 @@ Any clause can be represented in $L$ because [construction]. If $L$ supported $\
 \subsection{$\lor$C from DNF lower bounds}
 Suppose a language $L$ satisfies both of the following:
 \begin{enumerate}[noitemsep]
-  \item Every term can be converted into an equivalent sentence of $L$ in polynomial time and polynomial size.
+  \item Every term can be converted into an equivalent representation of $L$ in polynomial time and polynomial size.
   \item \langref{DNF} does not compile to $L$ in polynomial time.
 \end{enumerate}
 Then $L$ cannot satisfy $\lor$C in polynomial time.
@@ -87,7 +87,7 @@ Since the source clause representation is linear-size, the target representation
 \paragraph{\langfam{d-SDNNF}{T}, \langfam{SDNNF}{T}.}
 Fix a right-linear vtree $T$ induced by an order $<$.
 Start from the OBDD$_<$ chain for the clause.
-Compile it to \langfam{dec-SDNNF}{T}; this is automatically a \langfam{d-SDNNF}{T} sentence, and hence also an \langfam{SDNNF}{T} sentence.
+Compile it to \langfam{dec-SDNNF}{T}; this is automatically a \langfam{d-SDNNF}{T} representation, and hence also an \langfam{SDNNF}{T} representation.
 
 \paragraph{\langref{SDD}, \langref{cSDD}.}
 Start from an OBDD representation of the clause.
@@ -149,7 +149,7 @@ This route applies cleanly to the following families on the conjunction side:
 
 For DNNF and SDNNF, the same route also works:
 \begin{itemize}[noitemsep]
-  \item a clause is already a DNNF sentence, so DNNF gets a direct unconditional $\land$C lower bound from the propagated CNF $\not\leq$ DNNF gap;
+  \item a clause is already a DNNF representation, so DNNF gets a direct unconditional $\land$C lower bound from the propagated CNF $\not\leq$ DNNF gap;
   \item a clause has a small OBDD$_<$ representation, and OBDD$_<$ embeds into a right-linear SDNNF, so SDNNF gets the same kind of unconditional $\land$C lower bound from CNF $\not\leq$ SDNNF.
 \end{itemize}
 

@@ -1,7 +1,7 @@
 % =============================
 % Tractable Circuit Zoo - Query Support Claims
 % Auto-generated from database.json
-% Generated: 2026-05-24T22:25:04.399Z
+% Generated: 2026-05-26T18:58:07.003Z
 %
 % EDITING INSTRUCTIONS:
 % - Claim environments are auto-generated. Do NOT edit.
@@ -76,7 +76,7 @@
 \langref{CNF} supports Implicant in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-To check whether a consistent term $\alpha$ implies a \langref{CNF} sentence $\Sigma$, it suffices to verify that each clause of $\Sigma$ shares a literal with $\alpha$. This can be done in polynomial time \citep{Darwiche_2002}.
+To check whether a consistent term $\alpha$ implies a \langref{CNF} representation $\Sigma$, it suffices to verify that each clause of $\Sigma$ shares a literal with $\alpha$. This can be done in polynomial time \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_89649e36, op=VA
@@ -84,7 +84,7 @@ To check whether a consistent term $\alpha$ implies a \langref{CNF} sentence $\S
 \langref{CNF} supports Validity in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-A \langref{CNF} sentence is valid iff every clause in it is valid (i.e., contains a complementary pair of literals). This can be checked in linear time \citep{Darwiche_2002}.
+A \langref{CNF} representation is valid iff every clause in it is valid (i.e., contains a complementary pair of literals). This can be checked in linear time \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_4c204bf3, op=VA
@@ -100,7 +100,7 @@ Validity checking for \langref{DNF} is coNP-complete. A \langref{DNF} is valid i
 \langref{DNNF} supports Consistency in polynomial time \citep{Darwiche_2001a,Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-Consistency of a \langref{DNNF} sentence can be decided by a bottom-up traversal. A literal or constant node is handled directly; an $\lor$-node is consistent iff at least one child is consistent; and an $\land$-node is consistent iff all children are consistent. The last test is sound because decomposability ensures that conjuncts mention disjoint variable sets, so independently satisfiable children have compatible models. Hence consistency is decidable in linear time in the circuit size.
+Consistency of a \langref{DNNF} representation can be decided by a bottom-up traversal. A literal or constant node is handled directly; an $\lor$-node is consistent iff at least one child is consistent; and an $\land$-node is consistent iff all children are consistent. The last test is sound because decomposability ensures that conjuncts mention disjoint variable sets, so independently satisfiable children have compatible models. Hence consistency is decidable in linear time in the circuit size.
 \end{claimdescription}
 
 % lang=lang_6ae90adc, op=CT
@@ -132,7 +132,7 @@ By definition, \langref{IP} is the set of prime implicants of a formula. A consi
 \langref{MODS} supports Consistency in polynomial time \citep{Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-A sentence $\Sigma$ is consistent iff it has at least one model. Given the set of models, we need only check nonemptiness of the set \citep{Darwiche_2002}.
+A representation $\Sigma$ is consistent iff it has at least one model. Given the set of models, we need only check nonemptiness of the set \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_e02902d0, op=CT
@@ -156,7 +156,7 @@ Any query concerning \langref{OBDD} is equivalent to the corresponding query con
 \langref{OBDD} supports Equivalence in polynomial time \citep{Fortune_1978,Meinel_Theobald_1998,Darwiche_2002}
 \end{claim}
 \begin{claimdescription}
-\citet{Meinel_Theobald_1998} cite the polynomial-time equivalence algorithm of \citet{Fortune_1978} for free single-variable program schemes where one input tests predicates in one fixed order on all executions. An \langref{OBDD} is such a free read-once scheme: along every root-to-sink path, variables are tested according to its associated order. The algorithm compares the two diagrams by recursively comparing residual subprograms. When the ordered input next tests variable $x$, both $x=0$ and $x=1$ cofactors are compared against the corresponding restrictions of the other diagram; terminal disagreements reject, and repeated residual pairs are memoized. The number of residual pairs is polynomial in the input sizes, so equivalence of two \langref{OBDD} sentences is decidable in polynomial time \citep{Darwiche_2002}.
+\citet{Meinel_Theobald_1998} cite the polynomial-time equivalence algorithm of \citet{Fortune_1978} for free single-variable program schemes where one input tests predicates in one fixed order on all executions. An \langref{OBDD} is such a free read-once scheme: along every root-to-sink path, variables are tested according to its associated order. The algorithm compares the two diagrams by recursively comparing residual subprograms. When the ordered input next tests variable $x$, both $x=0$ and $x=1$ cofactors are compared against the corresponding restrictions of the other diagram; terminal disagreements reject, and repeated residual pairs are memoized. The number of residual pairs is polynomial in the input sizes, so equivalence of two \langref{OBDD} representations is decidable in polynomial time \citep{Darwiche_2002}.
 \end{claimdescription}
 
 % lang=lang_b9d72a7c, op=SE
@@ -288,7 +288,7 @@ Consistency checking for \langref{CNF} is NP-complete by the Cook-Levin theorem,
 \langref{d-DNNF} supports Equivalence in polynomial time assuming $P = \mathrm{BPP}$ \citep{Darwiche_Huang_2002}
 \end{claim}
 \begin{claimdescription}
-\citet{Darwiche_Huang_2002} showed that equivalence of \langref{d-DNNF} sentences can be tested in randomized polynomial time by reducing it to the problem of checking whether two \langref{d-DNNF} sentences agree on a randomly chosen assignment. Under the derandomization hypothesis P = BPP, this yields a deterministic polynomial-time algorithm and hence \langref{d-DNNF} satisfies EQ.
+\citet{Darwiche_Huang_2002} showed that equivalence of \langref{d-DNNF} representations can be tested in randomized polynomial time by reducing it to the problem of checking whether two \langref{d-DNNF} representations agree on a randomly chosen assignment. Under the derandomization hypothesis P = BPP, this yields a deterministic polynomial-time algorithm and hence \langref{d-DNNF} satisfies EQ.
 \end{claimdescription}
 
 

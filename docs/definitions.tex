@@ -1,7 +1,7 @@
 % =============================
 % Tractable Circuit Zoo - Conceptual Definitions
 % Auto-generated from database.json
-% Generated: 2026-05-24T22:25:04.395Z
+% Generated: 2026-05-26T18:58:06.999Z
 %
 % EDITING INSTRUCTIONS:
 % - Definition IDs are preserved in \label{...}. Do NOT edit.
@@ -113,82 +113,82 @@ The standard transformations in this project are \defref{transformation-cd}{Cond
 
 \begin{definition}\label{kdef:query-co}
 \textbf{Consistency (CO)} \\
-Given a sentence $\alpha$, decide whether $\alpha$ is satisfiable, i.e., whether there exists an assignment $X$ such that $\alpha(X)=\top$. \citep{Darwiche_2002}
+Given a representation $\alpha$, decide whether $\alpha$ is satisfiable, i.e., whether there exists an assignment $X$ such that $\alpha(X)=\top$. \citep{Darwiche_2002}
 \end{definition}
 
 \begin{definition}\label{kdef:query-va}
 \textbf{Validity (VA)} \\
-Given a sentence $\alpha$, decide whether $\alpha$ is valid, i.e., $\alpha \equiv \top$. \citep{Darwiche_2002}
+Given a representation $\alpha$, decide whether $\alpha$ is valid, i.e., $\alpha \equiv \top$. \citep{Darwiche_2002}
 \end{definition}
 
 \begin{definition}\label{kdef:query-ce}
 \textbf{Clausal Entailment (CE)} \\
-Given a sentence $\alpha$ and a clause $c$, decide whether $\alpha \models c$ (equivalently, whether $\alpha \wedge \neg c$ is unsatisfiable). \citep{Darwiche_2002}
+Given a representation $\alpha$ and a clause $c$, decide whether $\alpha \models c$ (equivalently, whether $\alpha \wedge \neg c$ is unsatisfiable). \citep{Darwiche_2002}
 \end{definition}
 
 \begin{definition}\label{kdef:query-im}
 \textbf{Implicant (IM)} \\
-Given a sentence $\alpha$ and a term $t$, decide whether $t \models \alpha$ (equivalently, whether $t \wedge \neg \alpha$ is unsatisfiable). \citep{Darwiche_2002}
+Given a representation $\alpha$ and a term $t$, decide whether $t \models \alpha$ (equivalently, whether $t \wedge \neg \alpha$ is unsatisfiable). \citep{Darwiche_2002}
 \end{definition}
 
 \begin{definition}\label{kdef:query-eq}
 \textbf{Equivalence (EQ)} \\
-Given two sentences $\alpha$ and $\beta$, decide whether $\alpha \equiv \beta$. \citep{Darwiche_2002}
+Given two representations $\alpha$ and $\beta$, decide whether $\alpha \equiv \beta$. \citep{Darwiche_2002}
 \end{definition}
 
 \begin{definition}\label{kdef:query-ct}
 \textbf{Model Counting (CT)} \\
-Given a sentence $\alpha$, compute the number of satisfying assignments: $|\{X:\alpha(X)=\top\}|$. \citep{Darwiche_2002}
+Given a representation $\alpha$, compute the number of satisfying assignments: $|\{X:\alpha(X)=\top\}|$. \citep{Darwiche_2002}
 \end{definition}
 
 \begin{definition}\label{kdef:query-me}
 \textbf{Model Enumeration (ME)} \\
-Given a sentence $\alpha$, enumerate all satisfying assignments, i.e., output $\{X:\alpha(X)=\top\}$. \citep{Darwiche_2002}
+Given a representation $\alpha$, enumerate all satisfying assignments, i.e., output $\{X:\alpha(X)=\top\}$. \citep{Darwiche_2002}
 \end{definition}
 
 \begin{definition}\label{kdef:query-se}
 \textbf{Sentential Entailment (SE)} \\
-Given sentences $\alpha$ and $\beta$, decide whether $\alpha \models \beta$. \citep{Darwiche_2002}
+Given representations $\alpha$ and $\beta$, decide whether $\alpha \models \beta$. \citep{Darwiche_2002}
 \end{definition}
 
 \begin{definition}\label{kdef:transformation-cd}
 \textbf{Conditioning (CD)} \\
-Given a sentence $\alpha$ and a consistent term $\gamma$, compute the conditioned sentence $\alpha|_{\gamma}$ obtained by substituting the assignments in $\gamma$. \citep{Darwiche_2002}
+Given a representation $\alpha$ and a consistent term $\gamma$, compute the conditioned representation $\alpha|_{\gamma}$ obtained by substituting the assignments in $\gamma$. \citep{Darwiche_2002}
 \end{definition}
 
 \begin{definition}\label{kdef:transformation-fo}
 \textbf{Forgetting (FO)} \\
-Given a sentence $\alpha$ and a set of variables $Y$, compute $\exists Y.\alpha$ (existentially quantifying the variables in $Y$). \citep{Darwiche_2002}
+Given a representation $\alpha$ and a set of variables $Y$, compute $\exists Y.\alpha$ (existentially quantifying the variables in $Y$). \citep{Darwiche_2002}
 \end{definition}
 
 \begin{definition}\label{kdef:transformation-sfo}
 \textbf{Singleton Forgetting (SFO)} \\
-Given a sentence $\alpha$ and a variable $x$, compute $\exists x.\alpha = (\alpha|_{x=0}) \vee (\alpha|_{x=1})$. \citep{Darwiche_2002}
+Given a representation $\alpha$ and a variable $x$, compute $\exists x.\alpha = (\alpha|_{x=0}) \vee (\alpha|_{x=1})$. \citep{Darwiche_2002}
 \end{definition}
 
 \begin{definition}\label{kdef:transformation-and-c}
 \textbf{Conjunction ($\wedge$C)} \\
-Given sentences $\alpha_1,\ldots,\alpha_m$, compute $\bigwedge_{i=1}^m \alpha_i$. \citep{Darwiche_2002}
+Given representations $\alpha_1,\ldots,\alpha_m$, compute $\bigwedge_{i=1}^m \alpha_i$. \citep{Darwiche_2002}
 \end{definition}
 
 \begin{definition}\label{kdef:transformation-and-bc}
 \textbf{Bounded Conjunction ($\wedge$BC)} \\
-Given two sentences $\alpha_1,\alpha_2$, compute $\alpha_1 \wedge \alpha_2$. \citep{Darwiche_2002}
+Given two representations $\alpha_1,\alpha_2$, compute $\alpha_1 \wedge \alpha_2$. \citep{Darwiche_2002}
 \end{definition}
 
 \begin{definition}\label{kdef:transformation-or-c}
 \textbf{Disjunction ($\vee$C)} \\
-Given sentences $\alpha_1,\ldots,\alpha_m$, compute $\bigvee_{i=1}^m \alpha_i$. \citep{Darwiche_2002}
+Given representations $\alpha_1,\ldots,\alpha_m$, compute $\bigvee_{i=1}^m \alpha_i$. \citep{Darwiche_2002}
 \end{definition}
 
 \begin{definition}\label{kdef:transformation-or-bc}
 \textbf{Bounded Disjunction ($\vee$BC)} \\
-Given two sentences $\alpha_1,\alpha_2$, compute $\alpha_1 \vee \alpha_2$. \citep{Darwiche_2002}
+Given two representations $\alpha_1,\alpha_2$, compute $\alpha_1 \vee \alpha_2$. \citep{Darwiche_2002}
 \end{definition}
 
 \begin{definition}\label{kdef:transformation-not-c}
 \textbf{Negation ($\neg$C)} \\
-Given a sentence $\alpha$, compute $\neg \alpha$. \citep{Darwiche_2002}
+Given a representation $\alpha$, compute $\neg \alpha$. \citep{Darwiche_2002}
 \end{definition}
 
 % =============================
