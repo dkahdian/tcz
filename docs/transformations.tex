@@ -126,12 +126,14 @@ As a result, because \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{S
 
 \begin{batchclaim}[id=tcz-obdd-d-dnnf-bounded-disjunction-lower-bound, op=OR_BC, status=no-quasi]
 For each language $\mathcal{L}$ such that \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{d-DNNF},
-$\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \citep{TCZ_Forthcoming}.
+$\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \citep{TCZ_Forthcoming,Bova_2016}.
 \end{batchclaim}
 \begin{claimdescription}
 There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by \langref{OBDD}{s} of size $O(n)$, such that any \langref{d-DNNF} computing $f\lor g$ has size $2^{\Omega(\sqrt{n})}$ \citep{TCZ_Forthcoming}.
 
 As a result, because \edgeref{OBDD}{$\mathcal{L}$} and \edgeref{$\mathcal{L}$}{d-DNNF}, $\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.
+
+Note that \citet[Theorem 9]{Bova_2016} proves the lower bound without explicitly noting the implication for Bounded Disjunction.
 \end{claimdescription}
 
 \begin{batchclaim}[id=vinall-smeeth-unambiguous-dnf-bounded-disjunction-lower-bound, op=OR_BC, status=no-poly-unknown-quasi]

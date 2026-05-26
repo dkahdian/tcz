@@ -174,10 +174,11 @@
           }
         ]
       },
-      "claimTemplate": "For each language $\\mathcal{L}$ such that \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{d-DNNF},\n$\\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \\citep{TCZ_Forthcoming}.",
-      "descriptionTemplate": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{d-DNNF}, $\\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.",
+      "claimTemplate": "For each language $\\mathcal{L}$ such that \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{d-DNNF},\n$\\mathcal{L}$ supports Bounded Disjunction not in quasipolynomial time \\citep{TCZ_Forthcoming,Bova_2016}.",
+      "descriptionTemplate": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{$\\mathcal{L}$} and \\edgeref{$\\mathcal{L}$}{d-DNNF}, $\\mathcal{L}$ cannot support bounded disjunction in quasipolynomial time.\n\nNote that \\citet[Theorem 9]{Bova_2016} proves the lower bound without explicitly noting the implication for Bounded Disjunction.",
       "refs": [
-        "TCZ_Forthcoming"
+        "TCZ_Forthcoming",
+        "Bova_2016"
       ]
     },
     {
@@ -1002,10 +1003,11 @@
             "complexity": "no-quasi",
             "refs": [
               "TCZ_Forthcoming",
+              "Bova_2016",
               "Capelli_2026",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{d-DNNF}, \\langref{d-DNNF} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{d-DNNF}, \\langref{d-DNNF} cannot support bounded disjunction in quasipolynomial time.\n\nNote that \\citet[Theorem 9]{Bova_2016} proves the lower bound without explicitly noting the implication for Bounded Disjunction.",
             "derived": false,
             "batchId": "tcz-obdd-d-dnnf-bounded-disjunction-lower-bound"
           },
@@ -1014,6 +1016,7 @@
             "refs": [
               "Darwiche_2002",
               "TCZ_Forthcoming",
+              "Bova_2016",
               "Capelli_2026",
               "Amarilli_2018"
             ],
@@ -2149,9 +2152,10 @@
             "complexity": "no-quasi",
             "refs": [
               "TCZ_Forthcoming",
+              "Bova_2016",
               "Darwiche_2002"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{FBDD} and \\edgeref{FBDD}{d-DNNF}, \\langref{FBDD} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{FBDD} and \\edgeref{FBDD}{d-DNNF}, \\langref{FBDD} cannot support bounded disjunction in quasipolynomial time.\n\nNote that \\citet[Theorem 9]{Bova_2016} proves the lower bound without explicitly noting the implication for Bounded Disjunction.",
             "derived": false,
             "batchId": "tcz-obdd-d-dnnf-bounded-disjunction-lower-bound"
           },
@@ -4931,9 +4935,10 @@
             "complexity": "no-quasi",
             "refs": [
               "TCZ_Forthcoming",
+              "Bova_2016",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{uFBDD} and \\edgeref{uFBDD}{d-DNNF}, \\langref{uFBDD} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{uFBDD} and \\edgeref{uFBDD}{d-DNNF}, \\langref{uFBDD} cannot support bounded disjunction in quasipolynomial time.\n\nNote that \\citet[Theorem 9]{Bova_2016} proves the lower bound without explicitly noting the implication for Bounded Disjunction.",
             "derived": false,
             "batchId": "tcz-obdd-d-dnnf-bounded-disjunction-lower-bound"
           },
@@ -4942,6 +4947,7 @@
             "refs": [
               "Darwiche_2002",
               "TCZ_Forthcoming",
+              "Bova_2016",
               "Amarilli_2018"
             ],
             "derived": true,
@@ -6138,9 +6144,10 @@
             "complexity": "no-quasi",
             "refs": [
               "TCZ_Forthcoming",
+              "Bova_2016",
               "Amarilli_2018"
             ],
-            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{dec-DNNF} and \\edgeref{dec-DNNF}{d-DNNF}, \\langref{dec-DNNF} cannot support bounded disjunction in quasipolynomial time.",
+            "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\edgeref{OBDD}{dec-DNNF} and \\edgeref{dec-DNNF}{d-DNNF}, \\langref{dec-DNNF} cannot support bounded disjunction in quasipolynomial time.\n\nNote that \\citet[Theorem 9]{Bova_2016} proves the lower bound without explicitly noting the implication for Bounded Disjunction.",
             "derived": false,
             "batchId": "tcz-obdd-d-dnnf-bounded-disjunction-lower-bound"
           },
