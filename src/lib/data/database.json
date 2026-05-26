@@ -39,7 +39,7 @@
         ]
       },
       "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langref{cSDD},\n  \\langref{d-SDNNF},\n  \\langref{DNNF},\n  \\langref{FBDD},\n  \\langref{nFBDD},\n  \\langref{nOBDD},\n  \\langref{SDD},\n  \\langref{SDNNF},\n  \\langref{uFBDD},\n  \\langref{uOBDD},\n  \\langref{OBDD},\n  \\langref{dec-DNNF},\n  \\langref{dec-SDNNF}\n\\},\n\\]\n$\\mathcal{L}$ supports Conjunction not in quasipolynomial time \\citep{Darwiche_2002,TCZ_Forthcoming}.",
-      "descriptionTemplate": "In the language $\\mathcal{L}$, every clause has a polynomial-size representation. If $\\mathcal{L}$ supported $\\land$C, then every \\langref{CNF} could be compiled into $\\mathcal{L}$ by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{$\\mathcal{L}$} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since $\\mathcal{L}$ does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate: Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, so a quasipolynomial Conjunction procedure would give a quasipolynomial Bounded Conjunction procedure.",
+      "descriptionTemplate": "In the language $\\mathcal{L}$, every clause has a polynomial-size representation. If $\\mathcal{L}$ supported $\\land$C, then every \\langref{CNF} could be compiled into $\\mathcal{L}$ by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{$\\mathcal{L}$} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since $\\mathcal{L}$ does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate.",
       "refs": [
         "Darwiche_2002",
         "TCZ_Forthcoming"
@@ -324,7 +324,7 @@
         ]
       },
       "claimTemplate": "For each language $\\mathcal{L}$ in\n\\[\n\\{\n  \\langref{cSDD},\n  \\langref{d-SDNNF},\n  \\langref{FBDD},\n  \\langref{uOBDD},\n  \\langref{OBDD},\n  \\langref{dec-DNNF},\n  \\langref{dec-SDNNF}\n\\},\n\\]\n$\\mathcal{L}$ supports Disjunction not in quasipolynomial time \\citep{Darwiche_2002,TCZ_Forthcoming}.",
-      "descriptionTemplate": "In the language $\\mathcal{L}$, every term has a polynomial-size representation. If $\\mathcal{L}$ supported $\\lor$C, then every \\langref{DNF} could be compiled into $\\mathcal{L}$ by disjoining the translated terms. This contradicts \\nedgeref{DNF}{$\\mathcal{L}$} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since $\\mathcal{L}$ does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate: Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, so a quasipolynomial Disjunction procedure would give a quasipolynomial Bounded Disjunction procedure.",
+      "descriptionTemplate": "In the language $\\mathcal{L}$, every term has a polynomial-size representation. If $\\mathcal{L}$ supported $\\lor$C, then every \\langref{DNF} could be compiled into $\\mathcal{L}$ by disjoining the translated terms. This contradicts \\nedgeref{DNF}{$\\mathcal{L}$} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since $\\mathcal{L}$ does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate.",
       "refs": [
         "Darwiche_2002",
         "TCZ_Forthcoming"
@@ -801,7 +801,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{cSDD}, every clause has a polynomial-size representation. If \\langref{cSDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{cSDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{cSDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{cSDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate: Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, so a quasipolynomial Conjunction procedure would give a quasipolynomial Bounded Conjunction procedure.",
+            "description": "In the language \\langref{cSDD}, every clause has a polynomial-size representation. If \\langref{cSDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{cSDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{cSDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{cSDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound-bounded-hard"
           },
@@ -813,7 +813,7 @@
               "VanDenBroeck_2015",
               "Amarilli_2018"
             ],
-            "description": "In the language \\langref{cSDD}, every term has a polynomial-size representation. If \\langref{cSDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{cSDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{cSDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{cSDD} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate: Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, so a quasipolynomial Disjunction procedure would give a quasipolynomial Bounded Disjunction procedure.",
+            "description": "In the language \\langref{cSDD}, every term has a polynomial-size representation. If \\langref{cSDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{cSDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{cSDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{cSDD} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound-bounded-hard"
           },
@@ -1267,7 +1267,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{d-SDNNF}, every clause has a polynomial-size representation. If \\langref{d-SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{d-SDNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{d-SDNNF} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{d-SDNNF} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate: Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, so a quasipolynomial Conjunction procedure would give a quasipolynomial Bounded Conjunction procedure.",
+            "description": "In the language \\langref{d-SDNNF}, every clause has a polynomial-size representation. If \\langref{d-SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{d-SDNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{d-SDNNF} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{d-SDNNF} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound-bounded-hard"
           },
@@ -1278,7 +1278,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "In the language \\langref{d-SDNNF}, every term has a polynomial-size representation. If \\langref{d-SDNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{d-SDNNF} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{d-SDNNF} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{d-SDNNF} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate: Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, so a quasipolynomial Disjunction procedure would give a quasipolynomial Bounded Disjunction procedure.",
+            "description": "In the language \\langref{d-SDNNF}, every term has a polynomial-size representation. If \\langref{d-SDNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{d-SDNNF} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{d-SDNNF} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{d-SDNNF} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound-bounded-hard"
           },
@@ -1972,7 +1972,7 @@
               "TCZ_Forthcoming",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{DNNF}, every clause has a polynomial-size representation. If \\langref{DNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{DNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{DNNF} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{DNNF} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate: Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, so a quasipolynomial Conjunction procedure would give a quasipolynomial Bounded Conjunction procedure.",
+            "description": "In the language \\langref{DNNF}, every clause has a polynomial-size representation. If \\langref{DNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{DNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{DNNF} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{DNNF} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound-bounded-hard"
           },
@@ -2171,7 +2171,7 @@
               "TCZ_Forthcoming",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{FBDD}, every clause has a polynomial-size representation. If \\langref{FBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{FBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{FBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{FBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate: Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, so a quasipolynomial Conjunction procedure would give a quasipolynomial Bounded Conjunction procedure.",
+            "description": "In the language \\langref{FBDD}, every clause has a polynomial-size representation. If \\langref{FBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{FBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{FBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{FBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound-bounded-hard"
           },
@@ -2182,7 +2182,7 @@
               "TCZ_Forthcoming",
               "Wegener_1987"
             ],
-            "description": "In the language \\langref{FBDD}, every term has a polynomial-size representation. If \\langref{FBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{FBDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{FBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{FBDD} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate: Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, so a quasipolynomial Disjunction procedure would give a quasipolynomial Bounded Disjunction procedure.",
+            "description": "In the language \\langref{FBDD}, every term has a polynomial-size representation. If \\langref{FBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{FBDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{FBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{FBDD} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound-bounded-hard"
           },
@@ -2806,7 +2806,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{nFBDD}, every clause has a polynomial-size representation. If \\langref{nFBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{nFBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{nFBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{nFBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate: Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, so a quasipolynomial Conjunction procedure would give a quasipolynomial Bounded Conjunction procedure.",
+            "description": "In the language \\langref{nFBDD}, every clause has a polynomial-size representation. If \\langref{nFBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{nFBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{nFBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{nFBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound-bounded-hard"
           },
@@ -3307,7 +3307,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{nOBDD}, every clause has a polynomial-size representation. If \\langref{nOBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{nOBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{nOBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{nOBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate: Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, so a quasipolynomial Conjunction procedure would give a quasipolynomial Bounded Conjunction procedure.",
+            "description": "In the language \\langref{nOBDD}, every clause has a polynomial-size representation. If \\langref{nOBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{nOBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{nOBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{nOBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound-bounded-hard"
           },
@@ -3940,7 +3940,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{SDD}, every clause has a polynomial-size representation. If \\langref{SDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{SDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{SDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{SDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate: Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, so a quasipolynomial Conjunction procedure would give a quasipolynomial Bounded Conjunction procedure.",
+            "description": "In the language \\langref{SDD}, every clause has a polynomial-size representation. If \\langref{SDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{SDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{SDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{SDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound-bounded-hard"
           },
@@ -4454,7 +4454,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{SDNNF}, every clause has a polynomial-size representation. If \\langref{SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{SDNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{SDNNF} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{SDNNF} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate: Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, so a quasipolynomial Conjunction procedure would give a quasipolynomial Bounded Conjunction procedure.",
+            "description": "In the language \\langref{SDNNF}, every clause has a polynomial-size representation. If \\langref{SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{SDNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{SDNNF} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{SDNNF} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound-bounded-hard"
           },
@@ -4955,7 +4955,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{uFBDD}, every clause has a polynomial-size representation. If \\langref{uFBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{uFBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{uFBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{uFBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate: Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, so a quasipolynomial Conjunction procedure would give a quasipolynomial Bounded Conjunction procedure.",
+            "description": "In the language \\langref{uFBDD}, every clause has a polynomial-size representation. If \\langref{uFBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{uFBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{uFBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{uFBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound-bounded-hard"
           },
@@ -5196,7 +5196,7 @@
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
-            "description": "In the language \\langref{uOBDD}, every term has a polynomial-size representation. If \\langref{uOBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{uOBDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{uOBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{uOBDD} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate: Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, so a quasipolynomial Disjunction procedure would give a quasipolynomial Bounded Disjunction procedure.",
+            "description": "In the language \\langref{uOBDD}, every term has a polynomial-size representation. If \\langref{uOBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{uOBDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{uOBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{uOBDD} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound-bounded-hard"
           },
@@ -5208,7 +5208,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{uOBDD}, every clause has a polynomial-size representation. If \\langref{uOBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{uOBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{uOBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{uOBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate: Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, so a quasipolynomial Conjunction procedure would give a quasipolynomial Bounded Conjunction procedure.",
+            "description": "In the language \\langref{uOBDD}, every clause has a polynomial-size representation. If \\langref{uOBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{uOBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{uOBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{uOBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound-bounded-hard"
           },
@@ -5421,7 +5421,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{OBDD}, every clause has a polynomial-size representation. If \\langref{OBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{OBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{OBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{OBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate: Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, so a quasipolynomial Conjunction procedure would give a quasipolynomial Bounded Conjunction procedure.",
+            "description": "In the language \\langref{OBDD}, every clause has a polynomial-size representation. If \\langref{OBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{OBDD} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{OBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{OBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound-bounded-hard"
           },
@@ -5432,7 +5432,7 @@
               "TCZ_Forthcoming",
               "Devadas_1993"
             ],
-            "description": "In the language \\langref{OBDD}, every term has a polynomial-size representation. If \\langref{OBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{OBDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{OBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{OBDD} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate: Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, so a quasipolynomial Disjunction procedure would give a quasipolynomial Bounded Disjunction procedure.",
+            "description": "In the language \\langref{OBDD}, every term has a polynomial-size representation. If \\langref{OBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{OBDD} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{OBDD} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{OBDD} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound-bounded-hard"
           },
@@ -6150,7 +6150,7 @@
               "Amarilli_2018",
               "Bova_2014"
             ],
-            "description": "In the language \\langref{dec-DNNF}, every clause has a polynomial-size representation. If \\langref{dec-DNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{dec-DNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{dec-DNNF} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{dec-DNNF} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate: Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, so a quasipolynomial Conjunction procedure would give a quasipolynomial Bounded Conjunction procedure.",
+            "description": "In the language \\langref{dec-DNNF}, every clause has a polynomial-size representation. If \\langref{dec-DNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{dec-DNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{dec-DNNF} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{dec-DNNF} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound-bounded-hard"
           },
@@ -6163,7 +6163,7 @@
               "Beame_2013",
               "Wegener_1987"
             ],
-            "description": "In the language \\langref{dec-DNNF}, every term has a polynomial-size representation. If \\langref{dec-DNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{dec-DNNF} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{dec-DNNF} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{dec-DNNF} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate: Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, so a quasipolynomial Disjunction procedure would give a quasipolynomial Bounded Disjunction procedure.",
+            "description": "In the language \\langref{dec-DNNF}, every term has a polynomial-size representation. If \\langref{dec-DNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{dec-DNNF} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{dec-DNNF} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{dec-DNNF} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound-bounded-hard"
           },
@@ -6397,7 +6397,7 @@
               "VanDenBroeck_2015",
               "Beame_2013"
             ],
-            "description": "In the language \\langref{dec-SDNNF}, every term has a polynomial-size representation. If \\langref{dec-SDNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{dec-SDNNF} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{dec-SDNNF} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{dec-SDNNF} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate: Disjunction implies Bounded Disjunction \\citep{Darwiche_2002}, so a quasipolynomial Disjunction procedure would give a quasipolynomial Bounded Disjunction procedure.",
+            "description": "In the language \\langref{dec-SDNNF}, every term has a polynomial-size representation. If \\langref{dec-SDNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{dec-SDNNF} by disjoining the translated terms. This contradicts \\nedgeref{DNF}{dec-SDNNF} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{dec-SDNNF} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-or-c-term-dnf-lower-bound-bounded-hard"
           },
@@ -6414,7 +6414,7 @@
               "Bova_2014",
               "Beame_2013"
             ],
-            "description": "In the language \\langref{dec-SDNNF}, every clause has a polynomial-size representation. If \\langref{dec-SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{dec-SDNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{dec-SDNNF} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{dec-SDNNF} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate: Conjunction implies Bounded Conjunction \\citep{Darwiche_2002}, so a quasipolynomial Conjunction procedure would give a quasipolynomial Bounded Conjunction procedure.",
+            "description": "In the language \\langref{dec-SDNNF}, every clause has a polynomial-size representation. If \\langref{dec-SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{dec-SDNNF} by conjoining the translated clauses. This contradicts \\nedgeref{CNF}{dec-SDNNF} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{dec-SDNNF} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate.",
             "derived": false,
             "batchId": "darwiche-and-c-clause-cnf-lower-bound-bounded-hard"
           },
