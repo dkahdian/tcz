@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 /**
  * Report database coverage, authored/derived claim counts, batch footprints,
  * citation usage, and optionally recomputation-based influence statistics.
@@ -21,6 +23,7 @@ import type {
 } from '../src/lib/types.js';
 
 type Category = 'edges' | 'queries' | 'transformations';
+type OperationCategory = Extract<Category, 'queries' | 'transformations'>;
 type CellState = 'closed' | 'partially-open' | 'open';
 type ClaimState = 'closed' | 'open';
 type CandidateKind = 'edge' | 'query' | 'transformation' | 'batch';
@@ -76,11 +79,14 @@ interface Report {
   };
 }
 
-const CLOSED_EDGE_STATUSES = new Set(['poly', 'no-poly-quasi', 'no-quasi']);
-const PARTIAL_EDGE_STATUSES = new Set(['unknown-poly-quasi', 'no-poly-unknown-quasi']);
-const OPEN_EDGE_STATUSES = new Set([null, 'unknown-both', 'unknown-to-us', 'unknown']);
-const CLOSED_OPERATION_STATUSES = new Set(['poly', 'no-poly-unknown-quasi', 'no-poly-quasi', 'no-quasi', 'not-poly']);
-const OPEN_OPERATION_STATUSES = new Set([undefined, null, 'unknown-to-us', 'unknown-both', 'unknown', 'unknown-poly-quasi']);
+type EdgeStatusCode = string | null;
+type OperationStatusCode = string | null | undefined;
+
+const CLOSED_EDGE_STATUSES: ReadonlySet<EdgeStatusCode> = new Set(['poly', 'no-poly-quasi', 'no-quasi']);
+const PARTIAL_EDGE_STATUSES: ReadonlySet<EdgeStatusCode> = new Set(['unknown-poly-quasi', 'no-poly-unknown-quasi']);
+const OPEN_EDGE_STATUSES: ReadonlySet<EdgeStatusCode> = new Set([null, 'unknown-both', 'unknown-to-us', 'unknown']);
+const CLOSED_OPERATION_STATUSES: ReadonlySet<OperationStatusCode> = new Set(['poly', 'no-poly-unknown-quasi', 'no-poly-quasi', 'no-quasi', 'not-poly']);
+const OPEN_OPERATION_STATUSES: ReadonlySet<OperationStatusCode> = new Set([undefined, null, 'unknown-to-us', 'unknown-both', 'unknown', 'unknown-poly-quasi']);
 
 function parseArgs(): Args {
   const args = process.argv.slice(2);
@@ -150,7 +156,7 @@ function buildGraphData(database: DatabaseSchema): GraphData {
   };
 }
 
-function getOperationCodes(database: DatabaseSchema, category: 'queries' | 'transformations'): string[] {
+function getOperationCodes(database: DatabaseSchema, category: OperationCategory): string[] {
   const operations = database.operations as { queries?: Record<string, unknown>; transformations?: Record<string, unknown> };
   return Object.keys(operations?.[category] ?? {});
 }
@@ -567,7 +573,7 @@ function removeCandidate(database: DatabaseSchema, candidate: InfluenceResult): 
   }
 
   if (candidate.kind === 'query' || candidate.kind === 'transformation') {
-    const [category, languageId, opCode] = candidate.key.split(':') as [Category, string, string];
+    const [category, languageId, opCode] = candidate.key.split(':') as [OperationCategory, string, string];
     const language = modified.languages.find((item) => item.id === languageId);
     if (language?.properties?.[category]) {
       language.properties[category]![opCode] = { complexity: 'unknown-to-us', refs: [] };

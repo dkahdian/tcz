@@ -9,7 +9,7 @@
     KCReference,
     SelectedOperationCell
   } from '$lib/types.js';
-  import { resolveLanguageProperties } from '$lib/data/operations.js';
+  import { displayCodeToSafeKey, resolveLanguageProperties } from '$lib/data/operations.js';
   import { extractCitationKeys, formatAssumptionForMathText } from '$lib/utils/math-text.js';
   import { getGlobalRefNumber } from '$lib/data/references.js';
   import DynamicLegend from './DynamicLegend.svelte';
@@ -34,6 +34,32 @@
   const isOperationsView = $derived(viewMode === 'queries' || viewMode === 'transforms');
   const isStudiedOperation = (op: KCOpEntry) =>
     op.complexity !== 'unknown-to-us' || Boolean(op.assumption || op.description || op.refs?.length);
+  const isActiveOperationType = (opType: 'query' | 'transformation') =>
+    (viewMode === 'queries' && opType === 'query') ||
+    (viewMode === 'transforms' && opType === 'transformation');
+
+  function hasOperationVisibility(data: GraphData | FilteredGraphData): data is FilteredGraphData {
+    return 'visibleQueryIds' in data && 'visibleTransformationIds' in data;
+  }
+
+  function isVisibleOperation(op: KCOpEntry, opType: 'query' | 'transformation') {
+    const sourceData = filteredGraphData ?? graphData;
+    if (!hasOperationVisibility(sourceData)) return true;
+
+    if (opType === 'query') {
+      return sourceData.visibleQueryIds.has(op.code);
+    }
+
+    const safeKey = displayCodeToSafeKey(op.code);
+    return sourceData.visibleTransformationIds.has(safeKey) || sourceData.visibleTransformationIds.has(op.code);
+  }
+
+  function shouldShowOperation(op: KCOpEntry, opType: 'query' | 'transformation') {
+    if (isActiveOperationType(opType)) {
+      return isVisibleOperation(op, opType);
+    }
+    return isStudiedOperation(op);
+  }
 
   // Use filteredGraphData for the legend if provided, otherwise fall back to graphData
   const legendGraphData = $derived(filteredGraphData ?? graphData);
@@ -221,8 +247,8 @@
           </div>
           {/snippet}
 
-          {@render operationSection('Queries', (resolvedProperties?.queries ?? []).filter(isStudiedOperation), 'query')}
-          {@render operationSection('Transformations', (resolvedProperties?.transformations ?? []).filter(isStudiedOperation), 'transformation')}
+          {@render operationSection('Queries', (resolvedProperties?.queries ?? []).filter((op) => shouldShowOperation(op, 'query')), 'query')}
+          {@render operationSection('Transformations', (resolvedProperties?.transformations ?? []).filter((op) => shouldShowOperation(op, 'transformation')), 'transformation')}
         </div>
         
         <ReferenceList references={allReferences} bind:anchorElement={referencesSection} />
