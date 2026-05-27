@@ -11,6 +11,7 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"deploy": "npm run build",
+		"stats": "npx tsx scripts/database-stats.ts",
 		"refresh": "npx tsx scripts/refresh-derived.ts",
 		"to-json": "npx tsx scripts/latex-bijection.ts --to-json",
 		"to-latex": "npx tsx scripts/latex-bijection.ts --to-latex && npm run push-overleaf",
