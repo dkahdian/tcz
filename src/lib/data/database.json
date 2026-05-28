@@ -18365,7 +18365,14 @@
             ]
           }
         },
-        null,
+        {
+          "status": "unknown-both",
+          "description": "\\citet[Theorem 1]{VanDenBroeck_2015} gives a class of Boolean functions $f_m$ and corresponding vtrees $T_m$ such that $f_m$ has an \\langfam{SDD}{T_m} representation of size $O(m^2)$, yet the canonical \\langfam{SDD}{T_m} representation of $f_m$ has size $\\Omega(2^m)$. This separates uncompressed from compressed \\langref{SDD}{s} when the vtree is held fixed. However, ruling out polynomial-size \\langfam{cSDD}{T'} representations of these functions for every target vtree $T'$ remains open.",
+          "refs": [
+            "VanDenBroeck_2015"
+          ],
+          "derived": false
+        },
         {
           "status": "unknown-poly-quasi",
           "refs": [

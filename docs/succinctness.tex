@@ -765,6 +765,13 @@ For any fixed vtree $T$, \langfam{cSDD}{T} is the compressed subset of \langfam{
 \end{claimdescription}
 
 \begin{claim}
+\langfam{SDD}{T} has unknown compilation to \langfam{cSDD}{T} \citep{VanDenBroeck_2015}
+\end{claim}
+\begin{claimdescription}
+\citet[Theorem 1]{VanDenBroeck_2015} gives a class of Boolean functions $f_m$ and corresponding vtrees $T_m$ such that $f_m$ has an \langfam{SDD}{T_m} representation of size $O(m^2)$, yet the canonical \langfam{SDD}{T_m} representation of $f_m$ has size $\Omega(2^m)$. This separates uncompressed from compressed \langref{SDD}{s} when the vtree is held fixed. However, ruling out polynomial-size \langfam{cSDD}{T'} representations of these functions for every target vtree $T'$ remains open.
+\end{claimdescription}
+
+\begin{claim}
 \langref{SDD} is polynomial-time compilable to \langref{d-SDNNF} \citep{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
