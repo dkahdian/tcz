@@ -32,11 +32,6 @@
   } = $props();
 
   const isOperationsView = $derived(viewMode === 'queries' || viewMode === 'transforms');
-  const isStudiedOperation = (op: KCOpEntry) =>
-    op.complexity !== 'unknown-to-us' || Boolean(op.assumption || op.description || op.refs?.length);
-  const isActiveOperationType = (opType: 'query' | 'transformation') =>
-    (viewMode === 'queries' && opType === 'query') ||
-    (viewMode === 'transforms' && opType === 'transformation');
 
   function hasOperationVisibility(data: GraphData | FilteredGraphData): data is FilteredGraphData {
     return 'visibleQueryIds' in data && 'visibleTransformationIds' in data;
@@ -55,10 +50,7 @@
   }
 
   function shouldShowOperation(op: KCOpEntry, opType: 'query' | 'transformation') {
-    if (isActiveOperationType(opType)) {
-      return isVisibleOperation(op, opType);
-    }
-    return isStudiedOperation(op);
+    return isVisibleOperation(op, opType);
   }
 
   // Use filteredGraphData for the legend if provided, otherwise fall back to graphData

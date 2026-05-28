@@ -635,14 +635,15 @@
     position: sticky;
     top: 0;
     background: #f8fafc;
-    z-index: 50;
+    z-index: 70;
     border-bottom: 1px solid #e5e7eb;
     height: 5rem !important;
   }
 
   .corner-cell {
+    left: 0;
     background: #e5e7eb;
-    z-index: 60;
+    z-index: 90;
     border-left: 1px solid #e5e7eb;
     height: 5rem;
   }
@@ -661,7 +662,7 @@
   .row-header {
     position: sticky;
     left: 0;
-    z-index: 50;
+    z-index: 60;
     background: #f8fafc;
     border-left: 1px solid #e5e7eb;
   }
