@@ -1,7 +1,7 @@
 % =============================
 % Tractable Circuit Zoo - Succinctness Claims and Descriptions
 % Auto-generated from database.json
-% Generated: 2026-05-26T19:35:13.963Z
+% Generated: 2026-06-04T20:12:45.938Z
 % 
 % EDITING INSTRUCTIONS:
 % - Claim environments are auto-generated. Do NOT edit.
@@ -716,14 +716,42 @@ For any fixed vtree $T$, a simple function can be chosen so that every \langfam{
 
 
 % =============================
-\section{P. Beame and J. Li and S. Roy and D. Suciu, "Model Counting of Query Expressions...}
-% Reference ID: Beame_2013
+\section{G. Van den Broeck and A. Darwiche, "On the Role of Canonicity in Knowledge Compi...}
+% Reference ID: VanDenBroeck_2015
 % =============================
 \begin{claim}
-\langref{d-DNNF} is not quasipolynomial-time compilable to \langref{dec-DNNF} \citep{Beame_2013}
+\langref{cSDD} is polynomial-time compilable to \langref{SDD} \citep{VanDenBroeck_2015}
 \end{claim}
 \begin{claimdescription}
-Shown by \citet[Corollary 3.5]{Beame_2013}.
+For each fixed vtree $T$, \langfam{cSDD}{T} is the compressed subset of \langfam{SDD}{T}, so compilation between \langref{cSDD} and \langref{SDD} is trivial.
+\end{claimdescription}
+
+\begin{claim}
+\langfam{cSDD}{T} is polynomial-time compilable to \langfam{SDD}{T} \citep{VanDenBroeck_2015}
+\end{claim}
+\begin{claimdescription}
+For any fixed vtree $T$, \langfam{cSDD}{T} is the compressed subset of \langfam{SDD}{T}, so compilation is trivial.
+\end{claimdescription}
+
+\begin{claim}
+\langref{SDD} is polynomial-time compilable to \langref{d-SDNNF} \citep{VanDenBroeck_2015}
+\end{claim}
+\begin{claimdescription}
+For each fixed vtree $T$, \langfam{SDD}{T} $\subset$ \langfam{d-SDNNF}{T}, so compilation is trivial.
+\end{claimdescription}
+
+\begin{claim}
+\langfam{SDD}{T} has unknown compilation to \langfam{cSDD}{T} \citep{VanDenBroeck_2015}
+\end{claim}
+\begin{claimdescription}
+\citet[Theorem 1]{VanDenBroeck_2015} gives a class of Boolean functions $f_m$ and corresponding vtrees $T_m$ such that $f_m$ has an \langfam{SDD}{T_m} representation of size $O(m^2)$, yet the canonical \langfam{SDD}{T_m} representation of $f_m$ has size $\Omega(2^m)$. This separates uncompressed from compressed \langref{SDD}{s} when the vtree is held fixed. However, ruling out polynomial-size \langfam{cSDD}{T'} representations of these functions for every target vtree $T'$ remains open.
+\end{claimdescription}
+
+\begin{claim}
+\langfam{SDD}{T} is polynomial-time compilable to \langfam{d-SDNNF}{T} \citep{VanDenBroeck_2015}
+\end{claim}
+\begin{claimdescription}
+For any fixed vtree $T$, \langfam{SDD}{T} is a strict subset of \langfam{d-SDNNF}{T}, so compilation is trivial.
 \end{claimdescription}
 
 
@@ -743,46 +771,6 @@ Shown by \citet[Corollary 3.5]{Beame_2013}.
 \end{claim}
 \begin{claimdescription}
 \langref{SDNNF} is the union of the fixed-vtree families \langfam{SDNNF}{T}. Hence any \langfam{SDNNF}{T} formula is already an \langref{SDNNF} formula, so the compilation is trivial and polynomial-time.
-\end{claimdescription}
-
-
-% =============================
-\section{G. Van den Broeck and A. Darwiche, "On the Role of Canonicity in Knowledge Compi...}
-% Reference ID: VanDenBroeck_2015
-% =============================
-\begin{claim}
-\langref{cSDD} is polynomial-time compilable to \langref{SDD} \citep{VanDenBroeck_2015}
-\end{claim}
-\begin{claimdescription}
-For each fixed vtree $T$, \langfam{cSDD}{T} is the compressed subset of \langfam{SDD}{T}, so compilation between \langref{cSDD} and \langref{SDD} is trivial.
-\end{claimdescription}
-
-\begin{claim}
-\langfam{cSDD}{T} is polynomial-time compilable to \langfam{SDD}{T} \citep{VanDenBroeck_2015}
-\end{claim}
-\begin{claimdescription}
-For any fixed vtree $T$, \langfam{cSDD}{T} is the compressed subset of \langfam{SDD}{T}, so compilation is trivial.
-\end{claimdescription}
-
-\begin{claim}
-\langfam{SDD}{T} has unknown compilation to \langfam{cSDD}{T} \citep{VanDenBroeck_2015}
-\end{claim}
-\begin{claimdescription}
-\citet[Theorem 1]{VanDenBroeck_2015} gives a class of Boolean functions $f_m$ and corresponding vtrees $T_m$ such that $f_m$ has an \langfam{SDD}{T_m} representation of size $O(m^2)$, yet the canonical \langfam{SDD}{T_m} representation of $f_m$ has size $\Omega(2^m)$. This separates uncompressed from compressed \langref{SDD}{s} when the vtree is held fixed. However, ruling out polynomial-size \langfam{cSDD}{T'} representations of these functions for every target vtree $T'$ remains open.
-\end{claimdescription}
-
-\begin{claim}
-\langref{SDD} is polynomial-time compilable to \langref{d-SDNNF} \citep{VanDenBroeck_2015}
-\end{claim}
-\begin{claimdescription}
-For each fixed vtree $T$, \langfam{SDD}{T} $\subset$ \langfam{d-SDNNF}{T}, so compilation is trivial.
-\end{claimdescription}
-
-\begin{claim}
-\langfam{SDD}{T} is polynomial-time compilable to \langfam{d-SDNNF}{T} \citep{VanDenBroeck_2015}
-\end{claim}
-\begin{claimdescription}
-For any fixed vtree $T$, \langfam{SDD}{T} is a strict subset of \langfam{d-SDNNF}{T}, so compilation is trivial.
 \end{claimdescription}
 
 
@@ -936,7 +924,7 @@ The Quine-McCluskey algorithm generates an \langref{IP} formula in polynomial ti
 \langref{FBDD} is not quasipolynomial-time compilable to \langref{SDNNF} \citep{Capelli_2016,Pipatsrisawat_2010}
 \end{claim}
 \begin{claimdescription}
-\citet[Appendix D.2]{Pipatsrisawat_2010} and \citet[Section 6.3]{Capelli_2016} independently proved this result using different techniques.
+\citet{Pipatsrisawat_2010} and \citet[Section 6.3]{Capelli_2016} independently proved this result using different techniques.
 \end{claimdescription}
 
 
