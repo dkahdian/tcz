@@ -36,7 +36,6 @@
     LanguageToAdd,
     ReferenceToAdd,
     RelationshipEntry,
-    SeparatingFunctionToAdd,
     SubmissionHistoryPayload
   } from './contribute/types.js';
   import type {
@@ -55,7 +54,6 @@
     languagesToEdit: LanguageToAdd[];
     relationships: RelationshipEntry[];
     newReferences: ReferenceToAdd[];
-    newSeparatingFunctions: SeparatingFunctionToAdd[];
   };
 
   function deriveQueueCollections(entries: ContributionQueueEntry[]): DerivedQueueCollections {
@@ -63,8 +61,7 @@
       languagesToAdd: [],
       languagesToEdit: [],
       relationships: [],
-      newReferences: [],
-      newSeparatingFunctions: []
+      newReferences: []
     };
 
     for (const entry of entries) {
@@ -80,9 +77,6 @@
           break;
         case 'reference':
           collections.newReferences.push(entry.payload);
-          break;
-        case 'separator':
-          collections.newSeparatingFunctions.push(entry.payload);
           break;
         default:
           break;
@@ -139,6 +133,11 @@
     if (storedViewMode === 'graph' || storedViewMode === 'succinctness' || storedViewMode === 'queries' || storedViewMode === 'transforms') {
       viewMode = storedViewMode;
     }
+    if (viewMode === 'graph') {
+      isSandboxMode = false;
+      sandboxSelection = null;
+      sandboxError = null;
+    }
 
     $effect(() => {
       if (browser) {
@@ -183,7 +182,7 @@
       }
     }
 
-    if (!isPreviewMode) {
+    if (!isPreviewMode && viewMode !== 'graph') {
       const storedSandbox = loadSandboxState();
       if (storedSandbox) {
         const evaluation = applySandboxEdits(initialGraphData, storedSandbox.edits);
@@ -275,8 +274,7 @@
         languagesToAdd,
         languagesToEdit,
         relationships,
-        newReferences,
-        newSeparatingFunctions
+        newReferences
       } = deriveQueueCollections(queue.entries ?? []);
 
       const changedRelationships = relationships.filter((rel) =>
@@ -305,7 +303,9 @@
         queue: queuePayload
       };
 
-      // Submit via GitHub API
+      // Submit via GitHub API. This token is intentionally public and scoped only
+      // to triggering the contribution dispatch flow for user-submitted data.
+      // If its GitHub permissions ever expand, replace this with a server-side token.
       const t1 = 'github_pat_11BODXYDQ0Fw5d4huTq6Ff_0w6DLns2rxcWbDjrX4oQz';
       const t2 = 'uYuSB5EGMOq31ueJ64VNZjTICPO27KQESFcK7l';
       const token = t1 + t2;
@@ -335,7 +335,6 @@
         languagesToEdit,
         relationships,
         newReferences,
-        newSeparatingFunctions,
         customTags: queue.customTags ?? [],
         modifiedRelations: modifiedRelationKeys,
         contributor: contributorInfo,
@@ -367,10 +366,14 @@
   // Compute filtered graph data reactively
   const baseGraphData = $derived(activeSandboxGraphData || previewGraphData || initialGraphData);
   const filteredGraphData = $derived(applyFiltersWithParams(baseGraphData, languageFilters, edgeFilters, filterStates, viewMode));
+  const graphFilterStates = $derived(computeEffectiveFilterState(languageFilters, edgeFilters, 'graph', filterDeltas));
+  const canonicalGraphData = $derived(applyFiltersWithParams(initialGraphData, languageFilters, edgeFilters, graphFilterStates, 'graph'));
+  const displayedBaseGraphData = $derived(viewMode === 'graph' ? initialGraphData : baseGraphData);
+  const displayedFilteredGraphData = $derived(viewMode === 'graph' ? canonicalGraphData : filteredGraphData);
   const showQuasipolynomialSandboxOptions = $derived(filterStates.get('poly-display') === true);
 
   function hasBaseEdge(sourceId: string, targetId: string) {
-    const { adjacencyMatrix } = baseGraphData;
+    const { adjacencyMatrix } = displayedBaseGraphData;
     const sourceIdx = adjacencyMatrix.indexByLanguage[sourceId];
     const targetIdx = adjacencyMatrix.indexByLanguage[targetId];
     if (sourceIdx === undefined || targetIdx === undefined) return false;
@@ -406,6 +409,7 @@
 
   function handleSetSandboxMode(enabled: boolean) {
     if (isPreviewMode) return;
+    if (viewMode === 'graph') return;
     if (isSandboxMode === enabled) return;
     isSandboxMode = enabled;
     sandboxSelection = null;
@@ -547,6 +551,11 @@
   function switchViewMode(newMode: ViewMode) {
     if (viewMode === newMode) return;
     clearSelectedCells();
+    if (newMode === 'graph') {
+      isSandboxMode = false;
+      sandboxSelection = null;
+      sandboxError = null;
+    }
     viewMode = newMode;
     filterStates = computeEffectiveFilterState(languageFilters, edgeFilters, newMode, filterDeltas);
   }
@@ -555,7 +564,7 @@
   // Hash-based navigation for entity links (lang, edge, op)
   // =========================================================================
   function navigateToHash(hash: string) {
-    const data = baseGraphData;
+    const data = displayedBaseGraphData;
     const parts = hash.split('/');
     const type = parts[0];
 
@@ -674,7 +683,7 @@
   // Reset selected node if it's no longer visible after filtering
   $effect(() => {
     if (selectedNode) {
-      const isVisible = filteredGraphData.visibleLanguageIds.has(selectedNode.id);
+      const isVisible = displayedFilteredGraphData.visibleLanguageIds.has(selectedNode.id);
       if (!isVisible) {
         selectedNode = null;
       }
@@ -686,7 +695,7 @@
     if (selectedEdge) {
       const edgeId = `${selectedEdge.source}->${selectedEdge.target}`;
       const reverseEdgeId = `${selectedEdge.target}->${selectedEdge.source}`;
-      const isVisible = filteredGraphData.visibleEdgeIds.has(edgeId) || filteredGraphData.visibleEdgeIds.has(reverseEdgeId);
+      const isVisible = displayedFilteredGraphData.visibleEdgeIds.has(edgeId) || displayedFilteredGraphData.visibleEdgeIds.has(reverseEdgeId);
       if (!isVisible && !hasBaseEdge(selectedEdge.source, selectedEdge.target)) {
         selectedEdge = null;
       }
@@ -736,22 +745,24 @@
           <a href="/about" class="about-link">
             About
           </a>
-          {#if isSandboxMode}
+          {#if viewMode !== 'graph' && isSandboxMode}
             <button type="button" class="sandbox-reset" disabled={sandboxEdits.length === 0} onclick={handleResetSandbox}>
               Reset
             </button>
           {/if}
-          <button
-            type="button"
-            class={`sandbox-toggle ${isSandboxMode ? 'is-active' : ''}`}
-            aria-pressed={isSandboxMode}
-            onclick={() => handleSetSandboxMode(!isSandboxMode)}
-          >
-            <span>Sandbox</span>
-            {#if sandboxEdits.length > 0}
-              <strong>{sandboxEdits.length}</strong>
-            {/if}
-          </button>
+          {#if viewMode !== 'graph'}
+            <button
+              type="button"
+              class={`sandbox-toggle ${isSandboxMode ? 'is-active' : ''}`}
+              aria-pressed={isSandboxMode}
+              onclick={() => handleSetSandboxMode(!isSandboxMode)}
+            >
+              <span>Sandbox</span>
+              {#if sandboxEdits.length > 0}
+                <strong>{sandboxEdits.length}</strong>
+              {/if}
+            </button>
+          {/if}
         {/if}
         <div class="view-toggle" role="group" aria-label="Visualization mode">
           {#each VIEW_MODES as mode}
@@ -769,7 +780,7 @@
         </div>
         <FilterDrawer 
           filters={allFilters}
-          languages={baseGraphData.languages}
+          languages={displayedBaseGraphData.languages}
           {filterStates}
           {viewMode}
           onFilterChange={handleFilterChange}
@@ -783,7 +794,7 @@
   <main class="app-main">
     <section class="visual-panel" data-view={viewMode}>
       {#if viewMode === 'graph'}
-        <KCGraph graphData={filteredGraphData} bind:selectedNode bind:selectedEdge />
+        <KCGraph graphData={displayedFilteredGraphData} bind:selectedNode bind:selectedEdge />
       {/if}
       {#if succinctnessMounted}
         <div class="keep-alive-wrapper" class:is-active={viewMode === 'succinctness'}>
@@ -850,8 +861,8 @@
           <OperationInfo 
             {selectedOperation}
             {selectedOperationCell}
-            graphData={baseGraphData}
-            filteredGraphData={filteredGraphData}
+            graphData={displayedBaseGraphData}
+            filteredGraphData={displayedFilteredGraphData}
             {viewMode}
             onLanguageSelect={(lang) => {
               selectedOperation = null;
@@ -867,8 +878,8 @@
           <OperationInfo 
             {selectedOperation}
             {selectedOperationCell}
-            graphData={baseGraphData}
-            filteredGraphData={filteredGraphData}
+            graphData={displayedBaseGraphData}
+            filteredGraphData={displayedFilteredGraphData}
             {viewMode}
             onLanguageSelect={(lang) => {
               selectedOperation = null;
@@ -883,8 +894,8 @@
         {:else if selectedNode}
           <LanguageInfo 
             selectedLanguage={selectedNode} 
-            graphData={baseGraphData}
-            filteredGraphData={filteredGraphData}
+            graphData={displayedBaseGraphData}
+            filteredGraphData={displayedFilteredGraphData}
             onOperationCellSelect={(cell) => {
               selectedNode = null;
               selectedOperationCell = cell;
@@ -895,25 +906,25 @@
           <OperationInfo 
             selectedOperation={null}
             selectedOperationCell={null}
-            graphData={baseGraphData}
-            filteredGraphData={filteredGraphData}
+            graphData={displayedBaseGraphData}
+            filteredGraphData={displayedFilteredGraphData}
             {viewMode}
           />
         {/if}
       {:else if selectedEdge}
-        <EdgeInfo selectedEdge={selectedEdge} graphData={baseGraphData} filteredGraphData={filteredGraphData} viewMode={viewMode} />
+        <EdgeInfo selectedEdge={selectedEdge} graphData={displayedBaseGraphData} filteredGraphData={displayedFilteredGraphData} viewMode={viewMode} />
       {:else if selectedNode}
         <LanguageInfo 
           selectedLanguage={selectedNode} 
-          graphData={baseGraphData}
-          filteredGraphData={filteredGraphData}
+          graphData={displayedBaseGraphData}
+          filteredGraphData={displayedFilteredGraphData}
           viewMode={viewMode}
         />
       {:else}
         <LanguageInfo 
           selectedLanguage={null} 
-          graphData={baseGraphData}
-          filteredGraphData={filteredGraphData}
+          graphData={displayedBaseGraphData}
+          filteredGraphData={displayedFilteredGraphData}
           viewMode={viewMode}
         />
       {/if}

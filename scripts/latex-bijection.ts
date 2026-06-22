@@ -12,7 +12,6 @@
  *    - Generates definitions.tex (core conceptual definitions)
  *    - Generates queries.tex (query operation support claims, non-derived only)
  *    - Generates transformations.tex (transformation operation support claims, non-derived only)
- *    - Generates separating-functions.tex (separating function definitions)
  *    - Generates refs.bib (BibTeX references)
  * 
  * 2. LaTeX → JSON (--to-json):
@@ -52,7 +51,6 @@ const DEFAULT_DEFINITIONS_OUTPUT = path.join(__dirname, '..', 'docs', 'definitio
 const DEFAULT_BIBTEX_OUTPUT = path.join(__dirname, '..', 'docs', 'refs.bib');
 const DEFAULT_QUERIES_OUTPUT = path.join(__dirname, '..', 'docs', 'queries.tex');
 const DEFAULT_TRANSFORMS_OUTPUT = path.join(__dirname, '..', 'docs', 'transformations.tex');
-const DEFAULT_SEPFUNCS_OUTPUT = path.join(__dirname, '..', 'docs', 'separating-functions.tex');
 
 // Import types
 import type { 
@@ -61,7 +59,6 @@ import type {
   KCDefinition,
   KCLanguage, 
   KCReference,
-  KCSeparatingFunction,
   KCOpSupport,
   KCOpSupportMap,
   KCBatchClaim,
@@ -82,7 +79,6 @@ interface Edge {
   assumption: string;
   refs: string[];
   derived: boolean;
-  separatingFunctionIds?: string[];
   // For no-poly-quasi edges with structured proofs
   noPolyDescription?: { description: string; refs: string[]; derived: boolean };
   quasiDescription?: { description: string; refs: string[]; derived: boolean };
@@ -304,7 +300,6 @@ function extractEdges(database: DatabaseSchema): Edge[] {
         assumption: relation.assumption || '',
         refs: relation.refs || [],
         derived: false, // We skip derived edges above
-        separatingFunctionIds: relation.separatingFunctionIds,
         noPolyDescription: relation.noPolyDescription,
         quasiDescription: relation.quasiDescription
       });
@@ -516,13 +511,7 @@ function generateClaim(edge: Edge): string {
     proofSketch = edge.description || '(Description needed)';
   }
   
-  // Build separator comment if applicable
-  const sepComment = edge.separatingFunctionIds && edge.separatingFunctionIds.length > 0
-    ? `% separators=${edge.separatingFunctionIds.join(',')}
-`
-    : '';
-
-  return `${sepComment}\\begin{claim}
+  return `\\begin{claim}
 ${claimText}
 \\end{claim}
 \\begin{claimdescription}
@@ -703,7 +692,6 @@ interface ParsedClaim {
   proofSketch: string;  // Copied directly to description field
   refs: string[];       // References from the claim line
   derived: boolean;
-  separatingFunctionIds?: string[];  // Separating functions referenced by this edge
 }
 
 /**
@@ -810,8 +798,6 @@ function parseLatex(latexContent: string): ParsedClaim[] {
   const lines = latexContent.split('\n');
   let i = 0;
   let isDerived = false;
-  
-  let pendingSeparators: string[] | undefined = undefined;
 
   while (i < lines.length) {
     const line = lines[i].trimEnd();
@@ -823,14 +809,6 @@ function parseLatex(latexContent: string): ParsedClaim[] {
       continue;
     }
 
-    // Check for separator metadata comment
-    const sepMatch = line.match(/^%\s*separators=(.+)$/);
-    if (sepMatch) {
-      pendingSeparators = sepMatch[1].split(',').map(s => s.trim()).filter(s => s.length > 0);
-      i++;
-      continue;
-    }
-    
     // Look for claim start: \begin{claim} (skip comment lines)
     if (line.includes('\\begin{claim}') && !line.trimStart().startsWith('%')) {
       const claimStartLine = line;
@@ -847,11 +825,7 @@ function parseLatex(latexContent: string): ParsedClaim[] {
       // Find and collect description content
       let proofContent = '';
       while (i < lines.length && !lines[i].includes('\\begin{claimdescription}')) {
-        // Check for separator metadata in comments between claim and description
-        const sepMatchInner = lines[i].match(/^%\s*separators=(.+)$/);
-        if (sepMatchInner) {
-          pendingSeparators = sepMatchInner[1].split(',').map(s => s.trim()).filter(s => s.length > 0);
-        } else if (lines[i].trim() && !lines[i].trim().startsWith('%')) {
+        if (lines[i].trim() && !lines[i].trim().startsWith('%')) {
           // Skip empty lines and comments between claim and description
           console.warn(`Unexpected content between claim and description: ${lines[i]}`);
         }
@@ -876,14 +850,10 @@ function parseLatex(latexContent: string): ParsedClaim[] {
       );
       
       if (parsed) {
-        if (pendingSeparators && pendingSeparators.length > 0) {
-          parsed.separatingFunctionIds = pendingSeparators;
-        }
         claims.push(parsed);
       }
       
       isDerived = false;
-      pendingSeparators = undefined;
       continue;
     }
     
@@ -974,9 +944,6 @@ function updateDatabase(database: DatabaseSchema, claims: ParsedClaim[]): void {
       if (claim.assumption) {
         existing.assumption = claim.assumption;
       }
-      if (claim.separatingFunctionIds && claim.separatingFunctionIds.length > 0) {
-        existing.separatingFunctionIds = claim.separatingFunctionIds;
-      }
       matrix[fromIdx][toIdx] = existing;
       console.log(`  Created new edge: ${claim.fromName} -> ${claim.toName} (${claim.status})`);
       created++;
@@ -994,9 +961,6 @@ function updateDatabase(database: DatabaseSchema, claims: ParsedClaim[]): void {
         existing.assumption = claim.assumption;
       } else {
         delete existing.assumption;
-      }
-      if (claim.separatingFunctionIds && claim.separatingFunctionIds.length > 0) {
-        existing.separatingFunctionIds = claim.separatingFunctionIds;
       }
       // Clean up derivation metadata
       delete existing.derivationOrder;
@@ -1029,14 +993,6 @@ function updateDatabase(database: DatabaseSchema, claims: ParsedClaim[]): void {
       delete existing.assumption;
     }
 
-    // Update separating function IDs
-    if (claim.separatingFunctionIds && claim.separatingFunctionIds.length > 0) {
-      existing.separatingFunctionIds = claim.separatingFunctionIds;
-    } else if (existing.separatingFunctionIds) {
-      // If separators were removed from LaTeX, remove from DB too
-      delete existing.separatingFunctionIds;
-    }
-    
     // Note: We don't update the status because it's auto-generated in LaTeX
     // and changing it would break the bijection. Status changes should be
     // made directly in the database.
@@ -1799,250 +1755,6 @@ function updateDefinitionsFromLatex(database: DatabaseSchema, parsed: ParsedConc
 
   database.definitions = current;
   console.log(`Updated ${updated} conceptual definitions, created ${created} new`);
-}
-
-// =============================================================================
-// Separating Functions LaTeX Generation and Parsing
-// =============================================================================
-
-/**
- * Generate a single separating function definition block.
- * 
- * Format:
- *   \begin{definition}[SHORTNAME]\label{sf:SAFE_LABEL}
- *   \textbf{NAME} \\
- *   DESCRIPTION \citep{REFS}?
- *   \end{definition}
- */
-function generateSepFuncDefinition(sf: KCSeparatingFunction): string {
-  const safeLabel = sf.shortName.replace(/[^a-zA-Z0-9-]/g, '-').toLowerCase();
-  const description = sf.description && sf.description !== '-'
-    ? sf.description
-    : '(Description needed)';
-
-  let content = `\\textbf{${sf.name}} \\\\
-${description}`;
-
-  if (sf.refs && sf.refs.length > 0) {
-    content += ` \\citep{${sf.refs.join(',')}}`;
-  }
-
-  return `\\begin{definition}[${escapeLatex(sf.shortName)}]\\label{sf:${safeLabel}}
-${content}
-\\end{definition}
-`;
-}
-
-/**
- * Generate the full separating functions LaTeX document.
- */
-function generateSepFuncsLatex(database: DatabaseSchema): string {
-  const { separatingFunctions } = database;
-
-  const sorted = [...separatingFunctions].sort((a, b) =>
-    a.shortName.localeCompare(b.shortName)
-  );
-
-  const definitions = sorted
-    .map(sf => generateSepFuncDefinition(sf))
-    .join('\n');
-
-  const preamble = `% =============================
-% Tractable Circuit Zoo - Separating Functions
-% Auto-generated from database.json
-% Generated: ${new Date().toISOString()}
-%
-% EDITING INSTRUCTIONS:
-% - Short names in brackets are auto-generated identifiers. Do NOT edit.
-% - Names (\\textbf{...}) are EDITABLE (may contain LaTeX math).
-% - Description content (after the name line) is EDITABLE.
-% - To sync back to JSON, run: npx tsx scripts/latex-bijection.ts --to-json
-% =============================
-\\documentclass[11pt]{article}
-
-% -------- Packages --------
-\\usepackage[margin=1in]{geometry}
-\\usepackage{amsmath, amssymb, amsthm}
-\\usepackage{mathtools}
-\\usepackage{xparse}
-\\usepackage{enumitem}
-\\usepackage{hyperref}
-\\usepackage{cleveref}
-\\usepackage{xcolor}
-\\usepackage{natbib}
-
-% -------- Hyperref setup --------
-\\hypersetup{
-  colorlinks=true,
-  linkcolor=blue,
-  citecolor=blue,
-  urlcolor=blue
-}
-
-% -------- Theorem styles --------
-\\theoremstyle{definition}
-\\newtheorem{definition}{Definition}
-
-% -------- Handy macros --------
-\\newcommand{\\R}{\\mathbb{R}}
-\\newcommand{\\N}{\\mathbb{N}}
-\\newcommand{\\eps}{\\varepsilon}
-% Cross-reference commands (rendered as links in the web UI)
-\\NewDocumentCommand{\\langref}{m g}{\\textbf{#1\\IfNoValueF{#2}{#2}}}
-\\NewDocumentCommand{\\langfam}{m m g}{\\textbf{#1$_{#2}$\\IfNoValueF{#3}{#3}}}
-\\NewDocumentCommand{\\defref}{m g}{\\hyperref[kdef:#1]{\\textbf{\\IfNoValueTF{#2}{#1}{#2}}}}
-\\newcommand{\\edgeref}[2]{#1 compiles to #2}
-\\newcommand{\\nedgeref}[2]{#1 cannot compile to #2}
-\\newcommand{\\opref}[2]{#1 supports #2}
-\\newcommand{\\nopref}[2]{#2 is unsupported by #1}
-
-% -------- Title info --------
-\\title{Tractable Circuit Zoo: Separating Functions}
-\\date{\\today}
-
-\\begin{document}
-\\maketitle
-
-`;
-
-  const postamble = `
-% =============================
-% Bibliography
-% =============================
-\\bibliographystyle{plainnat}
-\\bibliography{refs}
-
-\\end{document}
-`;
-
-  return preamble + definitions + postamble;
-}
-
-/**
- * Parsed separating function from LaTeX
- */
-interface ParsedSepFunc {
-  shortName: string;
-  name: string;
-  description: string;
-  refs: string[];
-}
-
-/**
- * Parse separating function definitions from LaTeX file.
- *
- * Expected format:
- *   \begin{definition}[SHORTNAME]\label{sf:SAFE_LABEL}
- *   \textbf{NAME} \\
- *   DESCRIPTION \citep{REFS}?
- *   \end{definition}
- */
-function parseSepFuncsLatex(latexContent: string): ParsedSepFunc[] {
-  const results: ParsedSepFunc[] = [];
-  const lines = latexContent.split('\n');
-  let i = 0;
-
-  while (i < lines.length) {
-    const line = lines[i].trimEnd();
-
-    // Look for definition start: \begin{definition}[SHORTNAME]\label{sf:...}
-    const defMatch = line.match(/\\begin\{definition\}\[([^\]]+)\]\\label\{sf:([^}]+)\}/);
-    if (defMatch) {
-      const shortName = defMatch[1];
-
-      // Collect definition content until \end{definition}
-      let content = '';
-      i++;
-      while (i < lines.length && !lines[i].includes('\\end{definition}')) {
-        content += lines[i] + '\n';
-        i++;
-      }
-      i++; // Skip \end{definition}
-
-      content = content.trim();
-
-      // Extract name from \textbf{...} (handles nested braces)
-      let name = '';
-      const nameExtracted = extractBraceContent(content, '\\textbf{');
-      if (nameExtracted) {
-        name = nameExtracted.content;
-        content = nameExtracted.rest.replace(/^\s*\\\\\s*/, '').trim();
-      }
-
-      // Extract references from the end
-      let refs: string[] = [];
-      const citeMatch = content.match(/\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}\s*$/);
-      if (citeMatch) {
-        refs = citeMatch[1].split(',').map(s => s.trim());
-        content = content.slice(0, citeMatch.index).trim();
-      }
-
-      results.push({
-        shortName,
-        name,
-        description: content,
-        refs
-      });
-
-      continue;
-    }
-
-    i++;
-  }
-
-  return results;
-}
-
-/**
- * Update database separating functions from parsed LaTeX definitions.
- */
-function updateSepFuncsFromLatex(database: DatabaseSchema, parsed: ParsedSepFunc[]): void {
-  const byShortName = new Map<string, KCSeparatingFunction>();
-  for (const sf of database.separatingFunctions) {
-    byShortName.set(sf.shortName, sf);
-  }
-
-  let updated = 0;
-  let created = 0;
-  let skipped = 0;
-
-  for (const p of parsed) {
-    const sf = byShortName.get(p.shortName);
-
-    if (!sf) {
-      // Create a new separating function entry
-      const newSf: KCSeparatingFunction = {
-        shortName: p.shortName,
-        name: p.name || p.shortName,
-        description: p.description || '(Description needed)',
-        refs: p.refs,
-      };
-      database.separatingFunctions.push(newSf);
-      byShortName.set(p.shortName, newSf);
-      console.log(`  Created new separating function: ${p.shortName}`);
-      created++;
-      continue;
-    }
-
-    // Update name (math content, editable)
-    if (p.name && p.name.length > 0) {
-      sf.name = p.name;
-    }
-
-    // Update description (editable)
-    if (p.description && p.description !== '(Description needed)') {
-      sf.description = p.description;
-    }
-
-    // Update refs
-    if (p.refs.length > 0) {
-      sf.refs = p.refs;
-    }
-
-    updated++;
-  }
-
-  console.log(`Updated ${updated} separating functions, created ${created} new, skipped ${skipped}`);
 }
 
 // =============================================================================
@@ -2828,7 +2540,6 @@ Output files (--to-latex):
   docs/definitions.tex          - Core conceptual definitions
   docs/queries.tex              - Query operation support claims
   docs/transformations.tex      - Transformation operation support claims
-  docs/separating-functions.tex - Separating function definitions
   docs/refs.bib                 - BibTeX references
 
 Input files (--to-json):
@@ -2837,7 +2548,6 @@ Input files (--to-json):
   docs/definitions.tex          - Updates conceptual definitions
   docs/queries.tex              - Updates query operation support
   docs/transformations.tex      - Updates transformation operation support
-  docs/separating-functions.tex - Updates separating functions
   docs/refs.bib                 - Updates references
 
 Database: src/lib/data/database.json
@@ -2914,7 +2624,6 @@ async function main(): Promise<void> {
     const bibtexPath = DEFAULT_BIBTEX_OUTPUT;
     const queriesPath = DEFAULT_QUERIES_OUTPUT;
     const transformsPath = DEFAULT_TRANSFORMS_OUTPUT;
-    const sepFuncsPath = DEFAULT_SEPFUNCS_OUTPUT;
     
     console.log('=== JSON → LaTeX Conversion ===\n');
     console.log(`Reading database from: ${DATABASE_PATH}`);
@@ -2924,7 +2633,6 @@ async function main(): Promise<void> {
     console.log(`Found ${database.languages.length} languages`);
     console.log(`Found ${(database.definitions ?? []).length} conceptual definitions`);
     console.log(`Found ${database.references.length} references`);
-    console.log(`Found ${database.separatingFunctions.length} separating functions`);
     
     // Generate and write claims LaTeX
     const claimsLatex = generateLatex(database);
@@ -2951,11 +2659,6 @@ async function main(): Promise<void> {
     fs.writeFileSync(transformsPath, transformsLatex, 'utf-8');
     console.log(`Wrote transformation support claims to: ${transformsPath}`);
 
-    // Generate and write separating functions LaTeX
-    const sepFuncsLatex = generateSepFuncsLatex(database);
-    fs.writeFileSync(sepFuncsPath, sepFuncsLatex, 'utf-8');
-    console.log(`Wrote separating functions to: ${sepFuncsPath}`);
-
     // Generate and write BibTeX
     const bibtex = generateBibtex(database);
     fs.writeFileSync(bibtexPath, bibtex, 'utf-8');
@@ -2972,7 +2675,6 @@ async function main(): Promise<void> {
     const bibtexPath = DEFAULT_BIBTEX_OUTPUT;
     const queriesPath = DEFAULT_QUERIES_OUTPUT;
     const transformsPath = DEFAULT_TRANSFORMS_OUTPUT;
-    const sepFuncsPath = DEFAULT_SEPFUNCS_OUTPUT;
     
     console.log('=== LaTeX → JSON Conversion ===\n');
     
@@ -3065,19 +2767,6 @@ async function main(): Promise<void> {
       updateOpsFromLatex(database, transformClaims, 'transformations');
     } else {
       console.log(`\nNote: Transformations file not found: ${transformsPath} (skipping transformation updates)`);
-    }
-
-    // Update from separating-functions.tex if file exists
-    if (fs.existsSync(sepFuncsPath)) {
-      console.log(`\nReading separating functions from: ${sepFuncsPath}`);
-      const sepFuncsContent = fs.readFileSync(sepFuncsPath, 'utf-8');
-      const parsedSepFuncs = parseSepFuncsLatex(sepFuncsContent);
-      console.log(`Parsed ${parsedSepFuncs.length} separating functions`);
-
-      console.log(`Updating separating functions...`);
-      updateSepFuncsFromLatex(database, parsedSepFuncs);
-    } else {
-      console.log(`\nNote: Separating functions file not found: ${sepFuncsPath} (skipping sep func updates)`);
     }
 
     // Write updated database

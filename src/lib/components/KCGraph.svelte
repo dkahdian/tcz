@@ -88,34 +88,6 @@
     };
   }
 
-  // Build a map to look up separating functions by shortName
-  function buildSeparatingFunctionMap(graphData: GraphData | FilteredGraphData) {
-    const map = new Map<string, string>();
-    for (const sf of graphData.separatingFunctions) {
-      map.set(sf.shortName, sf.shortName);
-    }
-    return map;
-  }
-
-  // Get first separating function shortName from IDs
-  function getFirstSeparatorName(
-    ids: string[] | undefined,
-    sfMap: Map<string, string>
-  ): string {
-    if (!ids?.length) return '';
-    const first = ids[0];
-    return sfMap.get(first) ?? '';
-  }
-
-  // Get all separating function shortNames from IDs
-  function getAllSeparatorNames(
-    ids: string[] | undefined,
-    sfMap: Map<string, string>
-  ): string[] {
-    if (!ids?.length) return [];
-    return ids.map(id => sfMap.get(id) ?? id);
-  }
-
   function buildLabelContainer(
     innerHtml: string,
     classNames: string[] = [],
@@ -402,9 +374,6 @@
       });
     }
 
-    // Build the separating function lookup map
-    const sfMap = buildSeparatingFunctionMap(graphData);
-    
     // Add all edges with proper styling
   for (const edge of edgePairs) {
       const aVisible = !isFilteredData || visibleLanguageIds!.has(edge.nodeA);
@@ -413,11 +382,6 @@
       if (aVisible && bVisible) {
         const aToBStyle = getEdgeEndpointStyle(edge.aToB);
         const bToAStyle = getEdgeEndpointStyle(edge.bToA);
-
-        const forwardSeparator = getFirstSeparatorName(edge.forward?.separatingFunctionIds, sfMap);
-        const backwardSeparator = getFirstSeparatorName(edge.backward?.separatingFunctionIds, sfMap);
-        const forwardLabelContent = getRenderableContent(forwardSeparator);
-        const backwardLabelContent = getRenderableContent(backwardSeparator);
         
         elements.push({
           data: {
@@ -428,12 +392,6 @@
             bToAStatus: edge.bToA,
             description: edge.description || '',
             refs: edge.refs,
-            aToBSeparating: getAllSeparatorNames(edge.forward?.separatingFunctionIds, sfMap),
-            bToASeparating: getAllSeparatorNames(edge.backward?.separatingFunctionIds, sfMap),
-            forwardLabel: forwardLabelContent.text,
-            forwardLabelHtml: forwardLabelContent.html,
-            backwardLabel: backwardLabelContent.text,
-            backwardLabelHtml: backwardLabelContent.html,
             width: 2,
             sourceArrow: bToAStyle.arrow,
             sourceDashed: bToAStyle.dashed,

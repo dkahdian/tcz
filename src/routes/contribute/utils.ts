@@ -6,7 +6,6 @@
 import type {
   LanguageToAdd,
   RelationshipEntry,
-  SeparatingFunctionToAdd,
   CustomTag,
   SubmissionHistoryEntry
 } from './types.js';
@@ -97,16 +96,6 @@ export function cloneRelationshipEntry(entry: RelationshipEntry): RelationshipEn
     status: entry.status,
     description: entry.description,
     assumption: entry.assumption,
-    refs: [...entry.refs],
-    separatingFunctionIds: entry.separatingFunctionIds ? [...entry.separatingFunctionIds] : undefined
-  };
-}
-
-export function cloneSeparatingFunctionToAdd(entry: SeparatingFunctionToAdd): SeparatingFunctionToAdd {
-  return {
-    shortName: entry.shortName,
-    name: entry.name,
-    description: entry.description,
     refs: [...entry.refs]
   };
 }
@@ -129,8 +118,6 @@ export function cloneQueueEntry(entry: ContributionQueueEntry): ContributionQueu
       return { id: entry.id, kind: entry.kind, payload: cloneRelationshipEntry(entry.payload) };
     case 'reference':
       return { id: entry.id, kind: entry.kind, payload: entry.payload };
-    case 'separator':
-      return { id: entry.id, kind: entry.kind, payload: cloneSeparatingFunctionToAdd(entry.payload) };
   }
 }
 

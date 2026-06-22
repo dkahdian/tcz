@@ -4,7 +4,6 @@
   import type { PageData } from './$types';
   import AddLanguageModal from '$lib/components/contribute/AddLanguageModal.svelte';
   import AddReferenceModal from '$lib/components/contribute/AddReferenceModal.svelte';
-  import AddSeparatingFunctionModal from '$lib/components/contribute/AddSeparatingFunctionModal.svelte';
   import ManageRelationshipModal from '$lib/components/contribute/ManageRelationshipModal.svelte';
   import ContributionQueue from './components/ContributionQueue.svelte';
   import ActionButtons from './components/ActionButtons.svelte';
@@ -14,7 +13,6 @@
     buildBaselineRelations,
     getAvailableReferences,
     getAvailableLanguages,
-    getAvailableSeparatingFunctions,
     convertLanguageForEdit
   } from './logic.js';
   import {
@@ -24,7 +22,6 @@
     sanitizeSubmissionId,
     cloneLanguageEntry,
     cloneRelationshipEntry,
-    cloneSeparatingFunctionToAdd,
     cloneQueueEntry,
     cloneCustomTag,
     createSubmissionId,
@@ -38,7 +35,6 @@
     LanguageToAdd,
     RelationshipEntry,
     CustomTag,
-    SeparatingFunctionToAdd,
     SubmissionHistoryEntry,
     ContributorInfo
   } from './types.js';
@@ -62,7 +58,6 @@
 
   type QueueLanguage = { queueEntryId: string; payload: LanguageToAdd };
   type QueueRelationship = { queueEntryId: string; payload: RelationshipEntry };
-  type QueueSeparatingFunction = { queueEntryId: string; payload: SeparatingFunctionToAdd };
   type QueueReference = { queueEntryId: string; ref: ReferenceToAdd };
 
   // Queue manipulation functions that reference component state
@@ -137,18 +132,12 @@
       .filter((e): e is Extract<ContributionQueueEntry, { kind: 'reference' }> => e.kind === 'reference')
       .map((e): QueueReference => ({ queueEntryId: e.id, ref: e.payload }))
   );
-  const newSeparatingFunctions = $derived(
-    queueEntries
-      .filter((e): e is Extract<ContributionQueueEntry, { kind: 'separator' }> => e.kind === 'separator')
-      .map((e): QueueSeparatingFunction => ({ queueEntryId: e.id, payload: e.payload }))
-  );
 
   // Track expanded state for chip UI
   let expandedLanguageToAddIndex = $state<number | null>(null);
   let expandedLanguageToEditIndex = $state<number | null>(null);
   let expandedRelationshipIndex = $state<number | null>(null);
   let expandedReferenceIndex = $state<number | null>(null);
-  let expandedSeparatingFunctionIndex = $state<number | null>(null);
 
   // Modal state — discriminated union replaces 11 separate state variables.
   // Only one modal is open at a time.
@@ -161,8 +150,6 @@
     | { kind: 'edit-queued-edit', index: number }
     | { kind: 'add-reference' }
     | { kind: 'edit-reference', index: number }
-    | { kind: 'add-sep-fn' }
-    | { kind: 'edit-sep-fn', index: number }
     | { kind: 'add-relationship' }
     | { kind: 'edit-relationship', index: number };
 
@@ -184,7 +171,6 @@
   const languageAddPayloads = $derived(languagesToAdd.map((entry) => entry.payload));
   const languageEditPayloads = $derived(languagesToEdit.map((entry) => entry.payload));
   const referenceValues = $derived(newReferences.map((entry) => entry.ref));
-  const separatingFunctionPayloads = $derived(newSeparatingFunctions.map((entry) => entry.payload));
   const relationshipPayloads = $derived(relationships.map((entry) => entry.payload));
 
   // Derived modal-related computations for template use
@@ -193,7 +179,6 @@
   const editAddIndex = $derived(modal.kind === 'edit-queued-add' ? modal.index : null);
   const editEditIndex = $derived(modal.kind === 'edit-queued-edit' ? modal.index : null);
   const editRefIndex = $derived(modal.kind === 'edit-reference' ? modal.index : null);
-  const editSepIndex = $derived(modal.kind === 'edit-sep-fn' ? modal.index : null);
   const editRelIndex = $derived(modal.kind === 'edit-relationship' ? modal.index : null);
   const editLangInitialData = $derived.by(() => {
     const m = modal;
@@ -429,15 +414,6 @@
     }
   }
 
-  function handleSepFnSubmit(sf: SeparatingFunctionToAdd) {
-    if (modal.kind === 'edit-sep-fn') {
-      const entry = newSeparatingFunctions[modal.index];
-      if (entry) updateQueueEntry(entry.queueEntryId, 'separator', cloneSeparatingFunctionToAdd(sf));
-    } else {
-      addQueueEntry({ id: createQueueEntryId(), kind: 'separator', payload: cloneSeparatingFunctionToAdd(sf) });
-    }
-  }
-
   function handleRelationshipSubmit(relationship: RelationshipEntry) {
     if (modal.kind === 'edit-relationship') {
       const entry = relationships[modal.index];
@@ -528,41 +504,12 @@
         return { ...entry, payload: updated };
       }
 
-      if (entry.kind === 'separator') {
-        if (!entry.payload.refs.includes(refId)) return entry;
-        const updated = cloneSeparatingFunctionToAdd(entry.payload);
-        updated.refs = updated.refs.filter((r) => r !== refId);
-        return { ...entry, payload: updated };
-      }
-
       return entry;
     });
 
     removeQueueEntry(referenceEntry.queueEntryId);
 
     customTags = customTags.map((tag) => ({ ...tag, refs: tag.refs.filter((r) => r !== refId) }));
-  }
-
-  function deleteSeparatingFunction(index: number) {
-    const entry = newSeparatingFunctions[index];
-    if (!entry) return;
-
-    const shortName = entry.payload.shortName;
-    removeQueueEntry(entry.queueEntryId);
-
-    queueEntries = queueEntries.map((queueEntry) => {
-      if (queueEntry.kind !== 'relationship' || !queueEntry.payload.separatingFunctionIds) {
-        return queueEntry;
-      }
-
-      if (!queueEntry.payload.separatingFunctionIds.includes(shortName)) {
-        return queueEntry;
-      }
-
-      const updated = cloneRelationshipEntry(queueEntry.payload);
-      updated.separatingFunctionIds = (updated.separatingFunctionIds || []).filter((id) => id !== shortName);
-      return { ...queueEntry, payload: updated };
-    });
   }
 
   function toggleHistoryPanel() {
@@ -770,19 +717,16 @@
             languagesToAdd={languageAddPayloads}
             languagesToEdit={languageEditPayloads}
             newReferences={referenceValues}
-            newSeparatingFunctions={separatingFunctionPayloads}
             relationships={relationshipPayloads}
             {modifiedRelations}
             existingReferenceIds={data.existingReferences.map(r => r.id)}
             {expandedLanguageToAddIndex}
             {expandedLanguageToEditIndex}
             {expandedReferenceIndex}
-            {expandedSeparatingFunctionIndex}
             {expandedRelationshipIndex}
             onToggleExpandLanguageToAdd={(index) => expandedLanguageToAddIndex = expandedLanguageToAddIndex === index ? null : index}
             onToggleExpandLanguageToEdit={(index) => expandedLanguageToEditIndex = expandedLanguageToEditIndex === index ? null : index}
             onToggleExpandReference={(index) => expandedReferenceIndex = expandedReferenceIndex === index ? null : index}
-            onToggleExpandSeparatingFunction={(index) => expandedSeparatingFunctionIndex = expandedSeparatingFunctionIndex === index ? null : index}
             onToggleExpandRelationship={(index) => expandedRelationshipIndex = expandedRelationshipIndex === index ? null : index}
             onEditLanguageToAdd={(index) => { modal = { kind: 'edit-queued-add', index }; }}
             onEditLanguageToEdit={(index) => { modal = { kind: 'edit-queued-edit', index }; }}
@@ -790,8 +734,6 @@
             onDeleteLanguageToEdit={handleDeleteLanguageToEdit}
             onEditReference={(index) => { modal = { kind: 'edit-reference', index }; }}
             onDeleteReference={deleteReference}
-            onEditSeparatingFunction={(index) => { modal = { kind: 'edit-sep-fn', index }; }}
-            onDeleteSeparatingFunction={deleteSeparatingFunction}
             onEditRelationship={(index) => { modal = { kind: 'edit-relationship', index }; }}
             onDeleteRelationship={(index) => handleDeleteRelationship(index)}
           />
@@ -803,7 +745,6 @@
             onEditLanguage={() => { modal = { kind: 'select-language-to-edit' }; }}
             onManageRelationships={() => { modal = { kind: 'add-relationship' }; }}
             onAddReference={() => { modal = { kind: 'add-reference' }; }}
-            onAddSeparatingFunction={() => { modal = { kind: 'add-sep-fn' }; }}
           />
 
           <!-- Preview Button -->
@@ -907,15 +848,6 @@
   isEditMode={editRefIndex !== null}
 />
 
-<AddSeparatingFunctionModal
-  isOpen={modal.kind === 'add-sep-fn' || modal.kind === 'edit-sep-fn'}
-  onClose={closeModal}
-  onAdd={handleSepFnSubmit}
-  initialValue={editSepIndex !== null ? newSeparatingFunctions[editSepIndex]?.payload : undefined}
-  availableRefs={getAvailableReferences(data.existingReferences, referenceValues)}
-  isEditMode={editSepIndex !== null}
-/>
-
 <ManageRelationshipModal
   isOpen={modal.kind === 'add-relationship' || modal.kind === 'edit-relationship'}
   onClose={closeModal}
@@ -924,6 +856,5 @@
   languages={getAvailableLanguages(data.languages, languageAddPayloads, languageEditPayloads)}
   {statusOptions}
   availableRefs={getAvailableReferences(data.existingReferences, referenceValues)}
-  availableSeparatingFunctions={getAvailableSeparatingFunctions(data.existingSeparatingFunctions, separatingFunctionPayloads)}
   {baselineRelations}
 />

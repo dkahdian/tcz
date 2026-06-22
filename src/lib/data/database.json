@@ -8283,10 +8283,7 @@
           "refs": [
             "Darwiche_2002"
           ],
-          "derived": false,
-          "separatingFunctionIds": [
-            "Parity"
-          ]
+          "derived": false
         },
         {
           "status": "no-quasi",
@@ -9039,10 +9036,7 @@
           "refs": [
             "Bova_2016_a"
           ],
-          "derived": false,
-          "separatingFunctionIds": [
-            "Generalized_HWB"
-          ]
+          "derived": false
         },
         null,
         {
@@ -9335,10 +9329,7 @@
           "refs": [
             "Darwiche_2002"
           ],
-          "derived": false,
-          "separatingFunctionIds": [
-            "$OR_n$"
-          ]
+          "derived": false
         },
         {
           "status": "no-poly-quasi",
@@ -11377,10 +11368,7 @@
           "refs": [
             "Darwiche_2002"
           ],
-          "derived": false,
-          "separatingFunctionIds": [
-            "Parity"
-          ]
+          "derived": false
         },
         {
           "status": "no-quasi",
@@ -11846,10 +11834,7 @@
           "refs": [
             "Bova_2016"
           ],
-          "derived": false,
-          "separatingFunctionIds": [
-            "Sauerhoff"
-          ]
+          "derived": false
         },
         {
           "status": "no-quasi",
@@ -12835,10 +12820,7 @@
           "refs": [
             "Gergov_1994"
           ],
-          "derived": false,
-          "separatingFunctionIds": [
-            "HWB"
-          ]
+          "derived": false
         },
         {
           "status": "poly",
@@ -13015,10 +12997,7 @@
           "refs": [
             "Darwiche_2002"
           ],
-          "derived": false,
-          "separatingFunctionIds": [
-            "Pairwise DNF"
-          ]
+          "derived": false
         },
         {
           "status": "no-poly-unknown-quasi",
@@ -13134,10 +13113,7 @@
             "Darwiche_2002",
             "Wegener_1987"
           ],
-          "derived": false,
-          "separatingFunctionIds": [
-            "Clique"
-          ]
+          "derived": false
         },
         null,
         {
@@ -13146,10 +13122,7 @@
           "refs": [
             "Darwiche_2002"
           ],
-          "derived": false,
-          "separatingFunctionIds": [
-            "$OR_n$"
-          ]
+          "derived": false
         },
         {
           "status": "poly",
@@ -14190,10 +14163,7 @@
           "refs": [
             "Amarilli_2018"
           ],
-          "derived": false,
-          "separatingFunctionIds": [
-            "Sauerhoff"
-          ]
+          "derived": false
         },
         {
           "status": "no-quasi",
@@ -14571,10 +14541,7 @@
           "refs": [
             "Amarilli_2018"
           ],
-          "derived": false,
-          "separatingFunctionIds": [
-            "Sauerhoff"
-          ]
+          "derived": false
         },
         {
           "status": "no-quasi",
@@ -16220,10 +16187,7 @@
           "refs": [
             "Darwiche_2002"
           ],
-          "derived": false,
-          "separatingFunctionIds": [
-            "Parity"
-          ]
+          "derived": false
         },
         {
           "status": "poly",
@@ -16311,10 +16275,7 @@
           "refs": [
             "Darwiche_2002"
           ],
-          "derived": false,
-          "separatingFunctionIds": [
-            "Parity"
-          ]
+          "derived": false
         },
         {
           "status": "poly",
@@ -16825,9 +16786,6 @@
           "description": "The Pairwise \\langref{CNF} formula $\\Sigma_n = \\bigwedge_{i=0}^{n-1}(x_{2i} \\vee x_{2i+1})$ has $2^n$ prime implicates; its negation $\\neg\\Sigma_n$ lies in \\langref{PI} and therefore has $2^n$ essential prime implicants, forcing any \\langref{DNF} representation to have at least $2^n$ terms \\citep{Darwiche_2002}.",
           "refs": [
             "Darwiche_2002"
-          ],
-          "separatingFunctionIds": [
-            "Pairwise CNF"
           ]
         },
         {
@@ -16836,10 +16794,7 @@
           "refs": [
             "Bova_2016"
           ],
-          "derived": false,
-          "separatingFunctionIds": [
-            "JS"
-          ]
+          "derived": false
         },
         {
           "status": "no-quasi",
@@ -16848,10 +16803,7 @@
             "Wegener_1987",
             "Darwiche_2002"
           ],
-          "derived": false,
-          "separatingFunctionIds": [
-            "Clique"
-          ]
+          "derived": false
         },
         {
           "status": "no-quasi",
@@ -16878,10 +16830,7 @@
           "refs": [
             "Darwiche_2002"
           ],
-          "derived": false,
-          "separatingFunctionIds": [
-            "$OR_n$"
-          ]
+          "derived": false
         },
         {
           "status": "no-quasi",
@@ -20689,10 +20638,7 @@
           ],
           "hidden": false,
           "derived": false,
-          "description": "The weighted sum function $WS_n$ has polynomial-size \\langref{uOBDD} formulas: \\citet{Wegener_2000} gives polynomial-size \\langref{nOBDD}{<} formulas for $WS_n$ under every variable ordering $<$, and the pointer-guess construction has at most one accepting guess, so the formula is unambiguous. By \\citet{Savicky_Zak_1996}, every \\langref{FBDD} for $WS_n$ has size $2^{n-o(n)}$. Hence no quasipolynomial compilation from \\langref{uOBDD} to \\langref{FBDD} is possible.",
-          "separatingFunctionIds": [
-            "$WS_n$"
-          ]
+          "description": "The weighted sum function $WS_n$ has polynomial-size \\langref{uOBDD} formulas: \\citet{Wegener_2000} gives polynomial-size \\langref{nOBDD}{<} formulas for $WS_n$ under every variable ordering $<$, and the pointer-guess construction has at most one accepting guess, so the formula is unambiguous. By \\citet{Savicky_Zak_1996}, every \\langref{FBDD} for $WS_n$ has size $2^{n-o(n)}$. Hence no quasipolynomial compilation from \\langref{uOBDD} to \\langref{FBDD} is possible."
         },
         {
           "status": "no-quasi",
@@ -20943,9 +20889,6 @@
           "refs": [
             "Bryant_1986",
             "Wegener_2000"
-          ],
-          "separatingFunctionIds": [
-            "HWB"
           ],
           "derived": false
         },
@@ -21390,10 +21333,7 @@
           ],
           "hidden": false,
           "derived": false,
-          "description": "Suppose an order $<$ existed so that \\langref{OBDD} compiled to \\langfam{OBDD}{<}. Take the first $2n$ variables in that order, call the first half $x_1,\\ldots,x_n$ and the second half $y_1,\\ldots,y_n$, and consider $EQ_n(x,y)$. This function has linear-size \\langref{OBDD}{s} under the interleaved order $x_1,y_1,\\ldots,x_n,y_n$, but exponential-size \\langfam{OBDD}{<} representations \\citep{Wegener_2000}. Thus no order $<$ can exist, and \\langref{OBDD} is not quasipolynomial-time compilable to \\langfam{OBDD}{<}.",
-          "separatingFunctionIds": [
-            "$EQ_n$"
-          ]
+          "description": "Suppose an order $<$ existed so that \\langref{OBDD} compiled to \\langfam{OBDD}{<}. Take the first $2n$ variables in that order, call the first half $x_1,\\ldots,x_n$ and the second half $y_1,\\ldots,y_n$, and consider $EQ_n(x,y)$. This function has linear-size \\langref{OBDD}{s} under the interleaved order $x_1,y_1,\\ldots,x_n,y_n$, but exponential-size \\langfam{OBDD}{<} representations \\citep{Wegener_2000}. Thus no order $<$ can exist, and \\langref{OBDD} is not quasipolynomial-time compilable to \\langfam{OBDD}{<}."
         },
         {
           "status": "no-quasi",
@@ -24257,9 +24197,6 @@
             "Bryant_1986",
             "Wegener_2000"
           ],
-          "separatingFunctionIds": [
-            "Generalized_HWB"
-          ],
           "derived": false
         },
         {
@@ -24418,10 +24355,7 @@
           "refs": [
             "Bova_2016_a"
           ],
-          "derived": false,
-          "separatingFunctionIds": [
-            "Generalized_HWB"
-          ]
+          "derived": false
         },
         null,
         {
@@ -26723,107 +26657,6 @@
       "lang_8cf1da0e": 29
     }
   },
-  "separatingFunctions": [
-    {
-      "shortName": "Pairwise CNF",
-      "name": "$\\Sigma_n = \\bigwedge_{i=0}^{n-1} \\left( x_{2i} \\vee x_{2i+1} \\right)$",
-      "description": "Requires that in each pair $(x_{2i}, x_{2i+1})$, at least one is true. Dual to the Pairwise \\langref{DNF}.",
-      "refs": [
-        "Darwiche_2002"
-      ]
-    },
-    {
-      "shortName": "Pairwise DNF",
-      "name": "$\\Pi_n = \\bigvee_{i=0}^{n-1} \\left( x_{2i} \\wedge x_{2i+1} \\right)$",
-      "description": "Requires that at least one pair $(x_{2i}, x_{2i+1})$ has both variables true. Dual to the Pairwise \\langref{CNF}.",
-      "refs": [
-        "Darwiche_2002"
-      ]
-    },
-    {
-      "shortName": "Parity",
-      "name": "Parity function",
-      "description": "$O_n = \\bigoplus_{i=0}^{n-1} x_i$ has linear size \\langfam{OBDD}{<} representations but exponential size \\langref{CNF} and \\langref{DNF} representations.",
-      "refs": [
-        "Bryant_1986"
-      ]
-    },
-    {
-      "shortName": "HWB",
-      "name": "Hidden Weighted Bit",
-      "description": "Let $w = \\sum_{i=1}^n x_i$ be the Hamming weight of the input. Then $HWB_n(x_1, \\ldots, x_n) = x_w$ (the $w$-th input bit). Has \\langref{OBDD} size $2^{\\Omega(n)}$ but polynomial \\langref{SDD} and \\langref{FBDD} size.",
-      "refs": [
-        "Bryant_1986"
-      ]
-    },
-    {
-      "shortName": "$OR_n$",
-      "name": "$OR_n = \\bigvee_{i=1}^{n} x_i$",
-      "description": "Separates languages that compactly represent disjunctions from those that cannot.",
-      "refs": [
-        "Darwiche_2002"
-      ]
-    },
-    {
-      "shortName": "Pairwise equivalence",
-      "name": "$\\Sigma_n = \\bigwedge_{i=1}^n (x_i \\leftrightarrow y_i)$",
-      "description": "Requires that each pair $(x_i, y_i)$ has equal truth values. An \\langfam{OBDD}{<} with interleaved order $x_1 < y_1 < \\cdots < x_n < y_n$ is polynomial, but a separated order $x_1 < \\cdots < x_n < y_1 < \\cdots < y_n$ forces exponential size.",
-      "refs": [
-        "Darwiche_2002"
-      ]
-    },
-    {
-      "shortName": "Clique",
-      "name": "Clique Detection Instances",
-      "description": "Tests whether a directed graph on $n$ vertices (encoded as $I \\in \\{0,1\\}^{n^2}$) contains a bidirectional clique of size $k$: $\\Sigma_{n,k}(I) = 1 \\iff I$ contains such a clique. Has $O(n^3)$ prime implicants but exponential \\langref{FBDD} size for suitable $k$.",
-      "refs": [
-        "Darwiche_2002",
-        "Wegener_1987"
-      ]
-    },
-    {
-      "shortName": "Sauerhoff",
-      "name": "Sauerhoff function",
-      "description": "Let $g_n: \\{0,1\\}^{2n} \\to \\{0,1\\}$ be the function evaluating to 1 if and only if the sum of its inputs is divisible by 3. The Sauerhoff function $S_n: \\{0,1\\}^{n^2} \\to \\{0,1\\}$ is defined on the $n \\times n$ matrix $X = (x_{i,j})$ as $S_n(X) = R_n(X) \\vee C_n(X)$, where $R_n, C_n : \\{0,1\\}^{n^2} \\to \\{0,1\\}$ are defined by $R_n(X) = \\bigplus_{i=1}^n g_n(x_{i1},x_{i2},...,x_{in}$ and $C_n(X) = R_n(X^T)$.",
-      "refs": [
-        "Sauerhoff_2003",
-        "Bova_2016"
-      ]
-    },
-    {
-      "shortName": "JS",
-      "name": "Jukna-Schnitger function",
-      "description": "Tests triangle-freeness on graphs with respect to a fixed set of forbidden triangles $A \\subset T_n$. \\citet{Jukna_2002} show that for every $n$, there exists $A_n$ of size $O(n^2)$ such that any balanced rectangle cover of $JS_n^{A_n}$ has size $2^{\\Omega(n^2)}$. Has \\langref{PI} size $O(n^2)$ but \\langref{DNNF} size $2^{\\Omega(n^2)}$.",
-      "refs": [
-        "Jukna_2002"
-      ]
-    },
-    {
-      "shortName": "Generalized_HWB",
-      "name": "Generalized Hidden Weighted Bit",
-      "description": "A variant of $HWB_n$ introduced by \\citet{Bova_2016_a} on $2n+1$ variables $x_1, \\ldots, x_n, y_0, \\ldots, y_n$. Defined as $F_n = (P_0 \\wedge \\neg y_0) \\vee (P_n \\wedge y_n) \\vee \\bigvee_{i=1}^{n-1}((P_{i,0} \\wedge \\neg y_i) \\vee (P_{i,1} \\wedge y_i))$, where $P_j$ and $P_{i,b}$ are the partition functions from the HWB \\langref{SDD} construction. The $y_i$ variables ensure all sub-\\langref{SDD}s are pairwise non-equivalent, making the \\langref{SDD} compressed. Has \\langref{cSDD} size $O(n^3)$ but \\langref{OBDD} size $2^{\\Omega(n)}$, since conditioning on $y_i = 1$ recovers $HWB_n$.",
-      "refs": [
-        "Bova_2016_a"
-      ]
-    },
-    {
-      "shortName": "$EQ_n$",
-      "name": "Equality function",
-      "description": "The equality function $EQ_n(x,y)$ is true iff $x_i = y_i$ for every $i \\in \\{1,\\ldots,n\\}$. It has linear-size \\langref{OBDD} representations for interleaved variable orders, but can require exponential \\langref{OBDD} size for separated orders.",
-      "refs": [
-        "Wegener_2000"
-      ]
-    },
-    {
-      "shortName": "$WS_n$",
-      "name": "Weighted sum function",
-      "description": "The weighted sum function $WS_n$ is the standard \\langref{OBDD}/\\langref{FBDD} separation family whose output is selected by the Hamming-weight-weighted index of the input. It has polynomial-size \\langfam{nOBDD}{<} representations under every variable order, but requires exponential \\langref{FBDD} size.",
-      "refs": [
-        "Wegener_2000",
-        "Savicky_Zak_1996"
-      ]
-    }
-  ],
   "relationTypes": [
     {
       "id": "poly",

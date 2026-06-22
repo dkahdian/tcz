@@ -2,14 +2,12 @@ import type {
   GraphData,
   KCLanguage,
   KCReference,
-  DirectedSuccinctnessRelation,
-  KCSeparatingFunction
+  DirectedSuccinctnessRelation
 } from '../types.js';
 import { generateLanguageId } from '../utils/language-id.js';
 import type {
   LanguageToAdd,
   RelationshipEntry,
-  SeparatingFunctionToAdd,
   ReferenceToAdd,
   CustomTag
 } from '../../routes/contribute/types.js';
@@ -21,7 +19,6 @@ import { generateReferenceId } from '../utils/reference-id.js';
 
 export type ContributionQueueEntry =
   | { id: string; kind: 'reference'; payload: ReferenceToAdd }
-  | { id: string; kind: 'separator'; payload: SeparatingFunctionToAdd }
   | { id: string; kind: 'language:new'; payload: LanguageToAdd }
   | { id: string; kind: 'language:edit'; payload: LanguageToAdd }
   | { id: string; kind: 'relationship'; payload: RelationshipEntry };
@@ -127,25 +124,7 @@ export function applyContributionQueue(
   }
   const referenceIds = new Set(referenceLookup.keys());
 
-  const separatingFunctionLookup = new Map<string, KCSeparatingFunction>();
-  if (merged.separatingFunctions) {
-    for (const fn of merged.separatingFunctions) {
-      separatingFunctionLookup.set(fn.shortName, fn);
-    }
-  }
-
   const modifiedSet = new Set(queue.modifiedRelations ?? []);
-
-  const addSeparatingFunction = (entry: SeparatingFunctionToAdd) => {
-    const resolved: KCSeparatingFunction = {
-      shortName: entry.shortName,
-      name: entry.name,
-      description: entry.description,
-      refs: [...entry.refs]
-    };
-    separatingFunctionLookup.set(resolved.shortName, resolved);
-    merged.separatingFunctions = [...(merged.separatingFunctions ?? []), resolved];
-  };
 
   const applyRelationship = (rel: RelationshipEntry) => {
     ensureLanguageInMatrix(rel.sourceId);
@@ -169,22 +148,11 @@ export function applyContributionQueue(
       return;
     }
 
-    // Collect separating function IDs
-    const separatingFunctionIds: string[] = [];
-    if (rel.separatingFunctionIds && rel.separatingFunctionIds.length > 0) {
-      for (const id of rel.separatingFunctionIds) {
-        if (separatingFunctionLookup.has(id)) {
-          separatingFunctionIds.push(id);
-        }
-      }
-    }
-
     const relation: DirectedSuccinctnessRelation = {
       status: rel.status,
       description: rel.description,
       assumption: rel.assumption,
       refs: [...rel.refs],
-      separatingFunctionIds: separatingFunctionIds.length > 0 ? separatingFunctionIds : undefined,
       // Explicitly mark as not derived since this is user-contributed
       derived: false
     };
@@ -205,10 +173,6 @@ export function applyContributionQueue(
         };
         referenceLookup.set(generatedId, reference);
         merged.references = [...(merged.references ?? []), reference];
-        break;
-      }
-      case 'separator': {
-        addSeparatingFunction(entry.payload);
         break;
       }
       case 'language:new': {

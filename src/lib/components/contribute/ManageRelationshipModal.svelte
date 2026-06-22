@@ -6,12 +6,6 @@
     name: string;
   };
 
-  type SeparatingFunctionForDropdown = {
-    shortName: string;
-    name: string;
-    description: string;
-  };
-
   type Relationship = {
     sourceId: string;
     targetId: string;
@@ -19,7 +13,6 @@
     description?: string;
     assumption?: string;
     refs: string[];
-    separatingFunctionIds?: string[];
   };
 
   type BaselineRelationship = {
@@ -27,7 +20,6 @@
     description?: string;
     assumption?: string;
     refs: string[];
-    separatingFunctionIds?: string[];
     derived?: boolean;
   };
 
@@ -44,7 +36,6 @@
     languages: Language[];
     statusOptions: StatusOption[];
     availableRefs?: ReferenceForTooltip[];
-    availableSeparatingFunctions?: SeparatingFunctionForDropdown[];
     baselineRelations?: Map<string, BaselineRelationship>; // key is "sourceId->targetId"
     initialData?: Relationship; // For editing existing relationships
   };
@@ -56,7 +47,6 @@
     languages, 
     statusOptions, 
     availableRefs = [],
-    availableSeparatingFunctions = [],
     baselineRelations = new Map(),
     initialData
   }: Props = $props();
@@ -67,7 +57,6 @@
   let description = $state('');
   let assumption = $state('');
   let selectedRefs = $state<string[]>([]);
-  let selectedSeparatingFunctionIds = $state<string[]>([]);
   
   // Track if we're in edit mode to prevent auto-populate from overwriting
   let isEditMode = $state(false);
@@ -82,9 +71,6 @@
       description = initialData.description || '';
       assumption = initialData.assumption || '';
       selectedRefs = [...initialData.refs];
-      selectedSeparatingFunctionIds = initialData.separatingFunctionIds 
-        ? [...initialData.separatingFunctionIds] 
-        : [];
     } else if (isOpen && !initialData) {
       isEditMode = false;
     }
@@ -105,16 +91,12 @@
         description = baseline.description || '';
         assumption = baseline.assumption || '';
         selectedRefs = [...baseline.refs];
-        selectedSeparatingFunctionIds = baseline.separatingFunctionIds 
-          ? [...baseline.separatingFunctionIds] 
-          : [];
       } else {
         // No baseline exists - clear to defaults for a new edge
         status = '';
         description = '';
         assumption = '';
         selectedRefs = [];
-        selectedSeparatingFunctionIds = [];
       }
     }
   });
@@ -126,7 +108,6 @@
     description = '';
     assumption = '';
     selectedRefs = [];
-    selectedSeparatingFunctionIds = [];
     isEditMode = false;
   }
 
@@ -139,8 +120,7 @@
       status,
       description: description || undefined,
       assumption: assumption || undefined,
-      refs: selectedRefs,
-      separatingFunctionIds: selectedSeparatingFunctionIds.length > 0 ? selectedSeparatingFunctionIds : undefined
+      refs: selectedRefs
     });
     
     resetForm();
@@ -160,13 +140,6 @@
     }
   }
 
-  function toggleSeparatingFunction(shortName: string) {
-    if (selectedSeparatingFunctionIds.includes(shortName)) {
-      selectedSeparatingFunctionIds = selectedSeparatingFunctionIds.filter(id => id !== shortName);
-    } else {
-      selectedSeparatingFunctionIds = [...selectedSeparatingFunctionIds, shortName];
-    }
-  }
 </script>
 
 {#if isOpen}
@@ -291,36 +264,6 @@
                 </button>
               {/each}
             </div>
-          </fieldset>
-        {/if}
-
-        <!-- Separating Functions -->
-        {#if availableSeparatingFunctions.length > 0}
-          <fieldset class="border-t pt-4">
-            <legend class="block text-sm font-medium text-gray-700 mb-2">
-              Separating Functions (optional)
-            </legend>
-            <div class="flex flex-wrap gap-2">
-              {#each availableSeparatingFunctions as sf}
-                <button
-                  type="button"
-                  onclick={() => toggleSeparatingFunction(sf.shortName)}
-                  class={`px-3 py-1 text-sm rounded-lg border-2 transition-colors ${
-                    selectedSeparatingFunctionIds.includes(sf.shortName)
-                      ? 'bg-orange-600 text-white border-orange-600'
-                      : 'bg-white text-gray-700 border-gray-300 hover:border-orange-300'
-                  }`}
-                  title={sf.name}
-                >
-                  {sf.shortName}
-                </button>
-              {/each}
-            </div>
-            {#if selectedSeparatingFunctionIds.length > 0}
-              <p class="text-xs text-gray-500 mt-2">
-                Selected: {selectedSeparatingFunctionIds.join(', ')}
-              </p>
-            {/if}
           </fieldset>
         {/if}
 

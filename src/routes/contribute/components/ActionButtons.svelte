@@ -6,18 +6,16 @@
     onAddLanguage,
     onEditLanguage,
     onManageRelationships,
-    onAddReference,
-    onAddSeparatingFunction
+    onAddReference
   }: {
     onAddLanguage: () => void;
     onEditLanguage: () => void;
     onManageRelationships: () => void;
     onAddReference: () => void;
-    onAddSeparatingFunction: () => void;
   } = $props();
 </script>
 
-<div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
   <button
     type="button"
     onclick={onAddLanguage}
@@ -48,13 +46,5 @@
     class="px-3 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors"
   >
     Reference
-  </button>
-  
-  <button
-    type="button"
-    onclick={onAddSeparatingFunction}
-    class="px-3 py-3 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg transition-colors"
-  >
-    Separator
   </button>
 </div>

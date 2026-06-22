@@ -84,20 +84,6 @@
 						</div>
 					</div>
 				{/if}
-				{#if relationship.separatingFunctionIds && relationship.separatingFunctionIds.length > 0}
-					<div>
-						<div class="font-semibold text-gray-700 mb-1">
-							Separating Functions ({relationship.separatingFunctionIds.length}):
-						</div>
-						<div class="flex flex-wrap gap-1">
-							{#each relationship.separatingFunctionIds as sfId}
-								<span class="inline-block bg-orange-100 text-orange-800 px-2 py-0.5 rounded text-xs border border-orange-300">
-									{sfId}
-								</span>
-							{/each}
-						</div>
-					</div>
-				{/if}
 				{#if relationship.refs && relationship.refs.length > 0}
 					<div>
 						<div class="font-semibold text-gray-700 mb-1">

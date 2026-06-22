@@ -1,6 +1,6 @@
-<script lang="ts">
+  <script lang="ts">
   import MathText from './MathText.svelte';
-  import type { SelectedEdge, GraphData, FilteredGraphData, KCReference, KCSeparatingFunction, DirectedSuccinctnessRelation, ViewMode } from '$lib/types.js';
+  import type { SelectedEdge, GraphData, FilteredGraphData, KCReference, DirectedSuccinctnessRelation, ViewMode } from '$lib/types.js';
   import { getComplexityFromCatalog } from '$lib/data/complexities.js';
   import { extractCitationKeys, formatAssumptionForMathText } from '$lib/utils/math-text.js';
   import { getGlobalRefNumber } from '$lib/data/references.js';
@@ -52,32 +52,6 @@
     };
   });
 
-  // Create a map for looking up separating functions by shortName
-  const separatingFunctionMap = $derived.by(() => {
-    const map = new Map<string, (typeof graphData.separatingFunctions)[number]>();
-    for (const sf of graphData.separatingFunctions) {
-      map.set(sf.shortName, sf);
-    }
-    return map;
-  });
-
-  // Look up separating functions for a relation by IDs
-  function getSeparatingFunctionsForRelation(relation: { separatingFunctionIds?: string[] } | null) {
-    if (!relation?.separatingFunctionIds?.length) return [];
-    return relation.separatingFunctionIds
-      .map(id => separatingFunctionMap.get(id))
-      .filter((sf): sf is NonNullable<typeof sf> => sf !== undefined);
-  }
-
-  // Pre-compute separating functions for both directions
-  const forwardSeparatingFunctions = $derived(
-    originalEdge?.forward ? getSeparatingFunctionsForRelation(originalEdge.forward) : []
-  );
-
-  const backwardSeparatingFunctions = $derived(
-    originalEdge?.backward ? getSeparatingFunctionsForRelation(originalEdge.backward) : []
-  );
-
   // Collect all unique references from both directions, including inline citations
   const edgeReferences = $derived.by<KCReference[]>(() => {
     if (!originalEdge) return [];
@@ -85,7 +59,7 @@
     const refIds = new Set<string>();
     const refs: KCReference[] = [];
 
-    const collectRefs = (relation: { refs: string[]; description?: string; separatingFunctionIds?: string[] } | null) => {
+    const collectRefs = (relation: { refs: string[]; description?: string } | null) => {
       if (!relation) return;
       relation.refs.forEach((id) => refIds.add(id));
       
@@ -93,15 +67,6 @@
       if (relation.description) {
         extractCitationKeys(relation.description).forEach((key) => refIds.add(key));
       }
-      
-      // Look up separating functions by ID and collect their refs and inline citations
-      getSeparatingFunctionsForRelation(relation).forEach((fn) => {
-        fn.refs.forEach((id) => refIds.add(id));
-        // Also extract citations from separating function description
-        if (fn.description) {
-          extractCitationKeys(fn.description).forEach((key) => refIds.add(key));
-        }
-      });
     };
 
     collectRefs(originalEdge.forward);
@@ -176,7 +141,7 @@
         </h3>
         
         <div class="space-y-4">
-{#snippet directionBlock(fromName: string, toName: string, relation: DirectedSuccinctnessRelation, separatingFns: KCSeparatingFunction[])}
+{#snippet directionBlock(fromName: string, toName: string, relation: DirectedSuccinctnessRelation)}
             <div class="direction-block">
               {#if false}<h5 class="font-semibold text-gray-900 mb-2">
                 <MathText text={fromName} className="inline" />
@@ -212,30 +177,6 @@
                   onCitationClick={handleCitationClick}
                 />
               {/if}
-              
-              {#if separatingFns.length > 0}
-                <div class="mt-3">
-                  <h6 class="text-sm font-semibold text-gray-900 mb-2">Separating Functions</h6>
-                  <div class="space-y-2">
-                    {#each separatingFns as fn}
-                      <div class="p-2 bg-blue-50 border border-blue-200 rounded">
-                        <div class="font-medium text-sm text-gray-900">
-                          <MathText text={fn.name} className="inline" />{#if fn.refs.length}{#each fn.refs as refId}<button 
-                                class="ref-badge"
-                                onclick={scrollToReferences}
-                                title="View reference"
-                              >[{getGlobalRefNumber(refId) ?? '?'}]</button>{/each}{/if}
-                        </div>
-                        <MathText 
-                          text={fn.description} 
-                          className="text-xs text-gray-600 mt-1 block"
-                          onCitationClick={handleCitationClick}
-                        />
-                      </div>
-                    {/each}
-                  </div>
-                </div>
-              {/if}
             </div>
           {/snippet}
 
@@ -261,11 +202,11 @@
           {/if}
 
           {#if originalEdge?.forward}
-            {@render directionBlock(selectedEdge.sourceName, selectedEdge.targetName, originalEdge.forward, forwardSeparatingFunctions)}
+            {@render directionBlock(selectedEdge.sourceName, selectedEdge.targetName, originalEdge.forward)}
           {/if}
           
           {#if originalEdge?.backward}
-            {@render directionBlock(selectedEdge.targetName, selectedEdge.sourceName, originalEdge.backward, backwardSeparatingFunctions)}
+            {@render directionBlock(selectedEdge.targetName, selectedEdge.sourceName, originalEdge.backward)}
           {/if}
         </div>
         

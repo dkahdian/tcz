@@ -3,7 +3,6 @@ import type {
   LanguageToAdd,
   ReferenceToAdd,
   RelationshipEntry,
-  SeparatingFunctionToAdd,
   SubmissionHistoryEntry,
   SubmissionHistoryPayload
 } from '../../routes/contribute/types.js';
@@ -25,16 +24,6 @@ function isRelationshipLike(value: unknown): value is RelationshipEntry {
     typeof value.sourceId === 'string' &&
     typeof value.targetId === 'string' &&
     typeof value.status === 'string' &&
-    Array.isArray(value.refs)
-  );
-}
-
-function isSeparatingFunctionLike(value: unknown): value is SeparatingFunctionToAdd {
-  return (
-    isObject(value) &&
-    typeof value.shortName === 'string' &&
-    typeof value.name === 'string' &&
-    typeof value.description === 'string' &&
     Array.isArray(value.refs)
   );
 }
@@ -66,17 +55,12 @@ function cloneLanguages(items: LanguageToAdd[]): LanguageToAdd[] {
 function cloneRelationships(items: RelationshipEntry[]): RelationshipEntry[] {
   return items.map((item) => ({
     ...item,
-    refs: [...item.refs],
-    separatingFunctionIds: item.separatingFunctionIds ? [...item.separatingFunctionIds] : undefined
+    refs: [...item.refs]
   }));
 }
 
 function cloneTags(items: CustomTag[]): CustomTag[] {
   return items.map((tag) => ({ ...tag, refs: [...tag.refs] }));
-}
-
-function cloneSeparatingFunctions(items: SeparatingFunctionToAdd[]): SeparatingFunctionToAdd[] {
-  return items.map((item) => ({ ...item, refs: [...item.refs] }));
 }
 
 function cloneReferences(items: ReferenceToAdd[]): ReferenceToAdd[] {
@@ -91,8 +75,6 @@ function cloneQueueEntries(entries: ContributionQueueEntry[]): ContributionQueue
         return { ...entry, payload: cloneLanguages([entry.payload])[0] };
       case 'relationship':
         return { ...entry, payload: cloneRelationships([entry.payload])[0] };
-      case 'separator':
-        return { ...entry, payload: cloneSeparatingFunctions([entry.payload])[0] };
       case 'reference':
         return { ...entry, payload: cloneReferences([entry.payload])[0] };
     }
@@ -118,11 +100,6 @@ function sanitizeQueueEntries(value: unknown): ContributionQueueEntry[] {
       case 'relationship':
         if (isRelationshipLike(raw.payload)) {
           entries.push({ id, kind, payload: cloneRelationships([raw.payload])[0] });
-        }
-        break;
-      case 'separator':
-        if (isSeparatingFunctionLike(raw.payload)) {
-          entries.push({ id, kind, payload: cloneSeparatingFunctions([raw.payload])[0] });
         }
         break;
       case 'reference':
@@ -187,13 +164,6 @@ function sanitizeHistoryEntry(raw: unknown): SubmissionHistoryEntry | null {
       ? cloneTags(value.filter((item): item is CustomTag => !!item && typeof item === 'object') as CustomTag[])
       : [];
 
-  const asSeparatingFunctionArray = (value: unknown): SeparatingFunctionToAdd[] =>
-    isArray(value)
-      ? cloneSeparatingFunctions(
-          value.filter((item): item is SeparatingFunctionToAdd => isSeparatingFunctionLike(item))
-        )
-      : [];
-
   const payload: SubmissionHistoryPayload = {
     submissionId,
     supersedesSubmissionId,
@@ -201,7 +171,6 @@ function sanitizeHistoryEntry(raw: unknown): SubmissionHistoryEntry | null {
     languagesToEdit: asLanguageArray(payloadRaw.languagesToEdit),
     relationships: asRelationshipArray(payloadRaw.relationships),
     newReferences: asReferenceArray(payloadRaw.newReferences),
-    newSeparatingFunctions: asSeparatingFunctionArray(payloadRaw.newSeparatingFunctions),
     customTags: asTagArray(payloadRaw.customTags),
     modifiedRelations: asStringArray(payloadRaw.modifiedRelations),
     contributor,
@@ -290,7 +259,6 @@ function createSubmissionHistoryEntry(payload: SubmissionHistoryPayload): Submis
       languagesToEdit: cloneLanguages(payload.languagesToEdit),
       relationships: cloneRelationships(payload.relationships),
       newReferences: [...payload.newReferences],
-      newSeparatingFunctions: cloneSeparatingFunctions(payload.newSeparatingFunctions),
       customTags: cloneTags(payload.customTags),
       modifiedRelations: [...payload.modifiedRelations],
       contributor: { ...payload.contributor },

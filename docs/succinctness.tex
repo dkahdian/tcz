@@ -217,7 +217,6 @@ Rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_
 As defined by \citet{Amarilli_2018}, \langref{FBDD} is the subset of \langref{uFBDD} with no $\vee$-nodes.
 \end{claimdescription}
 
-% separators=Sauerhoff
 \begin{claim}
 \langref{nFBDD} is not quasipolynomial-time compilable to \langref{d-DNNF} \citep{Amarilli_2018}
 \end{claim}
@@ -239,7 +238,6 @@ Rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_
 Consider the Boolean functions $\psi_n,\phi_n:\{0,1\}^{n^2}\to\{0,1\}$ that respectively test whether, in an $n \times n$ Boolean matrix, either the number of 1's is odd and there is a full row of 1's, or the number of 1's is even and there is a column full of 1's. An \langref{FBDD} of size $O(n^2)$ may simulate either $\psi_n$ or $\phi_n$, and thus the \langref{uFBDD} $\psi_n\vee\phi_n$ is of size $O(n^2)$; however, an \langref{FBDD} for $\psi_n\vee\phi_n$ is provably of size $2^{\Omega(n^{1/2})}$ \citep{Amarilli_2018}.
 \end{claimdescription}
 
-% separators=Sauerhoff
 \begin{claim}
 \langref{nFBDD} is not quasipolynomial-time compilable to \langref{uFBDD} \citep{Amarilli_2018}
 \end{claim}
@@ -385,7 +383,6 @@ For any fixed variable order $<$, every \langfam{uOBDD}{<} formula is a \langfam
 As defined by \citet{Darwiche_2002}, \langref{CNF} is a subset of \langref{NNF}. Therefore, a polynomial compilation is trivial.
 \end{claimdescription}
 
-% separators=Parity
 \begin{claim}
 \langref{CNF} is not quasipolynomial-time compilable to \langref{PI} \citep{Darwiche_2002}
 \end{claim}
@@ -400,7 +397,6 @@ It is well-known that some \langref{CNF} formulas (i.e. the negation of the pari
 As formalized by \citet{Darwiche_2002} and originally introduced in \citet{Darwiche_2001a}, \langref{d-DNNF} is a subset of \langref{DNNF} satisfying the determinism property, making a polynomial compilation trivial.
 \end{claimdescription}
 
-% separators=$OR_n$
 \begin{claim}
 \langref{d-DNNF} is not quasipolynomial-time compilable to \langref{MODS} \citep{Darwiche_2002}
 \end{claim}
@@ -422,7 +418,6 @@ Because counting the models of a \langref{d-DNNF} is in P and counting the model
 As defined by \citet{Darwiche_2002}, \langref{DNF} is a subset of \langref{DNNF}. Therefore, a polynomial compilation is trivial.
 \end{claimdescription}
 
-% separators=Parity
 \begin{claim}
 \langref{DNF} is not quasipolynomial-time compilable to \langref{IP} \citep{Darwiche_2002}
 \end{claim}
@@ -444,7 +439,6 @@ As defined by \citet{Darwiche_2002}, \langref{DNNF} is a subset of \langref{NNF}
 As defined by \citet{Darwiche_2002}, \langref{FBDD} is a subset of \langref{d-DNNF}, so a polynomial compilation is trivial.
 \end{claimdescription}
 
-% separators=Pairwise DNF
 \begin{claim}
 \langref{IP} is not quasipolynomial-time compilable to \langref{CNF} \citep{Darwiche_2002}
 \end{claim}
@@ -461,7 +455,6 @@ Since the early work of Quine, we know that the number of essential prime implic
 As defined by \citet{Darwiche_2002}, \langref{IP} is a subset of \langref{DNF}. Therefore, a polynomial compilation is trivial.
 \end{claimdescription}
 
-% separators=Clique
 \begin{claim}
 \langref{IP} is not quasipolynomial-time compilable to \langref{FBDD} \citep{Darwiche_2002,Wegener_1987}
 \end{claim}
@@ -469,7 +462,6 @@ As defined by \citet{Darwiche_2002}, \langref{IP} is a subset of \langref{DNF}. 
 The negation of the clique detection function $\neg\Sigma_{n,k}$ has $O(n^3)$ prime implicants (hence polynomial \langref{IP} size), but any \langref{FBDD} for $\neg\Sigma_{n,k}$ has exponential size for suitable $k$ \citep{Darwiche_2002,Wegener_1987}.
 \end{claimdescription}
 
-% separators=$OR_n$
 \begin{claim}
 \langref{IP} is not quasipolynomial-time compilable to \langref{MODS} \citep{Darwiche_2002}
 \end{claim}
@@ -512,7 +504,6 @@ A Shannon tree for any \langref{MODS} formula following order $<$ can be generat
 As defined by \citet{Darwiche_2002}, \langref{OBDD} is a subset of \langref{FBDD}. Therefore a polynomial time compilation is trivial.
 \end{claimdescription}
 
-% separators=Parity
 \begin{claim}
 \langfam{OBDD}{<} is not quasipolynomial-time compilable to \langref{CNF} \citep{Darwiche_2002}
 \end{claim}
@@ -520,7 +511,6 @@ As defined by \citet{Darwiche_2002}, \langref{OBDD} is a subset of \langref{FBDD
 The parity function $PARITY_n=\bigoplus_{i=1}^n x_i$ has linear size \langfam{OBDD}{<} representations but only exponential size \langref{CNF} representations.
 \end{claimdescription}
 
-% separators=Parity
 \begin{claim}
 \langfam{OBDD}{<} is not quasipolynomial-time compilable to \langref{DNF} \citep{Darwiche_2002}
 \end{claim}
@@ -542,7 +532,6 @@ As defined by \citet{Darwiche_2002}, \langfam{OBDD}{<} is a subset of \langref{O
 As defined by \citet{Darwiche_2002}, \langref{PI} is a subset of \langref{CNF}. Therefore, a polynomial compilation is trivial.
 \end{claimdescription}
 
-% separators=Pairwise CNF
 \begin{claim}
 \langref{PI} is not quasipolynomial-time compilable to \langref{DNF} \citep{Darwiche_2002}
 \end{claim}
@@ -550,7 +539,6 @@ As defined by \citet{Darwiche_2002}, \langref{PI} is a subset of \langref{CNF}. 
 The Pairwise \langref{CNF} formula $\Sigma_n = \bigwedge_{i=0}^{n-1}(x_{2i} \vee x_{2i+1})$ has $2^n$ prime implicates; its negation $\neg\Sigma_n$ lies in \langref{PI} and therefore has $2^n$ essential prime implicants, forcing any \langref{DNF} representation to have at least $2^n$ terms \citep{Darwiche_2002}.
 \end{claimdescription}
 
-% separators=Clique
 \begin{claim}
 \langref{PI} is not quasipolynomial-time compilable to \langref{FBDD} \citep{Wegener_1987,Darwiche_2002}
 \end{claim}
@@ -558,7 +546,6 @@ The Pairwise \langref{CNF} formula $\Sigma_n = \bigwedge_{i=0}^{n-1}(x_{2i} \vee
 The clique detection function $\Sigma_{n,k}$ has $O(n^3)$ prime implicates (hence polynomial \langref{PI} size), but any \langref{FBDD} for $\Sigma_{n,k}$ has exponential size for suitable $k$ \citep{Wegener_1987,Darwiche_2002}.
 \end{claimdescription}
 
-% separators=$OR_n$
 \begin{claim}
 \langref{PI} is not quasipolynomial-time compilable to \langref{MODS} \citep{Darwiche_2002}
 \end{claim}
@@ -571,7 +558,6 @@ The $OR_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \lang
 \section{I. Wegener, "Branching Programs and Binary Decision Diagrams: Theory and Applica...}
 % Reference ID: Wegener_2000
 % =============================
-% separators=Generalized_HWB
 \begin{claim}
 \langfam{cSDD}{T} is not quasipolynomial-time compilable to \langfam{OBDD}{<} \citep{Bova_2016_a,Bryant_1986,Wegener_2000}
 \end{claim}
@@ -586,7 +572,6 @@ The $OR_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \lang
 \langref{nOBDD} is the union of fixed-order languages \langfam{nOBDD}{<}. Hence any \langfam{nOBDD}{<} formula is already an \langref{nOBDD} formula, so the compilation is trivial and polynomial-time.
 \end{claimdescription}
 
-% separators=$EQ_n$
 \begin{claim}
 \langref{OBDD} is not quasipolynomial-time compilable to \langfam{OBDD}{<} \citep{Wegener_2000}
 \end{claim}
@@ -594,7 +579,6 @@ The $OR_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \lang
 Suppose an order $<$ existed so that \langref{OBDD} compiled to \langfam{OBDD}{<}. Take the first $2n$ variables in that order, call the first half $x_1,\ldots,x_n$ and the second half $y_1,\ldots,y_n$, and consider $EQ_n(x,y)$. This function has linear-size \langref{OBDD}{s} under the interleaved order $x_1,y_1,\ldots,x_n,y_n$, but exponential-size \langfam{OBDD}{<} representations \citep{Wegener_2000}. Thus no order $<$ can exist, and \langref{OBDD} is not quasipolynomial-time compilable to \langfam{OBDD}{<}.
 \end{claimdescription}
 
-% separators=$WS_n$
 \begin{claim}
 \langref{uOBDD} is not quasipolynomial-time compilable to \langref{FBDD} \citep{Wegener_2000,Savicky_Zak_1996}
 \end{claim}
@@ -602,7 +586,6 @@ Suppose an order $<$ existed so that \langref{OBDD} compiled to \langfam{OBDD}{<
 The weighted sum function $WS_n$ has polynomial-size \langref{uOBDD} formulas: \citet{Wegener_2000} gives polynomial-size \langref{nOBDD}{<} formulas for $WS_n$ under every variable ordering $<$, and the pointer-guess construction has at most one accepting guess, so the formula is unambiguous. By \citet{Savicky_Zak_1996}, every \langref{FBDD} for $WS_n$ has size $2^{n-o(n)}$. Hence no quasipolynomial compilation from \langref{uOBDD} to \langref{FBDD} is possible.
 \end{claimdescription}
 
-% separators=HWB
 \begin{claim}
 \langref{uOBDD} is not quasipolynomial-time compilable to \langref{OBDD} \citep{Bryant_1986,Wegener_2000}
 \end{claim}
@@ -811,7 +794,6 @@ Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. 
 \section{S. Bova, "SDDs Are Exponentially More Succinct than OBDDs", Proceedings of the A...}
 % Reference ID: Bova_2016_a
 % =============================
-% separators=Generalized_HWB
 \begin{claim}
 \langref{cSDD} is not quasipolynomial-time compilable to \langref{OBDD} \citep{Bova_2016_a}
 \end{claim}
@@ -819,7 +801,6 @@ Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. 
 \citet[Theorem 4]{Bova_2016_a} constructs a generalized hidden weighted bit function $F_n$ on $2n+1$ variables with \langref{cSDD} size $O(n^3)$ but \langref{OBDD} size $2^{\Omega(n)}$. The function $F_n$ augments $HWB_n$ with fresh variables $y_0, \ldots, y_n$ to ensure the resulting \langref{SDD} is compressed; conditioning $F_n$ on $y_i = 1$ recovers $HWB_n$, preserving Bryant's exponential \langref{OBDD} lower bound.
 \end{claimdescription}
 
-% separators=Generalized_HWB
 \begin{claim}
 \langfam{cSDD}{T} is not quasipolynomial-time compilable to \langref{OBDD} \citep{Bova_2016_a}
 \end{claim}
@@ -832,7 +813,6 @@ Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. 
 \section{S. Bova and F. Capelli and S. Mengel and F. Slivovsky, "Knowledge Compilation Me...}
 % Reference ID: Bova_2016
 % =============================
-% separators=Sauerhoff
 \begin{claim}
 \langref{DNNF} is not quasipolynomial-time compilable to \langref{d-DNNF} \citep{Bova_2016}
 \end{claim}
@@ -840,7 +820,6 @@ Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. 
 \citet[Proposition 7]{Bova_2016} shows that the Sauerhoff function $S_n$ has \langref{DNNF} size $O(n^2)$. Theorem 9 shows that $S_n$ has \langref{d-DNNF} size $2^{\Omega(n)}$. (Also see \citet{Bova_2014}.)
 \end{claimdescription}
 
-% separators=JS
 \begin{claim}
 \langref{PI} is not quasipolynomial-time compilable to \langref{DNNF} \citep{Bova_2016}
 \end{claim}
@@ -932,7 +911,6 @@ The Quine-McCluskey algorithm generates an \langref{IP} formula in polynomial ti
 \section{J. Gergov and C. Meinel, "Efficient Boolean manipulation with OBDD's can be exte...}
 % Reference ID: Gergov_1994
 % =============================
-% separators=HWB
 \begin{claim}
 \langref{FBDD} is not quasipolynomial-time compilable to \langref{OBDD} \citep{Gergov_1994}
 \end{claim}

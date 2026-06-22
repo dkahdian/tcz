@@ -1,6 +1,5 @@
 import type {
   GraphData,
-  KCSeparatingFunction,
   KCDefinition,
   KCBatchClaim,
   NodePositionsByLanguageName
@@ -16,7 +15,6 @@ import { initNameMap } from '../utils/language-id.js';
 // Initialize the language ID → name map so idToName() works at runtime
 initNameMap(allLanguages);
 
-const separatingFunctions = (database.separatingFunctions ?? []) as KCSeparatingFunction[];
 const definitions = (database.definitions ?? []) as KCDefinition[];
 const batchClaims = (database.batchClaims ?? []) as KCBatchClaim[];
 const rawDefaultNodePositions = (database as { defaultNodePositionsByLanguageName?: unknown })
@@ -51,7 +49,6 @@ export const canonicalDataset: GraphData = {
   relationTypes,
   complexities: COMPLEXITIES,
   references: allReferences,
-  separatingFunctions,
   defaultNodePositionsByLanguageName,
   metadata,
   batchClaims

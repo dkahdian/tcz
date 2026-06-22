@@ -22,7 +22,6 @@ type RawDatabase = {
   relationTypes?: unknown[];
   tags?: Record<string, unknown>;
   adjacencyMatrix: { languageIds: string[]; matrix: unknown[][] };
-  separatingFunctions?: unknown[];
   metadata?: Record<string, unknown>;
 };
 
@@ -154,7 +153,6 @@ function buildDatabasePayload(current: RawDatabase, dataset: GraphData): RawData
       languageIds: [...dataset.adjacencyMatrix.languageIds],
       matrix: dataset.adjacencyMatrix.matrix
     },
-    separatingFunctions: dataset.separatingFunctions ?? [],
     metadata: dataset.metadata ?? current.metadata
   };
 }

@@ -147,7 +147,6 @@ function buildGraphData(database: DatabaseSchema): GraphData {
     languages: database.languages,
     definitions: database.definitions,
     references: database.references,
-    separatingFunctions: database.separatingFunctions ?? [],
     complexities: COMPLEXITIES,
     relationTypes,
     adjacencyMatrix: database.adjacencyMatrix,
@@ -437,7 +436,6 @@ function removeDerivedEdges(matrix: KCAdjacencyMatrix): void {
             status: 'unknown-poly-quasi',
             description: edge.quasiDescription!.description,
             refs: edge.quasiDescription!.refs,
-            separatingFunctionIds: edge.separatingFunctionIds,
             hidden: false,
             derived: false
           };
@@ -446,7 +444,6 @@ function removeDerivedEdges(matrix: KCAdjacencyMatrix): void {
             status: 'no-poly-unknown-quasi',
             description: edge.noPolyDescription!.description,
             refs: edge.noPolyDescription!.refs,
-            separatingFunctionIds: edge.separatingFunctionIds,
             hidden: false,
             derived: false
           };

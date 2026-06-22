@@ -5,7 +5,6 @@ import type {
   KCDefinition,
   KCLanguage,
   KCOpSupport,
-  KCSeparatingFunction,
   KCReference,
   TransformValidationResult
 } from '../../types.js';
@@ -286,35 +285,12 @@ function validateDefinitions(
   }
 }
 
-function validateSeparatingFunctions(
-  separatingFunctions: KCSeparatingFunction[],
-  knownRefs: Set<string>,
-  errors: string[]
-): Set<string> {
-  const ids = new Set<string>();
-  for (const fn of separatingFunctions) {
-    if (!fn.shortName) {
-      errors.push('Separating function is missing a shortName');
-      continue;
-    }
-    if (ids.has(fn.shortName)) {
-      errors.push(`Duplicate separating function shortName "${fn.shortName}"`);
-    } else {
-      ids.add(fn.shortName);
-    }
-    if (fn.name) ids.add(fn.name);
-    ensureRefsExist(fn.refs, `Separating function "${fn.shortName}" refs`, knownRefs, errors);
-  }
-  return ids;
-}
-
 function validateRelation(
   relation: DirectedSuccinctnessRelation,
   sourceId: string,
   targetId: string,
   languageNames: Map<string, string>,
   knownRefs: Set<string>,
-  separatingFunctionIds: Set<string>,
   errors: string[]
 ): void {
   const sourceLabel = languageLatexRef(languageNames.get(normalizeLanguageId(sourceId)), sourceId);
@@ -326,29 +302,12 @@ function validateRelation(
   }
 
   ensureRefsExist(relation.refs, `${edgeLabel} refs`, knownRefs, errors);
-
-  if (relation.separatingFunctionIds !== undefined) {
-    if (!Array.isArray(relation.separatingFunctionIds)) {
-      errors.push(`${edgeLabel}: separatingFunctionIds must be an array`);
-    } else {
-      for (const fnId of relation.separatingFunctionIds) {
-        if (typeof fnId !== 'string' || !fnId.trim()) {
-          errors.push(`${edgeLabel}: separatingFunctionIds must contain string IDs`);
-          continue;
-        }
-        if (!separatingFunctionIds.has(fnId)) {
-          errors.push(`${edgeLabel} references unknown separating function "${fnId}"`);
-        }
-      }
-    }
-  }
 }
 
 function validateRelations(
   matrix: KCAdjacencyMatrix,
   languageNames: Map<string, string>,
   knownRefs: Set<string>,
-  separatingFunctionIds: Set<string>,
   errors: string[]
 ): void {
   const { languageIds, matrix: relations } = matrix;
@@ -356,7 +315,7 @@ function validateRelations(
     for (let j = 0; j < languageIds.length; j += 1) {
       const relation = relations[i]?.[j];
       if (!relation) continue;
-      validateRelation(relation, languageIds[i], languageIds[j], languageNames, knownRefs, separatingFunctionIds, errors);
+      validateRelation(relation, languageIds[i], languageIds[j], languageNames, knownRefs, errors);
     }
   }
 }
@@ -373,8 +332,7 @@ export function validateDatasetStructure(data: GraphData): TransformValidationRe
 
   validateDefinitions(data.definitions, globalReferenceRegistry, errors);
 
-  const separatingFunctionIds = validateSeparatingFunctions(data.separatingFunctions ?? [], globalReferenceRegistry, errors);
-  validateRelations(data.adjacencyMatrix, knownLanguages, globalReferenceRegistry, separatingFunctionIds, errors);
+  validateRelations(data.adjacencyMatrix, knownLanguages, globalReferenceRegistry, errors);
 
   return errors.length > 0 ? { ok: false, errors } : { ok: true };
 }

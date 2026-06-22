@@ -89,7 +89,6 @@ function relationSignature(source: GraphData, sourceId: string, targetId: string
     assumption: relation.assumption ?? null,
     description: relation.description ?? null,
     refs: relation.refs ?? [],
-    separatingFunctionIds: relation.separatingFunctionIds ?? [],
     derived: relation.derived ?? false,
     noPolyDescription: relation.noPolyDescription ?? null,
     quasiDescription: relation.quasiDescription ?? null

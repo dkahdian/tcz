@@ -137,35 +137,6 @@ export const polyDisplay: EdgeFilter<boolean> = {
 };
 
 /**
- * Omit separator functions - always off, not user-facing
- */
-export const omitSeparatorFunctions: EdgeFilter = {
-  id: 'omit-separator-functions',
-  name: 'Omit Separator Functions',
-  description: 'Hide all separator functions from edges',
-  applicableViews: ['graph', 'succinctness'],
-  uiGroup: 'Advanced',
-  kind: 'internal',
-  // Locked on now that the UI toggle is gone.
-  defaultParam: true,
-  controlType: 'checkbox',
-  hidden: true,
-  lambda: (data, param) => {
-    if (!param) return data;
-    return mapRelationsInDataset(data, (relation) => {
-      if (!relation) return null;
-      if (relation.separatingFunctionIds && relation.separatingFunctionIds.length > 0) {
-        return {
-          ...relation,
-          separatingFunctionIds: []
-        };
-      }
-      return relation;
-    });
-  }
-};
-
-/**
  * Show incomparabilities - OFF BY DEFAULT
  *
  * When disabled, hides pairs where both directions are gaps, unknown, or null.
@@ -300,6 +271,5 @@ export const edgeFilters: EdgeFilter<any>[] = [
   omitIncomparable,
   omitImplicitEdges,
   implicitEdgeTreatment,
-  omitSeparatorFunctions,
   omitMarkedEdges
 ];

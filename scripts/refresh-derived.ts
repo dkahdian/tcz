@@ -46,7 +46,6 @@ function removeDerivedEdges(matrix: KCAdjacencyMatrix): { removed: number; rever
             status: 'unknown-poly-quasi',
             description: edge.quasiDescription!.description,
             refs: edge.quasiDescription!.refs,
-            separatingFunctionIds: edge.separatingFunctionIds,
             hidden: false,
             derived: false
           };
@@ -57,7 +56,6 @@ function removeDerivedEdges(matrix: KCAdjacencyMatrix): { removed: number; rever
             status: 'no-poly-unknown-quasi',
             description: edge.noPolyDescription!.description,
             refs: edge.noPolyDescription!.refs,
-            separatingFunctionIds: edge.separatingFunctionIds,
             hidden: false,
             derived: false
           };
@@ -165,7 +163,6 @@ function main(): void {
   const graphData: GraphData = {
     languages: database.languages,
     references: database.references,
-    separatingFunctions: database.separatingFunctions ?? [],
     complexities: COMPLEXITIES,
     relationTypes: relationTypes,
     adjacencyMatrix: database.adjacencyMatrix,

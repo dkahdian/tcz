@@ -104,7 +104,6 @@ function applySimpleUpgrade(
     status: newStatus,
     refs,
     assumption,
-    separatingFunctionIds: undefined,
     hidden: false,
     derived: true,
     description,
@@ -173,7 +172,6 @@ function applyNoPolyQuasiUpgrade(
     status: 'no-poly-quasi',
     refs: allRefs,
     assumption: mergedAssumption,
-    separatingFunctionIds: originalRelation.separatingFunctionIds,
     hidden: false,
     derived: fullyDerived,
     noPolyDescription,
@@ -314,8 +312,7 @@ export function tryDowngrade(
       refs: original?.refs ?? [],
       hidden: original?.hidden ?? false,
       derived: true,
-      description: original?.description,
-      separatingFunctionIds: undefined
+      description: original?.description
     } satisfies DirectedSuccinctnessRelation;
     const result = validateAdjacencyConsistency(data);
     // always restore the original relation after the trial
@@ -429,7 +426,6 @@ export function tryDowngrade(
       assumption,
       hidden: false,
       derived: true,
-      separatingFunctionIds: undefined,
       description: newDesc.trim(),
       derivationOrder: nextDerivationOrder(),
       proofTrace: { rule: 'contradiction', triedStatus, witnessPath: witnessIds }
@@ -491,7 +487,6 @@ export function tryDowngrade(
       assumption: mergedAssumption,
       hidden: false,
       derived: fullyDerived,
-      separatingFunctionIds: relation?.separatingFunctionIds,
       noPolyDescription,
       quasiDescription,
       description: buildNoPolyQuasiDescription(noPolyDescription, quasiDescription)

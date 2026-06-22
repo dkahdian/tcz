@@ -8,7 +8,6 @@ import type {
   KCDefinition,
   KCLanguage,
   KCReference,
-  KCSeparatingFunction,
   NodePositionsByLanguageName
 } from '../../src/lib/types.js';
 
@@ -22,7 +21,6 @@ export interface DatabaseSchema {
   definitions?: KCDefinition[];
   adjacencyMatrix: KCAdjacencyMatrix;
   references: KCReference[];
-  separatingFunctions: KCSeparatingFunction[];
   defaultNodePositionsByLanguageName?: NodePositionsByLanguageName;
   tags?: Record<string, unknown>;
   metadata?: Record<string, unknown>;

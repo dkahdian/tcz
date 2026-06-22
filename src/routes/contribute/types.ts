@@ -1,13 +1,6 @@
 import type { ContributionQueueEntry } from '$lib/data/contribution-transforms.js';
 import type { KCOpSupport } from '$lib/types.js';
 
-export type SeparatingFunctionToAdd = {
-  shortName: string;
-  name: string;
-  description: string;
-  refs: string[];
-};
-
 export type RelationshipEntry = {
   sourceId: string;
   targetId: string;
@@ -16,7 +9,6 @@ export type RelationshipEntry = {
   description?: string;
   assumption?: string;
   refs: string[];
-  separatingFunctionIds?: string[]; // Array of shortNames referencing top-level separatingFunctions
 };
 
 /**
@@ -63,7 +55,6 @@ export type SubmissionHistoryPayload = {
   languagesToEdit: LanguageToAdd[];
   relationships: RelationshipEntry[];
   newReferences: ReferenceToAdd[];
-  newSeparatingFunctions: SeparatingFunctionToAdd[];
   customTags: CustomTag[];
   modifiedRelations: string[];
   contributor: ContributorInfo;

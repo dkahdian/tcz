@@ -210,10 +210,6 @@ export function applyFiltersWithParams(
   filterStates: FilterStateMap,
   viewMode: ViewMode = 'graph'
 ): FilteredGraphData {
-  const dataset = {
-    ...graphData,
-    separatingFunctions: graphData.separatingFunctions ?? []
-  } as GraphData;
   const applicableLanguageFilters = getApplicableFiltersForView(languageFilters, viewMode);
   const applicableEdgeFilters = getApplicableFiltersForView(edgeFilters, viewMode);
   const transformStage = (current: GraphData, filter: LanguageFilter | EdgeFilter) => {
@@ -229,7 +225,7 @@ export function applyFiltersWithParams(
     return filters.reduce<GraphData>((working, filter) => transformStage(working, filter), current);
   };
 
-  const afterLanguageFilters = applyStageList(dataset, applicableLanguageFilters);
+  const afterLanguageFilters = applyStageList(graphData, applicableLanguageFilters);
   const afterEdgeFilters = applyStageList(afterLanguageFilters, applicableEdgeFilters);
 
   const visibleLanguageIds = new Set(afterEdgeFilters.languages.map((language) => language.id));

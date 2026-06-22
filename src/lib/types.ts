@@ -309,21 +309,6 @@ export interface KCRelationType {
  */
 
 /**
- * Separating function stored in top-level database array.
- * shortName serves as the unique identifier for referencing from relationships.
- */
-export interface KCSeparatingFunction {
-  /** Short label rendered directly on the edge (also serves as unique ID) */
-  shortName: string;
-  /** Full human-readable name */
-  name: string;
-  /** Description of what is separated */
-  description: string;
-  /** Supporting references */
-  refs: string[];
-}
-
-/**
  * Description component for a single claim in a no-poly-quasi edge.
  * Used to track whether each half (no-poly / quasi-exists) was manually authored or derived.
  */
@@ -349,8 +334,6 @@ export interface DirectedSuccinctnessRelation {
   assumption?: string;
   /** Supporting references */
   refs: string[];
-  /** Separating function shortNames (references top-level separatingFunctions array by shortName) */
-  separatingFunctionIds?: string[];
   /** Whether this edge is hidden by transitive reduction (always false by default) */
   hidden?: boolean;
   /** True if this edge was inferred by the propagator rather than manually authored. */
@@ -419,8 +402,6 @@ export interface GraphData {
   complexities: Record<string, Complexity>;
   /** global registry of references used across the dataset */
   references: KCReference[];
-  /** separating function registry */
-  separatingFunctions: KCSeparatingFunction[];
   /** optional default node positions, keyed by language name */
   defaultNodePositionsByLanguageName?: NodePositionsByLanguageName;
   /** optional metadata copied from database.json */

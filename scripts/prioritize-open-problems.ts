@@ -14,7 +14,7 @@ import { loadDatabase, type DatabaseSchema } from './shared/database.js';
 
 import { propagateImplicitRelations } from '../src/lib/data/propagation/index.js';
 import { relationTypes, COMPLEXITIES } from '../src/lib/data/complexities.js';
-import type { GraphData, DirectedSuccinctnessRelation, KCAdjacencyMatrix, KCSeparatingFunction, KCLanguage } from '../src/lib/types.js';
+import type { GraphData, DirectedSuccinctnessRelation, KCAdjacencyMatrix, KCLanguage } from '../src/lib/types.js';
 
 type TargetStatus = 'poly' | 'no-poly-quasi' | 'no-quasi';
 
@@ -38,7 +38,6 @@ function buildGraphData(database: DatabaseSchema): GraphData {
   return {
     languages: database.languages,
     references: database.references,
-    separatingFunctions: database.separatingFunctions ?? [],
     complexities: COMPLEXITIES,
     relationTypes: relationTypes,
     adjacencyMatrix: database.adjacencyMatrix,

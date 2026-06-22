@@ -36,7 +36,6 @@ export interface BaselineRelation {
   description?: string;
   assumption?: string;
   refs: string[];
-  separatingFunctionIds?: string[];
   derived?: boolean;
 }
 
@@ -57,16 +56,11 @@ export function buildBaselineRelations(adjacencyMatrix: {
         const sourceId = languageIds[i];
         const targetId = languageIds[j];
         
-        const separatingFunctionIds = relation.separatingFunctionIds && Array.isArray(relation.separatingFunctionIds)
-          ? [...relation.separatingFunctionIds]
-          : undefined;
-        
         baselineRelations.set(relationKey(sourceId, targetId), {
           status: relation.status,
           description: relation.description,
           assumption: relation.assumption,
           refs: relation.refs ? [...relation.refs] : [],
-          separatingFunctionIds,
           derived: relation.derived
         });
       }
@@ -138,29 +132,4 @@ export function convertLanguageForEdit(lang: any): LanguageToAdd {
     tags: (lang.tags || []).map((t: any) => ({ ...t, color: t.color || '#6366f1' })),
     existingReferences: lang.references?.map((r: any) => r.id) || []
   };
-}
-
-
-
-/**
- * Build submission payload
- */
-/**
- * Get available separating functions (existing + new) for dropdown selection
- */
-export function getAvailableSeparatingFunctions(
-  existingSeparatingFunctions: Array<{ shortName: string; name: string; description: string }>,
-  newSeparatingFunctions: Array<{ shortName: string; name: string; description: string }>
-): Array<{ shortName: string; name: string; description: string }> {
-  const existing = existingSeparatingFunctions.map((sf) => ({
-    shortName: sf.shortName,
-    name: sf.name,
-    description: sf.description
-  }));
-  const newSFs = newSeparatingFunctions.map((sf) => ({
-    shortName: sf.shortName,
-    name: sf.name,
-    description: sf.description
-  }));
-  return [...existing, ...newSFs];
 }
