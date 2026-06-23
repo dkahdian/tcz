@@ -635,7 +635,8 @@
             }
           }
         }
-      }
+      },
+      "classification": "plain"
     },
     {
       "fullName": "Compressed Sentential Decision Diagrams",
@@ -881,7 +882,8 @@
       },
       "id": "lang_83e3b023",
       "definition": "\\langref{cSDD} $= \\bigcup_T \\langfam{cSDD}{T}$. \\citep{VanDenBroeck_2015,Darwiche_2011}",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "union"
     },
     {
       "name": "d-DNNF",
@@ -1108,7 +1110,8 @@
       },
       "id": "lang_6c130090",
       "definition": "Boolean circuits with AND and OR gates; literals as inputs; and whose AND gates are \\emph{decomposable} (children mention disjoint sets of variables) and whose OR gates are \\emph{deterministic} (on any input, at most one child evaluates to $1$).\\citep{Darwiche_2001b}",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "plain"
     },
     {
       "fullName": "Deterministic Structured Decomposable Negation Normal Form",
@@ -1337,7 +1340,8 @@
       },
       "id": "lang_ea9b5299",
       "definition": "\\langref{d-SDNNF} $= \\bigcup_T$ \\langfam{d-SDNNF}{T}. \\citep{Pipatsrisawat_2008}",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "union"
     },
     {
       "fullName": "Deterministic Structured Decomposable Negation Normal Form (wrt a fixed vtree)",
@@ -1586,7 +1590,8 @@
       },
       "id": "lang_91f812d0",
       "definition": "For each fixed vtree $T$, a \\langfam{d-SDNNF}{T} is a \\langref{d-DNNF} that is additionally structured decomposable, respecting the vtree $T$.\n\nIntuitively, all AND gates over the same set of variables must decompose via the same partition, as specified by the vtree.\n\nEquivalently, \\langfam{d-SDNNF}{T} formulas are \\langfam{SDNNF}{T} formulas that are also \\emph{deterministic} (see \\langref{d-DNNF}).\\citep{Pipatsrisawat_2008}",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "family"
     },
     {
       "id": "lang_4c204bf3",
@@ -1815,7 +1820,8 @@
             }
           }
         }
-      }
+      },
+      "classification": "plain"
     },
     {
       "name": "DNNF",
@@ -2040,7 +2046,8 @@
       },
       "id": "lang_3bebcab7",
       "definition": "Boolean circuits with AND and OR gates, literals as inputs, and whose AND gates are \\emph{decomposable} (children mention disjoint sets of variables).\\citep{Darwiche_2001a} Decomposability may be seen as the analogue in Boolean circuits to the notion of \\emph{syntactic multilinearity} in arithmetic circuits.\\citep{shpilka2010arithmetic}",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "plain"
     },
     {
       "name": "FBDD",
@@ -2236,7 +2243,8 @@
       },
       "id": "lang_684b1ca7",
       "definition": "Binary decision diagrams such that each root-to-sink path tests each variable at most once. Also known as read-once branching programs.\\citep{Wegener_2000}",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "plain"
     },
     {
       "name": "IP",
@@ -2424,7 +2432,8 @@
       },
       "id": "lang_6ae90adc",
       "definition": "A \\langref{DNF} that is the disjunction of all minimal entailing terms (prime implicants). \\citep{Quine_1952}",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "plain"
     },
     {
       "name": "MODS",
@@ -2634,7 +2643,8 @@
       },
       "id": "lang_e02902d0",
       "definition": "The set of satisfying assignments (models) of the function.\\citep{Darwiche_2002}\n\nEquivalently, a suitably restricted \\langref{DNF} whose terms are in one-to-one correspondence with the models.",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "plain"
     },
     {
       "fullName": "Nondeterministic Free Binary Decision Diagram",
@@ -2882,7 +2892,8 @@
       },
       "id": "lang_1df07cc3",
       "definition": "An \\langref{nFBDD} is a \\emph{nondeterministic} \\langref{FBDD}, i.e., an \\langref{FBDD} that is additionally allowed to contain \\emph{guess} nodes.\\citep{Wegener_2000}\n\nAlso known as a nondeterministic read-once branching program.",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "plain"
     },
     {
       "name": "NNF",
@@ -3133,7 +3144,8 @@
       },
       "id": "lang_5bf00851",
       "definition": "A Boolean circuit with AND and OR gates with literals as inputs (i.e., negations may only appear at leaves). Also called \\emph{De Morgan circuits}. \\citep{Darwiche_2002}",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "plain"
     },
     {
       "fullName": "Nondeterministic Ordered Binary Decision Diagram",
@@ -3386,7 +3398,8 @@
       },
       "id": "lang_d24efe0e",
       "definition": "\\langref{nOBDD} $= \\bigcup_{<}$ \\langfam{nOBDD}{<}. \\citep{Wegener_2000}",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "union"
     },
     {
       "fullName": "Ordered Binary Decision Diagram (wrt a fixed variable order)",
@@ -3575,7 +3588,8 @@
       },
       "id": "lang_d69995dd",
       "definition": "For each fixed variable order $<$, binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the order $<$.\\citep{Bryant_1986}\n\nEquivalently, oblivious read-once branching programs respecting the variable order $<$.\\citep{Wegener_2000}\n\nEquivalently, \\langfam{OBDD}{<}{s} are \\langref{FBDD}{s} required to respect the order $<$ on every root-to-sink path.",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "family"
     },
     {
       "name": "PI",
@@ -3761,7 +3775,8 @@
       },
       "id": "lang_27fffab2",
       "definition": "The subset of \\langref{CNF} where formulas are the conjunction of all minimal entailed clauses (prime implicates). \\citep{Quine_1952}.",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "plain"
     },
     {
       "fullName": "Sentential Decision Diagram",
@@ -4021,7 +4036,8 @@
       },
       "id": "lang_1afefbe2",
       "definition": "\\langref{SDD} $= \\bigcup_T$ \\langfam{SDD}{T}. \\citep{Darwiche_2011}",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "union"
     },
     {
       "fullName": "Sentential Decision Diagram (wrt a fixed vtree)",
@@ -4270,7 +4286,8 @@
       },
       "id": "lang_9c84a267",
       "definition": "\\langfam{SDD}{T} generalizes \\langfam{OBDD}{<} by allowing decisions, not only on variables, but on representations (i.e., recursively defined \\langref{SDD} formulas).\\citep{Darwiche_2011}\n\nEquivalently, an \\langfam{SDD}{T} is a \\langfam{d-SDNNF}{T} in which determinism is replaced by \\emph{strong determinism}, where $\\lor$-gates must take the form $ f(x,y) = \\bigvee_{i=1}^{m}(p_i(x) \\land s_i(y))$, where the $p_i$ are mutually exclusive and exhaustive.",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "family"
     },
     {
       "fullName": "Structured Decomposable Negation Normal Form",
@@ -4532,7 +4549,8 @@
       },
       "id": "lang_b13b0d78",
       "definition": "\\langref{SDNNF} $= \\bigcup_T$ \\langfam{SDNNF}{T}. \\citep{Pipatsrisawat_2008}",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "union"
     },
     {
       "fullName": "Structured Decomposable Negation Normal Form (wrt a fixed vtree)",
@@ -4780,7 +4798,8 @@
       },
       "id": "lang_3c803ba1",
       "definition": "For each fixed vtree $T$, an \\langfam{SDNNF}{T} is a \\langref{DNNF} that is additionally structured decomposable, respecting the vtree $T$.\\citep{Pipatsrisawat_2008}\n\nIntuitively, all AND gates over the same set of variables must decompose via the same partition, as specified by the vtree.",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "family"
     },
     {
       "fullName": "Unambiguous Free Binary Decision Diagram",
@@ -5021,7 +5040,8 @@
       },
       "id": "lang_4e62a038",
       "definition": "The \\emph{unambiguous} variant of \\langref{nFBDD}.\\citep{Wegener_2000} That is, on any input there is at most one accepting sequence of guesses.",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "plain"
     },
     {
       "fullName": "Unambiguous Ordered Binary Decision Diagram",
@@ -5258,7 +5278,8 @@
       },
       "id": "lang_c2df8c2b",
       "definition": "The \\emph{unambiguous} variant of \\langref{nOBDD}.\\citep{Wegener_2000} That is, on any input there is at most one accepting sequence of guesses.",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "union"
     },
     {
       "name": "OBDD",
@@ -5466,7 +5487,8 @@
       },
       "id": "lang_b9d72a7c",
       "definition": "Binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the same order.\\citep{Bryant_1986}\n\nAlso known as oblivious read-once branching programs.\\citep{Wegener_2000}\n\nEquivalently, \\langref{OBDD} $=\\bigcup_{<}$ \\langfam{OBDD}{<}.\\citep{Darwiche_2002}",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "union"
     },
     {
       "id": "lang_8cf1da0e",
@@ -5715,7 +5737,7 @@
           }
         }
       },
-      "references": []
+      "classification": "family"
     },
     {
       "id": "lang_d7403a53",
@@ -5956,7 +5978,7 @@
           }
         }
       },
-      "references": []
+      "classification": "union"
     },
     {
       "id": "lang_981b62f0",
@@ -6192,7 +6214,8 @@
         }
       },
       "definition": "Boolean circuits with AND and OR gates; literals as inputs; and whose AND gates are \\emph{decomposable} (children mention disjoint sets of variables) and whose OR gates must appear in the form of \\emph{decisions/tests} (subcircuits of the form $(x\\land f)\\lor (\\bar{x}\\land g)$ where $x$ is a variable).\\citep{darwiche2007language}\n\nEquivalently, \\langref{dec-DNNF} formulas are \\langref{d-DNNF} formulas whose OR-gates may only appear in \\emph{decisions/tests}.\n\nEquivalently, \\langref{dec-DNNF} formulas are (up to syntax) \\langref{FBDD}{s} that may additionally contain decomposable AND-gates.",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "plain"
     },
     {
       "id": "lang_0f27d539",
@@ -6441,7 +6464,8 @@
         }
       },
       "definition": "\\langref{dec-SDNNF} $= \\bigcup_T$ \\langfam{dec-SDNNF}{T}. \\citep{Amarilli_2018}",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "union"
     },
     {
       "id": "lang_4ae03bc8",
@@ -6680,7 +6704,8 @@
         }
       },
       "definition": "For each fixed vtree $T$, \\langfam{dec-SDNNF}{T} is the subset of \\langref{dec-DNNF} that respects $T$.\\citep{darwiche2007language,Amarilli_2018}\n\nEquivalently, \\langfam{dec-SDNNF}{T} formulas are \\langfam{SDNNF}{T} formulas whose OR-gates may only appear in \\emph{decisions/tests}.",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "family"
     },
     {
       "id": "lang_82fa749e",
@@ -6933,7 +6958,8 @@
         }
       },
       "definition": "\\langfam{cSDD}{T} is the subset of \\langfam{SDD}{T} that is \\emph{compressed}, a restriction that makes the representation canonical (i.e., there is a unique representation for every function). \\citep{Darwiche_2011}",
-      "definitionRefs": []
+      "definitionRefs": [],
+      "classification": "family"
     },
     {
       "id": "lang_e827cf31",
@@ -7184,7 +7210,7 @@
           }
         }
       },
-      "references": []
+      "classification": "family"
     },
     {
       "id": "lang_43a33aec",
@@ -7437,7 +7463,166 @@
           }
         }
       },
-      "references": []
+      "classification": "family"
+    },
+    {
+      "id": "lang_03f76f04",
+      "name": "ZDD$_T$",
+      "classification": "family",
+      "fullName": "Test language",
+      "definition": "Test definition",
+      "definitionRefs": [],
+      "properties": {
+        "queries": {
+          "CO": {
+            "complexity": "no-poly-unknown-quasi",
+            "refs": [
+              "Cook_1971",
+              "Levin_1973"
+            ],
+            "derived": true,
+            "description": "\\nopref{lang_89649e36}{CO} assuming $P \\neq NP$, and \\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. If ZDD$_T$ supported Consistency in polynomial time, then CNF could too by compiling first. Therefore Consistency is unsupported by ZDD$_T$ assuming $P \\neq NP$.",
+            "derivationOrder": 112,
+            "proofTrace": {
+              "rule": "query-downgrade-via-succinctness",
+              "sourceLanguageId": "lang_89649e36",
+              "targetLanguageId": "lang_03f76f04",
+              "operation": "CO",
+              "level": "poly"
+            },
+            "assumption": "P \\neq NP"
+          },
+          "VA": {
+            "complexity": "no-poly-unknown-quasi",
+            "refs": [
+              "Darwiche_2002"
+            ],
+            "derived": true,
+            "description": "\\nopref{lang_4c204bf3}{VA} assuming $P \\neq NP$, and \\edgeref{lang_4c204bf3}{lang_03f76f04} in polynomial time. If ZDD$_T$ supported Validity in polynomial time, then DNF could too by compiling first. Therefore Validity is unsupported by ZDD$_T$ assuming $P \\neq NP$.",
+            "derivationOrder": 113,
+            "proofTrace": {
+              "rule": "query-downgrade-via-succinctness",
+              "sourceLanguageId": "lang_4c204bf3",
+              "targetLanguageId": "lang_03f76f04",
+              "operation": "VA",
+              "level": "poly"
+            },
+            "assumption": "P \\neq NP"
+          },
+          "CE": {
+            "complexity": "no-poly-unknown-quasi",
+            "refs": [
+              "Darwiche_2002",
+              "Cook_1971",
+              "Levin_1973"
+            ],
+            "derived": true,
+            "description": "\\nopref{lang_89649e36}{CE} assuming $P \\neq NP$, and \\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. If ZDD$_T$ supported Clausal Entailment in polynomial time, then CNF could too by compiling first. Therefore Clausal Entailment is unsupported by ZDD$_T$ assuming $P \\neq NP$.",
+            "derivationOrder": 114,
+            "proofTrace": {
+              "rule": "query-downgrade-via-succinctness",
+              "sourceLanguageId": "lang_89649e36",
+              "targetLanguageId": "lang_03f76f04",
+              "operation": "CE",
+              "level": "poly"
+            },
+            "assumption": "P \\neq NP"
+          },
+          "IM": {
+            "complexity": "no-poly-unknown-quasi",
+            "refs": [
+              "Darwiche_2002"
+            ],
+            "derived": true,
+            "description": "\\nopref{lang_4c204bf3}{IM} assuming $P \\neq NP$, and \\edgeref{lang_4c204bf3}{lang_03f76f04} in polynomial time. If ZDD$_T$ supported Implicant in polynomial time, then DNF could too by compiling first. Therefore Implicant is unsupported by ZDD$_T$ assuming $P \\neq NP$.",
+            "derivationOrder": 115,
+            "proofTrace": {
+              "rule": "query-downgrade-via-succinctness",
+              "sourceLanguageId": "lang_4c204bf3",
+              "targetLanguageId": "lang_03f76f04",
+              "operation": "IM",
+              "level": "poly"
+            },
+            "assumption": "P \\neq NP"
+          },
+          "EQ": {
+            "complexity": "no-poly-unknown-quasi",
+            "refs": [
+              "Darwiche_2002",
+              "Cook_1971",
+              "Levin_1973"
+            ],
+            "derived": true,
+            "description": "\\nopref{lang_89649e36}{EQ} assuming $P \\neq NP$, and \\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. If ZDD$_T$ supported Equivalence in polynomial time, then CNF could too by compiling first. Therefore Equivalence is unsupported by ZDD$_T$ assuming $P \\neq NP$.",
+            "derivationOrder": 116,
+            "proofTrace": {
+              "rule": "query-downgrade-via-succinctness",
+              "sourceLanguageId": "lang_89649e36",
+              "targetLanguageId": "lang_03f76f04",
+              "operation": "EQ",
+              "level": "poly"
+            },
+            "assumption": "P \\neq NP"
+          },
+          "SE": {
+            "complexity": "no-poly-unknown-quasi",
+            "refs": [
+              "Darwiche_2002",
+              "Cook_1971",
+              "Levin_1973"
+            ],
+            "derived": true,
+            "description": "\\nopref{lang_89649e36}{SE} assuming $P \\neq NP$, and \\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. If ZDD$_T$ supported Sentential Entailment in polynomial time, then CNF could too by compiling first. Therefore Sentential Entailment is unsupported by ZDD$_T$ assuming $P \\neq NP$.",
+            "derivationOrder": 117,
+            "proofTrace": {
+              "rule": "query-downgrade-via-succinctness",
+              "sourceLanguageId": "lang_89649e36",
+              "targetLanguageId": "lang_03f76f04",
+              "operation": "SE",
+              "level": "poly"
+            },
+            "assumption": "P \\neq NP"
+          },
+          "CT": {
+            "complexity": "no-poly-unknown-quasi",
+            "refs": [
+              "Darwiche_2002",
+              "Roth_1996"
+            ],
+            "derived": true,
+            "description": "\\nopref{lang_89649e36}{CT} assuming the polynomial hierarchy does not collapse, and \\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. If ZDD$_T$ supported Model Counting in polynomial time, then CNF could too by compiling first. Therefore Model Counting is unsupported by ZDD$_T$ assuming the polynomial hierarchy does not collapse.",
+            "derivationOrder": 118,
+            "proofTrace": {
+              "rule": "query-downgrade-via-succinctness",
+              "sourceLanguageId": "lang_89649e36",
+              "targetLanguageId": "lang_03f76f04",
+              "operation": "CT",
+              "level": "poly"
+            },
+            "assumption": "the polynomial hierarchy does not collapse"
+          },
+          "ME": {
+            "complexity": "no-poly-unknown-quasi",
+            "refs": [
+              "Darwiche_2002",
+              "Cook_1971",
+              "Levin_1973"
+            ],
+            "derived": true,
+            "description": "\\nopref{lang_89649e36}{ME} assuming $P \\neq NP$, and \\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. If ZDD$_T$ supported Model Enumeration in polynomial time, then CNF could too by compiling first. Therefore Model Enumeration is unsupported by ZDD$_T$ assuming $P \\neq NP$.",
+            "derivationOrder": 119,
+            "proofTrace": {
+              "rule": "query-downgrade-via-succinctness",
+              "sourceLanguageId": "lang_89649e36",
+              "targetLanguageId": "lang_03f76f04",
+              "operation": "ME",
+              "level": "poly"
+            },
+            "assumption": "P \\neq NP"
+          }
+        },
+        "transformations": {}
+      }
     }
   ],
   "references": [
@@ -7461,9 +7646,9 @@
     },
     {
       "id": "Blum_1980",
+      "bibtex": "@article{Blum_1980,\n  title={Equivalence of free boolean graphs can be decided probabilistically in polynomial time},\n  author={Blum, Manuel and Chandra, Ashok K. and Wegman, Mark N.},\n  journal={Information Processing Letters},\n  volume={10},\n  number={2},\n  pages={80--82},\n  year={1980},\n  publisher={Elsevier},\n  doi={10.1016/S0020-0190(80)90078-2}\n}",
       "title": "M. Blum and A. K. Chandra and M. N. Wegman, \"Equivalence of free boolean graphs can be decided probabilistically in polynomial time\", Information Processing Letters, vol. 10, pp. 80–82, 1980.",
-      "href": "https://doi.org/10.1016/S0020-0190(80)90078-2",
-      "bibtex": "@article{Blum_1980,\n  title={Equivalence of free boolean graphs can be decided probabilistically in polynomial time},\n  author={Blum, Manuel and Chandra, Ashok K. and Wegman, Mark N.},\n  journal={Information Processing Letters},\n  volume={10},\n  number={2},\n  pages={80--82},\n  year={1980},\n  publisher={Elsevier},\n  doi={10.1016/S0020-0190(80)90078-2}\n}"
+      "href": "https://doi.org/10.1016/S0020-0190(80)90078-2"
     },
     {
       "id": "Bodlaender_1993",
@@ -7479,9 +7664,9 @@
     },
     {
       "id": "Bova_2014",
+      "bibtex": "@unpublished{Bova_2014,\n  title={Expander {CNFs} have exponential {DNNF} size},\n  author={Bova, Simone and Capelli, Florent and Mengel, Stefan and Slivovsky, Friedrich},\n  year={2014},\n  note={Unpublished manuscript},\n  url={http://www.cril.univ-artois.fr/~mengel/papers/cnf-to-dnnf-lower-bound.pdf}\n}",
       "title": "S. Bova and F. Capelli and S. Mengel and F. Slivovsky, \"Expander CNFs have exponential DNNF size\", 2014.",
-      "href": "http://www.cril.univ-artois.fr/~mengel/papers/cnf-to-dnnf-lower-bound.pdf",
-      "bibtex": "@unpublished{Bova_2014,\n  title={Expander {CNFs} have exponential {DNNF} size},\n  author={Bova, Simone and Capelli, Florent and Mengel, Stefan and Slivovsky, Friedrich},\n  year={2014},\n  note={Unpublished manuscript},\n  url={http://www.cril.univ-artois.fr/~mengel/papers/cnf-to-dnnf-lower-bound.pdf}\n}"
+      "href": "http://www.cril.univ-artois.fr/~mengel/papers/cnf-to-dnnf-lower-bound.pdf"
     },
     {
       "id": "Bova_2016",
@@ -7515,9 +7700,9 @@
     },
     {
       "id": "Capelli_2026",
+      "bibtex": "@misc{Capelli_2026,\n  title={A canonical generalization of OBDD},\n  author={Capelli, Florent and Choi, YooJung and Mengel, Stefan and Mu\\~{n}oz, Mart\\'{i}n and {Van den Broeck}, Guy},\n  year={2026},\n  eprint={2604.05537},\n  archivePrefix={arXiv},\n  primaryClass={cs.AI},\n  url={https://arxiv.org/abs/2604.05537}\n}",
       "title": "F. Capelli and Y. Choi and S. Mengel and M. Muñoz and G. Van den Broeck, \"A canonical generalization of OBDD\", 2026.",
-      "href": "https://arxiv.org/abs/2604.05537",
-      "bibtex": "@misc{Capelli_2026,\n  title={A canonical generalization of OBDD},\n  author={Capelli, Florent and Choi, YooJung and Mengel, Stefan and Mu\\~{n}oz, Mart\\'{i}n and {Van den Broeck}, Guy},\n  year={2026},\n  eprint={2604.05537},\n  archivePrefix={arXiv},\n  primaryClass={cs.AI},\n  url={https://arxiv.org/abs/2604.05537}\n}"
+      "href": "https://arxiv.org/abs/2604.05537"
     },
     {
       "id": "Chandra_1978",
@@ -7527,9 +7712,9 @@
     },
     {
       "id": "Cook_1971",
+      "bibtex": "@inproceedings{Cook_1971,\n  author = {Cook, Stephen A.},\n  title = {The Complexity of Theorem-Proving Procedures},\n  booktitle = {Proceedings of the Third Annual ACM Symposium on Theory of Computing},\n  pages = {151--158},\n  year = {1971},\n  publisher = {Association for Computing Machinery},\n  doi = {10.1145/800157.805047}\n}",
       "title": "S. A. Cook, \"The Complexity of Theorem-Proving Procedures\", Proceedings of the Third Annual ACM Symposium on Theory of Computing, pp. 151–158, 1971.",
-      "href": "https://doi.org/10.1145/800157.805047",
-      "bibtex": "@inproceedings{Cook_1971,\n  author = {Cook, Stephen A.},\n  title = {The Complexity of Theorem-Proving Procedures},\n  booktitle = {Proceedings of the Third Annual ACM Symposium on Theory of Computing},\n  pages = {151--158},\n  year = {1971},\n  publisher = {Association for Computing Machinery},\n  doi = {10.1145/800157.805047}\n}"
+      "href": "https://doi.org/10.1145/800157.805047"
     },
     {
       "id": "Darwiche_2000",
@@ -7563,27 +7748,27 @@
     },
     {
       "id": "Darwiche_Huang_2002",
+      "bibtex": "@techreport{Darwiche_Huang_2002,\n  title={Testing equivalence probabilistically},\n  author={Darwiche, Adnan and Huang, Jinbo},\n  institution={Computer Science Department, University of California, Los Angeles},\n  number={D-123},\n  year={2002},\n  url={https://users.cecs.anu.edu.au/~jinbo/02-d123.pdf}\n}",
       "title": "A. Darwiche and J. Huang, \"Testing equivalence probabilistically\", 2002.",
-      "href": "https://users.cecs.anu.edu.au/~jinbo/02-d123.pdf",
-      "bibtex": "@techreport{Darwiche_Huang_2002,\n  title={Testing equivalence probabilistically},\n  author={Darwiche, Adnan and Huang, Jinbo},\n  institution={Computer Science Department, University of California, Los Angeles},\n  number={D-123},\n  year={2002},\n  url={https://users.cecs.anu.edu.au/~jinbo/02-d123.pdf}\n}"
+      "href": "https://users.cecs.anu.edu.au/~jinbo/02-d123.pdf"
     },
     {
       "id": "darwiche2007language",
+      "bibtex": "@article{darwiche2007language,\n  title={The Language of Search},\n  author={Huang, Jinbo and Darwiche, Adnan},\n  journal={Journal of Artificial Intelligence Research},\n  volume={29},\n  pages={191--219},\n  year={2007},\n  doi={10.1613/jair.2097},\n  url={https://users.cecs.anu.edu.au/~jinbo/07-jair-los.pdf}\n}",
       "title": "J. Huang and A. Darwiche, \"The Language of Search\", Journal of Artificial Intelligence Research, vol. 29, pp. 191–219, 2007.",
-      "href": "https://users.cecs.anu.edu.au/~jinbo/07-jair-los.pdf",
-      "bibtex": "@article{darwiche2007language,\n  title={The Language of Search},\n  author={Huang, Jinbo and Darwiche, Adnan},\n  journal={Journal of Artificial Intelligence Research},\n  volume={29},\n  pages={191--219},\n  year={2007},\n  doi={10.1613/jair.2097},\n  url={https://users.cecs.anu.edu.au/~jinbo/07-jair-los.pdf}\n}"
+      "href": "https://users.cecs.anu.edu.au/~jinbo/07-jair-los.pdf"
     },
     {
       "id": "Devadas_1993",
+      "bibtex": "@article{Devadas_1993,\n  title={Comparing two-level and ordered binary decision diagram representations of logic functions},\n  author={Devadas, Srinivas},\n  journal={IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems},\n  volume={12},\n  number={5},\n  pages={722--723},\n  year={1993},\n  publisher={IEEE},\n  doi={10.1109/43.277617}\n}",
       "title": "S. Devadas, \"Comparing two-level and ordered binary decision diagram representations of logic functions\", IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems, vol. 12, pp. 722–723, 1993.",
-      "href": "https://doi.org/10.1109/43.277617",
-      "bibtex": "@article{Devadas_1993,\n  title={Comparing two-level and ordered binary decision diagram representations of logic functions},\n  author={Devadas, Srinivas},\n  journal={IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems},\n  volume={12},\n  number={5},\n  pages={722--723},\n  year={1993},\n  publisher={IEEE},\n  doi={10.1109/43.277617}\n}"
+      "href": "https://doi.org/10.1109/43.277617"
     },
     {
       "id": "Fargier_2013",
+      "bibtex": "@inproceedings{Fargier_2013,\nauthor = {Fargier, H\\'{e}l\\`{e}ne and Marquis, Pierre and Niveau, Alexandre},\ntitle = {Towards a knowledge compilation map for heterogeneous representation languages},\nyear = {2013},\nisbn = {9781577356332},\nurl = {https://dl.acm.org/doi/10.5555/2540128.2540255},\npublisher = {AAAI Press},\nabstract = {The knowledge compilation map introduced by Darwiche and Marquis takes advantage of a number of concepts (mainly queries, transformations, expressiveness, and succinctness) to compare the relative adequacy of representation languages to some AI problems. However, the framework is limited to the comparison of languages that are interpreted in a homogeneous way (formul\\ae{} are interpreted as Boolean functions). This prevents one from comparing, on a formal basis, languages that are close in essence, such as OBDD, MDD, and ADD. To fill the gap, we present a generalized framework into which comparing formally heterogeneous representation languages becomes feasible. In particular, we explain how the key notions of queries and transformations, expressiveness, and succinctness can be lifted to the generalized setting.},\nbooktitle = {Proceedings of the Twenty-Third International Joint Conference on Artificial Intelligence},\npages = {877--883},\nnumpages = {7},\nlocation = {Beijing, China},\nseries = {IJCAI '13}\n}",
       "title": "H. Fargier and P. Marquis and A. Niveau, \"Towards a knowledge compilation map for heterogeneous representation languages\", Proceedings of the Twenty-Third International Joint Conference on Artificial Intelligence, pp. 877–883, 2013.",
-      "href": "https://dl.acm.org/doi/10.5555/2540128.2540255",
-      "bibtex": "@inproceedings{Fargier_2013,\nauthor = {Fargier, H\\'{e}l\\`{e}ne and Marquis, Pierre and Niveau, Alexandre},\ntitle = {Towards a knowledge compilation map for heterogeneous representation languages},\nyear = {2013},\nisbn = {9781577356332},\nurl = {https://dl.acm.org/doi/10.5555/2540128.2540255},\npublisher = {AAAI Press},\nabstract = {The knowledge compilation map introduced by Darwiche and Marquis takes advantage of a number of concepts (mainly queries, transformations, expressiveness, and succinctness) to compare the relative adequacy of representation languages to some AI problems. However, the framework is limited to the comparison of languages that are interpreted in a homogeneous way (formul\\ae{} are interpreted as Boolean functions). This prevents one from comparing, on a formal basis, languages that are close in essence, such as OBDD, MDD, and ADD. To fill the gap, we present a generalized framework into which comparing formally heterogeneous representation languages becomes feasible. In particular, we explain how the key notions of queries and transformations, expressiveness, and succinctness can be lifted to the generalized setting.},\nbooktitle = {Proceedings of the Twenty-Third International Joint Conference on Artificial Intelligence},\npages = {877--883},\nnumpages = {7},\nlocation = {Beijing, China},\nseries = {IJCAI '13}\n}"
+      "href": "https://dl.acm.org/doi/10.5555/2540128.2540255"
     },
     {
       "id": "Fortune_1978",
@@ -7617,15 +7802,15 @@
     },
     {
       "id": "Lang_2003",
+      "bibtex": "@article{Lang_2003,\n  author = {Lang, J\\'er\\^ome and Liberatore, Paolo and Marquis, Pierre},\n  title = {Propositional Independence: Formula-Variable Independence and Forgetting},\n  journal = {Journal of Artificial Intelligence Research},\n  volume = {18},\n  pages = {391--443},\n  year = {2003},\n  publisher = {AAAI Press},\n  doi={10.1613/jair.1113}\n}",
       "title": "J. Lang and P. Liberatore and P. Marquis, \"Propositional Independence: Formula-Variable Independence and Forgetting\", Journal of Artificial Intelligence Research, vol. 18, pp. 391–443, 2003.",
-      "href": "https://doi.org/10.1613/jair.1113",
-      "bibtex": "@article{Lang_2003,\n  author = {Lang, J\\'er\\^ome and Liberatore, Paolo and Marquis, Pierre},\n  title = {Propositional Independence: Formula-Variable Independence and Forgetting},\n  journal = {Journal of Artificial Intelligence Research},\n  volume = {18},\n  pages = {391--443},\n  year = {2003},\n  publisher = {AAAI Press},\n  doi={10.1613/jair.1113}\n}"
+      "href": "https://doi.org/10.1613/jair.1113"
     },
     {
       "id": "Levin_1973",
+      "bibtex": "@article{Levin_1973,\n  author = {Levin, Leonid A.},\n  title = {Universal Search Problems},\n  journal = {Problems of Information Transmission},\n  volume = {9},\n  number = {3},\n  pages = {265--266},\n  year = {1973}\n}",
       "title": "L. A. Levin, \"Universal Search Problems\", Problems of Information Transmission, vol. 9, pp. 265–266, 1973.",
-      "href": "#",
-      "bibtex": "@article{Levin_1973,\n  author = {Levin, Leonid A.},\n  title = {Universal Search Problems},\n  journal = {Problems of Information Transmission},\n  volume = {9},\n  number = {3},\n  pages = {265--266},\n  year = {1973}\n}"
+      "href": "#"
     },
     {
       "id": "Marquis_2000",
@@ -7671,9 +7856,9 @@
     },
     {
       "id": "Savicky_Zak_1996",
+      "bibtex": "@techreport{Savicky_Zak_1996,\n  title={A Large Lower Bound for 1-Branching Programs},\n  author={Savicky, Petr and Zak, Stanislav},\n  institution={Electronic Colloquium on Computational Complexity},\n  number={TR96-036},\n  year={1996},\n  url={https://eccc.weizmann.ac.il/report/1996/036/}\n}",
       "title": "P. Savicky and S. Zak, \"A Large Lower Bound for 1-Branching Programs\", 1996.",
-      "href": "https://eccc.weizmann.ac.il/report/1996/036/",
-      "bibtex": "@techreport{Savicky_Zak_1996,\n  title={A Large Lower Bound for 1-Branching Programs},\n  author={Savicky, Petr and Zak, Stanislav},\n  institution={Electronic Colloquium on Computational Complexity},\n  number={TR96-036},\n  year={1996},\n  url={https://eccc.weizmann.ac.il/report/1996/036/}\n}"
+      "href": "https://eccc.weizmann.ac.il/report/1996/036/"
     },
     {
       "id": "Selman_1996",
@@ -7683,21 +7868,21 @@
     },
     {
       "id": "shpilka2010arithmetic",
+      "bibtex": "@article{shpilka2010arithmetic,\n  title={Arithmetic circuits: A survey of recent results and open questions},\n  author={Shpilka, Amir and Yehudayoff, Amir},\n  journal={Foundations and Trends in Theoretical Computer Science},\n  volume={5},\n  number={3-4},\n  pages={207--388},\n  year={2010},\n  publisher={Now Publishers},\n  doi={10.1561/0400000039}\n}",
       "title": "A. Shpilka and A. Yehudayoff, \"Arithmetic circuits: A survey of recent results and open questions\", Foundations and Trends in Theoretical Computer Science, vol. 5, pp. 207–388, 2010.",
-      "href": "https://doi.org/10.1561/0400000039",
-      "bibtex": "@article{shpilka2010arithmetic,\n  title={Arithmetic circuits: A survey of recent results and open questions},\n  author={Shpilka, Amir and Yehudayoff, Amir},\n  journal={Foundations and Trends in Theoretical Computer Science},\n  volume={5},\n  number={3-4},\n  pages={207--388},\n  year={2010},\n  publisher={Now Publishers},\n  doi={10.1561/0400000039}\n}"
+      "href": "https://doi.org/10.1561/0400000039"
     },
     {
       "id": "TCZ_Forthcoming",
+      "bibtex": "@misc{TCZ_Forthcoming,\n  title={A Tractable Circuit Zoo},\n  author={Kahdian, David and Broadrick, Oliver and Geh, Renato and {Van den Broeck}, Guy},\n  year={forthcoming},\n  note={Forthcoming}\n}",
       "title": "D. Kahdian and O. Broadrick and R. Geh and G. Van den Broeck, \"A Tractable Circuit Zoo\", forthcoming.",
-      "href": "#",
-      "bibtex": "@misc{TCZ_Forthcoming,\n  title={A Tractable Circuit Zoo},\n  author={Kahdian, David and Broadrick, Oliver and Geh, Renato and {Van den Broeck}, Guy},\n  year={forthcoming},\n  note={Forthcoming}\n}"
+      "href": "#"
     },
     {
       "id": "VanDenBroeck_2015",
+      "bibtex": "@inproceedings{VanDenBroeck_2015,\n  title={On the Role of Canonicity in Knowledge Compilation},\n  author={Van den Broeck, Guy and Darwiche, Adnan},\n  booktitle={Proceedings of the Twenty-Ninth AAAI Conference on Artificial Intelligence},\n  pages={1641--1648},\n  year={2015},\n  publisher={AAAI Press},\n  doi={10.1609/aaai.v29i1.9423}\n}",
       "title": "G. Van den Broeck and A. Darwiche, \"On the Role of Canonicity in Knowledge Compilation\", Proceedings of the Twenty-Ninth AAAI Conference on Artificial Intelligence, pp. 1641–1648, 2015.",
-      "href": "https://doi.org/10.1609/aaai.v29i1.9423",
-      "bibtex": "@inproceedings{VanDenBroeck_2015,\n  title={On the Role of Canonicity in Knowledge Compilation},\n  author={Van den Broeck, Guy and Darwiche, Adnan},\n  booktitle={Proceedings of the Twenty-Ninth AAAI Conference on Artificial Intelligence},\n  pages={1641--1648},\n  year={2015},\n  publisher={AAAI Press},\n  doi={10.1609/aaai.v29i1.9423}\n}"
+      "href": "https://doi.org/10.1609/aaai.v29i1.9423"
     },
     {
       "id": "Vinall-Smeeth_2024",
@@ -7957,7 +8142,8 @@
       "lang_e827cf31",
       "lang_43a33aec",
       "lang_d7403a53",
-      "lang_8cf1da0e"
+      "lang_8cf1da0e",
+      "lang_03f76f04"
     ],
     "matrix": [
       [
@@ -8546,6 +8732,12 @@
               "lang_6c130090"
             ]
           }
+        },
+        {
+          "status": "poly",
+          "refs": [],
+          "description": "Your claim under test",
+          "derived": false
         }
       ],
       [
@@ -9098,6 +9290,25 @@
               "lang_83e3b023",
               "lang_8cf1da0e",
               "lang_91f812d0"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Darwiche_2011"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_d69995dd}{lang_83e3b023} in polynomial time. \\nedgeref{lang_d69995dd}{lang_03f76f04} in quasipolynomial time. If cSDD compiled to ZDD$_T$ in quasipolynomial time, then OBDD$_<$ would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore cSDD cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 59,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_d69995dd",
+              "lang_83e3b023",
+              "lang_03f76f04"
             ]
           }
         }
@@ -9759,6 +9970,27 @@
               "lang_6c130090",
               "lang_8cf1da0e",
               "lang_91f812d0"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "VanDenBroeck_2015",
+            "Amarilli_2018",
+            "Darwiche_2011"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_83e3b023}{lang_6c130090} in polynomial time. \\nedgeref{lang_83e3b023}{lang_03f76f04} in quasipolynomial time. If d-DNNF compiled to ZDD$_T$ in quasipolynomial time, then cSDD would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore d-DNNF cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 60,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_83e3b023",
+              "lang_6c130090",
+              "lang_03f76f04"
             ]
           }
         }
@@ -10493,6 +10725,26 @@
               "lang_91f812d0"
             ]
           }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "VanDenBroeck_2015",
+            "Darwiche_2011"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_83e3b023}{lang_ea9b5299} in polynomial time. \\nedgeref{lang_83e3b023}{lang_03f76f04} in quasipolynomial time. If d-SDNNF compiled to ZDD$_T$ in quasipolynomial time, then cSDD would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore d-SDNNF cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 61,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_83e3b023",
+              "lang_ea9b5299",
+              "lang_03f76f04"
+            ]
+          }
         }
       ],
       [
@@ -11184,6 +11436,25 @@
               "lang_9c84a267"
             ]
           }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Capelli_2026"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_d69995dd}{lang_91f812d0} in polynomial time. \\nedgeref{lang_d69995dd}{lang_03f76f04} in quasipolynomial time. If d-SDNNF$_T$ compiled to ZDD$_T$ in quasipolynomial time, then OBDD$_<$ would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore d-SDNNF$_T$ cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 62,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_d69995dd",
+              "lang_91f812d0",
+              "lang_03f76f04"
+            ]
+          }
         }
       ],
       [
@@ -11712,6 +11983,12 @@
               "lang_ea9b5299"
             ]
           }
+        },
+        {
+          "status": "poly",
+          "refs": [],
+          "description": "Your claim under test",
+          "derived": false
         }
       ],
       [
@@ -12371,6 +12648,27 @@
               "lang_91f812d0"
             ]
           }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "VanDenBroeck_2015",
+            "Amarilli_2018",
+            "Darwiche_2011"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_83e3b023}{lang_3bebcab7} in polynomial time. \\nedgeref{lang_83e3b023}{lang_03f76f04} in quasipolynomial time. If DNNF compiled to ZDD$_T$ in quasipolynomial time, then cSDD would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore DNNF cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 63,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_83e3b023",
+              "lang_3bebcab7",
+              "lang_03f76f04"
+            ]
+          }
         }
       ],
       [
@@ -12916,6 +13214,25 @@
               "lang_684b1ca7",
               "lang_8cf1da0e",
               "lang_ea9b5299"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Darwiche_2002"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_d69995dd}{lang_684b1ca7} in polynomial time. \\nedgeref{lang_d69995dd}{lang_03f76f04} in quasipolynomial time. If FBDD compiled to ZDD$_T$ in quasipolynomial time, then OBDD$_<$ would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore FBDD cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 64,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_d69995dd",
+              "lang_684b1ca7",
+              "lang_03f76f04"
             ]
           }
         }
@@ -13478,6 +13795,25 @@
             "negLanguageId": "lang_6ae90adc",
             "level": "poly"
           }
+        },
+        {
+          "status": "poly",
+          "refs": [
+            "Darwiche_2002"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_6ae90adc}{lang_4c204bf3} in polynomial time. \\edgeref{lang_4c204bf3}{lang_03f76f04} in polynomial time. Therefore IP compiles to ZDD$_T$ in polynomial time.",
+          "derivationOrder": 3,
+          "proofTrace": {
+            "rule": "transitivity",
+            "path": [
+              "lang_6ae90adc",
+              "lang_4c204bf3",
+              "lang_03f76f04"
+            ],
+            "level": "poly"
+          }
         }
       ],
       [
@@ -14027,6 +14363,25 @@
               "lang_e02902d0",
               "lang_d69995dd",
               "lang_8cf1da0e"
+            ],
+            "level": "poly"
+          }
+        },
+        {
+          "status": "poly",
+          "refs": [
+            "Darwiche_2002"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_e02902d0}{lang_4c204bf3} in polynomial time. \\edgeref{lang_4c204bf3}{lang_03f76f04} in polynomial time. Therefore MODS compiles to ZDD$_T$ in polynomial time.",
+          "derivationOrder": 4,
+          "proofTrace": {
+            "rule": "transitivity",
+            "path": [
+              "lang_e02902d0",
+              "lang_4c204bf3",
+              "lang_03f76f04"
             ],
             "level": "poly"
           }
@@ -14751,6 +15106,32 @@
               "lang_91f812d0"
             ]
           }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "VanDenBroeck_2015",
+            "Amarilli_2018",
+            "Bollig_2018",
+            "Beame_2015",
+            "Pipatsrisawat_2008",
+            "TCZ_Forthcoming",
+            "Wegener_2000",
+            "Darwiche_2011"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_83e3b023}{lang_1df07cc3} in at worst quasipolynomial time. \\nedgeref{lang_83e3b023}{lang_03f76f04} in quasipolynomial time. If nFBDD compiled to ZDD$_T$ in quasipolynomial time, then cSDD would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore nFBDD cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 65,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_83e3b023",
+              "lang_1df07cc3",
+              "lang_03f76f04"
+            ]
+          }
         }
       ],
       [
@@ -15406,6 +15787,28 @@
               "lang_5bf00851",
               "lang_8cf1da0e",
               "lang_6c130090"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "VanDenBroeck_2015",
+            "Amarilli_2018",
+            "Darwiche_2002",
+            "Darwiche_2011"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_83e3b023}{lang_5bf00851} in polynomial time. \\nedgeref{lang_83e3b023}{lang_03f76f04} in quasipolynomial time. If NNF compiled to ZDD$_T$ in quasipolynomial time, then cSDD would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore NNF cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 66,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_83e3b023",
+              "lang_5bf00851",
+              "lang_03f76f04"
             ]
           }
         }
@@ -16108,6 +16511,32 @@
               "lang_91f812d0"
             ]
           }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "VanDenBroeck_2015",
+            "Amarilli_2018",
+            "Bollig_2018",
+            "Beame_2015",
+            "Pipatsrisawat_2008",
+            "TCZ_Forthcoming",
+            "Wegener_2000",
+            "Darwiche_2011"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_83e3b023}{lang_d24efe0e} in at worst quasipolynomial time. \\nedgeref{lang_83e3b023}{lang_03f76f04} in quasipolynomial time. If nOBDD compiled to ZDD$_T$ in quasipolynomial time, then cSDD would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore nOBDD cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 67,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_83e3b023",
+              "lang_d24efe0e",
+              "lang_03f76f04"
+            ]
+          }
         }
       ],
       [
@@ -16617,6 +17046,12 @@
             "Capelli_2026"
           ],
           "description": "\\citet[Theorem 17]{Capelli_2026} show that an \\langfam{OBDD}{<} over order $\\pi$ can be converted in linear time into an equivalent \\langfam{TDD}{T} respecting the corresponding linear vtree $T_{\\pi^{-1}}$, with size at most three times the input size."
+        },
+        {
+          "status": "no-quasi",
+          "refs": [],
+          "description": "Your claim under test",
+          "derived": false
         }
       ],
       [
@@ -17174,6 +17609,25 @@
               "lang_8cf1da0e",
               "lang_6c130090"
             ]
+          }
+        },
+        {
+          "status": "poly",
+          "refs": [
+            "Darwiche_2002"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_27fffab2}{lang_89649e36} in polynomial time. \\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. Therefore PI compiles to ZDD$_T$ in polynomial time.",
+          "derivationOrder": 5,
+          "proofTrace": {
+            "rule": "transitivity",
+            "path": [
+              "lang_27fffab2",
+              "lang_89649e36",
+              "lang_03f76f04"
+            ],
+            "level": "poly"
           }
         }
       ],
@@ -17778,6 +18232,26 @@
               "lang_91f812d0"
             ]
           }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "VanDenBroeck_2015",
+            "Darwiche_2011"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_83e3b023}{lang_1afefbe2} in polynomial time. \\nedgeref{lang_83e3b023}{lang_03f76f04} in quasipolynomial time. If SDD compiled to ZDD$_T$ in quasipolynomial time, then cSDD would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore SDD cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 68,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_83e3b023",
+              "lang_1afefbe2",
+              "lang_03f76f04"
+            ]
+          }
         }
       ],
       [
@@ -18315,7 +18789,26 @@
           }
         },
         null,
-        null
+        null,
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Capelli_2026"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_d69995dd}{lang_9c84a267} in polynomial time. \\nedgeref{lang_d69995dd}{lang_03f76f04} in quasipolynomial time. If SDD$_T$ compiled to ZDD$_T$ in quasipolynomial time, then OBDD$_<$ would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore SDD$_T$ cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 69,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_d69995dd",
+              "lang_9c84a267",
+              "lang_03f76f04"
+            ]
+          }
+        }
       ],
       [
         {
@@ -19019,6 +19512,27 @@
               "lang_b13b0d78",
               "lang_8cf1da0e",
               "lang_91f812d0"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "VanDenBroeck_2015",
+            "Amarilli_2018",
+            "Darwiche_2011"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_83e3b023}{lang_b13b0d78} in polynomial time. \\nedgeref{lang_83e3b023}{lang_03f76f04} in quasipolynomial time. If SDNNF compiled to ZDD$_T$ in quasipolynomial time, then cSDD would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore SDNNF cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 70,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_83e3b023",
+              "lang_b13b0d78",
+              "lang_03f76f04"
             ]
           }
         }
@@ -19738,6 +20252,26 @@
               "lang_ea9b5299"
             ]
           }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Amarilli_2018",
+            "Capelli_2026"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_91f812d0}{lang_3c803ba1} in polynomial time. \\nedgeref{lang_91f812d0}{lang_03f76f04} in quasipolynomial time. If SDNNF$_T$ compiled to ZDD$_T$ in quasipolynomial time, then d-SDNNF$_T$ would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore SDNNF$_T$ cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 71,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_91f812d0",
+              "lang_3c803ba1",
+              "lang_03f76f04"
+            ]
+          }
         }
       ],
       [
@@ -20429,6 +20963,32 @@
               "lang_91f812d0"
             ]
           }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "VanDenBroeck_2015",
+            "Amarilli_2018",
+            "Bollig_2018",
+            "Beame_2015",
+            "Pipatsrisawat_2008",
+            "TCZ_Forthcoming",
+            "Wegener_2000",
+            "Darwiche_2011"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_83e3b023}{lang_4e62a038} in at worst quasipolynomial time. \\nedgeref{lang_83e3b023}{lang_03f76f04} in quasipolynomial time. If uFBDD compiled to ZDD$_T$ in quasipolynomial time, then cSDD would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore uFBDD cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 72,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_83e3b023",
+              "lang_4e62a038",
+              "lang_03f76f04"
+            ]
+          }
         }
       ],
       [
@@ -21015,6 +21575,32 @@
               "lang_91f812d0"
             ]
           }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "VanDenBroeck_2015",
+            "Amarilli_2018",
+            "Bollig_2018",
+            "Beame_2015",
+            "Pipatsrisawat_2008",
+            "TCZ_Forthcoming",
+            "Wegener_2000",
+            "Darwiche_2011"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_83e3b023}{lang_c2df8c2b} in at worst quasipolynomial time. \\nedgeref{lang_83e3b023}{lang_03f76f04} in quasipolynomial time. If uOBDD compiled to ZDD$_T$ in quasipolynomial time, then cSDD would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore uOBDD cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 73,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_83e3b023",
+              "lang_c2df8c2b",
+              "lang_03f76f04"
+            ]
+          }
         }
       ],
       [
@@ -21517,6 +22103,25 @@
               "lang_b9d72a7c",
               "lang_8cf1da0e",
               "lang_91f812d0"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Darwiche_2002"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_d69995dd}{lang_b9d72a7c} in polynomial time. \\nedgeref{lang_d69995dd}{lang_03f76f04} in quasipolynomial time. If OBDD compiled to ZDD$_T$ in quasipolynomial time, then OBDD$_<$ would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore OBDD cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 74,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_d69995dd",
+              "lang_b9d72a7c",
+              "lang_03f76f04"
             ]
           }
         }
@@ -22229,6 +22834,26 @@
               "lang_981b62f0",
               "lang_8cf1da0e",
               "lang_ea9b5299"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Amarilli_2018",
+            "Darwiche_2002"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_684b1ca7}{lang_981b62f0} in polynomial time. \\nedgeref{lang_684b1ca7}{lang_03f76f04} in quasipolynomial time. If dec-DNNF compiled to ZDD$_T$ in quasipolynomial time, then FBDD would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore dec-DNNF cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 75,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_684b1ca7",
+              "lang_981b62f0",
+              "lang_03f76f04"
             ]
           }
         }
@@ -22984,6 +23609,25 @@
               "lang_0f27d539",
               "lang_8cf1da0e",
               "lang_91f812d0"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Amarilli_2018"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_d69995dd}{lang_0f27d539} in polynomial time. \\nedgeref{lang_d69995dd}{lang_03f76f04} in quasipolynomial time. If dec-SDNNF compiled to ZDD$_T$ in quasipolynomial time, then OBDD$_<$ would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore dec-SDNNF cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 76,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_d69995dd",
+              "lang_0f27d539",
+              "lang_03f76f04"
             ]
           }
         }
@@ -23853,6 +24497,25 @@
             ],
             "level": "quasi"
           }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Amarilli_2018"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_d69995dd}{lang_4ae03bc8} in polynomial time. \\nedgeref{lang_d69995dd}{lang_03f76f04} in quasipolynomial time. If dec-SDNNF$_T$ compiled to ZDD$_T$ in quasipolynomial time, then OBDD$_<$ would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore dec-SDNNF$_T$ cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 77,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_d69995dd",
+              "lang_4ae03bc8",
+              "lang_03f76f04"
+            ]
+          }
         }
       ],
       [
@@ -24392,7 +25055,26 @@
           }
         },
         null,
-        null
+        null,
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Darwiche_2011"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_d69995dd}{lang_82fa749e} in polynomial time. \\nedgeref{lang_d69995dd}{lang_03f76f04} in quasipolynomial time. If cSDD$_T$ compiled to ZDD$_T$ in quasipolynomial time, then OBDD$_<$ would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore cSDD$_T$ cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 78,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_d69995dd",
+              "lang_82fa749e",
+              "lang_03f76f04"
+            ]
+          }
+        }
       ],
       [
         {
@@ -25039,6 +25721,30 @@
               "lang_ea9b5299"
             ]
           }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Wegener_2000",
+            "Amarilli_2018",
+            "Bollig_2018",
+            "Beame_2015",
+            "TCZ_Forthcoming",
+            "Capelli_2026"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_91f812d0}{lang_e827cf31} in quasipolynomial time. \\nedgeref{lang_91f812d0}{lang_03f76f04} in quasipolynomial time. If nOBDD$_<$ compiled to ZDD$_T$ in quasipolynomial time, then d-SDNNF$_T$ would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore nOBDD$_<$ cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 79,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_91f812d0",
+              "lang_e827cf31",
+              "lang_03f76f04"
+            ]
+          }
         }
       ],
       [
@@ -25548,7 +26254,31 @@
         },
         null,
         null,
-        null
+        null,
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Amarilli_2018",
+            "Wegener_2000",
+            "Bollig_2018",
+            "Beame_2015",
+            "TCZ_Forthcoming",
+            "Capelli_2026"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_91f812d0}{lang_43a33aec} in quasipolynomial time. \\nedgeref{lang_91f812d0}{lang_03f76f04} in quasipolynomial time. If uOBDD$_<$ compiled to ZDD$_T$ in quasipolynomial time, then d-SDNNF$_T$ would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore uOBDD$_<$ cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 80,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_91f812d0",
+              "lang_43a33aec",
+              "lang_03f76f04"
+            ]
+          }
+        }
       ],
       [
         {
@@ -26080,6 +26810,25 @@
               "lang_91f812d0"
             ]
           }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Capelli_2026"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_d69995dd}{lang_d7403a53} in polynomial time. \\nedgeref{lang_d69995dd}{lang_03f76f04} in quasipolynomial time. If TDD compiled to ZDD$_T$ in quasipolynomial time, then OBDD$_<$ would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore TDD cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 81,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_d69995dd",
+              "lang_d7403a53",
+              "lang_03f76f04"
+            ]
+          }
         }
       ],
       [
@@ -26551,48 +27300,685 @@
           ],
           "description": "\\langref{TDD} is the union of the fixed-vtree languages \\langfam{TDD}{T}. Hence any \\langfam{TDD}{T} representation is already a \\langref{TDD} representation."
         },
+        null,
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Capelli_2026"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_d69995dd}{lang_8cf1da0e} in polynomial time. \\nedgeref{lang_d69995dd}{lang_03f76f04} in quasipolynomial time. If TDD$_T$ compiled to ZDD$_T$ in quasipolynomial time, then OBDD$_<$ would compile to ZDD$_T$ in at most quasipolynomial time, contradicting the above. Therefore TDD$_T$ cannot compile to ZDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 82,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_d69995dd",
+              "lang_8cf1da0e",
+              "lang_03f76f04"
+            ]
+          }
+        }
+      ],
+      [
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Darwiche_2002"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_4c204bf3}{lang_03f76f04} in polynomial time. \\nedgeref{lang_4c204bf3}{lang_89649e36} in quasipolynomial time. If ZDD$_T$ compiled to CNF in quasipolynomial time, then DNF would compile to CNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to CNF in quasipolynomial time.",
+          "derivationOrder": 83,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_4c204bf3",
+              "lang_03f76f04",
+              "lang_89649e36"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "VanDenBroeck_2015",
+            "Amarilli_2018",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\nedgeref{lang_89649e36}{lang_83e3b023} in quasipolynomial time. If ZDD$_T$ compiled to cSDD in quasipolynomial time, then CNF would compile to cSDD in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to cSDD in quasipolynomial time.",
+          "derivationOrder": 84,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_83e3b023"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Darwiche_2002",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\nedgeref{lang_89649e36}{lang_6c130090} in quasipolynomial time. If ZDD$_T$ compiled to d-DNNF in quasipolynomial time, then CNF would compile to d-DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to d-DNNF in quasipolynomial time.",
+          "derivationOrder": 85,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_6c130090"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Amarilli_2018",
+            "Darwiche_2002",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_ea9b5299}{lang_6c130090} in polynomial time. \\nedgeref{lang_89649e36}{lang_6c130090} in quasipolynomial time. If ZDD$_T$ compiled to d-SDNNF in quasipolynomial time, then CNF would compile to d-DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to d-SDNNF in quasipolynomial time.",
+          "derivationOrder": 86,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_ea9b5299",
+              "lang_6c130090"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Pipatsrisawat_2008",
+            "Amarilli_2018",
+            "Darwiche_2002",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_91f812d0}{lang_6c130090} in polynomial time. \\nedgeref{lang_89649e36}{lang_6c130090} in quasipolynomial time. If ZDD$_T$ compiled to d-SDNNF$_T$ in quasipolynomial time, then CNF would compile to d-DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to d-SDNNF$_T$ in quasipolynomial time.",
+          "derivationOrder": 87,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_91f812d0",
+              "lang_6c130090"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Darwiche_2002",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\nedgeref{lang_89649e36}{lang_4c204bf3} in quasipolynomial time. If ZDD$_T$ compiled to DNF in quasipolynomial time, then CNF would compile to DNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to DNF in quasipolynomial time.",
+          "derivationOrder": 88,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_4c204bf3"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\nedgeref{lang_89649e36}{lang_3bebcab7} in quasipolynomial time. If ZDD$_T$ compiled to DNNF in quasipolynomial time, then CNF would compile to DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to DNNF in quasipolynomial time.",
+          "derivationOrder": 89,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_3bebcab7"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Darwiche_2002",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_684b1ca7}{lang_6c130090} in polynomial time. \\nedgeref{lang_89649e36}{lang_6c130090} in quasipolynomial time. If ZDD$_T$ compiled to FBDD in quasipolynomial time, then CNF would compile to d-DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to FBDD in quasipolynomial time.",
+          "derivationOrder": 90,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_684b1ca7",
+              "lang_6c130090"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Darwiche_2002",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_6ae90adc}{lang_4c204bf3} in polynomial time. \\nedgeref{lang_89649e36}{lang_4c204bf3} in quasipolynomial time. If ZDD$_T$ compiled to IP in quasipolynomial time, then CNF would compile to DNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to IP in quasipolynomial time.",
+          "derivationOrder": 91,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_6ae90adc",
+              "lang_4c204bf3"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Darwiche_2002",
+            "Darwiche_2011",
+            "VanDenBroeck_2015",
+            "Amarilli_2018",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_e02902d0}{lang_83e3b023} in polynomial time. \\nedgeref{lang_89649e36}{lang_83e3b023} in quasipolynomial time. If ZDD$_T$ compiled to MODS in quasipolynomial time, then CNF would compile to cSDD in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to MODS in quasipolynomial time.",
+          "derivationOrder": 92,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_e02902d0",
+              "lang_83e3b023"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Amarilli_2018",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_1df07cc3}{lang_3bebcab7} in polynomial time. \\nedgeref{lang_89649e36}{lang_3bebcab7} in quasipolynomial time. If ZDD$_T$ compiled to nFBDD in quasipolynomial time, then CNF would compile to DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to nFBDD in quasipolynomial time.",
+          "derivationOrder": 93,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_1df07cc3",
+              "lang_3bebcab7"
+            ]
+          }
+        },
+        {
+          "status": "poly",
+          "refs": [],
+          "description": "Your claim under test",
+          "derived": false
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Amarilli_2018",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_d24efe0e}{lang_3bebcab7} in polynomial time. \\nedgeref{lang_89649e36}{lang_3bebcab7} in quasipolynomial time. If ZDD$_T$ compiled to nOBDD in quasipolynomial time, then CNF would compile to DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to nOBDD in quasipolynomial time.",
+          "derivationOrder": 94,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_d24efe0e",
+              "lang_3bebcab7"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Darwiche_2011",
+            "VanDenBroeck_2015",
+            "Amarilli_2018",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_d69995dd}{lang_83e3b023} in polynomial time. \\nedgeref{lang_89649e36}{lang_83e3b023} in quasipolynomial time. If ZDD$_T$ compiled to OBDD$_<$ in quasipolynomial time, then CNF would compile to cSDD in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to OBDD$_<$ in quasipolynomial time.",
+          "derivationOrder": 95,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_d69995dd",
+              "lang_83e3b023"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Darwiche_2002"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\nedgeref{lang_89649e36}{lang_27fffab2} in quasipolynomial time. If ZDD$_T$ compiled to PI in quasipolynomial time, then CNF would compile to PI in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to PI in quasipolynomial time.",
+          "derivationOrder": 96,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_27fffab2"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "VanDenBroeck_2015",
+            "Amarilli_2018",
+            "Darwiche_2002",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_1afefbe2}{lang_6c130090} in polynomial time. \\nedgeref{lang_89649e36}{lang_6c130090} in quasipolynomial time. If ZDD$_T$ compiled to SDD in quasipolynomial time, then CNF would compile to d-DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to SDD in quasipolynomial time.",
+          "derivationOrder": 97,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_1afefbe2",
+              "lang_6c130090"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Darwiche_2011",
+            "VanDenBroeck_2015",
+            "Amarilli_2018",
+            "Darwiche_2002",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_9c84a267}{lang_6c130090} in polynomial time. \\nedgeref{lang_89649e36}{lang_6c130090} in quasipolynomial time. If ZDD$_T$ compiled to SDD$_T$ in quasipolynomial time, then CNF would compile to d-DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to SDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 98,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_9c84a267",
+              "lang_6c130090"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Amarilli_2018",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_b13b0d78}{lang_3bebcab7} in polynomial time. \\nedgeref{lang_89649e36}{lang_3bebcab7} in quasipolynomial time. If ZDD$_T$ compiled to SDNNF in quasipolynomial time, then CNF would compile to DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to SDNNF in quasipolynomial time.",
+          "derivationOrder": 99,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_b13b0d78",
+              "lang_3bebcab7"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Pipatsrisawat_2008",
+            "Amarilli_2018",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_3c803ba1}{lang_3bebcab7} in polynomial time. \\nedgeref{lang_89649e36}{lang_3bebcab7} in quasipolynomial time. If ZDD$_T$ compiled to SDNNF$_T$ in quasipolynomial time, then CNF would compile to DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to SDNNF$_T$ in quasipolynomial time.",
+          "derivationOrder": 100,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_3c803ba1",
+              "lang_3bebcab7"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Amarilli_2018",
+            "Darwiche_2002",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_4e62a038}{lang_6c130090} in polynomial time. \\nedgeref{lang_89649e36}{lang_6c130090} in quasipolynomial time. If ZDD$_T$ compiled to uFBDD in quasipolynomial time, then CNF would compile to d-DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to uFBDD in quasipolynomial time.",
+          "derivationOrder": 101,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_4e62a038",
+              "lang_6c130090"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Amarilli_2018",
+            "Darwiche_2002",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_c2df8c2b}{lang_6c130090} in polynomial time. \\nedgeref{lang_89649e36}{lang_6c130090} in quasipolynomial time. If ZDD$_T$ compiled to uOBDD in quasipolynomial time, then CNF would compile to d-DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to uOBDD in quasipolynomial time.",
+          "derivationOrder": 102,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_c2df8c2b",
+              "lang_6c130090"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Darwiche_2011",
+            "VanDenBroeck_2015",
+            "Amarilli_2018",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_b9d72a7c}{lang_83e3b023} in polynomial time. \\nedgeref{lang_89649e36}{lang_83e3b023} in quasipolynomial time. If ZDD$_T$ compiled to OBDD in quasipolynomial time, then CNF would compile to cSDD in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to OBDD in quasipolynomial time.",
+          "derivationOrder": 103,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_b9d72a7c",
+              "lang_83e3b023"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Amarilli_2018",
+            "Darwiche_2002",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_981b62f0}{lang_6c130090} in polynomial time. \\nedgeref{lang_89649e36}{lang_6c130090} in quasipolynomial time. If ZDD$_T$ compiled to dec-DNNF in quasipolynomial time, then CNF would compile to d-DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to dec-DNNF in quasipolynomial time.",
+          "derivationOrder": 104,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_981b62f0",
+              "lang_6c130090"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Amarilli_2018",
+            "Bollig_2018",
+            "Beame_2015",
+            "Darwiche_2011",
+            "Darwiche_2002",
+            "Beame_2013",
+            "VanDenBroeck_2015",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_0f27d539}{lang_83e3b023} in at worst quasipolynomial time. \\nedgeref{lang_89649e36}{lang_83e3b023} in quasipolynomial time. If ZDD$_T$ compiled to dec-SDNNF in quasipolynomial time, then CNF would compile to cSDD in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to dec-SDNNF in quasipolynomial time.",
+          "derivationOrder": 105,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_0f27d539",
+              "lang_83e3b023"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Amarilli_2018",
+            "Bollig_2018",
+            "Beame_2015",
+            "Darwiche_2011",
+            "Darwiche_2002",
+            "Beame_2013",
+            "VanDenBroeck_2015",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_4ae03bc8}{lang_83e3b023} in at worst quasipolynomial time. \\nedgeref{lang_89649e36}{lang_83e3b023} in quasipolynomial time. If ZDD$_T$ compiled to dec-SDNNF$_T$ in quasipolynomial time, then CNF would compile to cSDD in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to dec-SDNNF$_T$ in quasipolynomial time.",
+          "derivationOrder": 106,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_4ae03bc8",
+              "lang_83e3b023"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Darwiche_2011",
+            "VanDenBroeck_2015",
+            "Amarilli_2018",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_82fa749e}{lang_83e3b023} in polynomial time. \\nedgeref{lang_89649e36}{lang_83e3b023} in quasipolynomial time. If ZDD$_T$ compiled to cSDD$_T$ in quasipolynomial time, then CNF would compile to cSDD in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to cSDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 107,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_82fa749e",
+              "lang_83e3b023"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Amarilli_2018",
+            "Pipatsrisawat_2008",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_e827cf31}{lang_3bebcab7} in polynomial time. \\nedgeref{lang_89649e36}{lang_3bebcab7} in quasipolynomial time. If ZDD$_T$ compiled to nOBDD$_<$ in quasipolynomial time, then CNF would compile to DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to nOBDD$_<$ in quasipolynomial time.",
+          "derivationOrder": 108,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_e827cf31",
+              "lang_3bebcab7"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Wegener_2000",
+            "Amarilli_2018",
+            "Darwiche_2002",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_43a33aec}{lang_6c130090} in polynomial time. \\nedgeref{lang_89649e36}{lang_6c130090} in quasipolynomial time. If ZDD$_T$ compiled to uOBDD$_<$ in quasipolynomial time, then CNF would compile to d-DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to uOBDD$_<$ in quasipolynomial time.",
+          "derivationOrder": 109,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_43a33aec",
+              "lang_6c130090"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Capelli_2026",
+            "Amarilli_2018",
+            "Darwiche_2002",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_d7403a53}{lang_6c130090} in polynomial time. \\nedgeref{lang_89649e36}{lang_6c130090} in quasipolynomial time. If ZDD$_T$ compiled to TDD in quasipolynomial time, then CNF would compile to d-DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to TDD in quasipolynomial time.",
+          "derivationOrder": 110,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_d7403a53",
+              "lang_6c130090"
+            ]
+          }
+        },
+        {
+          "status": "no-quasi",
+          "refs": [
+            "Capelli_2026",
+            "Amarilli_2018",
+            "Darwiche_2002",
+            "Bova_2014"
+          ],
+          "hidden": false,
+          "derived": true,
+          "description": "\\edgeref{lang_89649e36}{lang_03f76f04} in polynomial time. \\edgeref{lang_8cf1da0e}{lang_6c130090} in polynomial time. \\nedgeref{lang_89649e36}{lang_6c130090} in quasipolynomial time. If ZDD$_T$ compiled to TDD$_T$ in quasipolynomial time, then CNF would compile to d-DNNF in at most quasipolynomial time, contradicting the above. Therefore ZDD$_T$ cannot compile to TDD$_T$ in quasipolynomial time.",
+          "derivationOrder": 111,
+          "proofTrace": {
+            "rule": "contradiction",
+            "triedStatus": "no-poly-quasi",
+            "witnessPath": [
+              "lang_89649e36",
+              "lang_03f76f04",
+              "lang_8cf1da0e",
+              "lang_6c130090"
+            ]
+          }
+        },
         null
       ]
-    ],
-    "indexByLanguage": {
-      "lang_89649e36": 0,
-      "lang_83e3b023": 1,
-      "lang_6c130090": 2,
-      "lang_ea9b5299": 3,
-      "lang_91f812d0": 4,
-      "lang_4c204bf3": 5,
-      "lang_3bebcab7": 6,
-      "lang_684b1ca7": 7,
-      "lang_6ae90adc": 8,
-      "lang_e02902d0": 9,
-      "lang_1df07cc3": 10,
-      "lang_5bf00851": 11,
-      "lang_d24efe0e": 12,
-      "lang_d69995dd": 13,
-      "lang_27fffab2": 14,
-      "lang_1afefbe2": 15,
-      "lang_9c84a267": 16,
-      "lang_b13b0d78": 17,
-      "lang_3c803ba1": 18,
-      "lang_4e62a038": 19,
-      "lang_c2df8c2b": 20,
-      "lang_b9d72a7c": 21,
-      "lang_981b62f0": 22,
-      "lang_0f27d539": 23,
-      "lang_4ae03bc8": 24,
-      "lang_82fa749e": 25,
-      "lang_e827cf31": 26,
-      "lang_43a33aec": 27,
-      "lang_d7403a53": 28,
-      "lang_8cf1da0e": 29
-    }
+    ]
   },
   "relationTypes": [
     {
       "id": "poly",
       "name": "Polynomial",
       "label": "$\\leq_p$",
-      "description": "Polynomial transformation exists",
+      "description": "Polynomial compilation exists",
       "style": {
         "lineStyle": "solid",
         "width": 2,
@@ -26610,8 +27996,8 @@
     {
       "id": "no-poly-unknown-quasi",
       "name": "No Poly, Quasi Unknown",
-      "label": "$\\not\\leq_p$ · $\\leq_q^?$",
-      "description": "No polynomial algorithm; quasipolynomial unknown",
+      "label": "$\\not\\leq_p \\ \\leq_q^?$",
+      "description": "No polynomial compilation; quasipolynomial unknown",
       "style": {
         "lineStyle": "solid",
         "width": 2,
@@ -26629,8 +28015,8 @@
     {
       "id": "no-poly-quasi",
       "name": "No Poly, Quasi Exists",
-      "label": "$\\not\\leq_p$ · $\\leq_q$",
-      "description": "No polynomial algorithm; quasipolynomial unknown",
+      "label": "$\\not\\leq_p \\ \\leq_q$",
+      "description": "No polynomial compilation; quasipolynomial exists",
       "style": {
         "lineStyle": "solid",
         "width": 2,
@@ -26648,7 +28034,7 @@
     {
       "id": "unknown-poly-quasi",
       "name": "Poly Unknown, Quasi Exists",
-      "label": "$\\leq_p^?$ · $\\leq_q$",
+      "label": "$\\leq_p^? \\ \\leq_q$",
       "description": "Polynomial unknown; quasipolynomial exists",
       "style": {
         "lineStyle": "solid",
@@ -26687,7 +28073,7 @@
       "id": "no-quasi",
       "name": "No Quasi",
       "label": "$\\not\\leq_q$",
-      "description": "No quasipolynomial algorithm (implies no polynomial)",
+      "description": "No quasipolynomial compilation (implies no polynomial)",
       "style": {
         "lineStyle": "solid",
         "width": 2,
