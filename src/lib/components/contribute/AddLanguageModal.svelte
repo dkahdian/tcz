@@ -9,14 +9,12 @@
     definitionRefs: string[];
     queries: Record<string, { complexity: string; assumption?: string; refs: string[] }>;
     transformations: Record<string, { complexity: string; assumption?: string; refs: string[] }>;
-    tags: Array<{ label: string; color: string; description?: string; refs: string[] }>;
     existingReferences: string[];
   };
 
   type Query = { code: string; name: string };
   type Transformation = { code: string; name: string };
   type ComplexityOption = { value: string; label: string; description: string };
-  type Tag = { label: string; color: string; description?: string; refs: string[] };
 
   type OperationResult = {
     success: boolean;
@@ -32,7 +30,6 @@
     queries: Query[];
     transformations: Transformation[];
     complexityOptions: ComplexityOption[];
-    existingTags: Tag[];
     availableRefs?: ReferenceForTooltip[];
     isEdit?: boolean;
     initialData?: Language;
@@ -45,7 +42,6 @@
     queries,
     transformations,
     complexityOptions,
-    existingTags,
     availableRefs = [],
     isEdit = false,
     initialData
@@ -58,7 +54,6 @@
   let definitionRefs = $state<string[]>([]);
   let querySupport = $state<Record<string, { complexity: string; assumption?: string; refs: string[] }>>({});
   let transformationSupport = $state<Record<string, { complexity: string; assumption?: string; refs: string[] }>>({});
-  let selectedTags = $state<Tag[]>([]);
   let selectedExistingRefs = $state<string[]>([]);
   let errorMessage = $state<string | null>(null);
 
@@ -75,7 +70,6 @@
         definitionRefs = [...initialData.definitionRefs];
         querySupport = { ...initialData.queries };
         transformationSupport = { ...initialData.transformations };
-        selectedTags = [...initialData.tags];
         selectedExistingRefs = [...initialData.existingReferences];
         errorMessage = null;
       }
@@ -92,7 +86,6 @@
     definitionRefs = [];
     querySupport = {};
     transformationSupport = {};
-    selectedTags = [];
     selectedExistingRefs = [];
     queriesInitialized = false;
     transformationsInitialized = false;
@@ -114,7 +107,6 @@
         definitionRefs,
         queries: querySupport,
         transformations: transformationSupport,
-        tags: selectedTags,
         existingReferences: selectedExistingRefs
       });
 
@@ -154,14 +146,6 @@
       selectedExistingRefs = selectedExistingRefs.filter(r => r !== refId);
     } else {
       selectedExistingRefs = [...selectedExistingRefs, refId];
-    }
-  }
-
-  function toggleTag(tag: Tag) {
-    if (selectedTags.some(t => t.label === tag.label)) {
-      selectedTags = selectedTags.filter(t => t.label !== tag.label);
-    } else {
-      selectedTags = [...selectedTags, tag];
     }
   }
 
@@ -445,29 +429,6 @@
             {/each}
           </div>
         </div>
-
-        <!-- Tags -->
-        {#if existingTags.length > 0}
-          <div class="space-y-4 border-t pt-6">
-            <h3 class="text-lg font-bold text-gray-900">Tags</h3>
-            <div class="flex flex-wrap gap-2">
-              {#each existingTags as tag}
-                <button
-                  type="button"
-                  onclick={() => toggleTag(tag)}
-                  class={`px-3 py-1 rounded-full text-sm font-medium transition-all ${
-                    selectedTags.some(t => t.label === tag.label)
-                      ? 'ring-2 ring-offset-2'
-                      : 'opacity-60 hover:opacity-100'
-                  }`}
-                  style="background-color: {tag.color}; color: white; {selectedTags.some(t => t.label === tag.label) ? `ring-color: ${tag.color};` : ''}"
-                >
-                  {tag.label}
-                </button>
-              {/each}
-            </div>
-          </div>
-        {/if}
 
         <!-- Actions -->
         <div class="flex gap-3 justify-end pt-6 border-t sticky bottom-0 bg-white">

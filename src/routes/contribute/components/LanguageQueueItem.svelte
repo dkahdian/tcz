@@ -127,19 +127,6 @@
 					</div>
 				</div>
 			{/if}
-			{#if language.tags.length > 0}
-				<div>
-					<div class="font-semibold text-gray-700 mb-1">Tags ({language.tags.length}):</div>
-					<div class="space-y-2">
-						{#each language.tags as tag}
-							<div class="bg-white p-2 rounded border">
-								<MathText text={tag.label} className="font-medium" />
-								<MathText text={tag.description || 'No description'} className="text-gray-600" />
-							</div>
-						{/each}
-					</div>
-				</div>
-			{/if}
 		</div>
 	{/snippet}
 </GenericQueueItem>

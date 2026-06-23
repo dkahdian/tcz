@@ -20,7 +20,6 @@ type RawDatabase = {
   languages: unknown[];
   references?: RawReference[];
   relationTypes?: unknown[];
-  tags?: Record<string, unknown>;
   adjacencyMatrix: { languageIds: string[]; matrix: unknown[][] };
   metadata?: Record<string, unknown>;
 };
@@ -50,7 +49,6 @@ function normalizeQueue(
   }
   return {
     entries,
-    customTags: Array.isArray(rawQueue.customTags) ? rawQueue.customTags : [],
     modifiedRelations: Array.isArray(rawQueue.modifiedRelations)
       ? rawQueue.modifiedRelations
       : [],

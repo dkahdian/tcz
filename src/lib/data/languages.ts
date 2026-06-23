@@ -31,12 +31,6 @@ function enrichLanguage(langJson: any): KCLanguage {
     });
   }
   
-  if (langJson.tags) {
-    langJson.tags.forEach((tag: any) => {
-      if (tag.refs) tag.refs.forEach((id: string) => refIds.add(id));
-    });
-  }
-  
   return {
     ...langJson,
     classification: LANGUAGE_CLASSIFICATIONS[langJson.id] ?? 'plain',

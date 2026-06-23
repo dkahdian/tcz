@@ -41,7 +41,6 @@ export function loadQueuedChanges(): ContributionQueueSnapshot | null {
     const parsed = JSON.parse(stored);
     const snapshot: ContributionQueueSnapshot = {
       entries: normalizeEntries(parsed),
-      customTags: parsed.customTags || [],
       modifiedRelations: parsed.modifiedRelations || [],
       submissionId: typeof parsed.submissionId === 'string' ? parsed.submissionId : undefined,
       supersedesSubmissionId:

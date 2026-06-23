@@ -8,8 +8,7 @@ import { generateLanguageId } from '../utils/language-id.js';
 import type {
   LanguageToAdd,
   RelationshipEntry,
-  ReferenceToAdd,
-  CustomTag
+  ReferenceToAdd
 } from '../../routes/contribute/types.js';
 import { cloneDataset } from './transforms.js';
 import { validateDatasetStructure } from './validation/index.js';
@@ -25,7 +24,6 @@ export type ContributionQueueEntry =
 
 export interface ContributionQueueState {
   entries: ContributionQueueEntry[];
-  customTags: CustomTag[];
   modifiedRelations: string[];
   submissionId?: string;
   supersedesSubmissionId?: string | null;
@@ -66,7 +64,6 @@ function convertToKCLanguage(
       queries: language.queries,
       transformations: language.transformations
     },
-    tags: language.tags,
     references
   };
 }

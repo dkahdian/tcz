@@ -18,12 +18,10 @@
   import {
     isString,
     sanitizeStringArray,
-    sanitizeTags,
     sanitizeSubmissionId,
     cloneLanguageEntry,
     cloneRelationshipEntry,
     cloneQueueEntry,
-    cloneCustomTag,
     createSubmissionId,
     createQueueEntryId,
     formatHistoryTimestamp,
@@ -34,7 +32,6 @@
   import type {
     LanguageToAdd,
     RelationshipEntry,
-    CustomTag,
     SubmissionHistoryEntry,
     ContributorInfo
   } from './types.js';
@@ -166,8 +163,6 @@
   let modifiedRelations = $state(new Set<string>());
   let queuePersistenceReady = $state(false);
 
-  let customTags = $state<CustomTag[]>([]);
-
   const languageAddPayloads = $derived(languagesToAdd.map((entry) => entry.payload));
   const languageEditPayloads = $derived(languagesToEdit.map((entry) => entry.payload));
   const referenceValues = $derived(newReferences.map((entry) => entry.ref));
@@ -200,7 +195,6 @@
   // Derived state: check if queue has any items
   const hasQueuedItems = $derived(
     queueEntries.length > 0 ||
-    customTags.length > 0 ||
     modifiedRelations.size > 0
   );
 
@@ -235,7 +229,6 @@
       const stored = loadQueuedChanges();
       if (stored) {
         queueEntries = stored.entries.map(cloneQueueEntry);
-        customTags = sanitizeTags(stored.customTags);
         modifiedRelations = new Set(sanitizeStringArray(stored.modifiedRelations));
         activeSubmissionId = sanitizeSubmissionId(stored.submissionId) ?? '';
         supersedesSubmissionId = sanitizeSubmissionId(stored.supersedesSubmissionId);
@@ -292,7 +285,6 @@
 
     const isEmptyQueue =
       queueEntries.length === 0 &&
-      customTags.length === 0 &&
       modifiedRelations.size === 0;
 
     if (isEmptyQueue) {
@@ -307,7 +299,6 @@
 
     const snapshot: ContributionQueueState = {
       entries: queueEntries.map(cloneQueueEntry),
-      customTags: customTags.map(cloneCustomTag),
       modifiedRelations: Array.from(modifiedRelations),
       submissionId: activeSubmissionId,
       supersedesSubmissionId: supersedesSubmissionId ?? null
@@ -347,7 +338,6 @@
 
     const queuePayload: ContributionQueueState = {
       entries: queueEntries.map(cloneQueueEntry),
-      customTags: customTags.map(cloneCustomTag),
       modifiedRelations: Array.from(modifiedRelations),
       submissionId: activeSubmissionId,
       supersedesSubmissionId: supersedesSubmissionId ?? null
@@ -508,8 +498,6 @@
     });
 
     removeQueueEntry(referenceEntry.queueEntryId);
-
-    customTags = customTags.map((tag) => ({ ...tag, refs: tag.refs.filter((r) => r !== refId) }));
   }
 
   function toggleHistoryPanel() {
@@ -525,7 +513,6 @@
       const payload = entry.payload;
 
       queueEntries = deriveQueueEntriesFromHistory(payload);
-      customTags = payload.customTags.map(cloneCustomTag);
       modifiedRelations = new Set(payload.modifiedRelations);
 
       contributorEmail = payload.contributor.email;
@@ -765,7 +752,6 @@
   queries={Object.values(data.queries).map(q => ({ code: q.code, name: q.label }))}
   transformations={Object.values(data.transformations).map(t => ({ code: t.code, name: t.label }))}
   complexityOptions={complexityOptions.map(p => ({ value: p.code, label: p.label, description: p.description || '' }))}
-  existingTags={[...data.existingTags, ...customTags].map(t => ({ label: t.label, color: t.color || '#6366f1', description: '', refs: [] }))}
   availableRefs={getAvailableReferences(data.existingReferences, referenceValues)}
 />
 
@@ -778,7 +764,6 @@
   queries={Object.values(data.queries).map(q => ({ code: q.code, name: q.label }))}
   transformations={Object.values(data.transformations).map(t => ({ code: t.code, name: t.label }))}
   complexityOptions={complexityOptions.map(p => ({ value: p.code, label: p.label, description: p.description || '' }))}
-  existingTags={[...data.existingTags, ...customTags].map(t => ({ label: t.label, color: t.color || '#6366f1', description: '', refs: [] }))}
   availableRefs={getAvailableReferences(data.existingReferences, referenceValues)}
 />
 

@@ -129,7 +129,6 @@ export function convertLanguageForEdit(lang: any): LanguageToAdd {
     definitionRefs: lang.definitionRefs || [],
     queries: lang.properties?.queries || {},
     transformations: lang.properties?.transformations || {},
-    tags: (lang.tags || []).map((t: any) => ({ ...t, color: t.color || '#6366f1' })),
     existingReferences: lang.references?.map((r: any) => r.id) || []
   };
 }

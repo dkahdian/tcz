@@ -227,22 +227,6 @@ function validateLanguage(
   validateOperationMap(language.name, 'query', language.properties?.queries, globalRefs, errors);
   validateOperationMap(language.name, 'transformation', language.properties?.transformations, globalRefs, errors);
 
-  if (Array.isArray(language.tags)) {
-    const seenLabels = new Set<string>();
-    for (const tag of language.tags) {
-      if (!tag?.label) {
-        errors.push(`Language "${language.name}" has a tag without a label`);
-        continue;
-      }
-      if (seenLabels.has(tag.label)) {
-        errors.push(`Language "${language.name}" has duplicate tag label "${tag.label}"`);
-      } else {
-        seenLabels.add(tag.label);
-      }
-      ensureRefsExist(tag.refs, `Language "${language.name}" tag "${tag.label}" refs`, globalRefs, errors);
-    }
-  }
-
   if (Array.isArray(language.subsets)) {
     for (const subsetId of language.subsets) {
       const normalized = normalizeLanguageId(subsetId);

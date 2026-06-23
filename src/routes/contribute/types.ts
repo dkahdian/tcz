@@ -31,15 +31,7 @@ export type LanguageToAdd = {
   definitionRefs: string[];
   queries: Record<string, KCOpSupport>;
   transformations: Record<string, KCOpSupport>;
-  tags: Array<{ label: string; color: string; description?: string; refs: string[] }>;
   existingReferences: string[];
-};
-
-export type CustomTag = {
-  label: string;
-  color: string;
-  description?: string;
-  refs: string[];
 };
 
 export type ContributorInfo = {
@@ -55,7 +47,6 @@ export type SubmissionHistoryPayload = {
   languagesToEdit: LanguageToAdd[];
   relationships: RelationshipEntry[];
   newReferences: ReferenceToAdd[];
-  customTags: CustomTag[];
   modifiedRelations: string[];
   contributor: ContributorInfo;
   queueEntries?: ContributionQueueEntry[];

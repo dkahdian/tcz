@@ -6,7 +6,6 @@
 import type {
   LanguageToAdd,
   RelationshipEntry,
-  CustomTag,
   SubmissionHistoryEntry
 } from './types.js';
 import type { ContributionQueueEntry } from '$lib/data/contribution-transforms.js';
@@ -47,18 +46,6 @@ export function sanitizeOperationSupportRecord(
   return result;
 }
 
-export function sanitizeTags(value: unknown): CustomTag[] {
-  if (!Array.isArray(value)) return [];
-  return value
-    .filter((t): t is Record<string, unknown> => typeof t === 'object' && t !== null)
-    .map((t) => ({
-      label: isString(t.label) ? t.label : '',
-      color: isString(t.color) ? t.color : '#6366f1',
-      description: isString(t.description) ? t.description : undefined,
-      refs: sanitizeStringArray(t.refs)
-    }));
-}
-
 export function sanitizeSubmissionId(value: unknown): string | null {
   if (!isString(value) || value.length === 0) return null;
   // Basic validation: should look like a submission ID
@@ -79,12 +66,6 @@ export function cloneLanguageEntry(entry: LanguageToAdd): LanguageToAdd {
     definitionRefs: [...entry.definitionRefs],
     queries: cloneOperationSupport(entry.queries),
     transformations: cloneOperationSupport(entry.transformations),
-    tags: entry.tags.map((t) => ({
-      label: t.label,
-      color: t.color,
-      description: t.description,
-      refs: [...t.refs]
-    })),
     existingReferences: [...entry.existingReferences]
   };
 }
@@ -97,15 +78,6 @@ export function cloneRelationshipEntry(entry: RelationshipEntry): RelationshipEn
     description: entry.description,
     assumption: entry.assumption,
     refs: [...entry.refs]
-  };
-}
-
-export function cloneCustomTag(tag: CustomTag): CustomTag {
-  return {
-    label: tag.label,
-    color: tag.color,
-    description: tag.description,
-    refs: [...tag.refs]
   };
 }
 

@@ -20,7 +20,6 @@ export { relationTypes } from './complexities.js';
 export { allLanguages } from './languages.js';
 export { allPredefinedFilters } from './filters/index.js';
 export { edgeFilters } from './filters/index.js';
-export { getAllTags, getTags, getTag, CANONICAL_TAGS } from './tags.js';
 export { canonicalDataset } from './canonical.js';
 export { 
   COMPLEXITIES,

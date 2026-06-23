@@ -635,8 +635,7 @@
             }
           }
         }
-      },
-      "tags": []
+      }
     },
     {
       "fullName": "Compressed Sentential Decision Diagrams",
@@ -880,7 +879,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_83e3b023",
       "definition": "\\langref{cSDD} $= \\bigcup_T \\langfam{cSDD}{T}$. \\citep{VanDenBroeck_2015,Darwiche_2011}",
       "definitionRefs": []
@@ -1108,7 +1106,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_6c130090",
       "definition": "Boolean circuits with AND and OR gates; literals as inputs; and whose AND gates are \\emph{decomposable} (children mention disjoint sets of variables) and whose OR gates are \\emph{deterministic} (on any input, at most one child evaluates to $1$).\\citep{Darwiche_2001b}",
       "definitionRefs": []
@@ -1338,7 +1335,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_ea9b5299",
       "definition": "\\langref{d-SDNNF} $= \\bigcup_T$ \\langfam{d-SDNNF}{T}. \\citep{Pipatsrisawat_2008}",
       "definitionRefs": []
@@ -1588,7 +1584,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_91f812d0",
       "definition": "For each fixed vtree $T$, a \\langfam{d-SDNNF}{T} is a \\langref{d-DNNF} that is additionally structured decomposable, respecting the vtree $T$.\n\nIntuitively, all AND gates over the same set of variables must decompose via the same partition, as specified by the vtree.\n\nEquivalently, \\langfam{d-SDNNF}{T} formulas are \\langfam{SDNNF}{T} formulas that are also \\emph{deterministic} (see \\langref{d-DNNF}).\\citep{Pipatsrisawat_2008}",
       "definitionRefs": []
@@ -1820,8 +1815,7 @@
             }
           }
         }
-      },
-      "tags": []
+      }
     },
     {
       "name": "DNNF",
@@ -2044,7 +2038,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_3bebcab7",
       "definition": "Boolean circuits with AND and OR gates, literals as inputs, and whose AND gates are \\emph{decomposable} (children mention disjoint sets of variables).\\citep{Darwiche_2001a} Decomposability may be seen as the analogue in Boolean circuits to the notion of \\emph{syntactic multilinearity} in arithmetic circuits.\\citep{shpilka2010arithmetic}",
       "definitionRefs": []
@@ -2241,7 +2234,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_684b1ca7",
       "definition": "Binary decision diagrams such that each root-to-sink path tests each variable at most once. Also known as read-once branching programs.\\citep{Wegener_2000}",
       "definitionRefs": []
@@ -2430,7 +2422,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_6ae90adc",
       "definition": "A \\langref{DNF} that is the disjunction of all minimal entailing terms (prime implicants). \\citep{Quine_1952}",
       "definitionRefs": []
@@ -2641,7 +2632,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_e02902d0",
       "definition": "The set of satisfying assignments (models) of the function.\\citep{Darwiche_2002}\n\nEquivalently, a suitably restricted \\langref{DNF} whose terms are in one-to-one correspondence with the models.",
       "definitionRefs": []
@@ -2890,7 +2880,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_1df07cc3",
       "definition": "An \\langref{nFBDD} is a \\emph{nondeterministic} \\langref{FBDD}, i.e., an \\langref{FBDD} that is additionally allowed to contain \\emph{guess} nodes.\\citep{Wegener_2000}\n\nAlso known as a nondeterministic read-once branching program.",
       "definitionRefs": []
@@ -3142,7 +3131,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_5bf00851",
       "definition": "A Boolean circuit with AND and OR gates with literals as inputs (i.e., negations may only appear at leaves). Also called \\emph{De Morgan circuits}. \\citep{Darwiche_2002}",
       "definitionRefs": []
@@ -3396,7 +3384,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_d24efe0e",
       "definition": "\\langref{nOBDD} $= \\bigcup_{<}$ \\langfam{nOBDD}{<}. \\citep{Wegener_2000}",
       "definitionRefs": []
@@ -3586,7 +3573,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_d69995dd",
       "definition": "For each fixed variable order $<$, binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the order $<$.\\citep{Bryant_1986}\n\nEquivalently, oblivious read-once branching programs respecting the variable order $<$.\\citep{Wegener_2000}\n\nEquivalently, \\langfam{OBDD}{<}{s} are \\langref{FBDD}{s} required to respect the order $<$ on every root-to-sink path.",
       "definitionRefs": []
@@ -3773,7 +3759,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_27fffab2",
       "definition": "The subset of \\langref{CNF} where formulas are the conjunction of all minimal entailed clauses (prime implicates). \\citep{Quine_1952}.",
       "definitionRefs": []
@@ -4034,7 +4019,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_1afefbe2",
       "definition": "\\langref{SDD} $= \\bigcup_T$ \\langfam{SDD}{T}. \\citep{Darwiche_2011}",
       "definitionRefs": []
@@ -4284,7 +4268,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_9c84a267",
       "definition": "\\langfam{SDD}{T} generalizes \\langfam{OBDD}{<} by allowing decisions, not only on variables, but on representations (i.e., recursively defined \\langref{SDD} formulas).\\citep{Darwiche_2011}\n\nEquivalently, an \\langfam{SDD}{T} is a \\langfam{d-SDNNF}{T} in which determinism is replaced by \\emph{strong determinism}, where $\\lor$-gates must take the form $ f(x,y) = \\bigvee_{i=1}^{m}(p_i(x) \\land s_i(y))$, where the $p_i$ are mutually exclusive and exhaustive.",
       "definitionRefs": []
@@ -4547,7 +4530,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_b13b0d78",
       "definition": "\\langref{SDNNF} $= \\bigcup_T$ \\langfam{SDNNF}{T}. \\citep{Pipatsrisawat_2008}",
       "definitionRefs": []
@@ -4796,7 +4778,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_3c803ba1",
       "definition": "For each fixed vtree $T$, an \\langfam{SDNNF}{T} is a \\langref{DNNF} that is additionally structured decomposable, respecting the vtree $T$.\\citep{Pipatsrisawat_2008}\n\nIntuitively, all AND gates over the same set of variables must decompose via the same partition, as specified by the vtree.",
       "definitionRefs": []
@@ -5038,7 +5019,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_4e62a038",
       "definition": "The \\emph{unambiguous} variant of \\langref{nFBDD}.\\citep{Wegener_2000} That is, on any input there is at most one accepting sequence of guesses.",
       "definitionRefs": []
@@ -5276,7 +5256,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_c2df8c2b",
       "definition": "The \\emph{unambiguous} variant of \\langref{nOBDD}.\\citep{Wegener_2000} That is, on any input there is at most one accepting sequence of guesses.",
       "definitionRefs": []
@@ -5485,7 +5464,6 @@
           }
         }
       },
-      "tags": [],
       "id": "lang_b9d72a7c",
       "definition": "Binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the same order.\\citep{Bryant_1986}\n\nAlso known as oblivious read-once branching programs.\\citep{Wegener_2000}\n\nEquivalently, \\langref{OBDD} $=\\bigcup_{<}$ \\langfam{OBDD}{<}.\\citep{Darwiche_2002}",
       "definitionRefs": []
@@ -5737,7 +5715,6 @@
           }
         }
       },
-      "tags": [],
       "references": []
     },
     {
@@ -5979,7 +5956,6 @@
           }
         }
       },
-      "tags": [],
       "references": []
     },
     {
@@ -6215,7 +6191,6 @@
           }
         }
       },
-      "tags": [],
       "definition": "Boolean circuits with AND and OR gates; literals as inputs; and whose AND gates are \\emph{decomposable} (children mention disjoint sets of variables) and whose OR gates must appear in the form of \\emph{decisions/tests} (subcircuits of the form $(x\\land f)\\lor (\\bar{x}\\land g)$ where $x$ is a variable).\\citep{darwiche2007language}\n\nEquivalently, \\langref{dec-DNNF} formulas are \\langref{d-DNNF} formulas whose OR-gates may only appear in \\emph{decisions/tests}.\n\nEquivalently, \\langref{dec-DNNF} formulas are (up to syntax) \\langref{FBDD}{s} that may additionally contain decomposable AND-gates.",
       "definitionRefs": []
     },
@@ -6465,7 +6440,6 @@
           }
         }
       },
-      "tags": [],
       "definition": "\\langref{dec-SDNNF} $= \\bigcup_T$ \\langfam{dec-SDNNF}{T}. \\citep{Amarilli_2018}",
       "definitionRefs": []
     },
@@ -6705,7 +6679,6 @@
           }
         }
       },
-      "tags": [],
       "definition": "For each fixed vtree $T$, \\langfam{dec-SDNNF}{T} is the subset of \\langref{dec-DNNF} that respects $T$.\\citep{darwiche2007language,Amarilli_2018}\n\nEquivalently, \\langfam{dec-SDNNF}{T} formulas are \\langfam{SDNNF}{T} formulas whose OR-gates may only appear in \\emph{decisions/tests}.",
       "definitionRefs": []
     },
@@ -6959,7 +6932,6 @@
           }
         }
       },
-      "tags": [],
       "definition": "\\langfam{cSDD}{T} is the subset of \\langfam{SDD}{T} that is \\emph{compressed}, a restriction that makes the representation canonical (i.e., there is a unique representation for every function). \\citep{Darwiche_2011}",
       "definitionRefs": []
     },
@@ -7746,48 +7718,6 @@
       "href": "https://books.google.com/books?id=xqqJj42ZoXcC"
     }
   ],
-  "tags": {
-    "decomposability": {
-      "label": "Decomposability",
-      "color": "#84cc16",
-      "description": "Conjunctions have disjoint variable scopes"
-    },
-    "determinism": {
-      "label": "Determinism",
-      "color": "#ef4444",
-      "description": "Disjunctions are mutually exclusive"
-    },
-    "smoothness": {
-      "label": "Smoothness",
-      "color": "#06b6d4",
-      "description": "All disjuncts mention the same variables"
-    },
-    "flatness": {
-      "label": "Flatness",
-      "color": "#7c3aed",
-      "description": "Formula has bounded height"
-    },
-    "ordering": {
-      "label": "Ordering",
-      "color": "#f97316",
-      "description": "Variables follow a fixed ordering"
-    },
-    "read-once": {
-      "label": "Read-Once",
-      "color": "#ec4899",
-      "description": "Each variable appears at most once on any path"
-    },
-    "decision": {
-      "label": "Decision",
-      "color": "#8b5cf6",
-      "description": "Based on decision diagram structure"
-    },
-    "structured": {
-      "label": "Structured",
-      "color": "#10b981",
-      "description": "Decomposition follows a structured pattern"
-    }
-  },
   "defaultNodePositionsByLanguageName": {
     "CNF": {
       "x": 630,

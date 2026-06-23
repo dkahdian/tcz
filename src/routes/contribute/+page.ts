@@ -18,22 +18,9 @@ export const load: PageLoad = () => {
 
   const existingReferences = allReferences.map((ref) => ({ id: ref.id, title: ref.title, bibtex: ref.bibtex }));
 
-  const tagLookup = new Map<string, { label: string; color?: string }>();
-  for (const language of allLanguages) {
-    if (!language.tags) continue;
-    for (const tag of language.tags) {
-      if (!tagLookup.has(tag.label)) {
-        tagLookup.set(tag.label, { label: tag.label, color: tag.color });
-      }
-    }
-  }
-
-  const existingTags = Array.from(tagLookup.values());
-
   return {
     existingLanguageIds,
     existingReferences,
-    existingTags,
     languages: allLanguages,
     queries: QUERIES,
     transformations: TRANSFORMATIONS,

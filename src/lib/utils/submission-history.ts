@@ -1,5 +1,4 @@
 import type {
-  CustomTag,
   LanguageToAdd,
   ReferenceToAdd,
   RelationshipEntry,
@@ -47,7 +46,6 @@ function cloneLanguages(items: LanguageToAdd[]): LanguageToAdd[] {
     transformations: Object.fromEntries(
       Object.entries(item.transformations).map(([code, support]) => [code, { ...support, refs: [...support.refs] }])
     ),
-    tags: item.tags.map((tag) => ({ ...tag, refs: [...tag.refs] })),
     existingReferences: [...item.existingReferences]
   }));
 }
@@ -57,10 +55,6 @@ function cloneRelationships(items: RelationshipEntry[]): RelationshipEntry[] {
     ...item,
     refs: [...item.refs]
   }));
-}
-
-function cloneTags(items: CustomTag[]): CustomTag[] {
-  return items.map((tag) => ({ ...tag, refs: [...tag.refs] }));
 }
 
 function cloneReferences(items: ReferenceToAdd[]): ReferenceToAdd[] {
@@ -159,11 +153,6 @@ function sanitizeHistoryEntry(raw: unknown): SubmissionHistoryEntry | null {
         )
       : [];
 
-  const asTagArray = (value: unknown): CustomTag[] =>
-    isArray(value)
-      ? cloneTags(value.filter((item): item is CustomTag => !!item && typeof item === 'object') as CustomTag[])
-      : [];
-
   const payload: SubmissionHistoryPayload = {
     submissionId,
     supersedesSubmissionId,
@@ -171,7 +160,6 @@ function sanitizeHistoryEntry(raw: unknown): SubmissionHistoryEntry | null {
     languagesToEdit: asLanguageArray(payloadRaw.languagesToEdit),
     relationships: asRelationshipArray(payloadRaw.relationships),
     newReferences: asReferenceArray(payloadRaw.newReferences),
-    customTags: asTagArray(payloadRaw.customTags),
     modifiedRelations: asStringArray(payloadRaw.modifiedRelations),
     contributor,
     queueEntries: undefined
@@ -259,7 +247,6 @@ function createSubmissionHistoryEntry(payload: SubmissionHistoryPayload): Submis
       languagesToEdit: cloneLanguages(payload.languagesToEdit),
       relationships: cloneRelationships(payload.relationships),
       newReferences: [...payload.newReferences],
-      customTags: cloneTags(payload.customTags),
       modifiedRelations: [...payload.modifiedRelations],
       contributor: { ...payload.contributor },
       queueEntries: payload.queueEntries ? cloneQueueEntries(payload.queueEntries) : undefined

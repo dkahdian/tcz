@@ -168,26 +168,6 @@
               >[{getGlobalRefNumber(refId) ?? '?'}]</button>{/each}{/if}
         </p>
 
-        {#if selectedLanguage.tags?.length}
-          <div class="mb-4 flex flex-wrap gap-2">
-            {#each selectedLanguage.tags as tag}
-              <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium" style={`background:${tag.color ?? '#e5e7eb'}20; color:${tag.color ?? '#374151'}; border:1px solid ${tag.color ?? '#e5e7eb'}`}
-                title={tag.description || ''}>
-                <MathText text={tag.label} className="inline" />
-                {#if tag.refs?.length}
-                  {#each tag.refs as refId}
-                    <button 
-                      class="ref-badge inline"
-                      onclick={scrollToReferences}
-                      title="View reference"
-                    >[{getGlobalRefNumber(refId) ?? '?'}]</button>
-                  {/each}
-                {/if}
-              </span>
-            {/each}
-          </div>
-        {/if}
-        
         <div class="space-y-4">
           {#snippet operationSection(heading: string, ops: KCOpEntry[], opType: 'query' | 'transformation')}
           <div>

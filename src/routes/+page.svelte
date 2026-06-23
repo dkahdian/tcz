@@ -284,7 +284,6 @@
       // Build submission payload
       const queuePayload: ContributionQueueState = {
         entries: queue.entries ?? [],
-        customTags: queue.customTags ?? [],
         modifiedRelations: Array.isArray(queue.modifiedRelations)
           ? queue.modifiedRelations
           : [],
@@ -335,7 +334,6 @@
         languagesToEdit,
         relationships,
         newReferences,
-        customTags: queue.customTags ?? [],
         modifiedRelations: modifiedRelationKeys,
         contributor: contributorInfo,
         queueEntries: queue.entries ?? []

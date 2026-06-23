@@ -201,14 +201,6 @@ export interface KCLanguagePropertiesResolved {
   transformations: KCOpEntry[];
 }
 
-export interface KCTag {
-  label: string;
-  color?: string; // CSS color for badge
-  description?: string;
-  /** reference IDs pointing to entries in the language's references array */
-  refs: string[];
-}
-
 export interface KCReference {
   id: string;
   title: string;
@@ -231,8 +223,6 @@ export interface KCLanguage {
   properties: KCLanguageProperties;
   /** names of languages that are strict subsets of this one */
   subsets?: string[];
-  /** badges/tags for quick categorization */
-  tags?: KCTag[];
   /** list of external references for this language */
   references: KCReference[];
   /** visual overrides applied by filters */
