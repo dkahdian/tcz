@@ -20,11 +20,35 @@ function removeStoredValue(key: string): void {
 function isSandboxEdit(value: unknown): value is SandboxEdit {
   if (!value || typeof value !== 'object') return false;
   const edit = value as Record<string, unknown>;
+  if (edit.kind === 'reference') {
+    return typeof edit.bibtex === 'string';
+  }
+  if (edit.kind === 'language:new') {
+    return (
+      (edit.id === undefined || typeof edit.id === 'string') &&
+      typeof edit.name === 'string' &&
+      (edit.classification === 'plain' || edit.classification === 'family' || edit.classification === 'union') &&
+      typeof edit.fullName === 'string' &&
+      typeof edit.definition === 'string' &&
+      (edit.definitionRefs === undefined || Array.isArray(edit.definitionRefs))
+    );
+  }
+  if (edit.kind === 'language:edit') {
+    return (
+      typeof edit.languageId === 'string' &&
+      (edit.fullName === undefined || typeof edit.fullName === 'string') &&
+      (edit.definition === undefined || typeof edit.definition === 'string') &&
+      (edit.definitionRefs === undefined || Array.isArray(edit.definitionRefs))
+    );
+  }
   if (edit.kind === 'edge') {
     return (
       typeof edit.sourceId === 'string' &&
       typeof edit.targetId === 'string' &&
-      (typeof edit.status === 'string' || edit.status === null)
+      (typeof edit.status === 'string' || edit.status === null) &&
+      (edit.description === undefined || typeof edit.description === 'string') &&
+      (edit.noPolyDescription === undefined || typeof edit.noPolyDescription === 'string') &&
+      (edit.quasiDescription === undefined || typeof edit.quasiDescription === 'string')
     );
   }
   if (edit.kind === 'operation') {

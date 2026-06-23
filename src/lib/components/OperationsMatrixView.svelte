@@ -33,6 +33,8 @@
     sandboxMode = false,
     sandboxSelectedOperationCellId = null,
     sandboxBaselineGraphData = null,
+    onAddLanguage,
+    onRemoveSandboxLanguage,
     onSandboxOperationEdit,
     onSandboxOperationStatusChange
   }: {
@@ -46,6 +48,8 @@
     sandboxMode?: boolean;
     sandboxSelectedOperationCellId?: string | null;
     sandboxBaselineGraphData?: GraphData | FilteredGraphData | null;
+    onAddLanguage?: () => void;
+    onRemoveSandboxLanguage?: (languageId: string) => void;
     onSandboxOperationEdit?: (
       operationType: 'query' | 'transformation',
       languageId: string,
@@ -165,6 +169,16 @@
     selectedOperation = null;
     selectedOperationCell = null;
     selectedNode = language;
+  }
+
+  function isSandboxAddedLanguage(languageId: string): boolean {
+    if (!sandboxMode || !sandboxBaselineGraphData) return false;
+    return sandboxBaselineGraphData.adjacencyMatrix.indexByLanguage[languageId] === undefined;
+  }
+
+  function handleRemoveSandboxLanguageClick(event: MouseEvent, languageId: string) {
+    event.stopPropagation();
+    onRemoveSandboxLanguage?.(languageId);
   }
 
   function handleOperationClick(opCode: string) {
@@ -418,7 +432,13 @@
     >
       <thead>
         <tr>
-          <th class="corner-cell" aria-hidden="true"></th>
+          <th class="corner-cell">
+            {#if sandboxMode}
+              <button type="button" class="new-language-button" onclick={onAddLanguage} title="Add language">
+                New Language
+              </button>
+            {/if}
+          </th>
           {#each operationCodes as opCode}
             {@const opDef = operations[opCode]}
             <th class={`col-header ${isOperationHighlighted(opCode) ? 'is-active' : ''}`}>
@@ -437,9 +457,20 @@
         {#each visibleLanguages as language}
           <tr>
             <th class={`row-header ${isLanguageHighlighted(language) ? 'is-active' : ''}`}>
-              <button type="button" onclick={() => handleLanguageClick(language)} title={`Select ${language.name}`}>
-                <span class="math-text inline" aria-label={language.name}>{@html languageNameHtml.get(language.id) ?? language.name}</span>
-              </button>
+              <div class="language-header-control">
+                {#if isSandboxAddedLanguage(language.id)}
+                  <button
+                    type="button"
+                    class="remove-language-button"
+                    onclick={(event) => handleRemoveSandboxLanguageClick(event, language.id)}
+                    title={`Remove draft language ${language.name}`}
+                    aria-label={`Remove draft language ${language.name}`}
+                  >x</button>
+                {/if}
+                <button class="language-select-button" type="button" onclick={() => handleLanguageClick(language)} title={`Select ${language.name}`}>
+                  <span class="math-text inline" aria-label={language.name}>{@html languageNameHtml.get(language.id) ?? language.name}</span>
+                </button>
+              </div>
             </th>
             {#each operationCodes as opCode}
               {@const support = getOperationSupport(language, opCode)}
@@ -597,6 +628,28 @@
     border-left: 1px solid #e5e7eb;
   }
 
+  .new-language-button {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    border: 0;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 0.68rem;
+    font-weight: 800;
+    line-height: 1.1;
+    cursor: pointer;
+  }
+
+  .new-language-button:hover,
+  .new-language-button:focus-visible {
+    background: #bfdbfe;
+    color: #1e40af;
+    outline: 2px solid #2563eb;
+    outline-offset: -2px;
+  }
+
   .row-header,
   .col-header {
     background: #fff;
@@ -616,7 +669,15 @@
     border-left: 1px solid #e5e7eb;
   }
 
-  .row-header button,
+  .language-header-control {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+    min-width: 0;
+  }
+
+  .row-header .language-select-button,
   .col-header button {
     width: 100%;
     height: 100%;
@@ -630,13 +691,38 @@
     font-size: 0.8rem;
   }
 
-  .row-header button {
+  .row-header .language-select-button {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  .row-header button :global(.math-text) {
+  .remove-language-button {
+    flex: 0 0 1rem;
+    width: 1rem;
+    height: 100%;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-right: 1px solid #dbeafe;
+    background: #eff6ff;
+    color: #1d4ed8;
+    cursor: pointer;
+    font-size: 0.62rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .remove-language-button:hover,
+  .remove-language-button:focus-visible {
+    background: #dbeafe;
+    color: #991b1b;
+    outline: 2px solid #2563eb;
+    outline-offset: -2px;
+  }
+
+  .row-header .language-select-button :global(.math-text) {
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;

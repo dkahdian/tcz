@@ -8,8 +8,7 @@ const fields = [
 	contributor.email || 'anonymous',
 	contributor.github || '',
 	contributor.note || '',
-	payload.submissionId || '',
-	payload.supersedesSubmissionId || ''
+	payload.submissionId || ''
 ];
 for (const value of fields) {
 	console.log(String(value));
@@ -21,7 +20,8 @@ CONTRIBUTOR_EMAIL=${META[0]}
 CONTRIBUTOR_GITHUB=${META[1]}
 CONTRIBUTOR_NOTE=${META[2]}
 SUBMISSION_ID=${META[3]}
-SUPERSEDES_SUBMISSION_ID=${META[4]}
+
+CONTRIBUTOR_GITHUB=${CONTRIBUTOR_GITHUB#@}
 
 REPOSITORY=${GITHUB_REPOSITORY:-}
 if [[ -z "$REPOSITORY" ]]; then
@@ -98,10 +98,6 @@ if [[ -n "$CONTRIBUTOR_GITHUB" ]]; then
 	echo "- GitHub: @${CONTRIBUTOR_GITHUB}" >> "$PR_BODY_FILE"
 fi
 
-if [[ -n "$SUPERSEDES_SUBMISSION_ID" ]]; then
-	echo "- Supersedes Submission ID: ${SUPERSEDES_SUBMISSION_ID}" >> "$PR_BODY_FILE"
-fi
-
 if [[ -n "$CONTRIBUTOR_NOTE" ]]; then
 	cat >> "$PR_BODY_FILE" <<EOF
 
@@ -114,7 +110,7 @@ cat >> "$PR_BODY_FILE" <<EOF
 
 ## Automation
 
-This PR was generated from the ordered contribution queue. Validation and build checks already ran in the workflow before opening this pull request.
+This PR was generated from sandbox-mode contribution edits. Validation and build checks already ran in the workflow before opening this pull request.
 
 *This PR was automatically generated from a community contribution.*
 EOF
@@ -178,24 +174,6 @@ if [[ -z "$NEW_PR_URL" ]]; then
 fi
 
 rm "$CREATE_STDOUT" "$CREATE_STDERR" "$PR_BODY_FILE"
-
-if [[ -n "$SUPERSEDES_SUBMISSION_ID" ]]; then
-	QUERY="repo:${REPOSITORY} state:open is:pr ${SUPERSEDES_SUBMISSION_ID} in:body"
-	LOOKUP_STDERR=$(mktemp)
-	if ! SUPERSEDED_PR=$(gh search prs "$QUERY" --json number --limit 1 --jq '.[0].number' 2>"$LOOKUP_STDERR"); then
-		echo "Note: Unable to look up superseded PR: $(<"$LOOKUP_STDERR")" >&2
-		SUPERSEDED_PR=""
-	fi
-	rm "$LOOKUP_STDERR"
-	if [[ "$SUPERSEDED_PR" =~ ^[0-9]+$ && "$SUPERSEDED_PR" != "$NEW_PR_NUMBER" ]]; then
-		CLOSE_PAYLOAD=$(jq -n '{state: "closed"}')
-		printf '%s' "$CLOSE_PAYLOAD" | gh api "repos/${REPOSITORY}/pulls/${SUPERSEDED_PR}" --method PATCH --input - >/dev/null
-		COMMENT_PAYLOAD=$(jq -n --arg body "Superseded by ${NEW_PR_URL}." '{body: $body}')
-		printf '%s' "$COMMENT_PAYLOAD" | gh api "repos/${REPOSITORY}/issues/${SUPERSEDED_PR}/comments" --method POST --input - >/dev/null
-	else
-		echo "No open PR found for Supersedes Submission ID ${SUPERSEDES_SUBMISSION_ID}" >&2
-	fi
-fi
 
 for label in "${LABELS[@]}"; do
 	LABEL_PAYLOAD=$(jq -n --arg label "$label" '{labels: [$label]}')

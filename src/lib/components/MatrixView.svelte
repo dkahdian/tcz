@@ -27,6 +27,8 @@
     showQuasipolynomialSandboxOptions = true,
     sandboxSelectedEdgeId = null,
     sandboxBaselineGraphData = null,
+    onAddLanguage,
+    onRemoveSandboxLanguage,
     onSandboxEdgeEdit,
     onSandboxEdgeStatusChange
   }: {
@@ -39,6 +41,8 @@
     showQuasipolynomialSandboxOptions?: boolean;
     sandboxSelectedEdgeId?: string | null;
     sandboxBaselineGraphData?: GraphData | FilteredGraphData | null;
+    onAddLanguage?: () => void;
+    onRemoveSandboxLanguage?: (languageId: string) => void;
     onSandboxEdgeEdit?: (sourceId: string, targetId: string) => void;
     onSandboxEdgeStatusChange?: (sourceId: string, targetId: string, status: string | null) => boolean;
   } = $props();
@@ -249,6 +253,16 @@
     selectedNode = language;
   }
 
+  function isSandboxAddedLanguage(languageId: string): boolean {
+    if (!sandboxMode || !sandboxBaselineGraphData) return false;
+    return sandboxBaselineGraphData.adjacencyMatrix.indexByLanguage[languageId] === undefined;
+  }
+
+  function handleRemoveSandboxLanguageClick(event: MouseEvent, languageId: string) {
+    event.stopPropagation();
+    onRemoveSandboxLanguage?.(languageId);
+  }
+
   function handleCellClick(sourceId: string, targetId: string, relation: DirectedSuccinctnessRelation | null) {
     if (sandboxMode) {
       onSandboxEdgeEdit?.(sourceId, targetId);
@@ -446,12 +460,29 @@
     >
       <thead>
         <tr>
-          <th class="corner-cell" aria-hidden="true"></th>
+          <th class="corner-cell">
+            {#if sandboxMode}
+              <button type="button" class="new-language-button" onclick={onAddLanguage} title="Add language">
+                New Language
+              </button>
+            {/if}
+          </th>
           {#each matrixLanguages as column}
             <th class={`col-header ${selectedNode?.id === column.id ? 'is-active' : ''}`}>
-              <button type="button" onclick={() => handleColumnHeaderClick(column.language)} title={`Select ${column.language.name}`}>
-                <span class="math-text inline column-label" aria-label={column.language.name}>{@html languageNameHtml.get(column.id) ?? column.language.name}</span>
-              </button>
+              <div class="language-header-control language-header-control--column">
+                {#if isSandboxAddedLanguage(column.id)}
+                  <button
+                    type="button"
+                    class="remove-language-button"
+                    onclick={(event) => handleRemoveSandboxLanguageClick(event, column.id)}
+                    title={`Remove draft language ${column.language.name}`}
+                    aria-label={`Remove draft language ${column.language.name}`}
+                  >x</button>
+                {/if}
+                <button class="language-select-button" type="button" onclick={() => handleColumnHeaderClick(column.language)} title={`Select ${column.language.name}`}>
+                  <span class="math-text inline column-label" aria-label={column.language.name}>{@html languageNameHtml.get(column.id) ?? column.language.name}</span>
+                </button>
+              </div>
             </th>
           {/each}
         </tr>
@@ -460,9 +491,20 @@
         {#each matrixLanguages as rowLanguage}
           <tr>
             <th class={`row-header ${selectedNode?.id === rowLanguage.id ? 'is-active' : ''}`}>
-              <button type="button" onclick={() => handleRowHeaderClick(rowLanguage.language)} title={`Select ${rowLanguage.language.name}`}>
-                <span class="math-text inline" aria-label={rowLanguage.language.name}>{@html languageNameHtml.get(rowLanguage.id) ?? rowLanguage.language.name}</span>
-              </button>
+              <div class="language-header-control">
+                {#if isSandboxAddedLanguage(rowLanguage.id)}
+                  <button
+                    type="button"
+                    class="remove-language-button"
+                    onclick={(event) => handleRemoveSandboxLanguageClick(event, rowLanguage.id)}
+                    title={`Remove draft language ${rowLanguage.language.name}`}
+                    aria-label={`Remove draft language ${rowLanguage.language.name}`}
+                  >x</button>
+                {/if}
+                <button class="language-select-button" type="button" onclick={() => handleRowHeaderClick(rowLanguage.language)} title={`Select ${rowLanguage.language.name}`}>
+                  <span class="math-text inline" aria-label={rowLanguage.language.name}>{@html languageNameHtml.get(rowLanguage.id) ?? rowLanguage.language.name}</span>
+                </button>
+              </div>
             </th>
             {#each matrixLanguages as colLanguage}
               {#if rowLanguage.id === colLanguage.id}
@@ -648,6 +690,28 @@
     height: 5rem;
   }
 
+  .new-language-button {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    border: 0;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 0.68rem;
+    font-weight: 800;
+    line-height: 1.1;
+    cursor: pointer;
+  }
+
+  .new-language-button:hover,
+  .new-language-button:focus-visible {
+    background: #bfdbfe;
+    color: #1e40af;
+    outline: 2px solid #2563eb;
+    outline-offset: -2px;
+  }
+
   .row-header,
   .col-header {
     background: #fff;
@@ -667,8 +731,21 @@
     border-left: 1px solid #e5e7eb;
   }
 
-  .row-header button,
-  .col-header button {
+  .language-header-control {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+    min-width: 0;
+  }
+
+  .language-header-control--column {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .row-header .language-select-button,
+  .col-header .language-select-button {
     width: 100%;
     height: 100%;
     padding: 0 0.05rem;
@@ -684,7 +761,38 @@
     white-space: nowrap;
   }
 
-  .col-header button {
+  .remove-language-button {
+    flex: 0 0 1rem;
+    width: 1rem;
+    height: 100%;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-right: 1px solid #dbeafe;
+    background: #eff6ff;
+    color: #1d4ed8;
+    cursor: pointer;
+    font-size: 0.62rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .remove-language-button:hover,
+  .remove-language-button:focus-visible {
+    background: #dbeafe;
+    color: #991b1b;
+    outline: 2px solid #2563eb;
+    outline-offset: -2px;
+  }
+
+  .language-header-control--column .remove-language-button {
+    height: 1rem;
+    border-right: 0;
+    border-bottom: 1px solid #dbeafe;
+  }
+
+  .col-header .language-select-button {
     display: flex;
     align-items: center;
     justify-content: center;

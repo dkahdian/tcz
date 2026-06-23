@@ -1,5 +1,6 @@
 <script lang="ts">
   import MathText from './MathText.svelte';
+  import RichTextEditor from './RichTextEditor.svelte';
   import type { 
     KCLanguage, 
     GraphData, 
@@ -22,12 +23,18 @@
     graphData,
     filteredGraphData,
     onOperationCellSelect,
+    onSandboxLanguageEdit,
+    onSandboxReferenceAdd,
+    sandboxMode = false,
     viewMode = 'graph' as ViewMode
   }: {
     selectedLanguage: KCLanguage | null;
     graphData: GraphData | FilteredGraphData;
     filteredGraphData?: GraphData | FilteredGraphData;
     onOperationCellSelect?: (cell: SelectedOperationCell) => void;
+    onSandboxLanguageEdit?: (languageId: string, fields: { fullName?: string; definition?: string }) => void;
+    onSandboxReferenceAdd?: (bibtex: string) => string | null;
+    sandboxMode?: boolean;
     viewMode?: ViewMode;
   } = $props();
 
@@ -68,6 +75,17 @@
   );
 
   let referencesSection: HTMLElement | null = $state(null);
+  let draftLanguageId = $state<string | null>(null);
+  let draftFullName = $state('');
+  let draftDefinition = $state('');
+
+  $effect(() => {
+    if (selectedLanguage?.id !== draftLanguageId) {
+      draftLanguageId = selectedLanguage?.id ?? null;
+      draftFullName = selectedLanguage?.fullName ?? '';
+      draftDefinition = selectedLanguage?.definition ?? '';
+    }
+  });
 
   // Collect all references including inline citations from description and notes
   const allReferences = $derived.by<KCReference[]>(() => {
@@ -147,6 +165,16 @@
       support: op
     });
   }
+
+  function flushLanguageMetadata() {
+    if (!selectedLanguage || !sandboxMode || !onSandboxLanguageEdit) return;
+    const fields: { fullName?: string; definition?: string } = {};
+    if (draftFullName !== selectedLanguage.fullName) fields.fullName = draftFullName;
+    if (draftDefinition !== selectedLanguage.definition) fields.definition = draftDefinition;
+    if (Object.keys(fields).length > 0) {
+      onSandboxLanguageEdit(selectedLanguage.id, fields);
+    }
+  }
 </script>
 
 <div class="content-wrapper">
@@ -154,19 +182,45 @@
     {#if selectedLanguage}
       <div class="language-details">
         <MathText as="h3" className="text-xl font-bold text-gray-900 mb-2" text={selectedLanguage.name} />
-        <MathText as="h4" className="text-sm text-gray-600 mb-4" text={selectedLanguage.fullName} />
+        {#if sandboxMode}
+          <label class="editor-label" for="language-full-name">Full Name</label>
+          <input
+            id="language-full-name"
+            class="sidebar-input"
+            bind:value={draftFullName}
+            onblur={flushLanguageMetadata}
+          />
+        {:else}
+          <MathText as="h4" className="text-sm text-gray-600 mb-4" text={selectedLanguage.fullName} />
+        {/if}
         
-        <p class="text-gray-700 mb-6">
-          <MathText 
-            text={selectedLanguage.definition} 
-            className="inline"
-            onCitationClick={handleCitationClick}
-          />{#if selectedLanguage.definitionRefs?.length}{#each selectedLanguage.definitionRefs as refId}<button 
-                class="ref-badge"
-                onclick={scrollToReferences}
-                title="View reference"
-              >[{getGlobalRefNumber(refId) ?? '?'}]</button>{/each}{/if}
-        </p>
+        {#if sandboxMode}
+          <label class="editor-label" for="language-definition">Definition</label>
+          <RichTextEditor
+            value={draftDefinition}
+            {graphData}
+            currentLanguage={selectedLanguage}
+            placeholderText="Click to edit the definition."
+            rows={5}
+            onCommit={(nextValue: string) => {
+              draftDefinition = nextValue;
+              flushLanguageMetadata();
+            }}
+            onAddReference={onSandboxReferenceAdd}
+          />
+        {:else}
+          <p class="text-gray-700 mb-6">
+            <MathText
+              text={selectedLanguage.definition}
+              className="inline"
+              onCitationClick={handleCitationClick}
+            />{#if selectedLanguage.definitionRefs?.length}{#each selectedLanguage.definitionRefs as refId}<button
+                  class="ref-badge"
+                  onclick={scrollToReferences}
+                  title="View reference"
+                >[{getGlobalRefNumber(refId) ?? '?'}]</button>{/each}{/if}
+          </p>
+        {/if}
 
         <div class="space-y-4">
           {#snippet operationSection(heading: string, ops: KCOpEntry[], opType: 'query' | 'transformation')}
@@ -178,9 +232,9 @@
                 <button
                   type="button"
                   class="op-row grid grid-cols-[auto,1fr] items-start gap-x-2"
-                  class:op-row--clickable={isOperationsView}
+                  class:op-row--clickable={Boolean(onOperationCellSelect)}
                   onclick={() => selectOperationCell(op, opType)}
-                  disabled={!isOperationsView}
+                  disabled={!onOperationCellSelect}
                 >
                   <span class={`op-symbol ${display.cssClass}`} title={display.label}>
                     {@html display.symbolHtml}
@@ -251,6 +305,38 @@
 
     .ref-badge.inline {
       margin-left: 0.25em;
+    }
+
+    .editor-label {
+      display: block;
+      margin: 0.8rem 0 0.25rem;
+      color: #334155;
+      font-size: 0.75rem;
+      font-weight: 750;
+    }
+
+    .sidebar-input,
+    .sidebar-textarea {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #cbd5e1;
+      border-radius: 0.35rem;
+      padding: 0.45rem 0.5rem;
+      color: #0f172a;
+      font-size: 0.88rem;
+    }
+
+    .sidebar-textarea {
+      min-height: 7rem;
+      resize: vertical;
+      line-height: 1.45;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-input:focus,
+    .sidebar-textarea:focus {
+      border-color: #2563eb;
+      outline: 2px solid rgba(37, 99, 235, 0.16);
     }
 
     .op-row {

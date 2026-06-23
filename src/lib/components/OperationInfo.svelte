@@ -2,6 +2,8 @@
   import MathText from './MathText.svelte';
   import DynamicLegend from './DynamicLegend.svelte';
   import ReferenceList from './ReferenceList.svelte';
+  import RichTextEditor from './RichTextEditor.svelte';
+  import AssumptionPicker from './AssumptionPicker.svelte';
   import type { 
     GraphData, 
     FilteredGraphData, 
@@ -24,6 +26,9 @@
     filteredGraphData,
     onLanguageSelect,
     onOperationSelect,
+    sandboxMode = false,
+    onSandboxOperationEdit,
+    onSandboxReferenceAdd,
     viewMode = 'queries' as ViewMode
   }: {
     selectedOperation: SelectedOperation | null;
@@ -32,6 +37,14 @@
     filteredGraphData?: GraphData | FilteredGraphData;
     onLanguageSelect?: (language: KCLanguage) => void;
     onOperationSelect?: (operation: SelectedOperation) => void;
+    sandboxMode?: boolean;
+    onSandboxOperationEdit?: (
+      operationType: 'query' | 'transformation',
+      languageId: string,
+      operationCode: string,
+      edit: { complexity: string | null; assumption?: string; description?: string }
+    ) => void;
+    onSandboxReferenceAdd?: (bibtex: string) => string | null;
     viewMode?: ViewMode;
   } = $props();
 
@@ -41,6 +54,26 @@
   );
 
   let referencesSection: HTMLElement | null = $state(null);
+  let draftOperationCellId = $state<string | null>(null);
+  let draftOperationComplexity = $state('');
+  let draftOperationAssumption = $state('');
+  let draftOperationDescription = $state('');
+
+  const operationStatusOptions = $derived(
+    Object.values(graphData.complexities).filter((complexity) => !complexity.internal)
+  );
+
+  $effect(() => {
+    const key = selectedOperationCell
+      ? `${selectedOperationCell.operationType}:${selectedOperationCell.language.id}:${selectedOperationCell.operationCode}`
+      : null;
+    if (key !== draftOperationCellId) {
+      draftOperationCellId = key;
+      draftOperationComplexity = selectedOperationCell?.support.complexity ?? '';
+      draftOperationAssumption = selectedOperationCell?.support.assumption ?? '';
+      draftOperationDescription = selectedOperationCell?.support.description ?? '';
+    }
+  });
 
   function handleCitationClick(_key: string) {
     referencesSection?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -61,6 +94,25 @@
         type
       });
     }
+  }
+
+  function commitOperationEdit() {
+    if (!selectedOperationCell || !sandboxMode || !onSandboxOperationEdit) return;
+    onSandboxOperationEdit(
+      selectedOperationCell.operationType,
+      selectedOperationCell.language.id,
+      selectedOperationCell.operationCode,
+      {
+        complexity: draftOperationComplexity || null,
+        assumption: draftOperationAssumption.trim() || undefined,
+        description: draftOperationDescription.trim() || undefined
+      }
+    );
+  }
+
+  function commitOperationAssumption(assumption: string) {
+    draftOperationAssumption = assumption;
+    commitOperationEdit();
   }
 
   // Collect references for the cell view
@@ -145,7 +197,7 @@
           </div>
         </div>
 
-        {#if selectedOperationCell.support.description}
+        {#if selectedOperationCell.support.description && !sandboxMode}
           <div class="description-section">
             <MathText 
               text={selectedOperationCell.support.description} 
@@ -153,6 +205,41 @@
               wrapMode="hyphenate"
               lang="en"
               onCitationClick={handleCitationClick}
+            />
+          </div>
+        {/if}
+
+        {#if sandboxMode}
+          <div class="operation-editor">
+            <label class="editor-label" for="operation-status">Status</label>
+            <select
+              id="operation-status"
+              class="sidebar-input"
+              bind:value={draftOperationComplexity}
+              onchange={commitOperationEdit}
+            >
+              <option value="">Unknown</option>
+              {#each operationStatusOptions as option}
+                <option value={option.code}>{option.label}</option>
+              {/each}
+            </select>
+            <AssumptionPicker
+              value={draftOperationAssumption}
+              {graphData}
+              onCommit={commitOperationAssumption}
+            />
+            <label class="editor-label" for="operation-description">Description</label>
+            <RichTextEditor
+              value={draftOperationDescription}
+              {graphData}
+              currentLanguage={selectedOperationCell.language}
+              placeholderText="Click to edit the operation description."
+              rows={4}
+              onCommit={(nextValue: string) => {
+                draftOperationDescription = nextValue;
+                commitOperationEdit();
+              }}
+              onAddReference={onSandboxReferenceAdd}
             />
           </div>
         {/if}
@@ -354,6 +441,43 @@
     background: #eef2ff;
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
+  }
+
+  .operation-editor {
+    margin: 0 0 1rem;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 0.75rem;
+  }
+
+  .editor-label {
+    display: block;
+    margin: 0.65rem 0 0.25rem;
+    color: #334155;
+    font-size: 0.75rem;
+    font-weight: 750;
+  }
+
+  .sidebar-input,
+  .sidebar-textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.35rem;
+    padding: 0.45rem 0.5rem;
+    color: #0f172a;
+    font-size: 0.88rem;
+  }
+
+  .sidebar-textarea {
+    min-height: 5.5rem;
+    resize: vertical;
+    line-height: 1.45;
+  }
+
+  .sidebar-input:focus,
+  .sidebar-textarea:focus {
+    border-color: #2563eb;
+    outline: 2px solid rgba(37, 99, 235, 0.16);
   }
 
 </style>

@@ -3,10 +3,10 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import type { GraphData, KCLanguage, KCReference } from '../../src/lib/types.js';
 import {
-  applyContributionQueue,
-  type ContributionQueueState,
-  type ContributionSubmissionPayload
-} from '../../src/lib/data/contribution-transforms.js';
+  applySandboxEdits,
+  type SandboxContributionSubmissionPayload,
+  type SandboxEdit
+} from '../../src/lib/data/sandbox-transforms.js';
 import { canonicalDataset } from '../../src/lib/data/canonical.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -35,29 +35,17 @@ function readJSON(filePath: string): any {
   return JSON.parse(raw);
 }
 
-function normalizeQueue(
-  rawQueue: any,
-  submissionId: string,
-  supersedesSubmissionId: string | null
-): ContributionQueueState {
-  if (!rawQueue || typeof rawQueue !== 'object') {
-    throw new Error('Contribution payload is missing the ordered queue.');
+function normalizeSandboxEdits(rawSandbox: any): SandboxEdit[] {
+  if (!rawSandbox || typeof rawSandbox !== 'object' || !Array.isArray(rawSandbox.edits)) {
+    throw new Error('Contribution payload is missing sandbox edits.');
   }
-  const entries = Array.isArray(rawQueue.entries) ? rawQueue.entries : [];
-  if (entries.length === 0) {
-    throw new Error('Ordered queue must include at least one entry.');
+  if (rawSandbox.edits.length === 0) {
+    throw new Error('Sandbox contribution must include at least one edit.');
   }
-  return {
-    entries,
-    modifiedRelations: Array.isArray(rawQueue.modifiedRelations)
-      ? rawQueue.modifiedRelations
-      : [],
-    submissionId,
-    supersedesSubmissionId
-  };
+  return rawSandbox.edits as SandboxEdit[];
 }
 
-function readContribution(): ContributionSubmissionPayload {
+function readContribution(): SandboxContributionSubmissionPayload {
   const payload = readJSON(contributionPath);
   if (!payload || typeof payload !== 'object') {
     throw new Error('Contribution payload is malformed.');
@@ -70,23 +58,25 @@ function readContribution(): ContributionSubmissionPayload {
     throw new Error('submissionId is required.');
   }
 
-  const supersedesSubmissionId =
-    typeof payload.supersedesSubmissionId === 'string' && payload.supersedesSubmissionId.trim()
-      ? payload.supersedesSubmissionId.trim()
-      : null;
-
   const contributor = payload.contributor;
-  if (!contributor || typeof contributor !== 'object' || typeof contributor.email !== 'string') {
-    throw new Error('Contributor email is required.');
+  if (
+    !contributor ||
+    typeof contributor !== 'object' ||
+    typeof contributor.name !== 'string' ||
+    typeof contributor.email !== 'string' ||
+    !contributor.name.trim() ||
+    !contributor.email.trim()
+  ) {
+    throw new Error('Contributor name and email are required.');
   }
 
-  const queue = normalizeQueue(payload.queue, submissionId, supersedesSubmissionId);
+  const edits = normalizeSandboxEdits(payload.sandbox);
 
   return {
     submissionId,
-    supersedesSubmissionId,
     contributor: {
-      email: contributor.email,
+      name: contributor.name.trim(),
+      email: contributor.email.trim(),
       github:
         typeof contributor.github === 'string' && contributor.github.trim()
           ? contributor.github.trim()
@@ -96,8 +86,10 @@ function readContribution(): ContributionSubmissionPayload {
           ? contributor.note.trim()
           : undefined
     },
-    queue
-  } satisfies ContributionSubmissionPayload;
+    sandbox: {
+      edits
+    }
+  } satisfies SandboxContributionSubmissionPayload;
 }
 
 function serializeLanguages(languages: KCLanguage[]): unknown[] {
@@ -164,8 +156,12 @@ try {
   console.log('📥 Loading contribution payload...');
   const submission = readContribution();
 
-  console.log(`🔁 Replaying ${submission.queue.entries.length} queue entries...`);
-  const updatedDataset = applyContributionQueue(canonicalDataset, submission.queue);
+  console.log(`🔁 Replaying ${submission.sandbox.edits.length} sandbox edits...`);
+  const evaluation = applySandboxEdits(canonicalDataset, submission.sandbox.edits);
+  if (!evaluation.ok) {
+    throw new Error(evaluation.error);
+  }
+  const updatedDataset = evaluation.graphData;
 
   console.log('🗂️ Loading current canonical database...');
   const currentDatabase = readJSON(databasePath) as RawDatabase;
@@ -181,6 +177,6 @@ try {
   );
 } catch (error) {
   const message = error instanceof Error ? error.message : String(error);
-  console.error('\n❌ Unable to apply contribution queue:', message);
+  console.error('\n❌ Unable to apply sandbox contribution:', message);
   process.exit(1);
 }

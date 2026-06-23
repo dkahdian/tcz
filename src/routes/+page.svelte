@@ -14,77 +14,21 @@
   import { onMount } from 'svelte';
   import { browser } from '$app/environment';
   import { QUERIES, TRANSFORMATIONS } from '$lib/data/operations.js';
+  import { parseBibtex } from '$lib/data/references.js';
+  import { generateLanguageId } from '$lib/utils/language-id.js';
   import { loadSandboxState, saveSandboxState, clearSandboxState } from '$lib/sandbox-storage.js';
   import {
     applySandboxEdits,
     getChangedSuccinctnessCellIds,
     type SandboxEdit,
+    type SandboxContributionSubmissionPayload,
     type SandboxEvaluationResult,
     type SandboxOperationType
   } from '$lib/data/sandbox-transforms.js';
 
-  import {
-    hasQueuedChanges,
-    loadQueuedChanges,
-    clearQueuedChanges,
-    loadContributorInfo,
-    loadPreviewDataset,
-    savePreviewDataset
-  } from '$lib/contribution-storage.js';
-  import { recordSubmissionHistory } from '$lib/utils/submission-history.js';
-  import type {
-    LanguageToAdd,
-    ReferenceToAdd,
-    RelationshipEntry,
-    SubmissionHistoryPayload
-  } from './contribute/types.js';
-  import type {
-    ContributionQueueEntry,
-    ContributionQueueState,
-    ContributionSubmissionPayload
-  } from '$lib/data/contribution-transforms.js';
-  import { applyContributionQueue } from '$lib/data/contribution-transforms.js';
-
   const languageFilters = getAllLanguageFilters();
   const edgeFilters = getAllEdgeFilters();
   const FILTER_STORAGE_KEY = 'kcm_filter_deltas_v2';
-
-  type DerivedQueueCollections = {
-    languagesToAdd: LanguageToAdd[];
-    languagesToEdit: LanguageToAdd[];
-    relationships: RelationshipEntry[];
-    newReferences: ReferenceToAdd[];
-  };
-
-  function deriveQueueCollections(entries: ContributionQueueEntry[]): DerivedQueueCollections {
-    const collections: DerivedQueueCollections = {
-      languagesToAdd: [],
-      languagesToEdit: [],
-      relationships: [],
-      newReferences: []
-    };
-
-    for (const entry of entries) {
-      switch (entry.kind) {
-        case 'language:new':
-          collections.languagesToAdd.push(entry.payload);
-          break;
-        case 'language:edit':
-          collections.languagesToEdit.push(entry.payload);
-          break;
-        case 'relationship':
-          collections.relationships.push(entry.payload);
-          break;
-        case 'reference':
-          collections.newReferences.push(entry.payload);
-          break;
-        default:
-          break;
-      }
-    }
-
-    return collections;
-  }
 
   const createSubmissionId = (): string => {
     return crypto.randomUUID();
@@ -110,13 +54,25 @@
   // Effective filter state: defaults for current view + deltas applied on top
   let filterStates = $state<FilterStateMap>(computeEffectiveFilterState(languageFilters, edgeFilters, 'graph', new Map()));
   let filterPersistenceReady = $state(false);
-  let isPreviewMode = $state(false);
-  let previewGraphData: GraphData | null = $state(null);
-  let submittingPreview = $state(false);
+  let showSandboxSubmitModal = $state(false);
+  let submittingSandbox = $state(false);
+  let sandboxContributorName = $state('');
+  let sandboxContributorEmail = $state('');
+  let sandboxContributorGithub = $state('');
+  let sandboxContributorNote = $state('');
+  let sandboxSubmitError = $state<string | null>(null);
   let isSandboxMode = $state(false);
   let sandboxEdits = $state<SandboxEdit[]>([]);
   let sandboxError = $state<string | null>(null);
   let sandboxPersistenceReady = $state(false);
+  let showNewLanguageModal = $state(false);
+  let newLanguageClassification = $state<KCLanguage['classification']>('plain');
+  let newLanguageName = $state('');
+  let newLanguageFamilyBase = $state('');
+  let newLanguageFamilyParameter = $state('');
+  let newLanguageFullName = $state('');
+  let newLanguageDefinition = $state('');
+  let newLanguageError = $state<string | null>(null);
   let sandboxSelection = $state<
     | { kind: 'edge'; sourceId: string; targetId: string }
     | { kind: 'operation'; operationType: SandboxOperationType; languageId: string; operationCode: string }
@@ -159,30 +115,7 @@
       queueMicrotask(() => navigateToHash(initialHash));
     }
 
-    // Check for preview mode
-    const queuedChanges = hasQueuedChanges() ? loadQueuedChanges() : null;
-
-    if (queuedChanges) {
-      const dataset = loadPreviewDataset();
-      if (dataset) {
-        previewGraphData = dataset;
-        isPreviewMode = true;
-      } else {
-        // The preview dataset is best-effort (it can fail to persist due to localStorage quota).
-        // If it's missing but the queue exists, rebuild it on demand so preview mode still works.
-        try {
-          const rebuilt = applyContributionQueue(initialGraphData, queuedChanges);
-          previewGraphData = rebuilt;
-          isPreviewMode = true;
-          savePreviewDataset(rebuilt);
-        } catch (error) {
-          console.error('Failed to rebuild preview dataset from queued changes:', error);
-          console.warn('Queued changes detected but preview dataset is missing');
-        }
-      }
-    }
-
-    if (!isPreviewMode && viewMode !== 'graph') {
+    if (viewMode !== 'graph') {
       const storedSandbox = loadSandboxState();
       if (storedSandbox) {
         const evaluation = applySandboxEdits(initialGraphData, storedSandbox.edits);
@@ -234,72 +167,53 @@
     };
   });
 
-  function handleDiscardPreview() {
-    clearQueuedChanges();
-    if (browser) {
-      window.location.href = '/';
+  function openSandboxSubmitModal() {
+    if (!isSandboxMode || sandboxEdits.length === 0) return;
+    const evaluation = applySandboxEdits(initialGraphData, sandboxEdits);
+    if (!evaluation.ok) {
+      sandboxError = evaluation.error;
+      return;
     }
+    sandboxSubmitError = null;
+    showSandboxSubmitModal = true;
   }
 
-  async function handleSubmitPreview() {
-    if (!browser) return;
-    
-    submittingPreview = true;
+  function closeSandboxSubmitModal() {
+    if (submittingSandbox) return;
+    showSandboxSubmitModal = false;
+    sandboxSubmitError = null;
+  }
+
+  async function handleSandboxSubmit() {
+    if (!browser || submittingSandbox) return;
+    const name = sandboxContributorName.trim();
+    const email = sandboxContributorEmail.trim();
+    const github = sandboxContributorGithub.trim().replace(/^@+/, '');
+    if (!name || !email) {
+      sandboxSubmitError = 'Name and email are required.';
+      return;
+    }
+
+    const evaluation = applySandboxEdits(initialGraphData, sandboxEdits);
+    if (!evaluation.ok) {
+      sandboxError = evaluation.error;
+      sandboxSubmitError = evaluation.error;
+      return;
+    }
+
+    submittingSandbox = true;
     try {
-      const queue = loadQueuedChanges();
-      if (!queue) {
-        alert('No queued changes to submit');
-        submittingPreview = false;
-        return;
-      }
-
-      // Load contributor info from localStorage
-      const contributorInfo = loadContributorInfo();
-      if (!contributorInfo || !contributorInfo.email) {
-        alert('Contributor email is required. Please return to edit and provide your email.');
-        submittingPreview = false;
-        return;
-      }
-
-      const submissionId = typeof queue.submissionId === 'string' && queue.submissionId.length > 0
-        ? queue.submissionId
-        : createSubmissionId();
-      const supersedesSubmissionId = typeof queue.supersedesSubmissionId === 'string' && queue.supersedesSubmissionId.length > 0
-        ? queue.supersedesSubmissionId
-        : null;
-
-      const modifiedRelationKeys: string[] = Array.isArray(queue.modifiedRelations) ? queue.modifiedRelations : [];
-
-      const {
-        languagesToAdd,
-        languagesToEdit,
-        relationships,
-        newReferences
-      } = deriveQueueCollections(queue.entries ?? []);
-
-      const changedRelationships = relationships.filter((rel) =>
-        modifiedRelationKeys.includes(`${rel.sourceId}->${rel.targetId}`)
-      );
-
-      // Build submission payload
-      const queuePayload: ContributionQueueState = {
-        entries: queue.entries ?? [],
-        modifiedRelations: Array.isArray(queue.modifiedRelations)
-          ? queue.modifiedRelations
-          : [],
-        submissionId,
-        supersedesSubmissionId
-      };
-
-      const submission: ContributionSubmissionPayload = {
-        submissionId,
-        supersedesSubmissionId,
+      const submission: SandboxContributionSubmissionPayload = {
+        submissionId: createSubmissionId(),
         contributor: {
-          email: contributorInfo.email,
-          github: contributorInfo.github || undefined,
-          note: contributorInfo.note || undefined
+          name,
+          email,
+          ...(github ? { github } : {}),
+          ...(sandboxContributorNote.trim() ? { note: sandboxContributorNote.trim() } : {})
         },
-        queue: queuePayload
+        sandbox: {
+          edits: sandboxEdits
+        }
       };
 
       // Submit via GitHub API. This token is intentionally public and scoped only
@@ -327,28 +241,16 @@
         throw new Error('Failed to submit contribution');
       }
 
-      const historyPayload: SubmissionHistoryPayload = {
-        submissionId,
-        supersedesSubmissionId,
-        languagesToAdd,
-        languagesToEdit,
-        relationships,
-        newReferences,
-        modifiedRelations: modifiedRelationKeys,
-        contributor: contributorInfo,
-        queueEntries: queue.entries ?? []
-      };
-
-      recordSubmissionHistory(historyPayload);
-
-      // Success - clear queue and redirect to success page
-      clearQueuedChanges();
-      window.location.href = '/contribute/success';
+      handleResetSandbox();
+      sandboxContributorName = '';
+      sandboxContributorEmail = '';
+      sandboxContributorGithub = '';
+      sandboxContributorNote = '';
+      showSandboxSubmitModal = false;
     } catch (error) {
-      console.error('Submission error:', error);
-      alert('Failed to submit contribution: ' + (error instanceof Error ? error.message : 'Unknown error'));
+      sandboxSubmitError = error instanceof Error ? error.message : 'Failed to submit contribution.';
     } finally {
-      submittingPreview = false;
+      submittingSandbox = false;
     }
   }
 
@@ -357,12 +259,13 @@
   const sandboxEvaluation = $derived<SandboxEvaluationResult | null>(
     sandboxEdits.length > 0 ? applySandboxEdits(initialGraphData, sandboxEdits) : null
   );
+  const sandboxEditSummaries = $derived(sandboxEdits.map((edit) => summarizeSandboxEdit(edit)));
   const activeSandboxGraphData = $derived(
     isSandboxMode && sandboxEvaluation?.ok ? sandboxEvaluation.graphData : null
   );
 
   // Compute filtered graph data reactively
-  const baseGraphData = $derived(activeSandboxGraphData || previewGraphData || initialGraphData);
+  const baseGraphData = $derived(activeSandboxGraphData || initialGraphData);
   const filteredGraphData = $derived(applyFiltersWithParams(baseGraphData, languageFilters, edgeFilters, filterStates, viewMode));
   const graphFilterStates = $derived(computeEffectiveFilterState(languageFilters, edgeFilters, 'graph', filterDeltas));
   const canonicalGraphData = $derived(applyFiltersWithParams(initialGraphData, languageFilters, edgeFilters, graphFilterStates, 'graph'));
@@ -378,11 +281,6 @@
     return Boolean(adjacencyMatrix.matrix[sourceIdx]?.[targetIdx] || adjacencyMatrix.matrix[targetIdx]?.[sourceIdx]);
   }
 
-  const previewChangedSuccinctnessCellIds = $derived(
-    isPreviewMode && previewGraphData
-      ? getChangedSuccinctnessCellIds(initialGraphData, previewGraphData)
-      : new Set<string>()
-  );
   const sandboxChangedSuccinctnessCellIds = $derived(
     isSandboxMode && sandboxEvaluation?.ok ? sandboxEvaluation.changedEdgeIds : new Set<string>()
   );
@@ -395,9 +293,7 @@
   const directSandboxOperationCellIds = $derived(
     isSandboxMode && sandboxEvaluation?.ok ? sandboxEvaluation.directOperationCellIds : new Set<string>()
   );
-  const highlightedSuccinctnessCellIds = $derived(
-    isSandboxMode ? sandboxChangedSuccinctnessCellIds : previewChangedSuccinctnessCellIds
-  );
+  const highlightedSuccinctnessCellIds = $derived(sandboxChangedSuccinctnessCellIds);
 
   function clearSelectedCells() {
     selectedEdge = null;
@@ -406,7 +302,6 @@
   }
 
   function handleSetSandboxMode(enabled: boolean) {
-    if (isPreviewMode) return;
     if (viewMode === 'graph') return;
     if (isSandboxMode === enabled) return;
     isSandboxMode = enabled;
@@ -423,8 +318,81 @@
     clearSelectedCells();
   }
 
+  function isDraftLanguageEdit(edit: SandboxEdit, languageId: string): boolean {
+    return edit.kind === 'language:new' && (edit.id ?? generateLanguageId(edit.name)) === languageId;
+  }
+
+  function handleRemoveSandboxLanguage(languageId: string) {
+    if (!sandboxEdits.some((edit) => isDraftLanguageEdit(edit, languageId))) return;
+
+    const nextEdits = sandboxEdits.filter((edit) => {
+      if (isDraftLanguageEdit(edit, languageId)) return false;
+      if (edit.kind === 'language:edit') return edit.languageId !== languageId;
+      if (edit.kind === 'edge') return edit.sourceId !== languageId && edit.targetId !== languageId;
+      if (edit.kind === 'operation') return edit.languageId !== languageId;
+      return true;
+    });
+
+    const applied = commitSandboxEdits(nextEdits);
+    if (!applied) return;
+
+    if (selectedNode?.id === languageId) selectedNode = null;
+    if (selectedEdge?.source === languageId || selectedEdge?.target === languageId) selectedEdge = null;
+    if (selectedOperationCell?.language.id === languageId) selectedOperationCell = null;
+    if (
+      sandboxSelection?.kind === 'edge' &&
+      (sandboxSelection.sourceId === languageId || sandboxSelection.targetId === languageId)
+    ) {
+      sandboxSelection = null;
+    }
+    if (sandboxSelection?.kind === 'operation' && sandboxSelection.languageId === languageId) {
+      sandboxSelection = null;
+    }
+  }
+
+  function sandboxLanguageName(languageId: string): string {
+    const draftLanguage = sandboxEdits.find(
+      (edit): edit is Extract<SandboxEdit, { kind: 'language:new' }> =>
+        edit.kind === 'language:new' && edit.id === languageId
+    );
+    return draftLanguage?.name ?? initialGraphData.languages.find((language) => language.id === languageId)?.name ?? languageId;
+  }
+
+  function operationDisplayName(operationType: SandboxOperationType, operationCode: string): string {
+    const catalog = operationType === 'query' ? QUERIES : TRANSFORMATIONS;
+    const operation = Object.values(catalog).find((candidate) => candidate.code === operationCode);
+    return operation ? `${operation.code} (${operation.label})` : operationCode;
+  }
+
+  function summarizeSandboxEdit(edit: SandboxEdit): string {
+    if (edit.kind === 'language:new') {
+      return `New language: ${edit.name}`;
+    }
+    if (edit.kind === 'language:edit') {
+      return `Language: ${sandboxLanguageName(edit.languageId)}`;
+    }
+    if (edit.kind === 'edge') {
+      return `Relationship: ${sandboxLanguageName(edit.sourceId)} to ${sandboxLanguageName(edit.targetId)}`;
+    }
+    if (edit.kind === 'operation') {
+      return `Operation: ${operationDisplayName(edit.operationType, edit.operationCode)} on ${sandboxLanguageName(edit.languageId)}`;
+    }
+
+    const parsed = parseBibtex(edit.bibtex);
+    return `Reference: ${parsed.id && parsed.id !== 'unknown' ? parsed.id : 'new BibTeX entry'}`;
+  }
+
   function isSameSandboxTarget(a: SandboxEdit, b: SandboxEdit): boolean {
     if (a.kind !== b.kind) return false;
+    if (a.kind === 'reference' && b.kind === 'reference') {
+      return a.bibtex === b.bibtex;
+    }
+    if (a.kind === 'language:new' && b.kind === 'language:new') {
+      return (a.id ?? generateLanguageId(a.name)) === (b.id ?? generateLanguageId(b.name));
+    }
+    if (a.kind === 'language:edit' && b.kind === 'language:edit') {
+      return a.languageId === b.languageId;
+    }
     if (a.kind === 'edge' && b.kind === 'edge') {
       return a.sourceId === b.sourceId && a.targetId === b.targetId;
     }
@@ -436,6 +404,78 @@
       );
     }
     return false;
+  }
+
+  function resetNewLanguageForm() {
+    newLanguageClassification = 'plain';
+    newLanguageName = '';
+    newLanguageFamilyBase = '';
+    newLanguageFamilyParameter = '';
+    newLanguageFullName = '';
+    newLanguageDefinition = '';
+    newLanguageError = null;
+  }
+
+  function closeNewLanguageModal() {
+    showNewLanguageModal = false;
+    resetNewLanguageForm();
+  }
+
+  function getNewLanguageDisplayName(): string {
+    if (newLanguageClassification === 'family') {
+      const base = newLanguageFamilyBase.trim();
+      const parameter = newLanguageFamilyParameter.trim();
+      return base && parameter ? `${base}$_${parameter}$` : '';
+    }
+    return newLanguageName.trim();
+  }
+
+  const newLanguageNamePlaceholder = $derived(
+    newLanguageClassification === 'union' ? 'OBDD' : 'DNNF'
+  );
+  const newLanguageFullNamePlaceholder = $derived(
+    newLanguageClassification === 'union'
+      ? 'Ordered Binary Decision Diagram'
+      : newLanguageClassification === 'family'
+        ? 'Ordered Binary Decision Diagram (wrt a fixed variable order)'
+        : 'Decomposable Negation Normal Form'
+  );
+  const newLanguageDefinitionPlaceholder = $derived(
+    newLanguageClassification === 'family'
+      ? 'For each fixed variable order $<$, binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the order $<$.'
+      : newLanguageClassification === 'union'
+        ? 'Binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the same order.'
+        : 'Boolean circuits with AND and OR gates, literals as inputs, and whose AND gates are \\emph{decomposable} (children mention disjoint sets of variables).'
+  );
+
+  function handleAddLanguageSubmit() {
+    const name = getNewLanguageDisplayName();
+    const fullName = newLanguageFullName.trim();
+    const definition = newLanguageDefinition.trim();
+
+    if (!name || !fullName || !definition) {
+      newLanguageError = 'Name, full name, and definition are required.';
+      return;
+    }
+
+    const id = generateLanguageId(name);
+    const edit: SandboxEdit = {
+      kind: 'language:new',
+      id,
+      name,
+      classification: newLanguageClassification ?? 'plain',
+      fullName,
+      definition,
+      definitionRefs: []
+    };
+
+    const applied = commitSandboxEdits(nextSandboxEditsFor(edit));
+    if (!applied) {
+      newLanguageError = sandboxError ?? 'Unable to add language.';
+      return;
+    }
+
+    closeNewLanguageModal();
   }
 
   function commitSandboxEdits(nextEdits: SandboxEdit[]): boolean {
@@ -483,6 +523,45 @@
     return applied;
   }
 
+  function handleSandboxEdgeMetadataEdit(
+    sourceId: string,
+    targetId: string,
+    edit: {
+      status: string | null;
+      assumption?: string;
+      description?: string;
+      noPolyDescription?: string;
+      quasiDescription?: string;
+    }
+  ) {
+    const applied = handleSandboxApply({
+      kind: 'edge',
+      sourceId,
+      targetId,
+      ...edit
+    });
+    if (applied && selectedEdge?.source === sourceId && selectedEdge.target === targetId) {
+      selectedEdge = {
+        ...selectedEdge,
+        forward: edit.status
+          ? {
+              status: edit.status,
+              assumption: edit.assumption,
+              description: edit.description,
+              noPolyDescription: edit.noPolyDescription
+                ? { description: edit.noPolyDescription, refs: selectedEdge.forward?.refs ?? [], derived: false }
+                : undefined,
+              quasiDescription: edit.quasiDescription
+                ? { description: edit.quasiDescription, refs: selectedEdge.forward?.refs ?? [], derived: false }
+                : undefined,
+              refs: selectedEdge.forward?.refs ?? [],
+              derived: false
+            }
+          : null
+      };
+    }
+  }
+
   function handleSandboxOperationStatusChange(
     operationType: SandboxOperationType,
     languageId: string,
@@ -500,6 +579,60 @@
     });
     if (applied) sandboxSelection = null;
     return applied;
+  }
+
+  function handleSandboxOperationMetadataEdit(
+    operationType: SandboxOperationType,
+    languageId: string,
+    operationCode: string,
+    edit: { complexity: string | null; assumption?: string; description?: string }
+  ) {
+    const applied = handleSandboxApply({
+      kind: 'operation',
+      operationType,
+      languageId,
+      operationCode,
+      ...edit
+    });
+    if (
+      applied &&
+      selectedOperationCell?.language.id === languageId &&
+      selectedOperationCell.operationCode === operationCode
+    ) {
+      selectedOperationCell = {
+        ...selectedOperationCell,
+        support: {
+          ...selectedOperationCell.support,
+          complexity: edit.complexity ?? 'unknown-to-us',
+          assumption: edit.assumption,
+          description: edit.description
+        }
+      };
+    }
+  }
+
+  function handleSandboxLanguageEdit(languageId: string, fields: { fullName?: string; definition?: string }) {
+    const applied = handleSandboxApply({
+      kind: 'language:edit',
+      languageId,
+      ...fields
+    });
+    if (applied && selectedNode?.id === languageId) {
+      selectedNode = {
+        ...selectedNode,
+        ...fields
+      };
+    }
+  }
+
+  function handleSandboxReferenceAdd(bibtex: string): string | null {
+    const parsed = parseBibtex(bibtex);
+    if (!parsed.id || parsed.id === 'unknown') return null;
+    const applied = handleSandboxApply({
+      kind: 'reference',
+      bibtex
+    });
+    return applied ? parsed.id : null;
   }
 
   function handleSandboxEdgeEdit(sourceId: string, targetId: string) {
@@ -533,6 +666,15 @@
       return;
     }
     sandboxSelection = { kind: 'operation', operationType, languageId, operationCode };
+  }
+
+  function handleLanguageOperationCellSelect(cell: SelectedOperationCell) {
+    selectedNode = null;
+    selectedOperation = null;
+    selectedEdge = null;
+    selectedOperationCell = cell;
+    viewMode = cell.operationType === 'query' ? 'queries' : 'transforms';
+    filterStates = computeEffectiveFilterState(languageFilters, edgeFilters, viewMode, filterDeltas);
   }
 
   const sandboxSelectedEdgeId = $derived(
@@ -673,7 +815,7 @@
   });
 
   $effect(() => {
-    if (sandboxPersistenceReady && browser && !isPreviewMode) {
+    if (sandboxPersistenceReady && browser) {
       saveSandboxState(sandboxEdits);
     }
   });
@@ -708,59 +850,40 @@
 
 <div class="app-shell">
   <!-- Header -->
-  <header class="app-header" class:preview-mode={isPreviewMode} class:sandbox-mode={isSandboxMode}>
+  <header class="app-header" class:sandbox-mode={isSandboxMode}>
     <div class="header-content">
       <div class="header-left">
         <h1 class="title">Tractable Circuit Zoo</h1>
-        {#if isPreviewMode}
-          <div class="preview-badge">
-            <svg class="icon" width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-            </svg>
-            <span>Currently previewing your contribution</span>
-          </div>
-        {/if}
       </div>
       <div class="header-controls">
-        {#if isPreviewMode}
-          <button
-            type="button"
-            onclick={handleDiscardPreview}
-            class="btn btn-discard"
-            disabled={submittingPreview}
-          >
-            Discard
+        <a href="/about" class="about-link">
+          About
+        </a>
+        {#if viewMode !== 'graph' && isSandboxMode}
+          <button type="button" class="sandbox-reset" disabled={sandboxEdits.length === 0} onclick={handleResetSandbox}>
+            Reset
           </button>
           <button
             type="button"
-            onclick={handleSubmitPreview}
-            class="btn btn-submit"
-            disabled={submittingPreview}
+            class="sandbox-submit"
+            disabled={sandboxEdits.length === 0 || Boolean(sandboxEvaluation && !sandboxEvaluation.ok)}
+            onclick={openSandboxSubmitModal}
           >
-            {submittingPreview ? 'Submitting...' : 'Submit'}
+            Submit
           </button>
-        {:else}
-          <a href="/about" class="about-link">
-            About
-          </a>
-          {#if viewMode !== 'graph' && isSandboxMode}
-            <button type="button" class="sandbox-reset" disabled={sandboxEdits.length === 0} onclick={handleResetSandbox}>
-              Reset
-            </button>
-          {/if}
-          {#if viewMode !== 'graph'}
-            <button
-              type="button"
-              class={`sandbox-toggle ${isSandboxMode ? 'is-active' : ''}`}
-              aria-pressed={isSandboxMode}
-              onclick={() => handleSetSandboxMode(!isSandboxMode)}
-            >
-              <span>Sandbox</span>
-              {#if sandboxEdits.length > 0}
-                <strong>{sandboxEdits.length}</strong>
-              {/if}
-            </button>
-          {/if}
+        {/if}
+        {#if viewMode !== 'graph'}
+          <button
+            type="button"
+            class={`sandbox-toggle ${isSandboxMode ? 'is-active' : ''}`}
+            aria-pressed={isSandboxMode}
+            onclick={() => handleSetSandboxMode(!isSandboxMode)}
+          >
+            <span>Sandbox</span>
+            {#if sandboxEdits.length > 0}
+              <strong>{sandboxEdits.length}</strong>
+            {/if}
+          </button>
         {/if}
         <div class="view-toggle" role="group" aria-label="Visualization mode">
           {#each VIEW_MODES as mode}
@@ -806,6 +929,8 @@
             showQuasipolynomialSandboxOptions={showQuasipolynomialSandboxOptions}
             sandboxSelectedEdgeId={sandboxSelectedEdgeId}
             sandboxBaselineGraphData={initialGraphData}
+            onAddLanguage={() => { showNewLanguageModal = true; }}
+            onRemoveSandboxLanguage={handleRemoveSandboxLanguage}
             onSandboxEdgeEdit={handleSandboxEdgeEdit}
             onSandboxEdgeStatusChange={handleSandboxEdgeStatusChange}
           />
@@ -823,6 +948,8 @@
           sandboxMode={isSandboxMode}
           sandboxSelectedOperationCellId={sandboxSelectedOperationCellId}
           sandboxBaselineGraphData={initialGraphData}
+          onAddLanguage={() => { showNewLanguageModal = true; }}
+          onRemoveSandboxLanguage={handleRemoveSandboxLanguage}
           onSandboxOperationEdit={handleSandboxOperationEdit}
           onSandboxOperationStatusChange={handleSandboxOperationStatusChange}
         />
@@ -838,6 +965,8 @@
           sandboxMode={isSandboxMode}
           sandboxSelectedOperationCellId={sandboxSelectedOperationCellId}
           sandboxBaselineGraphData={initialGraphData}
+          onAddLanguage={() => { showNewLanguageModal = true; }}
+          onRemoveSandboxLanguage={handleRemoveSandboxLanguage}
           onSandboxOperationEdit={handleSandboxOperationEdit}
           onSandboxOperationStatusChange={handleSandboxOperationStatusChange}
         />
@@ -862,6 +991,9 @@
             graphData={displayedBaseGraphData}
             filteredGraphData={displayedFilteredGraphData}
             {viewMode}
+            sandboxMode={isSandboxMode}
+            onSandboxOperationEdit={handleSandboxOperationMetadataEdit}
+            onSandboxReferenceAdd={handleSandboxReferenceAdd}
             onLanguageSelect={(lang) => {
               selectedOperation = null;
               selectedOperationCell = null;
@@ -879,6 +1011,9 @@
             graphData={displayedBaseGraphData}
             filteredGraphData={displayedFilteredGraphData}
             {viewMode}
+            sandboxMode={isSandboxMode}
+            onSandboxOperationEdit={handleSandboxOperationMetadataEdit}
+            onSandboxReferenceAdd={handleSandboxReferenceAdd}
             onLanguageSelect={(lang) => {
               selectedOperation = null;
               selectedOperationCell = null;
@@ -894,10 +1029,10 @@
             selectedLanguage={selectedNode} 
             graphData={displayedBaseGraphData}
             filteredGraphData={displayedFilteredGraphData}
-            onOperationCellSelect={(cell) => {
-              selectedNode = null;
-              selectedOperationCell = cell;
-            }}
+            onOperationCellSelect={handleLanguageOperationCellSelect}
+            sandboxMode={isSandboxMode}
+            onSandboxLanguageEdit={handleSandboxLanguageEdit}
+            onSandboxReferenceAdd={handleSandboxReferenceAdd}
             viewMode={viewMode}
           />
         {:else}
@@ -907,15 +1042,30 @@
             graphData={displayedBaseGraphData}
             filteredGraphData={displayedFilteredGraphData}
             {viewMode}
+            sandboxMode={isSandboxMode}
+            onSandboxOperationEdit={handleSandboxOperationMetadataEdit}
+            onSandboxReferenceAdd={handleSandboxReferenceAdd}
           />
         {/if}
       {:else if selectedEdge}
-        <EdgeInfo selectedEdge={selectedEdge} graphData={displayedBaseGraphData} filteredGraphData={displayedFilteredGraphData} viewMode={viewMode} />
+        <EdgeInfo
+          selectedEdge={selectedEdge}
+          graphData={displayedBaseGraphData}
+          filteredGraphData={displayedFilteredGraphData}
+          sandboxMode={isSandboxMode}
+          onSandboxEdgeEdit={handleSandboxEdgeMetadataEdit}
+          onSandboxReferenceAdd={handleSandboxReferenceAdd}
+          viewMode={viewMode}
+        />
       {:else if selectedNode}
         <LanguageInfo 
           selectedLanguage={selectedNode} 
           graphData={displayedBaseGraphData}
           filteredGraphData={displayedFilteredGraphData}
+          onOperationCellSelect={handleLanguageOperationCellSelect}
+          sandboxMode={isSandboxMode}
+          onSandboxLanguageEdit={handleSandboxLanguageEdit}
+          onSandboxReferenceAdd={handleSandboxReferenceAdd}
           viewMode={viewMode}
         />
       {:else}
@@ -923,12 +1073,180 @@
           selectedLanguage={null} 
           graphData={displayedBaseGraphData}
           filteredGraphData={displayedFilteredGraphData}
+          onOperationCellSelect={handleLanguageOperationCellSelect}
+          sandboxMode={isSandboxMode}
+          onSandboxLanguageEdit={handleSandboxLanguageEdit}
+          onSandboxReferenceAdd={handleSandboxReferenceAdd}
           viewMode={viewMode}
         />
       {/if}
     </aside>
   </main>
 </div>
+
+{#if showNewLanguageModal}
+  <div class="modal-backdrop" role="presentation" onclick={closeNewLanguageModal}>
+    <div
+      class="new-language-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="new-language-title"
+      tabindex="-1"
+      onclick={(event) => event.stopPropagation()}
+      onkeydown={(event) => {
+        if (event.key === 'Escape') closeNewLanguageModal();
+      }}
+    >
+      <header class="modal-header">
+        <h2 id="new-language-title">New Language</h2>
+      </header>
+
+      <div class="modal-body">
+        {#if newLanguageError}
+          <div class="modal-error" role="alert">{newLanguageError}</div>
+        {/if}
+
+        <label class="field-label" for="new-language-classification">Classification</label>
+        <select id="new-language-classification" bind:value={newLanguageClassification} class="field-control">
+          <option value="plain">Plain</option>
+          <option value="union">Union</option>
+          <option value="family">Family</option>
+        </select>
+
+        {#if newLanguageClassification === 'family'}
+          <div class="field-grid">
+            <div>
+              <label class="field-label" for="new-language-family-base">Base Name</label>
+              <input
+                id="new-language-family-base"
+                class="field-control"
+                bind:value={newLanguageFamilyBase}
+                placeholder="OBDD"
+              />
+            </div>
+            <div>
+              <label class="field-label" for="new-language-family-parameter">Parameter</label>
+              <input
+                id="new-language-family-parameter"
+                class="field-control"
+                bind:value={newLanguageFamilyParameter}
+                placeholder="<"
+              />
+            </div>
+          </div>
+        {:else}
+          <label class="field-label" for="new-language-name">Display Name</label>
+          <input
+            id="new-language-name"
+            class="field-control"
+            bind:value={newLanguageName}
+            placeholder={newLanguageNamePlaceholder}
+          />
+        {/if}
+
+        <label class="field-label" for="new-language-full-name">Full Name</label>
+        <input
+          id="new-language-full-name"
+          class="field-control"
+          bind:value={newLanguageFullName}
+          placeholder={newLanguageFullNamePlaceholder}
+        />
+
+        <label class="field-label" for="new-language-definition">Definition</label>
+        <textarea
+          id="new-language-definition"
+          class="field-control textarea-control"
+          bind:value={newLanguageDefinition}
+          rows="5"
+          placeholder={newLanguageDefinitionPlaceholder}
+        ></textarea>
+      </div>
+
+      <footer class="modal-actions">
+        <button type="button" class="modal-button secondary" onclick={closeNewLanguageModal}>Cancel</button>
+        <button type="button" class="modal-button primary" onclick={handleAddLanguageSubmit}>Add Language</button>
+      </footer>
+    </div>
+  </div>
+{/if}
+
+{#if showSandboxSubmitModal}
+  <div class="modal-backdrop" role="presentation" onclick={closeSandboxSubmitModal}>
+    <div
+      class="new-language-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="sandbox-submit-title"
+      tabindex="-1"
+      onclick={(event) => event.stopPropagation()}
+      onkeydown={(event) => {
+        if (event.key === 'Escape') closeSandboxSubmitModal();
+      }}
+    >
+      <header class="modal-header">
+        <h2 id="sandbox-submit-title">Submit Contribution</h2>
+      </header>
+
+      <div class="modal-body">
+        {#if sandboxSubmitError}
+          <div class="modal-error" role="alert">{sandboxSubmitError}</div>
+        {/if}
+
+        <details class="submission-details">
+          <summary>Show {sandboxEdits.length} {sandboxEdits.length === 1 ? 'draft change' : 'draft changes'}</summary>
+          <ul>
+            {#each sandboxEditSummaries as summary}
+              <li><MathText text={summary} className="inline" /></li>
+            {/each}
+          </ul>
+        </details>
+
+        <label class="field-label" for="sandbox-contributor-name">Name <span class="required-marker">*</span></label>
+        <input
+          id="sandbox-contributor-name"
+          class="field-control"
+          bind:value={sandboxContributorName}
+          required
+        />
+
+        <label class="field-label" for="sandbox-contributor-email">Email <span class="required-marker">*</span></label>
+        <input
+          id="sandbox-contributor-email"
+          class="field-control"
+          type="email"
+          bind:value={sandboxContributorEmail}
+          required
+        />
+
+        <label class="field-label" for="sandbox-contributor-github">GitHub Handle</label>
+        <input
+          id="sandbox-contributor-github"
+          class="field-control"
+          bind:value={sandboxContributorGithub}
+          placeholder="@example"
+        />
+
+        <label class="field-label" for="sandbox-contributor-note">Note</label>
+        <textarea
+          id="sandbox-contributor-note"
+          class="field-control textarea-control"
+          bind:value={sandboxContributorNote}
+          rows="4"
+          placeholder="Say something to the reviewers"
+        ></textarea>
+      </div>
+
+      <footer class="modal-actions">
+        <button type="button" class="modal-button secondary" onclick={closeSandboxSubmitModal} disabled={submittingSandbox}>
+          Cancel
+        </button>
+        <button type="button" class="modal-button primary" onclick={handleSandboxSubmit} disabled={submittingSandbox}>
+          {submittingSandbox ? 'Submitting...' : 'Contribute'}
+        </button>
+      </footer>
+    </div>
+  </div>
+{/if}
 
 <style>
   .app-shell {
@@ -944,10 +1262,6 @@
     background: #ffffff;
     border-bottom: 1px solid #e5e7eb;
     padding: 0.75rem 1rem;
-  }
-
-  .app-header.preview-mode {
-    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
   }
 
   .app-header.sandbox-mode {
@@ -973,23 +1287,6 @@
     font-size: 1.25rem; 
     font-weight: 700; 
     color: #111827; 
-  }
-
-  .preview-badge {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.375rem 0.75rem;
-    background: rgba(59, 130, 246, 0.15);
-    border: 1px solid #3b82f6;
-    border-radius: 0.375rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #1e40af;
-  }
-
-  .preview-badge .icon {
-    flex-shrink: 0;
   }
 
   .sandbox-toggle {
@@ -1044,6 +1341,27 @@
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
+  }
+
+  .sandbox-submit {
+    padding: 0.46rem 0.72rem;
+    border-radius: 0.5rem;
+    border: 1px solid #15803d;
+    background: #16a34a;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .sandbox-submit:hover:not(:disabled) {
+    background: #15803d;
+  }
+
+  .sandbox-submit:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
   }
 
   .sandbox-reset:hover:not(:disabled) {
@@ -1110,26 +1428,6 @@
   .btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
-  }
-
-  .btn-discard {
-    background: #ef4444;
-    color: white;
-  }
-
-  .btn-discard:hover:not(:disabled) {
-    background: #dc2626;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-
-  .btn-submit {
-    background: #10b981;
-    color: white;
-  }
-
-  .btn-submit:hover:not(:disabled) {
-    background: #059669;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
   .about-link {
@@ -1240,4 +1538,158 @@
   /* Ensure visualizations fill container */
   :global(.kcm-graph-container) { flex: 1 1 auto; min-height: 0; }
   .visual-panel > :global(.matrix-view) { flex: 1 1 auto; min-height: 0; }
+
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    background: rgba(15, 23, 42, 0.45);
+  }
+
+  .new-language-modal {
+    width: min(34rem, 100%);
+    max-height: min(42rem, calc(100vh - 2rem));
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    border: 1px solid #bfdbfe;
+    background: #fff;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.28);
+  }
+
+  .modal-header {
+    padding: 1rem 1.1rem;
+    border-bottom: 1px solid #dbeafe;
+    background: #eff6ff;
+  }
+
+  .modal-header h2 {
+    margin: 0;
+    color: #1e3a8a;
+    font-size: 1rem;
+    font-weight: 800;
+  }
+
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    overflow: auto;
+    padding: 1rem 1.1rem;
+  }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(5rem, 0.45fr);
+    gap: 0.75rem;
+  }
+
+  .field-label {
+    display: block;
+    margin-top: 0.2rem;
+    color: #334155;
+    font-size: 0.78rem;
+    font-weight: 750;
+  }
+
+  .required-marker {
+    color: #dc2626;
+  }
+
+  .field-control {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.35rem;
+    padding: 0.48rem 0.55rem;
+    color: #0f172a;
+    font-size: 0.9rem;
+  }
+
+  .field-control:focus {
+    border-color: #2563eb;
+    outline: 2px solid rgba(37, 99, 235, 0.18);
+  }
+
+  .textarea-control {
+    min-height: 7rem;
+    resize: vertical;
+    line-height: 1.45;
+  }
+
+  .modal-error {
+    border: 1px solid #fecaca;
+    border-radius: 0.35rem;
+    background: #fef2f2;
+    padding: 0.55rem 0.65rem;
+    color: #991b1b;
+    font-size: 0.84rem;
+    font-weight: 650;
+  }
+
+  .submission-details {
+    border: 1px solid #dbeafe;
+    border-radius: 0.4rem;
+    background: #f8fafc;
+    color: #334155;
+    font-size: 0.84rem;
+  }
+
+  .submission-details summary {
+    cursor: pointer;
+    padding: 0.55rem 0.7rem;
+    color: #1e40af;
+    font-weight: 750;
+  }
+
+  .submission-details ul {
+    display: grid;
+    gap: 0.28rem;
+    max-height: 10rem;
+    overflow: auto;
+    margin: 0;
+    border-top: 1px solid #dbeafe;
+    padding: 0.55rem 0.9rem 0.7rem 1.45rem;
+  }
+
+  .submission-details li {
+    line-height: 1.35;
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    padding: 0.85rem 1.1rem;
+    border-top: 1px solid #e2e8f0;
+    background: #f8fafc;
+  }
+
+  .modal-button {
+    border-radius: 0.4rem;
+    padding: 0.48rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 750;
+    cursor: pointer;
+  }
+
+  .modal-button.secondary {
+    border: 1px solid #cbd5e1;
+    background: #fff;
+    color: #334155;
+  }
+
+  .modal-button.primary {
+    border: 1px solid #1d4ed8;
+    background: #2563eb;
+    color: #fff;
+  }
+
+  .modal-button:hover {
+    filter: brightness(0.97);
+  }
 </style>

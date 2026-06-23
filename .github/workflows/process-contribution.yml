@@ -33,7 +33,7 @@ jobs:
           JSON
           cat contribution.json
 
-      - name: Validate contribution queue payload
+      - name: Validate sandbox contribution payload
         run: |
           node <<'EOF'
           const fs = require('fs');
@@ -48,16 +48,22 @@ jobs:
           if (!payload.submissionId) {
             throw new Error('submissionId is required.');
           }
-          if (!payload.contributor || typeof payload.contributor.email !== 'string') {
-            throw new Error('Contributor email is missing.');
+          if (
+            !payload.contributor ||
+            typeof payload.contributor.name !== 'string' ||
+            !payload.contributor.name.trim() ||
+            typeof payload.contributor.email !== 'string' ||
+            !payload.contributor.email.trim()
+          ) {
+            throw new Error('Contributor name and email are required.');
           }
-          const entries = payload.queue && Array.isArray(payload.queue.entries)
-            ? payload.queue.entries.length
+          const edits = payload.sandbox && Array.isArray(payload.sandbox.edits)
+            ? payload.sandbox.edits.length
             : 0;
-          if (entries === 0) {
-            throw new Error('Contribution queue must include ordered entries.');
+          if (edits === 0) {
+            throw new Error('Sandbox contribution must include at least one edit.');
           }
-          console.log(`✅ Loaded submission ${payload.submissionId} with ${entries} queue entries.`);
+          console.log(`✅ Loaded submission ${payload.submissionId} with ${edits} sandbox edits.`);
           EOF
 
       - name: Generate contribution files

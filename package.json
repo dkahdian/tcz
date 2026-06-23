@@ -33,6 +33,9 @@
 		"vite": "^7.0.4"
 	},
 	"dependencies": {
+		"@codemirror/commands": "^6.10.3",
+		"@codemirror/state": "^6.6.0",
+		"@codemirror/view": "^6.43.1",
 		"cytoscape": "^3.33.1",
 		"cytoscape-dagre": "^2.5.0",
 		"cytoscape-elk": "^2.3.0",
