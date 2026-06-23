@@ -383,10 +383,6 @@
     return graphData.adjacencyMatrix.matrix[sourceIndex]?.[targetIndex] ?? null;
   }
 
-  function languageName(id: string): string {
-    return graphData.languages.find((language) => language.id === id)?.name ?? id;
-  }
-
   function relationMacroFor(status: string, focus?: 'no-poly' | 'quasi'): string | null {
     if (status === 'poly' || status === 'unknown-poly-quasi') return 'edgeref';
     if (status === 'no-quasi' || status === 'no-poly-unknown-quasi') return 'nedgeref';
@@ -400,7 +396,7 @@
     if (!relation) return;
     const command = relationMacroFor(relation.status, focus);
     if (!command) return;
-    insertText(`\\${command}{${languageName(relationSourceId)}}{${languageName(relationTargetId)}}`);
+    insertText(`\\${command}{${relationSourceId}}{${relationTargetId}}`);
   }
 
   function supportForOperation(languageId: string, code: string) {
@@ -415,7 +411,7 @@
     const support = supportForOperation(operationLanguageId, operationCode);
     if (!support || support.complexity === 'unknown-to-us') return;
     const command = support.complexity === 'poly' ? 'opref' : 'nopref';
-    insertText(`\\${command}{${languageName(operationLanguageId)}}{${operationCode}}`);
+    insertText(`\\${command}{${operationLanguageId}}{${operationCode}}`);
   }
 </script>
 

@@ -17,6 +17,7 @@ const EMPH_PATTERN = /\\emph\{([^}]+)\}/g;
 const TEXTIT_PATTERN = /\\textit\{([^}]+)\}/g;
 const TEXTBF_PATTERN = /\\textbf\{([^}]+)\}/g;
 const TEXTTT_PATTERN = /\\texttt\{([^}]+)\}/g;
+const ENTITY_COMMAND_PATTERN = /\\defref\{(?:[^{}]|\{[^{}]*\})+\}(?:\{(?:[^{}]|\{[^{}]*\})+\})?|\\langref\{(?:[^{}]|\{[^{}]*\})+\}(?:\{[^{}]*\})?|\\langfam\{[^{}]+\}\{[^{}]+\}(?:\{[^{}]*\})?|\\n?edgeref\{[^{}]+\}\{[^{}]+\}|\\n?opref\{[^{}]+\}\{[^{}]+\}/g;
 
 export interface EntityRefResolver {
   edgeRefs?: (sourceId: string, targetId: string) => string[];
@@ -52,6 +53,29 @@ function decodeLatexLiteralEscapes(value: string): string {
   // Decode escaped literal characters used in LaTeX prose (e.g. "\#P").
   // Keep command backslashes intact so macros like \langref still parse later.
   return value.replace(/\\([#%&_{}])/g, '$1');
+}
+
+function protectEntityCommands(value: string): {
+  text: string;
+  restore: (html: string) => string;
+} {
+  const commands: string[] = [];
+  const text = value.replace(ENTITY_COMMAND_PATTERN, (match) => {
+    const index = commands.length;
+    commands.push(match);
+    return `@@KCM_ENTITY_${index}@@`;
+  });
+
+  return {
+    text,
+    restore(html: string): string {
+      return html.replace(/@@KCM_ENTITY_(\d+)@@/g, (placeholder, rawIndex: string) => {
+        const command = commands[Number(rawIndex)];
+        if (command === undefined) return placeholder;
+        return escapeHtml(decodeLatexLiteralEscapes(command));
+      });
+    }
+  };
 }
 
 /**
@@ -165,14 +189,15 @@ export function renderMathText(input?: string | null): MathRenderResult {
   }
 
   LATEX_FRAGMENT.lastIndex = 0;
+  const protectedText = protectEntityCommands(text);
   let match: RegExpExecArray | null;
   let cursor = 0;
   let html = '';
   let foundLatex = false;
 
-  while ((match = LATEX_FRAGMENT.exec(text)) !== null) {
+  while ((match = LATEX_FRAGMENT.exec(protectedText.text)) !== null) {
     foundLatex = true;
-    html += escapeHtml(decodeLatexLiteralEscapes(text.slice(cursor, match.index))).replace(/\n/g, '<br>');
+    html += escapeHtml(decodeLatexLiteralEscapes(protectedText.text.slice(cursor, match.index))).replace(/\n/g, '<br>');
     const fragment = match[0];
     const { content, displayMode } = stripDelimiters(fragment);
     html += renderFragment(content.trim(), displayMode);
@@ -180,11 +205,14 @@ export function renderMathText(input?: string | null): MathRenderResult {
   }
 
   if (!foundLatex) {
-    const htmlWithBreaks = escapeHtml(decodeLatexLiteralEscapes(text)).replace(/\n/g, '<br>');
+    const htmlWithBreaks = protectedText.restore(
+      escapeHtml(decodeLatexLiteralEscapes(protectedText.text)).replace(/\n/g, '<br>')
+    );
     return cacheAndReturn({ hasLatex: false, html: htmlWithBreaks, plainText: text, citationKeys });
   }
 
-  html += escapeHtml(decodeLatexLiteralEscapes(text.slice(cursor))).replace(/\n/g, '<br>');
+  html += escapeHtml(decodeLatexLiteralEscapes(protectedText.text.slice(cursor))).replace(/\n/g, '<br>');
+  html = protectedText.restore(html);
   return cacheAndReturn({ hasLatex: true, html, plainText: text, citationKeys });
 }
 

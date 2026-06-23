@@ -143,6 +143,25 @@ assertIncludes(suffixedLang, '>CNFs</a>', 'suffixed langref should include suffi
 assertIncludes(suffixedLang, 'href="/#lang/lang_obdd_lt"', 'suffixed langfam should keep the family target');
 assertIncludes(suffixedLang, '<sub>&lt;</sub>s</a>', 'suffixed langfam should render suffix after the subscript inside the link');
 
+// Entity commands should protect math delimiters inside their arguments until
+// entity-link rendering resolves the full macro.
+const indexedEdgeHtml = renderEntityLinks(
+  renderMathText('\\edgeref{cSDD$_T$}{d-SDNNF}').html ?? '',
+  (id) => (id === 'lang_csdd_t' ? 'cSDD$_T$' : id === 'lang_dsdnnf' ? 'd-SDNNF' : id),
+  undefined,
+  (name) => (
+    name === 'cSDD$_T$' || name === 'cSDD_T'
+      ? 'lang_csdd_t'
+      : name === 'd-SDNNF'
+        ? 'lang_dsdnnf'
+        : undefined
+  ),
+  resolveDefinitionRef
+);
+assertIncludes(indexedEdgeHtml, 'href="/#edge/lang_csdd_t/lang_dsdnnf"', 'indexed edgeref should resolve both languages');
+assertIncludes(indexedEdgeHtml, 'cSDD<sub>T</sub> compiles to d-SDNNF', 'indexed edgeref should render a clean label');
+assert.equal(indexedEdgeHtml.includes('katex'), false, 'indexed edgeref should not inject KaTeX internals into the macro label');
+
 // Escaped LaTeX literals in prose should render as plain characters.
 const renderedHash = renderMathText('This is \\#P-complete.').html ?? '';
 assertIncludes(renderedHash, '#P-complete', 'escaped # should render without a leading backslash');

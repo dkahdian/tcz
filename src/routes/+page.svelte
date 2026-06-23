@@ -61,6 +61,7 @@
   let sandboxContributorGithub = $state('');
   let sandboxContributorNote = $state('');
   let sandboxSubmitError = $state<string | null>(null);
+  let sandboxSubmitSuccess = $state<string | null>(null);
   let isSandboxMode = $state(false);
   let sandboxEdits = $state<SandboxEdit[]>([]);
   let sandboxError = $state<string | null>(null);
@@ -175,6 +176,7 @@
       return;
     }
     sandboxSubmitError = null;
+    sandboxSubmitSuccess = null;
     showSandboxSubmitModal = true;
   }
 
@@ -241,12 +243,13 @@
         throw new Error('Failed to submit contribution');
       }
 
-      handleResetSandbox();
       sandboxContributorName = '';
       sandboxContributorEmail = '';
       sandboxContributorGithub = '';
       sandboxContributorNote = '';
       showSandboxSubmitModal = false;
+      sandboxSubmitError = null;
+      sandboxSubmitSuccess = 'Submission succeeded. Your local sandbox changes are still saved.';
     } catch (error) {
       sandboxSubmitError = error instanceof Error ? error.message : 'Failed to submit contribution.';
     } finally {
@@ -314,6 +317,7 @@
     sandboxEdits = [];
     sandboxSelection = null;
     sandboxError = null;
+    sandboxSubmitSuccess = null;
     clearSandboxState();
     clearSelectedCells();
   }
@@ -848,7 +852,7 @@
   <meta name="description" content="Interactive visualization of tractable circuit and knowledge compilation languages and their relationships" />
 </svelte:head>
 
-<div class="app-shell">
+<div class="app-shell" class:has-submit-success={Boolean(sandboxSubmitSuccess)}>
   <!-- Header -->
   <header class="app-header" class:sandbox-mode={isSandboxMode}>
     <div class="header-content">
@@ -910,6 +914,15 @@
       </div>
     </div>
   </header>
+
+  {#if sandboxSubmitSuccess}
+    <div class="sandbox-submit-success" role="status">
+      <span>{sandboxSubmitSuccess}</span>
+      <button type="button" onclick={() => sandboxSubmitSuccess = null} aria-label="Dismiss submission message">
+        Dismiss
+      </button>
+    </div>
+  {/if}
 
   <!-- Main Content -->
   <main class="app-main">
@@ -1258,6 +1271,10 @@
     background: #f9fafb;
   }
 
+  .app-shell.has-submit-success {
+    grid-template-rows: auto auto minmax(0, 1fr);
+  }
+
   .app-header {
     background: #ffffff;
     border-bottom: 1px solid #e5e7eb;
@@ -1266,6 +1283,37 @@
 
   .app-header.sandbox-mode {
     background: linear-gradient(135deg, #ecfeff 0%, #e0f2fe 100%);
+  }
+
+  .sandbox-submit-success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    min-height: 2.1rem;
+    padding: 0.3rem 1rem;
+    border-bottom: 1px solid #bbf7d0;
+    background: #f0fdf4;
+    color: #166534;
+    font-size: 0.86rem;
+    font-weight: 700;
+  }
+
+  .sandbox-submit-success button {
+    border: 1px solid #86efac;
+    border-radius: 0.35rem;
+    background: #ffffff;
+    color: #166534;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 750;
+    cursor: pointer;
+  }
+
+  .sandbox-submit-success button:hover,
+  .sandbox-submit-success button:focus-visible {
+    border-color: #22c55e;
+    outline: 2px solid rgba(34, 197, 94, 0.2);
   }
 
   .header-content {
