@@ -88,8 +88,8 @@ Many \texttt{no-poly} results are conditional on complexity-theoretic assumption
 However, the current implementation does have a small flaw: the propagator does not "prioritize" unconditional results over conditional results, so we may end up with conditional results that could be upgraded to unconditional. Implementing a system that prioritizes unconditional results is simple: we would only need to double the status space $S$ and thus also double the runtime.
 
 
-\subsection{Family-Level Liftability Note}
-Under our family-level succinctness definition, target choice is per family member, not per formula:
+\subsection{Class-Level Liftability Note}
+Under our class-level succinctness definition, target choice is per class member, not per formula:
 for each source member $L_2 \in \mathcal{F}_2$, one must choose a single target member
 $L_1 \in \mathcal{F}_1$ such that $L_1 \leq L_2$.
 
@@ -109,7 +109,7 @@ By contrast, fixed-order quasi lifts from structured families are not establishe
 \end{itemize}
 
 The reason is that the cited construction chooses an output order $\pi(\mathcal{D},T)$ that may depend
-on the specific input circuit $\mathcal{D}$, so one fixed target order per source family member is not guaranteed.
+on the specific input circuit $\mathcal{D}$, so one fixed target order per source class member is not guaranteed.
 
 
 

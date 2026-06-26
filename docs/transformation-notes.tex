@@ -25,7 +25,7 @@ The key point is that many unsupported transformation claims do not need a bespo
 Suppose a language $L$ satisfies both of the following:
 \begin{enumerate}[noitemsep]
   \item Every clause can be converted into an equivalent representation of $L$ in polynomial time and polynomial size.
-  \item \langref{CNF} does not compile to $L$ in polynomial time.
+  \item \langref{CNF} does not compile to $L$ with polynomial blowup.
 \end{enumerate}
 Then $L$ cannot satisfy $\land$C in polynomial time.
 
@@ -38,7 +38,7 @@ Any clause can be represented in $L$ because [construction]. If $L$ supported $\
 Suppose a language $L$ satisfies both of the following:
 \begin{enumerate}[noitemsep]
   \item Every term can be converted into an equivalent representation of $L$ in polynomial time and polynomial size.
-  \item \langref{DNF} does not compile to $L$ in polynomial time.
+  \item \langref{DNF} does not compile to $L$ with polynomial blowup.
 \end{enumerate}
 Then $L$ cannot satisfy $\lor$C in polynomial time.
 
@@ -163,10 +163,10 @@ On the disjunction side, the route only applies when DNF does not already compil
 In particular:
 \begin{itemize}[noitemsep]
   \item it \emph{does} apply to dec-DNNF, dec-SDNNF, dec-SDNNF$_T$, d-SDNNF$_T$, uOBDD, uOBDD$_<$, SDD$_T$, cSDD$_T$, and cSDD;
-  \item it \emph{does not} apply to nFBDD, SDNNF, nOBDD, or nOBDD$_<$, because DNF already compiles to those languages in polynomial time.
+  \item it \emph{does not} apply to nFBDD, SDNNF, nOBDD, or nOBDD$_<$, because DNF already compiles to those languages with polynomial blowup.
 \end{itemize}
 
-For the fixed-vtree families, the upgraded statements are genuinely quasipolynomial lower bounds, not merely polynomial lower bounds: the needed succinctness gaps are already present in the map as
+For the fixed-vtree classes, the upgraded statements are genuinely quasipolynomial lower bounds, not merely polynomial lower bounds: the needed succinctness gaps are already present in the map as
 \[
 \langref{CNF} \not\leq \langfam{SDD}{T},\quad
 \langref{CNF} \not\leq \langfam{cSDD}{T},\quad

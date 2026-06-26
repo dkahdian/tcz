@@ -363,7 +363,7 @@ export function tryDowngrade(
 
     const premisesPart = premises.join('. ') + '. ';
     const triedPhrase = phraseForStatus(triedStatus);
-    const impliedPhrase = triedStatus === 'poly' ? 'in polynomial time' : 'in quasipolynomial time';
+    const impliedPhrase = triedStatus === 'poly' ? 'with polynomial blowup' : 'with quasipolynomial blowup';
     const conclusion = triedStatus === 'poly'
       ? negativeCompilationRef(srcId, tgtId, 'poly')
       : negativeCompilationRef(srcId, tgtId, 'quasi');

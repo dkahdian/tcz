@@ -134,13 +134,13 @@ export function ensurePath(path: number[], source: number, target: number): numb
 export function phraseForStatus(status: string): string {
   switch (status) {
     case 'poly':
-      return 'in polynomial time';
+      return 'with polynomial blowup';
     case 'unknown-poly-quasi':
-      return 'in quasipolynomial time';
+      return 'with quasipolynomial blowup';
     case 'no-poly-quasi':
-      return 'in quasipolynomial time';
+      return 'with quasipolynomial blowup';
     default:
-      return 'in unknown time';
+      return 'with unknown blowup';
   }
 }
 
@@ -230,7 +230,7 @@ export function describePath(pathIds: string[], matrix: KCAdjacencyMatrix): stri
 
 /**
  * Format a contradicting relationship as a premise statement with its own
- * inline assumption.  E.g. "A cannot compile to B in polynomial time assuming $P \neq NP$ [refs]".
+ * inline assumption.  E.g. "A cannot compile to B with polynomial blowup assuming $P \neq NP$ [refs]".
  */
 export function formatContradictingPremise(
   srcId: string,

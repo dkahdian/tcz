@@ -24,6 +24,8 @@ vite.config.ts.timestamp-*
 
 # Github helper files
 .github/**/*.md
+.github/contribution-report.json
+contribution.json
 
 # Meta-Knowledge-Compilation files
 /notebooks

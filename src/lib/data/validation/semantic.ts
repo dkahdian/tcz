@@ -20,13 +20,13 @@ function getEdgeStatus(matrix: KCAdjacencyMatrix, source: number, target: number
 function phraseForStatus(status: string): string {
   switch (status) {
     case 'poly':
-      return 'in polynomial time';
+      return 'with polynomial blowup';
     case 'unknown-poly-quasi':
-      return 'in quasipolynomial time';
+      return 'with quasipolynomial blowup';
     case 'no-poly-quasi':
-      return 'in quasipolynomial time';
+      return 'with quasipolynomial blowup';
     default:
-      return 'in unknown time';
+      return 'with unknown blowup';
   }
 }
 
@@ -199,4 +199,3 @@ export function collectRefsUnion(path: number[], matrix: KCAdjacencyMatrix): str
   }
   return Array.from(refs);
 }
-

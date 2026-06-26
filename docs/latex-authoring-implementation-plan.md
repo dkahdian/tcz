@@ -89,15 +89,15 @@ rather than preserved as canonical authoring surface.
 6. Update view defaults to use this explicit list rather than hidden union
    classification.
 7. Refactor rich text insertion:
-   - detect family languages from the display/name shape or normalized language
+   - detect class languages from the display/name shape or normalized language
      identity, not `classification`;
-   - emit `\langfam{base}{parameter}` when the language identity is family-like;
+   - emit `\langfam{base}{parameter}` when the language identity is class-like;
    - emit `\langref{name}` otherwise.
 8. Refactor new-language/contribution UI:
    - replace classification selector with a simpler choice between language and
-     family;
+     class;
    - language creates `\langref{name}`;
-   - family creates `\langfam{base}{parameter}`;
+   - class creates `\langfam{base}{parameter}`;
    - no union-specific path.
 9. Update sandbox edit types and storage validation to remove classification.
 10. Remove classification wording from contribution docs after the LaTeX
@@ -194,7 +194,7 @@ rather than preserved as canonical authoring surface.
    - require `\fullname`;
    - require `description`;
    - reject duplicate short names;
-   - infer family identity from `\langfam`.
+   - infer class identity from `\langfam`.
 4. Parse concept blocks:
    - require `\title`;
    - require `description`;

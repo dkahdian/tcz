@@ -1,25 +1,33 @@
 #!/bin/bash
 set -euo pipefail
 
-mapfile -t META < <(node <<'EOF'
-const payload = require('./contribution.json');
-const contributor = payload.contributor || {};
-const fields = [
-	contributor.email || 'anonymous',
-	contributor.github || '',
-	contributor.note || '',
-	payload.submissionId || ''
-];
-for (const value of fields) {
-	console.log(String(value));
+json_value() {
+	local field="$1"
+	node -e "
+		const payload = require('./contribution.json');
+		const contributor = payload.contributor || {};
+		if ('$field' === 'name') process.stdout.write(String(contributor.name || 'Anonymous contributor'));
+		if ('$field' === 'email') process.stdout.write(String(contributor.email || 'anonymous@example.invalid'));
+		if ('$field' === 'github') process.stdout.write(String(contributor.github || ''));
+		if ('$field' === 'note') process.stdout.write(String(contributor.note || ''));
+		if ('$field' === 'submissionId') process.stdout.write(String(payload.submissionId || ''));
+	"
 }
+
+CONTRIBUTOR_NAME=$(json_value name)
+CONTRIBUTOR_EMAIL=$(json_value email)
+CONTRIBUTOR_GITHUB=$(json_value github)
+CONTRIBUTOR_NOTE=$(json_value note)
+SUBMISSION_ID=$(json_value submissionId)
+UNEXPECTED_FILE_COUNT=$(node <<'EOF'
+let unexpectedCount = 0;
+try {
+	const report = require('./.github/contribution-report.json');
+	unexpectedCount = Array.isArray(report.unexpectedFiles) ? report.unexpectedFiles.length : 0;
+} catch {}
+process.stdout.write(String(unexpectedCount));
 EOF
 )
-
-CONTRIBUTOR_EMAIL=${META[0]}
-CONTRIBUTOR_GITHUB=${META[1]}
-CONTRIBUTOR_NOTE=${META[2]}
-SUBMISSION_ID=${META[3]}
 
 CONTRIBUTOR_GITHUB=${CONTRIBUTOR_GITHUB#@}
 
@@ -52,6 +60,9 @@ BRANCH_SLUG=$(sanitize_slug "$RAW_SLUG")
 BRANCH_NAME="contribution/${BRANCH_SLUG}"
 
 declare -a LABELS=("data-contribution" "needs-review")
+if [[ "${UNEXPECTED_FILE_COUNT:-0}" != "0" ]]; then
+	LABELS+=("unexpected-files")
+fi
 
 if git rev-parse --verify "$BRANCH_NAME" >/dev/null 2>&1; then
 	git checkout "$BRANCH_NAME"
@@ -59,10 +70,18 @@ else
 	git checkout -b "$BRANCH_NAME"
 fi
 
-git config user.name "bot"
-git config user.email "b@o.t"
+git config user.name "tcz-contribution-bot"
+git config user.email "actions@github.com"
 
-git add src/lib/data/
+git add -u
+git add \
+	src/lib/data/database.json \
+	docs/definitions.tex \
+	docs/languages.tex \
+	docs/succinctness.tex \
+	docs/queries.tex \
+	docs/transformations.tex \
+	docs/refs.bib
 
 if git diff --cached --quiet; then
 	echo "ERROR: No files were modified by the contribution generation script."
@@ -75,7 +94,14 @@ if [[ -n "$CONTRIBUTOR_GITHUB" ]]; then
 	COMMIT_MSG+=" (by @${CONTRIBUTOR_GITHUB})"
 fi
 
-git commit -m "$COMMIT_MSG"
+AUTHOR_NAME="$CONTRIBUTOR_NAME"
+AUTHOR_EMAIL="$CONTRIBUTOR_EMAIL"
+if [[ -n "$CONTRIBUTOR_GITHUB" ]]; then
+	AUTHOR_NAME="${CONTRIBUTOR_NAME} (@${CONTRIBUTOR_GITHUB})"
+	AUTHOR_EMAIL="${CONTRIBUTOR_GITHUB}@users.noreply.github.com"
+fi
+
+git commit --author="${AUTHOR_NAME} <${AUTHOR_EMAIL}>" -m "$COMMIT_MSG"
 
 git push origin "$BRANCH_NAME"
 
@@ -87,26 +113,30 @@ fi
 export GH_TOKEN=${GH_TOKEN:-$CONTRIBUTION_TOKEN}
 
 PR_BODY_FILE=$(mktemp)
-cat > "$PR_BODY_FILE" <<EOF
+if [[ -f .github/contribution-pr-body.md ]]; then
+	cp .github/contribution-pr-body.md "$PR_BODY_FILE"
+else
+	cat > "$PR_BODY_FILE" <<EOF
 ## Submission Details
 
 - Submission ID: ${SUBMISSION_ID:-${BRANCH_SLUG}}
+- Contributor: ${CONTRIBUTOR_NAME}
 - Contributor Email: ${CONTRIBUTOR_EMAIL}
 EOF
 
-if [[ -n "$CONTRIBUTOR_GITHUB" ]]; then
-	echo "- GitHub: @${CONTRIBUTOR_GITHUB}" >> "$PR_BODY_FILE"
-fi
+	if [[ -n "$CONTRIBUTOR_GITHUB" ]]; then
+		echo "- GitHub: @${CONTRIBUTOR_GITHUB}" >> "$PR_BODY_FILE"
+	fi
 
-if [[ -n "$CONTRIBUTOR_NOTE" ]]; then
-	cat >> "$PR_BODY_FILE" <<EOF
+	if [[ -n "$CONTRIBUTOR_NOTE" ]]; then
+		cat >> "$PR_BODY_FILE" <<EOF
 
 ### Contributor Note
 ${CONTRIBUTOR_NOTE}
 EOF
-fi
+	fi
 
-cat >> "$PR_BODY_FILE" <<EOF
+	cat >> "$PR_BODY_FILE" <<EOF
 
 ## Automation
 
@@ -114,6 +144,7 @@ This PR was generated from sandbox-mode contribution edits. Validation and build
 
 *This PR was automatically generated from a community contribution.*
 EOF
+fi
 
 CREATE_STDOUT=$(mktemp)
 CREATE_STDERR=$(mktemp)
@@ -172,6 +203,8 @@ fi
 if [[ -z "$NEW_PR_URL" ]]; then
 	NEW_PR_URL="https://github.com/${REPOSITORY}/pull/${NEW_PR_NUMBER}"
 fi
+
+gh pr edit "$NEW_PR_NUMBER" --repo "$REPOSITORY" --body-file "$PR_BODY_FILE" >/dev/null || true
 
 rm "$CREATE_STDOUT" "$CREATE_STDERR" "$PR_BODY_FILE"
 

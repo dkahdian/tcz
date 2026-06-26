@@ -466,7 +466,7 @@
   <div class="rich-editor-shell" bind:this={shell} onfocusout={handleFocusOut}>
     <div class="toolbar" role="toolbar" aria-label="Rich text insertion tools">
       <button type="button" class="tool-button citation-tool" title="Insert reference" onclick={() => togglePanel('reference')}>[n]</button>
-      <button type="button" class="tool-button tool-button--math" title="Insert language or family" onclick={() => togglePanel('language')}>
+      <button type="button" class="tool-button tool-button--math" title="Insert language or class" onclick={() => togglePanel('language')}>
         <MathText text={'$\\mathcal{L}$'} className="inline" />
       </button>
       <button type="button" class="tool-button tool-button--math" title="Insert relation" onclick={() => togglePanel('relation')}>
@@ -521,7 +521,7 @@
           bind:value={languageSearch}
           onfocus={() => focusedPicker = 'language'}
           oninput={() => selectedLanguageId = ''}
-          placeholder="Search languages and families"
+          placeholder="Search languages and classes"
         />
         <label class="panel-check">
           <input type="checkbox" bind:checked={pluralLanguage} />
@@ -602,20 +602,20 @@
           {:else if relation.status === 'poly'}
             <p class="panel-note">What strength are you citing?</p>
             <div class="panel-actions-inline">
-              <button type="button" class="panel-action" onclick={() => insertRelation()}>Polynomial compilation</button>
-              <button type="button" class="panel-action" onclick={() => insertRelation('quasi')}>Quasipolynomial compilation</button>
+              <button type="button" class="panel-action" onclick={() => insertRelation()}>Polynomial blowup</button>
+              <button type="button" class="panel-action" onclick={() => insertRelation('quasi')}>Quasipolynomial blowup</button>
             </div>
           {:else if relation.status === 'no-poly-quasi'}
             <p class="panel-note">What are you citing here?</p>
             <div class="panel-actions-inline">
-              <button type="button" class="panel-action" onclick={() => insertRelation('no-poly')}>No polynomial compilation</button>
-              <button type="button" class="panel-action" onclick={() => insertRelation('quasi')}>Quasipolynomial compilation exists</button>
+              <button type="button" class="panel-action" onclick={() => insertRelation('no-poly')}>No polynomial blowup</button>
+              <button type="button" class="panel-action" onclick={() => insertRelation('quasi')}>Quasipolynomial blowup exists</button>
             </div>
           {:else if relation.status === 'no-quasi'}
             <p class="panel-note">What strength are you citing?</p>
             <div class="panel-actions-inline">
-              <button type="button" class="panel-action" onclick={() => insertRelation()}>No quasipolynomial compilation</button>
-              <button type="button" class="panel-action" onclick={() => insertRelation('no-poly')}>No polynomial compilation</button>
+              <button type="button" class="panel-action" onclick={() => insertRelation()}>No quasipolynomial blowup</button>
+              <button type="button" class="panel-action" onclick={() => insertRelation('no-poly')}>No polynomial blowup</button>
             </div>
           {:else if relationMacroFor(relation.status)}
             <button type="button" class="panel-action" onclick={() => insertRelation()}>Insert citation</button>

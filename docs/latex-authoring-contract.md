@@ -40,7 +40,7 @@ Plain and union-like languages use:
 \shortname{\langref{CNF}}
 ```
 
-Family/member languages use:
+Class/member languages use:
 
 ```tex
 \shortname{\langfam{OBDD}{<}}
@@ -49,7 +49,7 @@ Family/member languages use:
 The generator must emit macro-wrapped short names. Bare names such as
 `\shortname{CNF}` are invalid in canonical output.
 
-The internal app model must not store or require `classification`. Family status
+The internal app model must not store or require `classification`. Class status
 is inferred from `\langfam`. Plain-vs-union visibility is not modeled as a
 classification. The existing classification-based language-scope filter is
 deprecated and replaced by an explicit default-visible-language list that
@@ -95,7 +95,7 @@ A \langref{CNF} is a conjunction of clauses ...
 \end{language}
 ```
 
-Family/member example:
+Class/member example:
 
 ```tex
 \begin{language}

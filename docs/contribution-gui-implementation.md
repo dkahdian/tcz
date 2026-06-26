@@ -136,7 +136,7 @@ Use these controls consistently:
 - assumptions: direct dropdown/list over the canonical JSON assumptions, with an `Add assumption` option;
 - references: searchable multi-select dropdown over existing and draft references, with an `Add reference` option when the search has no match;
 - description/definition/plaintext: textarea with local dirty state;
-- classification: segmented control or select with `plain`, `family`, and `union`, defaulting to `plain`.
+- classification: segmented control or select with `plain`, `class`, and `union`, defaulting to `plain`.
 
 Dirty fields should be visibly marked in the sidebar. This can be subtle: for example, a small "Unsaved" pill on the panel or a changed-field border. Dirty fields count toward the header draft-change count even before they have flushed into the evaluated sandbox edit list.
 
@@ -154,7 +154,7 @@ Clicking inside a rendered field opens edit mode. Clicking `Preview`, or blurrin
 The toolbar should use compact symbols with tooltips, not plaintext labels:
 
 - reference: `[n]`;
-- language or family: cursive `L`;
+- language or class: cursive `L`;
 - relation: arrow;
 - operation: `[CO]`;
 - math: `$`;
@@ -167,10 +167,10 @@ The reference dropdown should provide:
 - an optional locator field, allowed for both citation commands;
 - an `Add new reference` action at the bottom that opens a BibTeX paste flow and makes the new key immediately insertable.
 
-The language dropdown should merge ordinary languages and families. The picker searches all languages and inserts the correct macro:
+The language dropdown should merge ordinary languages and classes. The picker searches all languages and inserts the correct macro:
 
 - ordinary and union languages: `\langref{Name}`;
-- fixed families: `\langfam{Base}{Parameter}`;
+- fixed classes: `\langfam{Base}{Parameter}`;
 - plural checkbox: appends the optional `{s}` argument.
 
 The relation dropdown should provide two searchable language selectors. The macro is inferred from the current relation status:
@@ -277,11 +277,11 @@ The add-language modal should ask only for:
 
 - classification, defaulting to `plain`;
 - display name for `plain` and `union`;
-- base name plus parameter symbol for `family`;
+- base name plus parameter symbol for `class`;
 - full name;
 - definition or description text.
 
-`plain` and `union` use the same fields because both render through `\langref{...}`. `family` uses separate base and parameter fields because it renders through `\langfam{base}{parameter}`.
+`plain` and `union` use the same fields because both render through `\langref{...}`. `class` uses separate base and parameter fields because it renders through `\langfam{base}{parameter}`.
 
 It should not ask for operation support immediately. After the language is added to sandbox mode, the contributor can fill query/transformation support from the operation matrices and relations from the succinctness matrix.
 

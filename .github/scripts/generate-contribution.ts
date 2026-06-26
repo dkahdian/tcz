@@ -171,7 +171,7 @@ try {
   writeDatabase(nextDatabase);
 
   console.log(
-    `✅ Contribution applied. Languages: ${updatedDataset.languages.length}, references: ${
+    `Contribution applied. Languages: ${updatedDataset.languages.length}, references: ${
       nextDatabase.references?.length ?? 0
     }.`
   );

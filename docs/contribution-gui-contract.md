@@ -32,14 +32,14 @@ When adding a language, the contributor must choose a language classification im
 Supported classifications:
 
 - `plain`: a single ordinary representation language, rendered as `\langref{...}` in generated LaTeX.
-- `family`: a fixed-parameter family/member, rendered as `\langfam{base}{parameter}` in generated LaTeX.
-- `union`: a union over family members, rendered as `\langref{...}` in generated LaTeX but treated separately in the app for filtering and semantics.
+- `class`: a fixed-parameter class/member, rendered as `\langfam{base}{parameter}` in generated LaTeX.
+- `union`: a union over class members, rendered as `\langref{...}` in generated LaTeX but treated separately in the app for filtering and semantics.
 
-For `family` languages, the GUI must collect the base name and parameter symbol separately. For example, `OBDD` plus `<` should produce the internal/display form for `OBDD$_<$`.
+For `class` languages, the GUI must collect the base name and parameter symbol separately. For example, `OBDD` plus `<` should produce the internal/display form for `OBDD$_<$`.
 
 Required language fields:
 
-- classification: `plain`, `family`, or `union`;
+- classification: `plain`, `class`, or `union`;
 - display name, generated or entered according to classification;
 - full name;
 - definition text.
@@ -148,7 +148,7 @@ ELK is the preferred layout engine for this. The installed ELK stack supports fi
 
 Graph placement is a system responsibility, not a contributor or reviewer responsibility. Maintainers may later adjust canonical positions for visual polish, but manual positioning must not be required for contribution acceptance.
 
-Language visibility follows the existing classification behavior unless explicitly changed later. Plain languages and fixed family members should be visible by default. Union languages should remain hidden by default through the language visibility filter, while still being searchable/selectable where the GUI needs them.
+Language visibility follows the existing classification behavior unless explicitly changed later. Plain languages and fixed class members should be visible by default. Union languages should remain hidden by default through the language visibility filter, while still being searchable/selectable where the GUI needs them.
 
 ## Assumptions
 

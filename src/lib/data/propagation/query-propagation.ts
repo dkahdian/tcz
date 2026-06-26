@@ -98,12 +98,15 @@ function joinWithAnd(items: string[]): string {
   return `${items.slice(0, -1).join(', ')}, and ${items[items.length - 1]}`;
 }
 
-function antecedentText(lemma: OperationLemma): string {
-  return joinWithAnd(lemma.antecedent.map(opLabel));
+function antecedentSupportText(lemma: OperationLemma): string {
+  return joinWithAnd(lemma.antecedent.map((op) => `support for ${opLabel(op)}`));
 }
 
-function implicationVerb(lemma: OperationLemma): string {
-  return lemma.antecedent.length === 1 ? 'implies' : 'together imply';
+function supportImplicationText(lemma: OperationLemma): string {
+  const consequent = `support for ${opLabel(lemma.consequent)}`;
+  return lemma.antecedent.length === 1
+    ? `${antecedentSupportText(lemma)} implies ${consequent}`
+    : `${antecedentSupportText(lemma)} together imply ${consequent}`;
 }
 
 function operationMacro(opCode: string): string {
@@ -399,7 +402,7 @@ export function propagateQueriesViaLemmas(
           .join(' and ');
         const antecedentRefs = lemma.antecedent.map((op) => getOperationSupport(language, op)?.refs ?? []);
         const refs = uniqueRefs(lemma.refs, ...antecedentRefs);
-        const description = `Here, ${antecedentPremises}. Since ${antecedentText(lemma)} ${implicationVerb(lemma)} ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}, ${operationSupportPhrase(language.id, lemma.consequent, premiseLevel)}.`;
+        const description = `${antecedentPremises}. Since ${supportImplicationText(lemma)}${formatCitations(lemma.refs)}, ${operationSupportPhrase(language.id, lemma.consequent, premiseLevel)}.`;
 
         if (DEBUG_PROPAGATION) {
           const reason = canImproveAssumption ? 'ASSUMPTION-IMPROVE' : 'LEMMA';
@@ -645,7 +648,7 @@ export function propagateDowngradesViaLemmaContrapositives(
           const othersDesc = otherAntecedents.length > 0
             ? ` Also, ${joinWithAnd(otherAntecedents.map((op) => operationSupportPhrase(language.id, op, 'poly')))}.`
             : '';
-          const description = `${antecedentText(lemma)} ${implicationVerb(lemma)} ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}. However, ${operationUnsupportedPhrase(language.id, lemma.consequent, 'poly')}.${othersDesc} Therefore ${operationUnsupportedPhrase(language.id, targetOp, 'poly')}.`;
+          const description = `${supportImplicationText(lemma)}${formatCitations(lemma.refs)}. However, ${operationUnsupportedPhrase(language.id, lemma.consequent, 'poly')}.${othersDesc} Therefore ${operationUnsupportedPhrase(language.id, targetOp, 'poly')}.`;
 
           if (DEBUG_PROPAGATION) {
             const reason = queryAssertsNoPoly(targetComplexity) ? 'ASSUMPTION-IMPROVE' : 'CONTRAPOSITIVE';
@@ -727,7 +730,7 @@ export function propagateDowngradesViaLemmaContrapositives(
           const othersDesc = otherAntecedents.length > 0
             ? ` Also, ${joinWithAnd(otherAntecedents.map((op) => operationSupportPhrase(language.id, op, 'quasi')))}.`
             : '';
-          const description = `${antecedentText(lemma)} ${implicationVerb(lemma)} ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}. However, ${operationUnsupportedPhrase(language.id, lemma.consequent, 'quasi')}.${othersDesc} Therefore ${operationUnsupportedPhrase(language.id, targetOp, 'quasi')}.`;
+          const description = `${supportImplicationText(lemma)}${formatCitations(lemma.refs)}. However, ${operationUnsupportedPhrase(language.id, lemma.consequent, 'quasi')}.${othersDesc} Therefore ${operationUnsupportedPhrase(language.id, targetOp, 'quasi')}.`;
 
           if (DEBUG_PROPAGATION) {
             const reason = queryAssertsNoQuasi(targetComplexity) ? 'ASSUMPTION-IMPROVE' : 'CONTRAPOSITIVE';
@@ -782,8 +785,8 @@ const EDGE_NO_POLY = new Set<string>(['no-poly-unknown-quasi', 'no-poly-quasi', 
  *
  * Lemma "Succinctness by Query":
  * If language A supports query Q in polynomial time, and language B does NOT
- * support Q in polynomial time, then B cannot be compiled to A in
- * polynomial time.
+ * support Q in polynomial time, then B cannot compile to A with
+ * polynomial blowup.
  *
  * Proof: If B → A were poly, then B supports Q by first compiling to A (poly)
  * then running A's poly-time query algorithm. But B doesn't support Q in poly.
@@ -874,9 +877,9 @@ function deriveNoPolyEdge(
   const assumption = mergeAssumptions(aSupport?.assumption, bSupport?.assumption);
   const description =
     `${operationSupportPhrase(langA.id, queryCode, 'poly')}, but ` +
-    `${operationUnsupportedPhrase(langB.id, queryCode, 'poly')}. If ${languageRefForId(langB.id)} could compile to ${languageRefForId(langA.id)} in ` +
-    `polynomial time, ${languageRefForId(langB.id)} could support ${opLabel(queryCode)} by first compiling to ${languageRefForId(langA.id)}. ` +
-    `Therefore ${languageRefForId(langB.id)} cannot compile to ${languageRefForId(langA.id)} in polynomial time${formatInlineAssumption(assumption)}.`;
+    `${operationUnsupportedPhrase(langB.id, queryCode, 'poly')}. If ${languageRefForId(langB.id)} could compile to ${languageRefForId(langA.id)} with ` +
+    `polynomial blowup, ${languageRefForId(langB.id)} could support ${opLabel(queryCode)} by first compiling to ${languageRefForId(langA.id)}. ` +
+    `Therefore ${languageRefForId(langB.id)} cannot compile to ${languageRefForId(langA.id)} with polynomial blowup${formatInlineAssumption(assumption)}.`;
   const refs = uniqueRefs(aRefs, bRefs);
 
   if (currentStatus === 'unknown-poly-quasi' && currentRelation) {
@@ -980,9 +983,9 @@ function deriveNoQuasiEdge(
   const assumption = mergeAssumptions(aSupport?.assumption, bSupport?.assumption);
   const description =
     `${operationSupportPhrase(langA.id, queryCode, 'quasi')}, but ` +
-    `${operationUnsupportedPhrase(langB.id, queryCode, 'quasi')}. If ${languageRefForId(langB.id)} could compile to ${languageRefForId(langA.id)} in ` +
-    `quasipolynomial time, ${languageRefForId(langB.id)} could support ${opLabel(queryCode)} by first compiling to ${languageRefForId(langA.id)}. ` +
-    `Therefore ${languageRefForId(langB.id)} cannot compile to ${languageRefForId(langA.id)} in quasipolynomial time${formatInlineAssumption(assumption)}.`;
+    `${operationUnsupportedPhrase(langB.id, queryCode, 'quasi')}. If ${languageRefForId(langB.id)} could compile to ${languageRefForId(langA.id)} with ` +
+    `quasipolynomial blowup, ${languageRefForId(langB.id)} could support ${opLabel(queryCode)} by first compiling to ${languageRefForId(langA.id)}. ` +
+    `Therefore ${languageRefForId(langB.id)} cannot compile to ${languageRefForId(langA.id)} with quasipolynomial blowup${formatInlineAssumption(assumption)}.`;
   const refs = uniqueRefs(aRefs, bRefs);
 
   // Transition: null / unknown-both / no-poly-unknown-quasi → no-quasi
@@ -1044,7 +1047,7 @@ export function validateQueryConsistency(data: GraphData): { ok: boolean; error?
           if (queryGuaranteesPoly(l2Complexity) && queryAssertsNoPoly(l1Complexity)) {
             return {
               ok: false,
-              error: `Contradiction: ${l1Name} compiles to ${l2Name} in polynomial time, and ${l2Name} supports ${opLabel(queryCode)} in polynomial time, but ${opLabel(queryCode)} is marked as unsupported by ${l1Name}.`
+              error: `Contradiction: ${l1Name} compiles to ${l2Name} with polynomial blowup, and ${l2Name} supports ${opLabel(queryCode)} in polynomial time, but ${opLabel(queryCode)} is marked as unsupported by ${l1Name}.`
             };
           }
         }
@@ -1054,7 +1057,7 @@ export function validateQueryConsistency(data: GraphData): { ok: boolean; error?
           if (queryGuaranteesQuasi(l2Complexity) && queryAssertsNoQuasi(l1Complexity)) {
             return {
               ok: false,
-              error: `Contradiction: ${l1Name} compiles to ${l2Name} in quasipolynomial time, and ${l2Name} supports ${opLabel(queryCode)} in quasipolynomial time, but ${opLabel(queryCode)} is marked as unsupported by ${l1Name} in quasipolynomial time.`
+              error: `Contradiction: ${l1Name} compiles to ${l2Name} with quasipolynomial blowup, and ${l2Name} supports ${opLabel(queryCode)} in quasipolynomial time, but ${opLabel(queryCode)} is marked as unsupported by ${l1Name} in quasipolynomial time.`
             };
           }
         }

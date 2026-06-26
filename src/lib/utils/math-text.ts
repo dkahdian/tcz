@@ -427,9 +427,9 @@ export function renderEntityLinks(
     return { id: normalizedRef, name: normalizedRef, resolved: false };
   };
 
-  function relationTimePhrase(command: string): string {
-    if (command === 'compilespoly' || command === 'nocompilespoly') return 'in polynomial time';
-    return 'in quasipolynomial time';
+  function relationBlowupPhrase(command: string): string {
+    if (command === 'compilespoly' || command === 'nocompilespoly') return 'with polynomial blowup';
+    return 'with quasipolynomial blowup';
   }
 
   function relationVerbPhrase(command: string): string {
@@ -446,7 +446,7 @@ export function renderEntityLinks(
   function relationLabelHtml(command: string, srcName: string, tgtName: string, assumption?: string): string {
     const source = renderNameHtml(srcName);
     const target = renderNameHtml(tgtName);
-    return `${source} ${relationVerbPhrase(command)} ${target} ${relationTimePhrase(command)}${renderAssumptionHtml(assumption)}`;
+    return `${source} ${relationVerbPhrase(command)} ${target} ${relationBlowupPhrase(command)}${renderAssumptionHtml(assumption)}`;
   }
 
   function operationTimePhrase(command: string): string {
@@ -506,7 +506,7 @@ export function renderEntityLinks(
     return `<a class="entity-link lang-link" href="/#lang/${safeId}" data-entity-type="lang" data-lang-id="${safeId}">${nameHtml}</a>`;
   });
 
-  // Replace \langfam{Base}{Index} with linked family language names.
+  // Replace \langfam{Base}{Index} with linked class-member language names.
   result = result.replace(LANGFAM_PATTERN, (_match, base: string, index: string, suffix: string | undefined) => {
     const familyRef = `${base}_${index}`;
     const { id, name } = resolveLang(familyRef);

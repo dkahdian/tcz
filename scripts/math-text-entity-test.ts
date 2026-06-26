@@ -25,7 +25,7 @@ const suffixedLang = renderEntityLinks(
 );
 assertIncludes(suffixedLang, 'href="/#lang/lang_cnf"', 'suffixed langref should keep the language target');
 assertIncludes(suffixedLang, '>CNFs</a>', 'suffixed langref should include suffix inside the link label');
-assertIncludes(suffixedLang, 'href="/#lang/lang_obdd_lt"', 'suffixed langfam should keep the family target');
+assertIncludes(suffixedLang, 'href="/#lang/lang_obdd_lt"', 'suffixed langfam should keep the class-member target');
 assertIncludes(suffixedLang, '<sub>&lt;</sub>s</a>', 'suffixed langfam should render suffix after the subscript inside the link');
 
 const relationHtml = renderEntityLinks(
@@ -43,7 +43,7 @@ const relationHtml = renderEntityLinks(
   { edgeRefs: () => ['Example_2024'], edgeAssumption: () => 'P \\neq NP' }
 );
 assertIncludes(relationHtml, 'href="/#edge/lang_csdd_t/lang_dsdnnf"', 'relation macro should resolve both languages');
-assertIncludes(relationHtml, 'cSDD<sub>T</sub> compiles to d-SDNNF in polynomial time', 'relation macro should render a clean label');
+assertIncludes(relationHtml, 'cSDD<sub>T</sub> compiles to d-SDNNF with polynomial blowup', 'relation macro should render a clean label');
 assertIncludes(relationHtml, 'assuming <span class="katex"', 'relation macro should render edge assumptions');
 assertIncludes(relationHtml, '\\citep{Example_2024}', 'relation macro should append missing edge citations');
 
@@ -53,7 +53,7 @@ const noQuasiHtml = renderEntityLinks(
   undefined,
   (name) => (name === 'CNF' ? 'lang_cnf' : name === 'DNNF' ? 'lang_dnnf' : undefined)
 );
-assertIncludes(noQuasiHtml, 'CNF does not compile to DNNF in quasipolynomial time', 'negative relation macro should render precise text');
+assertIncludes(noQuasiHtml, 'CNF does not compile to DNNF with quasipolynomial blowup', 'negative relation macro should render precise text');
 
 const operationHtml = renderEntityLinks(
   renderMathText('\\supportspoly{\\langref{CNF}}{\\VA}').html ?? '',

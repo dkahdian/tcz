@@ -67,7 +67,7 @@
   let sandboxError = $state<string | null>(null);
   let sandboxPersistenceReady = $state(false);
   let showNewLanguageModal = $state(false);
-  let newLanguageKind = $state<'language' | 'family'>('language');
+  let newLanguageKind = $state<'language' | 'class'>('language');
   let newLanguageName = $state('');
   let newLanguageFamilyBase = $state('');
   let newLanguageFamilyParameter = $state('');
@@ -262,7 +262,9 @@
   const sandboxEvaluation = $derived<SandboxEvaluationResult | null>(
     sandboxEdits.length > 0 ? applySandboxEdits(initialGraphData, sandboxEdits) : null
   );
-  const sandboxEditSummaries = $derived(sandboxEdits.map((edit) => summarizeSandboxEdit(edit)));
+  const sandboxEditSummaries = $derived(
+    sandboxEdits.map((edit, index) => ({ edit, index, summary: summarizeSandboxEdit(edit) }))
+  );
   const activeSandboxGraphData = $derived(
     isSandboxMode && sandboxEvaluation?.ok ? sandboxEvaluation.graphData : null
   );
@@ -319,6 +321,18 @@
     sandboxError = null;
     sandboxSubmitSuccess = null;
     clearSandboxState();
+    clearSelectedCells();
+  }
+
+  function handleRemoveSandboxEdit(index: number) {
+    const nextEdits = sandboxEdits.filter((_, editIndex) => editIndex !== index);
+    const applied = commitSandboxEdits(nextEdits);
+    if (!applied) return;
+
+    if (nextEdits.length === 0) {
+      showSandboxSubmitModal = false;
+    }
+    sandboxSubmitError = null;
     clearSelectedCells();
   }
 
@@ -504,7 +518,7 @@
   }
 
   function getNewLanguageDisplayName(): string {
-    if (newLanguageKind === 'family') {
+    if (newLanguageKind === 'class') {
       const base = newLanguageFamilyBase.trim();
       const parameter = newLanguageFamilyParameter.trim();
       return base && parameter ? `${base}$_${parameter}$` : '';
@@ -514,12 +528,12 @@
 
   const newLanguageNamePlaceholder = $derived('DNNF');
   const newLanguageFullNamePlaceholder = $derived(
-    newLanguageKind === 'family'
+    newLanguageKind === 'class'
         ? 'Ordered Binary Decision Diagram (wrt a fixed variable order)'
         : 'Decomposable Negation Normal Form'
   );
   const newLanguageDefinitionPlaceholder = $derived(
-    newLanguageKind === 'family'
+    newLanguageKind === 'class'
       ? 'For each fixed variable order $<$, binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the order $<$.'
       : 'Boolean circuits with AND and OR gates, literals as inputs, and whose AND gates are \\emph{decomposable} (children mention disjoint sets of variables).'
   );
@@ -1044,7 +1058,7 @@
             disabled={sandboxEdits.length === 0 || Boolean(sandboxEvaluation && !sandboxEvaluation.ok)}
             onclick={openSandboxSubmitModal}
           >
-            Submit
+            Review
           </button>
         {/if}
         {#if viewMode !== 'graph'}
@@ -1308,13 +1322,13 @@
         <label class="field-label" for="new-language-kind">Kind</label>
         <select id="new-language-kind" bind:value={newLanguageKind} class="field-control">
           <option value="language">Language</option>
-          <option value="family">Family</option>
+          <option value="class">Class</option>
         </select>
 
-        {#if newLanguageKind === 'family'}
+        {#if newLanguageKind === 'class'}
           <div class="field-grid">
             <div>
-              <label class="field-label" for="new-language-family-base">Base Name</label>
+              <label class="field-label" for="new-language-family-base">Class Base</label>
               <input
                 id="new-language-family-base"
                 class="field-control"
@@ -1323,7 +1337,7 @@
               />
             </div>
             <div>
-              <label class="field-label" for="new-language-family-parameter">Parameter</label>
+              <label class="field-label" for="new-language-family-parameter">Class Parameter</label>
               <input
                 id="new-language-family-parameter"
                 class="field-control"
@@ -1382,7 +1396,7 @@
       }}
     >
       <header class="modal-header">
-        <h2 id="sandbox-submit-title">Submit Contribution</h2>
+        <h2 id="sandbox-submit-title">Review Contribution</h2>
       </header>
 
       <div class="modal-body">
@@ -1392,9 +1406,21 @@
 
         <details class="submission-details">
           <summary>Show {sandboxEdits.length} {sandboxEdits.length === 1 ? 'draft change' : 'draft changes'}</summary>
-          <ul>
-            {#each sandboxEditSummaries as summary}
-              <li><MathText text={summary} className="inline" /></li>
+          <ul class="draft-change-list">
+            {#each sandboxEditSummaries as item (item.index)}
+              <li class="draft-change-row">
+                <MathText text={item.summary} className="inline" />
+                <button
+                  type="button"
+                  class="draft-change-remove"
+                  onclick={() => handleRemoveSandboxEdit(item.index)}
+                  disabled={submittingSandbox}
+                  aria-label={`Remove draft change: ${item.summary}`}
+                  title="Remove this draft change"
+                >
+                  x
+                </button>
+              </li>
             {/each}
           </ul>
         </details>
@@ -1879,18 +1905,51 @@
     font-weight: 750;
   }
 
-  .submission-details ul {
+  .submission-details .draft-change-list {
     display: grid;
     gap: 0.28rem;
     max-height: 10rem;
     overflow: auto;
     margin: 0;
     border-top: 1px solid #dbeafe;
-    padding: 0.55rem 0.9rem 0.7rem 1.45rem;
+    padding: 0.55rem 0.65rem 0.7rem;
+    list-style: none;
   }
 
-  .submission-details li {
+  .draft-change-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.35rem;
+    background: #ffffff;
+    padding: 0.38rem 0.45rem 0.38rem 0.55rem;
     line-height: 1.35;
+  }
+
+  .draft-change-remove {
+    display: grid;
+    flex: 0 0 auto;
+    width: 1.35rem;
+    height: 1.35rem;
+    place-items: center;
+    border: 1px solid #cbd5e1;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #64748b;
+    font-size: 0.8rem;
+    font-weight: 800;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .draft-change-remove:hover:not(:disabled),
+  .draft-change-remove:focus-visible {
+    border-color: #ef4444;
+    color: #b91c1c;
+    background: #fef2f2;
+    outline: 2px solid rgba(239, 68, 68, 0.16);
   }
 
   .modal-actions {

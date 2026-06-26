@@ -50,5 +50,14 @@ export async function load(url, context, defaultLoad) {
     };
   }
 
+  if (url.endsWith('.json')) {
+    const source = await readFile(fileURLToPath(url), 'utf8');
+    return {
+      format: 'module',
+      shortCircuit: true,
+      source: `export default ${source.trim()};`
+    };
+  }
+
   return defaultLoad(url, context, defaultLoad);
 }

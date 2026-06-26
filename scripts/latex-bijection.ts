@@ -3,7 +3,7 @@
 import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 import { DATABASE_PATH, loadDatabase, saveDatabase, type DatabaseSchema } from './shared/database.js';
 import { cleanBibtexText, extractBibtexField } from '../src/lib/utils/bibtex.js';
 import { generateLanguageId } from '../src/lib/utils/language-id.js';
@@ -314,8 +314,8 @@ function migrateLegacyDescription(text: string | undefined, database: DatabaseSc
 function stripRedundantRelationTiming(text: string): string {
   const languageArg = String.raw`(?:\\thislang|\\langref\{[^{}]+\}|\\langfam\{[^{}]+\}\{[^{}]+\})`;
   return text
-    .replace(new RegExp(`(\\\\(?:compilespoly|nocompilespoly)\\{${languageArg}\\}\\{${languageArg}\\})\\s+in polynomial time`, 'g'), '$1')
-    .replace(new RegExp(`(\\\\(?:compilesquasi|nocompilesquasi)\\{${languageArg}\\}\\{${languageArg}\\})\\s+in (?:at worst |at most )?quasipolynomial time`, 'g'), '$1')
+    .replace(new RegExp(`(\\\\(?:compilespoly|nocompilespoly)\\{${languageArg}\\}\\{${languageArg}\\})\\s+(?:in polynomial time|with polynomial blowup)`, 'g'), '$1')
+    .replace(new RegExp(`(\\\\(?:compilesquasi|nocompilesquasi)\\{${languageArg}\\}\\{${languageArg}\\})\\s+(?:in (?:at worst |at most )?quasipolynomial time|with quasipolynomial blowup)`, 'g'), '$1')
     .replace(new RegExp(`(\\\\(?:supportspoly|nosupportspoly)\\{${languageArg}\\}\\{\\\\[A-Za-z]+\\})\\s+in polynomial time`, 'g'), '$1')
     .replace(new RegExp(`(\\\\(?:supportsquasi|nosupportsquasi)\\{${languageArg}\\}\\{\\\\[A-Za-z]+\\})\\s+in (?:at worst |at most )?quasipolynomial time`, 'g'), '$1');
 }
@@ -428,10 +428,10 @@ ${theoremStyle}
 \\newcommand{\\ANDBC}{$\\wedge$BC}
 \\newcommand{\\ORC}{$\\vee$C}
 \\newcommand{\\ORBC}{$\\vee$BC}
-\\newcommand{\\compilespoly}[2]{#1 compiles polynomially to #2}
-\\newcommand{\\compilesquasi}[2]{#1 compiles quasipolynomially to #2}
-\\newcommand{\\nocompilespoly}[2]{#1 does not compile polynomially to #2}
-\\newcommand{\\nocompilesquasi}[2]{#1 does not compile quasipolynomially to #2}
+\\newcommand{\\compilespoly}[2]{#1 compiles to #2 with polynomial blowup}
+\\newcommand{\\compilesquasi}[2]{#1 compiles to #2 with quasipolynomial blowup}
+\\newcommand{\\nocompilespoly}[2]{#1 does not compile to #2 with polynomial blowup}
+\\newcommand{\\nocompilesquasi}[2]{#1 does not compile to #2 with quasipolynomial blowup}
 \\newcommand{\\supportspoly}[2]{#1 supports #2 in polynomial time}
 \\newcommand{\\supportsquasi}[2]{#1 supports #2 in quasipolynomial time}
 \\newcommand{\\nosupportspoly}[2]{#2 is not supported by #1 in polynomial time}
@@ -1063,8 +1063,12 @@ async function writeJson(): Promise<void> {
   validateRelationMacroAssertions(database);
   saveDatabase(database);
 
-  const { execSync } = await import('child_process');
-  execSync('npx tsx scripts/refresh-derived.ts', {
+  const { execFileSync } = await import('child_process');
+  execFileSync(process.execPath, [
+    '--import',
+    pathToFileURL(path.join(__dirname, 'tsx-register.mjs')).href,
+    path.join(__dirname, 'refresh-derived.ts')
+  ], {
     cwd: path.join(__dirname, '..'),
     stdio: 'inherit'
   });

@@ -38,10 +38,10 @@
 \newcommand{\ANDBC}{$\wedge$BC}
 \newcommand{\ORC}{$\vee$C}
 \newcommand{\ORBC}{$\vee$BC}
-\newcommand{\compilespoly}[2]{#1 compiles polynomially to #2}
-\newcommand{\compilesquasi}[2]{#1 compiles quasipolynomially to #2}
-\newcommand{\nocompilespoly}[2]{#1 does not compile polynomially to #2}
-\newcommand{\nocompilesquasi}[2]{#1 does not compile quasipolynomially to #2}
+\newcommand{\compilespoly}[2]{#1 compiles to #2 with polynomial blowup}
+\newcommand{\compilesquasi}[2]{#1 compiles to #2 with quasipolynomial blowup}
+\newcommand{\nocompilespoly}[2]{#1 does not compile to #2 with polynomial blowup}
+\newcommand{\nocompilesquasi}[2]{#1 does not compile to #2 with quasipolynomial blowup}
 \newcommand{\supportspoly}[2]{#1 supports #2 in polynomial time}
 \newcommand{\supportsquasi}[2]{#1 supports #2 in quasipolynomial time}
 \newcommand{\nosupportspoly}[2]{#2 is not supported by #1 in polynomial time}
@@ -79,13 +79,13 @@ A \emph{representation language} $L$ is a set of Boolean formulas sharing a comm
 \end{concept}
 
 \begin{concept}
-\title{Language Family}
+\title{Language Class}
 \begin{description}
-A \emph{language family} is a parameterized collection $\mathcal{F} = \{L_\theta\}_{\theta \in \Theta}$ of representation languages. The parameter $\theta$ may be, for example, a variable order or a vtree.
+A \emph{language class} is a parameterized collection $\mathcal{C} = \{L_\theta\}_{\theta \in \Theta}$ of representation languages. The parameter $\theta$ may be, for example, a variable order or a vtree.
 
-For example, \langfam{OBDD}{<} is parameterized by a variable order, and \langref{OBDD} is the union over all such parameters: \langref{OBDD} $= \bigcup_<$ \langfam{OBDD}{<}. Distinguishing family-level from language-level claims is central in this project. \citep{Darwiche_2002,Amarilli_2018}
+For example, \langfam{OBDD}{<} is parameterized by a variable order, and \langref{OBDD} is the union over all such parameters: \langref{OBDD} $= \bigcup_<$ \langfam{OBDD}{<}. Distinguishing class-level from language-level claims is central in this project. \citep{Darwiche_2002,Amarilli_2018}
 
-We overload notation in two controlled ways. When the text says ``for each fixed order $<$'' or ``for each fixed vtree $T$,'' notation such as \langfam{OBDD}{<} or \langfam{SDD}{T} denotes the corresponding member language. When no particular parameter is fixed and a family-level claim is intended, the same notation denotes the whole parameterized family, e.g.\ $\{$\langfam{OBDD}{<}$\}_{<}$ or $\{$\langfam{SDD}{T}$\}_{T}$.
+We overload notation in two controlled ways. When the text says ``for each fixed order $<$'' or ``for each fixed vtree $T$,'' notation such as \langfam{OBDD}{<} or \langfam{SDD}{T} denotes the corresponding member language. When no particular parameter is fixed and a class-level claim is intended, the same notation denotes the whole parameterized class, e.g.\ $\{$\langfam{OBDD}{<}$\}_{<}$ or $\{$\langfam{SDD}{T}$\}_{T}$.
 \end{description}
 \end{concept}
 
@@ -107,13 +107,13 @@ We additionally define quasipolynomial succinctness identically, except we requi
 \end{concept}
 
 \begin{concept}
-\title{Succinctness Between Families}
+\title{Succinctness Between Classes}
 \begin{description}
-Let $\mathcal{F}_1$ and $\mathcal{F}_2$ be language families. We write $\mathcal{F}_1 \leq_p \mathcal{F}_2$ if for every $L_2 \in \mathcal{F}_2$ there exists $L_1 \in \mathcal{F}_1$ such that $L_1 \leq_p L_2$.
+Let $\mathcal{C}_1$ and $\mathcal{C}_2$ be language classes. We write $\mathcal{C}_1 \leq_p \mathcal{C}_2$ if for every $L_2 \in \mathcal{C}_2$ there exists $L_1 \in \mathcal{C}_1$ such that $L_1 \leq_p L_2$.
 
-Likewise, we say $\mathcal{F}_1$ polynomially compiles into $\mathcal{F}_2$ if for every $L_1 \in \mathcal{F}_1$ there exists $L_2 \in \mathcal{F}_2$ such that $L_1$ polynomially compiles into $L_2$.
+Likewise, we say $\mathcal{C}_1$ polynomially compiles into $\mathcal{C}_2$ if for every $L_1 \in \mathcal{C}_1$ there exists $L_2 \in \mathcal{C}_2$ such that $L_1$ polynomially compiles into $L_2$.
 
-The same convention applies between a language $L$ and a family $\mathcal{F}$ by identifying $L$ with the singleton family $\{L\}$. \citep{Darwiche_2002,Gogic_1995}
+The same convention applies between a language $L$ and a class $\mathcal{C}$ by identifying $L$ with the singleton class $\{L\}$. \citep{Darwiche_2002,Gogic_1995}
 \end{description}
 \end{concept}
 

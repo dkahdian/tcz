@@ -63,17 +63,23 @@ jobs:
           if (edits === 0) {
             throw new Error('Sandbox contribution must include at least one edit.');
           }
-          console.log(`✅ Loaded submission ${payload.submissionId} with ${edits} sandbox edits.`);
+          console.log(`Loaded submission ${payload.submissionId} with ${edits} sandbox edits.`);
           EOF
 
       - name: Generate contribution files
-        run: npx tsx@latest .github/scripts/generate-contribution.ts
+        run: node --import ./scripts/tsx-register.mjs .github/scripts/generate-contribution.ts
+
+      - name: Run LaTeX bijection round-trip
+        run: npm run latex:roundtrip
 
       - name: Type check
         run: npm run check
 
       - name: Build
         run: npm run build
+
+      - name: Build PR report
+        run: node --import ./scripts/tsx-register.mjs .github/scripts/build-contribution-report.ts
 
       - name: Create branch, commit, and PR
         env:
