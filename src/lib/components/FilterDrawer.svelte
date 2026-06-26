@@ -1,5 +1,4 @@
 <script lang="ts">
-  import LanguageVisibilityPicker from './LanguageVisibilityPicker.svelte';
   import MathText from './MathText.svelte';
   import {
     areFilterValuesEqual,
@@ -12,7 +11,6 @@
     FilterStateMap,
     KCLanguage,
     LanguageFilter,
-    LanguageVisibilityParam,
     ViewMode
   } from '$lib/types.js';
 
@@ -37,7 +35,7 @@
   let isOpen = $state(false);
   const visibleFilters = $derived(getVisibleFiltersForView(filters, viewMode));
   const orderedFilters = $derived.by(() => {
-    const priority: Record<string, number> = { 'poly-display': 0, 'language-visibility': 99 };
+    const priority: Record<string, number> = { 'poly-display': 0 };
     return [...visibleFilters].sort((a, b) => {
       const pa = priority[a.id] ?? 1;
       const pb = priority[b.id] ?? 1;
@@ -77,15 +75,6 @@
     return String(getFilterValue(filter));
   }
 
-  function getLanguageVisibilityValue(filter: AnyFilter): LanguageVisibilityParam {
-    const value = getFilterValue(filter);
-    if (typeof value === 'object' && value !== null && 'mode' in value && 'ids' in value) {
-      return value as LanguageVisibilityParam;
-    }
-
-    return { mode: 'all', ids: [] };
-  }
-
   function toggleBooleanFilter(filter: AnyFilter) {
     setFilterValue(filter, getFilterValue(filter) !== true);
   }
@@ -119,20 +108,8 @@
 
       <div class="drawer-body">
         {#each orderedFilters as filter (filter.id)}
-          <div class="filter-row" class:filter-row--language-picker={filter.controlType === 'language-picker'}>
-            {#if filter.controlType === 'language-picker'}
-              <div class="filter-block">
-                <div class="field-copy">
-                  <MathText text={filter.name} className="filter-name" />
-                </div>
-                <LanguageVisibilityPicker
-                  languages={languages}
-                  value={getLanguageVisibilityValue(filter)}
-                  {viewMode}
-                  onChange={(value) => setFilterValue(filter, value)}
-                />
-              </div>
-            {:else if filter.controlType === 'dropdown' && filter.options}
+          <div class="filter-row">
+            {#if filter.controlType === 'dropdown' && filter.options}
               <label class="filter-field">
                 <div class="field-copy">
                   <MathText text={filter.name} className="filter-name" />
@@ -293,23 +270,6 @@
     border-top: 1px solid #eef2f7;
   }
 
-  .filter-row--language-picker {
-    flex: 1 1 auto;
-    min-height: min(42rem, calc(100vh - 8rem));
-    display: flex;
-    flex-direction: column;
-  }
-
-  .filter-row--language-picker .filter-block {
-    flex: 1;
-    min-height: 0;
-  }
-
-  .filter-row--language-picker :global(.picker-shell) {
-    flex: 1;
-    min-height: 0;
-  }
-
   .filter-row:first-child {
     border-top: none;
   }
@@ -334,12 +294,6 @@
 
   .toggle-field input:disabled {
     cursor: not-allowed;
-  }
-
-  .filter-block {
-    display: flex;
-    flex-direction: column;
-    gap: 0.45rem;
   }
 
   .field-copy {

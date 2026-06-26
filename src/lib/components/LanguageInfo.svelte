@@ -24,8 +24,10 @@
     filteredGraphData,
     onOperationCellSelect,
     onSandboxLanguageEdit,
+    onSandboxLanguageReset,
     onSandboxReferenceAdd,
     sandboxMode = false,
+    sandboxEdited = false,
     viewMode = 'graph' as ViewMode
   }: {
     selectedLanguage: KCLanguage | null;
@@ -33,8 +35,10 @@
     filteredGraphData?: GraphData | FilteredGraphData;
     onOperationCellSelect?: (cell: SelectedOperationCell) => void;
     onSandboxLanguageEdit?: (languageId: string, fields: { fullName?: string; definition?: string }) => void;
+    onSandboxLanguageReset?: (languageId: string) => void;
     onSandboxReferenceAdd?: (bibtex: string) => string | null;
     sandboxMode?: boolean;
+    sandboxEdited?: boolean;
     viewMode?: ViewMode;
   } = $props();
 
@@ -87,48 +91,41 @@
     }
   });
 
-  // Collect all references including inline citations from description and notes
+  // Collect references from inline citations and operation support.
   const allReferences = $derived.by<KCReference[]>(() => {
     if (!selectedLanguage) return [];
 
     const refIds = new Set<string>();
-    
-    // Add explicit references from the language
-    selectedLanguage.references?.forEach(ref => refIds.add(ref.id));
-    
-    // Extract inline citations from definition
+
     if (selectedLanguage.definition) {
       extractCitationKeys(selectedLanguage.definition).forEach(key => refIds.add(key));
     }
-    
-    // Extract inline citations from operation assumptions
+
     if (resolvedProperties) {
       for (const q of resolvedProperties.queries) {
+        q.refs?.forEach(key => refIds.add(key));
+        if (q.description) {
+          extractCitationKeys(q.description).forEach(key => refIds.add(key));
+        }
         if (q.assumption) {
           extractCitationKeys(q.assumption).forEach(key => refIds.add(key));
         }
       }
       for (const t of resolvedProperties.transformations) {
+        t.refs?.forEach(key => refIds.add(key));
+        if (t.description) {
+          extractCitationKeys(t.description).forEach(key => refIds.add(key));
+        }
         if (t.assumption) {
           extractCitationKeys(t.assumption).forEach(key => refIds.add(key));
         }
       }
     }
-    
-    // Build result from global references, preserving order from selectedLanguage.references first
+
     const globalRefMap = new Map(graphData.references.map(ref => [ref.id, ref]));
     const refs: KCReference[] = [];
     const addedIds = new Set<string>();
-    
-    // First add references in order from selectedLanguage.references
-    for (const ref of selectedLanguage.references ?? []) {
-      if (!addedIds.has(ref.id)) {
-        refs.push(ref);
-        addedIds.add(ref.id);
-      }
-    }
-    
-    // Then add any additional inline citations from global references
+
     for (const id of refIds) {
       if (!addedIds.has(id)) {
         const ref = globalRefMap.get(id);
@@ -175,6 +172,11 @@
       onSandboxLanguageEdit(selectedLanguage.id, fields);
     }
   }
+
+  function resetLanguageEdit() {
+    if (!selectedLanguage || !sandboxMode || !onSandboxLanguageReset) return;
+    onSandboxLanguageReset(selectedLanguage.id);
+  }
 </script>
 
 <div class="content-wrapper">
@@ -182,6 +184,11 @@
     {#if selectedLanguage}
       <div class="language-details">
         <MathText as="h3" className="text-xl font-bold text-gray-900 mb-2" text={selectedLanguage.name} />
+        {#if sandboxMode && sandboxEdited}
+          <div class="sandbox-editor-actions">
+            <button type="button" class="sandbox-cell-reset" onclick={resetLanguageEdit}>Reset</button>
+          </div>
+        {/if}
         {#if sandboxMode}
           <label class="editor-label" for="language-full-name">Full Name</label>
           <input
@@ -214,11 +221,7 @@
               text={selectedLanguage.definition}
               className="inline"
               onCitationClick={handleCitationClick}
-            />{#if selectedLanguage.definitionRefs?.length}{#each selectedLanguage.definitionRefs as refId}<button
-                  class="ref-badge"
-                  onclick={scrollToReferences}
-                  title="View reference"
-                >[{getGlobalRefNumber(refId) ?? '?'}]</button>{/each}{/if}
+            />
           </p>
         {/if}
 
@@ -305,6 +308,30 @@
 
     .ref-badge.inline {
       margin-left: 0.25em;
+    }
+
+    .sandbox-editor-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin: -0.25rem 0 0.55rem;
+    }
+
+    .sandbox-cell-reset {
+      border: 1px solid #cbd5e1;
+      border-radius: 0.35rem;
+      background: #fff;
+      color: #475569;
+      padding: 0.25rem 0.45rem;
+      font-size: 0.72rem;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    .sandbox-cell-reset:hover,
+    .sandbox-cell-reset:focus-visible {
+      background: #f1f5f9;
+      color: #0f172a;
+      outline: 2px solid rgba(37, 99, 235, 0.16);
     }
 
     .editor-label {

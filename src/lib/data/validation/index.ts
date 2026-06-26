@@ -10,6 +10,7 @@ import type {
 } from '../../types.js';
 import { getAllQueryCodes, getAllTransformationCodes, TRANSFORMATIONS } from '../operations.js';
 import { COMPLEXITIES, isValidComplexityCode } from '../complexities.js';
+import { guaranteesPoly, guaranteesQuasi } from './semantic.js';
 
 const VALID_TRANSFORMATION_STATUSES = new Set([
   'poly',
@@ -28,6 +29,28 @@ const VALID_TRANSFORMATION_DISPLAY_CODES = new Set(
 );
 
 const LANGUAGE_ID_SANITIZER = /\$/g;
+const RELATION_MACRO_PATTERN = /\\(compilespoly|compilesquasi|nocompilespoly|nocompilesquasi)\{((?:[^{}]|\{[^{}]*\})+)\}\{((?:[^{}]|\{[^{}]*\})+)\}/g;
+const OPERATION_RESULT_MACRO_PATTERN = /\\(supportspoly|supportsquasi|nosupportspoly|nosupportsquasi)\{((?:[^{}]|\{[^{}]*\})+)\}\{(\\[A-Za-z]+)\}/g;
+const LEGACY_ENTITY_MACRO_PATTERN = /\\(?:defref|edgeref|nedgeref|opref|nopref)\{/;
+
+const OPERATION_MACRO_TO_CODE: Record<string, string> = {
+  '\\CO': 'CO',
+  '\\VA': 'VA',
+  '\\CE': 'CE',
+  '\\IM': 'IM',
+  '\\EQ': 'EQ',
+  '\\SE': 'SE',
+  '\\CT': 'CT',
+  '\\ME': 'ME',
+  '\\CD': 'CD',
+  '\\FO': 'FO',
+  '\\SFO': 'SFO',
+  '\\NOTC': 'NOT_C',
+  '\\ANDC': 'AND_C',
+  '\\ANDBC': 'AND_BC',
+  '\\ORC': 'OR_C',
+  '\\ORBC': 'OR_BC'
+};
 
 function normalizeLanguageId(value: string): string {
   return (value ?? '').replace(LANGUAGE_ID_SANITIZER, '').trim();
@@ -40,6 +63,73 @@ function languageLatexRef(name: string | undefined, fallbackId: string): string 
     return `\\langfam{${familyMatch[1]}}{${familyMatch[2]}}`;
   }
   return `\\langref{${displayName.replace(/\$/g, '')}}`;
+}
+
+function normalizeLangRefArg(ref: string): string {
+  return ref
+    .trim()
+    .replace(/^\\langfam\{([^{}]+)\}\{([^{}]+)\}(?:\{[^{}]*\})?$/i, '$1_$2')
+    .replace(/^\\langref\{((?:[^{}]|\{[^{}]*\})+)\}(?:\{[^{}]*\})?$/i, '$1')
+    .replace(/\\textless\{\}/gi, '<')
+    .replace(/\\textless(?![A-Za-z])/gi, '<')
+    .replace(/\$<\$/g, '<')
+    .replace(/\$/g, '')
+    .replace(/\\_/g, '_')
+    .replace(/_\{\s*([^{}]+)\s*\}/g, '_$1')
+    .replace(/\s+/g, ' ');
+}
+
+function buildLanguageRefResolver(languages: KCLanguage[]): (ref: string) => string | undefined {
+  const aliases = new Map<string, string>();
+  for (const language of languages) {
+    const familyName = language.name.replace(/\$_([^$]+)\$/g, '_$1').replace(/\$/g, '');
+    for (const alias of [language.id, language.name, familyName, normalizeLangRefArg(language.name), normalizeLangRefArg(familyName)]) {
+      aliases.set(alias, language.id);
+      aliases.set(alias.toLowerCase(), language.id);
+    }
+  }
+  return (ref: string) => {
+    const normalized = normalizeLangRefArg(ref);
+    return aliases.get(normalized) ?? aliases.get(normalized.toLowerCase());
+  };
+}
+
+function relationMacroStatusOk(command: string, status: string | undefined): boolean {
+  switch (command) {
+    case 'compilespoly':
+      return guaranteesPoly(status);
+    case 'compilesquasi':
+      return guaranteesQuasi(status);
+    case 'nocompilespoly':
+      return status === 'no-poly-unknown-quasi' || status === 'no-poly-quasi' || status === 'no-quasi';
+    case 'nocompilesquasi':
+      return status === 'no-quasi';
+    default:
+      return false;
+  }
+}
+
+function operationMacroStatusOk(command: string, complexity: string | undefined): boolean {
+  switch (command) {
+    case 'supportspoly':
+      return complexity === 'poly';
+    case 'supportsquasi':
+      return guaranteesQuasi(complexity);
+    case 'nosupportspoly':
+      return complexity === 'no-poly-unknown-quasi' || complexity === 'no-poly-quasi' || complexity === 'no-quasi';
+    case 'nosupportsquasi':
+      return complexity === 'no-quasi';
+    default:
+      return false;
+  }
+}
+
+function operationSupportFor(data: GraphData, languageId: string, operationMacro: string): KCOpSupport | undefined {
+  const operationCode = OPERATION_MACRO_TO_CODE[operationMacro];
+  if (!operationCode) return undefined;
+  const language = data.languages.find((item) => item.id === languageId);
+  if (!language) return undefined;
+  return language.properties?.queries?.[operationCode] ?? language.properties?.transformations?.[operationCode];
 }
 
 function ensureRefsExist(
@@ -210,20 +300,6 @@ function validateLanguage(
   globalRefs: Set<string>,
   errors: string[]
 ): void {
-  if (Array.isArray(language.references)) {
-    for (const reference of language.references) {
-      if (!reference?.id) {
-        errors.push(`Language "${language.name}" contains a reference without an id`);
-        continue;
-      }
-      if (!globalRefs.has(reference.id)) {
-        errors.push(`Language "${language.name}" references unknown id "${reference.id}"`);
-      }
-    }
-  }
-
-  ensureRefsExist(language.definitionRefs, `Language "${language.name}" definitionRefs`, globalRefs, errors);
-
   validateOperationMap(language.name, 'query', language.properties?.queries, globalRefs, errors);
   validateOperationMap(language.name, 'transformation', language.properties?.transformations, globalRefs, errors);
 
@@ -304,6 +380,93 @@ function validateRelations(
   }
 }
 
+function validateRelationMacroText(
+  text: string | undefined,
+  context: string,
+  data: GraphData,
+  resolveLanguageId: (ref: string) => string | undefined,
+  errors: string[]
+): void {
+  if (!text) return;
+  if (LEGACY_ENTITY_MACRO_PATTERN.test(text)) {
+    errors.push(`${context}: legacy entity macros are not allowed`);
+  }
+  if (text.includes('\\thislang')) {
+    errors.push(`${context}: \\thislang is only valid inside authored batch claims`);
+    return;
+  }
+
+  RELATION_MACRO_PATTERN.lastIndex = 0;
+  let match: RegExpExecArray | null;
+  while ((match = RELATION_MACRO_PATTERN.exec(text)) !== null) {
+    const [, command, sourceRef, targetRef] = match;
+    const sourceId = resolveLanguageId(sourceRef);
+    const targetId = resolveLanguageId(targetRef);
+    if (!sourceId || !targetId) {
+      errors.push(`${context}: unknown language in \\${command}{${sourceRef}}{${targetRef}}`);
+      continue;
+    }
+    const sourceIndex = data.adjacencyMatrix.indexByLanguage[sourceId];
+    const targetIndex = data.adjacencyMatrix.indexByLanguage[targetId];
+    const status = sourceId === targetId ? 'poly' : data.adjacencyMatrix.matrix[sourceIndex]?.[targetIndex]?.status;
+    if (!relationMacroStatusOk(command, status)) {
+      errors.push(`${context}: \\${command}{${sourceRef}}{${targetRef}} does not match stored status ${status ?? 'missing'}`);
+    }
+  }
+
+  OPERATION_RESULT_MACRO_PATTERN.lastIndex = 0;
+  while ((match = OPERATION_RESULT_MACRO_PATTERN.exec(text)) !== null) {
+    const [, command, languageRef, operationMacro] = match;
+    const languageId = resolveLanguageId(languageRef);
+    if (!languageId) {
+      errors.push(`${context}: unknown language in \\${command}{${languageRef}}{${operationMacro}}`);
+      continue;
+    }
+    if (!OPERATION_MACRO_TO_CODE[operationMacro]) {
+      errors.push(`${context}: unknown operation macro ${operationMacro}`);
+      continue;
+    }
+    const support = operationSupportFor(data, languageId, operationMacro);
+    if (!operationMacroStatusOk(command, support?.complexity)) {
+      errors.push(`${context}: \\${command}{${languageRef}}{${operationMacro}} does not match stored status ${support?.complexity ?? 'missing'}`);
+    }
+  }
+}
+
+function validateRelationMacros(data: GraphData, errors: string[]): void {
+  const resolveLanguageId = buildLanguageRefResolver(data.languages);
+  for (const language of data.languages) {
+    validateRelationMacroText(language.definition, `Language "${language.name}" definition`, data, resolveLanguageId, errors);
+    for (const [opType, supportMap] of Object.entries(language.properties ?? {}) as Array<[string, Record<string, KCOpSupport> | undefined]>) {
+      for (const [opCode, support] of Object.entries(supportMap ?? {})) {
+        validateRelationMacroText(
+          support?.description,
+          `Language "${language.name}" ${opType} "${opCode}" description`,
+          data,
+          resolveLanguageId,
+          errors
+        );
+      }
+    }
+  }
+
+  for (const definition of data.definitions ?? []) {
+    validateRelationMacroText(definition.statement, `Definition "${definition.id}"`, data, resolveLanguageId, errors);
+  }
+
+  const { languageIds, matrix } = data.adjacencyMatrix;
+  for (let i = 0; i < languageIds.length; i += 1) {
+    for (let j = 0; j < languageIds.length; j += 1) {
+      const relation = matrix[i]?.[j];
+      if (!relation) continue;
+      const context = `Edge ${languageIds[i]} -> ${languageIds[j]}`;
+      validateRelationMacroText(relation.description, `${context} description`, data, resolveLanguageId, errors);
+      validateRelationMacroText(relation.noPolyDescription?.description, `${context} no-poly description`, data, resolveLanguageId, errors);
+      validateRelationMacroText(relation.quasiDescription?.description, `${context} quasi description`, data, resolveLanguageId, errors);
+    }
+  }
+}
+
 export function validateDatasetStructure(data: GraphData): TransformValidationResult {
   const errors: string[] = [];
   const knownLanguages = collectLanguageIdentifiers(data.languages, errors);
@@ -317,6 +480,7 @@ export function validateDatasetStructure(data: GraphData): TransformValidationRe
   validateDefinitions(data.definitions, globalReferenceRegistry, errors);
 
   validateRelations(data.adjacencyMatrix, knownLanguages, globalReferenceRegistry, errors);
+  validateRelationMacros(data, errors);
 
   return errors.length > 0 ? { ok: false, errors } : { ok: true };
 }

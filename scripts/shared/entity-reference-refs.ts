@@ -1,19 +1,26 @@
 import type { DatabaseSchema } from './database.js';
 
-const ENTITY_REF_PATTERN = /\\(n?edgeref|n?opref)\{([^}]+)\}\{([^}]+)\}/g;
+const ENTITY_REF_PATTERN = /\\(compilespoly|compilesquasi|nocompilespoly|nocompilesquasi)\{((?:[^{}]|\{[^{}]*\})+)\}\{((?:[^{}]|\{[^{}]*\})+)\}/g;
+const OPERATION_RESULT_REF_PATTERN = /\\(supportspoly|supportsquasi|nosupportspoly|nosupportsquasi)\{((?:[^{}]|\{[^{}]*\})+)\}\{(\\[A-Za-z]+)\}/g;
 
-type OperationCatalog = Record<string, { code: string }>;
-
-function operationCatalogs(database: DatabaseSchema): { queries: OperationCatalog; transformations: OperationCatalog } {
-  const operations = database.operations as {
-    queries?: OperationCatalog;
-    transformations?: OperationCatalog;
-  };
-  return {
-    queries: operations.queries ?? {},
-    transformations: operations.transformations ?? {}
-  };
-}
+const OPERATION_MACRO_TO_CODE: Record<string, string> = {
+  '\\CO': 'CO',
+  '\\VA': 'VA',
+  '\\CE': 'CE',
+  '\\IM': 'IM',
+  '\\EQ': 'EQ',
+  '\\SE': 'SE',
+  '\\CT': 'CT',
+  '\\ME': 'ME',
+  '\\CD': 'CD',
+  '\\FO': 'FO',
+  '\\SFO': 'SFO',
+  '\\NOTC': 'NOT_C',
+  '\\ANDC': 'AND_C',
+  '\\ANDBC': 'AND_BC',
+  '\\ORC': 'OR_C',
+  '\\ORBC': 'OR_BC'
+};
 
 function addUnique(target: string[], refs?: string[]): boolean {
   let changed = false;
@@ -68,21 +75,6 @@ function buildLanguageResolver(database: DatabaseSchema): (ref: string) => strin
   };
 }
 
-function displayCodeToSafeKey(database: DatabaseSchema, opCode: string): string {
-  const operations = operationCatalogs(database);
-  if (operations.queries[opCode] || operations.transformations[opCode]) {
-    return opCode;
-  }
-
-  for (const [safeKey, opDef] of Object.entries(operations.transformations)) {
-    if (opDef.code === opCode) return safeKey;
-  }
-  for (const [safeKey, opDef] of Object.entries(operations.queries)) {
-    if (opDef.code === opCode) return safeKey;
-  }
-  return opCode;
-}
-
 function relationRefs(database: DatabaseSchema, sourceId: string, targetId: string): string[] {
   const sourceIdx = database.adjacencyMatrix.indexByLanguage[sourceId];
   const targetIdx = database.adjacencyMatrix.indexByLanguage[targetId];
@@ -97,15 +89,11 @@ function relationRefs(database: DatabaseSchema, sourceId: string, targetId: stri
   return refs;
 }
 
-function operationRefs(database: DatabaseSchema, languageId: string, opCode: string): string[] {
-  const language = database.languages.find((candidate) => candidate.id === languageId);
-  if (!language) return [];
-  const safeCode = displayCodeToSafeKey(database, opCode);
-  const support =
-    language.properties?.queries?.[safeCode] ??
-    language.properties?.queries?.[opCode] ??
-    language.properties?.transformations?.[safeCode] ??
-    language.properties?.transformations?.[opCode];
+function operationRefs(database: DatabaseSchema, languageId: string, operationMacro: string): string[] {
+  const operationCode = OPERATION_MACRO_TO_CODE[operationMacro];
+  if (!operationCode) return [];
+  const language = database.languages.find((item) => item.id === languageId);
+  const support = language?.properties?.queries?.[operationCode] ?? language?.properties?.transformations?.[operationCode];
   return support?.refs ?? [];
 }
 
@@ -120,16 +108,18 @@ function referencedEntityRefs(
   ENTITY_REF_PATTERN.lastIndex = 0;
   let match: RegExpExecArray | null;
   while ((match = ENTITY_REF_PATTERN.exec(text)) !== null) {
-    const [, command, firstRef, secondRef] = match;
+    const [, _command, firstRef, secondRef] = match;
     const firstId = resolveLanguageId(firstRef);
     if (!firstId) continue;
+    const secondId = resolveLanguageId(secondRef);
+    if (secondId) addUnique(refs, relationRefs(database, firstId, secondId));
+  }
 
-    if (command.endsWith('edgeref')) {
-      const secondId = resolveLanguageId(secondRef);
-      if (secondId) addUnique(refs, relationRefs(database, firstId, secondId));
-    } else {
-      addUnique(refs, operationRefs(database, firstId, secondRef));
-    }
+  OPERATION_RESULT_REF_PATTERN.lastIndex = 0;
+  while ((match = OPERATION_RESULT_REF_PATTERN.exec(text)) !== null) {
+    const [, _command, languageRef, operationMacro] = match;
+    const languageId = resolveLanguageId(languageRef);
+    if (languageId) addUnique(refs, operationRefs(database, languageId, operationMacro));
   }
   return refs;
 }

@@ -22,7 +22,7 @@ function phraseForStatus(status: string): string {
     case 'poly':
       return 'in polynomial time';
     case 'unknown-poly-quasi':
-      return 'in at worst quasipolynomial time';
+      return 'in quasipolynomial time';
     case 'no-poly-quasi':
       return 'in quasipolynomial time';
     default:
@@ -199,5 +199,4 @@ export function collectRefsUnion(path: number[], matrix: KCAdjacencyMatrix): str
   }
   return Array.from(refs);
 }
-
 

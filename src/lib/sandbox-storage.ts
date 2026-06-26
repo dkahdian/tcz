@@ -27,18 +27,15 @@ function isSandboxEdit(value: unknown): value is SandboxEdit {
     return (
       (edit.id === undefined || typeof edit.id === 'string') &&
       typeof edit.name === 'string' &&
-      (edit.classification === 'plain' || edit.classification === 'family' || edit.classification === 'union') &&
       typeof edit.fullName === 'string' &&
-      typeof edit.definition === 'string' &&
-      (edit.definitionRefs === undefined || Array.isArray(edit.definitionRefs))
+      typeof edit.definition === 'string'
     );
   }
   if (edit.kind === 'language:edit') {
     return (
       typeof edit.languageId === 'string' &&
       (edit.fullName === undefined || typeof edit.fullName === 'string') &&
-      (edit.definition === undefined || typeof edit.definition === 'string') &&
-      (edit.definitionRefs === undefined || Array.isArray(edit.definitionRefs))
+      (edit.definition === undefined || typeof edit.definition === 'string')
     );
   }
   if (edit.kind === 'edge') {

@@ -175,15 +175,20 @@ The language dropdown should merge ordinary languages and families. The picker s
 
 The relation dropdown should provide two searchable language selectors. The macro is inferred from the current relation status:
 
-- `poly` and `unknown-poly-quasi`: insert `\edgeref{source}{target}`;
-- `no-quasi` and `no-poly-unknown-quasi`: insert `\nedgeref{source}{target}`;
+- `poly`: insert `\compilespoly{source}{target}`;
+- `unknown-poly-quasi`: insert `\compilesquasi{source}{target}`;
+- `no-poly-unknown-quasi`: insert `\nocompilespoly{source}{target}`;
+- `no-quasi`: insert `\nocompilesquasi{source}{target}`;
 - `unknown`: show `Nothing to cite`;
-- `no-poly-quasi`: ask what the sentence is citing, with options `No polynomial compilation` and `Quasipolynomial compilation exists`, then insert `\nedgeref` or `\edgeref` respectively.
+- `no-poly-quasi`: ask what the sentence is citing, with options `No polynomial compilation` and `Quasipolynomial compilation exists`, then insert `\nocompilespoly` or `\compilesquasi` respectively.
 
 The operation dropdown should provide searchable language and operation selectors. The macro is inferred from the selected claim:
 
-- `poly`: insert `\opref{language}{operation}`;
-- any other non-unknown status: insert `\nopref{language}{operation}`;
+- `poly`: insert `\supportspoly{language}{operation}`;
+- `unknown-poly-quasi`: insert `\supportsquasi{language}{operation}`;
+- `no-poly-unknown-quasi`: insert `\nosupportspoly{language}{operation}`;
+- `no-poly-quasi`: ask what the sentence is citing, then insert `\nosupportspoly` or `\supportsquasi`;
+- `no-quasi`: insert `\nosupportsquasi{language}{operation}`;
 - unknown: show `Nothing to cite`.
 
 The math button should insert `$...$`, wrapping the current selection when text is selected and placing the cursor inside the delimiters otherwise.

@@ -2,7 +2,7 @@
 
 Use citation commands for paper attribution. Prefer `\citet{...}` or `\citep{...}` over plaintext author names in claim descriptions.
 
-Use entity/reference commands for claim objects. Prefer `\langref{...}`, `\langfam{...}{...}`, `\edgeref{...}{...}`, `\nedgeref{...}{...}`, `\opref{...}{...}`, and `\nopref{...}{...}` over plaintext language or claim names. For plural prose, use the suffix form inside the language command, e.g. `\langref{OBDD}{s}` or `\langfam{OBDD}{<}{s}`.
+Use entity/reference commands for claim objects. Prefer `\langref{...}`, `\langfam{...}{...}`, relation macros such as `\compilespoly{...}{...}`, and operation-result macros such as `\supportspoly{...}{...}` over plaintext language or claim names. For plural prose, use the suffix form inside the language command, e.g. `\langref{OBDD}{s}` or `\langfam{OBDD}{<}{s}`.
 
 Keep claim descriptions concise. Justify the direct claim at hand; avoid extra context that is only interesting background.
 

@@ -1,27 +1,28 @@
 import katex from 'katex';
 
-const LATEX_TRIGGER = /(\$\$?[\s\S]*?\$|\\\[|\\\(|\\begin\{|\\cite[tp]?(?:\[[^\]]*\]){0,2}\{|\\defref\{|\\langref\{|\\langfam\{|\\n?edgeref\{|\\n?opref\{)/;
+const LATEX_TRIGGER = /(\$\$?[\s\S]*?\$|\\\[|\\\(|\\begin\{|\\cite[tp]?(?:\[[^\]]*\]){0,2}\{|\\langref\{|\\langfam\{|\\(?:compilespoly|compilesquasi|nocompilespoly|nocompilesquasi|supportspoly|supportsquasi|nosupportspoly|nosupportsquasi)\{)/;
 const LATEX_FRAGMENT = /(\$\$[\s\S]+?\$\$|\$[\s\S]+?\$|\\\[[\s\S]+?\\\]|\\\([\s\S]+?\\\))/g;
 const CITATION_PATTERN = /\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}/g;
 const CITATION_RENDER_PATTERN = /\\(cite|citet|citep)((?:\[[^\]]*\]){0,2})\{([^}]+)\}/g;
 
 // Entity link patterns (processed after HTML rendering)
-const DEFREF_PATTERN = /\\defref\{((?:[^{}]|\{[^{}]*\})+)\}(?:\{((?:[^{}]|\{[^{}]*\})+)\})?/g;
 const LANGREF_PATTERN = /\\langref\{((?:[^{}]|\{[^{}]*\})+)\}(?:\{([^{}]*)\})?/g;
 const LANGFAM_PATTERN = /\\langfam\{([^}]+)\}\{([^}]+)\}(?:\{([^{}]*)\})?/g;
-const EDGEREF_PATTERN = /\\edgeref\{([^}]+)\}\{([^}]+)\}/g;
-const NEDGEREF_PATTERN = /\\nedgeref\{([^}]+)\}\{([^}]+)\}/g;
-const OPREF_PATTERN = /\\opref\{([^}]+)\}\{([^}]+)\}/g;
-const NOPREF_PATTERN = /\\nopref\{([^}]+)\}\{([^}]+)\}/g;
+const RELATIONREF_PATTERN = /\\(compilespoly|compilesquasi|nocompilespoly|nocompilesquasi)\{((?:[^{}]|\{[^{}]*\})+)\}\{((?:[^{}]|\{[^{}]*\})+)\}/g;
+const OPRESULT_PATTERN = /\\(supportspoly|supportsquasi|nosupportspoly|nosupportsquasi)\{((?:[^{}]|\{[^{}]*\})+)\}\{(\\[A-Za-z]+)\}/g;
 const EMPH_PATTERN = /\\emph\{([^}]+)\}/g;
 const TEXTIT_PATTERN = /\\textit\{([^}]+)\}/g;
 const TEXTBF_PATTERN = /\\textbf\{([^}]+)\}/g;
 const TEXTTT_PATTERN = /\\texttt\{([^}]+)\}/g;
-const ENTITY_COMMAND_PATTERN = /\\defref\{(?:[^{}]|\{[^{}]*\})+\}(?:\{(?:[^{}]|\{[^{}]*\})+\})?|\\langref\{(?:[^{}]|\{[^{}]*\})+\}(?:\{[^{}]*\})?|\\langfam\{[^{}]+\}\{[^{}]+\}(?:\{[^{}]*\})?|\\n?edgeref\{[^{}]+\}\{[^{}]+\}|\\n?opref\{[^{}]+\}\{[^{}]+\}/g;
+const ENTITY_COMMAND_PATTERN = /\\langref\{(?:[^{}]|\{[^{}]*\})+\}(?:\{[^{}]*\})?|\\langfam\{[^{}]+\}\{[^{}]+\}(?:\{[^{}]*\})?|\\(?:compilespoly|compilesquasi|nocompilespoly|nocompilesquasi)\{(?:[^{}]|\{[^{}]*\})+\}\{(?:[^{}]|\{[^{}]*\})+\}|\\(?:supportspoly|supportsquasi|nosupportspoly|nosupportsquasi)\{(?:[^{}]|\{[^{}]*\})+\}\{\\[A-Za-z]+\}/g;
 
 export interface EntityRefResolver {
   edgeRefs?: (sourceId: string, targetId: string) => string[];
-  opRefs?: (languageId: string, opCode: string) => string[];
+  edgeAssumption?: (sourceId: string, targetId: string) => string | undefined;
+  operationLabel?: (operationMacro: string) => string;
+  operationCode?: (operationMacro: string) => string | undefined;
+  operationRefs?: (languageId: string, operationMacro: string) => string[];
+  operationAssumption?: (languageId: string, operationMacro: string) => string | undefined;
 }
 
 /**
@@ -316,10 +317,10 @@ export function renderLatexTextFormatting(html: string): string {
 }
 
 /**
- * Check if text contains entity link commands (\langref, \edgeref, \opref)
+ * Check if text contains entity link commands.
  */
 export function containsEntityLinks(text: string): boolean {
-  return /\\(defref|langref|langfam|n?edgeref|n?opref)\{/.test(text);
+  return /\\(langref|langfam|compilespoly|compilesquasi|nocompilespoly|nocompilesquasi|supportspoly|supportsquasi|nosupportspoly|nosupportsquasi)\{/.test(text);
 }
 
 /**
@@ -338,13 +339,6 @@ function renderNameHtml(name: string): string {
     return result.html ?? escapeHtml(name);
   }
   return escapeHtml(name);
-}
-
-function renderEntityLabelHtml(label: string): string {
-  // Inline math inside entity arguments may already have been rendered by
-  // renderMathText before entity-link replacement runs.
-  if (label.includes('class="katex')) return label;
-  return renderNameHtml(label);
 }
 
 function renderEntitySuffixHtml(suffix: string | undefined): string {
@@ -402,17 +396,17 @@ function entityCitationSuffix(
  * 
  * Supported commands:
  * - \langref{langId} → link to language info panel
- * - \edgeref{srcId}{tgtId} → link to edge info panel
- * - \opref{langId}{opCode} → link to operation cell info panel
+ * - relation macros such as \compilespoly{...}{...}: link to edge info panel
+ * - operation-result macros such as \supportspoly{...}{...}: link to operation cell info panel
  *
  * Uses <a> tags with href so Ctrl+click opens in a new tab.
  */
 export function renderEntityLinks(
   html: string,
   idToName: (id: string) => string,
-  opCodeToLabel?: (code: string) => string,
+  _opCodeToLabel?: (code: string) => string,
   nameToId?: (name: string) => string | undefined,
-  definitionRefResolver?: (ref: string) => { id: string; title: string; resolved: boolean },
+  _definitionRefResolver?: (ref: string) => { id: string; title: string; resolved: boolean },
   entityRefResolver?: EntityRefResolver
 ): string {
   let result = html;
@@ -433,23 +427,72 @@ export function renderEntityLinks(
     return { id: normalizedRef, name: normalizedRef, resolved: false };
   };
 
-  // Replace \defref{definitionId or definitionTitle} or \defref{id}{label}
-  result = result.replace(DEFREF_PATTERN, (_match, defRef: string, label: string | undefined) => {
-    const normalized = decodeMinimalEntities(defRef).trim();
-    const displayLabel = label ? decodeMinimalEntities(label).trim() : undefined;
-    const resolved = definitionRefResolver?.(normalized) ?? {
-      id: normalized,
-      title: normalized,
-      resolved: false
-    };
+  function relationTimePhrase(command: string): string {
+    if (command === 'compilespoly' || command === 'nocompilespoly') return 'in polynomial time';
+    return 'in quasipolynomial time';
+  }
 
-    if (!resolved.resolved) {
-      return `<span class="entity-link entity-link--unknown def-link--unknown" title="Unknown definition: ${escapeHtml(normalized)}">[?]</span>`;
+  function relationVerbPhrase(command: string): string {
+    if (command === 'compilespoly' || command === 'compilesquasi') return 'compiles to';
+    return 'does not compile to';
+  }
+
+  function renderAssumptionHtml(assumption: string | undefined): string {
+    if (!assumption) return '';
+    const rendered = renderMathText(formatAssumptionForMathText(assumption));
+    return ` assuming ${rendered.html ?? escapeHtml(assumption)}`;
+  }
+
+  function relationLabelHtml(command: string, srcName: string, tgtName: string, assumption?: string): string {
+    const source = renderNameHtml(srcName);
+    const target = renderNameHtml(tgtName);
+    return `${source} ${relationVerbPhrase(command)} ${target} ${relationTimePhrase(command)}${renderAssumptionHtml(assumption)}`;
+  }
+
+  function operationTimePhrase(command: string): string {
+    if (command === 'supportspoly' || command === 'nosupportspoly') return 'in polynomial time';
+    return 'in quasipolynomial time';
+  }
+
+  function operationLabelHtml(command: string, langName: string, operationMacro: string, assumption?: string): string {
+    const language = renderNameHtml(langName);
+    const operation = escapeHtml(entityRefResolver?.operationLabel?.(operationMacro) ?? operationMacro.replace(/^\\/, ''));
+    if (command === 'supportspoly' || command === 'supportsquasi') {
+      return `${language} supports ${operation} ${operationTimePhrase(command)}${renderAssumptionHtml(assumption)}`;
     }
+    return `${operation} is unsupported by ${language} ${operationTimePhrase(command)}${renderAssumptionHtml(assumption)}`;
+  }
 
-    const safeId = escapeHtml(resolved.id);
-    const labelHtml = renderEntityLabelHtml(displayLabel || resolved.title);
-    return `<a class="entity-link def-link" href="/about#${safeId}" data-entity-type="def" data-def-id="${safeId}"><strong>${labelHtml}</strong></a>`;
+  result = result.replace(RELATIONREF_PATTERN, (match: string, command: string, srcRef: string, tgtRef: string, offset: number, fullText: string) => {
+    const src = resolveLang(srcRef);
+    const tgt = resolveLang(tgtRef);
+    const assumption = src.resolved && tgt.resolved
+      ? entityRefResolver?.edgeAssumption?.(src.id, tgt.id)
+      : undefined;
+    const labelHtml = relationLabelHtml(command, src.name, tgt.name, assumption);
+    if (!src.resolved || !tgt.resolved || !src.id.startsWith('lang_') || !tgt.id.startsWith('lang_')) {
+      return labelHtml;
+    }
+    const safeSrc = escapeHtml(src.id);
+    const safeTgt = escapeHtml(tgt.id);
+    const citation = entityCitationSuffix(entityRefResolver?.edgeRefs?.(src.id, tgt.id), fullText, offset, match.length);
+    return `<a class="entity-link edge-link" href="/#edge/${safeSrc}/${safeTgt}" data-entity-type="edge" data-source-id="${safeSrc}" data-target-id="${safeTgt}">${labelHtml}</a>${citation}`;
+  });
+
+  result = result.replace(OPRESULT_PATTERN, (match: string, command: string, languageRef: string, operationMacro: string, offset: number, fullText: string) => {
+    const language = resolveLang(languageRef);
+    const assumption = language.resolved
+      ? entityRefResolver?.operationAssumption?.(language.id, operationMacro)
+      : undefined;
+    const labelHtml = operationLabelHtml(command, language.name, operationMacro, assumption);
+    if (!language.resolved || !language.id.startsWith('lang_')) {
+      return labelHtml;
+    }
+    const safeId = escapeHtml(language.id);
+    const operationCode = entityRefResolver?.operationCode?.(operationMacro) ?? operationMacro.replace(/^\\/, '');
+    const safeOp = escapeHtml(operationCode);
+    const citation = entityCitationSuffix(entityRefResolver?.operationRefs?.(language.id, operationMacro), fullText, offset, match.length);
+    return `<a class="entity-link operation-link" href="/#op/${safeId}/${safeOp}" data-entity-type="operation" data-lang-id="${safeId}" data-operation-code="${safeOp}">${labelHtml}</a>${citation}`;
   });
 
   // Replace \langref{langId or langName}
@@ -473,62 +516,6 @@ export function renderEntityLinks(
     }
     const safeId = escapeHtml(id);
     return `<a class="entity-link lang-link" href="/#lang/${safeId}" data-entity-type="lang" data-lang-id="${safeId}">${nameHtml}</a>`;
-  });
-
-  // Replace \edgeref{srcRef}{tgtRef}
-  result = result.replace(EDGEREF_PATTERN, (match: string, srcRef: string, tgtRef: string, offset: number, fullText: string) => {
-    const src = resolveLang(srcRef);
-    const tgt = resolveLang(tgtRef);
-    const labelHtml = `${renderNameHtml(src.name)} compiles to ${renderNameHtml(tgt.name)}`;
-    if (!src.resolved || !tgt.resolved || !src.id.startsWith('lang_') || !tgt.id.startsWith('lang_')) {
-      return labelHtml;
-    }
-    const safeSrc = escapeHtml(src.id);
-    const safeTgt = escapeHtml(tgt.id);
-    const citation = entityCitationSuffix(entityRefResolver?.edgeRefs?.(src.id, tgt.id), fullText, offset, match.length);
-    return `<a class="entity-link edge-link" href="/#edge/${safeSrc}/${safeTgt}" data-entity-type="edge" data-source-id="${safeSrc}" data-target-id="${safeTgt}">${labelHtml}</a>${citation}`;
-  });
-
-  // Replace \nedgeref{srcRef}{tgtRef} (negative edge: "cannot compile to")
-  result = result.replace(NEDGEREF_PATTERN, (match: string, srcRef: string, tgtRef: string, offset: number, fullText: string) => {
-    const src = resolveLang(srcRef);
-    const tgt = resolveLang(tgtRef);
-    const labelHtml = `${renderNameHtml(src.name)} cannot compile to ${renderNameHtml(tgt.name)}`;
-    if (!src.resolved || !tgt.resolved || !src.id.startsWith('lang_') || !tgt.id.startsWith('lang_')) {
-      return labelHtml;
-    }
-    const safeSrc = escapeHtml(src.id);
-    const safeTgt = escapeHtml(tgt.id);
-    const citation = entityCitationSuffix(entityRefResolver?.edgeRefs?.(src.id, tgt.id), fullText, offset, match.length);
-    return `<a class="entity-link edge-link" href="/#edge/${safeSrc}/${safeTgt}" data-entity-type="edge" data-source-id="${safeSrc}" data-target-id="${safeTgt}">${labelHtml}</a>${citation}`;
-  });
-
-  // Replace \opref{langRef}{opCode}
-  result = result.replace(OPREF_PATTERN, (match: string, langRef: string, opCode: string, offset: number, fullText: string) => {
-    const lang = resolveLang(langRef);
-    const opLabel = opCodeToLabel ? opCodeToLabel(opCode) : opCode;
-    const labelHtml = `${renderNameHtml(lang.name)} supports ${escapeHtml(opLabel)}`;
-    if (!lang.resolved || !lang.id.startsWith('lang_')) {
-      return labelHtml;
-    }
-    const safeId = escapeHtml(lang.id);
-    const safeCode = escapeHtml(opCode);
-    const citation = entityCitationSuffix(entityRefResolver?.opRefs?.(lang.id, opCode), fullText, offset, match.length);
-    return `<a class="entity-link op-link" href="/#op/${safeId}/${safeCode}" data-entity-type="op" data-lang-id="${safeId}" data-op-code="${safeCode}">${labelHtml}</a>${citation}`;
-  });
-
-  // Replace \nopref{langRef}{opCode} (negative op: "is unsupported by")
-  result = result.replace(NOPREF_PATTERN, (match: string, langRef: string, opCode: string, offset: number, fullText: string) => {
-    const lang = resolveLang(langRef);
-    const opLabel = opCodeToLabel ? opCodeToLabel(opCode) : opCode;
-    const labelHtml = `${escapeHtml(opLabel)} is unsupported by ${renderNameHtml(lang.name)}`;
-    if (!lang.resolved || !lang.id.startsWith('lang_')) {
-      return labelHtml;
-    }
-    const safeId = escapeHtml(lang.id);
-    const safeCode = escapeHtml(opCode);
-    const citation = entityCitationSuffix(entityRefResolver?.opRefs?.(lang.id, opCode), fullText, offset, match.length);
-    return `<a class="entity-link op-link" href="/#op/${safeId}/${safeCode}" data-entity-type="op" data-lang-id="${safeId}" data-op-code="${safeCode}">${labelHtml}</a>${citation}`;
   });
 
   return result;

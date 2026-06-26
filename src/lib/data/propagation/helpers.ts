@@ -136,7 +136,7 @@ export function phraseForStatus(status: string): string {
     case 'poly':
       return 'in polynomial time';
     case 'unknown-poly-quasi':
-      return 'in at worst quasipolynomial time';
+      return 'in quasipolynomial time';
     case 'no-poly-quasi':
       return 'in quasipolynomial time';
     default:
@@ -173,6 +173,27 @@ export function formatInlineAssumption(assumption: string | undefined): string {
   return ` assuming ${formatted.join(' and ')}`;
 }
 
+export function languageRefForId(languageId: string): string {
+  const name = idToName(languageId);
+  const familyMatch = name.match(/^(.+)\$_(.+)\$$/);
+  if (familyMatch) {
+    return `\\langfam{${familyMatch[1]}}{${familyMatch[2]}}`;
+  }
+  return `\\langref{${name.replace(/\$/g, '').replace(/_/g, '\\_')}}`;
+}
+
+export function positiveCompilationRef(sourceId: string, targetId: string, statusOrLevel: string): string {
+  const command = statusOrLevel === 'poly' || statusOrLevel === 'polynomial' ? 'compilespoly' : 'compilesquasi';
+  return `\\${command}{${languageRefForId(sourceId)}}{${languageRefForId(targetId)}}`;
+}
+
+export function negativeCompilationRef(sourceId: string, targetId: string, statusOrLevel: string): string {
+  const command = statusOrLevel === 'no-quasi' || statusOrLevel === 'quasi' || statusOrLevel === 'quasipolynomial'
+    ? 'nocompilesquasi'
+    : 'nocompilespoly';
+  return `\\${command}{${languageRefForId(sourceId)}}{${languageRefForId(targetId)}}`;
+}
+
 /**
  * Collect and merge assumptions from all edges along a path.
  * Returns undefined if no assumptions, a single assumption if only one,
@@ -202,8 +223,7 @@ export function describePath(pathIds: string[], matrix: KCAdjacencyMatrix): stri
     const toIdx = languageIds.indexOf(toId);
     const relation = matrix.matrix[fromIdx]?.[toIdx];
     const status = relation?.status ?? 'unknown';
-    const assumption = relation?.assumption;
-    parts.push(`\\edgeref{${fromId}}{${toId}} ${phraseForStatus(status)}${formatInlineAssumption(assumption)}.`);
+    parts.push(`${positiveCompilationRef(fromId, toId, status)}.`);
   }
   return parts.join(' ');
 }
@@ -216,16 +236,16 @@ export function formatContradictingPremise(
   srcId: string,
   tgtId: string,
   status: string,
-  assumption: string | undefined
+  _assumption: string | undefined
 ): string {
   switch (status) {
     case 'no-poly-quasi':
     case 'no-poly-unknown-quasi':
-      return `\\nedgeref{${srcId}}{${tgtId}} in polynomial time${formatInlineAssumption(assumption)}`;
+      return negativeCompilationRef(srcId, tgtId, 'poly');
     case 'no-quasi':
-      return `\\nedgeref{${srcId}}{${tgtId}} in quasipolynomial time${formatInlineAssumption(assumption)}`;
+      return negativeCompilationRef(srcId, tgtId, 'quasi');
     default:
-      return `${idToName(srcId)} and ${idToName(tgtId)} have an incompatible relationship${formatInlineAssumption(assumption)}`;
+      return `${idToName(srcId)} and ${idToName(tgtId)} have an incompatible relationship${formatInlineAssumption(_assumption)}`;
   }
 }
 

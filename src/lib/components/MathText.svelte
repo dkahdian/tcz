@@ -10,21 +10,12 @@
   } from '$lib/utils/math-text';
   import { getGlobalRefNumber } from '$lib/data/references.js';
   import { idToName, nameToId } from '$lib/utils/language-id.js';
-  import { QUERIES, TRANSFORMATIONS, displayCodeToSafeKey } from '$lib/data/operations.js';
   import { initialGraphData } from '$lib/data/index.js';
+  import { QUERIES, TRANSFORMATIONS } from '$lib/data/operations.js';
   import type { EntityRefResolver } from '$lib/utils/math-text';
 
   const processedHtmlCache = new Map<string, string | null>();
   const PROCESSED_HTML_CACHE_MAX = 1024;
-
-  function opCodeToLabel(code: string): string {
-    return QUERIES[code]?.label ?? TRANSFORMATIONS[code]?.label ?? code;
-  }
-
-  type DefinitionRefResolution = { id: string; title: string; resolved: boolean };
-  const definitionById = new Map((initialGraphData.definitions ?? []).map((d) => [d.id, d]));
-  const definitionByTitle = new Map((initialGraphData.definitions ?? []).map((d) => [d.title.toLowerCase(), d]));
-  const languageById = new Map(initialGraphData.languages.map((language) => [language.id, language]));
 
   function uniqueRefs(...refLists: Array<string[] | undefined>): string[] {
     const refs = new Set<string>();
@@ -34,6 +25,31 @@
       }
     }
     return Array.from(refs);
+  }
+
+  const operationMacroToCode: Record<string, string> = {
+    '\\CO': 'CO',
+    '\\VA': 'VA',
+    '\\CE': 'CE',
+    '\\IM': 'IM',
+    '\\EQ': 'EQ',
+    '\\SE': 'SE',
+    '\\CT': 'CT',
+    '\\ME': 'ME',
+    '\\CD': 'CD',
+    '\\FO': 'FO',
+    '\\SFO': 'SFO',
+    '\\NOTC': 'NOT_C',
+    '\\ANDC': 'AND_C',
+    '\\ANDBC': 'AND_BC',
+    '\\ORC': 'OR_C',
+    '\\ORBC': 'OR_BC'
+  };
+
+  function operationSupport(languageId: string, operationMacro: string) {
+    const operationCode = operationMacroToCode[operationMacro] ?? operationMacro.replace(/^\\/, '');
+    const language = initialGraphData.languages.find((item) => item.id === languageId);
+    return language?.properties?.queries?.[operationCode] ?? language?.properties?.transformations?.[operationCode];
   }
 
   const entityRefResolver: EntityRefResolver = {
@@ -50,50 +66,27 @@
         relation.quasiDescription?.refs
       );
     },
-    opRefs(languageId: string, opCode: string) {
-      const language = languageById.get(languageId);
-      if (!language) return [];
-      const safeCode = displayCodeToSafeKey(opCode);
-      const support =
-        language.properties?.queries?.[safeCode] ??
-        language.properties?.queries?.[opCode] ??
-        language.properties?.transformations?.[safeCode] ??
-        language.properties?.transformations?.[opCode];
-      return uniqueRefs(support?.refs);
+    edgeAssumption(sourceId: string, targetId: string) {
+      const { adjacencyMatrix } = initialGraphData;
+      const sourceIdx = adjacencyMatrix.indexByLanguage[sourceId];
+      const targetIdx = adjacencyMatrix.indexByLanguage[targetId];
+      if (sourceIdx === undefined || targetIdx === undefined) return undefined;
+      return adjacencyMatrix.matrix[sourceIdx]?.[targetIdx]?.assumption;
+    },
+    operationCode(operationMacro: string) {
+      return operationMacroToCode[operationMacro];
+    },
+    operationLabel(operationMacro: string) {
+      const operationCode = operationMacroToCode[operationMacro] ?? operationMacro.replace(/^\\/, '');
+      return QUERIES[operationCode]?.label ?? TRANSFORMATIONS[operationCode]?.label ?? operationCode;
+    },
+    operationRefs(languageId: string, operationMacro: string) {
+      return operationSupport(languageId, operationMacro)?.refs ?? [];
+    },
+    operationAssumption(languageId: string, operationMacro: string) {
+      return operationSupport(languageId, operationMacro)?.assumption;
     }
   };
-
-  function resolveDefinitionRef(ref: string): DefinitionRefResolution {
-    const normalized = ref.trim();
-    const byId = definitionById.get(normalized);
-    if (byId) {
-      return { id: byId.id, title: byId.title, resolved: true };
-    }
-
-    const lower = normalized.toLowerCase();
-    const byTitle = definitionByTitle.get(lower);
-    if (byTitle) {
-      return { id: byTitle.id, title: byTitle.title, resolved: true };
-    }
-
-    // Common fallback for slug-like refs that may use spaces, underscores,
-    // or hyphens interchangeably.
-    const slug = lower.replace(/[_\s]+/g, '-');
-    const candidates = [
-      normalized,
-      normalized.replace(/^kdef:/i, ''),
-      lower,
-      slug
-    ];
-    for (const candidate of candidates) {
-      const found = definitionById.get(candidate);
-      if (found) {
-        return { id: found.id, title: found.title, resolved: true };
-      }
-    }
-
-    return { id: normalized, title: normalized, resolved: false };
-  }
 
   let {
     text = '',
@@ -146,7 +139,7 @@
     }
     
     if (containsEntityLinks(text ?? '')) {
-      html = renderEntityLinks(html, idToName, opCodeToLabel, nameToId, resolveDefinitionRef, entityRefResolver);
+      html = renderEntityLinks(html, idToName, undefined, nameToId, undefined, entityRefResolver);
     }
 
     if (containsCitations(html)) {

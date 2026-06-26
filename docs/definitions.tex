@@ -1,75 +1,97 @@
 % =============================
 % Tractable Circuit Zoo - Conceptual Definitions
 % Auto-generated from database.json
-% Generated: 2026-06-04T20:12:45.943Z
-%
-% EDITING INSTRUCTIONS:
-% - Definition IDs are preserved in \label{...}. Do NOT edit.
-% - Titles (\textbf{...}) are EDITABLE.
-% - Statement content (after the title line) is EDITABLE.
-% - To sync back to JSON, run: npx tsx scripts/latex-bijection.ts --to-json
 % =============================
 \documentclass[11pt]{article}
-
-% -------- Packages --------
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{mathtools}
 \usepackage{xparse}
-\usepackage{enumitem}
 \usepackage{hyperref}
-\usepackage{cleveref}
-\usepackage{xcolor}
 \usepackage{natbib}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
 
-% -------- Hyperref setup --------
-\hypersetup{
-  colorlinks=true,
-  linkcolor=blue,
-  citecolor=blue,
-  urlcolor=blue
-}
 
-% -------- Theorem styles --------
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}
 
-% -------- Handy macros --------
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\eps}{\varepsilon}
-% Cross-reference commands (rendered as links in the web UI)
 \NewDocumentCommand{\langref}{m g}{\textbf{#1\IfNoValueF{#2}{#2}}}
 \NewDocumentCommand{\langfam}{m m g}{\textbf{#1$_{#2}$\IfNoValueF{#3}{#3}}}
-\NewDocumentCommand{\defref}{m g}{\hyperref[kdef:#1]{\textbf{\IfNoValueTF{#2}{#1}{#2}}}}
-\newcommand{\edgeref}[2]{#1 compiles to #2}
-\newcommand{\nedgeref}[2]{#1 cannot compile to #2}
-\newcommand{\opref}[2]{#1 supports #2}
-\newcommand{\nopref}[2]{#2 is unsupported by #1}
-
-% -------- Title info --------
-\title{Tractable Circuit Zoo: Conceptual Definitions}
+\newcommand{\thislang}{\mathcal{L}}
+\newcommand{\poly}{polynomial}
+\newcommand{\nopolyunknownquasi}{not polynomial, quasipolynomial unknown}
+\newcommand{\nopolyquasi}{not polynomial, quasipolynomial}
+\newcommand{\unknownpolyquasi}{polynomial unknown, quasipolynomial}
+\newcommand{\unknownboth}{unknown}
+\newcommand{\noquasi}{not quasipolynomial}
+\newcommand{\CO}{CO}
+\newcommand{\VA}{VA}
+\newcommand{\CE}{CE}
+\newcommand{\IM}{IM}
+\newcommand{\EQ}{EQ}
+\newcommand{\SE}{SE}
+\newcommand{\CT}{CT}
+\newcommand{\ME}{ME}
+\newcommand{\CD}{CD}
+\newcommand{\FO}{FO}
+\newcommand{\SFO}{SFO}
+\newcommand{\NOTC}{$\neg$C}
+\newcommand{\ANDC}{$\wedge$C}
+\newcommand{\ANDBC}{$\wedge$BC}
+\newcommand{\ORC}{$\vee$C}
+\newcommand{\ORBC}{$\vee$BC}
+\newcommand{\compilespoly}[2]{#1 compiles polynomially to #2}
+\newcommand{\compilesquasi}[2]{#1 compiles quasipolynomially to #2}
+\newcommand{\nocompilespoly}[2]{#1 does not compile polynomially to #2}
+\newcommand{\nocompilesquasi}[2]{#1 does not compile quasipolynomially to #2}
+\newcommand{\supportspoly}[2]{#1 supports #2 in polynomial time}
+\newcommand{\supportsquasi}[2]{#1 supports #2 in quasipolynomial time}
+\newcommand{\nosupportspoly}[2]{#2 is not supported by #1 in polynomial time}
+\newcommand{\nosupportsquasi}[2]{#2 is not supported by #1 in quasipolynomial time}
+\newcommand{\isin}[1]{#1}
+\newcommand{\shortname}[1]{\textbf{Short name:} #1\par}
+\newcommand{\fullname}[1]{\textbf{Full name:} #1\par}
+\newcommand{\source}[1]{\textbf{Source:} #1\par}
+\newcommand{\target}[1]{\textbf{Target:} #1\par}
+\newcommand{\language}[1]{\textbf{Language:} #1\par}
+\newcommand{\operation}[1]{\textbf{Operation:} #1\par}
+\newcommand{\status}[1]{\textbf{Status:} #1\par}
+\newcommand{\selector}[1]{\textbf{Selector:} #1\par}
+\newcommand{\assuming}[1]{\textbf{Assuming:} #1\par}
+\newcommand{\titlefield}[1]{\textbf{Title:} #1\par}
+\let\titlemacro\title
+\renewcommand{\title}[1]{\titlefield{#1}}
+\newenvironment{description}{\par\noindent\ignorespaces}{\par}
+\newenvironment{language}{}{}
+\newenvironment{concept}{}{}
+\newenvironment{succinctnessclaim}{}{}
+\newenvironment{queryclaim}{}{}
+\newenvironment{transformationclaim}{}{}
+\newenvironment{batchclaim}{}{}
+\titlemacro{Tractable Circuit Zoo: Conceptual Definitions}
 \date{\today}
-
 \begin{document}
 \maketitle
 
-\begin{definition}\label{kdef:representation-language}
-\textbf{Representation Language} \\
+\begin{concept}
+\title{Representation Language}
+\begin{description}
 A \emph{representation language} $L$ is a set of Boolean formulas sharing a common syntactic structure, endowed with the standard Boolean semantics and a size measure $|\cdot|$, usually simply the count of all variables and connectives in the formula. \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:language-family}
-\textbf{Language Family} \\
+\begin{concept}
+\title{Language Family}
+\begin{description}
 A \emph{language family} is a parameterized collection $\mathcal{F} = \{L_\theta\}_{\theta \in \Theta}$ of representation languages. The parameter $\theta$ may be, for example, a variable order or a vtree.
 
 For example, \langfam{OBDD}{<} is parameterized by a variable order, and \langref{OBDD} is the union over all such parameters: \langref{OBDD} $= \bigcup_<$ \langfam{OBDD}{<}. Distinguishing family-level from language-level claims is central in this project. \citep{Darwiche_2002,Amarilli_2018}
 
-We overload notation in two controlled ways. When the text says ``for each fixed order $<$'' or ``for each fixed vtree $T$,'' notation such as \langfam{OBDD}{<} or \langfam{SDD}{T} denotes the corresponding member language. When no particular parameter is fixed and a family-level claim is intended, the same notation denotes the whole parameterized family, e.g.\ $\{$\langfam{OBDD}{<}$\}_{<}$ or $\{$\langfam{SDD}{T}$\}_{T}$. \citep{Darwiche_2002,Amarilli_2018}
-\end{definition}
+We overload notation in two controlled ways. When the text says ``for each fixed order $<$'' or ``for each fixed vtree $T$,'' notation such as \langfam{OBDD}{<} or \langfam{SDD}{T} denotes the corresponding member language. When no particular parameter is fixed and a family-level claim is intended, the same notation denotes the whole parameterized family, e.g.\ $\{$\langfam{OBDD}{<}$\}_{<}$ or $\{$\langfam{SDD}{T}$\}_{T}$.
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:succinctness-language}
-\textbf{Succinctness Between Languages} \\
+\begin{concept}
+\title{Succinctness Between Languages}
+\begin{description}
 There are two intuitive definitions of succinctness: a \emph{time} requirement, i.e. that an efficient compilation algorithm exists between two languages; or the \emph{space} requirement, that formulas remain ``small'' in the new language. Since, for any computation, runtime is lower-bounded by output size, the latter definition is weaker.
 
 We fix the convention that succinctness between representation languages is a size-only relation, with no requirement that a conversion algorithm exist \citep{Gogic_1995}. However, to the best of our knowledge, all known proofs of succinctness use a compilation algorithm to establish the size relationship; and all proofs that \emph{no} time-efficient compilation algorithm exists use space complexity bounds. An example to the contrary would be highly interesting.
@@ -81,120 +103,156 @@ We say $L_1$ \emph{polynomially compiles into} $L_2$ if there exists a polynomia
 Since all claims in this project work with either definition, we will sometimes use them as if they were interchangeable.
 
 We additionally define quasipolynomial succinctness identically, except we require a quasipolynomial function $q(n) \in n^{log^{O(1)}(n)}$ satisfying the above properties and use the notation $\leq_q$. \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:succinctness-family}
-\textbf{Succinctness Between Families} \\
+\begin{concept}
+\title{Succinctness Between Families}
+\begin{description}
 Let $\mathcal{F}_1$ and $\mathcal{F}_2$ be language families. We write $\mathcal{F}_1 \leq_p \mathcal{F}_2$ if for every $L_2 \in \mathcal{F}_2$ there exists $L_1 \in \mathcal{F}_1$ such that $L_1 \leq_p L_2$.
 
 Likewise, we say $\mathcal{F}_1$ polynomially compiles into $\mathcal{F}_2$ if for every $L_1 \in \mathcal{F}_1$ there exists $L_2 \in \mathcal{F}_2$ such that $L_1$ polynomially compiles into $L_2$.
 
 The same convention applies between a language $L$ and a family $\mathcal{F}$ by identifying $L$ with the singleton family $\{L\}$. \citep{Darwiche_2002,Gogic_1995}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:tractability}
-\textbf{Tractability of an Operation} \\
+\begin{concept}
+\title{Tractability of an Operation}
+\begin{description}
 An operation $\mathcal{O}$ is \emph{tractable} on a representation language $L$ if there exists a polynomial-time (resp. quasipolynomial-time) algorithm that performs $\mathcal{O}$ on any input formula(s) in $L$. Following \citet{Selman_1996}, the point is to compile a propositional theory off-line into a language where target operations are tractable. \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:query-operation}
-\textbf{Query} \\
+\begin{concept}
+\title{Query}
+\begin{description}
 A \emph{query} takes a formula $\alpha \in L$ (and possibly auxiliary inputs) and returns a Boolean answer or a numerical value without modifying $\alpha$.
 
-The standard query operations in this project are \defref{query-co}{Consistency}, \defref{query-va}{Validity}, \defref{query-ce}{Clausal Entailment}, \defref{query-im}{Implicant}, \defref{query-eq}{Equivalence}, \defref{query-ct}{Model Counting}, \defref{query-me}{Model Enumeration}, and \defref{query-se}{Sentential Entailment}. \citep{Darwiche_2002}
-\end{definition}
+The standard query operations in this project are Consistency, Validity, Clausal Entailment, Implicant, Equivalence, Model Counting, Model Enumeration, and Sentential Entailment. \citep{Darwiche_2002}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:transformation-operation}
-\textbf{Transformation} \\
+\begin{concept}
+\title{Transformation}
+\begin{description}
 A \emph{transformation} maps one or more formulas from $\alpha_1,\alpha_2,..., \alpha_m\ \in L$, where $m$ may be arbitrarily large, to a new formula $\alpha_{m+1} \in L$.
 
-The standard transformations in this project are \defref{transformation-cd}{Conditioning}, \defref{transformation-fo}{Forgetting}, \defref{transformation-sfo}{Singleton Forgetting}, \defref{transformation-and-c}{Conjunction}, \defref{transformation-and-bc}{Bounded Conjunction}, \defref{transformation-or-c}{Disjunction}, \defref{transformation-or-bc}{Bounded Disjunction}, and \defref{transformation-not-c}{Negation}. \citep{Darwiche_2002}
-\end{definition}
+The standard transformations in this project are Conditioning, Forgetting, Singleton Forgetting, Conjunction, Bounded Conjunction, Disjunction, Bounded Disjunction, and Negation. \citep{Darwiche_2002}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:query-co}
-\textbf{Consistency (CO)} \\
+\begin{concept}
+\title{Consistency (CO)}
+\begin{description}
 Given a representation $\alpha$, decide whether $\alpha$ is satisfiable, i.e., whether there exists an assignment $X$ such that $\alpha(X)=\top$. \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:query-va}
-\textbf{Validity (VA)} \\
+\begin{concept}
+\title{Validity (VA)}
+\begin{description}
 Given a representation $\alpha$, decide whether $\alpha$ is valid, i.e., $\alpha \equiv \top$. \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:query-ce}
-\textbf{Clausal Entailment (CE)} \\
+\begin{concept}
+\title{Clausal Entailment (CE)}
+\begin{description}
 Given a representation $\alpha$ and a clause $c$, decide whether $\alpha \models c$ (equivalently, whether $\alpha \wedge \neg c$ is unsatisfiable). \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:query-im}
-\textbf{Implicant (IM)} \\
+\begin{concept}
+\title{Implicant (IM)}
+\begin{description}
 Given a representation $\alpha$ and a term $t$, decide whether $t \models \alpha$ (equivalently, whether $t \wedge \neg \alpha$ is unsatisfiable). \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:query-eq}
-\textbf{Equivalence (EQ)} \\
+\begin{concept}
+\title{Equivalence (EQ)}
+\begin{description}
 Given two representations $\alpha$ and $\beta$, decide whether $\alpha \equiv \beta$. \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:query-ct}
-\textbf{Model Counting (CT)} \\
+\begin{concept}
+\title{Model Counting (CT)}
+\begin{description}
 Given a representation $\alpha$, compute the number of satisfying assignments: $|\{X:\alpha(X)=\top\}|$. \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:query-me}
-\textbf{Model Enumeration (ME)} \\
+\begin{concept}
+\title{Model Enumeration (ME)}
+\begin{description}
 Given a representation $\alpha$, enumerate all satisfying assignments, i.e., output $\{X:\alpha(X)=\top\}$, in time polynomial in the input size and in the total size of the output. \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:query-se}
-\textbf{Sentential Entailment (SE)} \\
+\begin{concept}
+\title{Sentential Entailment (SE)}
+\begin{description}
 Given representations $\alpha$ and $\beta$, decide whether $\alpha \models \beta$. \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:transformation-cd}
-\textbf{Conditioning (CD)} \\
+\begin{concept}
+\title{Conditioning (CD)}
+\begin{description}
 Given a representation $\alpha$ and a consistent term $\gamma$, compute the conditioned representation $\alpha|_{\gamma}$ obtained by substituting the assignments in $\gamma$. \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:transformation-fo}
-\textbf{Forgetting (FO)} \\
+\begin{concept}
+\title{Forgetting (FO)}
+\begin{description}
 Given a representation $\alpha$ and a set of variables $Y$, compute $\exists Y.\alpha$ (existentially quantifying the variables in $Y$). \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:transformation-sfo}
-\textbf{Singleton Forgetting (SFO)} \\
+\begin{concept}
+\title{Singleton Forgetting (SFO)}
+\begin{description}
 Given a representation $\alpha$ and a variable $x$, compute $\exists x.\alpha = (\alpha|_{x=0}) \vee (\alpha|_{x=1})$. \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:transformation-and-c}
-\textbf{Conjunction ($\wedge$C)} \\
+\begin{concept}
+\title{Conjunction ($\wedge$C)}
+\begin{description}
 Given representations $\alpha_1,\ldots,\alpha_m$, compute $\bigwedge_{i=1}^m \alpha_i$. \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:transformation-and-bc}
-\textbf{Bounded Conjunction ($\wedge$BC)} \\
+\begin{concept}
+\title{Bounded Conjunction ($\wedge$BC)}
+\begin{description}
 Given two representations $\alpha_1,\alpha_2$, compute $\alpha_1 \wedge \alpha_2$. \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:transformation-or-c}
-\textbf{Disjunction ($\vee$C)} \\
+\begin{concept}
+\title{Disjunction ($\vee$C)}
+\begin{description}
 Given representations $\alpha_1,\ldots,\alpha_m$, compute $\bigvee_{i=1}^m \alpha_i$. \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:transformation-or-bc}
-\textbf{Bounded Disjunction ($\vee$BC)} \\
+\begin{concept}
+\title{Bounded Disjunction ($\vee$BC)}
+\begin{description}
 Given two representations $\alpha_1,\alpha_2$, compute $\alpha_1 \vee \alpha_2$. \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{concept}
 
-\begin{definition}\label{kdef:transformation-not-c}
-\textbf{Negation ($\neg$C)} \\
+\begin{concept}
+\title{Negation ($\neg$C)}
+\begin{description}
 Given a representation $\alpha$, compute $\neg \alpha$. \citep{Darwiche_2002}
-\end{definition}
-
-% =============================
-% Bibliography
-% =============================
+\end{description}
+\end{concept}
 \bibliographystyle{plainnat}
 \bibliography{refs}
-
 \end{document}

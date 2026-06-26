@@ -28,7 +28,9 @@
     onOperationSelect,
     sandboxMode = false,
     onSandboxOperationEdit,
+    onSandboxOperationReset,
     onSandboxReferenceAdd,
+    sandboxEdited = false,
     viewMode = 'queries' as ViewMode
   }: {
     selectedOperation: SelectedOperation | null;
@@ -44,7 +46,13 @@
       operationCode: string,
       edit: { complexity: string | null; assumption?: string; description?: string }
     ) => void;
+    onSandboxOperationReset?: (
+      operationType: 'query' | 'transformation',
+      languageId: string,
+      operationCode: string
+    ) => void;
     onSandboxReferenceAdd?: (bibtex: string) => string | null;
+    sandboxEdited?: boolean;
     viewMode?: ViewMode;
   } = $props();
 
@@ -113,6 +121,15 @@
   function commitOperationAssumption(assumption: string) {
     draftOperationAssumption = assumption;
     commitOperationEdit();
+  }
+
+  function resetOperationEdit() {
+    if (!selectedOperationCell || !sandboxMode || !onSandboxOperationReset) return;
+    onSandboxOperationReset(
+      selectedOperationCell.operationType,
+      selectedOperationCell.language.id,
+      selectedOperationCell.operationCode
+    );
   }
 
   // Collect references for the cell view
@@ -211,6 +228,11 @@
 
         {#if sandboxMode}
           <div class="operation-editor">
+            {#if sandboxEdited}
+              <div class="sandbox-editor-actions">
+                <button type="button" class="sandbox-cell-reset" onclick={resetOperationEdit}>Reset</button>
+              </div>
+            {/if}
             <label class="editor-label" for="operation-status">Status</label>
             <select
               id="operation-status"
@@ -447,6 +469,29 @@
     margin: 0 0 1rem;
     border-top: 1px solid #e2e8f0;
     padding-top: 0.75rem;
+  }
+
+  .sandbox-editor-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .sandbox-cell-reset {
+    border: 1px solid #cbd5e1;
+    border-radius: 0.35rem;
+    background: #fff;
+    color: #475569;
+    padding: 0.25rem 0.45rem;
+    font-size: 0.72rem;
+    font-weight: 750;
+    cursor: pointer;
+  }
+
+  .sandbox-cell-reset:hover,
+  .sandbox-cell-reset:focus-visible {
+    background: #f1f5f9;
+    color: #0f172a;
+    outline: 2px solid rgba(37, 99, 235, 0.16);
   }
 
   .editor-label {

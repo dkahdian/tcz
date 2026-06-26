@@ -361,13 +361,16 @@
     };
   }
 
-  function languageMacro(language: KCLanguage): string {
-    const suffix = pluralLanguage ? '{s}' : '';
-    const family = language.classification === 'family' ? splitFamilyName(language.name) : null;
+  function languageReference(language: KCLanguage, suffix = ''): string {
+    const family = splitFamilyName(language.name);
     if (family) {
       return `\\langfam{${family.base}}{${family.parameter}}${suffix}`;
     }
     return `\\langref{${language.name}}${suffix}`;
+  }
+
+  function languageMacro(language: KCLanguage): string {
+    return languageReference(language, pluralLanguage ? '{s}' : '');
   }
 
   function insertSelectedLanguage() {
@@ -384,9 +387,11 @@
   }
 
   function relationMacroFor(status: string, focus?: 'no-poly' | 'quasi'): string | null {
-    if (status === 'poly' || status === 'unknown-poly-quasi') return 'edgeref';
-    if (status === 'no-quasi' || status === 'no-poly-unknown-quasi') return 'nedgeref';
-    if (status === 'no-poly-quasi') return focus === 'quasi' ? 'edgeref' : focus === 'no-poly' ? 'nedgeref' : null;
+    if (status === 'poly') return focus === 'quasi' ? 'compilesquasi' : 'compilespoly';
+    if (status === 'unknown-poly-quasi') return 'compilesquasi';
+    if (status === 'no-poly-unknown-quasi') return 'nocompilespoly';
+    if (status === 'no-poly-quasi') return focus === 'quasi' ? 'compilesquasi' : focus === 'no-poly' ? 'nocompilespoly' : null;
+    if (status === 'no-quasi') return focus === 'no-poly' ? 'nocompilespoly' : 'nocompilesquasi';
     return null;
   }
 
@@ -396,7 +401,10 @@
     if (!relation) return;
     const command = relationMacroFor(relation.status, focus);
     if (!command) return;
-    insertText(`\\${command}{${relationSourceId}}{${relationTargetId}}`);
+    const source = graphData.languages.find((candidate) => candidate.id === relationSourceId);
+    const target = graphData.languages.find((candidate) => candidate.id === relationTargetId);
+    if (!source || !target) return;
+    insertText(`\\${command}{${languageReference(source)}}{${languageReference(target)}}`);
   }
 
   function supportForOperation(languageId: string, code: string) {
@@ -406,12 +414,51 @@
     return [...resolved.queries, ...resolved.transformations].find((operation) => operation.code === code) ?? null;
   }
 
+  function operationMacro(code: string): string {
+    const query = Object.keys(QUERIES).find((key) => QUERIES[key].code === code) ?? code;
+    const queryMacros: Record<string, string> = {
+      CO: '\\CO',
+      VA: '\\VA',
+      CE: '\\CE',
+      IM: '\\IM',
+      EQ: '\\EQ',
+      SE: '\\SE',
+      CT: '\\CT',
+      ME: '\\ME'
+    };
+    if (queryMacros[query]) return queryMacros[query];
+
+    const transform = Object.entries(TRANSFORMATIONS).find(([_key, operation]) => operation.code === code)?.[0] ?? code;
+    const transformMacros: Record<string, string> = {
+      CD: '\\CD',
+      FO: '\\FO',
+      SFO: '\\SFO',
+      NOT_C: '\\NOTC',
+      AND_C: '\\ANDC',
+      AND_BC: '\\ANDBC',
+      OR_C: '\\ORC',
+      OR_BC: '\\ORBC'
+    };
+    return transformMacros[transform] ?? code;
+  }
+
   function insertOperation() {
     if (!operationLanguageId || !operationCode) return;
     const support = supportForOperation(operationLanguageId, operationCode);
     if (!support || support.complexity === 'unknown-to-us') return;
-    const command = support.complexity === 'poly' ? 'opref' : 'nopref';
-    insertText(`\\${command}{${operationLanguageId}}{${operationCode}}`);
+    const language = graphData.languages.find((candidate) => candidate.id === operationLanguageId);
+    const operation = operationOptions.find((candidate) => candidate.code === operationCode);
+    if (!language || !operation) return;
+    const op = operationMacro(operation.code);
+    const command = support.complexity === 'poly'
+      ? 'supportspoly'
+      : support.complexity === 'unknown-poly-quasi' || support.complexity === 'no-poly-quasi'
+        ? 'supportsquasi'
+        : support.complexity === 'no-quasi'
+          ? 'nosupportsquasi'
+          : 'nosupportspoly';
+    const phrase = `\\${command}{${languageReference(language)}}{${op}}`;
+    insertText(phrase);
   }
 </script>
 
@@ -552,11 +599,23 @@
           {@const relation = lookupRelation(relationSourceId, relationTargetId)}
           {#if !relation || relation.status === 'unknown-both'}
             <p class="panel-note">Nothing to cite.</p>
+          {:else if relation.status === 'poly'}
+            <p class="panel-note">What strength are you citing?</p>
+            <div class="panel-actions-inline">
+              <button type="button" class="panel-action" onclick={() => insertRelation()}>Polynomial compilation</button>
+              <button type="button" class="panel-action" onclick={() => insertRelation('quasi')}>Quasipolynomial compilation</button>
+            </div>
           {:else if relation.status === 'no-poly-quasi'}
             <p class="panel-note">What are you citing here?</p>
             <div class="panel-actions-inline">
               <button type="button" class="panel-action" onclick={() => insertRelation('no-poly')}>No polynomial compilation</button>
               <button type="button" class="panel-action" onclick={() => insertRelation('quasi')}>Quasipolynomial compilation exists</button>
+            </div>
+          {:else if relation.status === 'no-quasi'}
+            <p class="panel-note">What strength are you citing?</p>
+            <div class="panel-actions-inline">
+              <button type="button" class="panel-action" onclick={() => insertRelation()}>No quasipolynomial compilation</button>
+              <button type="button" class="panel-action" onclick={() => insertRelation('no-poly')}>No polynomial compilation</button>
             </div>
           {:else if relationMacroFor(relation.status)}
             <button type="button" class="panel-action" onclick={() => insertRelation()}>Insert citation</button>

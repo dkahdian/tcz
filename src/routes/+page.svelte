@@ -67,7 +67,7 @@
   let sandboxError = $state<string | null>(null);
   let sandboxPersistenceReady = $state(false);
   let showNewLanguageModal = $state(false);
-  let newLanguageClassification = $state<KCLanguage['classification']>('plain');
+  let newLanguageKind = $state<'language' | 'family'>('language');
   let newLanguageName = $state('');
   let newLanguageFamilyBase = $state('');
   let newLanguageFamilyParameter = $state('');
@@ -364,7 +364,7 @@
 
   function operationDisplayName(operationType: SandboxOperationType, operationCode: string): string {
     const catalog = operationType === 'query' ? QUERIES : TRANSFORMATIONS;
-    const operation = Object.values(catalog).find((candidate) => candidate.code === operationCode);
+    const operation = catalog[operationCode] ?? Object.values(catalog).find((candidate) => candidate.code === operationCode);
     return operation ? `${operation.code} (${operation.label})` : operationCode;
   }
 
@@ -411,7 +411,7 @@
   }
 
   function resetNewLanguageForm() {
-    newLanguageClassification = 'plain';
+    newLanguageKind = 'language';
     newLanguageName = '';
     newLanguageFamilyBase = '';
     newLanguageFamilyParameter = '';
@@ -426,7 +426,7 @@
   }
 
   function getNewLanguageDisplayName(): string {
-    if (newLanguageClassification === 'family') {
+    if (newLanguageKind === 'family') {
       const base = newLanguageFamilyBase.trim();
       const parameter = newLanguageFamilyParameter.trim();
       return base && parameter ? `${base}$_${parameter}$` : '';
@@ -434,22 +434,16 @@
     return newLanguageName.trim();
   }
 
-  const newLanguageNamePlaceholder = $derived(
-    newLanguageClassification === 'union' ? 'OBDD' : 'DNNF'
-  );
+  const newLanguageNamePlaceholder = $derived('DNNF');
   const newLanguageFullNamePlaceholder = $derived(
-    newLanguageClassification === 'union'
-      ? 'Ordered Binary Decision Diagram'
-      : newLanguageClassification === 'family'
+    newLanguageKind === 'family'
         ? 'Ordered Binary Decision Diagram (wrt a fixed variable order)'
         : 'Decomposable Negation Normal Form'
   );
   const newLanguageDefinitionPlaceholder = $derived(
-    newLanguageClassification === 'family'
+    newLanguageKind === 'family'
       ? 'For each fixed variable order $<$, binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the order $<$.'
-      : newLanguageClassification === 'union'
-        ? 'Binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the same order.'
-        : 'Boolean circuits with AND and OR gates, literals as inputs, and whose AND gates are \\emph{decomposable} (children mention disjoint sets of variables).'
+      : 'Boolean circuits with AND and OR gates, literals as inputs, and whose AND gates are \\emph{decomposable} (children mention disjoint sets of variables).'
   );
 
   function handleAddLanguageSubmit() {
@@ -467,10 +461,8 @@
       kind: 'language:new',
       id,
       name,
-      classification: newLanguageClassification ?? 'plain',
       fullName,
-      definition,
-      definitionRefs: []
+      definition
     };
 
     const applied = commitSandboxEdits(nextSandboxEditsFor(edit));
@@ -615,6 +607,55 @@
     }
   }
 
+  function handleSandboxEdgeReset(sourceId: string, targetId: string) {
+    const applied = commitSandboxEdits(
+      sandboxEdits.filter((edit) =>
+        !(edit.kind === 'edge' && edit.sourceId === sourceId && edit.targetId === targetId)
+      )
+    );
+    if (applied && selectedEdge?.source === sourceId && selectedEdge.target === targetId) {
+      const basePair = initialGraphData.adjacencyMatrix;
+      const sourceIdx = basePair.indexByLanguage[sourceId];
+      const targetIdx = basePair.indexByLanguage[targetId];
+      selectedEdge = {
+        ...selectedEdge,
+        forward:
+          sourceIdx === undefined || targetIdx === undefined
+            ? null
+            : basePair.matrix[sourceIdx]?.[targetIdx] ?? null
+      };
+    }
+  }
+
+  function handleSandboxOperationReset(
+    operationType: SandboxOperationType,
+    languageId: string,
+    operationCode: string
+  ) {
+    const applied = commitSandboxEdits(
+      sandboxEdits.filter((edit) =>
+        !(
+          edit.kind === 'operation' &&
+          edit.operationType === operationType &&
+          edit.languageId === languageId &&
+          edit.operationCode === operationCode
+        )
+      )
+    );
+    if (applied && selectedOperationCell?.language.id === languageId && selectedOperationCell.operationCode === operationCode) {
+      selectedOperationCell = null;
+    }
+  }
+
+  function handleSandboxLanguageReset(languageId: string) {
+    const applied = commitSandboxEdits(
+      sandboxEdits.filter((edit) => !(edit.kind === 'language:edit' && edit.languageId === languageId))
+    );
+    if (applied && selectedNode?.id === languageId) {
+      selectedNode = initialGraphData.languages.find((language) => language.id === languageId) ?? selectedNode;
+    }
+  }
+
   function handleSandboxLanguageEdit(languageId: string, fields: { fullName?: string; definition?: string }) {
     const applied = handleSandboxApply({
       kind: 'language:edit',
@@ -691,6 +732,27 @@
       ? `${sandboxSelection.operationType}:${sandboxSelection.languageId}:${sandboxSelection.operationCode}`
       : null
   );
+
+  function hasSandboxEdgeEdit(sourceId: string, targetId: string): boolean {
+    return sandboxEdits.some((edit) => edit.kind === 'edge' && edit.sourceId === sourceId && edit.targetId === targetId);
+  }
+
+  function hasSandboxOperationEdit(
+    operationType: SandboxOperationType,
+    languageId: string,
+    operationCode: string
+  ): boolean {
+    return sandboxEdits.some((edit) =>
+      edit.kind === 'operation' &&
+      edit.operationType === operationType &&
+      edit.languageId === languageId &&
+      edit.operationCode === operationCode
+    );
+  }
+
+  function hasSandboxLanguageEdit(languageId: string): boolean {
+    return sandboxEdits.some((edit) => edit.kind === 'language:edit' && edit.languageId === languageId);
+  }
 
   function switchViewMode(newMode: ViewMode) {
     if (viewMode === newMode) return;
@@ -1005,7 +1067,13 @@
             filteredGraphData={displayedFilteredGraphData}
             {viewMode}
             sandboxMode={isSandboxMode}
+            sandboxEdited={hasSandboxOperationEdit(
+              selectedOperationCell.operationType,
+              selectedOperationCell.language.id,
+              selectedOperationCell.operationCode
+            )}
             onSandboxOperationEdit={handleSandboxOperationMetadataEdit}
+            onSandboxOperationReset={handleSandboxOperationReset}
             onSandboxReferenceAdd={handleSandboxReferenceAdd}
             onLanguageSelect={(lang) => {
               selectedOperation = null;
@@ -1026,6 +1094,7 @@
             {viewMode}
             sandboxMode={isSandboxMode}
             onSandboxOperationEdit={handleSandboxOperationMetadataEdit}
+            onSandboxOperationReset={handleSandboxOperationReset}
             onSandboxReferenceAdd={handleSandboxReferenceAdd}
             onLanguageSelect={(lang) => {
               selectedOperation = null;
@@ -1044,7 +1113,9 @@
             filteredGraphData={displayedFilteredGraphData}
             onOperationCellSelect={handleLanguageOperationCellSelect}
             sandboxMode={isSandboxMode}
+            sandboxEdited={hasSandboxLanguageEdit(selectedNode.id)}
             onSandboxLanguageEdit={handleSandboxLanguageEdit}
+            onSandboxLanguageReset={handleSandboxLanguageReset}
             onSandboxReferenceAdd={handleSandboxReferenceAdd}
             viewMode={viewMode}
           />
@@ -1057,6 +1128,7 @@
             {viewMode}
             sandboxMode={isSandboxMode}
             onSandboxOperationEdit={handleSandboxOperationMetadataEdit}
+            onSandboxOperationReset={handleSandboxOperationReset}
             onSandboxReferenceAdd={handleSandboxReferenceAdd}
           />
         {/if}
@@ -1066,7 +1138,9 @@
           graphData={displayedBaseGraphData}
           filteredGraphData={displayedFilteredGraphData}
           sandboxMode={isSandboxMode}
+          sandboxEdited={hasSandboxEdgeEdit(selectedEdge.source, selectedEdge.target)}
           onSandboxEdgeEdit={handleSandboxEdgeMetadataEdit}
+          onSandboxEdgeReset={handleSandboxEdgeReset}
           onSandboxReferenceAdd={handleSandboxReferenceAdd}
           viewMode={viewMode}
         />
@@ -1077,7 +1151,9 @@
           filteredGraphData={displayedFilteredGraphData}
           onOperationCellSelect={handleLanguageOperationCellSelect}
           sandboxMode={isSandboxMode}
+          sandboxEdited={hasSandboxLanguageEdit(selectedNode.id)}
           onSandboxLanguageEdit={handleSandboxLanguageEdit}
+          onSandboxLanguageReset={handleSandboxLanguageReset}
           onSandboxReferenceAdd={handleSandboxReferenceAdd}
           viewMode={viewMode}
         />
@@ -1089,6 +1165,7 @@
           onOperationCellSelect={handleLanguageOperationCellSelect}
           sandboxMode={isSandboxMode}
           onSandboxLanguageEdit={handleSandboxLanguageEdit}
+          onSandboxLanguageReset={handleSandboxLanguageReset}
           onSandboxReferenceAdd={handleSandboxReferenceAdd}
           viewMode={viewMode}
         />
@@ -1119,14 +1196,13 @@
           <div class="modal-error" role="alert">{newLanguageError}</div>
         {/if}
 
-        <label class="field-label" for="new-language-classification">Classification</label>
-        <select id="new-language-classification" bind:value={newLanguageClassification} class="field-control">
-          <option value="plain">Plain</option>
-          <option value="union">Union</option>
+        <label class="field-label" for="new-language-kind">Kind</label>
+        <select id="new-language-kind" bind:value={newLanguageKind} class="field-control">
+          <option value="language">Language</option>
           <option value="family">Family</option>
         </select>
 
-        {#if newLanguageClassification === 'family'}
+        {#if newLanguageKind === 'family'}
           <div class="field-grid">
             <div>
               <label class="field-label" for="new-language-family-base">Base Name</label>

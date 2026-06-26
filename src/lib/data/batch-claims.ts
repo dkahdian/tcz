@@ -16,8 +16,10 @@ interface BatchExpansionData {
 
 const LANG_PLACEHOLDER_MATH = '$\\mathcal{L}$';
 const LANG_PLACEHOLDER = '\\mathcal{L}';
-const EDGE_REF_PATTERN = /\\(n?edgeref)\{([^}]+)\}\{([^}]+)\}/g;
+const THIS_LANG = '\\thislang';
+const EDGE_REF_PATTERN = /\\(compilespoly|compilesquasi|nocompilespoly|nocompilesquasi)\{([^}]+)\}\{([^}]+)\}/g;
 const LANG_PLACEHOLDER_ARG = String.raw`\$?\\mathcal\{L\}\$?`;
+const CURRENT_LANG_ARG = String.raw`(?:\$?\\mathcal\{L\}\$?|\\thislang)`;
 const CITATION_PATTERN = /\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}/g;
 const SELF_COMPILATION_MARKER = '__TCZ_SELF_COMPILATION__';
 
@@ -129,17 +131,17 @@ function edgeRefs(
 
 function replaceEdgePlaceholders(text: string, language: KCLanguage): string {
   return cleanSelfCompilationGaps(text
-    .replace(new RegExp(String.raw`\\(n?edgeref)\{((?:[^{}]|\{[^{}]*\})+)\}\{${LANG_PLACEHOLDER_ARG}\}`, 'g'), (_match, command: string, sourceName: string) => {
-      if (command === 'edgeref' && isLanguageRef(language, sourceName)) {
+    .replace(new RegExp(String.raw`\\(compilespoly|compilesquasi|nocompilespoly|nocompilesquasi)\{((?:[^{}]|\{[^{}]*\})+)\}\{${CURRENT_LANG_ARG}\}`, 'g'), (_match, command: string, sourceName: string) => {
+      if ((command === 'compilespoly' || command === 'compilesquasi') && isLanguageRef(language, sourceName)) {
         return SELF_COMPILATION_MARKER;
       }
-      return `\\${command}{${sourceName.trim()}}{${edgeRefLanguageName(language)}}`;
+      return `\\${command}{${sourceName.trim()}}{${languageRef(language)}}`;
     })
-    .replace(new RegExp(String.raw`\\(n?edgeref)\{${LANG_PLACEHOLDER_ARG}\}\{((?:[^{}]|\{[^{}]*\})+)\}`, 'g'), (_match, command: string, targetName: string) => {
-      if (command === 'edgeref' && isLanguageRef(language, targetName)) {
+    .replace(new RegExp(String.raw`\\(compilespoly|compilesquasi|nocompilespoly|nocompilesquasi)\{${CURRENT_LANG_ARG}\}\{((?:[^{}]|\{[^{}]*\})+)\}`, 'g'), (_match, command: string, targetName: string) => {
+      if ((command === 'compilespoly' || command === 'compilesquasi') && isLanguageRef(language, targetName)) {
         return SELF_COMPILATION_MARKER;
       }
-      return `\\${command}{${edgeRefLanguageName(language)}}{${targetName.trim()}}`;
+      return `\\${command}{${languageRef(language)}}{${targetName.trim()}}`;
     }));
 }
 
@@ -158,6 +160,7 @@ function cleanSelfCompilationGaps(text: string): string {
 export function expandBatchTemplate(template: string, language: KCLanguage): string {
   const ref = languageRef(language);
   return replaceEdgePlaceholders(template, language)
+    .split(THIS_LANG).join(ref)
     .split(LANG_PLACEHOLDER_MATH).join(ref)
     .split(LANG_PLACEHOLDER).join(ref);
 }
@@ -222,6 +225,11 @@ function edgeSelectorMatches(
 
   const relation = database.adjacencyMatrix.matrix[sourceIndex]?.[targetIndex];
   const status = relation?.status;
+  if ((selector.polarity ?? 'positive') === 'negative') {
+    return selector.level === 'poly'
+      ? status === 'no-poly-unknown-quasi' || status === 'no-poly-quasi' || status === 'no-quasi'
+      : status === 'no-quasi';
+  }
   return selector.level === 'poly' ? guaranteesPoly(status) : guaranteesQuasi(status);
 }
 

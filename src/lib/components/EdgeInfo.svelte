@@ -15,7 +15,9 @@
     graphData,
     filteredGraphData,
     sandboxMode = false,
+    sandboxEdited = false,
     onSandboxEdgeEdit,
+    onSandboxEdgeReset,
     onSandboxReferenceAdd,
     viewMode = 'graph' as ViewMode
   }: {
@@ -23,6 +25,7 @@
     graphData: GraphData | FilteredGraphData;
     filteredGraphData?: GraphData | FilteredGraphData;
     sandboxMode?: boolean;
+    sandboxEdited?: boolean;
     onSandboxEdgeEdit?: (
       sourceId: string,
       targetId: string,
@@ -34,6 +37,7 @@
         quasiDescription?: string;
       }
     ) => void;
+    onSandboxEdgeReset?: (sourceId: string, targetId: string) => void;
     onSandboxReferenceAdd?: (bibtex: string) => string | null;
     viewMode?: ViewMode;
   } = $props();
@@ -229,6 +233,11 @@
     commitSelectedEdgeEdit();
   }
 
+  function resetSelectedEdgeEdit() {
+    if (!selectedEdge || !sandboxMode || !onSandboxEdgeReset) return;
+    onSandboxEdgeReset(selectedEdge.source, selectedEdge.target);
+  }
+
   function statusForDisplay(status: string | null) {
     return status || 'unknown-both';
   }
@@ -252,6 +261,11 @@
           <span> &harr; </span>
           <MathText text={selectedEdge.targetName} className="inline" />
         </h3>
+        {#if sandboxMode && sandboxEdited}
+          <div class="sandbox-editor-actions">
+            <button type="button" class="sandbox-cell-reset" onclick={resetSelectedEdgeEdit}>Reset</button>
+          </div>
+        {/if}
         
         <div class="space-y-4">
 {#snippet directionBlock(fromName: string, toName: string, relation: DirectedSuccinctnessRelation, editable = false)}
@@ -679,6 +693,30 @@
     margin-top: 0.75rem;
     border-top: 1px solid #e2e8f0;
     padding-top: 0.75rem;
+  }
+
+  .sandbox-editor-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin: -0.25rem 0 0.55rem;
+  }
+
+  .sandbox-cell-reset {
+    border: 1px solid #cbd5e1;
+    border-radius: 0.35rem;
+    background: #fff;
+    color: #475569;
+    padding: 0.25rem 0.45rem;
+    font-size: 0.72rem;
+    font-weight: 750;
+    cursor: pointer;
+  }
+
+  .sandbox-cell-reset:hover,
+  .sandbox-cell-reset:focus-visible {
+    background: #f1f5f9;
+    color: #0f172a;
+    outline: 2px solid rgba(37, 99, 235, 0.16);
   }
 
   .editor-label {

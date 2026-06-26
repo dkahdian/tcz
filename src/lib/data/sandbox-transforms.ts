@@ -2,7 +2,6 @@ import type {
   DirectedSuccinctnessRelation,
   GraphData,
   KCLanguage,
-  KCReference,
   KCOpSupport
 } from '../types.js';
 import { cloneDataset } from './transforms.js';
@@ -26,17 +25,14 @@ export type SandboxEdit =
       kind: 'language:new';
       id?: string;
       name: string;
-      classification: KCLanguage['classification'];
       fullName: string;
       definition: string;
-      definitionRefs?: string[];
     }
   | {
       kind: 'language:edit';
       languageId: string;
       fullName?: string;
       definition?: string;
-      definitionRefs?: string[];
     }
   | {
       kind: 'edge';
@@ -255,10 +251,6 @@ function ensureLanguageInMatrix(data: GraphData, languageId: string): void {
   adjacencyMatrix.matrix.push(new Array(newIndex + 1).fill(null));
 }
 
-function getReferenceLookup(data: GraphData): Map<string, KCReference> {
-  return new Map((data.references ?? []).map((reference) => [reference.id, reference]));
-}
-
 function applyReferenceEdit(data: GraphData, edit: Extract<SandboxEdit, { kind: 'reference' }>): void {
   const bibtex = edit.bibtex.trim();
   if (!bibtex) return;
@@ -295,24 +287,15 @@ function applyNewLanguageEdit(data: GraphData, edit: Extract<SandboxEdit, { kind
     throw new Error(`Language "${name}" already exists.`);
   }
 
-  const referenceLookup = getReferenceLookup(data);
-  const definitionRefs = [...(edit.definitionRefs ?? [])];
-  const references = definitionRefs
-    .map((refId) => referenceLookup.get(refId))
-    .filter((reference): reference is KCReference => Boolean(reference));
-
   const language: KCLanguage = {
     id,
     name,
-    classification: edit.classification ?? 'plain',
     fullName,
     definition,
-    definitionRefs,
     properties: {
       queries: {},
       transformations: {}
-    },
-    references
+    }
   };
 
   data.languages.push(language);
@@ -327,13 +310,6 @@ function applyLanguageMetadataEdit(data: GraphData, edit: Extract<SandboxEdit, {
 
   if (edit.fullName !== undefined) language.fullName = edit.fullName;
   if (edit.definition !== undefined) language.definition = edit.definition;
-  if (edit.definitionRefs !== undefined) {
-    language.definitionRefs = [...edit.definitionRefs];
-    const referenceLookup = getReferenceLookup(data);
-    language.references = language.definitionRefs
-      .map((refId) => referenceLookup.get(refId))
-      .filter((reference): reference is KCReference => Boolean(reference));
-  }
 }
 
 function applyEdgeEdit(data: GraphData, edit: Extract<SandboxEdit, { kind: 'edge' }>): void {
@@ -439,6 +415,12 @@ export function applySandboxEdits(base: GraphData, edits: SandboxEdit[]): Sandbo
     }
 
     const graphData = propagateImplicitRelations(merged);
+    const propagatedValidation = validateDatasetStructure(graphData);
+    if (!propagatedValidation.ok) {
+      const detail = propagatedValidation.errors?.join('; ') ?? 'unknown propagated structural error';
+      throw new Error(`Sandbox edits produced an invalid propagated dataset: ${detail}`);
+    }
+
     return {
       ok: true,
       graphData,

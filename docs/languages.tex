@@ -1,243 +1,345 @@
 % =============================
 % Tractable Circuit Zoo - Language Definitions
 % Auto-generated from database.json
-% Generated: 2026-06-04T20:12:45.941Z
-% 
-% EDITING INSTRUCTIONS:
-% - Language names in brackets are auto-generated. Do NOT edit.
-% - Full names (\textbf{...}) are auto-generated. Do NOT edit.
-% - Definition content (after the full name line) is EDITABLE.
-% - To sync back to JSON, run: npx tsx scripts/latex-bijection.ts --to-json
 % =============================
 \documentclass[11pt]{article}
-
-% -------- Packages --------
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{mathtools}
 \usepackage{xparse}
-\usepackage{enumitem}
 \usepackage{hyperref}
-\usepackage{cleveref}
-\usepackage{xcolor}
 \usepackage{natbib}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
 
-% -------- Hyperref setup --------
-\hypersetup{
-  colorlinks=true,
-  linkcolor=blue,
-  citecolor=blue,
-  urlcolor=blue
-}
 
-% -------- Theorem styles --------
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}
 
-% -------- Handy macros --------
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\eps}{\varepsilon}
-% Cross-reference commands (rendered as links in the web UI)
 \NewDocumentCommand{\langref}{m g}{\textbf{#1\IfNoValueF{#2}{#2}}}
 \NewDocumentCommand{\langfam}{m m g}{\textbf{#1$_{#2}$\IfNoValueF{#3}{#3}}}
-\NewDocumentCommand{\defref}{m g}{\hyperref[kdef:#1]{\textbf{\IfNoValueTF{#2}{#1}{#2}}}}
-\newcommand{\edgeref}[2]{#1 compiles to #2}
-\newcommand{\nedgeref}[2]{#1 cannot compile to #2}
-\newcommand{\opref}[2]{#1 supports #2}
-\newcommand{\nopref}[2]{#2 is unsupported by #1}
-
-% -------- Title info --------
-\title{Tractable Circuit Zoo: Language Definitions}
+\newcommand{\thislang}{\mathcal{L}}
+\newcommand{\poly}{polynomial}
+\newcommand{\nopolyunknownquasi}{not polynomial, quasipolynomial unknown}
+\newcommand{\nopolyquasi}{not polynomial, quasipolynomial}
+\newcommand{\unknownpolyquasi}{polynomial unknown, quasipolynomial}
+\newcommand{\unknownboth}{unknown}
+\newcommand{\noquasi}{not quasipolynomial}
+\newcommand{\CO}{CO}
+\newcommand{\VA}{VA}
+\newcommand{\CE}{CE}
+\newcommand{\IM}{IM}
+\newcommand{\EQ}{EQ}
+\newcommand{\SE}{SE}
+\newcommand{\CT}{CT}
+\newcommand{\ME}{ME}
+\newcommand{\CD}{CD}
+\newcommand{\FO}{FO}
+\newcommand{\SFO}{SFO}
+\newcommand{\NOTC}{$\neg$C}
+\newcommand{\ANDC}{$\wedge$C}
+\newcommand{\ANDBC}{$\wedge$BC}
+\newcommand{\ORC}{$\vee$C}
+\newcommand{\ORBC}{$\vee$BC}
+\newcommand{\compilespoly}[2]{#1 compiles polynomially to #2}
+\newcommand{\compilesquasi}[2]{#1 compiles quasipolynomially to #2}
+\newcommand{\nocompilespoly}[2]{#1 does not compile polynomially to #2}
+\newcommand{\nocompilesquasi}[2]{#1 does not compile quasipolynomially to #2}
+\newcommand{\supportspoly}[2]{#1 supports #2 in polynomial time}
+\newcommand{\supportsquasi}[2]{#1 supports #2 in quasipolynomial time}
+\newcommand{\nosupportspoly}[2]{#2 is not supported by #1 in polynomial time}
+\newcommand{\nosupportsquasi}[2]{#2 is not supported by #1 in quasipolynomial time}
+\newcommand{\isin}[1]{#1}
+\newcommand{\shortname}[1]{\textbf{Short name:} #1\par}
+\newcommand{\fullname}[1]{\textbf{Full name:} #1\par}
+\newcommand{\source}[1]{\textbf{Source:} #1\par}
+\newcommand{\target}[1]{\textbf{Target:} #1\par}
+\newcommand{\language}[1]{\textbf{Language:} #1\par}
+\newcommand{\operation}[1]{\textbf{Operation:} #1\par}
+\newcommand{\status}[1]{\textbf{Status:} #1\par}
+\newcommand{\selector}[1]{\textbf{Selector:} #1\par}
+\newcommand{\assuming}[1]{\textbf{Assuming:} #1\par}
+\newcommand{\titlefield}[1]{\textbf{Title:} #1\par}
+\let\titlemacro\title
+\renewcommand{\title}[1]{\titlefield{#1}}
+\newenvironment{description}{\par\noindent\ignorespaces}{\par}
+\newenvironment{language}{}{}
+\newenvironment{concept}{}{}
+\newenvironment{succinctnessclaim}{}{}
+\newenvironment{queryclaim}{}{}
+\newenvironment{transformationclaim}{}{}
+\newenvironment{batchclaim}{}{}
+\titlemacro{Tractable Circuit Zoo: Language Definitions}
 \date{\today}
-
 \begin{document}
 \maketitle
 
-\begin{definition}[\langref{CNF}]\label{def:lang_89649e36}
-\textbf{Conjunctive Normal Form} \\
+\begin{language}
+\shortname{\langref{CNF}}
+\fullname{Conjunctive Normal Form}
+\begin{description}
 A \langref{CNF} is a conjunction of clauses $\bigwedge_{i=1}^mC_i$. A clause is a disjunction of literals $C_i=\bigvee_{j=1}^{k_i}l_j$ where a literal $l_j$ is a variable $x$ or its negation $\lnot x$. For example, $(x \lor y \lor \lnot z)\land (x\lor \lnot y)\land (z\lor w)$.
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langref{cSDD}]\label{def:lang_83e3b023}
-\textbf{Compressed Sentential Decision Diagrams} \\
+\begin{language}
+\shortname{\langref{cSDD}}
+\fullname{Compressed Sentential Decision Diagrams}
+\begin{description}
 \langref{cSDD} $= \bigcup_T \langfam{cSDD}{T}$. \citep{VanDenBroeck_2015,Darwiche_2011}
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langfam{cSDD}{T}]\label{def:lang_82fa749e}
-\textbf{Compressed Sentential Decision Diagrams (wrt a fixed vtree)} \\
-\langfam{cSDD}{T} is the subset of \langfam{SDD}{T} that is \emph{compressed}, a restriction that makes the representation canonical (i.e., there is a unique representation for every function). \citep{Darwiche_2011}
-\end{definition}
-
-\begin{definition}[\langref{d-DNNF}]\label{def:lang_6c130090}
-\textbf{Deterministic Decomposable Negation Normal Form} \\
+\begin{language}
+\shortname{\langref{d-DNNF}}
+\fullname{Deterministic Decomposable Negation Normal Form}
+\begin{description}
 Boolean circuits with AND and OR gates; literals as inputs; and whose AND gates are \emph{decomposable} (children mention disjoint sets of variables) and whose OR gates are \emph{deterministic} (on any input, at most one child evaluates to $1$).\citep{Darwiche_2001b}
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langref{d-SDNNF}]\label{def:lang_ea9b5299}
-\textbf{Deterministic Structured Decomposable Negation Normal Form} \\
+\begin{language}
+\shortname{\langref{d-SDNNF}}
+\fullname{Deterministic Structured Decomposable Negation Normal Form}
+\begin{description}
 \langref{d-SDNNF} $= \bigcup_T$ \langfam{d-SDNNF}{T}. \citep{Pipatsrisawat_2008}
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langfam{d-SDNNF}{T}]\label{def:lang_91f812d0}
-\textbf{Deterministic Structured Decomposable Negation Normal Form (wrt a fixed vtree)} \\
+\begin{language}
+\shortname{\langfam{d-SDNNF}{T}}
+\fullname{Deterministic Structured Decomposable Negation Normal Form (wrt a fixed vtree)}
+\begin{description}
 For each fixed vtree $T$, a \langfam{d-SDNNF}{T} is a \langref{d-DNNF} that is additionally structured decomposable, respecting the vtree $T$.
 
 Intuitively, all AND gates over the same set of variables must decompose via the same partition, as specified by the vtree.
 
 Equivalently, \langfam{d-SDNNF}{T} formulas are \langfam{SDNNF}{T} formulas that are also \emph{deterministic} (see \langref{d-DNNF}).\citep{Pipatsrisawat_2008}
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langref{dec-DNNF}]\label{def:lang_981b62f0}
-\textbf{Decision Decomposable Negation Normal Form} \\
-Boolean circuits with AND and OR gates; literals as inputs; and whose AND gates are \emph{decomposable} (children mention disjoint sets of variables) and whose OR gates must appear in the form of \emph{decisions/tests} (subcircuits of the form $(x\land f)\lor (\bar{x}\land g)$ where $x$ is a variable).\citep{darwiche2007language}
-
-Equivalently, \langref{dec-DNNF} formulas are \langref{d-DNNF} formulas whose OR-gates may only appear in \emph{decisions/tests}.
-
-Equivalently, \langref{dec-DNNF} formulas are (up to syntax) \langref{FBDD}{s} that may additionally contain decomposable AND-gates.
-\end{definition}
-
-\begin{definition}[\langref{dec-SDNNF}]\label{def:lang_0f27d539}
-\textbf{Decision Structured Decomposable Negation Normal Form} \\
-\langref{dec-SDNNF} $= \bigcup_T$ \langfam{dec-SDNNF}{T}. \citep{Amarilli_2018}
-\end{definition}
-
-\begin{definition}[\langfam{dec-SDNNF}{T}]\label{def:lang_4ae03bc8}
-\textbf{Decision Structured Decomposable Negation Normal Form (wrt a fixed vtree)} \\
-For each fixed vtree $T$, \langfam{dec-SDNNF}{T} is the subset of \langref{dec-DNNF} that respects $T$.\citep{darwiche2007language,Amarilli_2018}
-
-Equivalently, \langfam{dec-SDNNF}{T} formulas are \langfam{SDNNF}{T} formulas whose OR-gates may only appear in \emph{decisions/tests}.
-\end{definition}
-
-\begin{definition}[\langref{DNF}]\label{def:lang_4c204bf3}
-\textbf{Disjunctive Normal Form} \\
+\begin{language}
+\shortname{\langref{DNF}}
+\fullname{Disjunctive Normal Form}
+\begin{description}
 A \langref{DNF} is a disjunction of terms $\bigvee_{i=1}^mT_i$. A term is a conjunction of literals $T_i=\bigwedge_{j=1}^{k_i}l_j$ where a literal $l_j$ is a variable $x$ or its negation $\lnot x$. For example, $(x \land y \land \lnot z)\lor (x\land \lnot y)\lor (z\land w)$.
 
 Equivalently, a \langref{DNF} is a \langref{DNNF} of depth two with an output OR gate whose children are AND gates over literals.
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langref{DNNF}]\label{def:lang_3bebcab7}
-\textbf{Decomposable Negation Normal Form} \\
+\begin{language}
+\shortname{\langref{DNNF}}
+\fullname{Decomposable Negation Normal Form}
+\begin{description}
 Boolean circuits with AND and OR gates, literals as inputs, and whose AND gates are \emph{decomposable} (children mention disjoint sets of variables).\citep{Darwiche_2001a} Decomposability may be seen as the analogue in Boolean circuits to the notion of \emph{syntactic multilinearity} in arithmetic circuits.\citep{shpilka2010arithmetic}
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langref{FBDD}]\label{def:lang_684b1ca7}
-\textbf{Free Binary Decision Diagram} \\
+\begin{language}
+\shortname{\langref{FBDD}}
+\fullname{Free Binary Decision Diagram}
+\begin{description}
 Binary decision diagrams such that each root-to-sink path tests each variable at most once. Also known as read-once branching programs.\citep{Wegener_2000}
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langref{IP}]\label{def:lang_6ae90adc}
-\textbf{Prime Implicants} \\
+\begin{language}
+\shortname{\langref{IP}}
+\fullname{Prime Implicants}
+\begin{description}
 A \langref{DNF} that is the disjunction of all minimal entailing terms (prime implicants). \citep{Quine_1952}
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langref{MODS}]\label{def:lang_e02902d0}
-\textbf{Models} \\
+\begin{language}
+\shortname{\langref{MODS}}
+\fullname{Models}
+\begin{description}
 The set of satisfying assignments (models) of the function.\citep{Darwiche_2002}
 
 Equivalently, a suitably restricted \langref{DNF} whose terms are in one-to-one correspondence with the models.
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langref{nFBDD}]\label{def:lang_1df07cc3}
-\textbf{Nondeterministic Free Binary Decision Diagram} \\
+\begin{language}
+\shortname{\langref{nFBDD}}
+\fullname{Nondeterministic Free Binary Decision Diagram}
+\begin{description}
 An \langref{nFBDD} is a \emph{nondeterministic} \langref{FBDD}, i.e., an \langref{FBDD} that is additionally allowed to contain \emph{guess} nodes.\citep{Wegener_2000}
 
 Also known as a nondeterministic read-once branching program.
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langref{NNF}]\label{def:lang_5bf00851}
-\textbf{Negation Normal Form} \\
+\begin{language}
+\shortname{\langref{NNF}}
+\fullname{Negation Normal Form}
+\begin{description}
 A Boolean circuit with AND and OR gates with literals as inputs (i.e., negations may only appear at leaves). Also called \emph{De Morgan circuits}. \citep{Darwiche_2002}
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langref{nOBDD}]\label{def:lang_d24efe0e}
-\textbf{Nondeterministic Ordered Binary Decision Diagram} \\
+\begin{language}
+\shortname{\langref{nOBDD}}
+\fullname{Nondeterministic Ordered Binary Decision Diagram}
+\begin{description}
 \langref{nOBDD} $= \bigcup_{<}$ \langfam{nOBDD}{<}. \citep{Wegener_2000}
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langfam{nOBDD}{<}]\label{def:lang_e827cf31}
-\textbf{Nondeterministic Ordered Binary Decision Diagram (wrt a fixed variable order)} \\
-An \langfam{nOBDD}{<} is a \emph{nondeterministic} \langfam{OBDD}{<}, i.e., an \langfam{OBDD}{<} that is additionally allowed to contain \emph{guess} nodes.\citep{Wegener_2000}
-
-Also known as a nondeterministic oblivious read-once branching program respecting variable order $<$.
-\end{definition}
-
-\begin{definition}[\langref{OBDD}]\label{def:lang_b9d72a7c}
-\textbf{Ordered Binary Decision Diagram} \\
-Binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the same order.\citep{Bryant_1986}
-
-Also known as oblivious read-once branching programs.\citep{Wegener_2000}
-
-Equivalently, \langref{OBDD} $=\bigcup_{<}$ \langfam{OBDD}{<}.\citep{Darwiche_2002}
-\end{definition}
-
-\begin{definition}[\langfam{OBDD}{<}]\label{def:lang_d69995dd}
-\textbf{Ordered Binary Decision Diagram (wrt a fixed variable order)} \\
+\begin{language}
+\shortname{\langfam{OBDD}{<}}
+\fullname{Ordered Binary Decision Diagram (wrt a fixed variable order)}
+\begin{description}
 For each fixed variable order $<$, binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the order $<$.\citep{Bryant_1986}
 
 Equivalently, oblivious read-once branching programs respecting the variable order $<$.\citep{Wegener_2000}
 
 Equivalently, \langfam{OBDD}{<}{s} are \langref{FBDD}{s} required to respect the order $<$ on every root-to-sink path.
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langref{PI}]\label{def:lang_27fffab2}
-\textbf{Prime Implicates} \\
+\begin{language}
+\shortname{\langref{PI}}
+\fullname{Prime Implicates}
+\begin{description}
 The subset of \langref{CNF} where formulas are the conjunction of all minimal entailed clauses (prime implicates). \citep{Quine_1952}.
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langref{SDD}]\label{def:lang_1afefbe2}
-\textbf{Sentential Decision Diagram} \\
+\begin{language}
+\shortname{\langref{SDD}}
+\fullname{Sentential Decision Diagram}
+\begin{description}
 \langref{SDD} $= \bigcup_T$ \langfam{SDD}{T}. \citep{Darwiche_2011}
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langfam{SDD}{T}]\label{def:lang_9c84a267}
-\textbf{Sentential Decision Diagram (wrt a fixed vtree)} \\
+\begin{language}
+\shortname{\langfam{SDD}{T}}
+\fullname{Sentential Decision Diagram (wrt a fixed vtree)}
+\begin{description}
 \langfam{SDD}{T} generalizes \langfam{OBDD}{<} by allowing decisions, not only on variables, but on representations (i.e., recursively defined \langref{SDD} formulas).\citep{Darwiche_2011}
 
 Equivalently, an \langfam{SDD}{T} is a \langfam{d-SDNNF}{T} in which determinism is replaced by \emph{strong determinism}, where $\lor$-gates must take the form $ f(x,y) = \bigvee_{i=1}^{m}(p_i(x) \land s_i(y))$, where the $p_i$ are mutually exclusive and exhaustive.
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langref{SDNNF}]\label{def:lang_b13b0d78}
-\textbf{Structured Decomposable Negation Normal Form} \\
+\begin{language}
+\shortname{\langref{SDNNF}}
+\fullname{Structured Decomposable Negation Normal Form}
+\begin{description}
 \langref{SDNNF} $= \bigcup_T$ \langfam{SDNNF}{T}. \citep{Pipatsrisawat_2008}
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langfam{SDNNF}{T}]\label{def:lang_3c803ba1}
-\textbf{Structured Decomposable Negation Normal Form (wrt a fixed vtree)} \\
+\begin{language}
+\shortname{\langfam{SDNNF}{T}}
+\fullname{Structured Decomposable Negation Normal Form (wrt a fixed vtree)}
+\begin{description}
 For each fixed vtree $T$, an \langfam{SDNNF}{T} is a \langref{DNNF} that is additionally structured decomposable, respecting the vtree $T$.\citep{Pipatsrisawat_2008}
 
 Intuitively, all AND gates over the same set of variables must decompose via the same partition, as specified by the vtree.
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langref{TDD}]\label{def:lang_d7403a53}
-\textbf{Tree Decision Diagram} \\
-\langref{TDD} $= \bigcup_T$ \langfam{TDD}{T}. \citep{Capelli_2026}
-\end{definition}
-
-\begin{definition}[\langfam{TDD}{T}]\label{def:lang_8cf1da0e}
-\textbf{Tree Decision Diagram (wrt a fixed vtree)} \\
-For each fixed vtree $T$, a \langfam{TDD}{T} is a deterministic tree decision diagram respecting $T$, as introduced by \citet{Capelli_2026}.
-\end{definition}
-
-\begin{definition}[\langref{uFBDD}]\label{def:lang_4e62a038}
-\textbf{Unambiguous Free Binary Decision Diagram} \\
+\begin{language}
+\shortname{\langref{uFBDD}}
+\fullname{Unambiguous Free Binary Decision Diagram}
+\begin{description}
 The \emph{unambiguous} variant of \langref{nFBDD}.\citep{Wegener_2000} That is, on any input there is at most one accepting sequence of guesses.
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langref{uOBDD}]\label{def:lang_c2df8c2b}
-\textbf{Unambiguous Ordered Binary Decision Diagram} \\
+\begin{language}
+\shortname{\langref{uOBDD}}
+\fullname{Unambiguous Ordered Binary Decision Diagram}
+\begin{description}
 The \emph{unambiguous} variant of \langref{nOBDD}.\citep{Wegener_2000} That is, on any input there is at most one accepting sequence of guesses.
-\end{definition}
+\end{description}
+\end{language}
 
-\begin{definition}[\langfam{uOBDD}{<}]\label{def:lang_43a33aec}
-\textbf{Unambiguous Ordered Binary Decision Diagram (wrt a fixed variable order)} \\
+\begin{language}
+\shortname{\langref{OBDD}}
+\fullname{Ordered Binary Decision Diagram}
+\begin{description}
+Binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the same order.\citep{Bryant_1986}
+
+Also known as oblivious read-once branching programs.\citep{Wegener_2000}
+
+Equivalently, \langref{OBDD} $=\bigcup_{<}$ \langfam{OBDD}{<}.\citep{Darwiche_2002}
+\end{description}
+\end{language}
+
+\begin{language}
+\shortname{\langfam{TDD}{T}}
+\fullname{Tree Decision Diagram (wrt a fixed vtree)}
+\begin{description}
+For each fixed vtree $T$, a \langfam{TDD}{T} is a deterministic tree decision diagram respecting $T$, as introduced by \citet{Capelli_2026}.
+\end{description}
+\end{language}
+
+\begin{language}
+\shortname{\langref{TDD}}
+\fullname{Tree Decision Diagram}
+\begin{description}
+\langref{TDD} $= \bigcup_T$ \langfam{TDD}{T}. \citep{Capelli_2026}
+\end{description}
+\end{language}
+
+\begin{language}
+\shortname{\langref{dec-DNNF}}
+\fullname{Decision Decomposable Negation Normal Form}
+\begin{description}
+Boolean circuits with AND and OR gates; literals as inputs; and whose AND gates are \emph{decomposable} (children mention disjoint sets of variables) and whose OR gates must appear in the form of \emph{decisions/tests} (subcircuits of the form $(x\land f)\lor (\bar{x}\land g)$ where $x$ is a variable).\citep{darwiche2007language}
+
+Equivalently, \langref{dec-DNNF} formulas are \langref{d-DNNF} formulas whose OR-gates may only appear in \emph{decisions/tests}.
+
+Equivalently, \langref{dec-DNNF} formulas are (up to syntax) \langref{FBDD}{s} that may additionally contain decomposable AND-gates.
+\end{description}
+\end{language}
+
+\begin{language}
+\shortname{\langref{dec-SDNNF}}
+\fullname{Decision Structured Decomposable Negation Normal Form}
+\begin{description}
+\langref{dec-SDNNF} $= \bigcup_T$ \langfam{dec-SDNNF}{T}. \citep{Amarilli_2018}
+\end{description}
+\end{language}
+
+\begin{language}
+\shortname{\langfam{dec-SDNNF}{T}}
+\fullname{Decision Structured Decomposable Negation Normal Form (wrt a fixed vtree)}
+\begin{description}
+For each fixed vtree $T$, \langfam{dec-SDNNF}{T} is the subset of \langref{dec-DNNF} that respects $T$.\citep{darwiche2007language,Amarilli_2018}
+
+Equivalently, \langfam{dec-SDNNF}{T} formulas are \langfam{SDNNF}{T} formulas whose OR-gates may only appear in \emph{decisions/tests}.
+\end{description}
+\end{language}
+
+\begin{language}
+\shortname{\langfam{cSDD}{T}}
+\fullname{Compressed Sentential Decision Diagrams (wrt a fixed vtree)}
+\begin{description}
+\langfam{cSDD}{T} is the subset of \langfam{SDD}{T} that is \emph{compressed}, a restriction that makes the representation canonical (i.e., there is a unique representation for every function). \citep{Darwiche_2011}
+\end{description}
+\end{language}
+
+\begin{language}
+\shortname{\langfam{nOBDD}{<}}
+\fullname{Nondeterministic Ordered Binary Decision Diagram (wrt a fixed variable order)}
+\begin{description}
+An \langfam{nOBDD}{<} is a \emph{nondeterministic} \langfam{OBDD}{<}, i.e., an \langfam{OBDD}{<} that is additionally allowed to contain \emph{guess} nodes.\citep{Wegener_2000}
+
+Also known as a nondeterministic oblivious read-once branching program respecting variable order $<$.
+\end{description}
+\end{language}
+
+\begin{language}
+\shortname{\langfam{uOBDD}{<}}
+\fullname{Unambiguous Ordered Binary Decision Diagram (wrt a fixed variable order)}
+\begin{description}
 The \emph{unambiguous} variant of \langfam{nOBDD}{<}.\citep{Wegener_2000} That is, on any input there is at most one accepting sequence of guesses.
-\end{definition}
-
-% =============================
-% Bibliography
-% =============================
+\end{description}
+\end{language}
 \bibliographystyle{plainnat}
 \bibliography{refs}
-
 \end{document}

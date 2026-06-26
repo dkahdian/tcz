@@ -1,149 +1,202 @@
 /// <reference types="node" />
 
-/**
- * Bidirectional transformation between JSON database and LaTeX/Overleaf format.
- * 
- * This script provides two transformation directions:
- * 
- * 1. JSON → LaTeX (--to-latex):
- *    - Reads database.json
- *    - Generates succinctness.tex (succinctness edges, grouped by reference)
- *    - Generates languages.tex (language definitions)
- *    - Generates definitions.tex (core conceptual definitions)
- *    - Generates queries.tex (query operation support claims, non-derived only)
- *    - Generates transformations.tex (transformation operation support claims, non-derived only)
- *    - Generates refs.bib (BibTeX references)
- * 
- * 2. LaTeX → JSON (--to-json):
- *    - Parses all LaTeX files with STRICT canonical format requirements
- *    - Updates database.json with editable content (descriptions, refs, assumptions)
- *    - Runs refresh-derived.ts to propagate changes
- * 
- * CANONICAL CLAIM FORMAT for edges (strictly enforced):
- *   \begin{claim}[status=STATUS]
- *   \langref{LANG1} transforms to \langref{LANG2} (assuming ASSUMPTION)?
- *   \end{claim}
- * 
- * CANONICAL CLAIM FORMAT for operations (strictly enforced):
- *   \begin{claim}[lang=LANG_ID, op=OP_CODE]
- *   \langref{LANG} supports OP_LABEL COMPLEXITY_TEXT (assuming ASSUMPTION)?
- *   \end{claim}
- * 
- * Usage:
- *   npx tsx scripts/latex-bijection.ts --to-latex [-o output.tex]
- *   npx tsx scripts/latex-bijection.ts --to-json input.tex
- */
-
+import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { DATABASE_PATH, loadDatabase, saveDatabase, type DatabaseSchema } from './shared/database.js';
 import { cleanBibtexText, extractBibtexField } from '../src/lib/utils/bibtex.js';
+import { generateLanguageId } from '../src/lib/utils/language-id.js';
+import { guaranteesPoly, guaranteesQuasi } from '../src/lib/data/validation/semantic.js';
+import type {
+  DirectedSuccinctnessRelation,
+  KCBatchClaim,
+  KCBatchLanguageRef,
+  KCBatchSelector,
+  KCDefinition,
+  KCLanguage,
+  KCOpSupport,
+  KCReference
+} from '../src/lib/types.js';
 
-// Get script directory (still needed for LaTeX/BibTeX paths)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Default Paths (LaTeX-specific, not shared)
-const DEFAULT_LATEX_OUTPUT = path.join(__dirname, '..', 'docs', 'succinctness.tex');
+const DEFAULT_SUCCINCTNESS_OUTPUT = path.join(__dirname, '..', 'docs', 'succinctness.tex');
 const DEFAULT_LANGUAGES_OUTPUT = path.join(__dirname, '..', 'docs', 'languages.tex');
 const DEFAULT_DEFINITIONS_OUTPUT = path.join(__dirname, '..', 'docs', 'definitions.tex');
 const DEFAULT_BIBTEX_OUTPUT = path.join(__dirname, '..', 'docs', 'refs.bib');
 const DEFAULT_QUERIES_OUTPUT = path.join(__dirname, '..', 'docs', 'queries.tex');
 const DEFAULT_TRANSFORMS_OUTPUT = path.join(__dirname, '..', 'docs', 'transformations.tex');
 
-// Import types
-import type { 
-  DirectedSuccinctnessRelation, 
-  KCAdjacencyMatrix, 
-  KCDefinition,
-  KCLanguage, 
-  KCReference,
-  KCOpSupport,
-  KCOpSupportMap,
-  KCBatchClaim,
-  KCBatchSelector
-} from '../src/lib/types.js';
+const STATUS_TO_MACRO: Record<string, string> = {
+  poly: '\\poly',
+  'no-poly-unknown-quasi': '\\nopolyunknownquasi',
+  'no-poly-quasi': '\\nopolyquasi',
+  'unknown-poly-quasi': '\\unknownpolyquasi',
+  'unknown-both': '\\unknownboth',
+  'no-quasi': '\\noquasi'
+};
 
-// =============================================================================
-// Edge Representation
-// =============================================================================
+const MACRO_TO_STATUS = Object.fromEntries(Object.entries(STATUS_TO_MACRO).map(([k, v]) => [v, k]));
 
-interface Edge {
-  fromId: string;
-  fromName: string;
-  toId: string;
-  toName: string;
-  status: string;
-  description: string;
-  assumption: string;
-  refs: string[];
-  derived: boolean;
-  // For no-poly-quasi edges with structured proofs
-  noPolyDescription?: { description: string; refs: string[]; derived: boolean };
-  quasiDescription?: { description: string; refs: string[]; derived: boolean };
+const QUERY_OPERATION_MACROS: Record<string, string> = {
+  CO: '\\CO',
+  VA: '\\VA',
+  CE: '\\CE',
+  IM: '\\IM',
+  EQ: '\\EQ',
+  SE: '\\SE',
+  CT: '\\CT',
+  ME: '\\ME'
+};
+
+const TRANSFORMATION_OPERATION_MACROS: Record<string, string> = {
+  CD: '\\CD',
+  FO: '\\FO',
+  SFO: '\\SFO',
+  NOT_C: '\\NOTC',
+  AND_C: '\\ANDC',
+  AND_BC: '\\ANDBC',
+  OR_C: '\\ORC',
+  OR_BC: '\\ORBC'
+};
+
+const MACRO_TO_QUERY_OPERATION = Object.fromEntries(
+  Object.entries(QUERY_OPERATION_MACROS).map(([k, v]) => [v, k])
+);
+const MACRO_TO_TRANSFORMATION_OPERATION = Object.fromEntries(
+  Object.entries(TRANSFORMATION_OPERATION_MACROS).map(([k, v]) => [v, k])
+);
+
+const RELATION_COMMANDS = new Set([
+  'compilespoly',
+  'compilesquasi',
+  'nocompilespoly',
+  'nocompilesquasi'
+]);
+
+const OPERATION_RESULT_COMMANDS = new Set([
+  'supportspoly',
+  'supportsquasi',
+  'nosupportspoly',
+  'nosupportsquasi'
+]);
+
+const OPERATION_MACRO_TO_CODE: Record<string, string> = {
+  ...MACRO_TO_QUERY_OPERATION,
+  ...MACRO_TO_TRANSFORMATION_OPERATION
+};
+
+const CITATION_PATTERN = /\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}/g;
+
+interface Block {
+  body: string;
+  start: number;
 }
 
-// =============================================================================
-// CANONICAL STATUS DEFINITIONS
-// These are the ONLY valid statuses. The claim text is deterministic.
-// =============================================================================
+interface ParsedLanguage {
+  name: string;
+  fullName: string;
+  definition: string;
+}
 
-/**
- * All valid complexity/compilation status codes.
- * Maps status code → canonical claim text fragment (human-readable English).
- */
-const CANONICAL_STATUSES: Record<string, string> = {
-  'poly':                   'is polynomial-time compilable to',
-  'no-poly-unknown-quasi':  'is not polynomial-time compilable to',
-  'no-poly-quasi':          'is not polynomial-time (but is quasipolynomial-time) compilable to',
-  'unknown-poly-quasi':     'has unknown polynomial-time (but has quasipolynomial-time) compilation to',
-  'no-quasi':               'is not quasipolynomial-time compilable to',
-  'unknown-both':           'has unknown compilation to',
-};
+interface ParsedConcept {
+  title: string;
+  statement: string;
+}
 
-/**
- * All valid operation complexity codes.
- * Maps complexity code → canonical claim text fragment for operation support.
- */
-const CANONICAL_OP_COMPLEXITIES: Record<string, string> = {
-  // Order matters: more specific patterns must come BEFORE less specific ones,
-  // since parseOpsLatex() uses body.includes(text) and breaks on first match.
-  'no-poly-unknown-quasi':  'not in polynomial time (quasipolynomial unknown)',
-  'no-poly-quasi':          'not in polynomial time (but in quasipolynomial time)',
-  'unknown-poly-quasi':     'in unknown polynomial time (but in quasipolynomial time)',
-  'no-quasi':               'not in quasipolynomial time',
-  'unknown-both':           'in unknown complexity',
-  'unknown-to-us':          'in unknown-to-us complexity',
-  'poly':                   'in polynomial time',
-};
+interface ParsedRelation {
+  sourceId: string;
+  targetId: string;
+  status: string;
+  assumption?: string;
+  description: string;
+  refs: string[];
+}
 
-// =============================================================================
-// LaTeX Helpers
-// =============================================================================
+interface ParsedOperationClaim {
+  languageId: string;
+  operation: string;
+  status: string;
+  assumption?: string;
+  description: string;
+  refs: string[];
+}
 
-/**
- * Convert language name to canonical LaTeX display format.
- * This is a bijection - must be reversible by parseLanguageName().
- * 
- * Examples:
- *   "NNF" → "\\langref{NNF}"
- *   "OBDD$_<$" → "\\langref{$OBDD_<$}"
- *   "d-DNNF" → "\\langref{d-DNNF}"
- *   "dec-SDNNF" → "\\langref{dec-SDNNF}"
- */
+function fail(message: string): never {
+  throw new Error(message);
+}
+
+function hashShort(value: string): string {
+  return crypto.createHash('sha256').update(value).digest('hex').slice(0, 12);
+}
+
+function slug(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/\\[a-zA-Z]+\*?(?:\[[^\]]*\])?/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function definitionIdForTitle(title: string): string {
+  const opMatch = title.match(/\(([A-Z]+)\)$/);
+  if (opMatch) return `query-${opMatch[1].toLowerCase()}`;
+
+  const normalized = title.toLowerCase();
+  if (normalized.startsWith('conditioning')) return 'transformation-cd';
+  if (normalized.startsWith('singleton forgetting')) return 'transformation-sfo';
+  if (normalized.startsWith('forgetting')) return 'transformation-fo';
+  if (normalized.startsWith('bounded conjunction')) return 'transformation-and-bc';
+  if (normalized.startsWith('conjunction')) return 'transformation-and-c';
+  if (normalized.startsWith('bounded disjunction')) return 'transformation-or-bc';
+  if (normalized.startsWith('disjunction')) return 'transformation-or-c';
+  if (normalized.startsWith('negation')) return 'transformation-not-c';
+  return slug(title);
+}
+
+function extractCitationKeys(text?: string): string[] {
+  const refs: string[] = [];
+  if (!text) return refs;
+  CITATION_PATTERN.lastIndex = 0;
+  let match: RegExpExecArray | null;
+  while ((match = CITATION_PATTERN.exec(text)) !== null) {
+    for (const key of match[1].split(',').map((item) => item.trim()).filter(Boolean)) {
+      if (!refs.includes(key)) refs.push(key);
+    }
+  }
+  return refs;
+}
+
+function ensureInlineCitations(text: string, refs?: string[]): string {
+  const cleanRefs = [...new Set((refs ?? []).filter(Boolean))];
+  if (cleanRefs.length === 0) return text;
+  const existing = new Set(extractCitationKeys(text));
+  const missing = cleanRefs.filter((ref) => !existing.has(ref));
+  if (missing.length === 0) return text;
+  const trimmed = text.trimEnd();
+  const suffix = ` \\citep{${missing.join(',')}}`;
+  return `${trimmed}${trimmed.endsWith('.') ? '' : '.'}${suffix}`;
+}
+
+function stripDefRefs(text: string): string {
+  return text
+    .replace(/\\defref\{[^{}]+\}\{([^{}]+)\}/g, '$1')
+    .replace(/\\defref\{([^{}]+)\}/g, (_match, id: string) =>
+      id
+        .split('-')
+        .map((part: string) => part ? part[0].toUpperCase() + part.slice(1) : part)
+        .join(' ')
+    );
+}
+
 function languageToLatex(name: string): string {
   const familyMatch = name.match(/^(.+)\$_(.+)\$$/);
   if (familyMatch) {
-    const base = familyMatch[1].replace(/\$/g, '');
-    const index = familyMatch[2].replace(/\$/g, '');
-    return `\\langfam{${base}}{${index}}`;
+    return `\\langfam{${familyMatch[1].replace(/\$/g, '')}}{${familyMatch[2].replace(/\$/g, '')}}`;
   }
-
-  const stripped = name.replace(/\$/g, '');
-  const escaped = stripped
-    .replace(/_/g, '\\_');
-  return `\\langref{${escaped}}`;
+  return `\\langref{${name.replace(/\$/g, '').replace(/_/g, '\\_')}}`;
 }
 
 function normalizeLanguageName(value: string): string {
@@ -161,2636 +214,890 @@ function normalizeLanguageName(value: string): string {
     .replace(/_\{\s*([^{}]+)\s*\}/g, '_$1')
     .replace(/\s+/g, ' ');
 
-  // Legacy form: $d$-$DNNF$ -> d-DNNF
-  if (normalized.includes('-')) {
-    normalized = normalized
-      .split('-')
-      .map((part) => {
-        const trimmed = part.trim();
-        if (trimmed.startsWith('$') && trimmed.endsWith('$')) {
-          return trimmed.slice(1, -1);
-        }
-        return trimmed;
-      })
-      .join('-');
-  }
-
-  // Strip an outer $...$ wrapper while preserving subscript structure.
   if (normalized.startsWith('$') && normalized.endsWith('$')) {
     normalized = normalized.slice(1, -1);
   }
-
-  // Canonical DB style for indexed families, e.g. OBDD_< -> OBDD$_<$.
   if (normalized.includes('_') && !normalized.includes('$')) {
     normalized = normalized
       .replace(/([A-Za-z0-9-])_<(?![A-Za-z0-9])/g, '$1$_<$')
       .replace(/([A-Za-z0-9-])_([A-Za-z0-9]+)(?![A-Za-z0-9])/g, '$1$_$2$');
   }
-
   return normalized;
 }
 
-/**
- * Parse language name from LaTeX format back to database format.
- * Inverse of languageToLatex().
- * 
- * Examples:
- *   "\\langref{NNF}" → "NNF"
- *   "\\langref{$OBDD_<$}" → "OBDD$_<$"
- *   "\\langref{d-DNNF}" → "d-DNNF"
- *   "$d$-$DNNF$" → "d-DNNF" (legacy)
- */
-function parseLanguageName(latex: string): string {
-  return normalizeLanguageName(latex);
+function isCurrentLanguagePlaceholder(value: string): boolean {
+  return value.trim() === '\\thislang' || /^\$?\\mathcal\{L\}\$?$/.test(value.trim());
 }
 
-/**
- * Escape special LaTeX characters in section titles.
- */
-function escapeLatex(text: string): string {
-  // Don't escape if it already contains LaTeX commands
-  if (text.includes('\\') || text.includes('$')) {
-    return text;
-  }
+function languageLatexFromRef(ref: string, database: DatabaseSchema): string {
+  if (isCurrentLanguagePlaceholder(ref)) return '\\thislang';
+  const raw = ref.trim();
+  const byId = database.languages.find((candidate) => candidate.id === raw);
+  if (byId) return languageToLatex(byId.name);
+  const normalized = normalizeLanguageName(ref);
+  const language = database.languages.find((candidate) =>
+    candidate.id === normalized ||
+    candidate.name === normalized ||
+    normalizeLanguageName(candidate.name) === normalized ||
+    normalizeLanguageName(languageToLatex(candidate.name)) === normalized
+  );
+  return language ? languageToLatex(language.name) : ref.trim();
+}
+
+function languageIdFromRef(ref: string, database: DatabaseSchema): string | undefined {
+  if (isCurrentLanguagePlaceholder(ref)) return undefined;
+  const raw = ref.trim();
+  const byId = database.languages.find((candidate) => candidate.id === raw);
+  if (byId) return byId.id;
+  const normalized = normalizeLanguageName(ref);
+  return database.languages.find((candidate) =>
+    candidate.id === normalized ||
+    candidate.name === normalized ||
+    normalizeLanguageName(candidate.name) === normalized ||
+    normalizeLanguageName(languageToLatex(candidate.name)) === normalized
+  )?.id;
+}
+
+function relationStatus(database: DatabaseSchema, sourceRef: string, targetRef: string): string | undefined {
+  const sourceId = languageIdFromRef(sourceRef, database);
+  const targetId = languageIdFromRef(targetRef, database);
+  if (!sourceId || !targetId) return undefined;
+  if (sourceId === targetId) return 'poly';
+  const sourceIndex = database.adjacencyMatrix.indexByLanguage[sourceId];
+  const targetIndex = database.adjacencyMatrix.indexByLanguage[targetId];
+  return database.adjacencyMatrix.matrix[sourceIndex]?.[targetIndex]?.status;
+}
+
+function operationMacroForAny(opCode: string): string {
+  if (QUERY_OPERATION_MACROS[opCode]) return QUERY_OPERATION_MACROS[opCode];
+  if (TRANSFORMATION_OPERATION_MACROS[opCode]) return TRANSFORMATION_OPERATION_MACROS[opCode];
+  return `\\${opCode.replace(/[^A-Za-z]/g, '')}`;
+}
+
+function operationStatus(database: DatabaseSchema, languageRef: string, opCode: string): string | undefined {
+  const languageId = languageIdFromRef(languageRef, database);
+  if (!languageId) return undefined;
+  const language = database.languages.find((item) => item.id === languageId);
+  return language?.properties?.queries?.[opCode]?.complexity ?? language?.properties?.transformations?.[opCode]?.complexity;
+}
+
+function operationResultMacroFor(command: 'opref' | 'nopref', status: string | undefined): string {
+  if (command === 'opref') return status === 'poly' ? 'supportspoly' : 'supportsquasi';
+  return status === 'no-quasi' ? 'nosupportsquasi' : 'nosupportspoly';
+}
+
+function migrateLegacyDescription(text: string | undefined, database: DatabaseSchema): string {
+  if (!text) return '';
+  return stripRedundantRelationTiming(stripDefRefs(text)
+    .replace(/\$?\\mathcal\{L\}\$?/g, '\\thislang')
+    .replace(/\\(compilespoly|compilesquasi|nocompilespoly|nocompilesquasi)\{((?:[^{}]|\{[^{}]*\})+)\}\{((?:[^{}]|\{[^{}]*\})+)\}/g, (_match, command: string, sourceRef: string, targetRef: string) =>
+      `\\${command}{${languageLatexFromRef(sourceRef, database)}}{${languageLatexFromRef(targetRef, database)}}`
+    )
+    .replace(/\\(edgeref|nedgeref)\{((?:[^{}]|\{[^{}]*\})+)\}\{((?:[^{}]|\{[^{}]*\})+)\}/g, (_match, command: string, sourceRef: string, targetRef: string) => {
+      const status = relationStatus(database, sourceRef, targetRef);
+      const source = languageLatexFromRef(sourceRef, database);
+      const target = languageLatexFromRef(targetRef, database);
+      const macro = command === 'edgeref'
+        ? status === 'poly' ? 'compilespoly' : 'compilesquasi'
+        : status === 'no-quasi' ? 'nocompilesquasi' : 'nocompilespoly';
+      return `\\${macro}{${source}}{${target}}`;
+    })
+    .replace(/\\opref\{((?:[^{}]|\{[^{}]*\})+)\}\{([^{}]+)\}/g, (_match, languageRef: string, opCode: string) =>
+      `\\${operationResultMacroFor('opref', operationStatus(database, languageRef, opCode))}{${languageLatexFromRef(languageRef, database)}}{${operationMacroForAny(opCode)}}`
+    )
+    .replace(/\\nopref\{((?:[^{}]|\{[^{}]*\})+)\}\{([^{}]+)\}/g, (_match, languageRef: string, opCode: string) =>
+      `\\${operationResultMacroFor('nopref', operationStatus(database, languageRef, opCode))}{${languageLatexFromRef(languageRef, database)}}{${operationMacroForAny(opCode)}}`
+    ));
+}
+
+function stripRedundantRelationTiming(text: string): string {
+  const languageArg = String.raw`(?:\\thislang|\\langref\{[^{}]+\}|\\langfam\{[^{}]+\}\{[^{}]+\})`;
   return text
-    .replace(/%/g, '\\%')
-    .replace(/&/g, '\\&')
-    .replace(/#/g, '\\#');
-  // Note: we don't escape _ because it might be part of reference IDs
+    .replace(new RegExp(`(\\\\(?:compilespoly|nocompilespoly)\\{${languageArg}\\}\\{${languageArg}\\})\\s+in polynomial time`, 'g'), '$1')
+    .replace(new RegExp(`(\\\\(?:compilesquasi|nocompilesquasi)\\{${languageArg}\\}\\{${languageArg}\\})\\s+in (?:at worst |at most )?quasipolynomial time`, 'g'), '$1')
+    .replace(new RegExp(`(\\\\(?:supportspoly|nosupportspoly)\\{${languageArg}\\}\\{\\\\[A-Za-z]+\\})\\s+in polynomial time`, 'g'), '$1')
+    .replace(new RegExp(`(\\\\(?:supportsquasi|nosupportsquasi)\\{${languageArg}\\}\\{\\\\[A-Za-z]+\\})\\s+in (?:at worst |at most )?quasipolynomial time`, 'g'), '$1');
 }
 
-/**
- * Extract content from a LaTeX command with brace-delimited argument,
- * properly handling nested braces.
- * 
- * Given content starting after the opening '{', returns the matched content
- * up to the balanced closing '}', and the remainder of the string.
- * 
- * Example: "hello {world}} rest" with depth 1 → content="hello {world}", rest=" rest"
- */
-function extractBraceContent(text: string, prefix: string): { content: string; rest: string } | null {
-  const idx = text.indexOf(prefix);
-  if (idx === -1) return null;
-
-  const start = idx + prefix.length;
-  // prefix should end with '{', so we start inside
+function extractBraceAt(text: string, openBrace: number): { content: string; end: number } {
+  if (text[openBrace] !== '{') fail(`Expected "{" at offset ${openBrace}`);
   let depth = 1;
-  let i = start;
-  while (i < text.length && depth > 0) {
+  for (let i = openBrace + 1; i < text.length; i++) {
     if (text[i] === '{') depth++;
-    else if (text[i] === '}') depth--;
-    i++;
+    if (text[i] === '}') depth--;
+    if (depth === 0) return { content: text.slice(openBrace + 1, i), end: i + 1 };
   }
-  if (depth !== 0) return null;
-
-  // i is now one past the closing brace
-  const content = text.slice(start, i - 1);
-  const rest = text.slice(i);
-  return { content, rest };
+  fail(`Unbalanced braces at offset ${openBrace}`);
 }
 
-// =============================================================================
-// JSON → LaTeX Conversion
-// =============================================================================
-
-/**
- * Extract edges from adjacency matrix.
- * SKIPS derived edges - they will be regenerated by propagation.
- */
-function extractEdges(database: DatabaseSchema): Edge[] {
-  const { adjacencyMatrix, languages } = database;
-  const edges: Edge[] = [];
-  
-  // Build ID to language map
-  const idToLang = new Map<string, KCLanguage>();
-  for (const lang of languages) {
-    idToLang.set(lang.id, lang);
+function commandValue(block: string, command: string, required = true): string | undefined {
+  const needle = `\\${command}`;
+  const idx = block.indexOf(needle);
+  if (idx < 0) {
+    if (required) fail(`Missing \\${command}{...}`);
+    return undefined;
   }
-  
-  const { languageIds, matrix } = adjacencyMatrix;
-  const n = languageIds.length;
-  
-  for (let i = 0; i < n; i++) {
-    for (let j = 0; j < n; j++) {
-      if (i === j) continue;
-      
-      const relation = matrix[i]?.[j] as DirectedSuccinctnessRelation | null;
-      if (!relation || !relation.status) continue;
-      
-      // Skip statuses we don't handle
-      if (!CANONICAL_STATUSES[relation.status]) continue;
-      
-      // SKIP FULLY DERIVED EDGES - they will be regenerated by propagation
-      if (relation.derived) continue;
-      
-      const fromId = languageIds[i];
-      const toId = languageIds[j];
-      const fromLang = idToLang.get(fromId);
-      const toLang = idToLang.get(toId);
-      
-      if (!fromLang || !toLang) continue;
-      
-      edges.push({
-        fromId,
-        fromName: fromLang.name,
-        toId,
-        toName: toLang.name,
-        status: relation.status,
-        description: relation.description || '',
-        assumption: relation.assumption || '',
-        refs: relation.refs || [],
-        derived: false, // We skip derived edges above
-        noPolyDescription: relation.noPolyDescription,
-        quasiDescription: relation.quasiDescription
-      });
-    }
-  }
-  
-  return edges;
+  let i = idx + needle.length;
+  while (/\s/.test(block[i] ?? '')) i++;
+  if (block[i] !== '{') fail(`Malformed \\${command}{...}`);
+  return extractBraceAt(block, i).content.trim();
 }
 
-/**
- * Group edges by primary reference (sorted by frequency)
- */
-function groupEdgesByReference(edges: Edge[]): Map<string, Edge[]> {
-  // Count reference occurrences across all edges
-  const refCounts = new Map<string, number>();
-  
-  for (const edge of edges) {
-    const allRefs = new Set<string>(edge.refs);
-    if (edge.noPolyDescription) {
-      edge.noPolyDescription.refs.forEach(r => allRefs.add(r));
-    }
-    if (edge.quasiDescription) {
-      edge.quasiDescription.refs.forEach(r => allRefs.add(r));
-    }
-    
-    for (const ref of allRefs) {
-      refCounts.set(ref, (refCounts.get(ref) || 0) + 1);
-    }
+function environmentBlocks(content: string, name: string): Block[] {
+  const blocks: Block[] = [];
+  const begin = `\\begin{${name}}`;
+  const end = `\\end{${name}}`;
+  let cursor = 0;
+  while (true) {
+    const start = content.indexOf(begin, cursor);
+    if (start < 0) return blocks;
+    const bodyStart = start + begin.length;
+    const stop = content.indexOf(end, bodyStart);
+    if (stop < 0) fail(`Missing ${end}`);
+    blocks.push({ body: content.slice(bodyStart, stop).trim(), start });
+    cursor = stop + end.length;
   }
-  
-  // Sort references by frequency (descending)
-  const sortedRefs = [...refCounts.entries()]
-    .sort((a, b) => b[1] - a[1])
-    .map(([ref]) => ref);
-  
-  // Group edges by primary reference
-  const grouped = new Map<string, Edge[]>();
-  const usedEdges = new Set<Edge>();
-  
-  // Add "No Reference" category
-  grouped.set('__NO_REFERENCE__', []);
-  
-  for (const ref of sortedRefs) {
-    grouped.set(ref, []);
-  }
-  
-  // Assign each edge to its primary (most frequent) reference
-  for (const edge of edges) {
-    const allRefs = new Set<string>(edge.refs);
-    if (edge.noPolyDescription) {
-      edge.noPolyDescription.refs.forEach(r => allRefs.add(r));
-    }
-    if (edge.quasiDescription) {
-      edge.quasiDescription.refs.forEach(r => allRefs.add(r));
-    }
-    
-    if (allRefs.size === 0) {
-      grouped.get('__NO_REFERENCE__')!.push(edge);
-      usedEdges.add(edge);
-      continue;
-    }
-    
-    // Find the most frequent reference for this edge
-    let primaryRef: string | null = null;
-    let maxCount = 0;
-    
-    for (const ref of sortedRefs) {
-      if (allRefs.has(ref)) {
-        const count = refCounts.get(ref) || 0;
-        if (count > maxCount) {
-          maxCount = count;
-          primaryRef = ref;
-        }
-        break; // Take the first (most frequent) match
-      }
-    }
-    
-    if (primaryRef && !usedEdges.has(edge)) {
-      grouped.get(primaryRef)!.push(edge);
-      usedEdges.add(edge);
-    }
-  }
-  
-  // Remove empty groups
-  for (const [key, value] of grouped) {
-    if (value.length === 0) {
-      grouped.delete(key);
-    }
-  }
-  
-  return grouped;
 }
 
-/**
- * Compute effective status for a partially derived edge.
- * - If no-poly is not derived but quasi is derived → 'no-poly-unknown-quasi'
- * - If no-poly is derived but quasi is not derived → 'unknown-poly-quasi'
- * - Otherwise return original status
- */
-function getEffectiveStatus(edge: Edge): string {
-  const hasNoPoly = edge.noPolyDescription !== undefined;
-  const hasQuasi = edge.quasiDescription !== undefined;
-  
-  // Only applies to no-poly-quasi edges with partial derivation
-  if (hasNoPoly && hasQuasi && edge.status === 'no-poly-quasi') {
-    const noPolyDerived = edge.noPolyDescription!.derived;
-    const quasiDerived = edge.quasiDescription!.derived;
-    
-    if (noPolyDerived && !quasiDerived) {
-      // No-poly part is derived, quasi is manual → claim is about quasi
-      return 'unknown-poly-quasi';
-    }
-    if (!noPolyDerived && quasiDerived) {
-      // No-poly is manual, quasi is derived → claim is about no-poly
-      return 'no-poly-unknown-quasi';
-    }
+function environmentValue(block: string, name: string, required = true): string | undefined {
+  const blocks = environmentBlocks(block, name);
+  if (blocks.length === 0) {
+    if (required) fail(`Missing ${name} environment`);
+    return undefined;
   }
-  
-  return edge.status;
+  if (blocks.length > 1) fail(`Expected only one ${name} environment`);
+  return blocks[0].body.trim();
 }
 
-/**
- * Build claim text with effective status (accounts for partial derivation).
- */
-function buildClaimTextWithEffectiveStatus(edge: Edge): string {
-  const fromLatex = languageToLatex(edge.fromName);
-  const toLatex = languageToLatex(edge.toName);
-  const effectiveStatus = getEffectiveStatus(edge);
-  const transformType = CANONICAL_STATUSES[effectiveStatus];
-  
-  if (!transformType) {
-    throw new Error(`Unknown status: ${effectiveStatus}`);
+function stripPreambleWarning(content: string): void {
+  const forbidden = [
+    /%\s*lang=/,
+    /%\s*Reference ID:/,
+    /\\label\{def:lang_/,
+    /\\label\{kdef:/,
+    /\\begin\{batchclaim\}\[/,
+    /\\classification\{/,
+    /\\references\{/,
+    /\\defref\{/,
+    /\\(?:edgeref|nedgeref|opref|nopref)\{/
+  ];
+  for (const pattern of forbidden) {
+    if (pattern.test(content)) fail(`Legacy LaTeX metadata is not allowed: ${pattern}`);
   }
-  
-  let claim = `${fromLatex} ${transformType} ${toLatex}`;
-  
-  if (edge.assumption) {
-    claim += ` assuming ${edge.assumption}`;
-  }
-  
-  // For partially derived edges, only include refs from non-derived part
-  let refs = edge.refs;
-  const hasNoPoly = edge.noPolyDescription !== undefined;
-  const hasQuasi = edge.quasiDescription !== undefined;
-  
-  if (hasNoPoly && hasQuasi && edge.status === 'no-poly-quasi') {
-    const noPolyDerived = edge.noPolyDescription!.derived;
-    const quasiDerived = edge.quasiDescription!.derived;
-    
-    if (noPolyDerived && !quasiDerived) {
-      // Use quasi refs only
-      refs = edge.quasiDescription!.refs;
-    } else if (!noPolyDerived && quasiDerived) {
-      // Use no-poly refs only
-      refs = edge.noPolyDescription!.refs;
-    }
-  }
-  
-  // Add references at the end
-  if (refs && refs.length > 0) {
-    claim += ` \\citep{${refs.join(',')}}`;
-  }
-  
-  return claim;
 }
 
-/**
- * Generate a single claim block with STRICT canonical format.
- * 
- * Format:
- *   \begin{claim}
- *   $LANG1$ TRANSFORMATION_TYPE $LANG2$ (assuming ASSUMPTION)? \citep{REFS}?
- *   \end{claim}
- *   \begin{claimdescription}
- *   DESCRIPTION (EDITABLE)
- *   \end{claimdescription}
- * 
- * For partially derived edges (derived: false but one sub-description has derived: true),
- * only includes the non-derived proof content with adjusted status.
- */
-function generateClaim(edge: Edge): string {
-  const claimText = buildClaimTextWithEffectiveStatus(edge);
-  
-  // Build proof sketch content - handle partial derivation
-  // For no-poly-quasi edges, check if one part is derived and one is not
-  let proofSketch: string;
-  
-  const hasNoPoly = edge.noPolyDescription !== undefined;
-  const hasQuasi = edge.quasiDescription !== undefined;
-  
-  if (hasNoPoly && hasQuasi) {
-    const noPolyDerived = edge.noPolyDescription!.derived;
-    const quasiDerived = edge.quasiDescription!.derived;
-    
-    // Check for partial derivation (one derived, one not)
-    if (noPolyDerived !== quasiDerived) {
-      // Partial derivation - only include non-derived part
-      if (!noPolyDerived) {
-        proofSketch = edge.noPolyDescription!.description || '(Proof needed)';
-      } else {
-        proofSketch = edge.quasiDescription!.description || '(Proof needed)';
-      }
-    } else {
-      // Both have same derivation status - use full description
-      proofSketch = edge.description || '(Description needed)';
-    }
-  } else {
-    // No sub-descriptions or only one - use full description
-    proofSketch = edge.description || '(Description needed)';
-  }
-  
-  return `\\begin{claim}
-${claimText}
-\\end{claim}
-\\begin{claimdescription}
-${proofSketch}
-\\end{claimdescription}
-`;
-}
-
-/**
- * Build a section from a reference ID and its edges
- */
-function buildSection(refId: string, refEdges: Edge[], refMap: Map<string, KCReference>): string {
-  let sectionTitle: string;
-  
-  if (refId === '__NO_REFERENCE__') {
-    sectionTitle = 'No Reference';
-  } else {
-    const ref = refMap.get(refId);
-    sectionTitle = ref ? ref.title.slice(0, 80) + (ref.title.length > 80 ? '...' : '') : refId;
-  }
-  
-  // Sort edges within section by from language, then to language
-  refEdges.sort((a, b) => {
-    const fromCmp = a.fromName.localeCompare(b.fromName);
-    if (fromCmp !== 0) return fromCmp;
-    return a.toName.localeCompare(b.toName);
-  });
-  
-  const claims = refEdges
-    .map(edge => generateClaim(edge))
-    .filter(c => c.length > 0)
-    .join('\n');
-  
-  if (claims.length === 0) {
-    return '';
-  }
-  
+function titlePreamble(title: string, theoremStyle = ''): string {
   return `% =============================
-\\section{${escapeLatex(sectionTitle)}}
-% Reference ID: ${refId}
-% =============================
-${claims}`;
-}
-
-/**
- * Generate the full LaTeX document
- */
-function generateLatex(database: DatabaseSchema): string {
-  const edges = extractEdges(database);
-  const groupedEdges = groupEdgesByReference(edges);
-  
-  // Reference lookup for section titles
-  const refMap = new Map<string, KCReference>();
-  for (const ref of database.references) {
-    refMap.set(ref.id, ref);
-  }
-  
-  // Build sections - put "No Reference" last
-  const sections: string[] = [];
-  let noRefSection: string | null = null;
-  
-  for (const [refId, refEdges] of groupedEdges) {
-    const section = buildSection(refId, refEdges, refMap);
-    if (!section) continue;
-    
-    if (refId === '__NO_REFERENCE__') {
-      noRefSection = section;
-    } else {
-      sections.push(section);
-    }
-  }
-  
-  // Add "No Reference" section at the end
-  if (noRefSection) {
-    sections.push(noRefSection);
-  }
-  
-  // Build full document
-  const preamble = `% =============================
-% Tractable Circuit Zoo - Succinctness Claims and Descriptions
+% Tractable Circuit Zoo - ${title}
 % Auto-generated from database.json
-% Generated: ${new Date().toISOString()}
-% 
-% EDITING INSTRUCTIONS:
-% - Claim environments are auto-generated. Do NOT edit.
-% - Description environments (claimdescription) are EDITABLE.
-% - Lines starting with "% [DERIVED" indicate auto-propagated edges.
-% - To sync back to JSON, run: npx tsx scripts/latex-bijection.ts --to-json <this-file>
 % =============================
 \\documentclass[11pt]{article}
-
-% -------- Packages --------
 \\usepackage[margin=1in]{geometry}
 \\usepackage{amsmath, amssymb, amsthm}
 \\usepackage{mathtools}
 \\usepackage{xparse}
-\\usepackage{enumitem}
 \\usepackage{hyperref}
-\\usepackage{cleveref}
-\\usepackage{xcolor}
 \\usepackage{natbib}
+\\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
 
-% -------- Hyperref setup --------
-\\hypersetup{
-  colorlinks=true,
-  linkcolor=blue,
-  citecolor=blue,
-  urlcolor=blue
-}
+${theoremStyle}
 
-% -------- Theorem styles --------
-\\theoremstyle{plain}
-\\newtheorem{theorem}{Theorem}[section]
-\\newtheorem{lemma}[theorem]{Lemma}
-\\newtheorem{proposition}[theorem]{Proposition}
-\\newtheorem{corollary}[theorem]{Corollary}
-\\newtheorem{claim}{Claim}[section]
-
-\\theoremstyle{definition}
-\\newtheorem{definition}[theorem]{Definition}
-\\newtheorem{example}[theorem]{Example}
-
-\\theoremstyle{remark}
-\\newtheorem{remark}[theorem]{Remark}
-
-% -------- Description environment (just indented text, no prefix) --------
-\\newenvironment{claimdescription}{%
-  \\par\\noindent\\ignorespaces
-}{\\par}
-
-% -------- Handy macros --------
-\\newcommand{\\R}{\\mathbb{R}}
-\\newcommand{\\N}{\\mathbb{N}}
-\\newcommand{\\eps}{\\varepsilon}
-% Cross-reference commands (rendered as links in the web UI)
 \\NewDocumentCommand{\\langref}{m g}{\\textbf{#1\\IfNoValueF{#2}{#2}}}
 \\NewDocumentCommand{\\langfam}{m m g}{\\textbf{#1$_{#2}$\\IfNoValueF{#3}{#3}}}
-\\NewDocumentCommand{\\defref}{m g}{\\hyperref[kdef:#1]{\\textbf{\\IfNoValueTF{#2}{#1}{#2}}}}
-\\newcommand{\\edgeref}[2]{#1 compiles to #2}
-\\newcommand{\\nedgeref}[2]{#1 cannot compile to #2}
-\\newcommand{\\opref}[2]{#1 supports #2}
-\\newcommand{\\nopref}[2]{#2 is unsupported by #1}
-
-% -------- Title info --------
-\\title{Tractable Circuit Zoo: Succinctness Claims}
+\\newcommand{\\thislang}{\\mathcal{L}}
+\\newcommand{\\poly}{polynomial}
+\\newcommand{\\nopolyunknownquasi}{not polynomial, quasipolynomial unknown}
+\\newcommand{\\nopolyquasi}{not polynomial, quasipolynomial}
+\\newcommand{\\unknownpolyquasi}{polynomial unknown, quasipolynomial}
+\\newcommand{\\unknownboth}{unknown}
+\\newcommand{\\noquasi}{not quasipolynomial}
+\\newcommand{\\CO}{CO}
+\\newcommand{\\VA}{VA}
+\\newcommand{\\CE}{CE}
+\\newcommand{\\IM}{IM}
+\\newcommand{\\EQ}{EQ}
+\\newcommand{\\SE}{SE}
+\\newcommand{\\CT}{CT}
+\\newcommand{\\ME}{ME}
+\\newcommand{\\CD}{CD}
+\\newcommand{\\FO}{FO}
+\\newcommand{\\SFO}{SFO}
+\\newcommand{\\NOTC}{$\\neg$C}
+\\newcommand{\\ANDC}{$\\wedge$C}
+\\newcommand{\\ANDBC}{$\\wedge$BC}
+\\newcommand{\\ORC}{$\\vee$C}
+\\newcommand{\\ORBC}{$\\vee$BC}
+\\newcommand{\\compilespoly}[2]{#1 compiles polynomially to #2}
+\\newcommand{\\compilesquasi}[2]{#1 compiles quasipolynomially to #2}
+\\newcommand{\\nocompilespoly}[2]{#1 does not compile polynomially to #2}
+\\newcommand{\\nocompilesquasi}[2]{#1 does not compile quasipolynomially to #2}
+\\newcommand{\\supportspoly}[2]{#1 supports #2 in polynomial time}
+\\newcommand{\\supportsquasi}[2]{#1 supports #2 in quasipolynomial time}
+\\newcommand{\\nosupportspoly}[2]{#2 is not supported by #1 in polynomial time}
+\\newcommand{\\nosupportsquasi}[2]{#2 is not supported by #1 in quasipolynomial time}
+\\newcommand{\\isin}[1]{#1}
+\\newcommand{\\shortname}[1]{\\textbf{Short name:} #1\\par}
+\\newcommand{\\fullname}[1]{\\textbf{Full name:} #1\\par}
+\\newcommand{\\source}[1]{\\textbf{Source:} #1\\par}
+\\newcommand{\\target}[1]{\\textbf{Target:} #1\\par}
+\\newcommand{\\language}[1]{\\textbf{Language:} #1\\par}
+\\newcommand{\\operation}[1]{\\textbf{Operation:} #1\\par}
+\\newcommand{\\status}[1]{\\textbf{Status:} #1\\par}
+\\newcommand{\\selector}[1]{\\textbf{Selector:} #1\\par}
+\\newcommand{\\assuming}[1]{\\textbf{Assuming:} #1\\par}
+\\newcommand{\\titlefield}[1]{\\textbf{Title:} #1\\par}
+\\let\\titlemacro\\title
+\\renewcommand{\\title}[1]{\\titlefield{#1}}
+\\newenvironment{description}{\\par\\noindent\\ignorespaces}{\\par}
+\\newenvironment{language}{}{}
+\\newenvironment{concept}{}{}
+\\newenvironment{succinctnessclaim}{}{}
+\\newenvironment{queryclaim}{}{}
+\\newenvironment{transformationclaim}{}{}
+\\newenvironment{batchclaim}{}{}
+\\titlemacro{Tractable Circuit Zoo: ${title}}
 \\date{\\today}
-
 \\begin{document}
 \\maketitle
 
-\\tableofcontents
-\\newpage
-
 `;
+}
 
-  const postamble = `
-% =============================
-% Bibliography
-% =============================
+function postamble(): string {
+  return `
 \\bibliographystyle{plainnat}
 \\bibliography{refs}
-
 \\end{document}
 `;
-
-  return preamble + sections.join('\n\n') + postamble;
 }
 
-// =============================================================================
-// LaTeX → JSON Conversion (STRICT PARSER)
-// =============================================================================
-
-interface ParsedClaim {
-  fromName: string;
-  toName: string;
-  status: string;
-  assumption: string;
-  proofSketch: string;  // Copied directly to description field
-  refs: string[];       // References from the claim line
-  derived: boolean;
-}
-
-/**
- * Parse the canonical claim format strictly.
- * 
- * Expected format:
- *   \begin{claim}
- *   LANG1 TRANSFORMATION_TYPE LANG2 (assuming ASSUMPTION)? (\citep{REFS})?
- *   where LANG is either legacy $...$ tokenization or \langref{...}
- *   \end{claim}
- * 
- * Returns null if the format doesn't match exactly.
- */
-function parseCanonicalClaim(
-  claimLine: string,  // The \begin{claim} line
-  claimBody: string,  // The content between begin/end
-  proofSketch: string,
-  derived: boolean
-): ParsedClaim | null {
-  // Parse claim body: $LANG1$ TRANSFORMATION_TYPE $LANG2$ (assuming ASSUMPTION)? (\citep{REFS})?
-  let body = claimBody.trim();
-  
-  // First, extract and remove citation if present (always at the end)
-  let refs: string[] = [];
-  const citeMatch = body.match(/\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}\s*$/);
-  if (citeMatch) {
-    refs = citeMatch[1].split(',').map(s => s.trim());
-    body = body.slice(0, citeMatch.index).trim();
-  }
-  
-  // Extract assumption if present (comes before citation)
-  let assumption = '';
-  const assumptionMatch = body.match(/\s+assuming\s+(.+)$/i);
-  if (assumptionMatch) {
-    assumption = assumptionMatch[1].trim();
-    body = body.slice(0, assumptionMatch.index).trim();
-  }
-  
-  // Now body should be: LANG1 TRANSFORMATION_TYPE LANG2
-  // We need to infer the status from the transformation text
-  
-  // Find which CANONICAL_STATUS the transformation text matches
-  let status: string | null = null;
-  let transformText: string | null = null;
-  
-  for (const [statusCode, transformationType] of Object.entries(CANONICAL_STATUSES)) {
-    if (body.includes(transformationType)) {
-      status = statusCode;
-      transformText = transformationType;
-      break;
-    }
-  }
-  
-  if (!status || !transformText) {
-    console.warn(`Could not determine status from claim body: ${body}`);
-    console.warn(`  Known transformations: ${Object.values(CANONICAL_STATUSES).join(', ')}`);
-    return null;
-  }
-  
-  // Build regex to match: LANG1 TRANSFORMATION_TYPE LANG2
-  // LANG can be legacy $NNF$, $d$-$DNNF$ or \langref{NNF}, \langref{$OBDD_<$}
-  const langPattern = '(\\\\langfam\\{[^{}]+\\}\\{[^{}]+\\}(?:\\{[^{}]*\\})?|\\\\langref\\{(?:[^{}]|\\{[^{}]*\\})+\\}(?:\\{[^{}]*\\})?|\\$[^$]+\\$(?:-\\$[^$]+\\$)*)';
-  const claimRegex = new RegExp(
-    `^${langPattern}\\s+${escapeRegex(transformText)}\\s+${langPattern}$`
-  );
-  
-  const claimMatch = body.match(claimRegex);
-  if (!claimMatch) {
-    console.warn(`Claim body doesn't match expected format for status="${status}":`);
-    console.warn(`  Expected: LANG1 ${transformText} LANG2`);
-    console.warn(`  Got: ${body}`);
-    return null;
-  }
-  
-  const fromLatex = claimMatch[1];
-  const toLatex = claimMatch[2];
-  
-  const fromName = parseLanguageName(fromLatex);
-  const toName = parseLanguageName(toLatex);
-  
-  return {
-    fromName,
-    toName,
-    status,
-    assumption,
-    proofSketch: proofSketch.trim(),  // Copy directly - this is the editable part
-    derived,
-    refs  // References extracted from the claim line
-  };
-}
-
-/**
- * Escape special regex characters
- */
-function escapeRegex(str: string): string {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-/**
- * Parse LaTeX file with STRICT format requirements.
- */
-function parseLatex(latexContent: string): ParsedClaim[] {
-  const claims: ParsedClaim[] = [];
-  const lines = latexContent.split('\n');
-  let i = 0;
-  let isDerived = false;
-
-  while (i < lines.length) {
-    const line = lines[i].trimEnd();
-    
-    // Check for derived marker
-    if (line.trimStart().startsWith('% [DERIVED')) {
-      isDerived = true;
-      i++;
-      continue;
-    }
-
-    // Look for claim start: \begin{claim} (skip comment lines)
-    if (line.includes('\\begin{claim}') && !line.trimStart().startsWith('%')) {
-      const claimStartLine = line;
-      
-      // Collect claim content until \end{claim}
-      let claimContent = '';
-      i++;
-      while (i < lines.length && !lines[i].includes('\\end{claim}')) {
-        claimContent += lines[i] + '\n';
-        i++;
-      }
-      i++; // Skip \end{claim}
-      
-      // Find and collect description content
-      let proofContent = '';
-      while (i < lines.length && !lines[i].includes('\\begin{claimdescription}')) {
-        if (lines[i].trim() && !lines[i].trim().startsWith('%')) {
-          // Skip empty lines and comments between claim and description
-          console.warn(`Unexpected content between claim and description: ${lines[i]}`);
-        }
-        i++;
-      }
-      
-      if (i < lines.length && lines[i].includes('\\begin{claimdescription}')) {
-        i++; // Skip \begin{claimdescription}
-        while (i < lines.length && !lines[i].includes('\\end{claimdescription}')) {
-          proofContent += lines[i] + '\n';
-          i++;
-        }
-        i++; // Skip \end{claimdescription}
-      }
-      
-      // Parse the claim with strict validation
-      const parsed = parseCanonicalClaim(
-        claimStartLine,
-        claimContent,
-        proofContent,
-        isDerived
-      );
-      
-      if (parsed) {
-        claims.push(parsed);
-      }
-      
-      isDerived = false;
-      continue;
-    }
-    
-    i++;
-  }
-  
-  return claims;
-}
-
-/**
- * Build language name to ID map
- */
-function buildNameToIdMap(languages: KCLanguage[]): Map<string, string> {
-  const map = new Map<string, string>();
-  for (const lang of languages) {
-    const exact = lang.name.trim();
-    const normalized = normalizeLanguageName(exact);
-    map.set(exact, lang.id);
-    map.set(exact.toLowerCase(), lang.id);
-    map.set(normalized, lang.id);
-    map.set(normalized.toLowerCase(), lang.id);
-    map.set(exact.replace(/\$/g, ''), lang.id);
-  }
-  return map;
-}
-
-/**
- * Update database from parsed claims.
- * Only non-derived claims are updated.
- * The description is copied directly to the description field.
- * References, status, and assumption are taken from the claim line.
- */
-function updateDatabase(database: DatabaseSchema, claims: ParsedClaim[]): void {
-  const nameToId = buildNameToIdMap(database.languages);
-  const { adjacencyMatrix } = database;
-  const { languageIds, matrix } = adjacencyMatrix;
-  
-  // Build index lookup
-  const idToIndex = new Map<string, number>();
-  for (let i = 0; i < languageIds.length; i++) {
-    idToIndex.set(languageIds[i], i);
-  }
-  
-  let updated = 0;
-  let created = 0;
-  let skipped = 0;
-  const parsedDirectKeys = new Set<string>();
-  
-  for (const claim of claims) {
-    // Skip derived claims - they'll be regenerated by propagation
-    if (claim.derived) {
-      skipped++;
-      continue;
-    }
-    
-    // Resolve language IDs by name
-    const fromId = nameToId.get(claim.fromName) || nameToId.get(claim.fromName.toLowerCase());
-    const toId = nameToId.get(claim.toName) || nameToId.get(claim.toName.toLowerCase());
-    
-    if (!fromId || !toId) {
-      console.warn(`Could not resolve languages: ${claim.fromName} -> ${claim.toName}`);
-      skipped++;
-      continue;
-    }
-    
-    const fromIdx = idToIndex.get(fromId);
-    const toIdx = idToIndex.get(toId);
-    
-    if (fromIdx === undefined || toIdx === undefined) {
-      console.warn(`Languages not in matrix: ${claim.fromName} (${fromId}) -> ${claim.toName} (${toId})`);
-      skipped++;
-      continue;
-    }
-
-    parsedDirectKeys.add(`${fromId}->${toId}`);
-    
-    // Get existing relation or create a new one
-    let existing = matrix[fromIdx][toIdx] as DirectedSuccinctnessRelation | null;
-    
-    if (!existing) {
-      // Create a new edge from the parsed claim
-      existing = {
-        status: claim.status,
-        description: claim.proofSketch,
-        refs: claim.refs,
-        derived: false,
-      };
-      if (claim.assumption) {
-        existing.assumption = claim.assumption;
-      }
-      matrix[fromIdx][toIdx] = existing;
-      console.log(`  Created new edge: ${claim.fromName} -> ${claim.toName} (${claim.status})`);
-      created++;
-      continue;
-    }
-    
-    // If the existing edge was derived but we now have a direct claim for it,
-    // promote it to a direct (non-derived) edge.
-    if (existing.derived) {
-      existing.derived = false;
-      existing.status = claim.status;
-      existing.description = claim.proofSketch;
-      existing.refs = claim.refs;
-      if (claim.assumption) {
-        existing.assumption = claim.assumption;
-      } else {
-        delete existing.assumption;
-      }
-      // Clean up derivation metadata
-      delete existing.derivationOrder;
-      delete existing.proofTrace;
-      console.log(`  Promoted derived edge to direct: ${claim.fromName} -> ${claim.toName} (${claim.status})`);
-      updated++;
-      continue;
-    }
-
-    // Update description field.
-    // For edges with a canonical quasiDescription (e.g. unknown-poly-quasi),
-    // the LaTeX claimdescription is the quasi proof sketch, not the main
-    // description (which is derived from the composite no-poly + quasi proofs).
-    if (existing.quasiDescription && !existing.quasiDescription.derived) {
-      existing.quasiDescription.description = claim.proofSketch;
-    } else {
-      existing.description = claim.proofSketch;
-    }
-    
-    // Update references from claim line (this was missing before!)
-    if (claim.refs.length > 0) {
-      existing.refs = claim.refs;
-    }
-    
-    // Update assumption from claim line
-    if (claim.assumption) {
-      existing.assumption = claim.assumption;
-    } else if ('assumption' in existing) {
-      // If assumption was removed from LaTeX, remove it from DB too
-      delete existing.assumption;
-    }
-
-    // Note: We don't update the status because it's auto-generated in LaTeX
-    // and changing it would break the bijection. Status changes should be
-    // made directly in the database.
-    
-    updated++;
-  }
-  
-  let removed = 0;
-  if (claims.length > 0) {
-    for (let fromIdx = 0; fromIdx < matrix.length; fromIdx++) {
-      for (let toIdx = 0; toIdx < matrix[fromIdx].length; toIdx++) {
-        const existing = matrix[fromIdx][toIdx] as DirectedSuccinctnessRelation | null;
-        if (!existing || existing.derived) continue;
-
-        const key = `${languageIds[fromIdx]}->${languageIds[toIdx]}`;
-        if (!parsedDirectKeys.has(key)) {
-          matrix[fromIdx][toIdx] = null;
-          removed++;
-        }
-      }
-    }
-  }
-  
-  console.log(`Updated ${updated} edges, created ${created} new edges, skipped ${skipped} (derived or unresolved), removed ${removed} deleted direct edges`);
-}
-
-// =============================================================================
-// BibTeX Generation and Parsing
-// =============================================================================
-
-/**
- * Normalize a BibTeX entry to use the given citation key.
- * Replaces @type{oldkey, with @type{newkey,
- */
-function normalizeBibtexKey(bibtex: string, newKey: string): string {
-  // Match @type{key, and replace with @type{newKey,
-  return bibtex.replace(/(@\w+\{)([^,\s]+)(,)/, `$1${newKey}$3`);
-}
-
-/**
- * Generate BibTeX file content from database references.
- * Normalizes citation keys to match database reference IDs.
- */
-function generateBibtex(database: DatabaseSchema): string {
-  const entries: string[] = [];
-  
-  for (const ref of database.references) {
-    if (ref.bibtex && ref.bibtex.trim()) {
-      // Normalize the citation key to match our reference ID
-      let entry = normalizeBibtexKey(ref.bibtex.trim(), ref.id);
-      entries.push(entry);
-    }
-  }
-  
-  return entries.join('\n');
-}
-
-/**
- * Parse a BibTeX file and extract entries.
- * Returns a map of citation key → full BibTeX entry.
- */
-function parseBibtex(content: string): Map<string, string> {
-  const entries = new Map<string, string>();
-  
-  // Match BibTeX entries: @type{key, ... }
-  // This regex handles nested braces properly
-  const entryRegex = /@(\w+)\s*\{\s*([^,\s]+)\s*,/g;
-  let match;
-  
-  while ((match = entryRegex.exec(content)) !== null) {
-    const startIdx = match.index;
-    const key = match[2];
-    
-    // Find the matching closing brace
-    let braceCount = 0;
-    let endIdx = startIdx;
-    let inEntry = false;
-    
-    for (let i = startIdx; i < content.length; i++) {
-      if (content[i] === '{') {
-        braceCount++;
-        inEntry = true;
-      } else if (content[i] === '}') {
-        braceCount--;
-        if (inEntry && braceCount === 0) {
-          endIdx = i + 1;
-          break;
-        }
-      }
-    }
-    
-    if (endIdx > startIdx) {
-      const entry = content.slice(startIdx, endIdx).trim();
-      entries.set(key, entry);
-    }
-  }
-  
-  return entries;
-}
-
-/**
- * Update database references from parsed BibTeX entries.
- * - Updates existing references if bibtex content changed
- * - Adds new references if they don't exist
- * - Removes references that are no longer in the BibTeX file
- */
-function updateReferencesFromBibtex(database: DatabaseSchema, bibtexEntries: Map<string, string>): void {
-  const existingRefs = new Map<string, KCReference>();
-  for (const ref of database.references) {
-    existingRefs.set(ref.id, ref);
-    // Also map by bibtex citation key if different from id
-    const keyMatch = ref.bibtex?.match(/@\w+\{([^,\s]+)/);
-    if (keyMatch && keyMatch[1] !== ref.id) {
-      existingRefs.set(keyMatch[1], ref);
-    }
-  }
-  
-  let added = 0;
-  let updated = 0;
-  
-  for (const [key, bibtex] of bibtexEntries) {
-    const existingRef = existingRefs.get(key);
-    
-    if (existingRef) {
-      // Update existing reference - normalize the bibtex key to match our ID
-      const normalizedBibtex = normalizeBibtexKey(bibtex, existingRef.id);
-      let changed = false;
-      if (existingRef.bibtex !== normalizedBibtex) {
-        existingRef.bibtex = normalizedBibtex;
-        changed = true;
-      }
-      // Regenerate title when bibtex changed or title is just the raw paper title
-      const rawTitle = extractTitleFromBibtex(bibtex);
-      const newTitle = buildCitationFromBibtex(bibtex, existingRef.id);
-      if (existingRef.title !== newTitle) {
-        existingRef.title = newTitle;
-        changed = true;
-      }
-      // Update href from bibtex when available (keeps href in sync with bibtex source)
-      const hrefFromBibtex = extractUrlFromBibtex(bibtex);
-      if (hrefFromBibtex && existingRef.href !== hrefFromBibtex) {
-        existingRef.href = hrefFromBibtex;
-        changed = true;
-      }
-      if (changed) updated++;
-    } else {
-      // Add new reference with normalized key
-      const normalizedBibtex = normalizeBibtexKey(bibtex, key);
-      const title = buildCitationFromBibtex(bibtex, key);
-      const href = extractUrlFromBibtex(bibtex) || '#';
-      
-      database.references.push({
-        id: key,
-        title,
-        href,
-        bibtex: normalizedBibtex
-      });
-      added++;
-    }
-  }
-  
-  // Remove references no longer in the BibTeX file
-  const bibtexKeys = new Set(bibtexEntries.keys());
-  const before = database.references.length;
-  database.references = database.references.filter(ref => bibtexKeys.has(ref.id));
-  const removed = before - database.references.length;
-
-  // Sort references alphabetically by ID
-  database.references.sort((a, b) => a.id.localeCompare(b.id));
-
-  console.log(`References: ${added} added, ${updated} updated, ${removed} removed`);
-}
-
-/**
- * Extract title from BibTeX entry
- */
-function extractTitleFromBibtex(bibtex: string): string | null {
-  return extractBibtexField(bibtex, 'title');
-}
-
-/**
- * Build a human-readable citation string from BibTeX fields.
- * Format: "Author(s), \"Title,\" Venue, vol. V, pp. P, Year."
- */
-function buildCitationFromBibtex(bibtex: string, fallbackKey: string): string {
-  const author = extractBibtexField(bibtex, 'author');
-  const title = extractBibtexField(bibtex, 'title');
-  const journal = extractBibtexField(bibtex, 'journal');
-  const booktitle = extractBibtexField(bibtex, 'booktitle');
-  const volume = extractBibtexField(bibtex, 'volume');
-  const pages = extractBibtexField(bibtex, 'pages');
-  const year = extractBibtexField(bibtex, 'year');
-
-  if (!title) return fallbackKey;
-
-  const parts: string[] = [];
-  if (author) {
-    const cleanAuthor = cleanBibtexText(author);
-    // Abbreviate first names: "de Colnet, Alexis and Meel, Kuldeep S." → "A. de Colnet and K. S. Meel"
-    const authors = cleanAuthor.split(/\s+and\s+/).map(a => {
-      const commaMatch = a.match(/^(.+?),\s*(.+)$/);
-      if (commaMatch) {
-        const last = commaMatch[1].trim();
-        const firstNames = commaMatch[2].trim().split(/\s+/).map(n => n.endsWith('.') ? n : n[0] + '.').join(' ');
-        return `${firstNames} ${last}`;
-      }
-      // "First Last" format
-      const spaceParts = a.trim().split(/\s+/);
-      if (spaceParts.length >= 2) {
-        const last = spaceParts[spaceParts.length - 1];
-        const firsts = spaceParts.slice(0, -1).map(n => n.endsWith('.') ? n : n[0] + '.').join(' ');
-        return `${firsts} ${last}`;
-      }
-      return a.trim();
-    });
-    parts.push(authors.join(' and '));
-  }
-
-  parts.push(`"${cleanBibtexText(title)}"`);
-
-  const venue = journal || booktitle;
-  if (venue) {
-    let venueStr = cleanBibtexText(venue);
-    if (volume) venueStr += `, vol. ${volume}`;
-    if (pages) venueStr += `, pp. ${cleanBibtexText(pages).replace(/--/g, '\u2013')}`;
-    parts.push(venueStr);
-  }
-
-  if (year) parts.push(year);
-
-  return parts.join(', ') + '.';
-}
-
-/**
- * Extract URL from BibTeX entry
- */
-function extractUrlFromBibtex(bibtex: string): string | null {
-  const url = extractBibtexField(bibtex, 'url');
-  if (url) {
-    return url.trim();
-  }
-
-  const doi = extractBibtexField(bibtex, 'doi');
-  if (doi) {
-    const value = doi.trim();
-    return value.startsWith('http') ? value : `https://doi.org/${value}`;
-  }
-
-  return null;
-}
-
-// =============================================================================
-// Languages LaTeX Generation and Parsing
-// =============================================================================
-
-/**
- * Generate a single language definition block.
- * 
- * Format:
- *   \begin{definition}[$NAME$]\label{def:ID}
- *   \textbf{FULL_NAME} \\
- *   DEFINITION_CONTENT
- *   \end{definition}
- */
-function generateLanguageDefinition(lang: KCLanguage): string {
-  const nameLatex = languageToLatex(lang.name);
-  const definition = lang.definition && lang.definition !== '-' 
-    ? lang.definition 
-    : '(Definition needed)';
-  
-  const content = `\\textbf{${escapeLatex(lang.fullName)}} \\\\
-${definition}`;
-  
-  return `\\begin{definition}[${nameLatex}]\\label{def:${lang.id}}
-${content}
-\\end{definition}
-`;
-}
-
-/**
- * Generate the full languages LaTeX document
- */
 function generateLanguagesLatex(database: DatabaseSchema): string {
-  const { languages } = database;
-  
-  // Sort languages alphabetically by name
-  const sortedLanguages = [...languages].sort((a, b) => 
-    a.name.localeCompare(b.name)
-  );
-  
-  // Build all definitions
-  const definitions = sortedLanguages
-    .map(lang => generateLanguageDefinition(lang))
-    .join('\n');
-  
-  // Build full document
-  const preamble = `% =============================
-% Tractable Circuit Zoo - Language Definitions
-% Auto-generated from database.json
-% Generated: ${new Date().toISOString()}
-% 
-% EDITING INSTRUCTIONS:
-% - Language names in brackets are auto-generated. Do NOT edit.
-% - Full names (\\textbf{...}) are auto-generated. Do NOT edit.
-% - Definition content (after the full name line) is EDITABLE.
-% - To sync back to JSON, run: npx tsx scripts/latex-bijection.ts --to-json
-% =============================
-\\documentclass[11pt]{article}
-
-% -------- Packages --------
-\\usepackage[margin=1in]{geometry}
-\\usepackage{amsmath, amssymb, amsthm}
-\\usepackage{mathtools}
-\\usepackage{xparse}
-\\usepackage{enumitem}
-\\usepackage{hyperref}
-\\usepackage{cleveref}
-\\usepackage{xcolor}
-\\usepackage{natbib}
-
-% -------- Hyperref setup --------
-\\hypersetup{
-  colorlinks=true,
-  linkcolor=blue,
-  citecolor=blue,
-  urlcolor=blue
+  const blocks = database.languages.map((language) => `\\begin{language}
+\\shortname{${languageToLatex(language.name)}}
+\\fullname{${language.fullName}}
+\\begin{description}
+${migrateLegacyDescription(language.definition, database)}
+\\end{description}
+\\end{language}`).join('\n\n');
+  return titlePreamble('Language Definitions') + blocks + postamble();
 }
 
-% -------- Theorem styles --------
-\\theoremstyle{definition}
-\\newtheorem{definition}{Definition}
-
-% -------- Handy macros --------
-\\newcommand{\\R}{\\mathbb{R}}
-\\newcommand{\\N}{\\mathbb{N}}
-\\newcommand{\\eps}{\\varepsilon}
-% Cross-reference commands (rendered as links in the web UI)
-\\NewDocumentCommand{\\langref}{m g}{\\textbf{#1\\IfNoValueF{#2}{#2}}}
-\\NewDocumentCommand{\\langfam}{m m g}{\\textbf{#1$_{#2}$\\IfNoValueF{#3}{#3}}}
-\\NewDocumentCommand{\\defref}{m g}{\\hyperref[kdef:#1]{\\textbf{\\IfNoValueTF{#2}{#1}{#2}}}}
-\\newcommand{\\edgeref}[2]{#1 compiles to #2}
-\\newcommand{\\nedgeref}[2]{#1 cannot compile to #2}
-\\newcommand{\\opref}[2]{#1 supports #2}
-\\newcommand{\\nopref}[2]{#2 is unsupported by #1}
-
-% -------- Title info --------
-\\title{Tractable Circuit Zoo: Language Definitions}
-\\date{\\today}
-
-\\begin{document}
-\\maketitle
-
-`;
-
-  const postamble = `
-% =============================
-% Bibliography
-% =============================
-\\bibliographystyle{plainnat}
-\\bibliography{refs}
-
-\\end{document}
-`;
-
-  return preamble + definitions + postamble;
-}
-
-/**
- * Parsed language definition from LaTeX
- */
-interface ParsedLanguageDefinition {
-  id: string;
-  name: string;
-  fullName: string;
-  definition: string;
-  definitionRefs: string[];
-}
-
-/**
- * Parse language definitions from LaTeX file.
- * 
- * Expected format:
- *   \begin{definition}[$NAME$]\label{def:ID}
- *   \textbf{FULL_NAME} \\
- *   DEFINITION_CONTENT
- *   \end{definition}
- */
-function parseLanguagesLatex(latexContent: string): ParsedLanguageDefinition[] {
-  const definitions: ParsedLanguageDefinition[] = [];
-  const lines = latexContent.split('\n');
-  let i = 0;
-  
-  while (i < lines.length) {
-    const line = lines[i].trimEnd();
-    
-    // Look for definition start: \begin{definition}[$NAME$]\label{def:ID}
-    const defMatch = line.match(/\\begin\{definition\}\[([^\]]+)\]\\label\{def:([^}]+)\}/);
-    if (defMatch) {
-      const nameLatex = defMatch[1];
-      const id = defMatch[2];
-      const name = parseLanguageName(nameLatex);
-      
-      // Collect definition content until \end{definition}
-      let content = '';
-      i++;
-      while (i < lines.length && !lines[i].includes('\\end{definition}')) {
-        content += lines[i] + '\n';
-        i++;
-      }
-      i++; // Skip \end{definition}
-      
-      // Parse the content
-      content = content.trim();
-      
-      // Extract full name from \textbf{...} (handles nested braces)
-      let fullName = '';
-      const extracted = extractBraceContent(content, '\\textbf{');
-      if (extracted) {
-        fullName = extracted.content;
-        // Remove the fullName line (including the \\)
-        content = extracted.rest.replace(/^\s*\\\\\s*/, '').trim();
-      }
-      
-      definitions.push({
-        id,
-        name,
-        fullName,
-        definition: content,
-        definitionRefs: []
-      });
-      
-      continue;
-    }
-    
-    i++;
-  }
-  
-  return definitions;
-}
-
-/**
- * Update database languages from parsed definitions.
- */
-function updateLanguagesFromLatex(database: DatabaseSchema, parsedDefs: ParsedLanguageDefinition[]): void {
-  // Build ID to language map
-  const idToLang = new Map<string, KCLanguage>();
-  for (const lang of database.languages) {
-    idToLang.set(lang.id, lang);
-  }
-
-  const { adjacencyMatrix } = database;
-
-  function appendLanguageToAdjacencyMatrix(languageId: string): void {
-    const currentSize = adjacencyMatrix.languageIds.length;
-    adjacencyMatrix.languageIds.push(languageId);
-    adjacencyMatrix.indexByLanguage[languageId] = currentSize;
-
-    for (let row = 0; row < currentSize; row++) {
-      adjacencyMatrix.matrix[row].push(null);
-    }
-
-    adjacencyMatrix.matrix.push(Array(currentSize + 1).fill(null));
-  }
-  
-  let updated = 0;
-  let created = 0;
-  let removed = 0;
-  
-  for (const def of parsedDefs) {
-    let lang = idToLang.get(def.id);
-
-    if (!lang) {
-      lang = {
-        id: def.id,
-        name: def.name,
-        fullName: def.fullName || '-',
-        definition: def.definition && def.definition !== '(Definition needed)' ? def.definition : '-',
-        definitionRefs: [],
-        properties: {
-          queries: {},
-          transformations: {}
-        },
-        references: []
-      };
-
-      database.languages.push(lang);
-      idToLang.set(lang.id, lang);
-      appendLanguageToAdjacencyMatrix(lang.id);
-      created++;
-    }
-    
-    // Keep language metadata in sync with docs.
-    if (def.name) {
-      lang.name = def.name;
-    }
-    if (def.fullName) {
-      lang.fullName = def.fullName;
-    }
-
-    // Update definition (the editable part)
-    if (def.definition && def.definition !== '(Definition needed)') {
-      lang.definition = def.definition;
-    }
-    
-    // Language definition citations are kept inline in the editable definition
-    // text. The legacy definitionRefs field remains empty for schema
-    // compatibility.
-    lang.definitionRefs = [];
-    
-    updated++;
-  }
-
-  const parsedIds = new Set(parsedDefs.map(def => def.id));
-  const removedIds = database.languages
-    .filter(lang => !parsedIds.has(lang.id))
-    .map(lang => lang.id);
-
-  if (removedIds.length > 0) {
-    const removedIdSet = new Set(removedIds);
-
-    database.languages = database.languages.filter(lang => !removedIdSet.has(lang.id));
-
-    const keptIds = adjacencyMatrix.languageIds.filter(id => !removedIdSet.has(id));
-    const oldIndexById = adjacencyMatrix.indexByLanguage;
-    const newMatrix = keptIds.map((fromId) => {
-      const fromIdx = oldIndexById[fromId];
-      return keptIds.map((toId) => adjacencyMatrix.matrix[fromIdx][oldIndexById[toId]]);
-    });
-
-    adjacencyMatrix.languageIds = keptIds;
-    adjacencyMatrix.indexByLanguage = Object.fromEntries(
-      keptIds.map((id, idx) => [id, idx])
-    );
-    adjacencyMatrix.matrix = newMatrix;
-
-    removed = removedIds.length;
-  }
-  
-  console.log(`Updated ${updated} language definitions, created ${created} new, removed ${removed}`);
-}
-
-// =============================================================================
-// Conceptual Definitions LaTeX Generation and Parsing
-// =============================================================================
-
-/**
- * Generate a single conceptual definition block.
- *
- * Format:
- *   \begin{definition}[id=DEF_ID]\label{kdef:DEF_ID}
- *   \textbf{TITLE} \\
- *   STATEMENT \citep{REFS}?
- *   \end{definition}
- */
-function generateConceptualDefinition(definition: KCDefinition): string {
-  const statement = definition.statement && definition.statement !== '-'
-    ? definition.statement
-    : '(Definition needed)';
-
-  let content = `\\textbf{${definition.title}} \\\\
-${statement}`;
-
-  if (definition.refs && definition.refs.length > 0) {
-    content += ` \\citep{${definition.refs.join(',')}}`;
-  }
-
-  return `\\begin{definition}\\label{kdef:${definition.id}}
-${content}
-\\end{definition}
-`;
-}
-
-/**
- * Generate the full conceptual definitions LaTeX document.
- */
 function generateDefinitionsLatex(database: DatabaseSchema): string {
-  const definitions = (database.definitions ?? [])
-    .map((definition) => generateConceptualDefinition(definition))
-    .join('\n');
-
-  const preamble = `% =============================
-% Tractable Circuit Zoo - Conceptual Definitions
-% Auto-generated from database.json
-% Generated: ${new Date().toISOString()}
-%
-% EDITING INSTRUCTIONS:
-% - Definition IDs are preserved in \\label{...}. Do NOT edit.
-% - Titles (\\textbf{...}) are EDITABLE.
-% - Statement content (after the title line) is EDITABLE.
-% - To sync back to JSON, run: npx tsx scripts/latex-bijection.ts --to-json
-% =============================
-\\documentclass[11pt]{article}
-
-% -------- Packages --------
-\\usepackage[margin=1in]{geometry}
-\\usepackage{amsmath, amssymb, amsthm}
-\\usepackage{mathtools}
-\\usepackage{xparse}
-\\usepackage{enumitem}
-\\usepackage{hyperref}
-\\usepackage{cleveref}
-\\usepackage{xcolor}
-\\usepackage{natbib}
-
-% -------- Hyperref setup --------
-\\hypersetup{
-  colorlinks=true,
-  linkcolor=blue,
-  citecolor=blue,
-  urlcolor=blue
+  const blocks = (database.definitions ?? []).map((definition) => `\\begin{concept}
+\\title{${definition.title}}
+\\begin{description}
+${ensureInlineCitations(migrateLegacyDescription(definition.statement, database), definition.refs)}
+\\end{description}
+\\end{concept}`).join('\n\n');
+  return titlePreamble('Conceptual Definitions') + blocks + postamble();
 }
 
-% -------- Theorem styles --------
-\\theoremstyle{definition}
-\\newtheorem{definition}{Definition}
-
-% -------- Handy macros --------
-\\newcommand{\\R}{\\mathbb{R}}
-\\newcommand{\\N}{\\mathbb{N}}
-\\newcommand{\\eps}{\\varepsilon}
-% Cross-reference commands (rendered as links in the web UI)
-\\NewDocumentCommand{\\langref}{m g}{\\textbf{#1\\IfNoValueF{#2}{#2}}}
-\\NewDocumentCommand{\\langfam}{m m g}{\\textbf{#1$_{#2}$\\IfNoValueF{#3}{#3}}}
-\\NewDocumentCommand{\\defref}{m g}{\\hyperref[kdef:#1]{\\textbf{\\IfNoValueTF{#2}{#1}{#2}}}}
-\\newcommand{\\edgeref}[2]{#1 compiles to #2}
-\\newcommand{\\nedgeref}[2]{#1 cannot compile to #2}
-\\newcommand{\\opref}[2]{#1 supports #2}
-\\newcommand{\\nopref}[2]{#2 is unsupported by #1}
-
-% -------- Title info --------
-\\title{Tractable Circuit Zoo: Conceptual Definitions}
-\\date{\\today}
-
-\\begin{document}
-\\maketitle
-
-`;
-
-  const postamble = `
-% =============================
-% Bibliography
-% =============================
-\\bibliographystyle{plainnat}
-\\bibliography{refs}
-
-\\end{document}
-`;
-
-  return preamble + definitions + postamble;
-}
-
-interface ParsedConceptualDefinition {
-  id: string;
-  title: string;
-  statement: string;
-  refs: string[];
-}
-
-/**
- * Parse conceptual definitions from LaTeX file.
- *
- * Expected format:
- *   \begin{definition}[id=DEF_ID]\label{kdef:DEF_ID}
- *   \textbf{TITLE} \\
- *   STATEMENT \citep{REFS}?
- *   \end{definition}
- */
-function parseDefinitionsLatex(latexContent: string): ParsedConceptualDefinition[] {
-  const results: ParsedConceptualDefinition[] = [];
-  const lines = latexContent.split('\n');
-  let i = 0;
-
-  while (i < lines.length) {
-    const line = lines[i].trimEnd();
-    const defMatch = line.match(/\\begin\{definition\}(?:\[id=([^\]]+)\])?\\label\{kdef:([^}]+)\}/);
-    if (!defMatch) {
-      i++;
-      continue;
-    }
-
-    const idFromOpt = defMatch[1] ? defMatch[1].trim() : null;
-    const idFromLabel = defMatch[2].trim();
-    const id = idFromOpt || idFromLabel;
-
-    let content = '';
-    i++;
-    while (i < lines.length && !lines[i].includes('\\end{definition}')) {
-      content += lines[i] + '\n';
-      i++;
-    }
-    i++; // Skip \end{definition}
-
-    content = content.trim();
-
-    let title = '';
-    const titleExtracted = extractBraceContent(content, '\\textbf{');
-    if (titleExtracted) {
-      title = titleExtracted.content;
-      content = titleExtracted.rest.replace(/^\s*\\\\\s*/, '').trim();
-    }
-
-    let refs: string[] = [];
-    const citeMatch = content.match(/\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}\s*$/);
-    if (citeMatch) {
-      refs = citeMatch[1].split(',').map((s) => s.trim()).filter(Boolean);
-      content = content.slice(0, citeMatch.index).trim();
-    }
-
-    results.push({
-      id,
-      title,
-      statement: content,
-      refs,
-    });
+function relationDescription(relation: DirectedSuccinctnessRelation): string {
+  if (relation.status === 'no-poly-quasi') {
+    const parts = [
+      relation.noPolyDescription?.description,
+      relation.quasiDescription?.description
+    ].filter(Boolean);
+    if (parts.length > 0) return parts.join('\n\n');
   }
-
-  return results;
+  return relation.description ?? '';
 }
 
-/**
- * Update database conceptual definitions from parsed LaTeX definitions.
- */
-function updateDefinitionsFromLatex(database: DatabaseSchema, parsed: ParsedConceptualDefinition[]): void {
-  const byId = new Map<string, KCDefinition>();
-  const current = database.definitions ?? [];
-  for (const definition of current) {
-    byId.set(definition.id, definition);
-  }
-
-  let updated = 0;
-  let created = 0;
-
-  for (const item of parsed) {
-    const existing = byId.get(item.id);
-    if (!existing) {
-      const newDefinition: KCDefinition = {
-        id: item.id,
-        title: item.title || item.id,
-        statement: item.statement || '(Definition needed)',
-        refs: item.refs,
-      };
-      current.push(newDefinition);
-      byId.set(item.id, newDefinition);
-      created++;
-      continue;
-    }
-
-    if (item.title && item.title.length > 0) {
-      existing.title = item.title;
-    }
-    if (item.statement && item.statement !== '(Definition needed)') {
-      existing.statement = item.statement;
-    }
-    if (item.refs.length > 0) {
-      existing.refs = item.refs;
-    }
-
-    updated++;
-  }
-
-  database.definitions = current;
-  console.log(`Updated ${updated} conceptual definitions, created ${created} new`);
-}
-
-// =============================================================================
-// Queries & Transformations LaTeX Generation and Parsing
-// =============================================================================
-
-/**
- * Operation definition lookup loaded from database.
- */
-interface OpDef {
-  code: string;
-  label: string;
-  description?: string;
-}
-
-/**
- * A single operation support claim to be rendered as LaTeX.
- */
-interface OpClaim {
-  langId: string;
-  langName: string;
-  /** Safe key used in the database (e.g., AND_C, NOT_C) */
-  opSafeKey: string;
-  /** Display code (e.g., ∧C, ¬C) - only for display in claim text */
-  opCode: string;
-  opLabel: string;
-  complexity: string;
-  assumption: string;
-  description: string;
-  refs: string[];
-  derived: boolean;
-}
-
-function parseOptionList(raw: string): Record<string, string> {
-  const result: Record<string, string> = {};
-  for (const part of raw.split(',')) {
-    const [key, ...rest] = part.split('=');
-    const trimmedKey = key?.trim();
-    if (!trimmedKey) continue;
-    result[trimmedKey] = rest.join('=').trim();
-  }
-  return result;
-}
-
-function opRefsFromClaimTemplate(claimTemplate: string): string[] {
-  const refs: string[] = [];
-  for (const match of claimTemplate.matchAll(/\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}/g)) {
-    for (const ref of match[1].split(',').map(s => s.trim()).filter(Boolean)) {
-      if (!refs.includes(ref)) refs.push(ref);
+function generateSuccinctnessLatex(database: DatabaseSchema): string {
+  const idToLanguage = new Map(database.languages.map((language) => [language.id, language]));
+  const blocks: string[] = [];
+  const { languageIds, matrix } = database.adjacencyMatrix;
+  for (let i = 0; i < languageIds.length; i++) {
+    for (let j = 0; j < languageIds.length; j++) {
+      if (i === j) continue;
+      const relation = matrix[i]?.[j];
+      if (!relation || relation.derived || !STATUS_TO_MACRO[relation.status]) continue;
+      const source = idToLanguage.get(languageIds[i]);
+      const target = idToLanguage.get(languageIds[j]);
+      if (!source || !target) continue;
+      const refs = [
+        ...(relation.refs ?? []),
+        ...(relation.noPolyDescription?.refs ?? []),
+        ...(relation.quasiDescription?.refs ?? [])
+      ];
+      blocks.push(`\\begin{succinctnessclaim}
+\\source{${languageToLatex(source.name)}}
+\\target{${languageToLatex(target.name)}}
+\\status{${STATUS_TO_MACRO[relation.status]}}
+${relation.assumption ? `\\assuming{${relation.assumption}}\n` : ''}\\begin{description}
+${ensureInlineCitations(migrateLegacyDescription(relationDescription(relation), database), refs)}
+\\end{description}
+\\end{succinctnessclaim}`);
     }
   }
-  return refs;
+  return titlePreamble('Succinctness Claims') + blocks.join('\n\n') + postamble();
 }
 
-function languageIdsFromBatchClaim(claimTemplate: string, languages: KCLanguage[]): string[] {
-  const idByName = new Map<string, string>();
-  for (const language of languages) {
-    idByName.set(language.name, language.id);
-  }
+function opMacro(opType: 'queries' | 'transformations', op: string): string {
+  const table = opType === 'queries' ? QUERY_OPERATION_MACROS : TRANSFORMATION_OPERATION_MACROS;
+  return table[op] ?? fail(`No LaTeX macro for ${opType} operation ${op}`);
+}
 
-  const ids: string[] = [];
-  const addLanguage = (latexRef: string): void => {
-    const name = parseLanguageName(latexRef);
-    const id = idByName.get(name);
-    if (!id) {
-      console.warn(`Unknown language in batch claim: ${latexRef} (${name})`);
-      return;
+function generateOperationClaim(
+  database: DatabaseSchema,
+  language: KCLanguage,
+  opType: 'queries' | 'transformations',
+  op: string,
+  support: KCOpSupport
+): string | null {
+  if (!support || support.derived || support.batchId || support.complexity === 'unknown-to-us') return null;
+  const environment = opType === 'queries' ? 'queryclaim' : 'transformationclaim';
+  return `\\begin{${environment}}
+\\language{${languageToLatex(language.name)}}
+\\operation{${opMacro(opType, op)}}
+\\status{${STATUS_TO_MACRO[support.complexity] ?? fail(`Unknown operation status ${support.complexity}`)}}
+${support.assumption ? `\\assuming{${support.assumption}}\n` : ''}\\begin{description}
+${ensureInlineCitations(migrateLegacyDescription(support.description, database), support.refs)}
+\\end{description}
+\\end{${environment}}`;
+}
+
+function selectorLanguageRef(ref: KCBatchLanguageRef, idToLanguage: Map<string, KCLanguage>): string {
+  if (ref.kind === 'current') return '\\thislang';
+  const language = idToLanguage.get(ref.id) ?? fail(`Unknown batch selector language ${ref.id}`);
+  return languageToLatex(language.name);
+}
+
+function selectorToLatex(selector: KCBatchSelector, idToLanguage: Map<string, KCLanguage>): string {
+  if (selector.kind === 'list') {
+    return `\\isin{${selector.languageIds.map((id) => {
+      const language = idToLanguage.get(id) ?? fail(`Unknown batch language ${id}`);
+      return languageToLatex(language.name);
+    }).join(', ')}}`;
+  }
+  if (selector.kind === 'allOf') {
+    return selector.selectors.map((child) => selectorToLatex(child, idToLanguage)).join(', ');
+  }
+  if (selector.kind === 'anyOf') {
+    fail('anyOf batch selectors are not supported by canonical LaTeX');
+  }
+  const command = (selector.polarity ?? 'positive') === 'negative'
+    ? selector.level === 'poly' ? 'nocompilespoly' : 'nocompilesquasi'
+    : selector.level === 'poly' ? 'compilespoly' : 'compilesquasi';
+  return `\\${command}{${selectorLanguageRef(selector.source, idToLanguage)}}{${selectorLanguageRef(selector.target, idToLanguage)}}`;
+}
+
+function batchSelector(batch: KCBatchClaim): KCBatchSelector {
+  return batch.selector ?? { kind: 'list', languageIds: batch.languageIds ?? [] };
+}
+
+function generateBatchClaim(database: DatabaseSchema, batch: KCBatchClaim, idToLanguage: Map<string, KCLanguage>): string {
+  return `\\begin{batchclaim}
+\\selector{${selectorToLatex(batchSelector(batch), idToLanguage)}}
+\\operation{${opMacro(batch.opType, batch.op)}}
+\\status{${STATUS_TO_MACRO[batch.status] ?? fail(`Unknown batch status ${batch.status}`)}}
+${batch.assumption ? `\\assuming{${batch.assumption}}\n` : ''}\\begin{description}
+${ensureInlineCitations(migrateLegacyDescription(batch.descriptionTemplate, database), batch.refs)}
+\\end{description}
+\\end{batchclaim}`;
+}
+
+function generateOpsLatex(database: DatabaseSchema, opType: 'queries' | 'transformations'): string {
+  const idToLanguage = new Map(database.languages.map((language) => [language.id, language]));
+  const blocks: string[] = [];
+  for (const batch of database.batchClaims ?? []) {
+    if (batch.opType === opType) blocks.push(generateBatchClaim(database, batch, idToLanguage));
+  }
+  for (const language of database.languages) {
+    const supports = language.properties?.[opType] ?? {};
+    for (const [op, support] of Object.entries(supports)) {
+      const block = generateOperationClaim(database, language, opType, op, support);
+      if (block) blocks.push(block);
     }
-    if (!ids.includes(id)) ids.push(id);
+  }
+  const title = opType === 'queries' ? 'Query Support' : 'Transformation Support';
+  return titlePreamble(title) + blocks.join('\n\n') + postamble();
+}
+
+function generateBibtex(database: DatabaseSchema): string {
+  return database.references
+    .map((ref) => ref.bibtex || `@misc{${ref.id},\n  title={${ref.title}},\n  url={${ref.href}}\n}`)
+    .join('\n\n');
+}
+
+function parseLanguagesLatex(content: string): ParsedLanguage[] {
+  stripPreambleWarning(content);
+  return environmentBlocks(content, 'language').map((block) => {
+    const shortname = commandValue(block.body, 'shortname')!;
+    return {
+      name: normalizeLanguageName(shortname),
+      fullName: commandValue(block.body, 'fullname')!,
+      definition: environmentValue(block.body, 'description')!
+    };
+  });
+}
+
+function parseDefinitionsLatex(content: string): ParsedConcept[] {
+  stripPreambleWarning(content);
+  return environmentBlocks(content, 'concept').map((block) => ({
+    title: commandValue(block.body, 'title')!,
+    statement: environmentValue(block.body, 'description')!
+  }));
+}
+
+function languageResolver(database: DatabaseSchema): (value: string) => string {
+  const aliases = new Map<string, string>();
+  for (const language of database.languages) {
+    const names = [
+      language.id,
+      language.name,
+      normalizeLanguageName(language.name),
+      normalizeLanguageName(languageToLatex(language.name))
+    ];
+    for (const name of names) {
+      aliases.set(name, language.id);
+      aliases.set(name.toLowerCase(), language.id);
+    }
+  }
+  return (value: string) => {
+    const normalized = normalizeLanguageName(value);
+    return aliases.get(normalized) ?? aliases.get(normalized.toLowerCase()) ?? fail(`Unknown language ${value}`);
   };
-
-  for (const match of claimTemplate.matchAll(/\\langref\{((?:[^{}]|\{[^{}]*\})+)\}(?:\{[^{}]*\})?/g)) {
-    addLanguage(`\\langref{${match[1]}}`);
-  }
-  for (const match of claimTemplate.matchAll(/\\langfam\{([^{}]+)\}\{([^{}]+)\}(?:\{[^{}]*\})?/g)) {
-    addLanguage(`\\langfam{${match[1]}}{${match[2]}}`);
-  }
-
-  return ids;
 }
 
-function languageIdFromLatexRef(latexRef: string, languages: KCLanguage[]): string | undefined {
-  const name = parseLanguageName(latexRef);
-  return languages.find((language) => language.name === name)?.id;
+function parseStatus(value: string): string {
+  return MACRO_TO_STATUS[value.trim()] ?? fail(`Unknown status macro ${value}`);
 }
 
-function inferSelectorFromBatchClaim(claimTemplate: string, languages: KCLanguage[]): KCBatchSelector {
-  const selectors: KCBatchSelector[] = [];
-  const languagePlaceholderArg = String.raw`\$?\\mathcal\{L\}\$?`;
+function relationMacroStatusOk(command: string, status: string | undefined): boolean {
+  switch (command) {
+    case 'compilespoly':
+      return guaranteesPoly(status);
+    case 'compilesquasi':
+      return guaranteesQuasi(status);
+    case 'nocompilespoly':
+      return status === 'no-poly-unknown-quasi' || status === 'no-poly-quasi' || status === 'no-quasi';
+    case 'nocompilesquasi':
+      return status === 'no-quasi';
+    default:
+      return false;
+  }
+}
 
-  for (const match of claimTemplate.matchAll(new RegExp(String.raw`\\edgeref\{((?:[^{}]|\{[^{}]*\})+)\}\{${languagePlaceholderArg}\}`, 'g'))) {
-    const id = languageIdFromLatexRef(`\\langref{${match[1]}}`, languages);
-    if (id) {
-      selectors.push({
-        kind: 'edge',
-        source: { kind: 'language', id },
-        target: { kind: 'current' },
-        level: 'poly'
-      });
+function operationMacroStatusOk(command: string, status: string | undefined): boolean {
+  switch (command) {
+    case 'supportspoly':
+      return status === 'poly';
+    case 'supportsquasi':
+      return guaranteesQuasi(status);
+    case 'nosupportspoly':
+      return status === 'no-poly-unknown-quasi' || status === 'no-poly-quasi' || status === 'no-quasi';
+    case 'nosupportsquasi':
+      return status === 'no-quasi';
+    default:
+      return false;
+  }
+}
+
+function operationStatusFromMacro(database: DatabaseSchema, languageId: string, operationMacro: string): string | undefined {
+  const opCode = OPERATION_MACRO_TO_CODE[operationMacro] ?? fail(`Unknown operation macro ${operationMacro}`);
+  const language = database.languages.find((item) => item.id === languageId);
+  return language?.properties?.queries?.[opCode]?.complexity ?? language?.properties?.transformations?.[opCode]?.complexity;
+}
+
+function validateRelationMacroAssertions(database: DatabaseSchema): void {
+  const resolveLanguage = languageResolver(database);
+  const pattern = /\\(compilespoly|compilesquasi|nocompilespoly|nocompilesquasi)\{((?:[^{}]|\{[^{}]*\})+)\}\{((?:[^{}]|\{[^{}]*\})+)\}/g;
+  const operationPattern = /\\(supportspoly|supportsquasi|nosupportspoly|nosupportsquasi)\{((?:[^{}]|\{[^{}]*\})+)\}\{(\\[A-Za-z]+)\}/g;
+  const texts: Array<{ context: string; text: string | undefined }> = [];
+
+  for (const language of database.languages) {
+    texts.push({ context: `language ${language.name}`, text: language.definition });
+    for (const [opType, map] of Object.entries(language.properties ?? {})) {
+      for (const [op, support] of Object.entries(map ?? {})) {
+        texts.push({ context: `${opType} ${language.name} ${op}`, text: support?.description });
+      }
     }
   }
-
-  for (const match of claimTemplate.matchAll(new RegExp(String.raw`\\edgeref\{${languagePlaceholderArg}\}\{((?:[^{}]|\{[^{}]*\})+)\}`, 'g'))) {
-    const id = languageIdFromLatexRef(`\\langref{${match[1]}}`, languages);
-    if (id) {
-      selectors.push({
-        kind: 'edge',
-        source: { kind: 'current' },
-        target: { kind: 'language', id },
-        level: 'poly'
-      });
+  for (const definition of database.definitions ?? []) {
+    texts.push({ context: `definition ${definition.title}`, text: definition.statement });
+  }
+  const { languageIds, matrix, indexByLanguage } = database.adjacencyMatrix;
+  for (let i = 0; i < languageIds.length; i++) {
+    for (let j = 0; j < languageIds.length; j++) {
+      const relation = matrix[i]?.[j];
+      if (!relation) continue;
+      texts.push({ context: `relation ${languageIds[i]} -> ${languageIds[j]}`, text: relation.description });
+      texts.push({ context: `relation ${languageIds[i]} -> ${languageIds[j]} no-poly`, text: relation.noPolyDescription?.description });
+      texts.push({ context: `relation ${languageIds[i]} -> ${languageIds[j]} quasi`, text: relation.quasiDescription?.description });
     }
   }
+  for (const batch of database.batchClaims ?? []) {
+    if (batch.descriptionTemplate?.includes('\\thislang')) continue;
+    texts.push({ context: `batch ${batch.id}`, text: batch.descriptionTemplate });
+  }
 
-  if (selectors.length === 1) return selectors[0];
-  if (selectors.length > 1) return { kind: 'allOf', selectors };
-
-  const languageIds = languageIdsFromBatchClaim(claimTemplate, languages);
-  return { kind: 'list', languageIds };
+  for (const { context, text } of texts) {
+    if (!text) continue;
+    pattern.lastIndex = 0;
+    let match: RegExpExecArray | null;
+    while ((match = pattern.exec(text)) !== null) {
+      const [, command, sourceRef, targetRef] = match;
+      if (sourceRef.trim() === '\\thislang' || targetRef.trim() === '\\thislang') continue;
+      const sourceId = resolveLanguage(sourceRef);
+      const targetId = resolveLanguage(targetRef);
+      const sourceIndex = indexByLanguage[sourceId];
+      const targetIndex = indexByLanguage[targetId];
+      const relation = matrix[sourceIndex]?.[targetIndex];
+      const status = sourceId === targetId ? 'poly' : relation?.status;
+      if (!relationMacroStatusOk(command, status)) {
+        fail(`False relation assertion in ${context}: \\${command}{${sourceRef}}{${targetRef}} does not match stored status ${status ?? 'missing'}`);
+      }
+    }
+    operationPattern.lastIndex = 0;
+    while ((match = operationPattern.exec(text)) !== null) {
+      const [, command, languageRef, operationMacro] = match;
+      if (languageRef.trim() === '\\thislang') continue;
+      const languageId = resolveLanguage(languageRef);
+      const status = operationStatusFromMacro(database, languageId, operationMacro);
+      if (!operationMacroStatusOk(command, status)) {
+        fail(`False operation assertion in ${context}: \\${command}{${languageRef}}{${operationMacro}} does not match stored status ${status ?? 'missing'}`);
+      }
+    }
+  }
 }
 
-/**
- * Extract direct operation claims from the database.
- * @param opType 'queries' or 'transformations'
- */
-function extractOpClaims(
+function parseAssumption(block: string): string | undefined {
+  return commandValue(block, 'assuming', false);
+}
+
+function parseSuccinctnessLatex(content: string, database: DatabaseSchema): ParsedRelation[] {
+  stripPreambleWarning(content);
+  const resolveLanguage = languageResolver(database);
+  return environmentBlocks(content, 'succinctnessclaim').map((block) => {
+    const description = environmentValue(block.body, 'description')!;
+    return {
+      sourceId: resolveLanguage(commandValue(block.body, 'source')!),
+      targetId: resolveLanguage(commandValue(block.body, 'target')!),
+      status: parseStatus(commandValue(block.body, 'status')!),
+      assumption: parseAssumption(block.body),
+      description,
+      refs: extractCitationKeys(description)
+    };
+  });
+}
+
+function parseOperationMacro(opType: 'queries' | 'transformations', value: string): string {
+  const table = opType === 'queries' ? MACRO_TO_QUERY_OPERATION : MACRO_TO_TRANSFORMATION_OPERATION;
+  return table[value.trim()] ?? fail(`Unknown ${opType} operation macro ${value}`);
+}
+
+function parseOperationClaims(
+  content: string,
   database: DatabaseSchema,
   opType: 'queries' | 'transformations'
-): OpClaim[] {
-  const opDefs = (database.operations as Record<string, Record<string, OpDef>>)[opType];
-  const claims: OpClaim[] = [];
+): ParsedOperationClaim[] {
+  stripPreambleWarning(content);
+  const resolveLanguage = languageResolver(database);
+  const env = opType === 'queries' ? 'queryclaim' : 'transformationclaim';
+  return environmentBlocks(content, env).map((block) => {
+    const description = environmentValue(block.body, 'description')!;
+    return {
+      languageId: resolveLanguage(commandValue(block.body, 'language')!),
+      operation: parseOperationMacro(opType, commandValue(block.body, 'operation')!),
+      status: parseStatus(commandValue(block.body, 'status')!),
+      assumption: parseAssumption(block.body),
+      description,
+      refs: extractCitationKeys(description)
+    };
+  });
+}
 
-  for (const lang of database.languages) {
-    const supportMap: KCOpSupportMap | undefined = lang.properties?.[opType];
-    if (!supportMap) continue;
-
-    for (const [safeKey, opDef] of Object.entries(opDefs)) {
-      const support = supportMap[safeKey] || supportMap[opDef.code];
-      if (!support) continue;
-
-      // Skip inferred entries and entries generated from authored batch claims.
-      if (support.derived || support.batchId) continue;
-
-      // Skip unknown-to-us (no claim to make)
-      if (support.complexity === 'unknown-to-us') continue;
-
-      claims.push({
-        langId: lang.id,
-        langName: lang.name,
-        opSafeKey: safeKey,
-        opCode: opDef.code,
-        opLabel: opDef.label,
-        complexity: support.complexity,
-        assumption: support.assumption || '',
-        description: support.description || '',
-        refs: support.refs || [],
-        derived: false
-      });
+function splitTopLevelCommaList(value: string): string[] {
+  const parts: string[] = [];
+  let depth = 0;
+  let start = 0;
+  for (let i = 0; i < value.length; i++) {
+    if (value[i] === '{') depth++;
+    if (value[i] === '}') depth--;
+    if (value[i] === ',' && depth === 0) {
+      parts.push(value.slice(start, i).trim());
+      start = i + 1;
     }
   }
-
-  return claims;
+  const last = value.slice(start).trim();
+  if (last) parts.push(last);
+  return parts;
 }
 
-/**
- * Generate a single operation support claim block.
- *
- * Format:
- *   % lang=LANG_ID, op=OP_SAFE_KEY
- *   \begin{claim}
- *   $LANG$ supports $OP_LABEL$ COMPLEXITY_TEXT (assuming ASSUMPTION)? \citep{REFS}?
- *   \end{claim}
- *   \begin{claimdescription}
- *   DESCRIPTION (EDITABLE)
- *   \end{claimdescription}
- */
-function generateOpClaim(claim: OpClaim): string {
-  const langLatex = languageToLatex(claim.langName);
-  const complexityText = CANONICAL_OP_COMPLEXITIES[claim.complexity];
-
-  if (!complexityText) {
-    console.warn(`Unknown operation complexity: ${claim.complexity}`);
-    return '';
-  }
-
-  let claimText = `${langLatex} supports ${claim.opLabel} ${complexityText}`;
-
-  if (claim.assumption) {
-    claimText += ` assuming ${claim.assumption}`;
-  }
-
-  if (claim.refs.length > 0) {
-    claimText += ` \\citep{${claim.refs.join(',')}}`;
-  }
-
-  const description = claim.description || '(Description needed)';
-
-  return `% lang=${claim.langId}, op=${claim.opSafeKey}
-\\begin{claim}
-${claimText}
-\\end{claim}
-\\begin{claimdescription}
-${description}
-\\end{claimdescription}
-`;
+function parseLanguageRef(value: string, resolveLanguage: (value: string) => string): KCBatchLanguageRef {
+  return value.trim() === '\\thislang'
+    ? { kind: 'current' }
+    : { kind: 'language', id: resolveLanguage(value) };
 }
 
-function generateBatchClaim(batch: KCBatchClaim): string {
-  const options = [
-    `id=${batch.id}`,
-    `op=${batch.op}`,
-    `status=${batch.status}`,
-    ...(batch.assumption ? [`assumption=${batch.assumption}`] : [])
-  ].join(', ');
-
-  return `\\begin{batchclaim}[${options}]
-${batch.claimTemplate}
-\\end{batchclaim}
-\\begin{claimdescription}
-${batch.descriptionTemplate}
-\\end{claimdescription}
-`;
+function parseSelectorClause(value: string, resolveLanguage: (value: string) => string): KCBatchSelector {
+  const trimmed = value.trim();
+  if (trimmed.startsWith('\\isin')) {
+    const content = commandValue(trimmed, 'isin')!;
+    return { kind: 'list', languageIds: splitTopLevelCommaList(content).map(resolveLanguage) };
+  }
+  for (const command of RELATION_COMMANDS) {
+    if (!trimmed.startsWith(`\\${command}`)) continue;
+    const firstStart = trimmed.indexOf('{');
+    const first = extractBraceAt(trimmed, firstStart);
+    const secondStart = trimmed.indexOf('{', first.end);
+    const second = extractBraceAt(trimmed, secondStart);
+    return {
+      kind: 'edge',
+      source: parseLanguageRef(first.content, resolveLanguage),
+      target: parseLanguageRef(second.content, resolveLanguage),
+      level: command.endsWith('poly') && !command.endsWith('quasi') ? 'poly' : 'quasi',
+      polarity: command.startsWith('no') ? 'negative' : 'positive'
+    };
+  }
+  fail(`Unknown selector clause: ${trimmed}`);
 }
 
-function generateBatchClaimsLatex(database: DatabaseSchema, opType: 'queries' | 'transformations'): string {
-  const batches = (database.batchClaims ?? []).filter(batch => batch.opType === opType);
-  if (batches.length === 0) return '';
-
-  return `% =============================
-\\section{Batch Claims}
-% =============================
-${batches.map(generateBatchClaim).join('\n')}`;
+function selectorKey(selector: KCBatchSelector): string {
+  return JSON.stringify(selector);
 }
 
-/**
- * Group operation claims by reference, same pattern as edge claims.
- */
-function groupOpClaimsByReference(claims: OpClaim[]): Map<string, OpClaim[]> {
-  const refCounts = new Map<string, number>();
-
-  for (const claim of claims) {
-    for (const ref of claim.refs) {
-      refCounts.set(ref, (refCounts.get(ref) || 0) + 1);
-    }
-  }
-
-  const sortedRefs = [...refCounts.entries()]
-    .sort((a, b) => b[1] - a[1])
-    .map(([ref]) => ref);
-
-  const grouped = new Map<string, OpClaim[]>();
-  const usedClaims = new Set<OpClaim>();
-
-  grouped.set('__NO_REFERENCE__', []);
-  for (const ref of sortedRefs) {
-    grouped.set(ref, []);
-  }
-
-  for (const claim of claims) {
-    if (claim.refs.length === 0) {
-      grouped.get('__NO_REFERENCE__')!.push(claim);
-      usedClaims.add(claim);
-      continue;
-    }
-
-    // Find the most frequent reference for this claim
-    for (const ref of sortedRefs) {
-      if (claim.refs.includes(ref) && !usedClaims.has(claim)) {
-        grouped.get(ref)!.push(claim);
-        usedClaims.add(claim);
-        break;
-      }
-    }
-  }
-
-  // Remove empty groups
-  for (const [key, value] of grouped) {
-    if (value.length === 0) grouped.delete(key);
-  }
-
-  return grouped;
+function parseBatchClaims(
+  content: string,
+  database: DatabaseSchema,
+  opType: 'queries' | 'transformations'
+): KCBatchClaim[] {
+  stripPreambleWarning(content);
+  const resolveLanguage = languageResolver(database);
+  const usedSelectors = new Set<string>();
+  return environmentBlocks(content, 'batchclaim').map((block) => {
+    const description = environmentValue(block.body, 'description')!;
+    const selectorText = commandValue(block.body, 'selector')!;
+    const clauses = splitTopLevelCommaList(selectorText).map((part) => parseSelectorClause(part, resolveLanguage));
+    const selector = clauses.length === 1 ? clauses[0] : { kind: 'allOf' as const, selectors: clauses };
+    const key = `${opType}:${parseOperationMacro(opType, commandValue(block.body, 'operation')!)}:${selectorKey(selector)}`;
+    if (usedSelectors.has(key)) fail(`Duplicate batch selector in ${opType}: ${selectorText}`);
+    usedSelectors.add(key);
+    const operation = parseOperationMacro(opType, commandValue(block.body, 'operation')!);
+    const status = parseStatus(commandValue(block.body, 'status')!);
+    return {
+      id: `batch-${hashShort(`${opType}:${operation}:${status}:${selectorKey(selector)}`)}`,
+      opType,
+      op: operation,
+      status,
+      assumption: parseAssumption(block.body),
+      selector,
+      languageIds: selector.kind === 'list' ? selector.languageIds : [],
+      claimTemplate: '',
+      descriptionTemplate: description,
+      refs: extractCitationKeys(description)
+    };
+  });
 }
 
-/**
- * Build a section of operation claims grouped by reference.
- */
-function buildOpSection(refId: string, refClaims: OpClaim[], refMap: Map<string, KCReference>): string {
-  let sectionTitle: string;
-
-  if (refId === '__NO_REFERENCE__') {
-    sectionTitle = 'No Reference';
-  } else {
-    const ref = refMap.get(refId);
-    sectionTitle = ref ? ref.title.slice(0, 80) + (ref.title.length > 80 ? '...' : '') : refId;
-  }
-
-  // Sort by language name, then operation code
-  refClaims.sort((a, b) => {
-    const langCmp = a.langName.localeCompare(b.langName);
-    if (langCmp !== 0) return langCmp;
-    return a.opCode.localeCompare(b.opCode);
+function alignLanguages(database: DatabaseSchema, parsed: ParsedLanguage[]): void {
+  const existingByName = new Map(database.languages.map((language) => [language.name, language]));
+  const oldIds = database.adjacencyMatrix.languageIds;
+  const oldMatrix = database.adjacencyMatrix.matrix;
+  const nextLanguages: KCLanguage[] = parsed.map((item) => {
+    const existing = existingByName.get(item.name);
+    const language = existing ?? {
+      id: generateLanguageId(item.name),
+      name: item.name,
+      fullName: item.fullName,
+      definition: item.definition,
+      properties: { queries: {}, transformations: {} }
+    };
+    language.name = item.name;
+    language.fullName = item.fullName;
+    language.definition = item.definition;
+    delete (language as any).classification;
+    delete (language as any).definitionRefs;
+    delete (language as any).references;
+    return language;
   });
 
-  const claimTexts = refClaims
-    .map(c => generateOpClaim(c))
-    .filter(c => c.length > 0)
-    .join('\n');
-
-  if (claimTexts.length === 0) return '';
-
-  return `% =============================
-\\section{${escapeLatex(sectionTitle)}}
-% Reference ID: ${refId}
-% =============================
-${claimTexts}`;
+  const nextIds = nextLanguages.map((language) => language.id);
+  const oldIndex = new Map(oldIds.map((id, index) => [id, index]));
+  const matrix = nextIds.map((sourceId) => nextIds.map((targetId) => {
+    if (sourceId === targetId) return null;
+    const i = oldIndex.get(sourceId);
+    const j = oldIndex.get(targetId);
+    return i === undefined || j === undefined ? null : oldMatrix[i]?.[j] ?? null;
+  }));
+  database.languages = nextLanguages;
+  database.adjacencyMatrix = {
+    languageIds: nextIds,
+    indexByLanguage: Object.fromEntries(nextIds.map((id, index) => [id, index])),
+    matrix
+  };
 }
 
-/**
- * Generate the full operations LaTeX document.
- * @param opType 'queries' or 'transformations'
- * @param title Document title
- */
-function generateOpsLatex(database: DatabaseSchema, opType: 'queries' | 'transformations', title: string): string {
-  const claims = extractOpClaims(database, opType);
-  const grouped = groupOpClaimsByReference(claims);
-  const batchClaimsLatex = generateBatchClaimsLatex(database, opType);
+function updateDefinitions(database: DatabaseSchema, concepts: ParsedConcept[]): void {
+  database.definitions = concepts.map((concept) => ({
+    id: definitionIdForTitle(concept.title),
+    title: concept.title,
+    statement: concept.statement,
+    refs: extractCitationKeys(concept.statement)
+  }));
+}
 
-  const refMap = new Map<string, KCReference>();
+function updateSuccinctness(database: DatabaseSchema, relations: ParsedRelation[]): void {
+  for (let i = 0; i < database.adjacencyMatrix.matrix.length; i++) {
+    for (let j = 0; j < database.adjacencyMatrix.matrix[i].length; j++) {
+      const relation = database.adjacencyMatrix.matrix[i][j];
+      if (relation && !relation.derived) database.adjacencyMatrix.matrix[i][j] = null;
+    }
+  }
+  for (const item of relations) {
+    if (item.sourceId === item.targetId) fail(`Self relation is invalid: ${item.sourceId}`);
+    const i = database.adjacencyMatrix.indexByLanguage[item.sourceId];
+    const j = database.adjacencyMatrix.indexByLanguage[item.targetId];
+    if (i === undefined || j === undefined) fail(`Unknown relation endpoint ${item.sourceId}->${item.targetId}`);
+    database.adjacencyMatrix.matrix[i][j] = {
+      status: item.status,
+      description: item.description,
+      refs: item.refs,
+      ...(item.assumption ? { assumption: item.assumption } : {}),
+      derived: false
+    };
+  }
+}
+
+function updateOperations(
+  database: DatabaseSchema,
+  claims: ParsedOperationClaim[],
+  batches: KCBatchClaim[],
+  opType: 'queries' | 'transformations'
+): void {
+  for (const language of database.languages) {
+    const map = language.properties?.[opType];
+    if (!map) continue;
+    for (const [op, support] of Object.entries(map)) {
+      if (support && !support.derived && !support.batchId) delete map[op];
+    }
+  }
+  for (const claim of claims) {
+    const language = database.languages.find((item) => item.id === claim.languageId) ?? fail(`Unknown language ${claim.languageId}`);
+    language.properties ??= {};
+    const map = opType === 'queries'
+      ? (language.properties.queries ??= {})
+      : (language.properties.transformations ??= {});
+    map[claim.operation] = {
+      complexity: claim.status,
+      description: claim.description,
+      refs: claim.refs,
+      ...(claim.assumption ? { assumption: claim.assumption } : {}),
+      derived: false
+    };
+  }
+  database.batchClaims = [
+    ...(database.batchClaims ?? []).filter((batch) => batch.opType !== opType),
+    ...batches
+  ];
+}
+
+function parseBibtex(content: string): Map<string, KCReference> {
+  const references = new Map<string, KCReference>();
+  const entries = content.split(/\n(?=@)/g).map((entry) => entry.trim()).filter(Boolean);
+  for (const bibtex of entries) {
+    const match = bibtex.match(/^@\w+\s*\{\s*([^,\s]+)\s*,/);
+    if (!match) continue;
+    const id = match[1].trim();
+    const title = cleanBibtexText(extractBibtexField(bibtex, 'title') ?? id);
+    const href =
+      cleanBibtexText(extractBibtexField(bibtex, 'url') ?? extractBibtexField(bibtex, 'doi') ?? '');
+    references.set(id, { id, title, href, bibtex });
+  }
+  return references;
+}
+
+function updateReferencesFromBibtex(database: DatabaseSchema, references: Map<string, KCReference>): void {
+  database.references = [...references.values()].sort((a, b) => a.id.localeCompare(b.id));
+}
+
+function stripCanonicalOnlyFields(database: DatabaseSchema): void {
+  for (const language of database.languages) {
+    delete (language as any).classification;
+    delete (language as any).definitionRefs;
+    delete (language as any).references;
+  }
+}
+
+function writeLatex(): void {
+  const database = loadDatabase();
+  stripCanonicalOnlyFields(database);
+  fs.writeFileSync(DEFAULT_LANGUAGES_OUTPUT, generateLanguagesLatex(database));
+  fs.writeFileSync(DEFAULT_DEFINITIONS_OUTPUT, generateDefinitionsLatex(database));
+  fs.writeFileSync(DEFAULT_SUCCINCTNESS_OUTPUT, generateSuccinctnessLatex(database));
+  fs.writeFileSync(DEFAULT_QUERIES_OUTPUT, generateOpsLatex(database, 'queries'));
+  fs.writeFileSync(DEFAULT_TRANSFORMS_OUTPUT, generateOpsLatex(database, 'transformations'));
+  fs.writeFileSync(DEFAULT_BIBTEX_OUTPUT, generateBibtex(database));
+  console.log('Wrote semantic LaTeX files.');
+}
+
+async function writeJson(): Promise<void> {
+  const database = loadDatabase();
+  const bibtex = fs.existsSync(DEFAULT_BIBTEX_OUTPUT) ? fs.readFileSync(DEFAULT_BIBTEX_OUTPUT, 'utf-8') : '';
+  if (bibtex) updateReferencesFromBibtex(database, parseBibtex(bibtex));
+
+  alignLanguages(database, parseLanguagesLatex(fs.readFileSync(DEFAULT_LANGUAGES_OUTPUT, 'utf-8')));
+  updateDefinitions(database, parseDefinitionsLatex(fs.readFileSync(DEFAULT_DEFINITIONS_OUTPUT, 'utf-8')));
+  updateSuccinctness(database, parseSuccinctnessLatex(fs.readFileSync(DEFAULT_SUCCINCTNESS_OUTPUT, 'utf-8'), database));
+
+  const queriesContent = fs.readFileSync(DEFAULT_QUERIES_OUTPUT, 'utf-8');
+  updateOperations(
+    database,
+    parseOperationClaims(queriesContent, database, 'queries'),
+    parseBatchClaims(queriesContent, database, 'queries'),
+    'queries'
+  );
+
+  const transformsContent = fs.readFileSync(DEFAULT_TRANSFORMS_OUTPUT, 'utf-8');
+  updateOperations(
+    database,
+    parseOperationClaims(transformsContent, database, 'transformations'),
+    parseBatchClaims(transformsContent, database, 'transformations'),
+    'transformations'
+  );
+
+  stripCanonicalOnlyFields(database);
+  validateRelationMacroAssertions(database);
+  saveDatabase(database);
+
+  const { execSync } = await import('child_process');
+  execSync('npx tsx scripts/refresh-derived.ts', {
+    cwd: path.join(__dirname, '..'),
+    stdio: 'inherit'
+  });
+}
+
+function normalizeRefs(): void {
+  const database = loadDatabase();
   for (const ref of database.references) {
-    refMap.set(ref.id, ref);
+    if (!ref.bibtex) continue;
+    ref.bibtex = ref.bibtex.replace(/^(@\w+\s*\{\s*)[^,\s]+/m, `$1${ref.id}`);
   }
-
-  const sections: string[] = [];
-  let noRefSection: string | null = null;
-
-  for (const [refId, refClaims] of grouped) {
-    const section = buildOpSection(refId, refClaims, refMap);
-    if (!section) continue;
-
-    if (refId === '__NO_REFERENCE__') {
-      noRefSection = section;
-    } else {
-      sections.push(section);
-    }
-  }
-
-  if (noRefSection) {
-    sections.push(noRefSection);
-  }
-
-  const opTypeLabel = opType === 'queries' ? 'Query' : 'Transformation';
-
-  const preamble = `% =============================
-% Tractable Circuit Zoo - ${opTypeLabel} Support Claims
-% Auto-generated from database.json
-% Generated: ${new Date().toISOString()}
-%
-% EDITING INSTRUCTIONS:
-% - Claim environments are auto-generated. Do NOT edit.
-% - Description environments (claimdescription) are EDITABLE.
-% - Derived entries are omitted; they will be regenerated by propagation.
-% - Batch claim environments are editable and expand to grouped operation entries.
-% - To sync back to JSON, run: npx tsx scripts/latex-bijection.ts --to-json
-% =============================
-\\documentclass[11pt]{article}
-
-% -------- Packages --------
-\\usepackage[margin=1in]{geometry}
-\\usepackage{amsmath, amssymb, amsthm}
-\\usepackage{mathtools}
-\\usepackage{xparse}
-\\usepackage{enumitem}
-\\usepackage{hyperref}
-\\usepackage{cleveref}
-\\usepackage{xcolor}
-\\usepackage{natbib}
-
-% -------- Hyperref setup --------
-\\hypersetup{
-  colorlinks=true,
-  linkcolor=blue,
-  citecolor=blue,
-  urlcolor=blue
-}
-
-% -------- Theorem styles --------
-\\theoremstyle{plain}
-\\newtheorem{claim}{Claim}[section]
-\\newtheorem{batchclaim}[claim]{Batch Claim}
-
-\\theoremstyle{definition}
-\\newtheorem{definition}[claim]{Definition}
-
-% -------- Description environment --------
-\\newenvironment{claimdescription}{%
-  \\par\\noindent\\ignorespaces
-}{\\par}
-
-% -------- Handy macros --------
-\\newcommand{\\R}{\\mathbb{R}}
-\\newcommand{\\N}{\\mathbb{N}}
-\\newcommand{\\eps}{\\varepsilon}
-% Cross-reference commands (rendered as links in the web UI)
-\\NewDocumentCommand{\\langref}{m g}{\\textbf{#1\\IfNoValueF{#2}{#2}}}
-\\NewDocumentCommand{\\langfam}{m m g}{\\textbf{#1$_{#2}$\\IfNoValueF{#3}{#3}}}
-\\NewDocumentCommand{\\defref}{m g}{\\hyperref[kdef:#1]{\\textbf{\\IfNoValueTF{#2}{#1}{#2}}}}
-\\newcommand{\\edgeref}[2]{#1 compiles to #2}
-\\newcommand{\\nedgeref}[2]{#1 cannot compile to #2}
-\\newcommand{\\opref}[2]{#1 supports #2}
-\\newcommand{\\nopref}[2]{#2 is unsupported by #1}
-
-% -------- Title info --------
-\\title{Tractable Circuit Zoo: ${opTypeLabel} Support}
-\\date{\\today}
-
-\\begin{document}
-\\maketitle
-
-\\tableofcontents
-\\newpage
-
-`;
-
-  const postamble = `
-% =============================
-% Bibliography
-% =============================
-\\bibliographystyle{plainnat}
-\\bibliography{refs}
-
-\\end{document}
-`;
-
-  const bodySections = [batchClaimsLatex, ...sections].filter(Boolean);
-  return preamble + bodySections.join('\n\n') + postamble;
-}
-
-// =============================================================================
-// Queries & Transformations LaTeX Parsing
-// =============================================================================
-
-/**
- * Parsed operation support claim from LaTeX.
- */
-interface ParsedOpClaim {
-  langId: string;
-  opCode: string;
-  complexity: string;
-  assumption: string;
-  description: string;
-  refs: string[];
-}
-
-/**
- * Parse operation support claims from LaTeX file.
- *
- * Expected format:
- *   % lang=LANG_ID, op=OP_SAFE_KEY
- *   \begin{claim}
- *   LANG supports OP_LABEL COMPLEXITY_TEXT (assuming ASSUMPTION)? (\citep{REFS})?
- *   \end{claim}
- *   \begin{claimdescription}
- *   DESCRIPTION
- *   \end{claimdescription}
- */
-function parseOpsLatex(latexContent: string): ParsedOpClaim[] {
-  const results: ParsedOpClaim[] = [];
-  const lines = latexContent.split('\n');
-  let i = 0;
-
-  // Track the most recent metadata comment
-  let pendingLangId: string | null = null;
-  let pendingOpCode: string | null = null;
-
-  while (i < lines.length) {
-    const line = lines[i].trimEnd();
-
-    // Look for metadata comment: % lang=..., op=...
-    const metaMatch = line.match(/^%\s*lang=([^,]+),\s*op=(.+)$/);
-    if (metaMatch) {
-      pendingLangId = metaMatch[1].trim();
-      pendingOpCode = metaMatch[2].trim();
-      i++;
-      continue;
-    }
-
-    // Look for claim start: \begin{claim} (without optional args for op claims)
-    if (line.includes('\\begin{claim}') && pendingLangId && pendingOpCode) {
-      const langId = pendingLangId;
-      const opCode = pendingOpCode;
-      pendingLangId = null;
-      pendingOpCode = null;
-
-      // Collect claim content until \end{claim}
-      let claimContent = '';
-      i++;
-      while (i < lines.length && !lines[i].includes('\\end{claim}')) {
-        claimContent += lines[i] + '\n';
-        i++;
-      }
-      i++; // Skip \end{claim}
-
-      // Find and collect description content
-      let descContent = '';
-      while (i < lines.length && !lines[i].includes('\\begin{claimdescription}')) {
-        if (lines[i].trim() && !lines[i].trim().startsWith('%')) {
-          break; // Unexpected content
-        }
-        i++;
-      }
-
-      if (i < lines.length && lines[i].includes('\\begin{claimdescription}')) {
-        i++; // Skip \begin{claimdescription}
-        while (i < lines.length && !lines[i].includes('\\end{claimdescription}')) {
-          descContent += lines[i] + '\n';
-          i++;
-        }
-        i++; // Skip \end{claimdescription}
-      }
-
-      // Parse the claim body to extract complexity, assumption, refs
-      let body = claimContent.trim();
-
-      // Extract citation
-      let refs: string[] = [];
-      const citeMatch = body.match(/\\cite[tp]?(?:\[[^\]]*\]){0,2}\{([^}]+)\}\s*$/);
-      if (citeMatch) {
-        refs = citeMatch[1].split(',').map(s => s.trim());
-        body = body.slice(0, citeMatch.index).trim();
-      }
-
-      // Extract assumption
-      let assumption = '';
-      const assumptionMatch2 = body.match(/\s+assuming\s+(.+)$/i);
-      if (assumptionMatch2) {
-        assumption = assumptionMatch2[1].trim();
-        body = body.slice(0, assumptionMatch2.index).trim();
-      }
-
-      // Determine complexity from canonical text
-      let complexity: string | null = null;
-      for (const [code, text] of Object.entries(CANONICAL_OP_COMPLEXITIES)) {
-        if (body.includes(text)) {
-          complexity = code;
-          break;
-        }
-      }
-
-      if (!complexity) {
-        console.warn(`Could not determine complexity from op claim body: ${body}`);
-        i++;
-        continue;
-      }
-
-      results.push({
-        langId,
-        opCode,
-        complexity,
-        assumption,
-        description: descContent.trim(),
-        refs
-      });
-
-      continue;
-    }
-
-    i++;
-  }
-
-  return results;
-}
-
-function parseBatchOpsLatex(
-  latexContent: string,
-  opType: 'queries' | 'transformations',
-  languages: KCLanguage[]
-): KCBatchClaim[] {
-  const results: KCBatchClaim[] = [];
-  const lines = latexContent.split('\n');
-  let i = 0;
-
-  while (i < lines.length) {
-    const line = lines[i].trimEnd();
-    const batchMatch = line.match(/\\begin\{batchclaim\}\[([^\]]+)\]/);
-    if (!batchMatch) {
-      i++;
-      continue;
-    }
-
-    const options = parseOptionList(batchMatch[1]);
-    const id = options.id;
-    const op = options.op;
-    const status = options.status;
-    const assumption = options.assumption;
-
-    if (!id || !op || !status) {
-      console.warn(`Skipping batchclaim with missing id/op/status: ${line}`);
-      i++;
-      continue;
-    }
-
-    let claimTemplate = '';
-    i++;
-    while (i < lines.length && !lines[i].includes('\\end{batchclaim}')) {
-      claimTemplate += lines[i] + '\n';
-      i++;
-    }
-    i++; // Skip \end{batchclaim}
-
-    let descriptionTemplate = '';
-    while (i < lines.length && !lines[i].includes('\\begin{claimdescription}')) {
-      i++;
-    }
-    if (i < lines.length && lines[i].includes('\\begin{claimdescription}')) {
-      i++;
-      while (i < lines.length && !lines[i].includes('\\end{claimdescription}')) {
-        descriptionTemplate += lines[i] + '\n';
-        i++;
-      }
-      i++; // Skip \end{claimdescription}
-    }
-
-    const trimmedClaim = claimTemplate.trim();
-    const selector = inferSelectorFromBatchClaim(trimmedClaim, languages);
-    const languageIds = selector.kind === 'list' ? selector.languageIds : [];
-    if (selector.kind === 'list' && languageIds.length === 0) {
-      console.warn(`Skipping batchclaim with no recognized languages: ${id}`);
-      continue;
-    }
-
-    results.push({
-      id,
-      opType,
-      op,
-      status,
-      ...(assumption && { assumption }),
-      languageIds,
-      selector,
-      claimTemplate: trimmedClaim,
-      descriptionTemplate: descriptionTemplate.trim(),
-      refs: opRefsFromClaimTemplate(trimmedClaim)
-    });
-  }
-
-  return results;
-}
-
-function updateBatchClaimsFromLatex(
-  database: DatabaseSchema,
-  parsedBatches: KCBatchClaim[],
-  opType: 'queries' | 'transformations'
-): void {
-  const retained = (database.batchClaims ?? []).filter(batch => batch.opType !== opType);
-  database.batchClaims = [...retained, ...parsedBatches];
-  console.log(`Updated ${parsedBatches.length} ${opType} batch claims`);
-}
-
-/**
- * Update database operation support from parsed LaTeX claims.
- * @param opType 'queries' or 'transformations'
- */
-function updateOpsFromLatex(
-  database: DatabaseSchema,
-  parsedClaims: ParsedOpClaim[],
-  opType: 'queries' | 'transformations'
-): void {
-  const opDefs = (database.operations as Record<string, Record<string, OpDef>>)[opType];
-
-  // Build set of valid safe keys for validation
-  const validSafeKeys = new Set(Object.keys(opDefs));
-
-  // Build language ID lookup
-  const idToLang = new Map<string, KCLanguage>();
-  for (const lang of database.languages) {
-    idToLang.set(lang.id, lang);
-  }
-
-  let updated = 0;
-  let skipped = 0;
-
-  for (const claim of parsedClaims) {
-    const lang = idToLang.get(claim.langId);
-    if (!lang) {
-      console.warn(`Unknown language ID in ops LaTeX: ${claim.langId}`);
-      skipped++;
-      continue;
-    }
-
-    // The opCode from LaTeX is already the safe key (e.g., AND_C, NOT_C)
-    const safeKey = claim.opCode;
-    if (!validSafeKeys.has(safeKey)) {
-      console.warn(`Unknown operation safe key in ops LaTeX: ${safeKey}`);
-      skipped++;
-      continue;
-    }
-
-    // Ensure properties map exists
-    if (!lang.properties) {
-      lang.properties = {};
-    }
-    if (!lang.properties[opType]) {
-      lang.properties[opType] = {};
-    }
-
-    const supportMap = lang.properties[opType]!;
-    const existing = supportMap[safeKey];
-
-    if (existing) {
-      // Claims present in LaTeX are explicit, so clear any derived metadata.
-      delete existing.derived;
-      delete existing.derivationOrder;
-      delete existing.proofTrace;
-
-      // Update existing entry — always sync complexity from LaTeX
-      existing.complexity = claim.complexity;
-      if (claim.description && claim.description !== '(Description needed)') {
-        existing.description = claim.description;
-      }
-      if (claim.refs.length > 0) {
-        existing.refs = claim.refs;
-      }
-      if (claim.assumption) {
-        existing.assumption = claim.assumption;
-      } else if ('assumption' in existing) {
-        delete existing.assumption;
-      }
-    } else {
-      // Create new entry
-      const newSupport: KCOpSupport = {
-        complexity: claim.complexity,
-        refs: claim.refs,
-      };
-      if (claim.assumption) newSupport.assumption = claim.assumption;
-      if (claim.description && claim.description !== '(Description needed)') {
-        newSupport.description = claim.description;
-      }
-      supportMap[safeKey] = newSupport;
-    }
-
-    updated++;
-  }
-
-  // Remove non-derived entries that are no longer in the LaTeX source
-  const claimKeys = new Set(parsedClaims.map(c => `${c.langId}:${c.opCode}`));
-  let removed = 0;
-  for (const lang of database.languages) {
-    const supportMap = lang.properties?.[opType];
-    if (!supportMap) continue;
-    for (const opKey of Object.keys(supportMap)) {
-      const entry = supportMap[opKey];
-      if (entry && !entry.derived && !entry.batchId && !claimKeys.has(`${lang.id}:${opKey}`)) {
-        delete supportMap[opKey];
-        removed++;
-      }
-    }
-  }
-
-  console.log(`Updated ${updated} ${opType} entries, skipped ${skipped}, removed ${removed}`);
-}
-
-// =============================================================================
-// CLI
-// =============================================================================
-
-function printUsage(): void {
-  console.log(`
-Tractable Circuit Zoo - LaTeX Bijection Script
-
-Usage:
-  npx tsx scripts/latex-bijection.ts --to-latex
-  npx tsx scripts/latex-bijection.ts --to-json
-  npx tsx scripts/latex-bijection.ts --normalize-refs
-
-Options:
-  --to-latex      Convert database.json to LaTeX files
-  --to-json       Convert LaTeX files back to database.json
-  --normalize-refs Normalize all BibTeX keys in database to match reference IDs
-  -h, --help      Show this help message
-
-Output files (--to-latex):
-  docs/succinctness.tex         - Succinctness claims and proofs
-  docs/languages.tex            - Language definitions
-  docs/definitions.tex          - Core conceptual definitions
-  docs/queries.tex              - Query operation support claims
-  docs/transformations.tex      - Transformation operation support claims
-  docs/refs.bib                 - BibTeX references
-
-Input files (--to-json):
-  docs/succinctness.tex         - Updates adjacency matrix descriptions
-  docs/languages.tex            - Updates language definitions
-  docs/definitions.tex          - Updates conceptual definitions
-  docs/queries.tex              - Updates query operation support
-  docs/transformations.tex      - Updates transformation operation support
-  docs/refs.bib                 - Updates references
-
-Database: src/lib/data/database.json
-
-Examples:
-  npx tsx scripts/latex-bijection.ts --to-latex
-  npx tsx scripts/latex-bijection.ts --to-json
-  npx tsx scripts/latex-bijection.ts --normalize-refs
-`);
+  saveDatabase(database);
 }
 
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
-  
-  if (args.length === 0 || args.includes('-h') || args.includes('--help')) {
-    printUsage();
-    process.exit(0);
-  }
-  
-  const toLatex = args.includes('--to-latex');
-  const toJson = args.includes('--to-json');
-  const normalizeRefs = args.includes('--normalize-refs');
-  
-  const modeCount = [toLatex, toJson, normalizeRefs].filter(Boolean).length;
-  
-  if (modeCount > 1) {
-    console.error('Error: Cannot specify multiple modes (--to-latex, --to-json, --normalize-refs)');
-    process.exit(1);
-  }
-  
-  if (modeCount === 0) {
-    console.error('Error: Must specify --to-latex, --to-json, or --normalize-refs');
-    printUsage();
-    process.exit(1);
-  }
-  
-  if (normalizeRefs) {
-    // Normalize all BibTeX keys in database
-    console.log('=== Normalizing BibTeX Keys ===\n');
-    console.log(`Reading database from: ${DATABASE_PATH}`);
-    
-    const database = loadDatabase();
-    
-    console.log(`Found ${database.references.length} references\n`);
-    
-    let updated = 0;
-    for (const ref of database.references) {
-      if (ref.bibtex) {
-        const normalized = normalizeBibtexKey(ref.bibtex, ref.id);
-        if (normalized !== ref.bibtex) {
-          console.log(`Normalized: ${ref.id}`);
-          ref.bibtex = normalized;
-          updated++;
-        }
-      }
-    }
-    
-    console.log(`\nUpdated ${updated} references`);
-    
-    if (updated > 0) {
-      console.log(`\nWriting database to: ${DATABASE_PATH}`);
-      saveDatabase(database);
-    }
-    
-    console.log('\n=== Done ===');
+  if (args.includes('--to-latex')) {
+    writeLatex();
     return;
   }
-  
-  if (toLatex) {
-    // JSON → LaTeX + BibTeX
-    const claimsPath = DEFAULT_LATEX_OUTPUT;
-    const languagesPath = DEFAULT_LANGUAGES_OUTPUT;
-    const definitionsPath = DEFAULT_DEFINITIONS_OUTPUT;
-    const bibtexPath = DEFAULT_BIBTEX_OUTPUT;
-    const queriesPath = DEFAULT_QUERIES_OUTPUT;
-    const transformsPath = DEFAULT_TRANSFORMS_OUTPUT;
-    
-    console.log('=== JSON → LaTeX Conversion ===\n');
-    console.log(`Reading database from: ${DATABASE_PATH}`);
-    
-    const database = loadDatabase();
-    
-    console.log(`Found ${database.languages.length} languages`);
-    console.log(`Found ${(database.definitions ?? []).length} conceptual definitions`);
-    console.log(`Found ${database.references.length} references`);
-    
-    // Generate and write claims LaTeX
-    const claimsLatex = generateLatex(database);
-    fs.writeFileSync(claimsPath, claimsLatex, 'utf-8');
-    console.log(`\nWrote claims to: ${claimsPath}`);
-    
-    // Generate and write languages LaTeX
-    const languagesLatex = generateLanguagesLatex(database);
-    fs.writeFileSync(languagesPath, languagesLatex, 'utf-8');
-    console.log(`Wrote language definitions to: ${languagesPath}`);
-
-    // Generate and write conceptual definitions LaTeX
-    const definitionsLatex = generateDefinitionsLatex(database);
-    fs.writeFileSync(definitionsPath, definitionsLatex, 'utf-8');
-    console.log(`Wrote conceptual definitions to: ${definitionsPath}`);
-    
-    // Generate and write queries LaTeX
-    const queriesLatex = generateOpsLatex(database, 'queries', 'Query');
-    fs.writeFileSync(queriesPath, queriesLatex, 'utf-8');
-    console.log(`Wrote query support claims to: ${queriesPath}`);
-
-    // Generate and write transformations LaTeX
-    const transformsLatex = generateOpsLatex(database, 'transformations', 'Transformation');
-    fs.writeFileSync(transformsPath, transformsLatex, 'utf-8');
-    console.log(`Wrote transformation support claims to: ${transformsPath}`);
-
-    // Generate and write BibTeX
-    const bibtex = generateBibtex(database);
-    fs.writeFileSync(bibtexPath, bibtex, 'utf-8');
-    console.log(`Wrote BibTeX to: ${bibtexPath}`);
-    
-    console.log('\n=== Done ===');
+  if (args.includes('--to-json')) {
+    await writeJson();
+    return;
   }
-  
-  if (toJson) {
-    // LaTeX → JSON
-    const claimsPath = DEFAULT_LATEX_OUTPUT;
-    const languagesPath = DEFAULT_LANGUAGES_OUTPUT;
-    const definitionsPath = DEFAULT_DEFINITIONS_OUTPUT;
-    const bibtexPath = DEFAULT_BIBTEX_OUTPUT;
-    const queriesPath = DEFAULT_QUERIES_OUTPUT;
-    const transformsPath = DEFAULT_TRANSFORMS_OUTPUT;
-    
-    console.log('=== LaTeX → JSON Conversion ===\n');
-    
-    console.log(`Reading database from: ${DATABASE_PATH}`);
-    const database = loadDatabase();
-    
-    // Update from BibTeX if file exists
-    if (fs.existsSync(bibtexPath)) {
-      console.log(`\nReading BibTeX from: ${bibtexPath}`);
-      const bibtexContent = fs.readFileSync(bibtexPath, 'utf-8');
-      const bibtexEntries = parseBibtex(bibtexContent);
-      console.log(`Parsed ${bibtexEntries.size} BibTeX entries`);
-      
-      console.log(`Updating references...`);
-      updateReferencesFromBibtex(database, bibtexEntries);
-    } else {
-      console.log(`\nNote: BibTeX file not found: ${bibtexPath} (skipping reference updates)`);
-    }
-    
-    // Update from succinctness.tex if file exists
-    if (fs.existsSync(claimsPath)) {
-      console.log(`\nReading claims from: ${claimsPath}`);
-      const claimsContent = fs.readFileSync(claimsPath, 'utf-8');
-      const claims = parseLatex(claimsContent);
-      console.log(`Parsed ${claims.length} claims`);
-      
-      console.log(`Updating adjacency matrix...`);
-      updateDatabase(database, claims);
-    } else {
-      console.log(`\nNote: Claims file not found: ${claimsPath} (skipping claim updates)`);
-    }
-    
-    // Update from languages.tex if file exists
-    if (fs.existsSync(languagesPath)) {
-      console.log(`\nReading language definitions from: ${languagesPath}`);
-      const languagesContent = fs.readFileSync(languagesPath, 'utf-8');
-      const languageDefs = parseLanguagesLatex(languagesContent);
-      console.log(`Parsed ${languageDefs.length} language definitions`);
-      
-      console.log(`Updating language definitions...`);
-      updateLanguagesFromLatex(database, languageDefs);
-    } else {
-      console.log(`\nNote: Languages file not found: ${languagesPath} (skipping language definition updates)`);
-    }
-
-    // Update from definitions.tex if file exists
-    if (fs.existsSync(definitionsPath)) {
-      console.log(`\nReading conceptual definitions from: ${definitionsPath}`);
-      const definitionsContent = fs.readFileSync(definitionsPath, 'utf-8');
-      const parsedDefinitions = parseDefinitionsLatex(definitionsContent);
-      console.log(`Parsed ${parsedDefinitions.length} conceptual definitions`);
-
-      console.log(`Updating conceptual definitions...`);
-      updateDefinitionsFromLatex(database, parsedDefinitions);
-    } else {
-      console.log(`\nNote: Definitions file not found: ${definitionsPath} (skipping conceptual definition updates)`);
-    }
-
-    // Update from queries.tex if file exists
-    if (fs.existsSync(queriesPath)) {
-      console.log(`\nReading query claims from: ${queriesPath}`);
-      const queriesContent = fs.readFileSync(queriesPath, 'utf-8');
-      const queryBatches = parseBatchOpsLatex(queriesContent, 'queries', database.languages);
-      console.log(`Parsed ${queryBatches.length} query batch claims`);
-      const queryClaims = parseOpsLatex(queriesContent);
-      console.log(`Parsed ${queryClaims.length} query claims`);
-
-      console.log(`Updating query batch claims...`);
-      updateBatchClaimsFromLatex(database, queryBatches, 'queries');
-
-      console.log(`Updating query operation support...`);
-      updateOpsFromLatex(database, queryClaims, 'queries');
-    } else {
-      console.log(`\nNote: Queries file not found: ${queriesPath} (skipping query updates)`);
-    }
-
-    // Update from transformations.tex if file exists
-    if (fs.existsSync(transformsPath)) {
-      console.log(`\nReading transformation claims from: ${transformsPath}`);
-      const transformsContent = fs.readFileSync(transformsPath, 'utf-8');
-      const transformBatches = parseBatchOpsLatex(transformsContent, 'transformations', database.languages);
-      console.log(`Parsed ${transformBatches.length} transformation batch claims`);
-      const transformClaims = parseOpsLatex(transformsContent);
-      console.log(`Parsed ${transformClaims.length} transformation claims`);
-
-      console.log(`Updating transformation batch claims...`);
-      updateBatchClaimsFromLatex(database, transformBatches, 'transformations');
-
-      console.log(`Updating transformation operation support...`);
-      updateOpsFromLatex(database, transformClaims, 'transformations');
-    } else {
-      console.log(`\nNote: Transformations file not found: ${transformsPath} (skipping transformation updates)`);
-    }
-
-    // Write updated database
-    console.log(`\nWriting database to: ${DATABASE_PATH}`);
-    saveDatabase(database);
-    
-    console.log('\n=== Running refresh-derived.ts to propagate changes ===\n');
-    
-    // Import and run refresh-derived logic
-    const { execSync } = await import('child_process');
-    try {
-      execSync('npx tsx scripts/refresh-derived.ts', { 
-        cwd: path.join(__dirname, '..'),
-        stdio: 'inherit' 
-      });
-    } catch (e) {
-      console.error('Warning: Failed to run refresh-derived.ts');
-    }
-    
-    console.log('\n=== Done ===');
+  if (args.includes('--normalize-refs')) {
+    normalizeRefs();
+    return;
   }
+  console.log(`Usage:
+  npx tsx scripts/latex-bijection.ts --to-latex
+  npx tsx scripts/latex-bijection.ts --to-json
+  npx tsx scripts/latex-bijection.ts --normalize-refs`);
 }
 
-main().catch(err => {
-  console.error('Error:', err);
+main().catch((error) => {
+  console.error(error);
   process.exit(1);
 });

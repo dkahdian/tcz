@@ -16,6 +16,9 @@ import {
   phraseForStatus,
   formatContradictingPremise,
   formatInlineAssumption,
+  languageRefForId,
+  negativeCompilationRef,
+  positiveCompilationRef,
   collectAssumptionsUnion,
   describePath,
   buildNoPolyQuasiDescription,
@@ -328,7 +331,7 @@ export function tryDowngrade(
     // witnessIds is the path that would exist if the tested edge had `triedStatus`
     // The contradiction is that the path endpoints have an incompatible status
     if (witnessIds.length < 2) {
-      return `If ${idToName(srcId)} compiled to ${idToName(tgtId)} ${phraseForStatus(triedStatus)}, a contradiction arises${formatInlineAssumption(mergedAssumption)}.`;
+      return `If ${languageRefForId(srcId)} compiled to ${languageRefForId(tgtId)} ${phraseForStatus(triedStatus)}, a contradiction arises${formatInlineAssumption(mergedAssumption)}.`;
     }
 
     const pathStart = witnessIds[0];
@@ -352,8 +355,7 @@ export function tryDowngrade(
       const toIdx = languageIds.indexOf(toId);
       const edgeRelation = adjacencyMatrix.matrix[fromIdx]?.[toIdx];
       const edgeStatus = edgeRelation?.status ?? 'unknown';
-      const edgeAssumption = edgeRelation?.assumption;
-      premises.push(`\\edgeref{${fromId}}{${toId}} ${phraseForStatus(edgeStatus)}${formatInlineAssumption(edgeAssumption)}`);
+      premises.push(positiveCompilationRef(fromId, toId, edgeStatus));
     }
 
     // State the contradicting fact as a premise with its own inline assumption
@@ -361,9 +363,12 @@ export function tryDowngrade(
 
     const premisesPart = premises.join('. ') + '. ';
     const triedPhrase = phraseForStatus(triedStatus);
-    const impliedPhrase = triedStatus === 'poly' ? 'in polynomial time' : 'in at most quasipolynomial time';
+    const impliedPhrase = triedStatus === 'poly' ? 'in polynomial time' : 'in quasipolynomial time';
+    const conclusion = triedStatus === 'poly'
+      ? negativeCompilationRef(srcId, tgtId, 'poly')
+      : negativeCompilationRef(srcId, tgtId, 'quasi');
 
-    return `${premisesPart}If ${idToName(srcId)} compiled to ${idToName(tgtId)} ${triedPhrase}, then ${idToName(pathStart)} would compile to ${idToName(pathEnd)} ${impliedPhrase}, contradicting the above. Therefore ${idToName(srcId)} cannot compile to ${idToName(tgtId)} ${triedPhrase}${formatInlineAssumption(mergedAssumption)}.`;
+    return `${premisesPart}If ${languageRefForId(srcId)} compiled to ${languageRefForId(tgtId)} ${triedPhrase}, then ${languageRefForId(pathStart)} would compile to ${languageRefForId(pathEnd)} ${impliedPhrase}, contradicting the above. Therefore ${conclusion}.`;
   };
 
   /**

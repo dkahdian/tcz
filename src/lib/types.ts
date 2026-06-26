@@ -151,6 +151,7 @@ export type KCBatchSelector =
       source: KCBatchLanguageRef;
       target: KCBatchLanguageRef;
       level: 'poly' | 'quasi';
+      polarity?: 'positive' | 'negative';
     };
 
 export interface KCBatchClaim {
@@ -213,18 +214,12 @@ export interface KCLanguage {
   id: string;
   /** Display name (may contain LaTeX like OBDD$_<$) */
   name: string;
-  /** Whether this node is a plain language, a fixed-parameter family, or a union language */
-  classification?: LanguageClassification;
   fullName: string;
   /** Formal definition of the language (supports LaTeX) */
   definition: string;
-  /** reference IDs for the definition */
-  definitionRefs: string[];
   properties: KCLanguageProperties;
   /** names of languages that are strict subsets of this one */
   subsets?: string[];
-  /** list of external references for this language */
-  references: KCReference[];
   /** visual overrides applied by filters */
   visual?: VisualOverrides;
 }
@@ -412,27 +407,15 @@ export interface TransformValidationResult {
 
 // Filter system types
 export type ViewMode = 'graph' | 'succinctness' | 'queries' | 'transforms';
-export type LanguageClassification = 'plain' | 'family' | 'union';
-export type LanguageScopeMode = 'families' | 'unions' | 'both';
 export type FilterUIGroup = 'Language Scope' | 'Visibility' | 'Display' | 'Advanced';
 export type FilterKind =
-  | 'language-visibility'
   | 'edge-visibility'
   | 'matrix-display'
   | 'operation-visualization'
   | 'internal';
-export type FilterControlType = 'checkbox' | 'toggle' | 'radio' | 'dropdown' | 'language-picker';
+export type FilterControlType = 'checkbox' | 'toggle' | 'radio' | 'dropdown';
 
-export interface LanguageVisibilityParam {
-  mode: 'all' | 'only' | 'except';
-  ids: string[];
-  hiddenQueryIds?: string[];
-  hiddenTransformationIds?: string[];
-  graphQueryIds?: string[];
-  graphTransformationIds?: string[];
-}
-
-export type FilterParamValue = boolean | string | number | LanguageVisibilityParam;
+export type FilterParamValue = boolean | string | number;
 
 /**
  * Selected operation for sidebar display

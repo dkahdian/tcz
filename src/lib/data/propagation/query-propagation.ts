@@ -11,6 +11,8 @@ import {
   collectAssumptionsUnion,
   formatCitations,
   formatInlineAssumption,
+  languageRefForId,
+  positiveCompilationRef,
   buildNoPolyQuasiDescription,
   contradictionError,
   nextDerivationOrder
@@ -104,6 +106,38 @@ function implicationVerb(lemma: OperationLemma): string {
   return lemma.antecedent.length === 1 ? 'implies' : 'together imply';
 }
 
+function operationMacro(opCode: string): string {
+  const macros: Record<string, string> = {
+    CO: '\\CO',
+    VA: '\\VA',
+    CE: '\\CE',
+    IM: '\\IM',
+    EQ: '\\EQ',
+    SE: '\\SE',
+    CT: '\\CT',
+    ME: '\\ME',
+    CD: '\\CD',
+    FO: '\\FO',
+    SFO: '\\SFO',
+    NOT_C: '\\NOTC',
+    AND_C: '\\ANDC',
+    AND_BC: '\\ANDBC',
+    OR_C: '\\ORC',
+    OR_BC: '\\ORBC'
+  };
+  return macros[opCode] ?? `\\${opCode.replace(/[^A-Za-z]/g, '')}`;
+}
+
+function operationSupportPhrase(languageId: string, opCode: string, level: 'poly' | 'quasi'): string {
+  const command = level === 'poly' ? 'supportspoly' : 'supportsquasi';
+  return `\\${command}{${languageRefForId(languageId)}}{${operationMacro(opCode)}}`;
+}
+
+function operationUnsupportedPhrase(languageId: string, opCode: string, level: 'poly' | 'quasi'): string {
+  const command = level === 'poly' ? 'nosupportspoly' : 'nosupportsquasi';
+  return `\\${command}{${languageRefForId(languageId)}}{${operationMacro(opCode)}}`;
+}
+
 /** Statuses that assert "no polynomial" */
 const NO_POLY_QUERY_STATUSES = new Set<string>(['no-poly-unknown-quasi', 'no-poly-quasi', 'no-quasi']);
 /** Statuses that assert "no quasipolynomial" (only no-quasi; no-poly-quasi means quasi EXISTS) */
@@ -193,7 +227,7 @@ export function propagateQueriesViaSuccinctness(
               const l2Name = idToName(l2Id);
               const l2Refs = l2.properties?.queries?.[queryCode]?.refs ?? [];
               const refs = uniqueRefs(pathRefs, l2Refs);
-              const description = `\\edgeref{${l1Id}}{${l2Id}} in polynomial time${formatInlineAssumption(pathAssumption)}, and \\opref{${l2Id}}{${queryCode}} in polynomial time${formatInlineAssumption(queryAssumption)}. Therefore ${idToName(l1Id)} supports ${opLabel(queryCode)} in polynomial time${formatInlineAssumption(assumption)}.`;
+              const description = `${positiveCompilationRef(l1Id, l2Id, 'poly')}, and ${operationSupportPhrase(l2Id, queryCode, 'poly')}. Therefore ${operationSupportPhrase(l1Id, queryCode, 'poly')}.`;
 
               if (DEBUG_PROPAGATION) {
                 const reason = canImproveAssumption ? 'ASSUMPTION-IMPROVE' : 'UPGRADE';
@@ -250,7 +284,7 @@ export function propagateQueriesViaSuccinctness(
             const newComplexity = l1Complexity === 'no-poly-unknown-quasi' ? 'no-poly-quasi' : 'unknown-poly-quasi';
             const l2Refs = l2.properties?.queries?.[queryCode]?.refs ?? [];
             const refs = uniqueRefs(pathRefs, l2Refs);
-            const description = `\\edgeref{${l1Id}}{${l2Id}} in quasipolynomial time${formatInlineAssumption(pathAssumption)}, and \\opref{${l2Id}}{${queryCode}} in quasipolynomial time${formatInlineAssumption(queryAssumption)}. Therefore ${idToName(l1Id)} supports ${opLabel(queryCode)} in at most quasipolynomial time${formatInlineAssumption(assumption)}.`;
+            const description = `${positiveCompilationRef(l1Id, l2Id, 'quasi')}, and ${operationSupportPhrase(l2Id, queryCode, 'quasi')}. Therefore ${operationSupportPhrase(l1Id, queryCode, 'quasi')}.`;
 
             const canAddUnconditionalQuasiNote =
               queryGuaranteesPoly(l1Complexity) &&
@@ -262,7 +296,7 @@ export function propagateQueriesViaSuccinctness(
             if (!needsUpgrade && !canImproveAssumption && !canAddUnconditionalQuasiNote) continue;
 
             if (canAddUnconditionalQuasiNote && l1Support) {
-              const note = `\n\nAlso, ${idToName(l1Id)} supports ${opLabel(queryCode)} in quasipolynomial time unconditionally. ${description}`;
+              const note = `\n\nAlso, ${operationSupportPhrase(l1Id, queryCode, 'quasi')} unconditionally. ${description}`;
               setQuerySupport(l1, queryCode, {
                 ...l1Support,
                 refs: uniqueRefs(l1Support.refs, refs),
@@ -359,13 +393,13 @@ export function propagateQueriesViaLemmas(
 
       if (shouldUpgrade || canImproveAssumption) {
         const langName = idToName(language.id);
-        const premiseLevel = polyOnly ? 'in polynomial time' : 'in quasipolynomial time';
+        const premiseLevel: 'poly' | 'quasi' = polyOnly ? 'poly' : 'quasi';
         const antecedentPremises = lemma.antecedent
-          .map((op, idx) => `\\opref{${language.id}}{${op}} ${premiseLevel}${formatInlineAssumption(antecedentAssumptions[idx])}`)
+          .map((op) => operationSupportPhrase(language.id, op, premiseLevel))
           .join(' and ');
         const antecedentRefs = lemma.antecedent.map((op) => getOperationSupport(language, op)?.refs ?? []);
         const refs = uniqueRefs(lemma.refs, ...antecedentRefs);
-        const description = `Here, ${antecedentPremises}. Since ${antecedentText(lemma)} ${implicationVerb(lemma)} ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}, \\langref{${language.id}} supports ${opLabel(lemma.consequent)}.`;
+        const description = `Here, ${antecedentPremises}. Since ${antecedentText(lemma)} ${implicationVerb(lemma)} ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}, ${operationSupportPhrase(language.id, lemma.consequent, premiseLevel)}.`;
 
         if (DEBUG_PROPAGATION) {
           const reason = canImproveAssumption ? 'ASSUMPTION-IMPROVE' : 'LEMMA';
@@ -465,7 +499,7 @@ export function propagateQueryDowngrades(
           const l2Name = idToName(l2.id);
           const l1Refs = l1.properties?.queries?.[queryCode]?.refs ?? [];
           const refs = uniqueRefs(l1Refs, pathRefs);
-          const description = `\\nopref{${l1.id}}{${queryCode}}${formatInlineAssumption(queryAssumption)}, and \\edgeref{${l1.id}}{${l2.id}} in polynomial time${formatInlineAssumption(pathAssumption)}. If ${idToName(l2.id)} supported ${opLabel(queryCode)} in polynomial time, then ${idToName(l1.id)} could too by compiling first. Therefore ${opLabel(queryCode)} is unsupported by ${idToName(l2.id)}${formatInlineAssumption(assumption)}.`;
+          const description = `${operationUnsupportedPhrase(l1.id, queryCode, 'poly')}, and ${positiveCompilationRef(l1.id, l2.id, 'poly')}. If ${languageRefForId(l2.id)} supported ${opLabel(queryCode)} in polynomial time, then ${languageRefForId(l1.id)} could too by compiling first. Therefore ${operationUnsupportedPhrase(l2.id, queryCode, 'poly')}.`;
 
           if (DEBUG_PROPAGATION) {
             console.log(`[Query Propagation] DOWNGRADE ${l2Name}.${queryCode}: ${l2Complexity} -> no-poly-unknown-quasi`);
@@ -511,7 +545,7 @@ export function propagateQueryDowngrades(
           const l2Name = idToName(l2.id);
           const l1Refs = l1.properties?.queries?.[queryCode]?.refs ?? [];
           const refs = uniqueRefs(l1Refs, pathRefs);
-          const description = `\\nopref{${l1.id}}{${queryCode}} in quasipolynomial time${formatInlineAssumption(queryAssumption)}, and \\edgeref{${l1.id}}{${l2.id}} in quasipolynomial time${formatInlineAssumption(pathAssumption)}. If ${idToName(l2.id)} supported ${opLabel(queryCode)} in quasipolynomial time, then ${idToName(l1.id)} could too by compiling first. Therefore ${opLabel(queryCode)} is unsupported by ${idToName(l2.id)} in quasipolynomial time${formatInlineAssumption(assumption)}.`;
+          const description = `${operationUnsupportedPhrase(l1.id, queryCode, 'quasi')}, and ${positiveCompilationRef(l1.id, l2.id, 'quasi')}. If ${languageRefForId(l2.id)} supported ${opLabel(queryCode)} in quasipolynomial time, then ${languageRefForId(l1.id)} could too by compiling first. Therefore ${operationUnsupportedPhrase(l2.id, queryCode, 'quasi')}.`;
 
           if (DEBUG_PROPAGATION) {
             console.log(`[Query Propagation] DOWNGRADE ${l2Name}.${queryCode}: ${l2Complexity} -> no-quasi`);
@@ -609,9 +643,9 @@ export function propagateDowngradesViaLemmaContrapositives(
 
           const refs = uniqueRefs(lemma.refs, consequentRefs, ...otherRefs);
           const othersDesc = otherAntecedents.length > 0
-            ? ` Also, ${joinWithAnd(otherAntecedents.map((op, idx) => `\\opref{${language.id}}{${op}} in polynomial time${formatInlineAssumption(otherAssumptions[idx])}`))}.`
+            ? ` Also, ${joinWithAnd(otherAntecedents.map((op) => operationSupportPhrase(language.id, op, 'poly')))}.`
             : '';
-          const description = `${antecedentText(lemma)} ${implicationVerb(lemma)} ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}. However, \\nopref{${language.id}}{${lemma.consequent}}${formatInlineAssumption(consequentSupport?.assumption)}.${othersDesc} Therefore ${opLabel(targetOp)} is unsupported by ${idToName(language.id)}${formatInlineAssumption(assumption)}.`;
+          const description = `${antecedentText(lemma)} ${implicationVerb(lemma)} ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}. However, ${operationUnsupportedPhrase(language.id, lemma.consequent, 'poly')}.${othersDesc} Therefore ${operationUnsupportedPhrase(language.id, targetOp, 'poly')}.`;
 
           if (DEBUG_PROPAGATION) {
             const reason = queryAssertsNoPoly(targetComplexity) ? 'ASSUMPTION-IMPROVE' : 'CONTRAPOSITIVE';
@@ -691,9 +725,9 @@ export function propagateDowngradesViaLemmaContrapositives(
 
           const refs = uniqueRefs(lemma.refs, consequentRefs, ...otherRefs);
           const othersDesc = otherAntecedents.length > 0
-            ? ` Also, ${joinWithAnd(otherAntecedents.map((op, idx) => `\\opref{${language.id}}{${op}} in quasipolynomial time${formatInlineAssumption(otherAssumptions[idx])}`))}.`
+            ? ` Also, ${joinWithAnd(otherAntecedents.map((op) => operationSupportPhrase(language.id, op, 'quasi')))}.`
             : '';
-          const description = `${antecedentText(lemma)} ${implicationVerb(lemma)} ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}. However, \\nopref{${language.id}}{${lemma.consequent}} in quasipolynomial time${formatInlineAssumption(consequentSupport?.assumption)}.${othersDesc} Therefore ${opLabel(targetOp)} is unsupported by ${idToName(language.id)} in quasipolynomial time${formatInlineAssumption(assumption)}.`;
+          const description = `${antecedentText(lemma)} ${implicationVerb(lemma)} ${opLabel(lemma.consequent)}${formatCitations(lemma.refs)}. However, ${operationUnsupportedPhrase(language.id, lemma.consequent, 'quasi')}.${othersDesc} Therefore ${operationUnsupportedPhrase(language.id, targetOp, 'quasi')}.`;
 
           if (DEBUG_PROPAGATION) {
             const reason = queryAssertsNoQuasi(targetComplexity) ? 'ASSUMPTION-IMPROVE' : 'CONTRAPOSITIVE';
@@ -839,10 +873,10 @@ function deriveNoPolyEdge(
   const bRefs = bSupport?.refs ?? [];
   const assumption = mergeAssumptions(aSupport?.assumption, bSupport?.assumption);
   const description =
-    `\\opref{${langA.id}}{${queryCode}} in polynomial time${formatInlineAssumption(aSupport?.assumption)}, but ` +
-    `\\nopref{${langB.id}}{${queryCode}}${formatInlineAssumption(bSupport?.assumption)}. If ${idToName(langB.id)} could compile to ${idToName(langA.id)} in ` +
-    `polynomial time, ${idToName(langB.id)} could support ${opLabel(queryCode)} by first compiling to ${idToName(langA.id)}. ` +
-    `Therefore ${idToName(langB.id)} cannot compile to ${idToName(langA.id)} in polynomial time${formatInlineAssumption(assumption)}.`;
+    `${operationSupportPhrase(langA.id, queryCode, 'poly')}, but ` +
+    `${operationUnsupportedPhrase(langB.id, queryCode, 'poly')}. If ${languageRefForId(langB.id)} could compile to ${languageRefForId(langA.id)} in ` +
+    `polynomial time, ${languageRefForId(langB.id)} could support ${opLabel(queryCode)} by first compiling to ${languageRefForId(langA.id)}. ` +
+    `Therefore ${languageRefForId(langB.id)} cannot compile to ${languageRefForId(langA.id)} in polynomial time${formatInlineAssumption(assumption)}.`;
   const refs = uniqueRefs(aRefs, bRefs);
 
   if (currentStatus === 'unknown-poly-quasi' && currentRelation) {
@@ -945,10 +979,10 @@ function deriveNoQuasiEdge(
   const bRefs = bSupport?.refs ?? [];
   const assumption = mergeAssumptions(aSupport?.assumption, bSupport?.assumption);
   const description =
-    `\\opref{${langA.id}}{${queryCode}} in quasipolynomial time${formatInlineAssumption(aSupport?.assumption)}, but ` +
-    `\\nopref{${langB.id}}{${queryCode}} in quasipolynomial time${formatInlineAssumption(bSupport?.assumption)}. If ${idToName(langB.id)} could compile to ${idToName(langA.id)} in ` +
-    `quasipolynomial time, ${idToName(langB.id)} could support ${opLabel(queryCode)} by first compiling to ${idToName(langA.id)}. ` +
-    `Therefore ${idToName(langB.id)} cannot compile to ${idToName(langA.id)} in quasipolynomial time${formatInlineAssumption(assumption)}.`;
+    `${operationSupportPhrase(langA.id, queryCode, 'quasi')}, but ` +
+    `${operationUnsupportedPhrase(langB.id, queryCode, 'quasi')}. If ${languageRefForId(langB.id)} could compile to ${languageRefForId(langA.id)} in ` +
+    `quasipolynomial time, ${languageRefForId(langB.id)} could support ${opLabel(queryCode)} by first compiling to ${languageRefForId(langA.id)}. ` +
+    `Therefore ${languageRefForId(langB.id)} cannot compile to ${languageRefForId(langA.id)} in quasipolynomial time${formatInlineAssumption(assumption)}.`;
   const refs = uniqueRefs(aRefs, bRefs);
 
   // Transition: null / unknown-both / no-poly-unknown-quasi → no-quasi
