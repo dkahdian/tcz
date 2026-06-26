@@ -368,6 +368,84 @@
     return operation ? `${operation.code} (${operation.label})` : operationCode;
   }
 
+  function operationCatalogEntry(operationType: SandboxOperationType, operationCode: string) {
+    const catalog = operationType === 'query' ? QUERIES : TRANSFORMATIONS;
+    const entry = catalog[operationCode] ?? Object.values(catalog).find((candidate) => candidate.code === operationCode);
+    const safeKey = Object.entries(catalog).find(([, candidate]) => candidate.code === operationCode)?.[0] ?? operationCode;
+    return entry ? { entry, safeKey } : null;
+  }
+
+  function refreshSelectedOperationCell(
+    graphData: GraphData,
+    operationType: SandboxOperationType,
+    languageId: string,
+    operationCode: string
+  ): void {
+    if (
+      selectedOperationCell?.operationType !== operationType ||
+      selectedOperationCell.language.id !== languageId
+    ) {
+      return;
+    }
+    const catalogEntry = operationCatalogEntry(operationType, operationCode);
+    if (!catalogEntry) return;
+    if (
+      selectedOperationCell.operationCode !== operationCode &&
+      selectedOperationCell.operationCode !== catalogEntry.entry.code &&
+      selectedOperationCell.operationCode !== catalogEntry.safeKey
+    ) {
+      return;
+    }
+    const language = graphData.languages.find((item) => item.id === languageId);
+    if (!language) return;
+    const supportMap = operationType === 'query'
+      ? language.properties?.queries
+      : language.properties?.transformations;
+    const support = supportMap?.[catalogEntry.safeKey] ?? supportMap?.[catalogEntry.entry.code];
+    selectedOperationCell = {
+      ...selectedOperationCell,
+      language,
+      operationCode: catalogEntry.entry.code,
+      operationLabel: catalogEntry.entry.label,
+      support: support
+        ? {
+            code: catalogEntry.entry.code,
+            label: catalogEntry.entry.label,
+            ...support
+          }
+        : {
+            code: catalogEntry.entry.code,
+            label: catalogEntry.entry.label,
+            complexity: 'unknown-to-us',
+            refs: []
+          }
+    };
+  }
+
+  function refreshSelectedEdge(graphData: GraphData, sourceId: string, targetId: string): void {
+    if (selectedEdge?.source !== sourceId || selectedEdge.target !== targetId) return;
+    const sourceIdx = graphData.adjacencyMatrix.indexByLanguage[sourceId];
+    const targetIdx = graphData.adjacencyMatrix.indexByLanguage[targetId];
+    if (sourceIdx === undefined || targetIdx === undefined) return;
+    const sourceLang = graphData.languages.find((language) => language.id === sourceId);
+    const targetLang = graphData.languages.find((language) => language.id === targetId);
+    if (!sourceLang || !targetLang) return;
+
+    const forward = graphData.adjacencyMatrix.matrix[sourceIdx]?.[targetIdx] ?? null;
+    const backward = graphData.adjacencyMatrix.matrix[targetIdx]?.[sourceIdx] ?? null;
+    selectedEdge = {
+      ...selectedEdge,
+      sourceName: sourceLang.name,
+      targetName: targetLang.name,
+      forward,
+      backward,
+      refs: [
+        ...(forward?.refs ?? []),
+        ...(backward?.refs ?? [])
+      ]
+    };
+  }
+
   function summarizeSandboxEdit(edit: SandboxEdit): string {
     if (edit.kind === 'language:new') {
       return `New language: ${edit.name}`;
@@ -509,13 +587,28 @@
   }
 
   function handleSandboxEdgeStatusChange(sourceId: string, targetId: string, status: string | null): boolean {
-    const applied = handleSandboxApply({
+    const existing = sandboxEdits.find(
+      (edit): edit is Extract<SandboxEdit, { kind: 'edge' }> =>
+        edit.kind === 'edge' && edit.sourceId === sourceId && edit.targetId === targetId
+    );
+    const edit: Extract<SandboxEdit, { kind: 'edge' }> = {
       kind: 'edge',
       sourceId,
       targetId,
-      status
-    });
-    if (applied) sandboxSelection = null;
+      status,
+      ...(existing?.assumption !== undefined ? { assumption: existing.assumption } : {}),
+      ...(existing?.description !== undefined ? { description: existing.description } : {}),
+      ...(existing?.noPolyDescription !== undefined ? { noPolyDescription: existing.noPolyDescription } : {}),
+      ...(existing?.quasiDescription !== undefined ? { quasiDescription: existing.quasiDescription } : {}),
+      ...(existing?.refs !== undefined ? { refs: existing.refs } : {})
+    };
+    const nextEdits = nextSandboxEditsFor(edit);
+    const applied = commitSandboxEdits(nextEdits);
+    if (applied) {
+      const evaluation = nextEdits.length > 0 ? applySandboxEdits(initialGraphData, nextEdits) : null;
+      refreshSelectedEdge(evaluation?.ok ? evaluation.graphData : initialGraphData, sourceId, targetId);
+      sandboxSelection = null;
+    }
     return applied;
   }
 
@@ -562,17 +655,33 @@
     operationType: SandboxOperationType,
     languageId: string,
     operationCode: string,
-    complexity: string | null,
-    assumption?: string
+    complexity: string | null
   ): boolean {
-    const applied = handleSandboxApply({
+    const existing = sandboxEdits.find(
+      (edit): edit is Extract<SandboxEdit, { kind: 'operation' }> =>
+        edit.kind === 'operation' &&
+        edit.operationType === operationType &&
+        edit.languageId === languageId &&
+        edit.operationCode === operationCode
+    );
+    const edit: Extract<SandboxEdit, { kind: 'operation' }> = {
       kind: 'operation',
       operationType,
       languageId,
       operationCode,
       complexity,
-      assumption
-    });
+      ...(existing?.assumption !== undefined ? { assumption: existing.assumption } : {}),
+      ...(existing?.description !== undefined ? { description: existing.description } : {}),
+      ...(existing?.refs !== undefined ? { refs: existing.refs } : {})
+    };
+    const nextEdits = nextSandboxEditsFor(edit);
+    const applied = commitSandboxEdits(nextEdits);
+    if (applied) {
+      const evaluation = applySandboxEdits(initialGraphData, nextEdits);
+      if (evaluation.ok) {
+        refreshSelectedOperationCell(evaluation.graphData, operationType, languageId, operationCode);
+      }
+    }
     if (applied) sandboxSelection = null;
     return applied;
   }

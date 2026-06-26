@@ -8,6 +8,7 @@ import { DATABASE_PATH, loadDatabase, saveDatabase, type DatabaseSchema } from '
 import { cleanBibtexText, extractBibtexField } from '../src/lib/utils/bibtex.js';
 import { generateLanguageId } from '../src/lib/utils/language-id.js';
 import { guaranteesPoly, guaranteesQuasi } from '../src/lib/data/validation/semantic.js';
+import { collectAssumptions } from '../src/lib/data/assumptions.js';
 import type {
   DirectedSuccinctnessRelation,
   KCBatchClaim,
@@ -1058,6 +1059,7 @@ async function writeJson(): Promise<void> {
   );
 
   stripCanonicalOnlyFields(database);
+  database.assumptions = collectAssumptions(database, { includeCanonical: false });
   validateRelationMacroAssertions(database);
   saveDatabase(database);
 

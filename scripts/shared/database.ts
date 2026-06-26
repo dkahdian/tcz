@@ -21,6 +21,7 @@ export interface DatabaseSchema {
   definitions?: KCDefinition[];
   adjacencyMatrix: KCAdjacencyMatrix;
   references: KCReference[];
+  assumptions?: string[];
   defaultNodePositionsByLanguageName?: NodePositionsByLanguageName;
   metadata?: Record<string, unknown>;
   operations: Record<string, unknown>;

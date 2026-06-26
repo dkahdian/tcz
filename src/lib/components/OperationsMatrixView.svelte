@@ -20,8 +20,6 @@
     assumption?: string;
   };
 
-  const SANDBOX_CONDITIONAL_ASSUMPTION = 'your condition under test';
-
   let {
     graphData,
     operationType,
@@ -59,8 +57,7 @@
       operationType: 'query' | 'transformation',
       languageId: string,
       operationCode: string,
-      complexity: string | null,
-      assumption?: string
+      complexity: string | null
     ) => boolean;
   } = $props();
 
@@ -259,19 +256,17 @@
     return support?.complexity ?? '';
   }
 
-  function validSandboxOptions(baselineSupport: KCOpEntry | null): SandboxOperationOption[] {
+  function validSandboxOptions(
+    baselineSupport: KCOpEntry | null,
+    currentSupport: KCOpEntry | null
+  ): SandboxOperationOption[] {
     const baselineComplexity = baselineSupport?.complexity ?? '';
+    const currentAssumption = currentSupport?.assumption?.trim() || undefined;
     if (UNKNOWN_OPERATION_COMPLEXITIES.has(baselineComplexity)) {
       return [
         { id: 'blank', complexity: null },
-        { id: 'poly', complexity: 'poly' },
-        { id: 'poly-conditional', complexity: 'poly', assumption: SANDBOX_CONDITIONAL_ASSUMPTION },
-        {
-          id: 'no-poly-conditional',
-          complexity: 'no-poly-unknown-quasi',
-          assumption: SANDBOX_CONDITIONAL_ASSUMPTION
-        },
-        { id: 'no-poly', complexity: 'no-poly-unknown-quasi' }
+        { id: 'poly', complexity: 'poly', assumption: currentAssumption },
+        { id: 'no-poly', complexity: 'no-poly-unknown-quasi', assumption: currentAssumption }
       ];
     }
 
@@ -279,11 +274,10 @@
       return [
         { id: 'blank', complexity: null },
         {
-          id: `${baselineComplexity}-conditional`,
+          id: baselineComplexity,
           complexity: baselineComplexity,
-          assumption: baselineSupport.assumption
+          assumption: currentAssumption ?? baselineSupport.assumption
         },
-        { id: `${baselineComplexity}-unconditional`, complexity: baselineComplexity }
       ];
     }
 
@@ -297,6 +291,10 @@
           assumption: option.assumption
         })
       : null;
+  }
+
+  function visibleSandboxOptionCount(options: SandboxOperationOption[]): number {
+    return options.filter((option) => option.complexity).length;
   }
 
   function isCurrentSandboxOption(option: SandboxOperationOption, support: KCOpEntry | null): boolean {
@@ -321,8 +319,7 @@
       type,
       language.id,
       opCode,
-      option.complexity,
-      option.assumption
+      option.complexity
     );
   }
 
@@ -413,9 +410,37 @@
     if (matrixScrollEl) resizeObserver.observe(matrixScrollEl);
     document.fonts?.ready.then(() => scheduleCellSizeUpdate()).catch(() => {});
 
+    const closeSandboxPopover = () => {
+      if (!sandboxSelectedOperationCellId) return;
+      const [type, languageId, operationCode] = sandboxSelectedOperationCellId.split(':');
+      if (
+        (type === 'query' || type === 'transformation') &&
+        languageId &&
+        operationCode
+      ) {
+        onSandboxOperationEdit?.(type, languageId, operationCode);
+      }
+    };
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target;
+      if (!sandboxSelectedOperationCellId || !(target instanceof Element)) return;
+      if (target.closest('.is-sandbox-editor-cell')) return;
+      closeSandboxPopover();
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') closeSandboxPopover();
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown, true);
+    document.addEventListener('keydown', handleKeyDown);
+
     return () => {
       resizeObserver.disconnect();
       if (measureRequest) cancelAnimationFrame(measureRequest);
+      document.removeEventListener('pointerdown', handlePointerDown, true);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   });
 </script>
@@ -491,8 +516,8 @@
                 </button>
                 {#if isSandboxEditing(language, opCode)}
                   {@const baselineSupport = getOperationSupport(language, opCode, sandboxBaselineGraphData ?? graphData)}
-                  {@const options = validSandboxOptions(baselineSupport)}
-                  {#if options.length > 0}
+                  {@const options = validSandboxOptions(baselineSupport, support)}
+                  {#if visibleSandboxOptionCount(options) > 1}
                     <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${language.name} ${opCode}`}>
                       {#each options as option}
                         {@const displayOption = optionDisplay(option)}
@@ -522,8 +547,8 @@
                     >&nbsp;</button>
                     {#if isSandboxEditing(language, opCode)}
                       {@const baselineSupport = getOperationSupport(language, opCode, sandboxBaselineGraphData ?? graphData)}
-                      {@const options = validSandboxOptions(baselineSupport)}
-                      {#if options.length > 0}
+                      {@const options = validSandboxOptions(baselineSupport, support)}
+                      {#if visibleSandboxOptionCount(options) > 1}
                         <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${language.name} ${opCode}`}>
                           {#each options as option}
                             {@const displayOption = optionDisplay(option)}

@@ -387,6 +387,8 @@ export interface GraphData {
   complexities: Record<string, Complexity>;
   /** global registry of references used across the dataset */
   references: KCReference[];
+  /** Canonical assumption strings used by relation and operation claims. */
+  assumptions?: string[];
   /** optional default node positions, keyed by language name */
   defaultNodePositionsByLanguageName?: NodePositionsByLanguageName;
   /** optional metadata copied from database.json */

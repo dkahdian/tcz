@@ -152,7 +152,7 @@ Language visibility follows the existing classification behavior unless explicit
 
 ## Assumptions
 
-Assumptions should be selected from existing assumptions when possible, with a free-text option for new assumptions. Examples include assumptions already present in the database, such as `P \neq NP`.
+Assumptions should be selected from the canonical JSON `assumptions` list when possible. The list is expected to be small enough to show directly, with a free-text option for new assumptions. Examples include assumptions already present in the database, such as `P \neq NP`.
 
 Assumption text is optional. It is part of the claim metadata and participates in generated descriptions and review.
 

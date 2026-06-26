@@ -27173,5 +27173,10 @@
       "description": "CT and $\\land$BC imply SE: $\\Sigma_1 \\models \\Sigma_2$ iff $|\\text{models}(\\Sigma_1 \\land \\Sigma_2)| = |\\text{models}(\\Sigma_1)|$. Compute the conjunction via $\\land$BC, then count models of both the original formula and the conjunction via CT and compare.",
       "refs": []
     }
+  ],
+  "assumptions": [
+    "$P = \\mathrm{BPP}$",
+    "P \\neq NP",
+    "the polynomial hierarchy does not collapse"
   ]
 }

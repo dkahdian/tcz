@@ -467,10 +467,24 @@ function validateRelationMacros(data: GraphData, errors: string[]): void {
   }
 }
 
+function validateAssumptions(assumptions: string[] | undefined, errors: string[]): void {
+  if (assumptions === undefined) return;
+  if (!Array.isArray(assumptions)) {
+    errors.push('assumptions must be an array of strings');
+    return;
+  }
+  for (const [index, assumption] of assumptions.entries()) {
+    if (typeof assumption !== 'string' || !assumption.trim()) {
+      errors.push(`assumptions[${index}] must be a non-empty string`);
+    }
+  }
+}
+
 export function validateDatasetStructure(data: GraphData): TransformValidationResult {
   const errors: string[] = [];
   const knownLanguages = collectLanguageIdentifiers(data.languages, errors);
   validateAdjacencyMatrix(data.adjacencyMatrix, knownLanguages, errors);
+  validateAssumptions(data.assumptions, errors);
 
   const globalReferenceRegistry = collectReferenceRegistry(data.references);
   for (const language of data.languages) {

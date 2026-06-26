@@ -47,6 +47,7 @@
   
   let referencesSection: HTMLElement | null = $state(null);
   let draftEdgeKey = $state<string | null>(null);
+  let draftEdgeSnapshot = $state<string | null>(null);
   let draftEdgeStatus = $state('');
   let draftEdgeAssumption = $state('');
   let draftEdgeDescription = $state('');
@@ -66,8 +67,18 @@
 
   $effect(() => {
     const key = selectedEdge ? `${selectedEdge.source}->${selectedEdge.target}` : null;
-    if (key !== draftEdgeKey) {
+    const snapshot = originalEdge?.forward
+      ? JSON.stringify({
+          status: originalEdge.forward.status ?? '',
+          assumption: originalEdge.forward.assumption ?? '',
+          description: originalEdge.forward.description ?? '',
+          noPolyDescription: originalEdge.forward.noPolyDescription?.description ?? '',
+          quasiDescription: originalEdge.forward.quasiDescription?.description ?? ''
+        })
+      : null;
+    if (key !== draftEdgeKey || snapshot !== draftEdgeSnapshot) {
       draftEdgeKey = key;
+      draftEdgeSnapshot = snapshot;
       draftEdgeStatus = originalEdge?.forward?.status ?? '';
       draftEdgeAssumption = originalEdge?.forward?.assumption ?? '';
       draftEdgeDescription = originalEdge?.forward?.description ?? '';
@@ -256,16 +267,16 @@
   <div class="content-wrapper">
     <div class="scrollable-content">
       <div class="edge-details">
-        <h3 class="text-xl font-bold text-gray-900 mb-4">
-          <MathText text={selectedEdge.sourceName} className="inline" />
-          <span> &harr; </span>
-          <MathText text={selectedEdge.targetName} className="inline" />
-        </h3>
-        {#if sandboxMode && sandboxEdited}
-          <div class="sandbox-editor-actions">
+        <div class="edge-title-row">
+          <h3 class="edge-title">
+            <MathText text={selectedEdge.sourceName} className="inline" />
+            <span> &harr; </span>
+            <MathText text={selectedEdge.targetName} className="inline" />
+          </h3>
+          {#if sandboxMode && sandboxEdited}
             <button type="button" class="sandbox-cell-reset" onclick={resetSelectedEdgeEdit}>Reset</button>
-          </div>
-        {/if}
+          {/if}
+        </div>
         
         <div class="space-y-4">
 {#snippet directionBlock(fromName: string, toName: string, relation: DirectedSuccinctnessRelation, editable = false)}
@@ -625,6 +636,23 @@
     cursor: pointer;
   }
 
+  .edge-title-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .edge-title {
+    margin: 0;
+    min-width: 0;
+    color: #111827;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
   .status-option:hover {
     border-color: #2563eb;
     box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
@@ -695,13 +723,8 @@
     padding-top: 0.75rem;
   }
 
-  .sandbox-editor-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin: -0.25rem 0 0.55rem;
-  }
-
   .sandbox-cell-reset {
+    flex: 0 0 auto;
     border: 1px solid #cbd5e1;
     border-radius: 0.35rem;
     background: #fff;

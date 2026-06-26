@@ -444,7 +444,32 @@
     updateCellSize();
     const resizeObserver = new ResizeObserver(() => updateCellSize());
     if (matrixScrollEl) resizeObserver.observe(matrixScrollEl);
-    return () => resizeObserver.disconnect();
+
+    const closeSandboxPopover = () => {
+      if (!sandboxSelectedEdgeId) return;
+      const [sourceId, targetId] = sandboxSelectedEdgeId.split('->');
+      if (sourceId && targetId) onSandboxEdgeEdit?.(sourceId, targetId);
+    };
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target;
+      if (!sandboxSelectedEdgeId || !(target instanceof Element)) return;
+      if (target.closest('.is-sandbox-editor-cell')) return;
+      closeSandboxPopover();
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') closeSandboxPopover();
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown, true);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      resizeObserver.disconnect();
+      document.removeEventListener('pointerdown', handlePointerDown, true);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   });
 </script>
 
@@ -540,6 +565,7 @@
                         <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${colLanguage.language.name} to ${rowLanguage.language.name}`}>
                           {#each options as option}
                             {@const isOriginalOption = isOriginalSandboxOption(option, baselineValue)}
+                            {@const optionAssumption = relation.assumption ?? (isOriginalOption ? baselineRelation?.assumption : undefined)}
                             <button
                               type="button"
                               class={`sandbox-option ${option ? getSandboxOptionClass(option) : 'sandbox-option--blank'} ${isOriginalOption ? 'is-original' : ''}`}
@@ -548,7 +574,7 @@
                               onclick={(event) => handleSandboxStatusClick(event, colLanguage.id, rowLanguage.id, option, currentValue, baselineValue)}
                             >
                               {#if option}
-                                <span class="cell-short">{@html getSandboxOptionHtml(option, isOriginalOption && Boolean(baselineRelation?.assumption))}</span>
+                                <span class="cell-short">{@html getSandboxOptionHtml(option, Boolean(optionAssumption))}</span>
                               {/if}
                             </button>
                           {/each}
@@ -577,6 +603,7 @@
                           <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${colLanguage.language.name} to ${rowLanguage.language.name}`}>
                             {#each options as option}
                               {@const isOriginalOption = isOriginalSandboxOption(option, baselineValue)}
+                              {@const optionAssumption = isOriginalOption ? baselineRelation?.assumption : undefined}
                               <button
                                 type="button"
                                 class={`sandbox-option ${option ? getSandboxOptionClass(option) : 'sandbox-option--blank'} ${isOriginalOption ? 'is-original' : ''}`}
@@ -585,7 +612,7 @@
                                 onclick={(event) => handleSandboxStatusClick(event, colLanguage.id, rowLanguage.id, option, currentValue, baselineValue)}
                               >
                                 {#if option}
-                                  <span class="cell-short">{@html getSandboxOptionHtml(option, isOriginalOption && Boolean(baselineRelation?.assumption))}</span>
+                                  <span class="cell-short">{@html getSandboxOptionHtml(option, Boolean(optionAssumption))}</span>
                                 {/if}
                               </button>
                             {/each}

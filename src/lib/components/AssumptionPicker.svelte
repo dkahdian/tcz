@@ -1,5 +1,6 @@
 <script lang="ts">
   import MathText from './MathText.svelte';
+  import { onMount } from 'svelte';
   import type { FilteredGraphData, GraphData } from '$lib/types.js';
   import { formatAssumptionForMathText } from '$lib/utils/math-text.js';
 
@@ -16,6 +17,7 @@
   } = $props();
 
   let open = $state(false);
+  let root: HTMLDivElement | null = $state(null);
   let search = $state(value ?? '');
   let modalOpen = $state(false);
   let newAssumption = $state('');
@@ -34,56 +36,55 @@
       if (trimmed) seen.add(trimmed);
     };
 
-    for (const row of graphData.adjacencyMatrix.matrix) {
-      for (const relation of row) {
-        add(relation?.assumption);
+    if (graphData.assumptions?.length) {
+      for (const assumption of graphData.assumptions) add(assumption);
+    } else {
+      for (const row of graphData.adjacencyMatrix.matrix) {
+        for (const relation of row) {
+          add(relation?.assumption);
+        }
       }
-    }
 
-    for (const language of graphData.languages) {
-      for (const support of Object.values(language.properties.queries ?? {})) {
-        add(support.assumption);
+      for (const language of graphData.languages) {
+        for (const support of Object.values(language.properties.queries ?? {})) {
+          add(support.assumption);
+        }
+        for (const support of Object.values(language.properties.transformations ?? {})) {
+          add(support.assumption);
+        }
       }
-      for (const support of Object.values(language.properties.transformations ?? {})) {
-        add(support.assumption);
-      }
-    }
 
-    for (const batch of graphData.batchClaims ?? []) {
-      add(batch.assumption);
+      for (const batch of graphData.batchClaims ?? []) {
+        add(batch.assumption);
+      }
     }
+    add(value);
 
     return [...seen].sort((a, b) => a.localeCompare(b));
   });
 
-  const filteredAssumptions = $derived.by<string[]>(() => {
-    const needle = normalize(search);
-    return assumptions
-      .map((assumption) => ({ assumption, score: scoreAssumption(assumption, needle) }))
-      .filter(({ score }) => score < Number.POSITIVE_INFINITY)
-      .sort((a, b) => a.score - b.score || a.assumption.localeCompare(b.assumption))
-      .slice(0, 8)
-      .map(({ assumption }) => assumption);
+  onMount(() => {
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target;
+      if (!open || modalOpen || !(target instanceof Node)) return;
+      if (!root?.contains(target)) open = false;
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        open = false;
+        modalOpen = false;
+      }
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown, true);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown, true);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   });
-
-  function normalize(text: string): string {
-    return text
-      .toLowerCase()
-      .replace(/\$/g, '')
-      .replace(/\\mathrm\{([^}]*)\}/g, '$1')
-      .replace(/\\text\{([^}]*)\}/g, '$1')
-      .replace(/\s+/g, ' ')
-      .trim();
-  }
-
-  function scoreAssumption(assumption: string, needle: string) {
-    if (!needle) return 0;
-    const normalized = normalize(assumption);
-    if (normalized === needle) return 0;
-    if (normalized.startsWith(needle)) return 1;
-    if (normalized.includes(needle)) return 2;
-    return Number.POSITIVE_INFINITY;
-  }
 
   function selectAssumption(assumption: string) {
     search = assumption;
@@ -124,8 +125,8 @@
   }
 </script>
 
-<div class="assumption-picker">
-  <label class="assumption-label" for="assumption-search">{label}</label>
+<div class="assumption-picker" bind:this={root}>
+  <span class="assumption-label">{label}</span>
   <button type="button" class="assumption-preview" onclick={() => open = true}>
     {#if value?.trim()}
       <MathText text={formatAssumptionForMathText(value)} className="inline" />
@@ -136,18 +137,11 @@
 
   {#if open}
     <div class="assumption-popover">
-      <input
-        id="assumption-search"
-        class="assumption-input"
-        bind:value={search}
-        placeholder="Search assumptions"
-        onfocus={() => open = true}
-      />
       <div class="assumption-results">
         <button type="button" class="assumption-row" onmousedown={(event) => event.preventDefault()} onclick={clearAssumption}>
           <span>No assumption</span>
         </button>
-        {#each filteredAssumptions as assumption}
+        {#each assumptions as assumption}
           <button type="button" class="assumption-row" onmousedown={(event) => event.preventDefault()} onclick={() => selectAssumption(assumption)}>
             <MathText text={formatAssumptionForMathText(assumption)} className="inline" />
           </button>
@@ -246,7 +240,6 @@
     box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
   }
 
-  .assumption-input,
   .assumption-textarea {
     width: 100%;
     box-sizing: border-box;

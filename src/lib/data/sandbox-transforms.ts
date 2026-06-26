@@ -11,8 +11,7 @@ import { QUERIES, TRANSFORMATIONS } from './operations.js';
 import { generateLanguageId } from '../utils/language-id.js';
 import { generateReferenceId } from '../utils/reference-id.js';
 import { parseBibtex } from './references.js';
-
-const SANDBOX_DESCRIPTION = 'Your claim under test';
+import { collectAssumptions } from './assumptions.js';
 
 export type SandboxOperationType = 'query' | 'transformation';
 
@@ -322,16 +321,17 @@ function applyEdgeEdit(data: GraphData, edit: Extract<SandboxEdit, { kind: 'edge
     return;
   }
 
+  const existing = data.adjacencyMatrix.matrix[sourceIdx][targetIdx] ?? null;
   const noPolyText = edit.noPolyDescription?.trim();
   const quasiText = edit.quasiDescription?.trim();
   const descriptionText = edit.description?.trim();
   const relation: DirectedSuccinctnessRelation = {
     status: edit.status,
-    refs: [...(edit.refs ?? [])],
+    refs: [...(edit.refs ?? existing?.refs ?? [])],
     description:
       edit.status === 'no-poly-quasi' && (noPolyText || quasiText)
         ? [noPolyText, quasiText].filter(Boolean).join(' ')
-        : descriptionText || SANDBOX_DESCRIPTION,
+        : descriptionText || existing?.description,
     derived: false
   };
   if (edit.status === 'no-poly-quasi' && noPolyText) {
@@ -378,12 +378,20 @@ function applyOperationEdit(data: GraphData, edit: Extract<SandboxEdit, { kind: 
     delete supportMap[displayCode];
   }
 
+  const existing = supportMap[edit.operationCode] ?? (displayCode ? supportMap[displayCode] : undefined);
+  const refs = edit.refs !== undefined ? [...edit.refs] : [...(existing?.refs ?? [])];
+  const description = edit.description !== undefined
+    ? edit.description.trim() || undefined
+    : existing?.description;
+
   supportMap[edit.operationCode] = {
+    ...(description ? { description } : {}),
     complexity: edit.complexity,
-    refs: [...(edit.refs ?? [])],
-    description: edit.description?.trim() || SANDBOX_DESCRIPTION,
+    refs,
     derived: false,
-    ...(edit.assumption?.trim() ? { assumption: edit.assumption.trim() } : {})
+    ...(edit.assumption !== undefined
+      ? (edit.assumption.trim() ? { assumption: edit.assumption.trim() } : {})
+      : (existing?.assumption ? { assumption: existing.assumption } : {}))
   };
 }
 
@@ -407,6 +415,7 @@ export function applySandboxEdits(base: GraphData, edits: SandboxEdit[]): Sandbo
       if (edit.kind === 'edge') applyEdgeEdit(merged, edit);
       if (edit.kind === 'operation') applyOperationEdit(merged, edit);
     }
+    merged.assumptions = collectAssumptions(merged, { includeCanonical: false });
 
     const validation = validateDatasetStructure(merged);
     if (!validation.ok) {
@@ -415,6 +424,7 @@ export function applySandboxEdits(base: GraphData, edits: SandboxEdit[]): Sandbo
     }
 
     const graphData = propagateImplicitRelations(merged);
+    graphData.assumptions = collectAssumptions(graphData, { includeCanonical: false });
     const propagatedValidation = validateDatasetStructure(graphData);
     if (!propagatedValidation.ok) {
       const detail = propagatedValidation.errors?.join('; ') ?? 'unknown propagated structural error';

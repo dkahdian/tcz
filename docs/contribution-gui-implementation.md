@@ -133,7 +133,7 @@ Sidebar editors should use ordinary form controls, not modal-first editing.
 Use these controls consistently:
 
 - status: select/dropdown with the same options as the current sandbox quick-picks;
-- assumptions: searchable dropdown over existing assumptions, with an `Add assumption` option when the search has no match;
+- assumptions: direct dropdown/list over the canonical JSON assumptions, with an `Add assumption` option;
 - references: searchable multi-select dropdown over existing and draft references, with an `Add reference` option when the search has no match;
 - description/definition/plaintext: textarea with local dirty state;
 - classification: segmented control or select with `plain`, `family`, and `union`, defaulting to `plain`.
@@ -213,9 +213,9 @@ Adding a reference does not close the parent relation/language/operation editor.
 
 The assumption picker should support:
 
-- search across assumptions already present in relations and operation claims;
-- selecting an existing assumption;
-- `Add assumption` when there is no match;
+- selecting an existing assumption from the canonical JSON `assumptions` list;
+- clearing an assumption;
+- `Add assumption`;
 - free-text entry for the new assumption.
 
 New assumptions should create warnings until reviewed, but should not block submission.
@@ -376,7 +376,7 @@ The implementation must preserve the contribution contract:
 - operation claims are edited per cell and do not expose batch mechanics;
 - relation claims are directed;
 - references are reusable and searchable, with BibTeX creation on failed search;
-- assumptions are searchable, with free-text creation on failed search;
+- assumptions come from a small canonical JSON list, with free-text creation for new assumptions;
 - tags are deprecated and not editable;
 - missing references/descriptions are warnings, not blockers;
 - contradictions under propagation are blockers;

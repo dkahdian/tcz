@@ -63,6 +63,7 @@
 
   let referencesSection: HTMLElement | null = $state(null);
   let draftOperationCellId = $state<string | null>(null);
+  let draftOperationSnapshot = $state<string | null>(null);
   let draftOperationComplexity = $state('');
   let draftOperationAssumption = $state('');
   let draftOperationDescription = $state('');
@@ -75,8 +76,16 @@
     const key = selectedOperationCell
       ? `${selectedOperationCell.operationType}:${selectedOperationCell.language.id}:${selectedOperationCell.operationCode}`
       : null;
-    if (key !== draftOperationCellId) {
+    const snapshot = selectedOperationCell
+      ? JSON.stringify({
+          complexity: selectedOperationCell.support.complexity ?? '',
+          assumption: selectedOperationCell.support.assumption ?? '',
+          description: selectedOperationCell.support.description ?? ''
+        })
+      : null;
+    if (key !== draftOperationCellId || snapshot !== draftOperationSnapshot) {
       draftOperationCellId = key;
+      draftOperationSnapshot = snapshot;
       draftOperationComplexity = selectedOperationCell?.support.complexity ?? '';
       draftOperationAssumption = selectedOperationCell?.support.assumption ?? '';
       draftOperationDescription = selectedOperationCell?.support.description ?? '';

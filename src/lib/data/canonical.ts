@@ -11,12 +11,16 @@ import { relationTypes } from './complexities.js';
 import { allReferences } from './references.js';
 import { COMPLEXITIES } from './complexities.js';
 import { initNameMap } from '../utils/language-id.js';
+import { collectAssumptions } from './assumptions.js';
 
 // Initialize the language ID → name map so idToName() works at runtime
 initNameMap(allLanguages);
 
 const definitions = (database.definitions ?? []) as KCDefinition[];
 const batchClaims = (database.batchClaims ?? []) as KCBatchClaim[];
+const assumptions = Array.isArray((database as { assumptions?: unknown }).assumptions)
+  ? ((database as { assumptions: string[] }).assumptions ?? [])
+  : undefined;
 const rawDefaultNodePositions = (database as { defaultNodePositionsByLanguageName?: unknown })
   .defaultNodePositionsByLanguageName;
 const defaultNodePositionsByLanguageName: NodePositionsByLanguageName | undefined = (() => {
@@ -49,6 +53,11 @@ export const canonicalDataset: GraphData = {
   relationTypes,
   complexities: COMPLEXITIES,
   references: allReferences,
+  assumptions: assumptions ?? collectAssumptions({
+    languages: allLanguages,
+    adjacencyMatrix: adjacencyMatrixData,
+    batchClaims
+  }),
   defaultNodePositionsByLanguageName,
   metadata,
   batchClaims
