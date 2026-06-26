@@ -100,23 +100,13 @@ const referencesMap: Record<string, KCReference> = {};
 const referencesData = database.references as DatabaseReference[];
 
 for (const ref of referencesData) {
-  // If title or href are missing, parse them from bibtex
-  if (ref.title && ref.href) {
-    referencesMap[ref.id] = {
-      id: ref.id,
-      title: ref.title,
-      href: ref.href,
-      bibtex: ref.bibtex
-    };
-  } else {
-    const parsed = parseBibtex(ref.bibtex);
-    referencesMap[ref.id] = {
-      id: ref.id,
-      title: ref.title ?? parsed.title,
-      href: ref.href ?? parsed.href,
-      bibtex: ref.bibtex
-    };
-  }
+  const parsed = parseBibtex(ref.bibtex);
+  referencesMap[ref.id] = {
+    id: ref.id,
+    title: parsed.title !== 'Unknown Reference' ? parsed.title : (ref.title ?? parsed.title),
+    href: parsed.href !== '#' ? parsed.href : (ref.href ?? parsed.href),
+    bibtex: ref.bibtex
+  };
 }
 
 export function getReferences(...ids: string[]): KCReference[] {

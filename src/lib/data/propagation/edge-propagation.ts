@@ -142,8 +142,8 @@ function applyNoPolyQuasiUpgrade(
   const pathDesc = describePath(pathIds, matrix);
   const pathAssumption = collectAssumptionsUnion(path, matrix);
   const quasiConclusion = pathAssumption
-    ? `Therefore ${idToName(srcId)} compiles to ${idToName(tgtId)} in quasipolynomial time assuming ${pathAssumption}.`
-    : `Therefore ${idToName(srcId)} compiles to ${idToName(tgtId)} in quasipolynomial time.`;
+    ? `Therefore ${positiveCompilationRef(srcId, tgtId, 'quasi')}${formatInlineAssumption(pathAssumption)}.`
+    : `Therefore ${positiveCompilationRef(srcId, tgtId, 'quasi')}.`;
   const quasiDesc = `${pathDesc} ${quasiConclusion}`;
   const quasiRefs = collectRefsUnion(path, matrix);
   const quasiDescription: DescriptionComponent = {
@@ -209,7 +209,7 @@ export function phaseOneUpgrade(
           const ids = path.map((idx) => languageIds[idx]);
           const desc = describePath(ids, matrix);
           contradictionError(
-            `Contradiction: ${desc} Therefore ${idToName(srcId)} compiles to ${idToName(tgtId)} in quasipolynomial time, but ${idToName(srcId)} is marked as not compiling to ${idToName(tgtId)} in quasipolynomial time.`
+            `Contradiction: ${desc} Therefore ${positiveCompilationRef(srcId, tgtId, 'quasi')}, but ${negativeCompilationRef(srcId, tgtId, 'quasi')}.`
           );
         }
         const path = ensurePath(reconstructPathIndices(i, j, reachQ.parent[i]), i, j);
@@ -223,7 +223,7 @@ export function phaseOneUpgrade(
           applyNoPolyQuasiUpgrade(matrix, i, j, path, relation);
         } else {
           // Standard upgrade to unknown-poly-quasi
-          const derivedDesc = `Therefore ${idToName(srcId)} compiles to ${idToName(tgtId)} in quasipolynomial time.`;
+          const derivedDesc = `Therefore ${positiveCompilationRef(srcId, tgtId, 'quasi')}.`;
           const pathIds = path.map((idx) => languageIds[idx]);
           applySimpleUpgrade(matrix, path, newStatus, derivedDesc, { rule: 'transitivity', path: pathIds, level: 'quasi' });
         }
@@ -238,11 +238,11 @@ export function phaseOneUpgrade(
           const ids = path.map((idx) => languageIds[idx]);
           const desc = describePath(ids, matrix);
           contradictionError(
-            `Contradiction: ${desc} Therefore ${idToName(srcId)} compiles to ${idToName(tgtId)} in polynomial time, but ${idToName(srcId)} is marked as not compiling to ${idToName(tgtId)} in polynomial time.`
+            `Contradiction: ${desc} Therefore ${positiveCompilationRef(srcId, tgtId, 'poly')}, but ${negativeCompilationRef(srcId, tgtId, 'poly')}.`
           );
         }
         const path = ensurePath(reconstructPathIndices(i, j, reachP.parent[i]), i, j);
-        const derivedDesc = `Therefore ${idToName(srcId)} compiles to ${idToName(tgtId)} in polynomial time.`;
+        const derivedDesc = `Therefore ${positiveCompilationRef(srcId, tgtId, 'poly')}.`;
         if (DEBUG_PROPAGATION) {
           console.log(`[Propagation] UPGRADE ${srcName} -> ${tgtName}: ${status ?? 'null'} -> poly`);
         }

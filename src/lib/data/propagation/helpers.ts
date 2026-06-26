@@ -245,7 +245,7 @@ export function formatContradictingPremise(
     case 'no-quasi':
       return negativeCompilationRef(srcId, tgtId, 'quasi');
     default:
-      return `${idToName(srcId)} and ${idToName(tgtId)} have an incompatible relationship${formatInlineAssumption(_assumption)}`;
+      return `${languageRefForId(srcId)} and ${languageRefForId(tgtId)} have an incompatible relationship${formatInlineAssumption(_assumption)}`;
   }
 }
 

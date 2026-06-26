@@ -32,6 +32,7 @@ const LANGUAGE_ID_SANITIZER = /\$/g;
 const RELATION_MACRO_PATTERN = /\\(compilespoly|compilesquasi|nocompilespoly|nocompilesquasi)\{((?:[^{}]|\{[^{}]*\})+)\}\{((?:[^{}]|\{[^{}]*\})+)\}/g;
 const OPERATION_RESULT_MACRO_PATTERN = /\\(supportspoly|supportsquasi|nosupportspoly|nosupportsquasi)\{((?:[^{}]|\{[^{}]*\})+)\}\{(\\[A-Za-z]+)\}/g;
 const LEGACY_ENTITY_MACRO_PATTERN = /\\(?:defref|edgeref|nedgeref|opref|nopref)\{/;
+const RAW_LANGUAGE_ID_PATTERN = /\blang_[a-f0-9]{8,}\b/;
 
 const OPERATION_MACRO_TO_CODE: Record<string, string> = {
   '\\CO': 'CO',
@@ -390,6 +391,9 @@ function validateRelationMacroText(
   if (!text) return;
   if (LEGACY_ENTITY_MACRO_PATTERN.test(text)) {
     errors.push(`${context}: legacy entity macros are not allowed`);
+  }
+  if (RAW_LANGUAGE_ID_PATTERN.test(text)) {
+    errors.push(`${context}: raw internal language IDs are not allowed in prose; use \\langref or \\langfam`);
   }
   if (text.includes('\\thislang')) {
     errors.push(`${context}: \\thislang is only valid inside authored batch claims`);
