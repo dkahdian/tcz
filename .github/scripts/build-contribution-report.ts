@@ -103,6 +103,10 @@ function summarizeEdit(edit: SandboxEdit, database: DatabaseShape, languageNames
     const operation = operationLabel(database, edit.operationType, edit.operationCode);
     return `Operation: ${operation} on ${language}${edit.complexity ? ` = ${edit.complexity}` : ''}`;
   }
+  if (edit.kind === 'graph-position') {
+    const language = languageNames.get(edit.languageId) ?? edit.languageId;
+    return `Graph position: ${language} = (${Math.round(edit.position.x)}, ${Math.round(edit.position.y)})`;
+  }
   return `Reference: ${parseBibtexId(edit.bibtex)}`;
 }
 

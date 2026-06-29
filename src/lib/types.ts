@@ -412,12 +412,22 @@ export type ViewMode = 'graph' | 'succinctness' | 'queries' | 'transforms';
 export type FilterUIGroup = 'Language Scope' | 'Visibility' | 'Display' | 'Advanced';
 export type FilterKind =
   | 'edge-visibility'
+  | 'language-visibility'
   | 'matrix-display'
   | 'operation-visualization'
   | 'internal';
-export type FilterControlType = 'checkbox' | 'toggle' | 'radio' | 'dropdown';
+export type FilterControlType = 'checkbox' | 'toggle' | 'radio' | 'dropdown' | 'language-picker';
 
-export type FilterParamValue = boolean | string | number;
+export interface LanguageVisibilityParam {
+  mode: 'all' | 'only' | 'except';
+  ids: string[];
+  hiddenQueryIds?: string[];
+  hiddenTransformationIds?: string[];
+  graphQueryIds?: string[];
+  graphTransformationIds?: string[];
+}
+
+export type FilterParamValue = boolean | string | number | LanguageVisibilityParam;
 
 /**
  * Selected operation for sidebar display

@@ -15,7 +15,7 @@
 
 \NewDocumentCommand{\langref}{m g}{\textbf{#1\IfNoValueF{#2}{#2}}}
 \NewDocumentCommand{\langfam}{m m g}{\textbf{#1$_{#2}$\IfNoValueF{#3}{#3}}}
-\newcommand{\thislang}{\mathcal{L}}
+\newcommand{\thislang}{\ensuremath{\mathcal{L}}}
 \newcommand{\poly}{polynomial}
 \newcommand{\nopolyunknownquasi}{not polynomial, quasipolynomial unknown}
 \newcommand{\nopolyquasi}{not polynomial, quasipolynomial}
@@ -51,7 +51,7 @@
 \newcommand{\fullname}[1]{\textbf{Full name:} #1\par}
 \newcommand{\source}[1]{\textbf{Source:} #1\par}
 \newcommand{\target}[1]{\textbf{Target:} #1\par}
-\newcommand{\language}[1]{\textbf{Language:} #1\par}
+\newcommand{\claimlanguage}[1]{\textbf{Language:} #1\par}
 \newcommand{\operation}[1]{\textbf{Operation:} #1\par}
 \newcommand{\status}[1]{\textbf{Status:} #1\par}
 \newcommand{\selector}[1]{\textbf{Selector:} #1\par}
@@ -59,8 +59,13 @@
 \newcommand{\titlefield}[1]{\textbf{Title:} #1\par}
 \let\titlemacro\title
 \renewcommand{\title}[1]{\titlefield{#1}}
-\newenvironment{description}{\par\noindent\ignorespaces}{\par}
-\newenvironment{language}{}{}
+\renewenvironment{description}{\par\noindent\ignorespaces}{\par}
+\makeatletter
+\let\texlanguage\language
+\def\languageenvname{language}
+\def\language{\ifx\@currenvir\languageenvname\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi{\relax}{\texlanguage}}
+\let\endlanguage\relax
+\makeatother
 \newenvironment{concept}{}{}
 \newenvironment{succinctnessclaim}{}{}
 \newenvironment{queryclaim}{}{}
@@ -72,7 +77,7 @@
 \maketitle
 
 \begin{queryclaim}
-\language{\langref{CNF}}
+\claimlanguage{\langref{CNF}}
 \operation{\CO}
 \status{\nopolyunknownquasi}
 \assuming{P \neq NP}
@@ -82,7 +87,7 @@ Consistency checking for \langref{CNF} is NP-complete by the Cook-Levin theorem,
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{CNF}}
+\claimlanguage{\langref{CNF}}
 \operation{\IM}
 \status{\poly}
 \begin{description}
@@ -91,7 +96,7 @@ To check whether a consistent term $\alpha$ implies a \langref{CNF} representati
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{CNF}}
+\claimlanguage{\langref{CNF}}
 \operation{\VA}
 \status{\poly}
 \begin{description}
@@ -100,17 +105,17 @@ A \langref{CNF} representation is valid iff every clause in it is valid (i.e., c
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{d-DNNF}}
+\claimlanguage{\langref{d-DNNF}}
 \operation{\EQ}
 \status{\poly}
-\assuming{$P = \mathrm{BPP}$}
+\assuming{P = \mathrm{BPP}}
 \begin{description}
 \citet{Darwiche_Huang_2002} showed that equivalence of \langref{d-DNNF} representations can be tested in randomized polynomial time by reducing it to the problem of checking whether two \langref{d-DNNF} representations agree on a randomly chosen assignment. Under the derandomization hypothesis P = BPP, this yields a deterministic polynomial-time algorithm and hence \langref{d-DNNF} satisfies EQ.
 \end{description}
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{d-DNNF}}
+\claimlanguage{\langref{d-DNNF}}
 \operation{\CT}
 \status{\poly}
 \begin{description}
@@ -119,7 +124,7 @@ A \langref{CNF} representation is valid iff every clause in it is valid (i.e., c
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{DNF}}
+\claimlanguage{\langref{DNF}}
 \operation{\VA}
 \status{\nopolyunknownquasi}
 \assuming{P \neq NP}
@@ -129,7 +134,7 @@ Validity checking for \langref{DNF} is coNP-complete. A \langref{DNF} is valid i
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{DNNF}}
+\claimlanguage{\langref{DNNF}}
 \operation{\CO}
 \status{\poly}
 \begin{description}
@@ -138,7 +143,7 @@ Consistency of a \langref{DNNF} representation can be decided by a bottom-up tra
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{FBDD}}
+\claimlanguage{\langref{FBDD}}
 \operation{\CO}
 \status{\poly}
 \begin{description}
@@ -147,7 +152,7 @@ Consistency means existence of a satisfying root-to-1 path. For a general \langr
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{FBDD}}
+\claimlanguage{\langref{FBDD}}
 \operation{\CT}
 \status{\poly}
 \begin{description}
@@ -156,7 +161,7 @@ Model counting is done by dynamic programming over the DAG representation of the
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{FBDD}}
+\claimlanguage{\langref{FBDD}}
 \operation{\VA}
 \status{\poly}
 \begin{description}
@@ -165,17 +170,17 @@ Validity is equivalent to absence of any falsifying path. For a general \langref
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{FBDD}}
+\claimlanguage{\langref{FBDD}}
 \operation{\EQ}
 \status{\poly}
-\assuming{$P = \mathrm{BPP}$}
+\assuming{P = \mathrm{BPP}}
 \begin{description}
 \citep{Blum_1980} evaluate both free Boolean graphs under random assignments over a finite field; if values differ, the graphs are definitely distinct, and if values match, they are probably equivalent. Repetition decreases error probability exponentially. Under derandomization assumptions such as P = BPP, this also yields deterministic polynomial-time equivalence testing for \langref{FBDD}.
 \end{description}
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{IP}}
+\claimlanguage{\langref{IP}}
 \operation{\CT}
 \status{\nopolyunknownquasi}
 \assuming{the polynomial hierarchy does not collapse}
@@ -185,7 +190,7 @@ By duality with \langref{PI}: the negation of a formula in prime implicate form 
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{IP}}
+\claimlanguage{\langref{IP}}
 \operation{\IM}
 \status{\poly}
 \begin{description}
@@ -194,7 +199,7 @@ By definition, \langref{IP} is the set of prime implicants of a formula. A consi
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{IP}}
+\claimlanguage{\langref{IP}}
 \operation{\SE}
 \status{\poly}
 \begin{description}
@@ -203,7 +208,7 @@ By definition, \langref{IP} is the set of prime implicants of a formula. A consi
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{MODS}}
+\claimlanguage{\langref{MODS}}
 \operation{\CO}
 \status{\poly}
 \begin{description}
@@ -212,7 +217,7 @@ A representation $\Sigma$ is consistent iff it has at least one model. Given the
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{MODS}}
+\claimlanguage{\langref{MODS}}
 \operation{\CT}
 \status{\poly}
 \begin{description}
@@ -221,7 +226,7 @@ We need only take the cardinality of the set of models (which can be done in lin
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langfam{OBDD}{<}}
+\claimlanguage{\langfam{OBDD}{<}}
 \operation{\CO}
 \status{\poly}
 \begin{description}
@@ -230,7 +235,7 @@ Consistency can be checked in polynomial time by graph reachability: verify that
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langfam{OBDD}{<}}
+\claimlanguage{\langfam{OBDD}{<}}
 \operation{\CT}
 \status{\poly}
 \begin{description}
@@ -239,7 +244,7 @@ Model counting on \langfam{OBDD}{<}{s} can be done in polynomial time by a singl
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langfam{OBDD}{<}}
+\claimlanguage{\langfam{OBDD}{<}}
 \operation{\EQ}
 \status{\poly}
 \begin{description}
@@ -248,7 +253,7 @@ After reducing both diagrams, \langfam{OBDD}{<}{s} are canonical: two functions 
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langfam{OBDD}{<}}
+\claimlanguage{\langfam{OBDD}{<}}
 \operation{\ME}
 \status{\poly}
 \begin{description}
@@ -257,7 +262,7 @@ Models of an \langfam{OBDD}{<} formula can be enumerated in time polynomial in t
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langfam{OBDD}{<}}
+\claimlanguage{\langfam{OBDD}{<}}
 \operation{\VA}
 \status{\poly}
 \begin{description}
@@ -266,7 +271,7 @@ Validity can be checked in polynomial time by graph reachability: verify that no
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{PI}}
+\claimlanguage{\langref{PI}}
 \operation{\CE}
 \status{\poly}
 \begin{description}
@@ -275,7 +280,7 @@ By definition, \langref{PI} is the set of prime implicates of a formula. A claus
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{PI}}
+\claimlanguage{\langref{PI}}
 \operation{\CT}
 \status{\nopolyunknownquasi}
 \assuming{the polynomial hierarchy does not collapse}
@@ -285,7 +290,7 @@ The model counting problem for monotone Krom formulas (conjunctions of clauses w
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{PI}}
+\claimlanguage{\langref{PI}}
 \operation{\SE}
 \status{\poly}
 \begin{description}
@@ -294,7 +299,7 @@ The model counting problem for monotone Krom formulas (conjunctions of clauses w
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{OBDD}}
+\claimlanguage{\langref{OBDD}}
 \operation{\CT}
 \status{\poly}
 \begin{description}
@@ -303,7 +308,7 @@ Any query concerning \langref{OBDD} is equivalent to the corresponding query con
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{OBDD}}
+\claimlanguage{\langref{OBDD}}
 \operation{\EQ}
 \status{\poly}
 \begin{description}
@@ -312,7 +317,7 @@ Any query concerning \langref{OBDD} is equivalent to the corresponding query con
 \end{queryclaim}
 
 \begin{queryclaim}
-\language{\langref{OBDD}}
+\claimlanguage{\langref{OBDD}}
 \operation{\SE}
 \status{\nopolyunknownquasi}
 \assuming{P \neq NP}

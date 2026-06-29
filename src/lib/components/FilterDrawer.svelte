@@ -1,4 +1,5 @@
 <script lang="ts">
+  import LanguageVisibilityPicker from './LanguageVisibilityPicker.svelte';
   import MathText from './MathText.svelte';
   import {
     areFilterValuesEqual,
@@ -11,6 +12,7 @@
     FilterStateMap,
     KCLanguage,
     LanguageFilter,
+    LanguageVisibilityParam,
     ViewMode
   } from '$lib/types.js';
 
@@ -35,7 +37,7 @@
   let isOpen = $state(false);
   const visibleFilters = $derived(getVisibleFiltersForView(filters, viewMode));
   const orderedFilters = $derived.by(() => {
-    const priority: Record<string, number> = { 'poly-display': 0 };
+    const priority: Record<string, number> = { 'poly-display': 0, 'language-visibility': 99 };
     return [...visibleFilters].sort((a, b) => {
       const pa = priority[a.id] ?? 1;
       const pb = priority[b.id] ?? 1;
@@ -75,6 +77,15 @@
     return String(getFilterValue(filter));
   }
 
+  function getLanguageVisibilityValue(filter: AnyFilter): LanguageVisibilityParam {
+    const value = getFilterValue(filter);
+    if (typeof value === 'object' && value !== null && 'mode' in value && 'ids' in value) {
+      return value as LanguageVisibilityParam;
+    }
+
+    return { mode: 'all', ids: [] };
+  }
+
   function toggleBooleanFilter(filter: AnyFilter) {
     setFilterValue(filter, getFilterValue(filter) !== true);
   }
@@ -109,7 +120,19 @@
       <div class="drawer-body">
         {#each orderedFilters as filter (filter.id)}
           <div class="filter-row">
-            {#if filter.controlType === 'dropdown' && filter.options}
+            {#if filter.controlType === 'language-picker'}
+              <div class="filter-block">
+                <div class="field-copy">
+                  <MathText text={filter.name} className="filter-name" />
+                </div>
+                <LanguageVisibilityPicker
+                  languages={languages}
+                  value={getLanguageVisibilityValue(filter)}
+                  {viewMode}
+                  onChange={(value) => setFilterValue(filter, value)}
+                />
+              </div>
+            {:else if filter.controlType === 'dropdown' && filter.options}
               <label class="filter-field">
                 <div class="field-copy">
                   <MathText text={filter.name} className="filter-name" />
@@ -315,6 +338,11 @@
     background: #fff;
     color: #0f172a;
     font-size: 0.84rem;
+  }
+
+  .filter-block {
+    display: grid;
+    gap: 0.55rem;
   }
 
   @media (max-width: 960px) {

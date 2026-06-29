@@ -103,10 +103,20 @@
     return `<div${classAttr}>${effectiveHtml}</div>`;
   }
 
-  let { graphData, selectedNode = $bindable(), selectedEdge = $bindable() }: {
+  let {
+    graphData,
+    selectedNode = $bindable(),
+    selectedEdge = $bindable(),
+    sandboxMode = false,
+    onSandboxNodePositionsChange,
+    onSandboxNodePositionsReset
+  }: {
     graphData: GraphData | FilteredGraphData;
     selectedNode: KCLanguage | null;
     selectedEdge: SelectedEdge | null;
+    sandboxMode?: boolean;
+    onSandboxNodePositionsChange?: (updates: Array<{ languageId: string; position: NodePosition }>) => void;
+    onSandboxNodePositionsReset?: (languageIds: string[]) => void;
   } = $props();
 
   let graphContainer: HTMLDivElement;
@@ -131,6 +141,11 @@
 
   function resetGraphPositions() {
     if (!browser) return;
+    if (sandboxMode) {
+      const languageIds = cy?.nodes().map((node) => node.id()) ?? [];
+      onSandboxNodePositionsReset?.(languageIds);
+      return;
+    }
     localStorage.removeItem(NODE_POSITIONS_STORAGE_KEY);
     
     // Recreate the graph with default positions
@@ -151,7 +166,16 @@
       });
     });
 
-    persistPositionMap(autoLayoutPositions);
+    if (sandboxMode) {
+      onSandboxNodePositionsChange?.(
+        Array.from(autoLayoutPositions.entries()).map(([languageId, position]) => ({
+          languageId,
+          position: { x: position.x, y: position.y }
+        }))
+      );
+    } else {
+      persistPositionMap(autoLayoutPositions);
+    }
     cy.fit(cy.elements(), 40);
   }
 
@@ -167,7 +191,7 @@
       .filter(lang => !isFilteredData || visibleLanguageIds!.has(lang.id));
     const configuredDefaultPositions = graphData.defaultNodePositionsByLanguageName ?? {};
 
-    const storedPositions = loadStoredNodePositions();
+    const storedPositions = sandboxMode ? {} : loadStoredNodePositions();
     
     // Clear default positions map for this rebuild
     defaultPositions.clear();
@@ -520,13 +544,25 @@
     cy.nodeHtmlLabel(htmlLabelOptions);
 
     if (browser) {
-      persistNodePositions(cy.nodes());
+      if (!sandboxMode) {
+        persistNodePositions(cy.nodes());
+      }
       
       cy.on('free', 'node', (evt) => {
-        // After a reset, only persist the positions of nodes that were actually moved
-        // to avoid overwriting the empty localStorage with all default positions
         const movedNode = evt.target;
-        persistNodePositions(movedNode);
+        const pos = movedNode.position();
+        if (sandboxMode) {
+          onSandboxNodePositionsChange?.([
+            {
+              languageId: movedNode.id(),
+              position: { x: pos.x, y: pos.y }
+            }
+          ]);
+        } else {
+          // After a reset, only persist the positions of nodes that were actually moved
+          // to avoid overwriting the empty localStorage with all default positions
+          persistNodePositions(movedNode);
+        }
       });
     }
 
@@ -643,6 +679,68 @@
     );
   }
 
+  function getVisibleLanguages(data: GraphData | FilteredGraphData): KCLanguage[] {
+    const isFilteredData = 'visibleLanguageIds' in data;
+    const visibleLanguageIds = isFilteredData ? data.visibleLanguageIds : null;
+    return data.languages.filter((language) => !isFilteredData || visibleLanguageIds!.has(language.id));
+  }
+
+  function graphRenderSignature(data: GraphData | FilteredGraphData): string {
+    const visibleLanguages = getVisibleLanguages(data);
+    const visibleIds = new Set(visibleLanguages.map((language) => language.id));
+    const edgePairs = normalizeEdgePairs(data.adjacencyMatrix)
+      .filter((edge) => visibleIds.has(edge.nodeA) && visibleIds.has(edge.nodeB))
+      .map((edge) => ({
+        id: edge.id,
+        nodeA: edge.nodeA,
+        nodeB: edge.nodeB,
+        aToB: edge.aToB,
+        bToA: edge.bToA,
+        forward: edge.forward,
+        backward: edge.backward,
+        description: edge.description,
+        refs: edge.refs
+      }));
+
+    return JSON.stringify({
+      operationVisibility: data.operationVisibility ?? null,
+      languages: visibleLanguages.map((language) => ({
+        id: language.id,
+        name: language.name,
+        fullName: language.fullName,
+        definition: language.definition,
+        visual: language.visual ?? null
+      })),
+      edges: edgePairs
+    });
+  }
+
+  function graphPositionSignature(data: GraphData | FilteredGraphData): string {
+    const configuredPositions = data.defaultNodePositionsByLanguageName ?? {};
+    return JSON.stringify(
+      getVisibleLanguages(data).map((language) => {
+        const position = configuredPositions[language.name] ?? null;
+        return [language.id, position ? { x: position.x, y: position.y } : null];
+      })
+    );
+  }
+
+  function applyGraphDataPositions(data: GraphData | FilteredGraphData) {
+    if (!cy) return;
+    const configuredPositions = data.defaultNodePositionsByLanguageName ?? {};
+    cy.batch(() => {
+      for (const language of getVisibleLanguages(data)) {
+        const node = cy.getElementById(language.id);
+        if (node.empty()) continue;
+        const configuredPosition = configuredPositions[language.name];
+        const fallbackPosition = defaultPositions.get(language.id);
+        const nextPosition = configuredPosition ?? fallbackPosition;
+        if (!nextPosition) continue;
+        node.position({ x: nextPosition.x, y: nextPosition.y });
+      }
+    });
+  }
+
   onMount(() => {
     ensureCytoscapePluginsRegistered();
     createGraph();
@@ -654,11 +752,28 @@
 
   // Recreate graph when graphData changes
   let lastGraphData = graphData;
+  let lastSandboxMode = sandboxMode;
+  let lastGraphRenderSignature = graphRenderSignature(graphData);
+  let lastGraphPositionSignature = graphPositionSignature(graphData);
   $effect(() => {
-    if (graphData !== lastGraphData && graphContainer) {
+    if ((graphData !== lastGraphData || sandboxMode !== lastSandboxMode) && graphContainer) {
+      const nextRenderSignature = graphRenderSignature(graphData);
+      const nextPositionSignature = graphPositionSignature(graphData);
+      if (cy && sandboxMode === lastSandboxMode && nextRenderSignature === lastGraphRenderSignature) {
+        if (nextPositionSignature !== lastGraphPositionSignature) {
+          applyGraphDataPositions(graphData);
+        }
+        lastGraphData = graphData;
+        lastGraphPositionSignature = nextPositionSignature;
+        return;
+      }
+
       lastGraphData = graphData;
+      lastSandboxMode = sandboxMode;
       cy?.destroy();
       createGraph();
+      lastGraphRenderSignature = nextRenderSignature;
+      lastGraphPositionSignature = nextPositionSignature;
     }
   });
 </script>

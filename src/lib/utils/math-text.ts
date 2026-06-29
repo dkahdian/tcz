@@ -253,7 +253,7 @@ export function renderTextWithCitations(
       const dataKey = escapeHtml(key);
       return {
         key,
-        html: `<button class="citation-link" data-citation-key="${dataKey}" title="View reference">${num}</button>`
+        html: `<button class="citation-link" data-citation-key="${dataKey}" title="View reference ${num}">bib</button>`
       };
     });
 

@@ -465,7 +465,7 @@
 {#if editing}
   <div class="rich-editor-shell" bind:this={shell} onfocusout={handleFocusOut}>
     <div class="toolbar" role="toolbar" aria-label="Rich text insertion tools">
-      <button type="button" class="tool-button citation-tool" title="Insert reference" onclick={() => togglePanel('reference')}>[n]</button>
+      <button type="button" class="tool-button citation-tool" title="Insert reference" onclick={() => togglePanel('reference')}>[bib]</button>
       <button type="button" class="tool-button tool-button--math" title="Insert language or class" onclick={() => togglePanel('language')}>
         <MathText text={'$\\mathcal{L}$'} className="inline" />
       </button>

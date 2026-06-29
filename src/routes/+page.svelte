@@ -10,7 +10,7 @@
 
   import { initialGraphData, getAllLanguageFilters, getAllEdgeFilters } from '$lib/data/index.js';
   import { applyFiltersWithParams, computeEffectiveFilterState, extractDeltasFromState, getVisibleFiltersForView, updateDelta, type FilterDeltas } from '$lib/filter-utils.js';
-  import type { KCLanguage, LanguageFilter, EdgeFilter, FilterParamValue, FilterStateMap, SelectedEdge, SelectedOperation, SelectedOperationCell, GraphData, ViewMode } from '$lib/types.js';
+  import type { KCLanguage, LanguageFilter, EdgeFilter, FilterParamValue, FilterStateMap, SelectedEdge, SelectedOperation, SelectedOperationCell, GraphData, ViewMode, NodePosition } from '$lib/types.js';
   import { onMount } from 'svelte';
   import { browser } from '$app/environment';
   import { QUERIES, TRANSFORMATIONS } from '$lib/data/operations.js';
@@ -19,7 +19,11 @@
   import { loadSandboxState, saveSandboxState, clearSandboxState } from '$lib/sandbox-storage.js';
   import {
     applySandboxEdits,
-    getChangedSuccinctnessCellIds,
+    applySandboxGraphPositionEdits,
+    getDirectSandboxEdgeIds,
+    getDirectSandboxOperationCellIds,
+    isGraphPositionEdit,
+    isSemanticSandboxEdit,
     type SandboxEdit,
     type SandboxContributionSubmissionPayload,
     type SandboxEvaluationResult,
@@ -65,6 +69,8 @@
   let isSandboxMode = $state(false);
   let sandboxEdits = $state<SandboxEdit[]>([]);
   let sandboxError = $state<string | null>(null);
+  let lastSemanticSandboxKey = '';
+  let lastSemanticSandboxEvaluation: SandboxEvaluationResult | null = null;
   let sandboxPersistenceReady = $state(false);
   let showNewLanguageModal = $state(false);
   let newLanguageKind = $state<'language' | 'class'>('language');
@@ -90,12 +96,6 @@
     if (storedViewMode === 'graph' || storedViewMode === 'succinctness' || storedViewMode === 'queries' || storedViewMode === 'transforms') {
       viewMode = storedViewMode;
     }
-    if (viewMode === 'graph') {
-      isSandboxMode = false;
-      sandboxSelection = null;
-      sandboxError = null;
-    }
-
     $effect(() => {
       if (browser) {
         localStorage.setItem('kcm_view_mode', viewMode);
@@ -116,17 +116,15 @@
       queueMicrotask(() => navigateToHash(initialHash));
     }
 
-    if (viewMode !== 'graph') {
-      const storedSandbox = loadSandboxState();
-      if (storedSandbox) {
-        const evaluation = applySandboxEdits(initialGraphData, storedSandbox.edits);
-        if (evaluation.ok) {
-          sandboxEdits = storedSandbox.edits;
-          isSandboxMode = true;
-        } else {
-          sandboxError = `Stored sandbox edits could not be restored: ${evaluation.error}`;
-          clearSandboxState();
-        }
+    const storedSandbox = loadSandboxState();
+    if (storedSandbox) {
+      const evaluation = applySandboxEdits(initialGraphData, storedSandbox.edits);
+      if (evaluation.ok) {
+        sandboxEdits = storedSandbox.edits;
+        isSandboxMode = true;
+      } else {
+        sandboxError = `Stored sandbox edits could not be restored: ${evaluation.error}`;
+        clearSandboxState();
       }
     }
     sandboxPersistenceReady = true;
@@ -259,8 +257,71 @@
 
   const allFilters = $derived([...languageFilters, ...edgeFilters]);
 
+  function evaluateSemanticSandboxEdits(edits: SandboxEdit[]): SandboxEvaluationResult | null {
+    if (edits.length === 0) {
+      lastSemanticSandboxKey = '';
+      lastSemanticSandboxEvaluation = null;
+      return null;
+    }
+
+    const key = JSON.stringify(edits);
+    if (key === lastSemanticSandboxKey && lastSemanticSandboxEvaluation) {
+      return lastSemanticSandboxEvaluation;
+    }
+
+    const evaluation = applySandboxEdits(initialGraphData, edits);
+    lastSemanticSandboxKey = key;
+    lastSemanticSandboxEvaluation = evaluation;
+    return evaluation;
+  }
+
+  function evaluateSandboxEditsForDisplay(edits: SandboxEdit[]): SandboxEvaluationResult | null {
+    if (edits.length === 0) return null;
+
+    const semanticEdits = edits.filter(isSemanticSandboxEdit);
+    const positionEdits = edits.filter(isGraphPositionEdit);
+    const semanticEvaluation = evaluateSemanticSandboxEdits(semanticEdits);
+    const directEdgeIds = getDirectSandboxEdgeIds(edits);
+    const directOperationCellIds = getDirectSandboxOperationCellIds(edits);
+
+    if (semanticEvaluation && !semanticEvaluation.ok) {
+      return {
+        ...semanticEvaluation,
+        directEdgeIds,
+        directOperationCellIds
+      };
+    }
+
+    try {
+      const semanticGraphData = semanticEvaluation?.ok ? semanticEvaluation.graphData : initialGraphData;
+      const graphData = applySandboxGraphPositionEdits(semanticGraphData, positionEdits);
+
+      return {
+        ok: true,
+        graphData,
+        changedEdgeIds: semanticEvaluation?.ok ? semanticEvaluation.changedEdgeIds : new Set<string>(),
+        changedOperationCellIds: semanticEvaluation?.ok
+          ? semanticEvaluation.changedOperationCellIds
+          : new Set<string>(),
+        directEdgeIds,
+        directOperationCellIds
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: error instanceof Error ? error.message : String(error),
+        changedEdgeIds: semanticEvaluation?.ok ? semanticEvaluation.changedEdgeIds : new Set<string>(),
+        changedOperationCellIds: semanticEvaluation?.ok
+          ? semanticEvaluation.changedOperationCellIds
+          : new Set<string>(),
+        directEdgeIds,
+        directOperationCellIds
+      };
+    }
+  }
+
   const sandboxEvaluation = $derived<SandboxEvaluationResult | null>(
-    sandboxEdits.length > 0 ? applySandboxEdits(initialGraphData, sandboxEdits) : null
+    evaluateSandboxEditsForDisplay(sandboxEdits)
   );
   const sandboxEditSummaries = $derived(
     sandboxEdits.map((edit, index) => ({ edit, index, summary: summarizeSandboxEdit(edit) }))
@@ -273,9 +334,13 @@
   const baseGraphData = $derived(activeSandboxGraphData || initialGraphData);
   const filteredGraphData = $derived(applyFiltersWithParams(baseGraphData, languageFilters, edgeFilters, filterStates, viewMode));
   const graphFilterStates = $derived(computeEffectiveFilterState(languageFilters, edgeFilters, 'graph', filterDeltas));
-  const canonicalGraphData = $derived(applyFiltersWithParams(initialGraphData, languageFilters, edgeFilters, graphFilterStates, 'graph'));
-  const displayedBaseGraphData = $derived(viewMode === 'graph' ? initialGraphData : baseGraphData);
-  const displayedFilteredGraphData = $derived(viewMode === 'graph' ? canonicalGraphData : filteredGraphData);
+  const sandboxSidebarEditingEnabled = $derived(isSandboxMode && viewMode !== 'graph');
+  const displayedBaseGraphData = $derived(baseGraphData);
+  const displayedFilteredGraphData = $derived(
+    viewMode === 'graph'
+      ? applyFiltersWithParams(baseGraphData, languageFilters, edgeFilters, graphFilterStates, 'graph')
+      : filteredGraphData
+  );
   const showQuasipolynomialSandboxOptions = $derived(filterStates.get('poly-display') === true);
 
   function hasBaseEdge(sourceId: string, targetId: string) {
@@ -307,7 +372,6 @@
   }
 
   function handleSetSandboxMode(enabled: boolean) {
-    if (viewMode === 'graph') return;
     if (isSandboxMode === enabled) return;
     isSandboxMode = enabled;
     sandboxSelection = null;
@@ -348,6 +412,7 @@
       if (edit.kind === 'language:edit') return edit.languageId !== languageId;
       if (edit.kind === 'edge') return edit.sourceId !== languageId && edit.targetId !== languageId;
       if (edit.kind === 'operation') return edit.languageId !== languageId;
+      if (edit.kind === 'graph-position') return edit.languageId !== languageId;
       return true;
     });
 
@@ -473,6 +538,9 @@
     if (edit.kind === 'operation') {
       return `Operation: ${operationDisplayName(edit.operationType, edit.operationCode)} on ${sandboxLanguageName(edit.languageId)}`;
     }
+    if (edit.kind === 'graph-position') {
+      return `Graph position: ${sandboxLanguageName(edit.languageId)}`;
+    }
 
     const parsed = parseBibtex(edit.bibtex);
     return `Reference: ${parsed.id && parsed.id !== 'unknown' ? parsed.id : 'new BibTeX entry'}`;
@@ -498,6 +566,9 @@
         a.languageId === b.languageId &&
         a.operationCode === b.operationCode
       );
+    }
+    if (a.kind === 'graph-position' && b.kind === 'graph-position') {
+      return a.languageId === b.languageId;
     }
     return false;
   }
@@ -593,6 +664,73 @@
       return retainedEdits;
     }
     return [...retainedEdits, edit];
+  }
+
+  function canonicalGraphPosition(languageId: string): NodePosition | null {
+    const language = initialGraphData.languages.find((item) => item.id === languageId);
+    if (!language) return null;
+    const position = initialGraphData.defaultNodePositionsByLanguageName?.[language.name];
+    return position ? { x: position.x, y: position.y } : null;
+  }
+
+  function isSameGraphPosition(a: NodePosition | null, b: NodePosition): boolean {
+    if (!a) return false;
+    return Math.abs(a.x - b.x) < 0.5 && Math.abs(a.y - b.y) < 0.5;
+  }
+
+  function commitSandboxPositionEdits(nextEdits: SandboxEdit[]): boolean {
+    const invalidPosition = nextEdits.find(
+      (edit) =>
+        edit.kind === 'graph-position' &&
+        (!edit.languageId ||
+          !Number.isFinite(edit.position.x) ||
+          !Number.isFinite(edit.position.y))
+    );
+    if (invalidPosition) {
+      sandboxError = 'Invalid graph position edit.';
+      return false;
+    }
+
+    sandboxEdits = nextEdits;
+    sandboxError = null;
+    return true;
+  }
+
+  function handleSandboxNodePositionsChange(
+    updates: Array<{ languageId: string; position: NodePosition }>
+  ) {
+    if (!isSandboxMode) return;
+    const normalized = updates.filter(({ languageId, position }) =>
+      languageId &&
+      Number.isFinite(position.x) &&
+      Number.isFinite(position.y)
+    );
+    if (normalized.length === 0) return;
+
+    const updatedLanguageIds = new Set(normalized.map((update) => update.languageId));
+    const retained = sandboxEdits.filter((edit) =>
+      !(edit.kind === 'graph-position' && updatedLanguageIds.has(edit.languageId))
+    );
+    const positionEdits: SandboxEdit[] = normalized
+      .filter(({ languageId, position }) => !isSameGraphPosition(canonicalGraphPosition(languageId), position))
+      .map(({ languageId, position }) => ({
+        kind: 'graph-position',
+        languageId,
+        position: {
+          x: Math.round(position.x),
+          y: Math.round(position.y)
+        }
+      }));
+
+    commitSandboxPositionEdits([...retained, ...positionEdits]);
+  }
+
+  function handleSandboxNodePositionsReset(languageIds: string[]) {
+    if (!isSandboxMode || languageIds.length === 0) return;
+    const resetIds = new Set(languageIds);
+    commitSandboxPositionEdits(
+      sandboxEdits.filter((edit) => !(edit.kind === 'graph-position' && resetIds.has(edit.languageId)))
+    );
   }
 
   function handleSandboxApply(edit: SandboxEdit): boolean {
@@ -880,11 +1018,7 @@
   function switchViewMode(newMode: ViewMode) {
     if (viewMode === newMode) return;
     clearSelectedCells();
-    if (newMode === 'graph') {
-      isSandboxMode = false;
-      sandboxSelection = null;
-      sandboxError = null;
-    }
+    sandboxSelection = null;
     viewMode = newMode;
     filterStates = computeEffectiveFilterState(languageFilters, edgeFilters, newMode, filterDeltas);
   }
@@ -1048,7 +1182,7 @@
         <a href="/about" class="about-link">
           About
         </a>
-        {#if viewMode !== 'graph' && isSandboxMode}
+        {#if isSandboxMode}
           <button type="button" class="sandbox-reset" disabled={sandboxEdits.length === 0} onclick={handleResetSandbox}>
             Reset
           </button>
@@ -1061,19 +1195,17 @@
             Review
           </button>
         {/if}
-        {#if viewMode !== 'graph'}
-          <button
-            type="button"
-            class={`sandbox-toggle ${isSandboxMode ? 'is-active' : ''}`}
-            aria-pressed={isSandboxMode}
-            onclick={() => handleSetSandboxMode(!isSandboxMode)}
-          >
-            <span>Sandbox</span>
-            {#if sandboxEdits.length > 0}
-              <strong>{sandboxEdits.length}</strong>
-            {/if}
-          </button>
-        {/if}
+        <button
+          type="button"
+          class={`sandbox-toggle ${isSandboxMode ? 'is-active' : ''}`}
+          aria-pressed={isSandboxMode}
+          onclick={() => handleSetSandboxMode(!isSandboxMode)}
+        >
+          <span>Sandbox</span>
+          {#if sandboxEdits.length > 0}
+            <strong>{sandboxEdits.length}</strong>
+          {/if}
+        </button>
         <div class="view-toggle" role="group" aria-label="Visualization mode">
           {#each VIEW_MODES as mode}
             <button
@@ -1113,7 +1245,14 @@
   <main class="app-main">
     <section class="visual-panel" data-view={viewMode}>
       {#if viewMode === 'graph'}
-        <KCGraph graphData={displayedFilteredGraphData} bind:selectedNode bind:selectedEdge />
+        <KCGraph
+          graphData={displayedFilteredGraphData}
+          bind:selectedNode
+          bind:selectedEdge
+          sandboxMode={isSandboxMode}
+          onSandboxNodePositionsChange={handleSandboxNodePositionsChange}
+          onSandboxNodePositionsReset={handleSandboxNodePositionsReset}
+        />
       {/if}
       {#if succinctnessMounted}
         <div class="keep-alive-wrapper" class:is-active={viewMode === 'succinctness'}>
@@ -1189,7 +1328,7 @@
             graphData={displayedBaseGraphData}
             filteredGraphData={displayedFilteredGraphData}
             {viewMode}
-            sandboxMode={isSandboxMode}
+            sandboxMode={sandboxSidebarEditingEnabled}
             sandboxEdited={hasSandboxOperationEdit(
               selectedOperationCell.operationType,
               selectedOperationCell.language.id,
@@ -1215,7 +1354,7 @@
             graphData={displayedBaseGraphData}
             filteredGraphData={displayedFilteredGraphData}
             {viewMode}
-            sandboxMode={isSandboxMode}
+            sandboxMode={sandboxSidebarEditingEnabled}
             onSandboxOperationEdit={handleSandboxOperationMetadataEdit}
             onSandboxOperationReset={handleSandboxOperationReset}
             onSandboxReferenceAdd={handleSandboxReferenceAdd}
@@ -1235,7 +1374,7 @@
             graphData={displayedBaseGraphData}
             filteredGraphData={displayedFilteredGraphData}
             onOperationCellSelect={handleLanguageOperationCellSelect}
-            sandboxMode={isSandboxMode}
+            sandboxMode={sandboxSidebarEditingEnabled}
             sandboxEdited={hasSandboxLanguageEdit(selectedNode.id)}
             onSandboxLanguageEdit={handleSandboxLanguageEdit}
             onSandboxLanguageReset={handleSandboxLanguageReset}
@@ -1249,7 +1388,7 @@
             graphData={displayedBaseGraphData}
             filteredGraphData={displayedFilteredGraphData}
             {viewMode}
-            sandboxMode={isSandboxMode}
+            sandboxMode={sandboxSidebarEditingEnabled}
             onSandboxOperationEdit={handleSandboxOperationMetadataEdit}
             onSandboxOperationReset={handleSandboxOperationReset}
             onSandboxReferenceAdd={handleSandboxReferenceAdd}
@@ -1260,7 +1399,7 @@
           selectedEdge={selectedEdge}
           graphData={displayedBaseGraphData}
           filteredGraphData={displayedFilteredGraphData}
-          sandboxMode={isSandboxMode}
+          sandboxMode={sandboxSidebarEditingEnabled}
           sandboxEdited={hasSandboxEdgeEdit(selectedEdge.source, selectedEdge.target)}
           onSandboxEdgeEdit={handleSandboxEdgeMetadataEdit}
           onSandboxEdgeReset={handleSandboxEdgeReset}
@@ -1273,7 +1412,7 @@
           graphData={displayedBaseGraphData}
           filteredGraphData={displayedFilteredGraphData}
           onOperationCellSelect={handleLanguageOperationCellSelect}
-          sandboxMode={isSandboxMode}
+          sandboxMode={sandboxSidebarEditingEnabled}
           sandboxEdited={hasSandboxLanguageEdit(selectedNode.id)}
           onSandboxLanguageEdit={handleSandboxLanguageEdit}
           onSandboxLanguageReset={handleSandboxLanguageReset}
@@ -1286,7 +1425,7 @@
           graphData={displayedBaseGraphData}
           filteredGraphData={displayedFilteredGraphData}
           onOperationCellSelect={handleLanguageOperationCellSelect}
-          sandboxMode={isSandboxMode}
+          sandboxMode={sandboxSidebarEditingEnabled}
           onSandboxLanguageEdit={handleSandboxLanguageEdit}
           onSandboxLanguageReset={handleSandboxLanguageReset}
           onSandboxReferenceAdd={handleSandboxReferenceAdd}

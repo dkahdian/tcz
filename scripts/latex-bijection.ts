@@ -405,7 +405,7 @@ ${theoremStyle}
 
 \\NewDocumentCommand{\\langref}{m g}{\\textbf{#1\\IfNoValueF{#2}{#2}}}
 \\NewDocumentCommand{\\langfam}{m m g}{\\textbf{#1$_{#2}$\\IfNoValueF{#3}{#3}}}
-\\newcommand{\\thislang}{\\mathcal{L}}
+\\newcommand{\\thislang}{\\ensuremath{\\mathcal{L}}}
 \\newcommand{\\poly}{polynomial}
 \\newcommand{\\nopolyunknownquasi}{not polynomial, quasipolynomial unknown}
 \\newcommand{\\nopolyquasi}{not polynomial, quasipolynomial}
@@ -441,7 +441,7 @@ ${theoremStyle}
 \\newcommand{\\fullname}[1]{\\textbf{Full name:} #1\\par}
 \\newcommand{\\source}[1]{\\textbf{Source:} #1\\par}
 \\newcommand{\\target}[1]{\\textbf{Target:} #1\\par}
-\\newcommand{\\language}[1]{\\textbf{Language:} #1\\par}
+\\newcommand{\\claimlanguage}[1]{\\textbf{Language:} #1\\par}
 \\newcommand{\\operation}[1]{\\textbf{Operation:} #1\\par}
 \\newcommand{\\status}[1]{\\textbf{Status:} #1\\par}
 \\newcommand{\\selector}[1]{\\textbf{Selector:} #1\\par}
@@ -449,8 +449,13 @@ ${theoremStyle}
 \\newcommand{\\titlefield}[1]{\\textbf{Title:} #1\\par}
 \\let\\titlemacro\\title
 \\renewcommand{\\title}[1]{\\titlefield{#1}}
-\\newenvironment{description}{\\par\\noindent\\ignorespaces}{\\par}
-\\newenvironment{language}{}{}
+\\renewenvironment{description}{\\par\\noindent\\ignorespaces}{\\par}
+\\makeatletter
+\\let\\texlanguage\\language
+\\def\\languageenvname{language}
+\\def\\language{\\ifx\\@currenvir\\languageenvname\\expandafter\\@firstoftwo\\else\\expandafter\\@secondoftwo\\fi{\\relax}{\\texlanguage}}
+\\let\\endlanguage\\relax
+\\makeatother
 \\newenvironment{concept}{}{}
 \\newenvironment{succinctnessclaim}{}{}
 \\newenvironment{queryclaim}{}{}
@@ -549,7 +554,7 @@ function generateOperationClaim(
   if (!support || support.derived || support.batchId || support.complexity === 'unknown-to-us') return null;
   const environment = opType === 'queries' ? 'queryclaim' : 'transformationclaim';
   return `\\begin{${environment}}
-\\language{${languageToLatex(language.name)}}
+\\claimlanguage{${languageToLatex(language.name)}}
 \\operation{${opMacro(opType, op)}}
 \\status{${STATUS_TO_MACRO[support.complexity] ?? fail(`Unknown operation status ${support.complexity}`)}}
 ${support.assumption ? `\\assuming{${support.assumption}}\n` : ''}\\begin{description}
@@ -798,8 +803,9 @@ function parseOperationClaims(
   const env = opType === 'queries' ? 'queryclaim' : 'transformationclaim';
   return environmentBlocks(content, env).map((block) => {
     const description = environmentValue(block.body, 'description')!;
+    const languageRef = commandValue(block.body, 'claimlanguage') ?? commandValue(block.body, 'language');
     return {
-      languageId: resolveLanguage(commandValue(block.body, 'language')!),
+      languageId: resolveLanguage(languageRef ?? fail(`Missing language field in ${env}`)),
       operation: parseOperationMacro(opType, commandValue(block.body, 'operation')!),
       status: parseStatus(commandValue(block.body, 'status')!),
       assumption: parseAssumption(block.body),

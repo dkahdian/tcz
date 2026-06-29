@@ -56,6 +56,17 @@ function isSandboxEdit(value: unknown): value is SandboxEdit {
       (typeof edit.complexity === 'string' || edit.complexity === null)
     );
   }
+  if (edit.kind === 'graph-position') {
+    const position = edit.position as Record<string, unknown> | undefined;
+    return (
+      typeof edit.languageId === 'string' &&
+      Boolean(position) &&
+      typeof position?.x === 'number' &&
+      typeof position?.y === 'number' &&
+      Number.isFinite(position.x) &&
+      Number.isFinite(position.y)
+    );
+  }
   return false;
 }
 

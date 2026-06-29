@@ -694,7 +694,7 @@
               "operation": "EQ",
               "level": "poly"
             },
-            "assumption": "$P = \\mathrm{BPP}$"
+            "assumption": "P = \\mathrm{BPP}"
           },
           "CT": {
             "complexity": "poly",
@@ -1013,7 +1013,7 @@
             "refs": [
               "Darwiche_Huang_2002"
             ],
-            "assumption": "$P = \\mathrm{BPP}$",
+            "assumption": "P = \\mathrm{BPP}",
             "derived": false
           },
           "CT": {
@@ -1168,7 +1168,7 @@
               "operation": "EQ",
               "level": "poly"
             },
-            "assumption": "$P = \\mathrm{BPP}$"
+            "assumption": "P = \\mathrm{BPP}"
           },
           "CT": {
             "complexity": "poly",
@@ -2187,7 +2187,7 @@
             "refs": [
               "Blum_1980"
             ],
-            "assumption": "$P = \\mathrm{BPP}$",
+            "assumption": "P = \\mathrm{BPP}",
             "derived": false
           }
         },
@@ -3901,7 +3901,7 @@
               "operation": "EQ",
               "level": "poly"
             },
-            "assumption": "$P = \\mathrm{BPP}$"
+            "assumption": "P = \\mathrm{BPP}"
           },
           "CT": {
             "complexity": "poly",
@@ -4929,7 +4929,7 @@
               "operation": "EQ",
               "level": "poly"
             },
-            "assumption": "$P = \\mathrm{BPP}$"
+            "assumption": "P = \\mathrm{BPP}"
           },
           "CT": {
             "complexity": "poly",
@@ -5174,7 +5174,7 @@
               "operation": "EQ",
               "level": "poly"
             },
-            "assumption": "$P = \\mathrm{BPP}$"
+            "assumption": "P = \\mathrm{BPP}"
           },
           "CT": {
             "complexity": "poly",
@@ -5883,7 +5883,7 @@
               "operation": "EQ",
               "level": "poly"
             },
-            "assumption": "$P = \\mathrm{BPP}$"
+            "assumption": "P = \\mathrm{BPP}"
           },
           "CT": {
             "complexity": "poly",
@@ -6125,7 +6125,7 @@
               "operation": "EQ",
               "level": "poly"
             },
-            "assumption": "$P = \\mathrm{BPP}$"
+            "assumption": "P = \\mathrm{BPP}"
           },
           "CT": {
             "complexity": "poly",
@@ -6372,7 +6372,7 @@
               "operation": "EQ",
               "level": "poly"
             },
-            "assumption": "$P = \\mathrm{BPP}$"
+            "assumption": "P = \\mathrm{BPP}"
           },
           "CT": {
             "complexity": "poly",
@@ -7845,7 +7845,7 @@
       "id": "TCZ_Forthcoming",
       "title": "A Tractable Circuit Zoo",
       "href": "",
-      "bibtex": "@misc{TCZ_Forthcoming,\n  title={A Tractable Circuit Zoo},\n  author={Kahdian, David and Broadrick, Oliver and Geh, Renato and {Van den Broeck}, Guy},\n  year={forthcoming},\n  note={Forthcoming}\n}"
+      "bibtex": "@misc{TCZ_Forthcoming,\n  title={A Tractable Circuit Zoo},\n  author={anonymous},\n  year={forthcoming},\n  note={Forthcoming}\n}"
     },
     {
       "id": "VanDenBroeck_2015",
@@ -27175,8 +27175,8 @@
     }
   ],
   "assumptions": [
-    "$P = \\mathrm{BPP}$",
     "P \\neq NP",
+    "P = \\mathrm{BPP}",
     "the polynomial hierarchy does not collapse"
   ]
 }

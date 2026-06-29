@@ -37,7 +37,7 @@
       {#each references as ref}
         <li class="text-xs text-gray-700">
           <div class="flex items-start gap-1.5">
-            <span class="font-semibold text-gray-900">[{getGlobalRefNumber(ref.id) ?? '?'}]</span>
+            <span class="font-semibold text-gray-900" title={`Reference ${getGlobalRefNumber(ref.id) ?? '?'}`}>[bib]</span>
             <div class="flex-1 min-w-0">
               <a class="underline text-blue-600 hover:text-blue-800 break-words" href={ref.href} target="_blank" rel="noreferrer noopener">{ref.title}</a>
               <button

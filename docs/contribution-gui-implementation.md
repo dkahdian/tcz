@@ -153,7 +153,7 @@ Clicking inside a rendered field opens edit mode. Clicking `Preview`, or blurrin
 
 The toolbar should use compact symbols with tooltips, not plaintext labels:
 
-- reference: `[n]`;
+- reference: `[bib]`;
 - language or class: cursive `L`;
 - relation: arrow;
 - operation: `[CO]`;

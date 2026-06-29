@@ -133,9 +133,11 @@ Language tags are deprecated and removed from the canonical language model. The 
 
 ## Graph Placement And Visibility
 
-Contributors do not provide graph coordinates. Reviewers are not required to place nodes as part of accepting an otherwise valid contribution.
+Sandbox mode is available on the graph, but only for layout review. Graph mode must not expose sidebar-style edits to language metadata, succinctness claims, query claims, transformation claims, assumptions, descriptions, or references.
 
-When a contribution introduces a language, the system must generate a default graph position for that language before it becomes part of the canonical database. Accepted canonical languages should not be left without an entry in `defaultNodePositionsByLanguageName`.
+Contributors may drag visible graph nodes while sandbox mode is enabled. Each moved node is stored as a `graph-position` sandbox edit and submitted with the rest of the contribution. Accepted position edits update `defaultNodePositionsByLanguageName`.
+
+When a contribution introduces a language, the graph should show the new node using the current deterministic placement fallback until the contributor or maintainer moves it. Accepted canonical languages should not be left without an entry in `defaultNodePositionsByLanguageName` when a submitted graph-position edit exists for that language.
 
 Placement should be algorithmic and deterministic. Existing canonical node positions are treated as anchors, and newly introduced languages are placed relative to those anchors using their accepted relations and classifications.
 
@@ -146,7 +148,7 @@ ELK is the preferred layout engine for this. The installed ELK stack supports fi
 - preserve the existing graph as much as possible;
 - fall back to a deterministic reserved placement region if the anchored layout cannot produce a satisfactory position.
 
-Graph placement is a system responsibility, not a contributor or reviewer responsibility. Maintainers may later adjust canonical positions for visual polish, but manual positioning must not be required for contribution acceptance.
+Graph placement remains partly a system responsibility: manual positioning must not be required for contribution acceptance. Maintainers may accept submitted graph positions, adjust them later, or rely on deterministic placement for new nodes.
 
 Language visibility follows the existing classification behavior unless explicitly changed later. Plain languages and fixed class members should be visible by default. Union languages should remain hidden by default through the language visibility filter, while still being searchable/selectable where the GUI needs them.
 

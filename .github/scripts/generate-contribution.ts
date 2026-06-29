@@ -21,6 +21,7 @@ type RawDatabase = {
   references?: RawReference[];
   relationTypes?: unknown[];
   adjacencyMatrix: { languageIds: string[]; matrix: unknown[][] };
+  defaultNodePositionsByLanguageName?: GraphData['defaultNodePositionsByLanguageName'];
   metadata?: Record<string, unknown>;
 };
 
@@ -143,6 +144,7 @@ function buildDatabasePayload(current: RawDatabase, dataset: GraphData): RawData
       languageIds: [...dataset.adjacencyMatrix.languageIds],
       matrix: dataset.adjacencyMatrix.matrix
     },
+    defaultNodePositionsByLanguageName: dataset.defaultNodePositionsByLanguageName,
     metadata: dataset.metadata ?? current.metadata
   };
 }

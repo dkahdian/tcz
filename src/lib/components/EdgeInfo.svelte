@@ -358,7 +358,7 @@
                       class="ref-badge"
                       onclick={scrollToReferences}
                       title="View reference"
-                    >[{getGlobalRefNumber(refId) ?? '?'}]</button>{/each}{/if}
+                    >[bib]</button>{/each}{/if}
                 </h5>
               {/if}
               {#if relation.description && !(sandboxMode && editable)}

@@ -15,7 +15,7 @@
 
 \NewDocumentCommand{\langref}{m g}{\textbf{#1\IfNoValueF{#2}{#2}}}
 \NewDocumentCommand{\langfam}{m m g}{\textbf{#1$_{#2}$\IfNoValueF{#3}{#3}}}
-\newcommand{\thislang}{\mathcal{L}}
+\newcommand{\thislang}{\ensuremath{\mathcal{L}}}
 \newcommand{\poly}{polynomial}
 \newcommand{\nopolyunknownquasi}{not polynomial, quasipolynomial unknown}
 \newcommand{\nopolyquasi}{not polynomial, quasipolynomial}
@@ -51,7 +51,7 @@
 \newcommand{\fullname}[1]{\textbf{Full name:} #1\par}
 \newcommand{\source}[1]{\textbf{Source:} #1\par}
 \newcommand{\target}[1]{\textbf{Target:} #1\par}
-\newcommand{\language}[1]{\textbf{Language:} #1\par}
+\newcommand{\claimlanguage}[1]{\textbf{Language:} #1\par}
 \newcommand{\operation}[1]{\textbf{Operation:} #1\par}
 \newcommand{\status}[1]{\textbf{Status:} #1\par}
 \newcommand{\selector}[1]{\textbf{Selector:} #1\par}
@@ -59,8 +59,13 @@
 \newcommand{\titlefield}[1]{\textbf{Title:} #1\par}
 \let\titlemacro\title
 \renewcommand{\title}[1]{\titlefield{#1}}
-\newenvironment{description}{\par\noindent\ignorespaces}{\par}
-\newenvironment{language}{}{}
+\renewenvironment{description}{\par\noindent\ignorespaces}{\par}
+\makeatletter
+\let\texlanguage\language
+\def\languageenvname{language}
+\def\language{\ifx\@currenvir\languageenvname\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi{\relax}{\texlanguage}}
+\let\endlanguage\relax
+\makeatother
 \newenvironment{concept}{}{}
 \newenvironment{succinctnessclaim}{}{}
 \newenvironment{queryclaim}{}{}
@@ -193,7 +198,7 @@ A quasipolynomial-time forgetting procedure for \thislang would turn every \lang
 \end{batchclaim}
 
 \begin{transformationclaim}
-\language{\langref{CNF}}
+\claimlanguage{\langref{CNF}}
 \operation{\ANDC}
 \status{\poly}
 \begin{description}
@@ -202,7 +207,7 @@ Conjunction of \langref{CNF} representation is trivially another \langref{CNF} r
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{CNF}}
+\claimlanguage{\langref{CNF}}
 \operation{\ORBC}
 \status{\poly}
 \begin{description}
@@ -211,7 +216,7 @@ The disjunction of two \langref{CNF} representations $\alpha_1 \lor \alpha_2$ ca
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{CNF}}
+\claimlanguage{\langref{CNF}}
 \operation{\ORC}
 \status{\nopolyunknownquasi}
 \begin{description}
@@ -220,7 +225,7 @@ It is straightforward to convert any term into an equivalent \langref{CNF} formu
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{CNF}}
+\claimlanguage{\langref{CNF}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -229,7 +234,7 @@ CD is trivially satisfied: replacing literals of the conditioning term by Boolea
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{cSDD}}
+\claimlanguage{\langref{cSDD}}
 \operation{\NOTC}
 \status{\poly}
 \begin{description}
@@ -238,7 +243,7 @@ Every \langref{cSDD} respects some vtree $T$. Apply the fixed-vtree negation pro
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{d-DNNF}}
+\claimlanguage{\langref{d-DNNF}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -247,7 +252,7 @@ Conditioning preserves both decomposability and determinism. If $\alpha \land \b
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{d-SDNNF}}
+\claimlanguage{\langref{d-SDNNF}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -256,7 +261,7 @@ Conditioning preserves both structured decomposability and determinism. The vtre
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{d-SDNNF}}
+\claimlanguage{\langref{d-SDNNF}}
 \operation{\FO}
 \status{\noquasi}
 \begin{description}
@@ -265,7 +270,7 @@ If \langref{d-SDNNF} satisfied FO, then every \langref{DNF} could be compiled to
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{d-SDNNF}}
+\claimlanguage{\langref{d-SDNNF}}
 \operation{\NOTC}
 \status{\nopolyunknownquasi}
 \begin{description}
@@ -274,7 +279,7 @@ If \langref{d-SDNNF} satisfied FO, then every \langref{DNF} could be compiled to
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{d-SDNNF}}
+\claimlanguage{\langref{d-SDNNF}}
 \operation{\SFO}
 \status{\nopolyunknownquasi}
 \begin{description}
@@ -283,7 +288,7 @@ If \langref{d-SDNNF} satisfied FO, then every \langref{DNF} could be compiled to
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{d-SDNNF}{T}}
+\claimlanguage{\langfam{d-SDNNF}{T}}
 \operation{\ANDBC}
 \status{\poly}
 \begin{description}
@@ -292,7 +297,7 @@ Bounded conjunction of two \langfam{d-SDNNF}{T} formulas can be performed in pol
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{d-SDNNF}{T}}
+\claimlanguage{\langfam{d-SDNNF}{T}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -301,7 +306,7 @@ Conditioning preserves both decomposability and determinism, and it preserves th
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{DNF}}
+\claimlanguage{\langref{DNF}}
 \operation{\ANDBC}
 \status{\poly}
 \begin{description}
@@ -310,7 +315,7 @@ The conjunction of two \langref{DNF} representations $\alpha_1 \land \alpha_2$ c
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{DNF}}
+\claimlanguage{\langref{DNF}}
 \operation{\ORC}
 \status{\poly}
 \begin{description}
@@ -319,7 +324,7 @@ Disjunction of \langref{DNF} representations is trivially another \langref{DNF} 
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{DNF}}
+\claimlanguage{\langref{DNF}}
 \operation{\FO}
 \status{\poly}
 \begin{description}
@@ -328,7 +333,7 @@ Disjunction of \langref{DNF} representations is trivially another \langref{DNF} 
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{DNNF}}
+\claimlanguage{\langref{DNNF}}
 \operation{\ORC}
 \status{\poly}
 \begin{description}
@@ -337,7 +342,7 @@ Disjunction trivially preserves decomposability since decomposability only const
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{DNNF}}
+\claimlanguage{\langref{DNNF}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -346,7 +351,7 @@ Conditioning preserves decomposability: if $\alpha$ and $\beta$ do not share var
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{DNNF}}
+\claimlanguage{\langref{DNNF}}
 \operation{\FO}
 \status{\poly}
 \begin{description}
@@ -355,7 +360,7 @@ Conditioning preserves decomposability: if $\alpha$ and $\beta$ do not share var
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{FBDD}}
+\claimlanguage{\langref{FBDD}}
 \operation{\NOTC}
 \status{\poly}
 \begin{description}
@@ -364,7 +369,7 @@ Negation of an \langref{FBDD} is achieved by switching the labels of the 0-sink 
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{FBDD}}
+\claimlanguage{\langref{FBDD}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -373,7 +378,7 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{FBDD}}
+\claimlanguage{\langref{FBDD}}
 \operation{\SFO}
 \status{\noquasi}
 \begin{description}
@@ -382,7 +387,7 @@ Let $ROW_n$ and $COL_n$ test whether an $n \times n$ Boolean matrix has an all-1
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{IP}}
+\claimlanguage{\langref{IP}}
 \operation{\NOTC}
 \status{\noquasi}
 \begin{description}
@@ -391,7 +396,7 @@ Dual of \langref{PI}: $\Sigma_n = \bigvee_{i=0}^{n-1}(x_{2i} \land x_{2i+1})$ is
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{IP}}
+\claimlanguage{\langref{IP}}
 \operation{\ANDBC}
 \status{\poly}
 \begin{description}
@@ -400,7 +405,7 @@ $\text{IP}(\alpha_1 \land \alpha_2) = \max(\{\beta_1 \land \beta_2 \mid \beta_1 
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{IP}}
+\claimlanguage{\langref{IP}}
 \operation{\ANDC}
 \status{\nopolyunknownquasi}
 \begin{description}
@@ -409,7 +414,7 @@ It is straightforward to convert a clause into an equivalent \langref{IP} formul
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{IP}}
+\claimlanguage{\langref{IP}}
 \operation{\ORBC}
 \status{\noquasi}
 \begin{description}
@@ -418,7 +423,7 @@ Combining prime implicants via disjunction requires distributing and re-minimizi
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{IP}}
+\claimlanguage{\langref{IP}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -427,7 +432,7 @@ Given an \langref{IP} formula $\Sigma = \bigvee \gamma_i$, conditioning on $\gam
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{IP}}
+\claimlanguage{\langref{IP}}
 \operation{\SFO}
 \status{\noquasi}
 \begin{description}
@@ -436,7 +441,7 @@ The number of prime implicants of $\exists x.\Sigma$ can be exponentially greate
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{MODS}}
+\claimlanguage{\langref{MODS}}
 \operation{\NOTC}
 \status{\noquasi}
 \begin{description}
@@ -445,7 +450,7 @@ $\Sigma = \bigwedge_{i=1}^n x_i$ has only one model over $\{x_1,\ldots,x_n\}$ bu
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{MODS}}
+\claimlanguage{\langref{MODS}}
 \operation{\ANDBC}
 \status{\poly}
 \begin{description}
@@ -454,7 +459,7 @@ The bounded conjunction of two \langref{MODS} formulas (over the same variables)
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{MODS}}
+\claimlanguage{\langref{MODS}}
 \operation{\ANDC}
 \status{\noquasi}
 \begin{description}
@@ -463,7 +468,7 @@ Let $\Sigma_i = (x_{i,1} \lor x_{i,2})$ for $i = 1,\ldots,n$. Each $\Sigma_i$ ha
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{MODS}}
+\claimlanguage{\langref{MODS}}
 \operation{\ORBC}
 \status{\noquasi}
 \begin{description}
@@ -472,7 +477,7 @@ Let $\alpha_1 = \bigwedge_{i=1}^n x_i$ (1 model) and $\alpha_2 = y$ (1 model). T
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{MODS}}
+\claimlanguage{\langref{MODS}}
 \operation{\FO}
 \status{\poly}
 \begin{description}
@@ -481,7 +486,7 @@ Given a \langref{MODS} formula $\Sigma$ and a set $X$, the \langref{MODS} repres
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{nFBDD}}
+\claimlanguage{\langref{nFBDD}}
 \operation{\ORC}
 \status{\poly}
 \begin{description}
@@ -490,7 +495,7 @@ Disjunction of \langref{nFBDD} formulas is obtained by adding a top-level nondet
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{nFBDD}}
+\claimlanguage{\langref{nFBDD}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -499,7 +504,7 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{nFBDD}}
+\claimlanguage{\langref{nFBDD}}
 \operation{\FO}
 \status{\poly}
 \begin{description}
@@ -508,7 +513,7 @@ To forget a variable, replace each decision node labeled by that variable with a
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{NNF}}
+\claimlanguage{\langref{NNF}}
 \operation{\NOTC}
 \status{\poly}
 \begin{description}
@@ -517,7 +522,7 @@ To forget a variable, replace each decision node labeled by that variable with a
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{NNF}}
+\claimlanguage{\langref{NNF}}
 \operation{\ANDC}
 \status{\poly}
 \begin{description}
@@ -526,7 +531,7 @@ Taking the conjunction of \langref{NNF} representations $\alpha_1 \land \alpha_2
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{NNF}}
+\claimlanguage{\langref{NNF}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -535,7 +540,7 @@ CD is trivially satisfied by \langref{NNF}: replacing literals of the conditioni
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{nOBDD}}
+\claimlanguage{\langref{nOBDD}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -544,7 +549,7 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{nOBDD}}
+\claimlanguage{\langref{nOBDD}}
 \operation{\FO}
 \status{\poly}
 \begin{description}
@@ -553,7 +558,7 @@ To forget a variable, replace each decision node labeled by that variable with a
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{OBDD}{<}}
+\claimlanguage{\langfam{OBDD}{<}}
 \operation{\NOTC}
 \status{\poly}
 \begin{description}
@@ -562,7 +567,7 @@ Negation of an \langfam{OBDD}{<} is achieved by switching the labels of the 0-si
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{OBDD}{<}}
+\claimlanguage{\langfam{OBDD}{<}}
 \operation{\ANDBC}
 \status{\poly}
 \begin{description}
@@ -571,7 +576,7 @@ The Apply algorithm computes the conjunction of two \langfam{OBDD}{<} representa
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{OBDD}{<}}
+\claimlanguage{\langfam{OBDD}{<}}
 \operation{\ORBC}
 \status{\poly}
 \begin{description}
@@ -580,7 +585,7 @@ The Apply algorithm computes the disjunction of two \langfam{OBDD}{<} representa
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{OBDD}{<}}
+\claimlanguage{\langfam{OBDD}{<}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -589,7 +594,7 @@ Conditioning is easy on \langfam{OBDD}{<}: replace each decision node labeled by
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{PI}}
+\claimlanguage{\langref{PI}}
 \operation{\NOTC}
 \status{\noquasi}
 \begin{description}
@@ -598,7 +603,7 @@ The formula $\Sigma_n = \bigwedge_{i=0}^{n-1}(x_{2i} \lor x_{2i+1})$ is in \lang
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{PI}}
+\claimlanguage{\langref{PI}}
 \operation{\ANDBC}
 \status{\noquasi}
 \begin{description}
@@ -607,7 +612,7 @@ Combining prime implicates via conjunction requires distributing and re-minimizi
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{PI}}
+\claimlanguage{\langref{PI}}
 \operation{\ORBC}
 \status{\poly}
 \begin{description}
@@ -616,7 +621,7 @@ $\text{PI}(\alpha_1 \lor \alpha_2) = \min(\{\beta_1 \lor \beta_2 \mid \beta_1 \i
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{PI}}
+\claimlanguage{\langref{PI}}
 \operation{\ORC}
 \status{\nopolyunknownquasi}
 \begin{description}
@@ -625,7 +630,7 @@ It is straightforward to convert any term into an equivalent \langref{PI} formul
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{PI}}
+\claimlanguage{\langref{PI}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -634,7 +639,7 @@ The prime implicates of $\Sigma \land \gamma$ can be computed in polytime when $
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{PI}}
+\claimlanguage{\langref{PI}}
 \operation{\FO}
 \status{\poly}
 \begin{description}
@@ -643,7 +648,7 @@ The prime implicates of $\exists X.\Sigma$ are exactly the prime implicates of $
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{SDD}}
+\claimlanguage{\langref{SDD}}
 \operation{\NOTC}
 \status{\poly}
 \begin{description}
@@ -652,7 +657,7 @@ An \langref{SDD} can be negated in polytime by applying exclusive-or with $\top$
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{SDD}}
+\claimlanguage{\langref{SDD}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -661,7 +666,7 @@ Conditioning an \langref{SDD} $f$ on a literal $l$ is equivalent to computing $f
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{SDD}{T}}
+\claimlanguage{\langfam{SDD}{T}}
 \operation{\NOTC}
 \status{\poly}
 \begin{description}
@@ -670,7 +675,7 @@ Negation of an \langfam{SDD}{T} can be computed in polytime by applying exclusiv
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{SDD}{T}}
+\claimlanguage{\langfam{SDD}{T}}
 \operation{\ANDBC}
 \status{\poly}
 \begin{description}
@@ -679,7 +684,7 @@ The Apply algorithm combines two \langfam{SDD}{T} representations using any Bool
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{SDD}{T}}
+\claimlanguage{\langfam{SDD}{T}}
 \operation{\ORBC}
 \status{\poly}
 \begin{description}
@@ -688,7 +693,7 @@ The Apply algorithm combines two \langfam{SDD}{T} representations using any Bool
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{SDD}{T}}
+\claimlanguage{\langfam{SDD}{T}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -697,7 +702,7 @@ Conditioning an \langfam{SDD}{T} representation $f$ on a literal $l$ is equivale
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{SDNNF}}
+\claimlanguage{\langref{SDNNF}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -706,7 +711,7 @@ Conditioning preserves structured decomposability: replacing conditioned literal
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{SDNNF}}
+\claimlanguage{\langref{SDNNF}}
 \operation{\FO}
 \status{\poly}
 \begin{description}
@@ -715,7 +720,7 @@ Forgetting preserves structured decomposability. Replacing all occurrences of li
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{SDNNF}{T}}
+\claimlanguage{\langfam{SDNNF}{T}}
 \operation{\ANDBC}
 \status{\poly}
 \begin{description}
@@ -724,7 +729,7 @@ Bounded conjunction of two \langfam{SDNNF}{T} formulas can be performed in polyt
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{SDNNF}{T}}
+\claimlanguage{\langfam{SDNNF}{T}}
 \operation{\ORC}
 \status{\poly}
 \begin{description}
@@ -733,7 +738,7 @@ Disjunction of \langfam{SDNNF}{T} formulas preserves structured decomposability,
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{SDNNF}{T}}
+\claimlanguage{\langfam{SDNNF}{T}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -742,7 +747,7 @@ Conditioning preserves decomposability with respect to the same fixed vtree: aft
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{SDNNF}{T}}
+\claimlanguage{\langfam{SDNNF}{T}}
 \operation{\FO}
 \status{\poly}
 \begin{description}
@@ -751,7 +756,7 @@ Darwiche's \langref{DNNF} projection operation for forgetting variables preserve
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{uFBDD}}
+\claimlanguage{\langref{uFBDD}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -760,7 +765,7 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{uOBDD}}
+\claimlanguage{\langref{uOBDD}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -769,7 +774,7 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{uOBDD}}
+\claimlanguage{\langref{uOBDD}}
 \operation{\NOTC}
 \status{\nopolyunknownquasi}
 \begin{description}
@@ -778,7 +783,7 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{uOBDD}}
+\claimlanguage{\langref{uOBDD}}
 \operation{\SFO}
 \status{\nopolyunknownquasi}
 \begin{description}
@@ -787,7 +792,7 @@ The proof of \citet[Corollary 1]{Vinall-Smeeth_2024} shows the intractability of
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{OBDD}}
+\claimlanguage{\langref{OBDD}}
 \operation{\NOTC}
 \status{\poly}
 \begin{description}
@@ -796,7 +801,7 @@ Negation of an \langref{OBDD} is achieved by switching the labels of the 0-sink 
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{OBDD}}
+\claimlanguage{\langref{OBDD}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -805,7 +810,7 @@ Since \langref{OBDD} $\subseteq$ \langref{FBDD} and conditioning preserves the v
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{OBDD}}
+\claimlanguage{\langref{OBDD}}
 \operation{\SFO}
 \status{\poly}
 \begin{description}
@@ -814,7 +819,7 @@ Since only one \langref{OBDD} representation is considered in the transformation
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{TDD}{T}}
+\claimlanguage{\langfam{TDD}{T}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -823,7 +828,7 @@ Conditioning a \langfam{TDD}{T} on a literal can be performed in polynomial time
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{TDD}{T}}
+\claimlanguage{\langfam{TDD}{T}}
 \operation{\ANDBC}
 \status{\poly}
 \begin{description}
@@ -832,7 +837,7 @@ Bounded conjunction is polynomial-time for \langfam{TDD}{T}{s} respecting the sa
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{TDD}{T}}
+\claimlanguage{\langfam{TDD}{T}}
 \operation{\NOTC}
 \status{\poly}
 \begin{description}
@@ -841,7 +846,7 @@ Bounded conjunction is polynomial-time for \langfam{TDD}{T}{s} respecting the sa
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{TDD}}
+\claimlanguage{\langref{TDD}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -850,7 +855,7 @@ Bounded conjunction is polynomial-time for \langfam{TDD}{T}{s} respecting the sa
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{TDD}}
+\claimlanguage{\langref{TDD}}
 \operation{\SFO}
 \status{\poly}
 \begin{description}
@@ -859,7 +864,7 @@ Bounded conjunction is polynomial-time for \langfam{TDD}{T}{s} respecting the sa
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{TDD}}
+\claimlanguage{\langref{TDD}}
 \operation{\NOTC}
 \status{\poly}
 \begin{description}
@@ -868,7 +873,7 @@ Bounded conjunction is polynomial-time for \langfam{TDD}{T}{s} respecting the sa
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{dec-DNNF}}
+\claimlanguage{\langref{dec-DNNF}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -877,7 +882,7 @@ A \langref{dec-DNNF} can be viewed as a decision diagram with additional decompo
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langref{dec-SDNNF}}
+\claimlanguage{\langref{dec-SDNNF}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -886,7 +891,7 @@ A \langref{dec-SDNNF} can be viewed as a decision diagram with additional struct
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{dec-SDNNF}{T}}
+\claimlanguage{\langfam{dec-SDNNF}{T}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -895,7 +900,7 @@ For each fixed vtree $T$, a \langfam{dec-SDNNF}{T} can be viewed as a decision d
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{cSDD}{T}}
+\claimlanguage{\langfam{cSDD}{T}}
 \operation{\NOTC}
 \status{\poly}
 \begin{description}
@@ -904,7 +909,7 @@ For each fixed vtree $T$, a \langfam{dec-SDNNF}{T} can be viewed as a decision d
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{cSDD}{T}}
+\claimlanguage{\langfam{cSDD}{T}}
 \operation{\ANDBC}
 \status{\nopolyunknownquasi}
 \begin{description}
@@ -913,7 +918,7 @@ For each fixed vtree $T$, a \langfam{dec-SDNNF}{T} can be viewed as a decision d
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{cSDD}{T}}
+\claimlanguage{\langfam{cSDD}{T}}
 \operation{\CD}
 \status{\nopolyunknownquasi}
 \begin{description}
@@ -922,7 +927,7 @@ For each fixed vtree $T$, a \langfam{dec-SDNNF}{T} can be viewed as a decision d
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{cSDD}{T}}
+\claimlanguage{\langfam{cSDD}{T}}
 \operation{\SFO}
 \status{\nopolyunknownquasi}
 \begin{description}
@@ -931,7 +936,7 @@ For each fixed vtree $T$, a \langfam{dec-SDNNF}{T} can be viewed as a decision d
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{nOBDD}{<}}
+\claimlanguage{\langfam{nOBDD}{<}}
 \operation{\ORC}
 \status{\poly}
 \begin{description}
@@ -940,7 +945,7 @@ Disjunction of \langfam{nOBDD}{<}{s} is obtained by adding a top-level nondeterm
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{nOBDD}{<}}
+\claimlanguage{\langfam{nOBDD}{<}}
 \operation{\ANDBC}
 \status{\poly}
 \begin{description}
@@ -949,7 +954,7 @@ The usual product algorithm for conjoining \langfam{OBDD}{<}{s} respecting the s
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{nOBDD}{<}}
+\claimlanguage{\langfam{nOBDD}{<}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -958,7 +963,7 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{nOBDD}{<}}
+\claimlanguage{\langfam{nOBDD}{<}}
 \operation{\FO}
 \status{\poly}
 \begin{description}
@@ -967,7 +972,7 @@ To forget a variable, replace each decision node labeled by that variable with a
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{uOBDD}{<}}
+\claimlanguage{\langfam{uOBDD}{<}}
 \operation{\CD}
 \status{\poly}
 \begin{description}
@@ -976,7 +981,7 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 \end{transformationclaim}
 
 \begin{transformationclaim}
-\language{\langfam{uOBDD}{<}}
+\claimlanguage{\langfam{uOBDD}{<}}
 \operation{\ANDBC}
 \status{\poly}
 \begin{description}

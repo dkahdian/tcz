@@ -2,7 +2,8 @@ import type {
   DirectedSuccinctnessRelation,
   GraphData,
   KCLanguage,
-  KCOpSupport
+  KCOpSupport,
+  NodePosition
 } from '../types.js';
 import { cloneDataset } from './transforms.js';
 import { validateDatasetStructure } from './validation/index.js';
@@ -53,6 +54,11 @@ export type SandboxEdit =
       assumption?: string;
       description?: string;
       refs?: string[];
+    }
+  | {
+      kind: 'graph-position';
+      languageId: string;
+      position: NodePosition;
     };
 
 export interface SandboxState {
@@ -235,6 +241,14 @@ export function getDirectSandboxOperationCellIds(edits: SandboxEdit[]): Set<stri
   );
 }
 
+export function isGraphPositionEdit(edit: SandboxEdit): edit is Extract<SandboxEdit, { kind: 'graph-position' }> {
+  return edit.kind === 'graph-position';
+}
+
+export function isSemanticSandboxEdit(edit: SandboxEdit): boolean {
+  return !isGraphPositionEdit(edit);
+}
+
 function ensureLanguageInMatrix(data: GraphData, languageId: string): void {
   const { adjacencyMatrix } = data;
   if (languageId in adjacencyMatrix.indexByLanguage) {
@@ -395,6 +409,32 @@ function applyOperationEdit(data: GraphData, edit: Extract<SandboxEdit, { kind: 
   };
 }
 
+function applyGraphPositionEdit(data: GraphData, edit: Extract<SandboxEdit, { kind: 'graph-position' }>): void {
+  const language = data.languages.find((item) => item.id === edit.languageId);
+  if (!language) {
+    throw new Error(`Cannot position unknown language "${edit.languageId}".`);
+  }
+  const { x, y } = edit.position;
+  if (!Number.isFinite(x) || !Number.isFinite(y)) {
+    throw new Error(`Invalid graph position for "${language.name}".`);
+  }
+
+  data.defaultNodePositionsByLanguageName ??= {};
+  data.defaultNodePositionsByLanguageName[language.name] = { x, y };
+}
+
+export function applySandboxGraphPositionEdits(
+  base: GraphData,
+  edits: Array<Extract<SandboxEdit, { kind: 'graph-position' }>>
+): GraphData {
+  if (edits.length === 0) return base;
+  const merged = cloneDataset(base);
+  for (const edit of edits) {
+    applyGraphPositionEdit(merged, edit);
+  }
+  return merged;
+}
+
 export function applySandboxEdits(base: GraphData, edits: SandboxEdit[]): SandboxEvaluationResult {
   const directEdgeIds = getDirectSandboxEdgeIds(edits);
   const directOperationCellIds = getDirectSandboxOperationCellIds(edits);
@@ -414,6 +454,9 @@ export function applySandboxEdits(base: GraphData, edits: SandboxEdit[]): Sandbo
     for (const edit of edits) {
       if (edit.kind === 'edge') applyEdgeEdit(merged, edit);
       if (edit.kind === 'operation') applyOperationEdit(merged, edit);
+    }
+    for (const edit of edits) {
+      if (edit.kind === 'graph-position') applyGraphPositionEdit(merged, edit);
     }
     merged.assumptions = collectAssumptions(merged, { includeCanonical: false });
 
