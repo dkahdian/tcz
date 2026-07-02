@@ -34,7 +34,7 @@ although whitespace and generated ordering may normalize.
 
 Languages are identified by their visible `\shortname{...}` macro.
 
-Plain and union-like languages use:
+Ordinary languages use:
 
 ```tex
 \shortname{\langref{CNF}}
@@ -50,10 +50,8 @@ The generator must emit macro-wrapped short names. Bare names such as
 `\shortname{CNF}` are invalid in canonical output.
 
 The internal app model must not store or require `classification`. Class status
-is inferred from `\langfam`. Plain-vs-union visibility is not modeled as a
-classification. The existing classification-based language-scope filter is
-deprecated and replaced by an explicit default-visible-language list that
-preserves the current default view.
+is inferred from `\langfam`. Default visibility is controlled by an explicit
+default-visible-language list that preserves the current default view.
 
 ## Concept Definitions
 

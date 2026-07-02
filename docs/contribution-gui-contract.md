@@ -27,26 +27,26 @@ Validation must evaluate the whole queue at once, because a new language, its re
 
 ## Language Contributions
 
-When adding a language, the contributor must choose a language classification immediately. The default is `plain`.
+When adding a language, the contributor chooses between an ordinary language and
+a fixed-parameter class/member. There is no language classification field in
+the canonical app model.
 
-Supported classifications:
+Supported identity shapes:
 
-- `plain`: a single ordinary representation language, rendered as `\langref{...}` in generated LaTeX.
-- `class`: a fixed-parameter class/member, rendered as `\langfam{base}{parameter}` in generated LaTeX.
-- `union`: a union over class members, rendered as `\langref{...}` in generated LaTeX but treated separately in the app for filtering and semantics.
+- language: a single ordinary representation language, rendered as `\langref{...}` in generated LaTeX.
+- class: a fixed-parameter class/member, rendered as `\langfam{base}{parameter}` in generated LaTeX.
 
 For `class` languages, the GUI must collect the base name and parameter symbol separately. For example, `OBDD` plus `<` should produce the internal/display form for `OBDD$_<$`.
 
 Required language fields:
 
-- classification: `plain`, `class`, or `union`;
-- display name, generated or entered according to classification;
+- identity shape: language or class;
+- display name, generated or entered according to identity shape;
 - full name;
 - definition text.
 
 Optional but supported language fields:
 
-- definition references;
 - query support claims;
 - transformation support claims.
 
@@ -54,13 +54,19 @@ References and descriptions are optional, but missing references or missing expl
 
 ## Editing Existing Languages
 
-For existing languages, contributors may edit language metadata except the language name and classification. The name is immutable because it is used in display, LaTeX round-tripping, and many cross-references. The classification is immutable because changing it can change the meaning and LaTeX rendering contract of the existing language identity.
+For existing languages, contributors may edit language metadata except the
+language name. The name is immutable for accepted languages because it is used in
+display, LaTeX round-tripping, URLs, and many cross-references.
+
+For a newly added draft language, the display name may be edited while it
+remains a draft. The draft keeps its generated internal ID so any draft
+relations, operation claims, and graph-position edits continue to point to the
+same language.
 
 Editable fields include:
 
 - full name;
 - definition text;
-- definition references;
 - query support;
 - transformation support.
 
@@ -135,11 +141,16 @@ Language tags are deprecated and removed from the canonical language model. The 
 
 Sandbox mode is available on the graph, but only for layout review. Graph mode must not expose sidebar-style edits to language metadata, succinctness claims, query claims, transformation claims, assumptions, descriptions, or references.
 
-Contributors may drag visible graph nodes while sandbox mode is enabled. Each moved node is stored as a `graph-position` sandbox edit and submitted with the rest of the contribution. Accepted position edits update `defaultNodePositionsByLanguageName`.
+Contributors may drag visible graph nodes while sandbox mode is enabled. Each
+moved node is stored as a `graph-position` sandbox edit and submitted with the
+rest of the contribution. Accepted position edits update
+`defaultNodePositionsByLanguageName`.
 
 When a contribution introduces a language, the graph should show the new node using the current deterministic placement fallback until the contributor or maintainer moves it. Accepted canonical languages should not be left without an entry in `defaultNodePositionsByLanguageName` when a submitted graph-position edit exists for that language.
 
-Placement should be algorithmic and deterministic. Existing canonical node positions are treated as anchors, and newly introduced languages are placed relative to those anchors using their accepted relations and classifications.
+Placement should be algorithmic and deterministic. Existing canonical node
+positions are treated as anchors, and newly introduced languages are placed
+relative to those anchors using their accepted relations.
 
 ELK is the preferred layout engine for this. The installed ELK stack supports fixed-position and incremental layout concepts, including `org.eclipse.elk.stress.fixed`, `org.eclipse.elk.position`, and interactive layout options. The implementation should prototype an ELK-based anchored layout first:
 
@@ -150,7 +161,9 @@ ELK is the preferred layout engine for this. The installed ELK stack supports fi
 
 Graph placement remains partly a system responsibility: manual positioning must not be required for contribution acceptance. Maintainers may accept submitted graph positions, adjust them later, or rely on deterministic placement for new nodes.
 
-Language visibility follows the existing classification behavior unless explicitly changed later. Plain languages and fixed class members should be visible by default. Union languages should remain hidden by default through the language visibility filter, while still being searchable/selectable where the GUI needs them.
+Language visibility is controlled by an explicit default-visible-language list
+and a language visibility picker. It must not depend on a language
+classification field.
 
 ## Assumptions
 
