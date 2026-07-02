@@ -68,8 +68,17 @@
   let draftOperationAssumption = $state('');
   let draftOperationDescription = $state('');
 
+  const HIDDEN_OPERATION_UNKNOWN_CODES = new Set([
+    'unknown',
+    'unknown-both',
+    'unknown-to-us',
+    'unknown-poly-quasi'
+  ]);
+
   const operationStatusOptions = $derived(
-    Object.values(graphData.complexities).filter((complexity) => !complexity.internal)
+    Object.values(graphData.complexities).filter(
+      (complexity) => !complexity.internal && !HIDDEN_OPERATION_UNKNOWN_CODES.has(complexity.code)
+    )
   );
 
   $effect(() => {

@@ -47,8 +47,30 @@ export const CANONICAL_ORDER: Record<string, number> = {
 export function compareByCanonicalOrder(
 	a: string,
 	b: string,
-	getName: (id: string) => string
+	getName: (id: string) => string,
+	options: {
+		isNewLanguage?: (id: string) => boolean;
+		getCurrentIndex?: (id: string) => number;
+		hasPositiveCompilation?: (sourceId: string, targetId: string) => boolean;
+	} = {}
 ): number {
+	const aIsNew = options.isNewLanguage?.(a) ?? false;
+	const bIsNew = options.isNewLanguage?.(b) ?? false;
+	if (aIsNew || bIsNew) {
+		const aCompilesToB = options.hasPositiveCompilation?.(a, b) ?? false;
+		const bCompilesToA = options.hasPositiveCompilation?.(b, a) ?? false;
+		if (aCompilesToB !== bCompilesToA) {
+			// In the matrix order, targets of known compilations precede sources.
+			return aCompilesToB ? 1 : -1;
+		}
+	}
+	if (aIsNew !== bIsNew) return aIsNew ? -1 : 1;
+	if (aIsNew && bIsNew) {
+		const ia = options.getCurrentIndex?.(a) ?? 0;
+		const ib = options.getCurrentIndex?.(b) ?? 0;
+		if (ia !== ib) return ib - ia;
+	}
+
 	const pa = CANONICAL_ORDER[a] ?? 1000;
 	const pb = CANONICAL_ORDER[b] ?? 1000;
 	if (pa !== pb) return pa - pb;

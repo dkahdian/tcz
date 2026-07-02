@@ -14,7 +14,13 @@
    */
   function sortByCanonicalOrder(ids: string[]): string[] {
     const getName = (id: string) => languageLookup.get(id)?.name?.toLowerCase() ?? id;
-    return [...ids].sort((a, b) => compareByCanonicalOrder(a, b, getName));
+    return [...ids].sort((a, b) =>
+      compareByCanonicalOrder(a, b, getName, {
+        isNewLanguage: isSandboxAddedLanguage,
+        getCurrentIndex: (id) => graphData.adjacencyMatrix.indexByLanguage[id] ?? 0,
+        hasPositiveCompilation
+      })
+    );
   }
 
   let {
@@ -94,6 +100,16 @@
   });
 
   const UNKNOWN_STATUS = 'unknown-both';
+
+  const POSITIVE_COMPILATION_STATUSES = new Set(['poly', 'unknown-poly-quasi', 'no-poly-quasi']);
+
+  function hasPositiveCompilation(sourceId: string, targetId: string): boolean {
+    const sourceIndex = graphData.adjacencyMatrix.indexByLanguage[sourceId];
+    const targetIndex = graphData.adjacencyMatrix.indexByLanguage[targetId];
+    if (sourceIndex === undefined || targetIndex === undefined) return false;
+    const status = graphData.adjacencyMatrix.matrix[sourceIndex]?.[targetIndex]?.status;
+    return Boolean(status && POSITIVE_COMPILATION_STATUSES.has(status));
+  }
 
   function getConditionalNotation(status: string, notation: string): string {
     switch (status) {

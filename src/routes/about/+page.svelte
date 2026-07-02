@@ -34,11 +34,8 @@
 				relations that need to be manually entered. It also makes it fun to consider
 				“possible worlds”. By entering “sandbox mode” the user can enter hypothetical
 				(yet unproven) relations and immediately visualize what other relations follow
-				from their hypotheses. The zoo is
-				<a href="https://github.com/dkahdian/tcz" target="_blank" rel="noopener noreferrer">
-					open source
-				</a>
-				and will soon have a user interface for contributing directly through the website.
+				from their hypotheses. The zoo will soon have a user interface for contributing
+				directly through the website.
 			</p>
 		</section>
 

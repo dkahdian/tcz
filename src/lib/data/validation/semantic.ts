@@ -95,7 +95,16 @@ function pathToIds(path: number[], ids: string[]): string[] {
   return path.map((idx) => ids[idx]);
 }
 
-function describePath(path: number[], matrix: KCAdjacencyMatrix): string {
+function languageLabel(languageId: string, names: Map<string, string>): string {
+  const name = names.get(languageId) ?? languageId;
+  const familyMatch = name.match(/^(.+)\$_(.+)\$$/);
+  if (familyMatch) {
+    return `\\langfam{${familyMatch[1]}}{${familyMatch[2]}}`;
+  }
+  return `\\langref{${name.replace(/\$/g, '').replace(/_/g, '\\_')}}`;
+}
+
+function describePath(path: number[], matrix: KCAdjacencyMatrix, names: Map<string, string>): string {
   const { languageIds } = matrix;
   const parts: string[] = [];
   for (let i = 0; i < path.length - 1; i += 1) {
@@ -103,7 +112,7 @@ function describePath(path: number[], matrix: KCAdjacencyMatrix): string {
     const to = path[i + 1];
     const status = getEdgeStatus(matrix, from, to) ?? 'unknown';
     const phrase = phraseForStatus(status);
-    parts.push(`${languageIds[from]} compiles to ${languageIds[to]} ${phrase}.`);
+    parts.push(`${languageLabel(languageIds[from], names)} compiles to ${languageLabel(languageIds[to], names)} ${phrase}.`);
   }
   return parts.join(' ');
 }
@@ -117,14 +126,15 @@ function buildContradictionMessage(
   target: number,
   kind: 'poly' | 'quasi',
   path: number[],
-  matrix: KCAdjacencyMatrix
+  matrix: KCAdjacencyMatrix,
+  names: Map<string, string>
 ): string {
-  const base = describePath(path, matrix);
-  const fromId = matrix.languageIds[source];
-  const toId = matrix.languageIds[target];
+  const base = describePath(path, matrix, names);
+  const fromId = languageLabel(matrix.languageIds[source], names);
+  const toId = languageLabel(matrix.languageIds[target], names);
   const storedStatus = formatStoredStatus(getEdgeStatus(matrix, source, target));
   const mustHave = kind === 'poly' ? 'poly' : 'quasi';
-  return `Contradiction: ${base} Therefore ${fromId}→${toId} must have ${mustHave}, but ${fromId}→${toId} is marked ${storedStatus}.`;
+  return `Contradiction: ${base} Therefore ${fromId} -> ${toId} must have ${mustHave}, but ${fromId} -> ${toId} is marked ${storedStatus}.`;
 }
 
 function buildClosureMessage(
@@ -132,18 +142,20 @@ function buildClosureMessage(
   target: number,
   kind: 'poly' | 'quasi',
   path: number[],
-  matrix: KCAdjacencyMatrix
+  matrix: KCAdjacencyMatrix,
+  names: Map<string, string>
 ): string {
-  const base = describePath(path, matrix);
-  const fromId = matrix.languageIds[source];
-  const toId = matrix.languageIds[target];
+  const base = describePath(path, matrix, names);
+  const fromId = languageLabel(matrix.languageIds[source], names);
+  const toId = languageLabel(matrix.languageIds[target], names);
   const storedStatus = formatStoredStatus(getEdgeStatus(matrix, source, target));
   const mustHave = kind === 'poly' ? 'poly' : 'at least quasi';
-  return `Closure violation: ${base} Therefore ${fromId}→${toId} must be ${mustHave}, but ${fromId}→${toId} is marked ${storedStatus}.`;
+  return `Closure violation: ${base} Therefore ${fromId} -> ${toId} must be ${mustHave}, but ${fromId} -> ${toId} is marked ${storedStatus}.`;
 }
 
 export function validateAdjacencyConsistency(data: GraphData): SemanticValidationResult {
   const { adjacencyMatrix } = data;
+  const languageNames = new Map(data.languages.map((language) => [language.id, language.name]));
   const size = adjacencyMatrix.languageIds.length;
   const reachP = computeReachability(adjacencyMatrix, POLY_STATUS);
   const reachQ = computeReachability(adjacencyMatrix, QUASI_STATUS);
@@ -159,14 +171,14 @@ export function validateAdjacencyConsistency(data: GraphData): SemanticValidatio
       const relation = adjacencyMatrix.matrix[i]?.[j];
       if (reachP.reach[i][j] && status && NO_POLY_STATUSES.has(status)) {
         const path = reconstructPathIndices(i, j, reachP.parent[i]);
-        const message = buildContradictionMessage(i, j, 'poly', path, adjacencyMatrix);
+        const message = buildContradictionMessage(i, j, 'poly', path, adjacencyMatrix, languageNames);
         const result: SemanticValidationResult = { ok: false, error: message, witnessPath: pathToIds(path, adjacencyMatrix.languageIds) };
         if (!relation?.assumption) return result;
         if (!fallback) fallback = result;
       }
       if (reachQ.reach[i][j] && status === 'no-quasi') {
         const path = reconstructPathIndices(i, j, reachQ.parent[i]);
-        const message = buildContradictionMessage(i, j, 'quasi', path, adjacencyMatrix);
+        const message = buildContradictionMessage(i, j, 'quasi', path, adjacencyMatrix, languageNames);
         const result: SemanticValidationResult = { ok: false, error: message, witnessPath: pathToIds(path, adjacencyMatrix.languageIds) };
         if (!relation?.assumption) return result;
         if (!fallback) fallback = result;

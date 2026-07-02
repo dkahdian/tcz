@@ -91,7 +91,12 @@ function summarizeEdit(edit: SandboxEdit, database: DatabaseShape, languageNames
     return `New language: ${edit.name}`;
   }
   if (edit.kind === 'language:edit') {
-    return `Language: ${languageNames.get(edit.languageId) ?? edit.languageId}`;
+    const language = languageNames.get(edit.languageId) ?? edit.languageId;
+    const parts = [
+      edit.fullName ? 'full name updated' : '',
+      edit.definition ? 'definition updated' : ''
+    ].filter(Boolean);
+    return `Language: ${language}${parts.length ? ` (${parts.join(', ')})` : ''}`;
   }
   if (edit.kind === 'edge') {
     const source = languageNames.get(edit.sourceId) ?? edit.sourceId;

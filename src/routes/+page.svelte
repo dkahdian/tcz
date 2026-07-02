@@ -13,7 +13,7 @@
   import type { KCLanguage, LanguageFilter, EdgeFilter, FilterParamValue, FilterStateMap, SelectedEdge, SelectedOperation, SelectedOperationCell, GraphData, ViewMode, NodePosition } from '$lib/types.js';
   import { onMount } from 'svelte';
   import { browser } from '$app/environment';
-  import { QUERIES, TRANSFORMATIONS } from '$lib/data/operations.js';
+  import { QUERIES, TRANSFORMATIONS, displayCodeToSafeKey } from '$lib/data/operations.js';
   import { parseBibtex } from '$lib/data/references.js';
   import { generateLanguageId } from '$lib/utils/language-id.js';
   import { loadSandboxState, saveSandboxState, clearSandboxState } from '$lib/sandbox-storage.js';
@@ -80,6 +80,7 @@
   let newLanguageFullName = $state('');
   let newLanguageDefinition = $state('');
   let newLanguageError = $state<string | null>(null);
+  let pendingLanguageRemovalId = $state<string | null>(null);
   let sandboxSelection = $state<
     | { kind: 'edge'; sourceId: string; targetId: string }
     | { kind: 'operation'; operationType: SandboxOperationType; languageId: string; operationCode: string }
@@ -376,7 +377,6 @@
     isSandboxMode = enabled;
     sandboxSelection = null;
     sandboxError = null;
-    clearSelectedCells();
   }
 
   function handleResetSandbox() {
@@ -406,6 +406,17 @@
 
   function handleRemoveSandboxLanguage(languageId: string) {
     if (!sandboxEdits.some((edit) => isDraftLanguageEdit(edit, languageId))) return;
+    pendingLanguageRemovalId = languageId;
+  }
+
+  function cancelRemoveSandboxLanguage() {
+    pendingLanguageRemovalId = null;
+  }
+
+  function confirmRemoveSandboxLanguage() {
+    const languageId = pendingLanguageRemovalId;
+    if (!languageId) return;
+    pendingLanguageRemovalId = null;
 
     const nextEdits = sandboxEdits.filter((edit) => {
       if (isDraftLanguageEdit(edit, languageId)) return false;
@@ -432,6 +443,10 @@
       sandboxSelection = null;
     }
   }
+
+  const pendingLanguageRemovalName = $derived(
+    pendingLanguageRemovalId ? sandboxLanguageName(pendingLanguageRemovalId) : ''
+  );
 
   function sandboxLanguageName(languageId: string): string {
     const draftLanguage = sandboxEdits.find(
@@ -530,7 +545,11 @@
       return `New language: ${edit.name}`;
     }
     if (edit.kind === 'language:edit') {
-      return `Language: ${sandboxLanguageName(edit.languageId)}`;
+      const parts = [
+        edit.fullName ? 'full name updated' : '',
+        edit.definition ? 'definition updated' : ''
+      ].filter(Boolean);
+      return `Language: ${sandboxLanguageName(edit.languageId)}${parts.length ? ` (${parts.join(', ')})` : ''}`;
     }
     if (edit.kind === 'edge') {
       return `Relationship: ${sandboxLanguageName(edit.sourceId)} to ${sandboxLanguageName(edit.targetId)}`;
@@ -605,8 +624,8 @@
   );
   const newLanguageDefinitionPlaceholder = $derived(
     newLanguageKind === 'class'
-      ? 'For each fixed variable order $<$, binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the order $<$.'
-      : 'Boolean circuits with AND and OR gates, literals as inputs, and whose AND gates are \\emph{decomposable} (children mention disjoint sets of variables).'
+      ? 'For each fixed variable order $<$, binary decision diagrams such that each root-to-sink path tests each variable at most once and the variables appear in the order $<$.\n\nExample LaTeX: $x_1 < x_2 < \\cdots < x_n$'
+      : 'Boolean circuits with AND and OR gates, literals as inputs, and whose AND gates are \\emph{decomposable} (children mention disjoint sets of variables).\n\nExample LaTeX: $f = g \\land h$'
   );
 
   function handleAddLanguageSubmit() {
@@ -917,16 +936,44 @@
     }
   }
 
-  function handleSandboxLanguageEdit(languageId: string, fields: { fullName?: string; definition?: string }) {
+  function handleSandboxLanguageEdit(languageId: string, fields: { name?: string; fullName?: string; definition?: string }) {
+    const draftIndex = sandboxEdits.findIndex((edit) => isDraftLanguageEdit(edit, languageId));
+    if (draftIndex >= 0) {
+      const draftLanguage = sandboxEdits[draftIndex] as Extract<SandboxEdit, { kind: 'language:new' }>;
+      const updatedDraft: Extract<SandboxEdit, { kind: 'language:new' }> = {
+        ...draftLanguage,
+        id: draftLanguage.id ?? languageId,
+        name: fields.name ?? draftLanguage.name,
+        fullName: fields.fullName ?? draftLanguage.fullName,
+        definition: fields.definition ?? draftLanguage.definition
+      };
+      const nextEdits = [
+        ...sandboxEdits.slice(0, draftIndex),
+        updatedDraft,
+        ...sandboxEdits.slice(draftIndex + 1)
+      ];
+      const applied = commitSandboxEdits(nextEdits);
+      if (applied && selectedNode?.id === languageId) {
+        selectedNode = {
+          ...selectedNode,
+          name: updatedDraft.name,
+          fullName: updatedDraft.fullName,
+          definition: updatedDraft.definition
+        };
+      }
+      return;
+    }
+
+    const { name: _ignoredName, ...metadataFields } = fields;
     const applied = handleSandboxApply({
       kind: 'language:edit',
       languageId,
-      ...fields
+      ...metadataFields
     });
     if (applied && selectedNode?.id === languageId) {
       selectedNode = {
         ...selectedNode,
-        ...fields
+        ...metadataFields
       };
     }
   }
@@ -981,6 +1028,16 @@
     selectedOperationCell = cell;
     viewMode = cell.operationType === 'query' ? 'queries' : 'transforms';
     filterStates = computeEffectiveFilterState(languageFilters, edgeFilters, viewMode, filterDeltas);
+    if (isSandboxMode) {
+      sandboxSelection = {
+        kind: 'operation',
+        operationType: cell.operationType,
+        languageId: cell.language.id,
+        operationCode: cell.operationType === 'query'
+          ? cell.operationCode
+          : displayCodeToSafeKey(cell.operationCode)
+      };
+    }
   }
 
   const sandboxSelectedEdgeId = $derived(
@@ -1013,6 +1070,10 @@
 
   function hasSandboxLanguageEdit(languageId: string): boolean {
     return sandboxEdits.some((edit) => edit.kind === 'language:edit' && edit.languageId === languageId);
+  }
+
+  function isSandboxDraftLanguage(language: KCLanguage | null): boolean {
+    return Boolean(language && sandboxEdits.some((edit) => isDraftLanguageEdit(edit, language.id)));
   }
 
   function switchViewMode(newMode: ViewMode) {
@@ -1313,7 +1374,7 @@
     <aside class="side-panel">
       {#if isSandboxMode && sandboxError}
         <div class="sandbox-error" role="alert">
-          <strong>Sandbox contradiction</strong>
+          <strong>Sandbox error</strong>
           <div class="sandbox-error-message">
             <MathText text={sandboxError} />
           </div>
@@ -1376,6 +1437,7 @@
             onOperationCellSelect={handleLanguageOperationCellSelect}
             sandboxMode={sandboxSidebarEditingEnabled}
             sandboxEdited={hasSandboxLanguageEdit(selectedNode.id)}
+            nameEditable={isSandboxMode && isSandboxDraftLanguage(selectedNode)}
             onSandboxLanguageEdit={handleSandboxLanguageEdit}
             onSandboxLanguageReset={handleSandboxLanguageReset}
             onSandboxReferenceAdd={handleSandboxReferenceAdd}
@@ -1414,6 +1476,7 @@
           onOperationCellSelect={handleLanguageOperationCellSelect}
           sandboxMode={sandboxSidebarEditingEnabled}
           sandboxEdited={hasSandboxLanguageEdit(selectedNode.id)}
+          nameEditable={isSandboxMode && isSandboxDraftLanguage(selectedNode)}
           onSandboxLanguageEdit={handleSandboxLanguageEdit}
           onSandboxLanguageReset={handleSandboxLanguageReset}
           onSandboxReferenceAdd={handleSandboxReferenceAdd}
@@ -1426,6 +1489,7 @@
           filteredGraphData={displayedFilteredGraphData}
           onOperationCellSelect={handleLanguageOperationCellSelect}
           sandboxMode={sandboxSidebarEditingEnabled}
+          nameEditable={false}
           onSandboxLanguageEdit={handleSandboxLanguageEdit}
           onSandboxLanguageReset={handleSandboxLanguageReset}
           onSandboxReferenceAdd={handleSandboxReferenceAdd}
@@ -1521,6 +1585,37 @@
   </div>
 {/if}
 
+{#if pendingLanguageRemovalId}
+  <div class="modal-backdrop" role="presentation" onclick={cancelRemoveSandboxLanguage}>
+    <div
+      class="new-language-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="remove-language-title"
+      tabindex="-1"
+      onclick={(event) => event.stopPropagation()}
+      onkeydown={(event) => {
+        if (event.key === 'Escape') cancelRemoveSandboxLanguage();
+      }}
+    >
+      <header class="modal-header">
+        <h2 id="remove-language-title">Remove Draft Language?</h2>
+      </header>
+
+      <div class="modal-body">
+        <p class="modal-copy">
+          Remove <strong>{pendingLanguageRemovalName}</strong> and all draft changes that depend on it?
+        </p>
+      </div>
+
+      <footer class="modal-actions">
+        <button type="button" class="modal-button secondary" onclick={cancelRemoveSandboxLanguage}>Cancel</button>
+        <button type="button" class="modal-button danger" onclick={confirmRemoveSandboxLanguage}>Remove</button>
+      </footer>
+    </div>
+  </div>
+{/if}
+
 {#if showSandboxSubmitModal}
   <div class="modal-backdrop" role="presentation" onclick={closeSandboxSubmitModal}>
     <div
@@ -1589,13 +1684,13 @@
           placeholder="@example"
         />
 
-        <label class="field-label" for="sandbox-contributor-note">Note</label>
+        <label class="field-label" for="sandbox-contributor-note">Pull Request Message</label>
         <textarea
           id="sandbox-contributor-note"
           class="field-control textarea-control"
           bind:value={sandboxContributorNote}
           rows="4"
-          placeholder="Say something to the reviewers"
+          placeholder="Optional message for the generated pull request"
         ></textarea>
       </div>
 
@@ -2118,6 +2213,19 @@
     border: 1px solid #1d4ed8;
     background: #2563eb;
     color: #fff;
+  }
+
+  .modal-button.danger {
+    border: 1px solid #dc2626;
+    background: #ef4444;
+    color: #fff;
+  }
+
+  .modal-copy {
+    margin: 0;
+    color: #334155;
+    font-size: 0.92rem;
+    line-height: 1.5;
   }
 
   .modal-button:hover {

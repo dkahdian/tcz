@@ -459,11 +459,14 @@ function validateRelationMacros(data: GraphData, errors: string[]): void {
   }
 
   const { languageIds, matrix } = data.adjacencyMatrix;
+  const languageNames = new Map(data.languages.map((language) => [normalizeLanguageId(language.id), language.name]));
   for (let i = 0; i < languageIds.length; i += 1) {
     for (let j = 0; j < languageIds.length; j += 1) {
       const relation = matrix[i]?.[j];
       if (!relation) continue;
-      const context = `Edge ${languageIds[i]} -> ${languageIds[j]}`;
+      const sourceLabel = languageLatexRef(languageNames.get(normalizeLanguageId(languageIds[i])), languageIds[i]);
+      const targetLabel = languageLatexRef(languageNames.get(normalizeLanguageId(languageIds[j])), languageIds[j]);
+      const context = `Edge ${sourceLabel} -> ${targetLabel}`;
       validateRelationMacroText(relation.description, `${context} description`, data, resolveLanguageId, errors);
       validateRelationMacroText(relation.noPolyDescription?.description, `${context} no-poly description`, data, resolveLanguageId, errors);
       validateRelationMacroText(relation.quasiDescription?.description, `${context} quasi description`, data, resolveLanguageId, errors);

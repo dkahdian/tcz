@@ -28,17 +28,19 @@
     onSandboxReferenceAdd,
     sandboxMode = false,
     sandboxEdited = false,
+    nameEditable = false,
     viewMode = 'graph' as ViewMode
   }: {
     selectedLanguage: KCLanguage | null;
     graphData: GraphData | FilteredGraphData;
     filteredGraphData?: GraphData | FilteredGraphData;
     onOperationCellSelect?: (cell: SelectedOperationCell) => void;
-    onSandboxLanguageEdit?: (languageId: string, fields: { fullName?: string; definition?: string }) => void;
+    onSandboxLanguageEdit?: (languageId: string, fields: { name?: string; fullName?: string; definition?: string }) => void;
     onSandboxLanguageReset?: (languageId: string) => void;
     onSandboxReferenceAdd?: (bibtex: string) => string | null;
     sandboxMode?: boolean;
     sandboxEdited?: boolean;
+    nameEditable?: boolean;
     viewMode?: ViewMode;
   } = $props();
 
@@ -80,12 +82,14 @@
 
   let referencesSection: HTMLElement | null = $state(null);
   let draftLanguageId = $state<string | null>(null);
+  let draftName = $state('');
   let draftFullName = $state('');
   let draftDefinition = $state('');
 
   $effect(() => {
     if (selectedLanguage?.id !== draftLanguageId) {
       draftLanguageId = selectedLanguage?.id ?? null;
+      draftName = selectedLanguage?.name ?? '';
       draftFullName = selectedLanguage?.fullName ?? '';
       draftDefinition = selectedLanguage?.definition ?? '';
     }
@@ -165,7 +169,8 @@
 
   function flushLanguageMetadata() {
     if (!selectedLanguage || !sandboxMode || !onSandboxLanguageEdit) return;
-    const fields: { fullName?: string; definition?: string } = {};
+    const fields: { name?: string; fullName?: string; definition?: string } = {};
+    if (nameEditable && draftName.trim() && draftName !== selectedLanguage.name) fields.name = draftName.trim();
     if (draftFullName !== selectedLanguage.fullName) fields.fullName = draftFullName;
     if (draftDefinition !== selectedLanguage.definition) fields.definition = draftDefinition;
     if (Object.keys(fields).length > 0) {
@@ -190,6 +195,15 @@
           </div>
         {/if}
         {#if sandboxMode}
+          {#if nameEditable}
+            <label class="editor-label" for="language-display-name">Display Name</label>
+            <input
+              id="language-display-name"
+              class="sidebar-input"
+              bind:value={draftName}
+              onblur={flushLanguageMetadata}
+            />
+          {/if}
           <label class="editor-label" for="language-full-name">Full Name</label>
           <input
             id="language-full-name"
