@@ -7603,9 +7603,9 @@
     },
     {
       "id": "Beame_2013",
-      "title": "Model Counting of Query Expressions: Limitations of Propositional Methods",
-      "href": "https://arxiv.org/abs/1312.4125",
-      "bibtex": "@misc{Beame_2013,\n      title={Model Counting of Query Expressions: Limitations of Propositional Methods}, \n      author={Paul Beame and Jerry Li and Sudeepa Roy and Dan Suciu},\n      year={2013},\n      eprint={1312.4125},\n      archivePrefix={arXiv},\n      primaryClass={cs.DB},\n      url={https://arxiv.org/abs/1312.4125}, \n}"
+      "title": "Lower Bounds for Exact Model Counting and Applications in Probabilistic Databases",
+      "href": "https://arxiv.org/abs/1309.6815",
+      "bibtex": "@misc{Beame_2013,\n      title={Lower Bounds for Exact Model Counting and Applications in Probabilistic Databases}, \n      author={Paul Beame and Jerry Li and Sudeepa Roy and Dan Suciu},\n      year={2013},\n      eprint={1309.6815},\n      archivePrefix={arXiv},\n      primaryClass={cs.DB},\n      url={https://arxiv.org/abs/1309.6815}, \n}"
     },
     {
       "id": "Beame_2015",
