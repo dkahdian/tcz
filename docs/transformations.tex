@@ -79,7 +79,7 @@
 \begin{batchclaim}
 \selector{\isin{\langref{cSDD}, \langref{d-SDNNF}, \langref{DNNF}, \langref{FBDD}, \langref{nFBDD}, \langref{nOBDD}, \langref{SDD}, \langref{SDNNF}, \langref{uFBDD}, \langref{uOBDD}, \langref{OBDD}, \langref{TDD}, \langref{dec-DNNF}, \langref{dec-SDNNF}}}
 \operation{\ANDC}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 In the language \thislang, every clause has a polynomial-size representation. If \thislang supported $\land$C, then every \langref{CNF} could be compiled into \thislang by conjoining the translated clauses. This contradicts \nocompilespoly{\langref{CNF}}{\thislang} \citep{TCZ_Forthcoming}.
 
@@ -90,7 +90,7 @@ Alternatively, since \thislang does not support Bounded Conjunction in quasipoly
 \begin{batchclaim}
 \selector{\isin{\langref{DNF}, \langfam{d-SDNNF}{T}, \langfam{SDD}{T}, \langfam{SDNNF}{T}, \langfam{dec-SDNNF}{T}, \langfam{cSDD}{T}, \langfam{TDD}{T}, \langfam{nOBDD}{<}, \langfam{uOBDD}{<}}}
 \operation{\ANDC}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 In the language \thislang, every clause has a polynomial-size representation. If \thislang supported $\land$C, then every \langref{CNF} could be compiled into \thislang by conjoining the translated clauses. This contradicts \nocompilespoly{\langref{CNF}}{\thislang} \citep{TCZ_Forthcoming}. \citep{Darwiche_2002}
 \end{description}
@@ -99,7 +99,7 @@ In the language \thislang, every clause has a polynomial-size representation. If
 \begin{batchclaim}
 \selector{\compilespoly{\langref{OBDD}}{\thislang}, \compilespoly{\thislang}{\langref{DNNF}}}
 \operation{\ANDBC}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by \langref{OBDD}{s} of size $O(n)$, such that any \langref{DNNF} computing $f\land g$ has size $2^{\Omega(\sqrt{n})}$ \citep{TCZ_Forthcoming}.
 
@@ -110,7 +110,7 @@ As a result, because \compilesquasi{\langref{OBDD}}{\thislang} and \compilesquas
 \begin{batchclaim}
 \selector{\compilespoly{\langref{OBDD}}{\thislang}, \compilespoly{\thislang}{\langref{SDNNF}}}
 \operation{\ORBC}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by \langref{OBDD}{s} of size $O(n)$, such that any \langref{SDNNF} computing $f\lor g$ has size $2^{\Omega(\sqrt{n})}$ \citep{TCZ_Forthcoming}.
 
@@ -121,7 +121,7 @@ As a result, because \compilesquasi{\langref{OBDD}}{\thislang} and \compilesquas
 \begin{batchclaim}
 \selector{\compilespoly{\langref{OBDD}}{\thislang}, \compilespoly{\thislang}{\langref{d-DNNF}}}
 \operation{\ORBC}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 There are Boolean functions $f,g:\{0,1\}^n\to\{0,1\}$, each computable by \langref{OBDD}{s} of size $O(n)$, such that any \langref{d-DNNF} computing $f\lor g$ has size $2^{\Omega(\sqrt{n})}$ \citep{TCZ_Forthcoming}.
 
@@ -152,7 +152,7 @@ If \thislang supported Singleton Forgetting in polynomial time, then given two \
 \begin{batchclaim}
 \selector{\compilespoly{\langref{DNF}}{\thislang}, \compilespoly{\thislang}{\langref{DNNF}}}
 \operation{\NOTC}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 \citet[Lemma 5]{Bova_2014} gives 2-\langref{DNF} formulas $D$ whose negations require \langref{DNNF} size $2^{\Omega(\operatorname{size}(D))}$. If \thislang supported Negation in quasipolynomial time, then \compilesquasi{\langref{DNF}}{\thislang} and \compilesquasi{\thislang}{\langref{DNNF}} would yield quasipolynomial-size \langref{DNNF} formulas for those negations, contradicting the lower bound.
 \end{description}
@@ -161,7 +161,7 @@ If \thislang supported Singleton Forgetting in polynomial time, then given two \
 \begin{batchclaim}
 \selector{\isin{\langref{cSDD}, \langref{d-SDNNF}, \langref{FBDD}, \langref{uOBDD}, \langref{OBDD}, \langref{TDD}, \langref{dec-DNNF}, \langref{dec-SDNNF}}}
 \operation{\ORC}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 In the language \thislang, every term has a polynomial-size representation. If \thislang supported $\lor$C, then every \langref{DNF} could be compiled into \thislang by disjoining the translated terms. This contradicts \nocompilespoly{\langref{DNF}}{\thislang} \citep{TCZ_Forthcoming}.
 
@@ -172,7 +172,7 @@ Alternatively, since \thislang does not support Bounded Disjunction in quasipoly
 \begin{batchclaim}
 \selector{\isin{\langfam{d-SDNNF}{T}, \langfam{OBDD}{<}, \langfam{SDD}{T}, \langfam{dec-SDNNF}{T}, \langfam{cSDD}{T}, \langfam{TDD}{T}, \langfam{uOBDD}{<}}}
 \operation{\ORC}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 In the language \thislang, every term has a polynomial-size representation. If \thislang supported $\lor$C, then every \langref{DNF} could be compiled into \thislang by disjoining the translated terms. This contradicts \nocompilespoly{\langref{DNF}}{\thislang} \citep{TCZ_Forthcoming}. \citep{Darwiche_2002}
 \end{description}
@@ -191,7 +191,7 @@ If \thislang supported FO, then the consistency of any \langref{CNF} representat
 \begin{batchclaim}
 \selector{\isin{\langref{OBDD}, \langref{TDD}, \langfam{OBDD}{<}, \langfam{SDD}{T}, \langfam{cSDD}{T}, \langfam{TDD}{T}}}
 \operation{\FO}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 A quasipolynomial-time forgetting procedure for \thislang would turn every \langref{DNF} representation into an equivalent \thislang representation of quasipolynomial size in the input \langref{DNF} after introducing fresh selectors and forgetting them. This contradicts \nocompilespoly{\langref{DNF}}{\thislang} \citep{TCZ_Forthcoming}. \citep{Darwiche_2002,VanDenBroeck_2015}
 \end{description}
@@ -263,7 +263,7 @@ Conditioning preserves both structured decomposability and determinism. The vtre
 \begin{transformationclaim}
 \claimlanguage{\langref{d-SDNNF}}
 \operation{\FO}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 If \langref{d-SDNNF} satisfied FO, then every \langref{DNF} could be compiled to an equivalent \langref{d-SDNNF} of size polynomial in the input \langref{DNF} (using fresh selector variables and applying FO). Since specific \langref{DNF} formulas require exponential-size \langref{d-SDNNF} representations (unconditionally), this is impossible. This unconditional result applies to the fixed-vtree case \citet[Proposition 4]{Pipatsrisawat_2008}.
 \end{description}
@@ -380,7 +380,7 @@ Conditioning is easy on branching programs: replace each decision node labeled b
 \begin{transformationclaim}
 \claimlanguage{\langref{FBDD}}
 \operation{\SFO}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 Let $ROW_n$ and $COL_n$ test whether an $n \times n$ Boolean matrix has an all-1 row or an all-1 column. The selector construction $(s \land ROW_n) \lor (\neg s \land COL_n)$ has polynomial-size \langref{FBDD}{s}: the top variable $s$ chooses a rowwise or columnwise computation. Forgetting $s$ yields $ROW_n \lor COL_n$, whose \langref{FBDD} size is $\Omega(n^{-7/2}2^n)$ by \citet[Theorem 6.2.13]{Wegener_2000}.
 \end{description}
@@ -389,7 +389,7 @@ Let $ROW_n$ and $COL_n$ test whether an $n \times n$ Boolean matrix has an all-1
 \begin{transformationclaim}
 \claimlanguage{\langref{IP}}
 \operation{\NOTC}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 Dual of \langref{PI}: $\Sigma_n = \bigvee_{i=0}^{n-1}(x_{2i} \land x_{2i+1})$ is in \langref{IP} form but has $2^n$ prime implicates. Its negation has $2^n$ prime implicants. Hence \langref{IP} cannot satisfy $\neg$C \citep{Darwiche_2002}.
 \end{description}
@@ -416,7 +416,7 @@ It is straightforward to convert a clause into an equivalent \langref{IP} formul
 \begin{transformationclaim}
 \claimlanguage{\langref{IP}}
 \operation{\ORBC}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 Combining prime implicants via disjunction requires distributing and re-minimizing terms, which can lead to an exponential explosion of new prime implicants. Let $\alpha_1 = \bigwedge_{i=1}^k p_i$ (one prime implicant) and $\alpha_2 = \bigvee_{i=1}^k \bigvee_{j=1}^m (\neg p_i \land q_{i,j})$ ($mk$ prime implicants). Then $\alpha_1 \lor \alpha_2$ has $(m+1)^k + mk$ prime implicants, an exponential blowup \citep{Chandra_1978} \citep{Darwiche_2002}.
 \end{description}
@@ -434,7 +434,7 @@ Given an \langref{IP} formula $\Sigma = \bigvee \gamma_i$, conditioning on $\gam
 \begin{transformationclaim}
 \claimlanguage{\langref{IP}}
 \operation{\SFO}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 The number of prime implicants of $\exists x.\Sigma$ can be exponentially greater than the number of prime implicants of $\Sigma$ \citep{Chandra_1978}. A specific construction with $mk+1$ prime implicants produces $(m+1)^k + mk$ prime implicants after forgetting one variable \citep{Darwiche_2002}.
 \end{description}
@@ -443,7 +443,7 @@ The number of prime implicants of $\exists x.\Sigma$ can be exponentially greate
 \begin{transformationclaim}
 \claimlanguage{\langref{MODS}}
 \operation{\NOTC}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 $\Sigma = \bigwedge_{i=1}^n x_i$ has only one model over $\{x_1,\ldots,x_n\}$ but its negation $\neg\Sigma$ has $2^n - 1$ models. Hence \langref{MODS} cannot satisfy $\neg$C \citep{Darwiche_2002}.
 \end{description}
@@ -461,7 +461,7 @@ The bounded conjunction of two \langref{MODS} formulas (over the same variables)
 \begin{transformationclaim}
 \claimlanguage{\langref{MODS}}
 \operation{\ANDC}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 Let $\Sigma_i = (x_{i,1} \lor x_{i,2})$ for $i = 1,\ldots,n$. Each $\Sigma_i$ has 3 models. But $\Sigma = \bigwedge_{i=1}^n \Sigma_i$ has $3^n$ models, so no polynomial-size \langref{MODS} representation exists \citep{Darwiche_2002}.
 \end{description}
@@ -470,7 +470,7 @@ Let $\Sigma_i = (x_{i,1} \lor x_{i,2})$ for $i = 1,\ldots,n$. Each $\Sigma_i$ ha
 \begin{transformationclaim}
 \claimlanguage{\langref{MODS}}
 \operation{\ORBC}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 Let $\alpha_1 = \bigwedge_{i=1}^n x_i$ (1 model) and $\alpha_2 = y$ (1 model). Then $\alpha_1 \lor \alpha_2$ has $2^n + 1$ models over $\text{Vars}(\alpha_1) \cup \text{Vars}(\alpha_2)$. Since this already uses the disjunction of just two \langref{MODS} representations, \langref{MODS} does not satisfy $\lor$BC \citep{Darwiche_2002}.
 \end{description}
@@ -596,7 +596,7 @@ Conditioning is easy on \langfam{OBDD}{<}: replace each decision node labeled by
 \begin{transformationclaim}
 \claimlanguage{\langref{PI}}
 \operation{\NOTC}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 The formula $\Sigma_n = \bigwedge_{i=0}^{n-1}(x_{2i} \lor x_{2i+1})$ is in \langref{PI} form but has $2^n$ prime implicants. Its negation has $2^n$ prime implicates. Hence \langref{PI} cannot satisfy $\neg$C \citep{Darwiche_2002}.
 \end{description}
@@ -605,7 +605,7 @@ The formula $\Sigma_n = \bigwedge_{i=0}^{n-1}(x_{2i} \lor x_{2i+1})$ is in \lang
 \begin{transformationclaim}
 \claimlanguage{\langref{PI}}
 \operation{\ANDBC}
-\status{\noquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 Combining prime implicates via conjunction requires distributing and re-minimizing clauses, which can lead to an exponential explosion of new prime implicates. Let $\alpha_1 = \bigvee_{i=1}^k p_i$ (one prime implicate) and $\alpha_2 = \bigwedge_{i=1}^k \bigwedge_{j=1}^m (\neg p_i \lor q_{i,j})$ ($mk$ prime implicates). Then $\alpha_1 \land \alpha_2$ has $(m+1)^k + mk$ prime implicates, an exponential blowup \citep{Chandra_1978} \citep{Darwiche_2002}.
 \end{description}

@@ -1,10 +1,10 @@
 {
   "batchClaims": [
     {
-      "id": "batch-d635fd7ef69c",
+      "id": "batch-beda5df5af85",
       "opType": "transformations",
       "op": "AND_C",
-      "status": "no-quasi",
+      "status": "no-poly-unknown-quasi",
       "selector": {
         "kind": "list",
         "languageIds": [
@@ -48,10 +48,10 @@
       ]
     },
     {
-      "id": "batch-ab69b1ec9f1d",
+      "id": "batch-d74f35d08471",
       "opType": "transformations",
       "op": "AND_C",
-      "status": "no-quasi",
+      "status": "no-poly-unknown-quasi",
       "selector": {
         "kind": "list",
         "languageIds": [
@@ -85,10 +85,10 @@
       ]
     },
     {
-      "id": "batch-1a95f4323f3e",
+      "id": "batch-ea7748d67a6c",
       "opType": "transformations",
       "op": "AND_BC",
-      "status": "no-quasi",
+      "status": "no-poly-unknown-quasi",
       "selector": {
         "kind": "allOf",
         "selectors": [
@@ -126,10 +126,10 @@
       ]
     },
     {
-      "id": "batch-dfe618b6ecd7",
+      "id": "batch-6c84faca0f6e",
       "opType": "transformations",
       "op": "OR_BC",
-      "status": "no-quasi",
+      "status": "no-poly-unknown-quasi",
       "selector": {
         "kind": "allOf",
         "selectors": [
@@ -167,10 +167,10 @@
       ]
     },
     {
-      "id": "batch-868e3ee0601c",
+      "id": "batch-1fc9ddee1513",
       "opType": "transformations",
       "op": "OR_BC",
-      "status": "no-quasi",
+      "status": "no-poly-unknown-quasi",
       "selector": {
         "kind": "allOf",
         "selectors": [
@@ -268,10 +268,10 @@
       ]
     },
     {
-      "id": "batch-3bcedff54136",
+      "id": "batch-707875cc981c",
       "opType": "transformations",
       "op": "NOT_C",
-      "status": "no-quasi",
+      "status": "no-poly-unknown-quasi",
       "selector": {
         "kind": "allOf",
         "selectors": [
@@ -309,10 +309,10 @@
       ]
     },
     {
-      "id": "batch-60a3482e3845",
+      "id": "batch-acfaba1563a1",
       "opType": "transformations",
       "op": "OR_C",
-      "status": "no-quasi",
+      "status": "no-poly-unknown-quasi",
       "selector": {
         "kind": "list",
         "languageIds": [
@@ -344,10 +344,10 @@
       ]
     },
     {
-      "id": "batch-2cd9d99dc341",
+      "id": "batch-22ef75ea16d1",
       "opType": "transformations",
       "op": "OR_C",
-      "status": "no-quasi",
+      "status": "no-poly-unknown-quasi",
       "selector": {
         "kind": "list",
         "languageIds": [
@@ -400,10 +400,10 @@
       ]
     },
     {
-      "id": "batch-092532dfc014",
+      "id": "batch-34736033b56d",
       "opType": "transformations",
       "op": "FO",
-      "status": "no-quasi",
+      "status": "no-poly-unknown-quasi",
       "selector": {
         "kind": "list",
         "languageIds": [
@@ -813,7 +813,7 @@
         },
         "transformations": {
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -823,10 +823,10 @@
             ],
             "description": "In the language \\langref{cSDD}, every clause has a polynomial-size representation. If \\langref{cSDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{cSDD} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langref{cSDD}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{cSDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-d635fd7ef69c"
+            "batchId": "batch-beda5df5af85"
           },
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -835,10 +835,10 @@
             ],
             "description": "In the language \\langref{cSDD}, every term has a polynomial-size representation. If \\langref{cSDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{cSDD} by disjoining the translated terms. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langref{cSDD}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{cSDD} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-60a3482e3845"
+            "batchId": "batch-acfaba1563a1"
           },
           "AND_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2011",
@@ -847,10 +847,10 @@
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{cSDD}} and \\compilesquasi{\\langref{cSDD}}{\\langref{DNNF}}, \\langref{cSDD} cannot support bounded conjunction.",
             "derived": false,
-            "batchId": "batch-1a95f4323f3e"
+            "batchId": "batch-ea7748d67a6c"
           },
           "OR_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2011",
@@ -859,7 +859,7 @@
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{cSDD}} and \\compilesquasi{\\langref{cSDD}}{\\langref{SDNNF}}, \\langref{cSDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
-            "batchId": "batch-dfe618b6ecd7"
+            "batchId": "batch-6c84faca0f6e"
           },
           "SFO": {
             "complexity": "no-poly-unknown-quasi",
@@ -1028,7 +1028,7 @@
         },
         "transformations": {
           "AND_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Amarilli_2018",
@@ -1037,10 +1037,10 @@
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{d-DNNF}} and \\compilesquasi{\\langref{d-DNNF}}{\\langref{DNNF}}, \\langref{d-DNNF} cannot support bounded conjunction.",
             "derived": false,
-            "batchId": "batch-1a95f4323f3e"
+            "batchId": "batch-ea7748d67a6c"
           },
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Darwiche_2002",
               "TCZ_Forthcoming",
@@ -1048,18 +1048,18 @@
               "Darwiche_2001a"
             ],
             "derived": true,
-            "description": "support for Conjunction implies support for Bounded Conjunction \\citep{Darwiche_2002}. However, \\nosupportsquasi{\\langref{d-DNNF}}{\\ANDBC}. Therefore \\nosupportsquasi{\\langref{d-DNNF}}{\\ANDC}.",
-            "derivationOrder": 1620,
+            "description": "support for Conjunction implies support for Bounded Conjunction \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{d-DNNF}}{\\ANDBC}. Therefore \\nosupportspoly{\\langref{d-DNNF}}{\\ANDC}.",
+            "derivationOrder": 1619,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "and-c-and-bc",
               "languageId": "lang_6c130090",
               "pivotOp": "AND_C",
-              "level": "quasi"
+              "level": "poly"
             }
           },
           "OR_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Bova_2016",
@@ -1067,10 +1067,10 @@
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{d-DNNF}}, \\langref{d-DNNF} cannot support bounded disjunction in quasipolynomial time.\n\nNote that \\citet[Theorem 9]{Bova_2016} proves the lower bound without explicitly noting the implication for Bounded Disjunction.",
             "derived": false,
-            "batchId": "batch-868e3ee0601c"
+            "batchId": "batch-1fc9ddee1513"
           },
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Darwiche_2002",
               "TCZ_Forthcoming",
@@ -1078,14 +1078,14 @@
               "Amarilli_2018"
             ],
             "derived": true,
-            "description": "support for Disjunction implies support for Bounded Disjunction \\citep{Darwiche_2002}. However, \\nosupportsquasi{\\langref{d-DNNF}}{\\ORBC}. Therefore \\nosupportsquasi{\\langref{d-DNNF}}{\\ORC}.",
-            "derivationOrder": 1622,
+            "description": "support for Disjunction implies support for Bounded Disjunction \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{d-DNNF}}{\\ORBC}. Therefore \\nosupportspoly{\\langref{d-DNNF}}{\\ORC}.",
+            "derivationOrder": 1620,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
               "languageId": "lang_6c130090",
               "pivotOp": "OR_C",
-              "level": "quasi"
+              "level": "poly"
             }
           },
           "FO": {
@@ -1097,7 +1097,7 @@
             ],
             "derived": true,
             "description": "support for Forgetting implies support for Singleton Forgetting \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{d-DNNF}}{\\SFO}. Therefore \\nosupportspoly{\\langref{d-DNNF}}{\\FO}.",
-            "derivationOrder": 1623,
+            "derivationOrder": 1621,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -1281,7 +1281,7 @@
         },
         "transformations": {
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -1291,10 +1291,10 @@
             ],
             "description": "In the language \\langref{d-SDNNF}, every clause has a polynomial-size representation. If \\langref{d-SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{d-SDNNF} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langref{d-SDNNF}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{d-SDNNF} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-d635fd7ef69c"
+            "batchId": "batch-beda5df5af85"
           },
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -1302,27 +1302,27 @@
             ],
             "description": "In the language \\langref{d-SDNNF}, every term has a polynomial-size representation. If \\langref{d-SDNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{d-SDNNF} by disjoining the translated terms. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langref{d-SDNNF}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{d-SDNNF} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-60a3482e3845"
+            "batchId": "batch-acfaba1563a1"
           },
           "AND_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{d-SDNNF}} and \\compilesquasi{\\langref{d-SDNNF}}{\\langref{DNNF}}, \\langref{d-SDNNF} cannot support bounded conjunction.",
             "derived": false,
-            "batchId": "batch-1a95f4323f3e"
+            "batchId": "batch-ea7748d67a6c"
           },
           "OR_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{d-SDNNF}} and \\compilesquasi{\\langref{d-SDNNF}}{\\langref{SDNNF}}, \\langref{d-SDNNF} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
-            "batchId": "batch-dfe618b6ecd7"
+            "batchId": "batch-6c84faca0f6e"
           },
           "CD": {
             "complexity": "poly",
@@ -1333,7 +1333,7 @@
             "derived": false
           },
           "FO": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "description": "If \\langref{d-SDNNF} satisfied FO, then every \\langref{DNF} could be compiled to an equivalent \\langref{d-SDNNF} of size polynomial in the input \\langref{DNF} (using fresh selector variables and applying FO). Since specific \\langref{DNF} formulas require exponential-size \\langref{d-SDNNF} representations (unconditionally), this is impossible. This unconditional result applies to the fixed-vtree case \\citet[Proposition 4]{Pipatsrisawat_2008}.",
             "refs": [
               "Pipatsrisawat_2008"
@@ -1515,7 +1515,7 @@
         },
         "transformations": {
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -1524,10 +1524,10 @@
             ],
             "description": "In the language \\langfam{d-SDNNF}{T}, every term has a polynomial-size representation. If \\langfam{d-SDNNF}{T} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{d-SDNNF}{T} by disjoining the translated terms. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langfam{d-SDNNF}{T}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-2cd9d99dc341"
+            "batchId": "batch-22ef75ea16d1"
           },
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -1538,7 +1538,7 @@
             ],
             "description": "In the language \\langfam{d-SDNNF}{T}, every clause has a polynomial-size representation. If \\langfam{d-SDNNF}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{d-SDNNF}{T} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langfam{d-SDNNF}{T}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-ab69b1ec9f1d"
+            "batchId": "batch-d74f35d08471"
           },
           "FO": {
             "complexity": "no-poly-unknown-quasi",
@@ -1549,7 +1549,7 @@
             ],
             "derived": true,
             "description": "support for Forgetting implies support for Singleton Forgetting \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langfam{d-SDNNF}{T}}{\\SFO}. Therefore \\nosupportspoly{\\langfam{d-SDNNF}{T}}{\\FO}.",
-            "derivationOrder": 1624,
+            "derivationOrder": 1622,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -1586,7 +1586,7 @@
             ],
             "derived": true,
             "description": "support for Negation and support for Bounded Conjunction together imply support for Bounded Disjunction \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langfam{d-SDNNF}{T}}{\\ORBC}. Also, \\supportspoly{\\langfam{d-SDNNF}{T}}{\\ANDBC}. Therefore \\nosupportspoly{\\langfam{d-SDNNF}{T}}{\\NOTC}.",
-            "derivationOrder": 1625,
+            "derivationOrder": 1623,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-and-bc-or-bc",
@@ -1698,7 +1698,7 @@
             ],
             "derived": true,
             "description": "support for Equivalence implies support for Validity \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{DNF}}{\\VA}. Therefore \\nosupportspoly{\\langref{DNF}}{\\EQ}.",
-            "derivationOrder": 1626,
+            "derivationOrder": 1624,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -1715,7 +1715,7 @@
             ],
             "derived": true,
             "description": "support for Sentential Entailment implies support for Equivalence \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{DNF}}{\\EQ}. Therefore \\nosupportspoly{\\langref{DNF}}{\\SE}.",
-            "derivationOrder": 1627,
+            "derivationOrder": 1625,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "se-eq",
@@ -1732,7 +1732,7 @@
             ],
             "derived": true,
             "description": "support for Implicant implies support for Validity \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{DNF}}{\\VA}. Therefore \\nosupportspoly{\\langref{DNF}}{\\IM}.",
-            "derivationOrder": 1628,
+            "derivationOrder": 1626,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -1754,17 +1754,17 @@
         },
         "transformations": {
           "NOT_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Bova_2014",
               "Darwiche_2002"
             ],
             "description": "\\citet[Lemma 5]{Bova_2014} gives 2-\\langref{DNF} formulas $D$ whose negations require \\langref{DNNF} size $2^{\\Omega(\\operatorname{size}(D))}$. If \\langref{DNF} supported Negation in quasipolynomial time, then \\compilesquasi{\\langref{DNF}}{\\langref{DNNF}} would yield quasipolynomial-size \\langref{DNNF} formulas for those negations, contradicting the lower bound.",
             "derived": false,
-            "batchId": "batch-3bcedff54136"
+            "batchId": "batch-707875cc981c"
           },
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -1772,7 +1772,7 @@
             ],
             "description": "In the language \\langref{DNF}, every clause has a polynomial-size representation. If \\langref{DNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{DNF} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langref{DNF}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-ab69b1ec9f1d"
+            "batchId": "batch-d74f35d08471"
           },
           "OR_BC": {
             "complexity": "poly",
@@ -1947,7 +1947,7 @@
             ],
             "derived": true,
             "description": "support for Equivalence implies support for Validity \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{DNNF}}{\\VA}. Therefore \\nosupportspoly{\\langref{DNNF}}{\\EQ}.",
-            "derivationOrder": 1629,
+            "derivationOrder": 1627,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -1964,7 +1964,7 @@
             ],
             "derived": true,
             "description": "support for Implicant implies support for Validity \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{DNNF}}{\\VA}. Therefore \\nosupportspoly{\\langref{DNNF}}{\\IM}.",
-            "derivationOrder": 1630,
+            "derivationOrder": 1628,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -1986,7 +1986,7 @@
         },
         "transformations": {
           "AND_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Amarilli_2018",
@@ -1995,10 +1995,10 @@
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{DNNF}}, \\langref{DNNF} cannot support bounded conjunction.",
             "derived": false,
-            "batchId": "batch-1a95f4323f3e"
+            "batchId": "batch-ea7748d67a6c"
           },
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -2006,17 +2006,17 @@
             ],
             "description": "In the language \\langref{DNNF}, every clause has a polynomial-size representation. If \\langref{DNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{DNNF} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langref{DNNF}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{DNNF} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-d635fd7ef69c"
+            "batchId": "batch-beda5df5af85"
           },
           "NOT_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Bova_2014",
               "Darwiche_2002"
             ],
             "description": "\\citet[Lemma 5]{Bova_2014} gives 2-\\langref{DNF} formulas $D$ whose negations require \\langref{DNNF} size $2^{\\Omega(\\operatorname{size}(D))}$. If \\langref{DNNF} supported Negation in quasipolynomial time, then \\compilesquasi{\\langref{DNF}}{\\langref{DNNF}} would yield quasipolynomial-size \\langref{DNNF} formulas for those negations, contradicting the lower bound.",
             "derived": false,
-            "batchId": "batch-3bcedff54136"
+            "batchId": "batch-707875cc981c"
           },
           "OR_BC": {
             "complexity": "poly",
@@ -2193,7 +2193,7 @@
         },
         "transformations": {
           "AND_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -2201,10 +2201,10 @@
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{FBDD}} and \\compilesquasi{\\langref{FBDD}}{\\langref{DNNF}}, \\langref{FBDD} cannot support bounded conjunction.",
             "derived": false,
-            "batchId": "batch-1a95f4323f3e"
+            "batchId": "batch-ea7748d67a6c"
           },
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -2213,10 +2213,10 @@
             ],
             "description": "In the language \\langref{FBDD}, every clause has a polynomial-size representation. If \\langref{FBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{FBDD} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langref{FBDD}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{FBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-d635fd7ef69c"
+            "batchId": "batch-beda5df5af85"
           },
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -2224,10 +2224,10 @@
             ],
             "description": "In the language \\langref{FBDD}, every term has a polynomial-size representation. If \\langref{FBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{FBDD} by disjoining the translated terms. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langref{FBDD}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{FBDD} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-60a3482e3845"
+            "batchId": "batch-acfaba1563a1"
           },
           "OR_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Bova_2016",
@@ -2235,23 +2235,23 @@
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{FBDD}} and \\compilesquasi{\\langref{FBDD}}{\\langref{d-DNNF}}, \\langref{FBDD} cannot support bounded disjunction in quasipolynomial time.\n\nNote that \\citet[Theorem 9]{Bova_2016} proves the lower bound without explicitly noting the implication for Bounded Disjunction.",
             "derived": false,
-            "batchId": "batch-868e3ee0601c"
+            "batchId": "batch-1fc9ddee1513"
           },
           "FO": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Darwiche_2002",
               "Wegener_2000"
             ],
             "derived": true,
-            "description": "support for Forgetting implies support for Singleton Forgetting \\citep{Darwiche_2002}. However, \\nosupportsquasi{\\langref{FBDD}}{\\SFO}. Therefore \\nosupportsquasi{\\langref{FBDD}}{\\FO}.",
-            "derivationOrder": 1632,
+            "description": "support for Forgetting implies support for Singleton Forgetting \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{FBDD}}{\\SFO}. Therefore \\nosupportspoly{\\langref{FBDD}}{\\FO}.",
+            "derivationOrder": 1629,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
               "languageId": "lang_684b1ca7",
               "pivotOp": "FO",
-              "level": "quasi"
+              "level": "poly"
             }
           },
           "NOT_C": {
@@ -2271,7 +2271,7 @@
             "derived": false
           },
           "SFO": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "description": "Let $ROW_n$ and $COL_n$ test whether an $n \\times n$ Boolean matrix has an all-1 row or an all-1 column. The selector construction $(s \\land ROW_n) \\lor (\\neg s \\land COL_n)$ has polynomial-size \\langref{FBDD}{s}: the top variable $s$ chooses a rowwise or columnwise computation. Forgetting $s$ yields $ROW_n \\lor COL_n$, whose \\langref{FBDD} size is $\\Omega(n^{-7/2}2^n)$ by \\citet[Theorem 6.2.13]{Wegener_2000}.",
             "refs": [
               "Wegener_2000"
@@ -2395,41 +2395,41 @@
         },
         "transformations": {
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Darwiche_2002",
               "Chandra_1978"
             ],
             "derived": true,
-            "description": "support for Disjunction implies support for Bounded Disjunction \\citep{Darwiche_2002}. However, \\nosupportsquasi{\\langref{IP}}{\\ORBC}. Therefore \\nosupportsquasi{\\langref{IP}}{\\ORC}.",
-            "derivationOrder": 1634,
+            "description": "support for Disjunction implies support for Bounded Disjunction \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{IP}}{\\ORBC}. Therefore \\nosupportspoly{\\langref{IP}}{\\ORC}.",
+            "derivationOrder": 1630,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
               "languageId": "lang_6ae90adc",
               "pivotOp": "OR_C",
-              "level": "quasi"
+              "level": "poly"
             }
           },
           "FO": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Darwiche_2002",
               "Chandra_1978"
             ],
             "derived": true,
-            "description": "support for Forgetting implies support for Singleton Forgetting \\citep{Darwiche_2002}. However, \\nosupportsquasi{\\langref{IP}}{\\SFO}. Therefore \\nosupportsquasi{\\langref{IP}}{\\FO}.",
-            "derivationOrder": 1636,
+            "description": "support for Forgetting implies support for Singleton Forgetting \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{IP}}{\\SFO}. Therefore \\nosupportspoly{\\langref{IP}}{\\FO}.",
+            "derivationOrder": 1631,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
               "languageId": "lang_6ae90adc",
               "pivotOp": "FO",
-              "level": "quasi"
+              "level": "poly"
             }
           },
           "NOT_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "description": "Dual of \\langref{PI}: $\\Sigma_n = \\bigvee_{i=0}^{n-1}(x_{2i} \\land x_{2i+1})$ is in \\langref{IP} form but has $2^n$ prime implicates. Its negation has $2^n$ prime implicants. Hence \\langref{IP} cannot satisfy $\\neg$C \\citep{Darwiche_2002}.",
             "refs": [
               "Darwiche_2002"
@@ -2454,7 +2454,7 @@
             "derived": false
           },
           "OR_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "description": "Combining prime implicants via disjunction requires distributing and re-minimizing terms, which can lead to an exponential explosion of new prime implicants. Let $\\alpha_1 = \\bigwedge_{i=1}^k p_i$ (one prime implicant) and $\\alpha_2 = \\bigvee_{i=1}^k \\bigvee_{j=1}^m (\\neg p_i \\land q_{i,j})$ ($mk$ prime implicants). Then $\\alpha_1 \\lor \\alpha_2$ has $(m+1)^k + mk$ prime implicants, an exponential blowup \\citep{Chandra_1978} \\citep{Darwiche_2002}.",
             "refs": [
               "Chandra_1978",
@@ -2471,7 +2471,7 @@
             "derived": false
           },
           "SFO": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "description": "The number of prime implicants of $\\exists x.\\Sigma$ can be exponentially greater than the number of prime implicants of $\\Sigma$ \\citep{Chandra_1978}. A specific construction with $mk+1$ prime implicants produces $(m+1)^k + mk$ prime implicants after forgetting one variable \\citep{Darwiche_2002}.",
             "refs": [
               "Chandra_1978",
@@ -2642,23 +2642,23 @@
             }
           },
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Darwiche_2002"
             ],
             "derived": true,
-            "description": "support for Disjunction implies support for Bounded Disjunction \\citep{Darwiche_2002}. However, \\nosupportsquasi{\\langref{MODS}}{\\ORBC}. Therefore \\nosupportsquasi{\\langref{MODS}}{\\ORC}.",
-            "derivationOrder": 1638,
+            "description": "support for Disjunction implies support for Bounded Disjunction \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{MODS}}{\\ORBC}. Therefore \\nosupportspoly{\\langref{MODS}}{\\ORC}.",
+            "derivationOrder": 1632,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
               "languageId": "lang_e02902d0",
               "pivotOp": "OR_C",
-              "level": "quasi"
+              "level": "poly"
             }
           },
           "NOT_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "description": "$\\Sigma = \\bigwedge_{i=1}^n x_i$ has only one model over $\\{x_1,\\ldots,x_n\\}$ but its negation $\\neg\\Sigma$ has $2^n - 1$ models. Hence \\langref{MODS} cannot satisfy $\\neg$C \\citep{Darwiche_2002}.",
             "refs": [
               "Darwiche_2002"
@@ -2674,7 +2674,7 @@
             "derived": false
           },
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "description": "Let $\\Sigma_i = (x_{i,1} \\lor x_{i,2})$ for $i = 1,\\ldots,n$. Each $\\Sigma_i$ has 3 models. But $\\Sigma = \\bigwedge_{i=1}^n \\Sigma_i$ has $3^n$ models, so no polynomial-size \\langref{MODS} representation exists \\citep{Darwiche_2002}.",
             "refs": [
               "Darwiche_2002"
@@ -2682,7 +2682,7 @@
             "derived": false
           },
           "OR_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "description": "Let $\\alpha_1 = \\bigwedge_{i=1}^n x_i$ (1 model) and $\\alpha_2 = y$ (1 model). Then $\\alpha_1 \\lor \\alpha_2$ has $2^n + 1$ models over $\\text{Vars}(\\alpha_1) \\cup \\text{Vars}(\\alpha_2)$. Since this already uses the disjunction of just two \\langref{MODS} representations, \\langref{MODS} does not satisfy $\\lor$BC \\citep{Darwiche_2002}.",
             "refs": [
               "Darwiche_2002"
@@ -2828,7 +2828,7 @@
             ],
             "derived": true,
             "description": "support for Equivalence implies support for Validity \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{nFBDD}}{\\VA}. Therefore \\nosupportspoly{\\langref{nFBDD}}{\\EQ}.",
-            "derivationOrder": 1639,
+            "derivationOrder": 1633,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -2847,7 +2847,7 @@
             ],
             "derived": true,
             "description": "support for Implicant implies support for Validity \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{nFBDD}}{\\VA}. Therefore \\nosupportspoly{\\langref{nFBDD}}{\\IM}.",
-            "derivationOrder": 1640,
+            "derivationOrder": 1634,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -2860,7 +2860,7 @@
         },
         "transformations": {
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -2869,10 +2869,10 @@
             ],
             "description": "In the language \\langref{nFBDD}, every clause has a polynomial-size representation. If \\langref{nFBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{nFBDD} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langref{nFBDD}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{nFBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-d635fd7ef69c"
+            "batchId": "batch-beda5df5af85"
           },
           "NOT_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Bova_2014",
               "Amarilli_2018",
@@ -2880,17 +2880,17 @@
             ],
             "description": "\\citet[Lemma 5]{Bova_2014} gives 2-\\langref{DNF} formulas $D$ whose negations require \\langref{DNNF} size $2^{\\Omega(\\operatorname{size}(D))}$. If \\langref{nFBDD} supported Negation in quasipolynomial time, then \\compilesquasi{\\langref{DNF}}{\\langref{nFBDD}} and \\compilesquasi{\\langref{nFBDD}}{\\langref{DNNF}} would yield quasipolynomial-size \\langref{DNNF} formulas for those negations, contradicting the lower bound.",
             "derived": false,
-            "batchId": "batch-3bcedff54136"
+            "batchId": "batch-707875cc981c"
           },
           "AND_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{nFBDD}} and \\compilesquasi{\\langref{nFBDD}}{\\langref{DNNF}}, \\langref{nFBDD} cannot support bounded conjunction.",
             "derived": false,
-            "batchId": "batch-1a95f4323f3e"
+            "batchId": "batch-ea7748d67a6c"
           },
           "OR_BC": {
             "complexity": "poly",
@@ -3040,7 +3040,7 @@
             ],
             "derived": true,
             "description": "support for Equivalence implies support for Consistency \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{NNF}}{\\CO}. Therefore \\nosupportspoly{\\langref{NNF}}{\\EQ}.",
-            "derivationOrder": 1641,
+            "derivationOrder": 1635,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-co",
@@ -3057,7 +3057,7 @@
             ],
             "derived": true,
             "description": "support for Implicant implies support for Validity \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{NNF}}{\\VA}. Therefore \\nosupportspoly{\\langref{NNF}}{\\IM}.",
-            "derivationOrder": 1642,
+            "derivationOrder": 1636,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -3076,7 +3076,7 @@
             ],
             "derived": true,
             "description": "support for Clausal Entailment implies support for Consistency \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{NNF}}{\\CO}. Therefore \\nosupportspoly{\\langref{NNF}}{\\CE}.",
-            "derivationOrder": 1643,
+            "derivationOrder": 1637,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "ce-co",
@@ -3095,7 +3095,7 @@
             ],
             "derived": true,
             "description": "support for Model Enumeration implies support for Consistency \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{NNF}}{\\CO}. Therefore \\nosupportspoly{\\langref{NNF}}{\\ME}.",
-            "derivationOrder": 1644,
+            "derivationOrder": 1638,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "me-co",
@@ -3331,7 +3331,7 @@
             ],
             "derived": true,
             "description": "support for Equivalence implies support for Validity \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{nOBDD}}{\\VA}. Therefore \\nosupportspoly{\\langref{nOBDD}}{\\EQ}.",
-            "derivationOrder": 1645,
+            "derivationOrder": 1639,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -3350,7 +3350,7 @@
             ],
             "derived": true,
             "description": "support for Implicant implies support for Validity \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{nOBDD}}{\\VA}. Therefore \\nosupportspoly{\\langref{nOBDD}}{\\IM}.",
-            "derivationOrder": 1646,
+            "derivationOrder": 1640,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -3363,7 +3363,7 @@
         },
         "transformations": {
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -3372,10 +3372,10 @@
             ],
             "description": "In the language \\langref{nOBDD}, every clause has a polynomial-size representation. If \\langref{nOBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{nOBDD} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langref{nOBDD}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{nOBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-d635fd7ef69c"
+            "batchId": "batch-beda5df5af85"
           },
           "NOT_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Bova_2014",
               "Amarilli_2018",
@@ -3383,44 +3383,44 @@
             ],
             "description": "\\citet[Lemma 5]{Bova_2014} gives 2-\\langref{DNF} formulas $D$ whose negations require \\langref{DNNF} size $2^{\\Omega(\\operatorname{size}(D))}$. If \\langref{nOBDD} supported Negation in quasipolynomial time, then \\compilesquasi{\\langref{DNF}}{\\langref{nOBDD}} and \\compilesquasi{\\langref{nOBDD}}{\\langref{DNNF}} would yield quasipolynomial-size \\langref{DNNF} formulas for those negations, contradicting the lower bound.",
             "derived": false,
-            "batchId": "batch-3bcedff54136"
+            "batchId": "batch-707875cc981c"
           },
           "AND_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{nOBDD}} and \\compilesquasi{\\langref{nOBDD}}{\\langref{DNNF}}, \\langref{nOBDD} cannot support bounded conjunction.",
             "derived": false,
-            "batchId": "batch-1a95f4323f3e"
+            "batchId": "batch-ea7748d67a6c"
           },
           "OR_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{nOBDD}} and \\compilesquasi{\\langref{nOBDD}}{\\langref{SDNNF}}, \\langref{nOBDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
-            "batchId": "batch-dfe618b6ecd7"
+            "batchId": "batch-6c84faca0f6e"
           },
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Darwiche_2002",
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
             "derived": true,
-            "description": "support for Disjunction implies support for Bounded Disjunction \\citep{Darwiche_2002}. However, \\nosupportsquasi{\\langref{nOBDD}}{\\ORBC}. Therefore \\nosupportsquasi{\\langref{nOBDD}}{\\ORC}.",
-            "derivationOrder": 1648,
+            "description": "support for Disjunction implies support for Bounded Disjunction \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{nOBDD}}{\\ORBC}. Therefore \\nosupportspoly{\\langref{nOBDD}}{\\ORC}.",
+            "derivationOrder": 1641,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
               "languageId": "lang_d24efe0e",
               "pivotOp": "OR_C",
-              "level": "quasi"
+              "level": "poly"
             }
           },
           "SFO": {
@@ -3560,7 +3560,7 @@
         },
         "transformations": {
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -3570,10 +3570,10 @@
             ],
             "description": "In the language \\langfam{OBDD}{<}, every term has a polynomial-size representation. If \\langfam{OBDD}{<} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{OBDD}{<} by disjoining the translated terms. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langfam{OBDD}{<}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-2cd9d99dc341"
+            "batchId": "batch-22ef75ea16d1"
           },
           "FO": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -3583,7 +3583,7 @@
             ],
             "description": "A quasipolynomial-time forgetting procedure for \\langfam{OBDD}{<} would turn every \\langref{DNF} representation into an equivalent \\langfam{OBDD}{<} representation of quasipolynomial size in the input \\langref{DNF} after introducing fresh selectors and forgetting them. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langfam{OBDD}{<}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002,VanDenBroeck_2015}",
             "derived": false,
-            "batchId": "batch-092532dfc014"
+            "batchId": "batch-34736033b56d"
           },
           "SFO": {
             "complexity": "poly",
@@ -3602,7 +3602,7 @@
             }
           },
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Darwiche_2002",
               "TCZ_Forthcoming",
@@ -3612,14 +3612,14 @@
               "Amarilli_2018"
             ],
             "derived": true,
-            "description": "support for Negation and support for Conjunction together imply support for Disjunction \\citep{Darwiche_2002}. However, \\nosupportsquasi{\\langfam{OBDD}{<}}{\\ORC}. Also, \\supportsquasi{\\langfam{OBDD}{<}}{\\NOTC}. Therefore \\nosupportsquasi{\\langfam{OBDD}{<}}{\\ANDC}.",
-            "derivationOrder": 1650,
+            "description": "support for Negation and support for Conjunction together imply support for Disjunction \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langfam{OBDD}{<}}{\\ORC}. Also, \\supportspoly{\\langfam{OBDD}{<}}{\\NOTC}. Therefore \\nosupportspoly{\\langfam{OBDD}{<}}{\\ANDC}.",
+            "derivationOrder": 1642,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-and-c-or-c",
               "languageId": "lang_d69995dd",
               "pivotOp": "AND_C",
-              "level": "quasi"
+              "level": "poly"
             }
           },
           "NOT_C": {
@@ -3787,24 +3787,24 @@
             }
           },
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Darwiche_2002",
               "Chandra_1978"
             ],
             "derived": true,
-            "description": "support for Conjunction implies support for Bounded Conjunction \\citep{Darwiche_2002}. However, \\nosupportsquasi{\\langref{PI}}{\\ANDBC}. Therefore \\nosupportsquasi{\\langref{PI}}{\\ANDC}.",
-            "derivationOrder": 1652,
+            "description": "support for Conjunction implies support for Bounded Conjunction \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{PI}}{\\ANDBC}. Therefore \\nosupportspoly{\\langref{PI}}{\\ANDC}.",
+            "derivationOrder": 1643,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "and-c-and-bc",
               "languageId": "lang_27fffab2",
               "pivotOp": "AND_C",
-              "level": "quasi"
+              "level": "poly"
             }
           },
           "NOT_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "description": "The formula $\\Sigma_n = \\bigwedge_{i=0}^{n-1}(x_{2i} \\lor x_{2i+1})$ is in \\langref{PI} form but has $2^n$ prime implicants. Its negation has $2^n$ prime implicates. Hence \\langref{PI} cannot satisfy $\\neg$C \\citep{Darwiche_2002}.",
             "refs": [
               "Darwiche_2002"
@@ -3812,7 +3812,7 @@
             "derived": false
           },
           "AND_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "description": "Combining prime implicates via conjunction requires distributing and re-minimizing clauses, which can lead to an exponential explosion of new prime implicates. Let $\\alpha_1 = \\bigvee_{i=1}^k p_i$ (one prime implicate) and $\\alpha_2 = \\bigwedge_{i=1}^k \\bigwedge_{j=1}^m (\\neg p_i \\lor q_{i,j})$ ($mk$ prime implicates). Then $\\alpha_1 \\land \\alpha_2$ has $(m+1)^k + mk$ prime implicates, an exponential blowup \\citep{Chandra_1978} \\citep{Darwiche_2002}.",
             "refs": [
               "Chandra_1978",
@@ -4019,7 +4019,7 @@
         },
         "transformations": {
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -4030,10 +4030,10 @@
             ],
             "description": "In the language \\langref{SDD}, every clause has a polynomial-size representation. If \\langref{SDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{SDD} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langref{SDD}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{SDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-d635fd7ef69c"
+            "batchId": "batch-beda5df5af85"
           },
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Darwiche_2002",
               "TCZ_Forthcoming",
@@ -4042,18 +4042,18 @@
               "Amarilli_2018"
             ],
             "derived": true,
-            "description": "support for Disjunction implies support for Bounded Disjunction \\citep{Darwiche_2002}. However, \\nosupportsquasi{\\langref{SDD}}{\\ORBC}. Therefore \\nosupportsquasi{\\langref{SDD}}{\\ORC}.",
-            "derivationOrder": 1654,
+            "description": "support for Disjunction implies support for Bounded Disjunction \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{SDD}}{\\ORBC}. Therefore \\nosupportspoly{\\langref{SDD}}{\\ORC}.",
+            "derivationOrder": 1644,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
               "languageId": "lang_1afefbe2",
               "pivotOp": "OR_C",
-              "level": "quasi"
+              "level": "poly"
             }
           },
           "AND_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Capelli_2026",
@@ -4062,10 +4062,10 @@
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{SDD}} and \\compilesquasi{\\langref{SDD}}{\\langref{DNNF}}, \\langref{SDD} cannot support bounded conjunction.",
             "derived": false,
-            "batchId": "batch-1a95f4323f3e"
+            "batchId": "batch-ea7748d67a6c"
           },
           "OR_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Capelli_2026",
@@ -4074,7 +4074,7 @@
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{SDD}} and \\compilesquasi{\\langref{SDD}}{\\langref{SDNNF}}, \\langref{SDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
-            "batchId": "batch-dfe618b6ecd7"
+            "batchId": "batch-6c84faca0f6e"
           },
           "SFO": {
             "complexity": "no-poly-unknown-quasi",
@@ -4095,7 +4095,7 @@
             ],
             "derived": true,
             "description": "support for Forgetting implies support for Singleton Forgetting \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{SDD}}{\\SFO}. Therefore \\nosupportspoly{\\langref{SDD}}{\\FO}.",
-            "derivationOrder": 1655,
+            "derivationOrder": 1645,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -4287,7 +4287,7 @@
         },
         "transformations": {
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -4299,10 +4299,10 @@
             ],
             "description": "In the language \\langfam{SDD}{T}, every clause has a polynomial-size representation. If \\langfam{SDD}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{SDD}{T} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langfam{SDD}{T}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-ab69b1ec9f1d"
+            "batchId": "batch-d74f35d08471"
           },
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -4312,10 +4312,10 @@
             ],
             "description": "In the language \\langfam{SDD}{T}, every term has a polynomial-size representation. If \\langfam{SDD}{T} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{SDD}{T} by disjoining the translated terms. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langfam{SDD}{T}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-2cd9d99dc341"
+            "batchId": "batch-22ef75ea16d1"
           },
           "FO": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -4325,7 +4325,7 @@
             ],
             "description": "A quasipolynomial-time forgetting procedure for \\langfam{SDD}{T} would turn every \\langref{DNF} representation into an equivalent \\langfam{SDD}{T} representation of quasipolynomial size in the input \\langref{DNF} after introducing fresh selectors and forgetting them. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langfam{SDD}{T}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002,VanDenBroeck_2015}",
             "derived": false,
-            "batchId": "batch-092532dfc014"
+            "batchId": "batch-34736033b56d"
           },
           "SFO": {
             "complexity": "poly",
@@ -4508,7 +4508,7 @@
             ],
             "derived": true,
             "description": "support for Equivalence implies support for Validity \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{SDNNF}}{\\VA}. Therefore \\nosupportspoly{\\langref{SDNNF}}{\\EQ}.",
-            "derivationOrder": 1656,
+            "derivationOrder": 1646,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -4528,7 +4528,7 @@
             ],
             "derived": true,
             "description": "support for Implicant implies support for Validity \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{SDNNF}}{\\VA}. Therefore \\nosupportspoly{\\langref{SDNNF}}{\\IM}.",
-            "derivationOrder": 1657,
+            "derivationOrder": 1647,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -4541,7 +4541,7 @@
         },
         "transformations": {
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -4550,10 +4550,10 @@
             ],
             "description": "In the language \\langref{SDNNF}, every clause has a polynomial-size representation. If \\langref{SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{SDNNF} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langref{SDNNF}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{SDNNF} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-d635fd7ef69c"
+            "batchId": "batch-beda5df5af85"
           },
           "NOT_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Bova_2014",
               "Amarilli_2018",
@@ -4562,44 +4562,44 @@
             ],
             "description": "\\citet[Lemma 5]{Bova_2014} gives 2-\\langref{DNF} formulas $D$ whose negations require \\langref{DNNF} size $2^{\\Omega(\\operatorname{size}(D))}$. If \\langref{SDNNF} supported Negation in quasipolynomial time, then \\compilesquasi{\\langref{DNF}}{\\langref{SDNNF}} and \\compilesquasi{\\langref{SDNNF}}{\\langref{DNNF}} would yield quasipolynomial-size \\langref{DNNF} formulas for those negations, contradicting the lower bound.",
             "derived": false,
-            "batchId": "batch-3bcedff54136"
+            "batchId": "batch-707875cc981c"
           },
           "AND_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{SDNNF}} and \\compilesquasi{\\langref{SDNNF}}{\\langref{DNNF}}, \\langref{SDNNF} cannot support bounded conjunction.",
             "derived": false,
-            "batchId": "batch-1a95f4323f3e"
+            "batchId": "batch-ea7748d67a6c"
           },
           "OR_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{SDNNF}}, \\langref{SDNNF} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
-            "batchId": "batch-dfe618b6ecd7"
+            "batchId": "batch-6c84faca0f6e"
           },
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Darwiche_2002",
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
             "derived": true,
-            "description": "support for Disjunction implies support for Bounded Disjunction \\citep{Darwiche_2002}. However, \\nosupportsquasi{\\langref{SDNNF}}{\\ORBC}. Therefore \\nosupportsquasi{\\langref{SDNNF}}{\\ORC}.",
-            "derivationOrder": 1659,
+            "description": "support for Disjunction implies support for Bounded Disjunction \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{SDNNF}}{\\ORBC}. Therefore \\nosupportspoly{\\langref{SDNNF}}{\\ORC}.",
+            "derivationOrder": 1648,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
               "languageId": "lang_b13b0d78",
               "pivotOp": "OR_C",
-              "level": "quasi"
+              "level": "poly"
             }
           },
           "SFO": {
@@ -4746,7 +4746,7 @@
             ],
             "derived": true,
             "description": "support for Equivalence implies support for Validity \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langfam{SDNNF}{T}}{\\VA}. Therefore \\nosupportspoly{\\langfam{SDNNF}{T}}{\\EQ}.",
-            "derivationOrder": 1660,
+            "derivationOrder": 1649,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -4765,7 +4765,7 @@
             ],
             "derived": true,
             "description": "support for Sentential Entailment implies support for Equivalence \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langfam{SDNNF}{T}}{\\EQ}. Therefore \\nosupportspoly{\\langfam{SDNNF}{T}}{\\SE}.",
-            "derivationOrder": 1661,
+            "derivationOrder": 1650,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "se-eq",
@@ -4784,7 +4784,7 @@
             ],
             "derived": true,
             "description": "support for Implicant implies support for Validity \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langfam{SDNNF}{T}}{\\VA}. Therefore \\nosupportspoly{\\langfam{SDNNF}{T}}{\\IM}.",
-            "derivationOrder": 1662,
+            "derivationOrder": 1651,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -4797,7 +4797,7 @@
         },
         "transformations": {
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -4807,10 +4807,10 @@
             ],
             "description": "In the language \\langfam{SDNNF}{T}, every clause has a polynomial-size representation. If \\langfam{SDNNF}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{SDNNF}{T} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langfam{SDNNF}{T}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-ab69b1ec9f1d"
+            "batchId": "batch-d74f35d08471"
           },
           "NOT_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Bova_2014",
               "Amarilli_2018",
@@ -4819,7 +4819,7 @@
             ],
             "description": "\\citet[Lemma 5]{Bova_2014} gives 2-\\langref{DNF} formulas $D$ whose negations require \\langref{DNNF} size $2^{\\Omega(\\operatorname{size}(D))}$. If \\langfam{SDNNF}{T} supported Negation in quasipolynomial time, then \\compilesquasi{\\langref{DNF}}{\\langfam{SDNNF}{T}} and \\compilesquasi{\\langfam{SDNNF}{T}}{\\langref{DNNF}} would yield quasipolynomial-size \\langref{DNNF} formulas for those negations, contradicting the lower bound.",
             "derived": false,
-            "batchId": "batch-3bcedff54136"
+            "batchId": "batch-707875cc981c"
           },
           "OR_BC": {
             "complexity": "poly",
@@ -5042,7 +5042,7 @@
         },
         "transformations": {
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -5052,20 +5052,20 @@
             ],
             "description": "In the language \\langref{uFBDD}, every clause has a polynomial-size representation. If \\langref{uFBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{uFBDD} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langref{uFBDD}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{uFBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-d635fd7ef69c"
+            "batchId": "batch-beda5df5af85"
           },
           "AND_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{uFBDD}} and \\compilesquasi{\\langref{uFBDD}}{\\langref{DNNF}}, \\langref{uFBDD} cannot support bounded conjunction.",
             "derived": false,
-            "batchId": "batch-1a95f4323f3e"
+            "batchId": "batch-ea7748d67a6c"
           },
           "OR_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Bova_2016",
@@ -5073,10 +5073,10 @@
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{uFBDD}} and \\compilesquasi{\\langref{uFBDD}}{\\langref{d-DNNF}}, \\langref{uFBDD} cannot support bounded disjunction in quasipolynomial time.\n\nNote that \\citet[Theorem 9]{Bova_2016} proves the lower bound without explicitly noting the implication for Bounded Disjunction.",
             "derived": false,
-            "batchId": "batch-868e3ee0601c"
+            "batchId": "batch-1fc9ddee1513"
           },
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Darwiche_2002",
               "TCZ_Forthcoming",
@@ -5084,14 +5084,14 @@
               "Amarilli_2018"
             ],
             "derived": true,
-            "description": "support for Disjunction implies support for Bounded Disjunction \\citep{Darwiche_2002}. However, \\nosupportsquasi{\\langref{uFBDD}}{\\ORBC}. Therefore \\nosupportsquasi{\\langref{uFBDD}}{\\ORC}.",
-            "derivationOrder": 1664,
+            "description": "support for Disjunction implies support for Bounded Disjunction \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{uFBDD}}{\\ORBC}. Therefore \\nosupportspoly{\\langref{uFBDD}}{\\ORC}.",
+            "derivationOrder": 1652,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "or-c-or-bc",
               "languageId": "lang_4e62a038",
               "pivotOp": "OR_C",
-              "level": "quasi"
+              "level": "poly"
             }
           },
           "SFO": {
@@ -5113,7 +5113,7 @@
             ],
             "derived": true,
             "description": "support for Forgetting implies support for Singleton Forgetting \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{uFBDD}}{\\SFO}. Therefore \\nosupportspoly{\\langref{uFBDD}}{\\FO}.",
-            "derivationOrder": 1665,
+            "derivationOrder": 1653,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -5287,7 +5287,7 @@
         },
         "transformations": {
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -5295,10 +5295,10 @@
             ],
             "description": "In the language \\langref{uOBDD}, every term has a polynomial-size representation. If \\langref{uOBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{uOBDD} by disjoining the translated terms. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langref{uOBDD}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{uOBDD} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-60a3482e3845"
+            "batchId": "batch-acfaba1563a1"
           },
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -5308,27 +5308,27 @@
             ],
             "description": "In the language \\langref{uOBDD}, every clause has a polynomial-size representation. If \\langref{uOBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{uOBDD} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langref{uOBDD}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{uOBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-d635fd7ef69c"
+            "batchId": "batch-beda5df5af85"
           },
           "AND_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{uOBDD}} and \\compilesquasi{\\langref{uOBDD}}{\\langref{DNNF}}, \\langref{uOBDD} cannot support bounded conjunction.",
             "derived": false,
-            "batchId": "batch-1a95f4323f3e"
+            "batchId": "batch-ea7748d67a6c"
           },
           "OR_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{uOBDD}} and \\compilesquasi{\\langref{uOBDD}}{\\langref{SDNNF}}, \\langref{uOBDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
-            "batchId": "batch-dfe618b6ecd7"
+            "batchId": "batch-6c84faca0f6e"
           },
           "FO": {
             "complexity": "no-poly-unknown-quasi",
@@ -5338,7 +5338,7 @@
             ],
             "derived": true,
             "description": "support for Forgetting implies support for Singleton Forgetting \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{uOBDD}}{\\SFO}. Therefore \\nosupportspoly{\\langref{uOBDD}}{\\FO}.",
-            "derivationOrder": 1666,
+            "derivationOrder": 1654,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -5500,7 +5500,7 @@
         },
         "transformations": {
           "AND_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Amarilli_2018",
@@ -5509,10 +5509,10 @@
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{DNNF}}, \\langref{OBDD} cannot support bounded conjunction.",
             "derived": false,
-            "batchId": "batch-1a95f4323f3e"
+            "batchId": "batch-ea7748d67a6c"
           },
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -5523,10 +5523,10 @@
             ],
             "description": "In the language \\langref{OBDD}, every clause has a polynomial-size representation. If \\langref{OBDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{OBDD} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langref{OBDD}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{OBDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-d635fd7ef69c"
+            "batchId": "batch-beda5df5af85"
           },
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -5534,20 +5534,20 @@
             ],
             "description": "In the language \\langref{OBDD}, every term has a polynomial-size representation. If \\langref{OBDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{OBDD} by disjoining the translated terms. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langref{OBDD}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{OBDD} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-60a3482e3845"
+            "batchId": "batch-acfaba1563a1"
           },
           "OR_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{SDNNF}}, \\langref{OBDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
-            "batchId": "batch-dfe618b6ecd7"
+            "batchId": "batch-6c84faca0f6e"
           },
           "FO": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -5556,7 +5556,7 @@
             ],
             "description": "A quasipolynomial-time forgetting procedure for \\langref{OBDD} would turn every \\langref{DNF} representation into an equivalent \\langref{OBDD} representation of quasipolynomial size in the input \\langref{DNF} after introducing fresh selectors and forgetting them. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langref{OBDD}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002,VanDenBroeck_2015}",
             "derived": false,
-            "batchId": "batch-092532dfc014"
+            "batchId": "batch-34736033b56d"
           },
           "NOT_C": {
             "complexity": "poly",
@@ -5743,7 +5743,7 @@
         },
         "transformations": {
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -5754,10 +5754,10 @@
             ],
             "description": "In the language \\langfam{TDD}{T}, every clause has a polynomial-size representation. If \\langfam{TDD}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{TDD}{T} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langfam{TDD}{T}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-ab69b1ec9f1d"
+            "batchId": "batch-d74f35d08471"
           },
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -5766,10 +5766,10 @@
             ],
             "description": "In the language \\langfam{TDD}{T}, every term has a polynomial-size representation. If \\langfam{TDD}{T} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{TDD}{T} by disjoining the translated terms. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langfam{TDD}{T}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-2cd9d99dc341"
+            "batchId": "batch-22ef75ea16d1"
           },
           "FO": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -5779,7 +5779,7 @@
             ],
             "description": "A quasipolynomial-time forgetting procedure for \\langfam{TDD}{T} would turn every \\langref{DNF} representation into an equivalent \\langfam{TDD}{T} representation of quasipolynomial size in the input \\langref{DNF} after introducing fresh selectors and forgetting them. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langfam{TDD}{T}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002,VanDenBroeck_2015}",
             "derived": false,
-            "batchId": "batch-092532dfc014"
+            "batchId": "batch-34736033b56d"
           },
           "OR_BC": {
             "complexity": "poly",
@@ -5998,7 +5998,7 @@
         },
         "transformations": {
           "AND_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Capelli_2026",
@@ -6006,10 +6006,10 @@
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{TDD}} and \\compilesquasi{\\langref{TDD}}{\\langref{DNNF}}, \\langref{TDD} cannot support bounded conjunction.",
             "derived": false,
-            "batchId": "batch-1a95f4323f3e"
+            "batchId": "batch-ea7748d67a6c"
           },
           "OR_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Capelli_2026",
@@ -6017,10 +6017,10 @@
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{TDD}} and \\compilesquasi{\\langref{TDD}}{\\langref{SDNNF}}, \\langref{TDD} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
-            "batchId": "batch-dfe618b6ecd7"
+            "batchId": "batch-6c84faca0f6e"
           },
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -6031,10 +6031,10 @@
             ],
             "description": "In the language \\langref{TDD}, every clause has a polynomial-size representation. If \\langref{TDD} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{TDD} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langref{TDD}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{TDD} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-d635fd7ef69c"
+            "batchId": "batch-beda5df5af85"
           },
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -6043,10 +6043,10 @@
             ],
             "description": "In the language \\langref{TDD}, every term has a polynomial-size representation. If \\langref{TDD} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{TDD} by disjoining the translated terms. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langref{TDD}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{TDD} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-60a3482e3845"
+            "batchId": "batch-acfaba1563a1"
           },
           "FO": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -6056,7 +6056,7 @@
             ],
             "description": "A quasipolynomial-time forgetting procedure for \\langref{TDD} would turn every \\langref{DNF} representation into an equivalent \\langref{TDD} representation of quasipolynomial size in the input \\langref{DNF} after introducing fresh selectors and forgetting them. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langref{TDD}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002,VanDenBroeck_2015}",
             "derived": false,
-            "batchId": "batch-092532dfc014"
+            "batchId": "batch-34736033b56d"
           },
           "CD": {
             "complexity": "poly",
@@ -6238,7 +6238,7 @@
         },
         "transformations": {
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -6248,10 +6248,10 @@
             ],
             "description": "In the language \\langref{dec-DNNF}, every clause has a polynomial-size representation. If \\langref{dec-DNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{dec-DNNF} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langref{dec-DNNF}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{dec-DNNF} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-d635fd7ef69c"
+            "batchId": "batch-beda5df5af85"
           },
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -6261,10 +6261,10 @@
             ],
             "description": "In the language \\langref{dec-DNNF}, every term has a polynomial-size representation. If \\langref{dec-DNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{dec-DNNF} by disjoining the translated terms. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langref{dec-DNNF}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{dec-DNNF} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-60a3482e3845"
+            "batchId": "batch-acfaba1563a1"
           },
           "AND_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Amarilli_2018",
@@ -6273,10 +6273,10 @@
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{dec-DNNF}} and \\compilesquasi{\\langref{dec-DNNF}}{\\langref{DNNF}}, \\langref{dec-DNNF} cannot support bounded conjunction.",
             "derived": false,
-            "batchId": "batch-1a95f4323f3e"
+            "batchId": "batch-ea7748d67a6c"
           },
           "OR_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Bova_2016",
@@ -6284,7 +6284,7 @@
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{d-DNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{dec-DNNF}} and \\compilesquasi{\\langref{dec-DNNF}}{\\langref{d-DNNF}}, \\langref{dec-DNNF} cannot support bounded disjunction in quasipolynomial time.\n\nNote that \\citet[Theorem 9]{Bova_2016} proves the lower bound without explicitly noting the implication for Bounded Disjunction.",
             "derived": false,
-            "batchId": "batch-868e3ee0601c"
+            "batchId": "batch-1fc9ddee1513"
           },
           "SFO": {
             "complexity": "no-poly-unknown-quasi",
@@ -6305,7 +6305,7 @@
             ],
             "derived": true,
             "description": "support for Forgetting implies support for Singleton Forgetting \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{dec-DNNF}}{\\SFO}. Therefore \\nosupportspoly{\\langref{dec-DNNF}}{\\FO}.",
-            "derivationOrder": 1667,
+            "derivationOrder": 1655,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -6485,7 +6485,7 @@
         },
         "transformations": {
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -6498,10 +6498,10 @@
             ],
             "description": "In the language \\langref{dec-SDNNF}, every term has a polynomial-size representation. If \\langref{dec-SDNNF} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langref{dec-SDNNF} by disjoining the translated terms. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langref{dec-SDNNF}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{dec-SDNNF} does not support Bounded Disjunction in quasipolynomial time, intractability of Disjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-60a3482e3845"
+            "batchId": "batch-acfaba1563a1"
           },
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -6515,10 +6515,10 @@
             ],
             "description": "In the language \\langref{dec-SDNNF}, every clause has a polynomial-size representation. If \\langref{dec-SDNNF} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langref{dec-SDNNF} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langref{dec-SDNNF}} \\citep{TCZ_Forthcoming}.\n\nAlternatively, since \\langref{dec-SDNNF} does not support Bounded Conjunction in quasipolynomial time, intractability of Conjunction is immediate. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-d635fd7ef69c"
+            "batchId": "batch-beda5df5af85"
           },
           "AND_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Amarilli_2018",
@@ -6527,17 +6527,17 @@
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{DNNF} computing $f\\land g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{dec-SDNNF}} and \\compilesquasi{\\langref{dec-SDNNF}}{\\langref{DNNF}}, \\langref{dec-SDNNF} cannot support bounded conjunction.",
             "derived": false,
-            "batchId": "batch-1a95f4323f3e"
+            "batchId": "batch-ea7748d67a6c"
           },
           "OR_BC": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Amarilli_2018"
             ],
             "description": "There are Boolean functions $f,g:\\{0,1\\}^n\\to\\{0,1\\}$, each computable by \\langref{OBDD}{s} of size $O(n)$, such that any \\langref{SDNNF} computing $f\\lor g$ has size $2^{\\Omega(\\sqrt{n})}$ \\citep{TCZ_Forthcoming}.\n\nAs a result, because \\compilesquasi{\\langref{OBDD}}{\\langref{dec-SDNNF}} and \\compilesquasi{\\langref{dec-SDNNF}}{\\langref{SDNNF}}, \\langref{dec-SDNNF} cannot support bounded disjunction in quasipolynomial time.",
             "derived": false,
-            "batchId": "batch-dfe618b6ecd7"
+            "batchId": "batch-6c84faca0f6e"
           },
           "SFO": {
             "complexity": "no-poly-unknown-quasi",
@@ -6558,7 +6558,7 @@
             ],
             "derived": true,
             "description": "support for Forgetting implies support for Singleton Forgetting \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langref{dec-SDNNF}}{\\SFO}. Therefore \\nosupportspoly{\\langref{dec-SDNNF}}{\\FO}.",
-            "derivationOrder": 1668,
+            "derivationOrder": 1656,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -6732,7 +6732,7 @@
         },
         "transformations": {
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -6745,10 +6745,10 @@
             ],
             "description": "In the language \\langfam{dec-SDNNF}{T}, every term has a polynomial-size representation. If \\langfam{dec-SDNNF}{T} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{dec-SDNNF}{T} by disjoining the translated terms. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langfam{dec-SDNNF}{T}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-2cd9d99dc341"
+            "batchId": "batch-22ef75ea16d1"
           },
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -6762,7 +6762,7 @@
             ],
             "description": "In the language \\langfam{dec-SDNNF}{T}, every clause has a polynomial-size representation. If \\langfam{dec-SDNNF}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{dec-SDNNF}{T} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langfam{dec-SDNNF}{T}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-ab69b1ec9f1d"
+            "batchId": "batch-d74f35d08471"
           },
           "SFO": {
             "complexity": "no-poly-unknown-quasi",
@@ -6783,7 +6783,7 @@
             ],
             "derived": true,
             "description": "support for Forgetting implies support for Singleton Forgetting \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langfam{dec-SDNNF}{T}}{\\SFO}. Therefore \\nosupportspoly{\\langfam{dec-SDNNF}{T}}{\\FO}.",
-            "derivationOrder": 1669,
+            "derivationOrder": 1657,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -6802,7 +6802,7 @@
             ],
             "derived": true,
             "description": "support for Conditioning and support for Bounded Disjunction together imply support for Singleton Forgetting \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langfam{dec-SDNNF}{T}}{\\SFO}. Also, \\supportspoly{\\langfam{dec-SDNNF}{T}}{\\CD}. Therefore \\nosupportspoly{\\langfam{dec-SDNNF}{T}}{\\ORBC}.",
-            "derivationOrder": 1670,
+            "derivationOrder": 1658,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "cd-or-bc-sfo",
@@ -6990,7 +6990,7 @@
         },
         "transformations": {
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -7001,10 +7001,10 @@
             ],
             "description": "In the language \\langfam{cSDD}{T}, every clause has a polynomial-size representation. If \\langfam{cSDD}{T} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{cSDD}{T} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langfam{cSDD}{T}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-ab69b1ec9f1d"
+            "batchId": "batch-d74f35d08471"
           },
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -7014,10 +7014,10 @@
             ],
             "description": "In the language \\langfam{cSDD}{T}, every term has a polynomial-size representation. If \\langfam{cSDD}{T} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{cSDD}{T} by disjoining the translated terms. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langfam{cSDD}{T}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-2cd9d99dc341"
+            "batchId": "batch-22ef75ea16d1"
           },
           "FO": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -7027,7 +7027,7 @@
             ],
             "description": "A quasipolynomial-time forgetting procedure for \\langfam{cSDD}{T} would turn every \\langref{DNF} representation into an equivalent \\langfam{cSDD}{T} representation of quasipolynomial size in the input \\langref{DNF} after introducing fresh selectors and forgetting them. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langfam{cSDD}{T}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002,VanDenBroeck_2015}",
             "derived": false,
-            "batchId": "batch-092532dfc014"
+            "batchId": "batch-34736033b56d"
           },
           "OR_BC": {
             "complexity": "no-poly-unknown-quasi",
@@ -7037,7 +7037,7 @@
             ],
             "derived": true,
             "description": "support for Negation and support for Bounded Disjunction together imply support for Bounded Conjunction \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langfam{cSDD}{T}}{\\ANDBC}. Also, \\supportspoly{\\langfam{cSDD}{T}}{\\NOTC}. Therefore \\nosupportspoly{\\langfam{cSDD}{T}}{\\ORBC}.",
-            "derivationOrder": 1671,
+            "derivationOrder": 1659,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-or-bc-and-bc",
@@ -7193,7 +7193,7 @@
             ],
             "derived": true,
             "description": "support for Equivalence implies support for Validity \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langfam{nOBDD}{<}}{\\VA}. Therefore \\nosupportspoly{\\langfam{nOBDD}{<}}{\\EQ}.",
-            "derivationOrder": 1672,
+            "derivationOrder": 1660,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "eq-va",
@@ -7212,7 +7212,7 @@
             ],
             "derived": true,
             "description": "support for Sentential Entailment implies support for Equivalence \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langfam{nOBDD}{<}}{\\EQ}. Therefore \\nosupportspoly{\\langfam{nOBDD}{<}}{\\SE}.",
-            "derivationOrder": 1673,
+            "derivationOrder": 1661,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "se-eq",
@@ -7231,7 +7231,7 @@
             ],
             "derived": true,
             "description": "support for Implicant implies support for Validity \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langfam{nOBDD}{<}}{\\VA}. Therefore \\nosupportspoly{\\langfam{nOBDD}{<}}{\\IM}.",
-            "derivationOrder": 1674,
+            "derivationOrder": 1662,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "im-va",
@@ -7244,7 +7244,7 @@
         },
         "transformations": {
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -7254,10 +7254,10 @@
             ],
             "description": "In the language \\langfam{nOBDD}{<}, every clause has a polynomial-size representation. If \\langfam{nOBDD}{<} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{nOBDD}{<} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langfam{nOBDD}{<}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-ab69b1ec9f1d"
+            "batchId": "batch-d74f35d08471"
           },
           "NOT_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "Bova_2014",
               "Amarilli_2018",
@@ -7266,7 +7266,7 @@
             ],
             "description": "\\citet[Lemma 5]{Bova_2014} gives 2-\\langref{DNF} formulas $D$ whose negations require \\langref{DNNF} size $2^{\\Omega(\\operatorname{size}(D))}$. If \\langfam{nOBDD}{<} supported Negation in quasipolynomial time, then \\compilesquasi{\\langref{DNF}}{\\langfam{nOBDD}{<}} and \\compilesquasi{\\langfam{nOBDD}{<}}{\\langref{DNNF}} would yield quasipolynomial-size \\langref{DNNF} formulas for those negations, contradicting the lower bound.",
             "derived": false,
-            "batchId": "batch-3bcedff54136"
+            "batchId": "batch-707875cc981c"
           },
           "OR_BC": {
             "complexity": "poly",
@@ -7494,7 +7494,7 @@
         },
         "transformations": {
           "OR_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -7503,10 +7503,10 @@
             ],
             "description": "In the language \\langfam{uOBDD}{<}, every term has a polynomial-size representation. If \\langfam{uOBDD}{<} supported $\\lor$C, then every \\langref{DNF} could be compiled into \\langfam{uOBDD}{<} by disjoining the translated terms. This contradicts \\nocompilespoly{\\langref{DNF}}{\\langfam{uOBDD}{<}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-2cd9d99dc341"
+            "batchId": "batch-22ef75ea16d1"
           },
           "AND_C": {
-            "complexity": "no-quasi",
+            "complexity": "no-poly-unknown-quasi",
             "refs": [
               "TCZ_Forthcoming",
               "Darwiche_2002",
@@ -7517,7 +7517,7 @@
             ],
             "description": "In the language \\langfam{uOBDD}{<}, every clause has a polynomial-size representation. If \\langfam{uOBDD}{<} supported $\\land$C, then every \\langref{CNF} could be compiled into \\langfam{uOBDD}{<} by conjoining the translated clauses. This contradicts \\nocompilespoly{\\langref{CNF}}{\\langfam{uOBDD}{<}} \\citep{TCZ_Forthcoming}. \\citep{Darwiche_2002}",
             "derived": false,
-            "batchId": "batch-ab69b1ec9f1d"
+            "batchId": "batch-d74f35d08471"
           },
           "OR_BC": {
             "complexity": "no-poly-unknown-quasi",
@@ -7547,7 +7547,7 @@
             ],
             "derived": true,
             "description": "support for Forgetting implies support for Singleton Forgetting \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langfam{uOBDD}{<}}{\\SFO}. Therefore \\nosupportspoly{\\langfam{uOBDD}{<}}{\\FO}.",
-            "derivationOrder": 1675,
+            "derivationOrder": 1663,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "fo-sfo",
@@ -7565,7 +7565,7 @@
             ],
             "derived": true,
             "description": "support for Negation and support for Bounded Conjunction together imply support for Bounded Disjunction \\citep{Darwiche_2002}. However, \\nosupportspoly{\\langfam{uOBDD}{<}}{\\ORBC}. Also, \\supportspoly{\\langfam{uOBDD}{<}}{\\ANDBC}. Therefore \\nosupportspoly{\\langfam{uOBDD}{<}}{\\NOTC}.",
-            "derivationOrder": 1676,
+            "derivationOrder": 1664,
             "proofTrace": {
               "rule": "lemma-contrapositive",
               "lemmaId": "not-c-and-bc-or-bc",
@@ -13045,7 +13045,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\supportspoly{\\langref{cSDD}}{\\CT}, but \\nosupportspoly{\\langref{IP}}{\\CT}. If \\langref{IP} could compile to \\langref{cSDD} with polynomial blowup, \\langref{IP} could support Model Counting by first compiling to \\langref{cSDD}. Therefore \\langref{IP} cannot compile to \\langref{cSDD} with polynomial blowup assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1677,
+          "derivationOrder": 1665,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13064,7 +13064,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\supportspoly{\\langref{d-DNNF}}{\\CT}, but \\nosupportspoly{\\langref{IP}}{\\CT}. If \\langref{IP} could compile to \\langref{d-DNNF} with polynomial blowup, \\langref{IP} could support Model Counting by first compiling to \\langref{d-DNNF}. Therefore \\langref{IP} cannot compile to \\langref{d-DNNF} with polynomial blowup assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1678,
+          "derivationOrder": 1666,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13084,7 +13084,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\supportspoly{\\langref{d-SDNNF}}{\\CT}, but \\nosupportspoly{\\langref{IP}}{\\CT}. If \\langref{IP} could compile to \\langref{d-SDNNF} with polynomial blowup, \\langref{IP} could support Model Counting by first compiling to \\langref{d-SDNNF}. Therefore \\langref{IP} cannot compile to \\langref{d-SDNNF} with polynomial blowup assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1679,
+          "derivationOrder": 1667,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13105,7 +13105,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\supportspoly{\\langfam{d-SDNNF}{T}}{\\CT}, but \\nosupportspoly{\\langref{IP}}{\\CT}. If \\langref{IP} could compile to \\langfam{d-SDNNF}{T} with polynomial blowup, \\langref{IP} could support Model Counting by first compiling to \\langfam{d-SDNNF}{T}. Therefore \\langref{IP} cannot compile to \\langfam{d-SDNNF}{T} with polynomial blowup assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1680,
+          "derivationOrder": 1668,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13275,7 +13275,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\supportspoly{\\langref{SDD}}{\\CT}, but \\nosupportspoly{\\langref{IP}}{\\CT}. If \\langref{IP} could compile to \\langref{SDD} with polynomial blowup, \\langref{IP} could support Model Counting by first compiling to \\langref{SDD}. Therefore \\langref{IP} cannot compile to \\langref{SDD} with polynomial blowup assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1681,
+          "derivationOrder": 1669,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13297,7 +13297,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\supportspoly{\\langfam{SDD}{T}}{\\CT}, but \\nosupportspoly{\\langref{IP}}{\\CT}. If \\langref{IP} could compile to \\langfam{SDD}{T} with polynomial blowup, \\langref{IP} could support Model Counting by first compiling to \\langfam{SDD}{T}. Therefore \\langref{IP} cannot compile to \\langfam{SDD}{T} with polynomial blowup assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1682,
+          "derivationOrder": 1670,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13363,7 +13363,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\supportspoly{\\langref{uFBDD}}{\\CT}, but \\nosupportspoly{\\langref{IP}}{\\CT}. If \\langref{IP} could compile to \\langref{uFBDD} with polynomial blowup, \\langref{IP} could support Model Counting by first compiling to \\langref{uFBDD}. Therefore \\langref{IP} cannot compile to \\langref{uFBDD} with polynomial blowup assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1683,
+          "derivationOrder": 1671,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13383,7 +13383,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\supportspoly{\\langref{uOBDD}}{\\CT}, but \\nosupportspoly{\\langref{IP}}{\\CT}. If \\langref{IP} could compile to \\langref{uOBDD} with polynomial blowup, \\langref{IP} could support Model Counting by first compiling to \\langref{uOBDD}. Therefore \\langref{IP} cannot compile to \\langref{uOBDD} with polynomial blowup assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1684,
+          "derivationOrder": 1672,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13424,7 +13424,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\supportspoly{\\langfam{TDD}{T}}{\\CT}, but \\nosupportspoly{\\langref{IP}}{\\CT}. If \\langref{IP} could compile to \\langfam{TDD}{T} with polynomial blowup, \\langref{IP} could support Model Counting by first compiling to \\langfam{TDD}{T}. Therefore \\langref{IP} cannot compile to \\langfam{TDD}{T} with polynomial blowup assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1685,
+          "derivationOrder": 1673,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13445,7 +13445,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\supportspoly{\\langref{TDD}}{\\CT}, but \\nosupportspoly{\\langref{IP}}{\\CT}. If \\langref{IP} could compile to \\langref{TDD} with polynomial blowup, \\langref{IP} could support Model Counting by first compiling to \\langref{TDD}. Therefore \\langref{IP} cannot compile to \\langref{TDD} with polynomial blowup assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1686,
+          "derivationOrder": 1674,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13533,7 +13533,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\supportspoly{\\langfam{cSDD}{T}}{\\CT}, but \\nosupportspoly{\\langref{IP}}{\\CT}. If \\langref{IP} could compile to \\langfam{cSDD}{T} with polynomial blowup, \\langref{IP} could support Model Counting by first compiling to \\langfam{cSDD}{T}. Therefore \\langref{IP} cannot compile to \\langfam{cSDD}{T} with polynomial blowup assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1687,
+          "derivationOrder": 1675,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",
@@ -13575,7 +13575,7 @@
           "hidden": false,
           "derived": true,
           "description": "\\supportspoly{\\langfam{uOBDD}{<}}{\\CT}, but \\nosupportspoly{\\langref{IP}}{\\CT}. If \\langref{IP} could compile to \\langfam{uOBDD}{<} with polynomial blowup, \\langref{IP} could support Model Counting by first compiling to \\langfam{uOBDD}{<}. Therefore \\langref{IP} cannot compile to \\langfam{uOBDD}{<} with polynomial blowup assuming the polynomial hierarchy does not collapse.",
-          "derivationOrder": 1688,
+          "derivationOrder": 1676,
           "proofTrace": {
             "rule": "query-difference",
             "operation": "CT",

@@ -670,6 +670,45 @@ function parseStatus(value: string): string {
   return MACRO_TO_STATUS[value.trim()] ?? fail(`Unknown status macro ${value}`);
 }
 
+const DISALLOWED_OPERATION_QUASI_STATUSES = new Set([
+  'no-quasi',
+  'no-poly-quasi',
+  'unknown-poly-quasi'
+]);
+
+function assertNoOperationQuasiDetail(database: DatabaseSchema, context: string): void {
+  const errors: string[] = [];
+
+  for (const batch of database.batchClaims ?? []) {
+    if (
+      (batch.opType === 'queries' || batch.opType === 'transformations') &&
+      DISALLOWED_OPERATION_QUASI_STATUSES.has(batch.status)
+    ) {
+      errors.push(`batch ${batch.id} (${batch.opType}.${batch.op}) has status ${batch.status}`);
+    }
+  }
+
+  for (const language of database.languages) {
+    for (const opType of ['queries', 'transformations'] as const) {
+      const supportMap = language.properties?.[opType];
+      if (!supportMap) continue;
+      for (const [operation, support] of Object.entries(supportMap)) {
+        if (support && DISALLOWED_OPERATION_QUASI_STATUSES.has(support.complexity)) {
+          errors.push(`${opType} ${language.name}.${operation} has status ${support.complexity}`);
+        }
+      }
+    }
+  }
+
+  if (errors.length > 0) {
+    fail(
+      `Operation support no longer tracks quasipolynomial detail (${context}). ` +
+      `Use poly, no-poly-unknown-quasi, or unknown-to-us for queries/transforms.\n` +
+      errors.map((error) => `- ${error}`).join('\n')
+    );
+  }
+}
+
 function relationMacroStatusOk(command: string, status: string | undefined): boolean {
   switch (command) {
     case 'compilespoly':
@@ -1030,6 +1069,7 @@ function stripCanonicalOnlyFields(database: DatabaseSchema): void {
 function writeLatex(): void {
   const database = loadDatabase();
   stripCanonicalOnlyFields(database);
+  assertNoOperationQuasiDetail(database, 'database.json -> LaTeX');
   fs.writeFileSync(DEFAULT_LANGUAGES_OUTPUT, generateLanguagesLatex(database));
   fs.writeFileSync(DEFAULT_DEFINITIONS_OUTPUT, generateDefinitionsLatex(database));
   fs.writeFileSync(DEFAULT_SUCCINCTNESS_OUTPUT, generateSuccinctnessLatex(database));
@@ -1066,6 +1106,7 @@ async function writeJson(): Promise<void> {
 
   stripCanonicalOnlyFields(database);
   database.assumptions = collectAssumptions(database, { includeCanonical: false });
+  assertNoOperationQuasiDetail(database, 'LaTeX -> database.json');
   validateRelationMacroAssertions(database);
   saveDatabase(database);
 
@@ -1078,6 +1119,8 @@ async function writeJson(): Promise<void> {
     cwd: path.join(__dirname, '..'),
     stdio: 'inherit'
   });
+
+  assertNoOperationQuasiDetail(loadDatabase(), 'refresh-derived output');
 }
 
 function normalizeRefs(): void {
