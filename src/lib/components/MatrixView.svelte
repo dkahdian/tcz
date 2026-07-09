@@ -6,7 +6,6 @@
     SelectedEdge,
     DirectedSuccinctnessRelation
   } from '$lib/types.js';
-  import { measureCellSize } from '$lib/utils/matrix-cell-size.js';
   import { compareByCanonicalOrder } from '$lib/utils/canonical-order.js';
 
   /**
@@ -457,13 +456,11 @@
     return `${colLang.name} → ${rowLang.name}: ${label}${assumptionStr}${refs}`;
   }
 
-  // Dynamic cell sizing
   let matrixScrollEl: HTMLDivElement;
-  let tableEl: HTMLTableElement;
-  let cellSize = $state({ width: 0, height: 0, headerWidth: 0 });
-  let measured = $state(false);
+  let cellSize = $state({ width: 44, height: 34, headerWidth: 116 });
   let lastContainerSize = { width: 0, height: 0 };
   let lastLanguageCount = 0;
+  let lastQuasiSizingMode = showQuasipolynomialSandboxOptions;
   let savedScrollPosition = { left: 0, top: 0 };
   let restoringScroll = false;
 
@@ -488,43 +485,49 @@
   }
 
   function updateCellSize() {
-    if (!matrixScrollEl || !tableEl) return;
-    
+    if (!matrixScrollEl) return;
+
     const containerWidth = matrixScrollEl.clientWidth;
     const containerHeight = matrixScrollEl.clientHeight;
     const langCount = matrixLanguages.length;
-    
-    // Skip re-measurement if container size and language count haven't changed
-    if (measured && containerWidth === lastContainerSize.width 
-        && containerHeight === lastContainerSize.height 
-        && langCount === lastLanguageCount) {
+    const quasiSizingMode = showQuasipolynomialSandboxOptions;
+
+    if (containerWidth === lastContainerSize.width
+        && containerHeight === lastContainerSize.height
+        && langCount === lastLanguageCount
+        && quasiSizingMode === lastQuasiSizingMode) {
       return;
     }
-    
-    const numCells = langCount + 1; // +1 for header
-    const result = measureCellSize(matrixScrollEl, tableEl, numCells, numCells);
-    if (result) {
-      // Only update if dimensions actually changed
-      if (result.width !== cellSize.width || result.height !== cellSize.height || result.headerWidth !== cellSize.headerWidth) {
-        cellSize = result;
-      }
-      lastContainerSize = { width: containerWidth, height: containerHeight };
-      lastLanguageCount = langCount;
-      measured = true;
-      queueMicrotask(() => restoreScrollPosition());
+
+    const headerWidth = 116;
+    const headerHeight = 80;
+    const dataCols = Math.max(langCount, 1);
+    const availableDataWidth = Math.max(0, containerWidth - headerWidth);
+    const availableDataHeight = Math.max(0, containerHeight - headerHeight);
+    const minCellWidth = quasiSizingMode ? 66 : 42;
+    const width = Math.max(minCellWidth, Math.floor(availableDataWidth / dataCols));
+    const height = Math.max(28, Math.floor(availableDataHeight / dataCols));
+    const next = { width, height, headerWidth };
+    if (
+      next.width !== cellSize.width ||
+      next.height !== cellSize.height ||
+      next.headerWidth !== cellSize.headerWidth
+    ) {
+      cellSize = next;
     }
+    lastContainerSize = { width: containerWidth, height: containerHeight };
+    lastLanguageCount = langCount;
+    lastQuasiSizingMode = quasiSizingMode;
+    queueMicrotask(() => restoreScrollPosition());
   }
 
   $effect(() => {
-    // Re-measure when languages change
     matrixLayoutSignature;
+    showQuasipolynomialSandboxOptions;
     rememberScrollPosition();
-    measured = false;
-    // Use microtask to ensure DOM is updated
     queueMicrotask(() => updateCellSize());
   });
 
-  // Also measure on mount and resize
   import { onMount } from 'svelte';
   onMount(() => {
     updateCellSize();
@@ -561,168 +564,180 @@
 
 <div class="matrix-view" aria-live="polite">
   <div class="matrix-scroll" bind:this={matrixScrollEl} onscroll={rememberScrollPosition} role="region" aria-label="Adjacency matrix view">
-    <table 
-      class="matrix-table" 
-      bind:this={tableEl}
+    <div
+      class="matrix-grid"
+      role="table"
+      aria-label="Succinctness matrix"
       style:--cell-width="{cellSize.width}px"
       style:--cell-height="{cellSize.height}px"
       style:--header-width="{cellSize.headerWidth}px"
-      class:measured
+      style:--column-count={matrixLanguages.length}
     >
-      <thead>
-        <tr>
-          <th class="corner-cell">
-            {#if sandboxMode}
-              <button type="button" class="new-language-button" onclick={onAddLanguage} title="Add language">
-                New Language
-              </button>
+      <div class="corner-cell" role="columnheader" style:grid-column="1" style:grid-row="1">
+        {#if sandboxMode}
+          <button type="button" class="new-language-button" onclick={onAddLanguage} title="Add language">
+            New Language
+          </button>
+        {/if}
+      </div>
+      {#each matrixLanguages as column, columnIndex (column.id)}
+        <div
+          class={`col-header ${selectedNode?.id === column.id ? 'is-active' : ''}`}
+          role="columnheader"
+          style:grid-column={columnIndex + 2}
+          style:grid-row="1"
+        >
+          <div class="language-header-control language-header-control--column">
+            {#if isSandboxAddedLanguage(column.id)}
+              <button
+                type="button"
+                class="remove-language-button"
+                onclick={(event) => handleRemoveSandboxLanguageClick(event, column.id)}
+                title={`Remove draft language ${column.language.name}`}
+                aria-label={`Remove draft language ${column.language.name}`}
+              >x</button>
             {/if}
-          </th>
-          {#each matrixLanguages as column (column.id)}
-            <th class={`col-header ${selectedNode?.id === column.id ? 'is-active' : ''}`}>
-              <div class="language-header-control language-header-control--column">
-                {#if isSandboxAddedLanguage(column.id)}
-                  <button
-                    type="button"
-                    class="remove-language-button"
-                    onclick={(event) => handleRemoveSandboxLanguageClick(event, column.id)}
-                    title={`Remove draft language ${column.language.name}`}
-                    aria-label={`Remove draft language ${column.language.name}`}
-                  >x</button>
-                {/if}
-                <button class="language-select-button" type="button" onclick={() => handleColumnHeaderClick(column.language)} title={`Select ${column.language.name}`}>
-                  <span class="math-text inline column-label" aria-label={column.language.name}>{@html languageNameHtml.get(column.id) ?? column.language.name}</span>
+            <button class="language-select-button" type="button" onclick={() => handleColumnHeaderClick(column.language)} title={`Select ${column.language.name}`}>
+              <span class="math-text inline column-label" aria-label={column.language.name}>{@html languageNameHtml.get(column.id) ?? column.language.name}</span>
+            </button>
+          </div>
+        </div>
+      {/each}
+      {#each matrixLanguages as rowLanguage, rowIndex (rowLanguage.id)}
+        <div
+          class={`row-header ${selectedNode?.id === rowLanguage.id ? 'is-active' : ''}`}
+          role="rowheader"
+          style:grid-column="1"
+          style:grid-row={rowIndex + 2}
+        >
+          <div class="language-header-control">
+            {#if isSandboxAddedLanguage(rowLanguage.id)}
+              <button
+                type="button"
+                class="remove-language-button"
+                onclick={(event) => handleRemoveSandboxLanguageClick(event, rowLanguage.id)}
+                title={`Remove draft language ${rowLanguage.language.name}`}
+                aria-label={`Remove draft language ${rowLanguage.language.name}`}
+              >x</button>
+            {/if}
+            <button class="language-select-button" type="button" onclick={() => handleRowHeaderClick(rowLanguage.language)} title={`Select ${rowLanguage.language.name}`}>
+              <span class="math-text inline" aria-label={rowLanguage.language.name}>{@html languageNameHtml.get(rowLanguage.id) ?? rowLanguage.language.name}</span>
+            </button>
+          </div>
+        </div>
+        {#each matrixLanguages as colLanguage, colIndex (colLanguage.id)}
+          {#if rowLanguage.id === colLanguage.id}
+            <div
+              class={`matrix-cell-shell matrix-cell--diagonal ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted is-col-highlighted' : ''}`}
+              role="cell"
+              style:grid-column={colIndex + 2}
+              style:grid-row={rowIndex + 2}
+            >
+              <button
+                type="button"
+                class="diagonal-button"
+                onclick={() => handleRowHeaderClick(rowLanguage.language)}
+                aria-label={`Select ${rowLanguage.language.name}`}
+                title={`Select ${rowLanguage.language.name}`}
+              >
+                =
+              </button>
+            </div>
+          {:else}
+            {@const cell = getMatrixCellModel(rowLanguage, colLanguage)}
+            <div
+              class="matrix-cell-shell"
+              class:is-sandbox-editor-cell={cell.editing}
+              role="cell"
+              style:grid-column={colIndex + 2}
+              style:grid-row={rowIndex + 2}
+            >
+              {#if cell.relation}
+                <button
+                  type="button"
+                  class={cell.buttonClass}
+                  onclick={() => handleCellClick(colLanguage.id, rowLanguage.id, cell.relation)}
+                  title={cell.title}
+                >
+                  <span class="cell-short">{@html cell.statusHtml}</span>
                 </button>
-              </div>
-            </th>
-          {/each}
-        </tr>
-      </thead>
-      <tbody>
-        {#each matrixLanguages as rowLanguage (rowLanguage.id)}
-          <tr>
-            <th class={`row-header ${selectedNode?.id === rowLanguage.id ? 'is-active' : ''}`}>
-              <div class="language-header-control">
-                {#if isSandboxAddedLanguage(rowLanguage.id)}
-                  <button
-                    type="button"
-                    class="remove-language-button"
-                    onclick={(event) => handleRemoveSandboxLanguageClick(event, rowLanguage.id)}
-                    title={`Remove draft language ${rowLanguage.language.name}`}
-                    aria-label={`Remove draft language ${rowLanguage.language.name}`}
-                  >x</button>
+                {#if cell.editing}
+                  {@const currentValue = cell.currentValue}
+                  {@const baselineRelation = getBaselineRelation(colLanguage.id, rowLanguage.id)}
+                  {@const baselineValue = getSandboxCellValue(baselineRelation)}
+                  {@const options = validSandboxOptions(baselineValue)}
+                  {#if options.length > 0}
+                    <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${colLanguage.language.name} to ${rowLanguage.language.name}`}>
+                      {#each options as option}
+                        {@const isOriginalOption = isOriginalSandboxOption(option, baselineValue)}
+                        {@const optionAssumption = cell.relation.assumption ?? (isOriginalOption ? baselineRelation?.assumption : undefined)}
+                        <button
+                          type="button"
+                          class={`sandbox-option ${option ? getSandboxOptionClass(option) : 'sandbox-option--blank'} ${isOriginalOption ? 'is-original' : ''}`}
+                          title={option ? STATUS_LABELS[getSandboxDisplayStatus(option)] ?? STATUS_LABELS[option] : 'Blank'}
+                          aria-label={option ? STATUS_LABELS[getSandboxDisplayStatus(option)] ?? STATUS_LABELS[option] : 'Blank'}
+                          onclick={(event) => handleSandboxStatusClick(event, colLanguage.id, rowLanguage.id, option, currentValue, baselineValue)}
+                        >
+                          {#if option}
+                            <span class="cell-short">{@html getSandboxOptionHtml(option, Boolean(optionAssumption))}</span>
+                          {/if}
+                        </button>
+                      {/each}
+                    </div>
+                  {/if}
                 {/if}
-                <button class="language-select-button" type="button" onclick={() => handleRowHeaderClick(rowLanguage.language)} title={`Select ${rowLanguage.language.name}`}>
-                  <span class="math-text inline" aria-label={rowLanguage.language.name}>{@html languageNameHtml.get(rowLanguage.id) ?? rowLanguage.language.name}</span>
-                </button>
-              </div>
-            </th>
-            {#each matrixLanguages as colLanguage (colLanguage.id)}
-              {#if rowLanguage.id === colLanguage.id}
-                <td class={`matrix-cell--diagonal ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted is-col-highlighted' : ''}`}>
-                  <button
-                    type="button"
-                    class="diagonal-button"
-                    onclick={() => handleRowHeaderClick(rowLanguage.language)}
-                    aria-label={`Select ${rowLanguage.language.name}`}
-                    title={`Select ${rowLanguage.language.name}`}
-                  >
-                    =
-                  </button>
-                </td>
               {:else}
-                {@const cell = getMatrixCellModel(rowLanguage, colLanguage)}
-                {#if cell.relation}
-                  <td class:is-sandbox-editor-cell={cell.editing}>
-                    <button
-                      type="button"
-                      class={cell.buttonClass}
-                      onclick={() => handleCellClick(colLanguage.id, rowLanguage.id, cell.relation)}
-                      title={cell.title}
-                    >
-                      <span class="cell-short">{@html cell.statusHtml}</span>
-                    </button>
-                    {#if cell.editing}
-                      {@const currentValue = cell.currentValue}
-                      {@const baselineRelation = getBaselineRelation(colLanguage.id, rowLanguage.id)}
-                      {@const baselineValue = getSandboxCellValue(baselineRelation)}
-                      {@const options = validSandboxOptions(baselineValue)}
-                      {#if options.length > 0}
-                        <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${colLanguage.language.name} to ${rowLanguage.language.name}`}>
-                          {#each options as option}
-                            {@const isOriginalOption = isOriginalSandboxOption(option, baselineValue)}
-                            {@const optionAssumption = cell.relation.assumption ?? (isOriginalOption ? baselineRelation?.assumption : undefined)}
-                            <button
-                              type="button"
-                              class={`sandbox-option ${option ? getSandboxOptionClass(option) : 'sandbox-option--blank'} ${isOriginalOption ? 'is-original' : ''}`}
-                              title={option ? STATUS_LABELS[getSandboxDisplayStatus(option)] ?? STATUS_LABELS[option] : 'Blank'}
-                              aria-label={option ? STATUS_LABELS[getSandboxDisplayStatus(option)] ?? STATUS_LABELS[option] : 'Blank'}
-                              onclick={(event) => handleSandboxStatusClick(event, colLanguage.id, rowLanguage.id, option, currentValue, baselineValue)}
-                            >
-                              {#if option}
-                                <span class="cell-short">{@html getSandboxOptionHtml(option, Boolean(optionAssumption))}</span>
-                              {/if}
-                            </button>
-                          {/each}
-                        </div>
-                      {/if}
+                {#if sandboxMode}
+                  <button
+                    type="button"
+                    class={cell.buttonClass}
+                    onclick={() => handleCellClick(colLanguage.id, rowLanguage.id, null)}
+                    aria-label={`Edit ${colLanguage.language.name} to ${rowLanguage.language.name}`}
+                    title={cell.title}
+                  >
+                    <span class="cell-short">{@html cell.statusHtml}</span>
+                  </button>
+                  {#if cell.editing}
+                    {@const currentValue = cell.currentValue}
+                    {@const baselineRelation = getBaselineRelation(colLanguage.id, rowLanguage.id)}
+                    {@const baselineValue = getSandboxCellValue(baselineRelation)}
+                    {@const options = validSandboxOptions(baselineValue)}
+                    {#if options.length > 0}
+                      <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${colLanguage.language.name} to ${rowLanguage.language.name}`}>
+                        {#each options as option}
+                          {@const isOriginalOption = isOriginalSandboxOption(option, baselineValue)}
+                          {@const optionAssumption = isOriginalOption ? baselineRelation?.assumption : undefined}
+                          <button
+                            type="button"
+                            class={`sandbox-option ${option ? getSandboxOptionClass(option) : 'sandbox-option--blank'} ${isOriginalOption ? 'is-original' : ''}`}
+                            title={option ? STATUS_LABELS[getSandboxDisplayStatus(option)] ?? STATUS_LABELS[option] : 'Blank'}
+                            aria-label={option ? STATUS_LABELS[getSandboxDisplayStatus(option)] ?? STATUS_LABELS[option] : 'Blank'}
+                            onclick={(event) => handleSandboxStatusClick(event, colLanguage.id, rowLanguage.id, option, currentValue, baselineValue)}
+                          >
+                            {#if option}
+                              <span class="cell-short">{@html getSandboxOptionHtml(option, Boolean(optionAssumption))}</span>
+                            {/if}
+                          </button>
+                        {/each}
+                      </div>
                     {/if}
-                  </td>
+                  {/if}
                 {:else}
-                  <td class:is-sandbox-editor-cell={cell.editing}>
-                    {#if sandboxMode}
-                      <button
-                        type="button"
-                        class={cell.buttonClass}
-                        onclick={() => handleCellClick(colLanguage.id, rowLanguage.id, null)}
-                        aria-label={`Edit ${colLanguage.language.name} to ${rowLanguage.language.name}`}
-                        title={cell.title}
-                      >
-                        <span class="cell-short">{@html cell.statusHtml}</span>
-                      </button>
-                      {#if cell.editing}
-                        {@const currentValue = cell.currentValue}
-                        {@const baselineRelation = getBaselineRelation(colLanguage.id, rowLanguage.id)}
-                        {@const baselineValue = getSandboxCellValue(baselineRelation)}
-                        {@const options = validSandboxOptions(baselineValue)}
-                        {#if options.length > 0}
-                          <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${colLanguage.language.name} to ${rowLanguage.language.name}`}>
-                            {#each options as option}
-                              {@const isOriginalOption = isOriginalSandboxOption(option, baselineValue)}
-                              {@const optionAssumption = isOriginalOption ? baselineRelation?.assumption : undefined}
-                              <button
-                                type="button"
-                                class={`sandbox-option ${option ? getSandboxOptionClass(option) : 'sandbox-option--blank'} ${isOriginalOption ? 'is-original' : ''}`}
-                                title={option ? STATUS_LABELS[getSandboxDisplayStatus(option)] ?? STATUS_LABELS[option] : 'Blank'}
-                                aria-label={option ? STATUS_LABELS[getSandboxDisplayStatus(option)] ?? STATUS_LABELS[option] : 'Blank'}
-                                onclick={(event) => handleSandboxStatusClick(event, colLanguage.id, rowLanguage.id, option, currentValue, baselineValue)}
-                              >
-                                {#if option}
-                                  <span class="cell-short">{@html getSandboxOptionHtml(option, Boolean(optionAssumption))}</span>
-                                {/if}
-                              </button>
-                            {/each}
-                          </div>
-                        {/if}
-                      {/if}
-                    {:else}
-                      <button
-                        type="button"
-                        class={cell.buttonClass}
-                        onclick={() => handleCellClick(colLanguage.id, rowLanguage.id, null)}
-                        title={cell.title}
-                      >
-                        <span class="cell-short">{@html cell.statusHtml}</span>
-                      </button>
-                    {/if}
-                  </td>
+                  <button
+                    type="button"
+                    class={cell.buttonClass}
+                    onclick={() => handleCellClick(colLanguage.id, rowLanguage.id, null)}
+                    title={cell.title}
+                  >
+                    <span class="cell-short">{@html cell.statusHtml}</span>
+                  </button>
                 {/if}
               {/if}
-            {/each}
-          </tr>
+            </div>
+          {/if}
         {/each}
-      </tbody>
-    </table>
+      {/each}
+    </div>
   </div>
 </div>
 
@@ -740,66 +755,36 @@
     width: 100%;
   }
 
-  .matrix-table {
-    width: auto;
-    border-collapse: separate;
-    border-spacing: 0;
-    table-layout: fixed;
+  .matrix-grid {
+    width: max-content;
+    min-width: 100%;
+    display: grid;
+    grid-template-columns: var(--header-width) repeat(var(--column-count), var(--cell-width));
+    grid-template-rows: 5rem repeat(var(--column-count), var(--cell-height));
     font-size: 0.75rem;
   }
 
-  /* border-box so measured getBoundingClientRect() widths map directly to CSS width */
-  .matrix-table th,
-  .matrix-table td {
+  .matrix-grid > * {
     box-sizing: border-box;
   }
 
-  /* Before measurement, let cells size naturally */
-  .matrix-table:not(.measured) th,
-  .matrix-table:not(.measured) td {
-    width: auto;
-    min-width: auto;
-    max-width: none;
-  }
-
-  /* After measurement, use computed cell size */
-  .matrix-table.measured td {
-    width: var(--cell-width, auto);
-    min-width: var(--cell-width, auto);
-    max-width: var(--cell-width, none);
-    height: var(--cell-height, auto);
-  }
-
-  /* Column headers (thead th except corner) use data-column width */
-  .matrix-table.measured thead th:not(.corner-cell) {
-    width: var(--cell-width, auto);
-    min-width: var(--cell-width, auto);
-    max-width: var(--cell-width, none);
-  }
-
-  /* Row headers + corner use separate header width */
-  .matrix-table.measured .corner-cell,
-  .matrix-table.measured tbody th {
-    width: var(--header-width, auto);
-    min-width: var(--header-width, auto);
-    max-width: var(--header-width, none);
-    height: var(--cell-height, auto);
-  }
-
-  thead th {
+  .col-header {
     position: sticky;
     top: 0;
     background: #f8fafc;
     z-index: 70;
     border-bottom: 1px solid #e5e7eb;
-    height: 5rem !important;
+    height: 5rem;
   }
 
   .corner-cell {
+    position: sticky;
+    top: 0;
     left: 0;
     background: #e5e7eb;
     z-index: 90;
     border-left: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
     height: 5rem;
   }
 
@@ -929,11 +914,7 @@
     box-shadow: inset 0 0 0 2px #2563eb;
   }
 
-  tbody th {
-    border-bottom: 1px solid #e5e7eb;
-  }
-
-  td {
+  .matrix-cell-shell {
     border-right: 1px solid #e5e7eb;
     border-bottom: 1px solid #e5e7eb;
     text-align: center;
@@ -941,7 +922,7 @@
     overflow: hidden;
   }
 
-  td.is-sandbox-editor-cell {
+  .matrix-cell-shell.is-sandbox-editor-cell {
     position: relative;
     overflow: visible;
     z-index: 20;
@@ -1034,6 +1015,7 @@
     font-weight: 600;
     font-size: 0.75rem;
     line-height: 1;
+    white-space: nowrap;
   }
 
   .cell-label {
@@ -1143,7 +1125,7 @@
   }
 
   /* Tighten KaTeX rendering inside matrix cells */
-  .matrix-table :global(.katex) {
+  .matrix-grid :global(.katex) {
     font-size: 1.2em;
     line-height: 1;
     padding: 0;
@@ -1157,14 +1139,8 @@
 
 
   @media (max-width: 1024px) {
-    .matrix-table {
+    .matrix-grid {
       min-width: 400px;
-    }
-
-    .row-header,
-    .col-header,
-    .corner-cell {
-      width: 80px;
     }
   }
 </style>
