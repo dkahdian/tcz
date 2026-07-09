@@ -517,7 +517,7 @@ function generateSuccinctnessLatex(database: DatabaseSchema): string {
     for (let j = 0; j < languageIds.length; j++) {
       if (i === j) continue;
       const relation = matrix[i]?.[j];
-      if (!relation || relation.derived || !STATUS_TO_MACRO[relation.status]) continue;
+      if (!relation || relation.derived || relation.origin === 'derived' || relation.origin === 'batch' || !STATUS_TO_MACRO[relation.status]) continue;
       const source = idToLanguage.get(languageIds[i]);
       const target = idToLanguage.get(languageIds[j]);
       if (!source || !target) continue;
@@ -551,7 +551,14 @@ function generateOperationClaim(
   op: string,
   support: KCOpSupport
 ): string | null {
-  if (!support || support.derived || support.batchId || support.complexity === 'unknown-to-us') return null;
+  if (
+    !support ||
+    support.derived ||
+    support.origin === 'derived' ||
+    support.origin === 'batch' ||
+    support.batchId ||
+    support.complexity === 'unknown-to-us'
+  ) return null;
   const environment = opType === 'queries' ? 'queryclaim' : 'transformationclaim';
   return `\\begin{${environment}}
 \\claimlanguage{${languageToLatex(language.name)}}
@@ -581,6 +588,10 @@ function selectorToLatex(selector: KCBatchSelector, idToLanguage: Map<string, KC
   }
   if (selector.kind === 'anyOf') {
     fail('anyOf batch selectors are not supported by canonical LaTeX');
+  }
+  if (selector.kind === 'operation') {
+    const command = (selector.polarity ?? 'positive') === 'negative' ? 'nosupportspoly' : 'supportspoly';
+    return `\\${command}{${selectorLanguageRef(selector.language, idToLanguage)}}{${opMacro(selector.opType, selector.op)}}`;
   }
   const command = (selector.polarity ?? 'positive') === 'negative'
     ? selector.level === 'poly' ? 'nocompilespoly' : 'nocompilesquasi'
@@ -897,6 +908,35 @@ function parseSelectorClause(value: string, resolveLanguage: (value: string) => 
       polarity: command.startsWith('no') ? 'negative' : 'positive'
     };
   }
+  for (const command of ['supportspoly', 'nosupportspoly']) {
+    if (!trimmed.startsWith(`\\${command}`)) continue;
+    const firstStart = trimmed.indexOf('{');
+    const first = extractBraceAt(trimmed, firstStart);
+    const secondStart = trimmed.indexOf('{', first.end);
+    const second = extractBraceAt(trimmed, secondStart);
+    const operationMacro = second.content.trim();
+    const queryOp = MACRO_TO_QUERY_OPERATION[operationMacro];
+    const transformationOp = MACRO_TO_TRANSFORMATION_OPERATION[operationMacro];
+    if (queryOp) {
+      return {
+        kind: 'operation',
+        opType: 'queries',
+        language: parseLanguageRef(first.content, resolveLanguage),
+        op: queryOp,
+        polarity: command.startsWith('no') ? 'negative' : 'positive'
+      };
+    }
+    if (transformationOp) {
+      return {
+        kind: 'operation',
+        opType: 'transformations',
+        language: parseLanguageRef(first.content, resolveLanguage),
+        op: transformationOp,
+        polarity: command.startsWith('no') ? 'negative' : 'positive'
+      };
+    }
+    fail(`Unknown operation selector macro: ${operationMacro}`);
+  }
   fail(`Unknown selector clause: ${trimmed}`);
 }
 
@@ -988,7 +1028,9 @@ function updateSuccinctness(database: DatabaseSchema, relations: ParsedRelation[
   for (let i = 0; i < database.adjacencyMatrix.matrix.length; i++) {
     for (let j = 0; j < database.adjacencyMatrix.matrix[i].length; j++) {
       const relation = database.adjacencyMatrix.matrix[i][j];
-      if (relation && !relation.derived) database.adjacencyMatrix.matrix[i][j] = null;
+      if (relation && relation.derived !== true && relation.origin !== 'derived' && relation.origin !== 'batch') {
+        database.adjacencyMatrix.matrix[i][j] = null;
+      }
     }
   }
   for (const item of relations) {
@@ -1001,7 +1043,8 @@ function updateSuccinctness(database: DatabaseSchema, relations: ParsedRelation[
       description: item.description,
       refs: item.refs,
       ...(item.assumption ? { assumption: item.assumption } : {}),
-      derived: false
+      derived: false,
+      origin: 'authored'
     };
   }
 }
@@ -1016,7 +1059,15 @@ function updateOperations(
     const map = language.properties?.[opType];
     if (!map) continue;
     for (const [op, support] of Object.entries(map)) {
-      if (support && !support.derived && !support.batchId) delete map[op];
+      if (
+        support &&
+        support.derived !== true &&
+        support.origin !== 'derived' &&
+        support.origin !== 'batch' &&
+        !support.batchId
+      ) {
+        delete map[op];
+      }
     }
   }
   for (const claim of claims) {
@@ -1030,7 +1081,8 @@ function updateOperations(
       description: claim.description,
       refs: claim.refs,
       ...(claim.assumption ? { assumption: claim.assumption } : {}),
-      derived: false
+      derived: false,
+      origin: 'authored'
     };
   }
   database.batchClaims = [

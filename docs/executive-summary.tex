@@ -47,7 +47,7 @@
 \begin{abstract}
 We describe the Tractable Circuit Zoo. This project is meant as a modernization of \citet{Darwiche_2002}. At the lowest level, the project is a survey of the tractable circuit and knowledge compilation landscape. We collected only "direct" results, that is, results that are not derived via transitive relations from other results. Internally, we represent these results as a graph, and use a DFS reachability algorithm to validate consistency. We use this algorithm to build a propagator, which uses transitive and other simple lemmas to derive related results. This gives us expanded versions of each of the tables in \citet{Darwiche_2002}.
 
-To further validate our results, we encode the knowledge base as a propositional CNF formula, compile it to d-DNNF using $\text{c2d}$, and verify that the entailed literals match the graph-based propagation exactly. The compiled representation further enables model counting and surprise analysis, ranking open problems by their information content. Additionally, the propagator emits machine-checkable proof traces that are verified by the Lean~4 proof assistant, ensuring that every derived claim is a valid consequence of the axioms and lemmas. The project is publicly visible at \url{https://tcz.kahdian.com} and on Github at \url{https://github.com/dkahdian/tcz}.
+To further validate our results, we encode the knowledge base as a propositional CNF formula, compile it to d-DNNF using $\text{c2d}$, and verify that the entailed literals match the graph-based propagation exactly. The compiled representation further enables model counting and surprise analysis, ranking open problems by their information content. The project is publicly visible at \url{https://tcz.kahdian.com} and on Github at \url{https://github.com/dkahdian/tcz}.
 \end{abstract}
 
 \section{Setup}
@@ -230,7 +230,7 @@ The CNF was compiled to a smooth d-DNNF using c2d~v2.20 in approximately 14~seco
 \begin{itemize}
   \item \textbf{Model count.} $\text{MC}(\Sigma) = 1{,}466{,}882{,}601 \approx 2^{30.45}$ consistent worlds.
   \item \textbf{Clausal entailment.} Of the 840~variables, 241~are entailed true, 500~are entailed false, and 99~are free (unknown).
-  \item \textbf{Verification.} The set of entailed literals from the d-DNNF matches exactly the set of known and derived facts from the graph-based propagation algorithms of Sections~3--4. There are zero discrepancies in either direction, confirming empirically that the algorithmic propagation is both \emph{sound} (it derives nothing beyond what the axioms entail) and \emph{complete} (it derives everything the axioms entail). As an additional layer of assurance, the propagator records proof traces for each derived fact, and a code generator emits Lean~4 theorems that are type-checked against the axiom set, providing a machine-verified certificate of consistency.
+  \item \textbf{Verification.} The set of entailed literals from the d-DNNF matches exactly the set of known and derived facts from the graph-based propagation algorithms of Sections~3--4. There are zero discrepancies in either direction, confirming empirically that the algorithmic propagation is both \emph{sound} (it derives nothing beyond what the axioms entail) and \emph{complete} (it derives everything the axioms entail).
 \end{itemize}
 
 \subsection{Surprise Analysis}

@@ -17,9 +17,7 @@
 		"to-latex": "node --import ./scripts/tsx-register.mjs scripts/latex-bijection.ts --to-latex && npm run push-overleaf",
 		"latex:roundtrip": "node scripts/latex-roundtrip-check.mjs",
 		"push-overleaf": "node --import ./scripts/tsx-register.mjs scripts/push-overleaf.ts",
-		"pull-overleaf": "node --import ./scripts/tsx-register.mjs scripts/pull-overleaf.ts",
-		"generate-lean": "node --import ./scripts/tsx-register.mjs scripts/generate-lean.ts",
-		"lean-check": "cd lean && lake build"
+		"pull-overleaf": "node --import ./scripts/tsx-register.mjs scripts/pull-overleaf.ts"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-static": "^3.0.1",

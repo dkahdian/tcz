@@ -86,6 +86,8 @@ export function resolveOperations(
         refs: support.refs,
         description: support.description,
         derived: support.derived,
+        origin: support.origin,
+        batchId: support.batchId,
         dimmed: support.dimmed,
         explicit: support.explicit
       });

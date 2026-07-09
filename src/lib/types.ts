@@ -40,23 +40,6 @@ export interface OperationLemma {
   refs: string[];
 }
 
-// ===========================================================================
-// Proof trace types for Lean 4 code generation
-// ===========================================================================
-
-/**
- * A structured proof trace recording how a derived fact was inferred.
- * Used by the Lean code generator to emit machine-checked proof terms.
- */
-export type ProofTrace =
-  | { rule: 'transitivity'; path: string[]; level: 'poly' | 'quasi' }
-  | { rule: 'contradiction'; triedStatus: string; witnessPath: string[] }
-  | { rule: 'query-via-succinctness'; sourceLanguageId: string; targetLanguageId: string; operation: string; level: 'poly' | 'quasi' }
-  | { rule: 'lemma-forward'; lemmaId: string; languageId: string; level: 'poly' | 'quasi' }
-  | { rule: 'lemma-contrapositive'; lemmaId: string; languageId: string; pivotOp: string; level: 'poly' | 'quasi' }
-  | { rule: 'query-difference'; operation: string; posLanguageId: string; negLanguageId: string; level: 'poly' | 'quasi' }
-  | { rule: 'query-downgrade-via-succinctness'; sourceLanguageId: string; targetLanguageId: string; operation: string; level: 'poly' | 'quasi' };
-
 /**
  * Full complexity info with display properties.
  * Used for both transformation statuses and operation complexities.
@@ -107,6 +90,26 @@ export interface VisualOverrides {
   highlightLevel?: 'none' | 'subtle' | 'strong';
 }
 
+export type ClaimOrigin = 'authored' | 'batch' | 'derived';
+
+export type ProofAtom =
+  | { kind: 'leP' | 'leQ' | 'notLeP' | 'notLeQ'; sourceId: string; targetId: string }
+  | { kind: 'supportsP' | 'notSupportsP'; languageId: string; op: string };
+
+export interface PropagationProof {
+  rule:
+    | 'authored'
+    | 'batch'
+    | 'positive-path'
+    | 'negative-obstruction'
+    | 'query-transfer'
+    | 'query-separation'
+    | 'lemma-forward'
+    | 'lemma-contrapositive'
+    | 'no-quasi-implies-no-poly';
+  premises: ProofAtom[];
+}
+
 /**
  * Language-specific support information for an operation.
  * The operation code and label come from the canonical operations definition.
@@ -122,12 +125,12 @@ export interface KCOpSupport {
   description?: string;
   /** True if this operation support was inferred by the propagator rather than manually authored */
   derived?: boolean;
+  /** Provenance category for propagation and proof selection. */
+  origin?: ClaimOrigin;
+  /** Structured human-proof certificate for propagation reuse. */
+  proof?: PropagationProof;
   /** ID of the authored batch claim that generated this operation support entry. */
   batchId?: string;
-  /** Global derivation order for Lean proof generation (lower = derived earlier). Undefined for non-derived. */
-  derivationOrder?: number;
-  /** Structured proof trace for Lean code generation */
-  proofTrace?: ProofTrace;
   /** True if this cell should be visually dimmed/grayed (set by implicitEdgeTreatment filter). */
   dimmed?: boolean;
   /** True if this cell should be highlighted as explicit (set by implicitEdgeTreatment filter). */
@@ -151,6 +154,13 @@ export type KCBatchSelector =
       source: KCBatchLanguageRef;
       target: KCBatchLanguageRef;
       level: 'poly' | 'quasi';
+      polarity?: 'positive' | 'negative';
+    }
+  | {
+      kind: 'operation';
+      opType: 'queries' | 'transformations';
+      language: KCBatchLanguageRef;
+      op: string;
       polarity?: 'positive' | 'negative';
     };
 
@@ -304,10 +314,10 @@ export interface DescriptionComponent {
   refs: string[];
   /** True if this part was inferred by the propagator */
   derived: boolean;
-  /** Global derivation order for Lean proof generation */
-  derivationOrder?: number;
-  /** Structured proof trace for Lean code generation */
-  proofTrace?: ProofTrace;
+  /** Provenance category for this proof component. */
+  origin?: ClaimOrigin;
+  /** Structured human-proof certificate for propagation reuse. */
+  proof?: PropagationProof;
 }
 
 export interface DirectedSuccinctnessRelation {
@@ -323,10 +333,10 @@ export interface DirectedSuccinctnessRelation {
   hidden?: boolean;
   /** True if this edge was inferred by the propagator rather than manually authored. */
   derived?: boolean;
-  /** Global derivation order for Lean proof generation (lower = derived earlier). Undefined for non-derived. */
-  derivationOrder?: number;
-  /** Structured proof trace for Lean code generation */
-  proofTrace?: ProofTrace;
+  /** Provenance category for propagation and proof selection. */
+  origin?: ClaimOrigin;
+  /** Structured human-proof certificate for propagation reuse. */
+  proof?: PropagationProof;
   /**
    * For no-poly-quasi edges: structured proof tracking for each claim.
    * Allows partial derivation where one claim is manual and the other derived.

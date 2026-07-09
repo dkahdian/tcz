@@ -233,7 +233,7 @@ export const implicitEdgeTreatment: EdgeFilter<ImplicitEdgeTreatmentMode> = {
     let result = mapRelationsInDataset(data, (relation) => {
       if (!relation) return null;
 
-      if (relation.derived) {
+      if (relation.derived || relation.origin === 'derived') {
         return { ...relation, dimmed: true };
       }
       return relation;
@@ -244,7 +244,7 @@ export const implicitEdgeTreatment: EdgeFilter<ImplicitEdgeTreatmentMode> = {
       const mapOps = (ops: Record<string, import('$lib/types.js').KCOpSupport>) => {
         const mapped: Record<string, import('$lib/types.js').KCOpSupport> = {};
         for (const [code, support] of Object.entries(ops)) {
-          if (support.derived) {
+          if (support.derived || support.origin === 'derived') {
             mapped[code] = { ...support, dimmed: true };
           } else {
             mapped[code] = support;

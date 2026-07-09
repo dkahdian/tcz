@@ -130,8 +130,8 @@
       selectedOperationCell.operationCode,
       {
         complexity: draftOperationComplexity || null,
-        assumption: draftOperationAssumption.trim() || undefined,
-        description: draftOperationDescription.trim() || undefined
+        assumption: draftOperationAssumption.trim(),
+        description: draftOperationDescription.trim()
       }
     );
   }

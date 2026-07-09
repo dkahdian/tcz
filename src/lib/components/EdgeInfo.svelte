@@ -135,7 +135,11 @@
       ? lookupRelationPair(filteredGraphData, selectedEdge.source, selectedEdge.target)
       : null;
     const basePair = lookupRelationPair(graphData, selectedEdge.source, selectedEdge.target);
-    const pair = filteredPair && (filteredPair.forward || filteredPair.backward) ? filteredPair : basePair;
+    const pair = sandboxMode
+      ? basePair
+      : filteredPair && (filteredPair.forward || filteredPair.backward)
+        ? filteredPair
+        : basePair;
 
     if (!pair) return selectedEdge;
 
@@ -226,10 +230,10 @@
     if (!selectedEdge || !sandboxMode || !onSandboxEdgeEdit) return;
     onSandboxEdgeEdit(selectedEdge.source, selectedEdge.target, {
       status: draftEdgeStatus || null,
-      assumption: draftEdgeAssumption.trim() || undefined,
-      description: draftEdgeDescription.trim() || undefined,
-      noPolyDescription: draftNoPolyDescription.trim() || undefined,
-      quasiDescription: draftQuasiDescription.trim() || undefined
+      assumption: draftEdgeAssumption.trim(),
+      description: draftEdgeDescription.trim(),
+      noPolyDescription: draftNoPolyDescription.trim(),
+      quasiDescription: draftQuasiDescription.trim()
     });
   }
 

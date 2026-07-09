@@ -75,6 +75,8 @@ export function createFillUnknownOperationsFilter(): LanguageFilter {
                 refs: support.refs ?? [],
                 ...(support.description && { description: support.description }),
                 ...(support.derived != null && { derived: support.derived }),
+                ...(support.origin && { origin: support.origin }),
+                ...(support.batchId && { batchId: support.batchId }),
                 ...(support.dimmed != null && { dimmed: support.dimmed }),
                 ...(support.explicit != null && { explicit: support.explicit })
               };

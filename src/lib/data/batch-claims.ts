@@ -312,6 +312,7 @@ export function expandBatchClaims(database: BatchExpansionData): number {
         refs,
         description: citedDescription.text,
         derived: false,
+        origin: 'batch',
         batchId: batch.id
       };
       if (batch.assumption) support.assumption = batch.assumption;

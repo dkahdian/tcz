@@ -7,7 +7,7 @@ import type {
 } from '../types.js';
 import { cloneDataset } from './transforms.js';
 import { validateDatasetStructure } from './validation/index.js';
-import { propagateImplicitRelations } from './propagation/index.js';
+import { propagateImplicitRelations, type PropagationOptions } from './propagation/index.js';
 import { QUERIES, TRANSFORMATIONS } from './operations.js';
 import { generateLanguageId } from '../utils/language-id.js';
 import { generateReferenceId } from '../utils/reference-id.js';
@@ -97,6 +97,11 @@ export type SandboxEvaluationResult =
       directOperationCellIds: Set<string>;
     };
 
+export interface SandboxEvaluationOptions {
+  proofMode?: PropagationOptions['proofMode'];
+  oldProofSource?: GraphData;
+}
+
 export function edgeEditId(sourceId: string, targetId: string): string {
   return `${sourceId}->${targetId}`;
 }
@@ -135,12 +140,7 @@ function relationSignature(source: GraphData, sourceId: string, targetId: string
   if (!relation) return 'null';
   return JSON.stringify({
     status: relation.status ?? null,
-    assumption: relation.assumption ?? null,
-    description: relation.description ?? null,
-    refs: relation.refs ?? [],
-    derived: relation.derived ?? false,
-    noPolyDescription: relation.noPolyDescription ?? null,
-    quasiDescription: relation.quasiDescription ?? null
+    assumption: relation.assumption ?? null
   });
 }
 
@@ -169,11 +169,17 @@ function operationSignature(
   if (!support) return 'null';
   return JSON.stringify({
     complexity: support.complexity ?? null,
-    assumption: support.assumption ?? null,
-    description: support.description ?? null,
-    refs: support.refs ?? [],
-    derived: support.derived ?? false
+    assumption: support.assumption ?? null
   });
+}
+
+function hasOwn(object: object, key: string): boolean {
+  return Object.prototype.hasOwnProperty.call(object, key);
+}
+
+function cleanOptionalText(value: string | undefined): string | undefined {
+  const text = value?.trim();
+  return text ? text : undefined;
 }
 
 export function getChangedSuccinctnessCellIds(base: GraphData, next: GraphData): Set<string> {
@@ -330,43 +336,91 @@ function applyEdgeEdit(data: GraphData, edit: Extract<SandboxEdit, { kind: 'edge
   const targetIdx = data.adjacencyMatrix.indexByLanguage[edit.targetId];
   if (sourceIdx === undefined || targetIdx === undefined || sourceIdx === targetIdx) return;
 
-  if (!edit.status || edit.status === 'unknown-to-us') {
+  const existing = data.adjacencyMatrix.matrix[sourceIdx][targetIdx] ?? null;
+  const status = normalizeSandboxEdgeStatus(edit.status, existing);
+  if (!status) {
     data.adjacencyMatrix.matrix[sourceIdx][targetIdx] = null;
     return;
   }
 
-  const existing = data.adjacencyMatrix.matrix[sourceIdx][targetIdx] ?? null;
-  const noPolyText = edit.noPolyDescription?.trim();
-  const quasiText = edit.quasiDescription?.trim();
-  const descriptionText = edit.description?.trim();
+  const noPolyText = edgeNoPolyDescriptionForEdit(edit, existing, status);
+  const quasiText = edgeQuasiDescriptionForEdit(edit, existing, status);
+  const descriptionText = edgeDescriptionForEdit(edit, existing, status);
+  const assumptionText = hasOwn(edit, 'assumption')
+    ? cleanOptionalText(edit.assumption)
+    : existing?.assumption;
   const relation: DirectedSuccinctnessRelation = {
-    status: edit.status,
+    status,
     refs: [...(edit.refs ?? existing?.refs ?? [])],
-    description:
-      edit.status === 'no-poly-quasi' && (noPolyText || quasiText)
-        ? [noPolyText, quasiText].filter(Boolean).join(' ')
-        : descriptionText || existing?.description,
+    ...(descriptionText ? { description: descriptionText } : {}),
     derived: false
   };
-  if (edit.status === 'no-poly-quasi' && noPolyText) {
+  if (status === 'no-poly-quasi' && noPolyText) {
     relation.noPolyDescription = {
       description: noPolyText,
-      refs: [...(edit.refs ?? [])],
+      refs: [...(edit.refs ?? existing?.noPolyDescription?.refs ?? existing?.refs ?? [])],
       derived: false
     };
   }
-  if (edit.status === 'no-poly-quasi' && quasiText) {
+  if (status === 'no-poly-quasi' && quasiText) {
     relation.quasiDescription = {
       description: quasiText,
-      refs: [...(edit.refs ?? [])],
+      refs: [...(edit.refs ?? existing?.quasiDescription?.refs ?? existing?.refs ?? [])],
       derived: false
     };
   }
-  if (edit.assumption?.trim()) {
-    relation.assumption = edit.assumption.trim();
+  if (assumptionText) {
+    relation.assumption = assumptionText;
   }
 
   data.adjacencyMatrix.matrix[sourceIdx][targetIdx] = relation;
+}
+
+function normalizeSandboxEdgeStatus(
+  status: string | null | undefined,
+  existing: DirectedSuccinctnessRelation | null
+): string | null {
+  if (!status || status === 'unknown-to-us' || status === 'unknown-both' || status === 'unknown') return null;
+  if (status === 'not-poly' || status === 'no-poly-unknown-quasi') {
+    if (existing?.status === 'unknown-poly-quasi' || existing?.status === 'no-poly-quasi') return 'no-poly-quasi';
+    if (existing?.status === 'no-quasi') return 'no-quasi';
+    return 'no-poly-unknown-quasi';
+  }
+  return status;
+}
+
+function edgeDescriptionForEdit(
+  edit: Extract<SandboxEdit, { kind: 'edge' }>,
+  existing: DirectedSuccinctnessRelation | null,
+  status: string
+): string | undefined {
+  if (hasOwn(edit, 'description')) return cleanOptionalText(edit.description);
+  if (existing?.status !== status) return undefined;
+  return existing.description;
+}
+
+function edgeNoPolyDescriptionForEdit(
+  edit: Extract<SandboxEdit, { kind: 'edge' }>,
+  existing: DirectedSuccinctnessRelation | null,
+  status: string
+): string | undefined {
+  if (status !== 'no-poly-quasi') return undefined;
+  if (hasOwn(edit, 'noPolyDescription')) return cleanOptionalText(edit.noPolyDescription);
+  if (existing?.status === 'no-poly-quasi') return existing.noPolyDescription?.description;
+  if (existing?.status === 'no-poly-unknown-quasi') return existing.description;
+  return undefined;
+}
+
+function edgeQuasiDescriptionForEdit(
+  edit: Extract<SandboxEdit, { kind: 'edge' }>,
+  existing: DirectedSuccinctnessRelation | null,
+  status: string
+): string | undefined {
+  if (status !== 'no-poly-quasi') return undefined;
+  if (hasOwn(edit, 'quasiDescription')) return cleanOptionalText(edit.quasiDescription);
+  if (existing?.status === 'no-poly-quasi') return existing.quasiDescription?.description;
+  if (existing?.status === 'unknown-poly-quasi') return existing.description;
+  return undefined;
 }
 
 function applyOperationEdit(data: GraphData, edit: Extract<SandboxEdit, { kind: 'operation' }>): void {
@@ -382,7 +436,8 @@ function applyOperationEdit(data: GraphData, edit: Extract<SandboxEdit, { kind: 
     : TRANSFORMATIONS[edit.operationCode];
   const displayCode = operation?.code;
 
-  if (!edit.complexity || edit.complexity === 'unknown-to-us') {
+  const complexity = normalizeSandboxOperationComplexity(edit.complexity);
+  if (!complexity) {
     delete supportMap[edit.operationCode];
     if (displayCode) delete supportMap[displayCode];
     return;
@@ -394,19 +449,28 @@ function applyOperationEdit(data: GraphData, edit: Extract<SandboxEdit, { kind: 
 
   const existing = supportMap[edit.operationCode] ?? (displayCode ? supportMap[displayCode] : undefined);
   const refs = edit.refs !== undefined ? [...edit.refs] : [...(existing?.refs ?? [])];
-  const description = edit.description !== undefined
-    ? edit.description.trim() || undefined
-    : existing?.description;
+  const description = hasOwn(edit, 'description')
+    ? cleanOptionalText(edit.description)
+    : existing?.complexity === complexity
+      ? existing?.description
+      : undefined;
+  const assumption = hasOwn(edit, 'assumption')
+    ? cleanOptionalText(edit.assumption)
+    : existing?.assumption;
 
   supportMap[edit.operationCode] = {
     ...(description ? { description } : {}),
-    complexity: edit.complexity,
+    complexity,
     refs,
     derived: false,
-    ...(edit.assumption !== undefined
-      ? (edit.assumption.trim() ? { assumption: edit.assumption.trim() } : {})
-      : (existing?.assumption ? { assumption: existing.assumption } : {}))
+    ...(assumption ? { assumption } : {})
   };
+}
+
+function normalizeSandboxOperationComplexity(complexity: string | null | undefined): string | null {
+  if (!complexity || complexity === 'unknown-to-us' || complexity === 'unknown-both' || complexity === 'unknown') return null;
+  if (complexity === 'not-poly') return 'no-poly-unknown-quasi';
+  return complexity;
 }
 
 function applyGraphPositionEdit(data: GraphData, edit: Extract<SandboxEdit, { kind: 'graph-position' }>): void {
@@ -435,7 +499,11 @@ export function applySandboxGraphPositionEdits(
   return merged;
 }
 
-export function applySandboxEdits(base: GraphData, edits: SandboxEdit[]): SandboxEvaluationResult {
+export function applySandboxEdits(
+  base: GraphData,
+  edits: SandboxEdit[],
+  options: SandboxEvaluationOptions = {}
+): SandboxEvaluationResult {
   const directEdgeIds = getDirectSandboxEdgeIds(edits);
   const directOperationCellIds = getDirectSandboxOperationCellIds(edits);
 
@@ -466,12 +534,17 @@ export function applySandboxEdits(base: GraphData, edits: SandboxEdit[]): Sandbo
       throw new Error(`Sandbox edits produced an invalid dataset: ${detail}`);
     }
 
-    const graphData = propagateImplicitRelations(merged);
+    const graphData = propagateImplicitRelations(merged, {
+      proofMode: options.proofMode ?? 'lazy',
+      oldProofSource: options.oldProofSource
+    });
     graphData.assumptions = collectAssumptions(graphData, { includeCanonical: false });
-    const propagatedValidation = validateDatasetStructure(graphData);
-    if (!propagatedValidation.ok) {
-      const detail = propagatedValidation.errors?.join('; ') ?? 'unknown propagated structural error';
-      throw new Error(`Sandbox edits produced an invalid propagated dataset: ${detail}`);
+    if ((options.proofMode ?? 'lazy') !== 'lazy') {
+      const propagatedValidation = validateDatasetStructure(graphData);
+      if (!propagatedValidation.ok) {
+        const detail = propagatedValidation.errors?.join('; ') ?? 'unknown propagated structural error';
+        throw new Error(`Sandbox edits produced an invalid propagated dataset: ${detail}`);
+      }
     }
 
     return {

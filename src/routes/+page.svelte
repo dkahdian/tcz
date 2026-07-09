@@ -33,6 +33,22 @@
   const languageFilters = getAllLanguageFilters();
   const edgeFilters = getAllEdgeFilters();
   const FILTER_STORAGE_KEY = 'kcm_filter_deltas_v2';
+  type SandboxProofTarget =
+    | { kind: 'edge'; sourceId: string; targetId: string }
+    | { kind: 'operation'; operationType: SandboxOperationType; languageId: string; operationCode: string };
+  type SandboxWorkerResponse =
+    | { id: number; kind: 'hydrate-sandbox'; result: SandboxEvaluationResult }
+    | {
+        id: number;
+        kind: 'prove-target';
+        result:
+          | {
+              ok: true;
+              relation?: import('$lib/types.js').DirectedSuccinctnessRelation | null;
+              support?: import('$lib/types.js').KCOpSupport | null;
+            }
+          | { ok: false; error: string };
+      };
 
   const createSubmissionId = (): string => {
     return crypto.randomUUID();
@@ -71,6 +87,16 @@
   let sandboxError = $state<string | null>(null);
   let lastSemanticSandboxKey = '';
   let lastSemanticSandboxEvaluation: SandboxEvaluationResult | null = null;
+  let hydratedSemanticSandboxKey = $state('');
+  let hydratedSemanticSandboxEvaluation = $state<SandboxEvaluationResult | null>(null);
+  let pendingHydrationKey = '';
+  let sandboxHydrationWorker: Worker | null = null;
+  let sandboxTargetProofWorker: Worker | null = null;
+  let sandboxWorkerRequestId = 0;
+  let pendingTargetProofKey = '';
+  const hydrationKeysByRequestId = new Map<number, string>();
+  const targetProofKeysByRequestId = new Map<number, string>();
+  const completedTargetProofKeys = new Set<string>();
   let sandboxPersistenceReady = $state(false);
   let showNewLanguageModal = $state(false);
   let newLanguageKind = $state<'language' | 'class'>('language');
@@ -92,6 +118,34 @@
       filterPersistenceReady = true;
       return;
     }
+
+    sandboxHydrationWorker = new Worker(new URL('$lib/workers/sandbox-hydration.worker.ts', import.meta.url), {
+      type: 'module'
+    });
+    sandboxTargetProofWorker = new Worker(new URL('$lib/workers/sandbox-hydration.worker.ts', import.meta.url), {
+      type: 'module'
+    });
+    sandboxHydrationWorker.onmessage = (event: MessageEvent<SandboxWorkerResponse>) => {
+      const message = event.data;
+      if (message.kind !== 'hydrate-sandbox') return;
+      const key = hydrationKeysByRequestId.get(message.id) ?? '';
+      hydrationKeysByRequestId.delete(message.id);
+      if (key === pendingHydrationKey) pendingHydrationKey = '';
+      if (key !== JSON.stringify(sandboxEdits.filter(isSemanticSandboxEdit))) return;
+      hydratedSemanticSandboxKey = key;
+      hydratedSemanticSandboxEvaluation = message.result;
+      if (message.result.ok) refreshSelectedClaimFromGraph(message.result.graphData);
+    };
+    sandboxTargetProofWorker.onmessage = (event: MessageEvent<SandboxWorkerResponse>) => {
+      const message = event.data;
+      if (message.kind !== 'prove-target') return;
+      const key = targetProofKeysByRequestId.get(message.id) ?? '';
+      targetProofKeysByRequestId.delete(message.id);
+      if (key === pendingTargetProofKey) pendingTargetProofKey = '';
+      completedTargetProofKeys.add(key);
+      if (!message.result.ok) return;
+      applyTargetProofResult(key, message.result);
+    };
 
     const storedViewMode = localStorage.getItem('kcm_view_mode');
     if (storedViewMode === 'graph' || storedViewMode === 'succinctness' || storedViewMode === 'queries' || storedViewMode === 'transforms') {
@@ -164,12 +218,14 @@
 
     return () => {
       window.removeEventListener('hashchange', onHashChange);
+      sandboxHydrationWorker?.terminate();
+      sandboxTargetProofWorker?.terminate();
     };
   });
 
   function openSandboxSubmitModal() {
     if (!isSandboxMode || sandboxEdits.length === 0) return;
-    const evaluation = applySandboxEdits(initialGraphData, sandboxEdits);
+    const evaluation = applySandboxEdits(initialGraphData, sandboxEdits, { proofMode: 'eager' });
     if (!evaluation.ok) {
       sandboxError = evaluation.error;
       return;
@@ -195,7 +251,7 @@
       return;
     }
 
-    const evaluation = applySandboxEdits(initialGraphData, sandboxEdits);
+    const evaluation = applySandboxEdits(initialGraphData, sandboxEdits, { proofMode: 'eager' });
     if (!evaluation.ok) {
       sandboxError = evaluation.error;
       sandboxSubmitError = evaluation.error;
@@ -262,18 +318,131 @@
     if (edits.length === 0) {
       lastSemanticSandboxKey = '';
       lastSemanticSandboxEvaluation = null;
+      hydratedSemanticSandboxKey = '';
+      hydratedSemanticSandboxEvaluation = null;
       return null;
     }
 
     const key = JSON.stringify(edits);
+    if (key === hydratedSemanticSandboxKey && hydratedSemanticSandboxEvaluation) {
+      return hydratedSemanticSandboxEvaluation;
+    }
     if (key === lastSemanticSandboxKey && lastSemanticSandboxEvaluation) {
       return lastSemanticSandboxEvaluation;
     }
 
-    const evaluation = applySandboxEdits(initialGraphData, edits);
+    const evaluation = applySandboxEdits(initialGraphData, edits, {
+      oldProofSource: currentSandboxProofPreload(key)
+    });
     lastSemanticSandboxKey = key;
     lastSemanticSandboxEvaluation = evaluation;
     return evaluation;
+  }
+
+  function currentSandboxProofPreload(nextKey?: string): GraphData | undefined {
+    if (
+      hydratedSemanticSandboxEvaluation?.ok &&
+      (!nextKey || hydratedSemanticSandboxKey !== nextKey)
+    ) {
+      return hydratedSemanticSandboxEvaluation.graphData;
+    }
+    if (
+      lastSemanticSandboxEvaluation?.ok &&
+      (!nextKey || lastSemanticSandboxKey !== nextKey)
+    ) {
+      return lastSemanticSandboxEvaluation.graphData;
+    }
+    return undefined;
+  }
+
+  function requestSandboxHydration(edits: SandboxEdit[]): void {
+    if (!browser || !sandboxHydrationWorker || edits.length === 0) return;
+    const key = JSON.stringify(edits);
+    if (
+      key === pendingHydrationKey ||
+      (key === hydratedSemanticSandboxKey && hydratedSemanticSandboxEvaluation)
+    ) return;
+    const id = ++sandboxWorkerRequestId;
+    pendingHydrationKey = key;
+    hydrationKeysByRequestId.set(id, key);
+    sandboxHydrationWorker.postMessage({
+      id,
+      kind: 'hydrate-sandbox',
+      base: cloneForWorker(initialGraphData),
+      edits: cloneForWorker(edits)
+    });
+  }
+
+  function targetProofKey(target: SandboxProofTarget, semanticKey: string): string {
+    return `${semanticKey}:${JSON.stringify(target)}`;
+  }
+
+  function requestTargetProof(target: SandboxProofTarget, edits: SandboxEdit[]): void {
+    if (!browser || !sandboxTargetProofWorker || edits.length === 0) return;
+    const semanticKey = JSON.stringify(edits);
+    const key = targetProofKey(target, semanticKey);
+    if (key === pendingTargetProofKey) return;
+    const id = ++sandboxWorkerRequestId;
+    pendingTargetProofKey = key;
+    targetProofKeysByRequestId.set(id, key);
+    sandboxTargetProofWorker.postMessage({
+      id,
+      kind: 'prove-target',
+      base: cloneForWorker(initialGraphData),
+      edits: cloneForWorker(edits),
+      target: cloneForWorker(target)
+    });
+  }
+
+  function cloneForWorker<T>(value: T): T {
+    return JSON.parse(JSON.stringify(value)) as T;
+  }
+
+  function applyTargetProofResult(
+    proofKey: string,
+    result: Extract<SandboxWorkerResponse, { kind: 'prove-target' }>['result']
+  ): void {
+    if (!result.ok) return;
+    const semanticEdits = sandboxEdits.filter(isSemanticSandboxEdit);
+    const semanticKey = JSON.stringify(semanticEdits);
+    if (!proofKey.startsWith(`${semanticKey}:`)) return;
+
+    if (result.relation && selectedEdge) {
+      const target = JSON.parse(proofKey.slice(semanticKey.length + 1)) as SandboxProofTarget;
+      if (target.kind !== 'edge') return;
+      const isForward = selectedEdge.source === target.sourceId && selectedEdge.target === target.targetId;
+      const isBackward = selectedEdge.source === target.targetId && selectedEdge.target === target.sourceId;
+      if (!isForward && !isBackward) return;
+      selectedEdge = {
+        ...selectedEdge,
+        forward: isForward ? result.relation : selectedEdge.forward,
+        backward: isBackward ? result.relation : selectedEdge.backward,
+        refs: [
+          ...((isForward ? result.relation : selectedEdge.forward)?.refs ?? []),
+          ...((isBackward ? result.relation : selectedEdge.backward)?.refs ?? [])
+        ]
+      };
+      return;
+    }
+
+    if (result.support && selectedOperationCell) {
+      const target = JSON.parse(proofKey.slice(semanticKey.length + 1)) as SandboxProofTarget;
+      if (
+        target.kind !== 'operation' ||
+        selectedOperationCell.operationType !== target.operationType ||
+        selectedOperationCell.language.id !== target.languageId ||
+        selectedOperationCell.operationCode !== target.operationCode
+      ) return;
+      selectedOperationCell = {
+        ...selectedOperationCell,
+        support: {
+          ...selectedOperationCell.support,
+          ...result.support,
+          code: selectedOperationCell.support.code,
+          label: selectedOperationCell.support.label
+        }
+      };
+    }
   }
 
   function evaluateSandboxEditsForDisplay(edits: SandboxEdit[]): SandboxEvaluationResult | null {
@@ -365,6 +534,24 @@
     isSandboxMode && sandboxEvaluation?.ok ? sandboxEvaluation.directOperationCellIds : new Set<string>()
   );
   const highlightedSuccinctnessCellIds = $derived(sandboxChangedSuccinctnessCellIds);
+
+  $effect(() => {
+    if (!isSandboxMode) return;
+    const semanticEdits = sandboxEdits.filter(isSemanticSandboxEdit);
+    requestSandboxHydration(semanticEdits);
+  });
+
+  $effect(() => {
+    if (!isSandboxMode) return;
+    const semanticEdits = sandboxEdits.filter(isSemanticSandboxEdit);
+    if (semanticEdits.length === 0) return;
+    const semanticKey = JSON.stringify(semanticEdits);
+    const target = selectedClaimTargetNeedingProof();
+    if (!target) return;
+    const key = targetProofKey(target, semanticKey);
+    if (completedTargetProofKeys.has(key)) return;
+    requestTargetProof(target, semanticEdits);
+  });
 
   function clearSelectedCells() {
     selectedEdge = null;
@@ -540,6 +727,56 @@
     };
   }
 
+  function refreshSelectedClaimFromGraph(graphData: GraphData): void {
+    if (selectedEdge) {
+      refreshSelectedEdge(graphData, selectedEdge.source, selectedEdge.target);
+    }
+    if (selectedOperationCell) {
+      refreshSelectedOperationCell(
+        graphData,
+        selectedOperationCell.operationType,
+        selectedOperationCell.language.id,
+        selectedOperationCell.operationCode
+      );
+    }
+  }
+
+  function relationNeedsProofHydration(relation: import('$lib/types.js').DirectedSuccinctnessRelation | null | undefined): boolean {
+    if (!relation) return false;
+    const generated = relation.derived || relation.origin === 'derived' || relation.origin === 'batch';
+    if (!generated) return false;
+    if (relation.status === 'no-poly-quasi') {
+      return !relation.noPolyDescription?.description || !relation.quasiDescription?.description;
+    }
+    return !relation.description || !relation.proof;
+  }
+
+  function operationNeedsProofHydration(support: import('$lib/types.js').KCOpSupport | null | undefined): boolean {
+    if (!support) return false;
+    const generated = support.derived || support.origin === 'derived' || support.origin === 'batch' || Boolean(support.batchId);
+    return generated && (!support.description || !support.proof);
+  }
+
+  function selectedClaimTargetNeedingProof(): SandboxProofTarget | null {
+    if (selectedEdge) {
+      if (relationNeedsProofHydration(selectedEdge.forward)) {
+        return { kind: 'edge', sourceId: selectedEdge.source, targetId: selectedEdge.target };
+      }
+      if (relationNeedsProofHydration(selectedEdge.backward)) {
+        return { kind: 'edge', sourceId: selectedEdge.target, targetId: selectedEdge.source };
+      }
+    }
+    if (selectedOperationCell && operationNeedsProofHydration(selectedOperationCell.support)) {
+      return {
+        kind: 'operation',
+        operationType: selectedOperationCell.operationType,
+        languageId: selectedOperationCell.language.id,
+        operationCode: selectedOperationCell.operationCode
+      };
+    }
+    return null;
+  }
+
   function summarizeSandboxEdit(edit: SandboxEdit): string {
     if (edit.kind === 'language:new') {
       return `New language: ${edit.name}`;
@@ -663,7 +900,9 @@
       return true;
     }
 
-    const evaluation = applySandboxEdits(initialGraphData, nextEdits);
+    const evaluation = applySandboxEdits(initialGraphData, nextEdits, {
+      oldProofSource: currentSandboxProofPreload(JSON.stringify(nextEdits.filter(isSemanticSandboxEdit)))
+    });
     if (!evaluation.ok) {
       sandboxError = evaluation.error;
       return false;
@@ -776,7 +1015,11 @@
     const nextEdits = nextSandboxEditsFor(edit);
     const applied = commitSandboxEdits(nextEdits);
     if (applied) {
-      const evaluation = nextEdits.length > 0 ? applySandboxEdits(initialGraphData, nextEdits) : null;
+      const evaluation = nextEdits.length > 0
+        ? applySandboxEdits(initialGraphData, nextEdits, {
+            oldProofSource: currentSandboxProofPreload(JSON.stringify(nextEdits.filter(isSemanticSandboxEdit)))
+          })
+        : null;
       refreshSelectedEdge(evaluation?.ok ? evaluation.graphData : initialGraphData, sourceId, targetId);
       sandboxSelection = null;
     }
@@ -848,7 +1091,9 @@
     const nextEdits = nextSandboxEditsFor(edit);
     const applied = commitSandboxEdits(nextEdits);
     if (applied) {
-      const evaluation = applySandboxEdits(initialGraphData, nextEdits);
+      const evaluation = applySandboxEdits(initialGraphData, nextEdits, {
+        oldProofSource: currentSandboxProofPreload(JSON.stringify(nextEdits.filter(isSemanticSandboxEdit)))
+      });
       if (evaluation.ok) {
         refreshSelectedOperationCell(evaluation.graphData, operationType, languageId, operationCode);
       }

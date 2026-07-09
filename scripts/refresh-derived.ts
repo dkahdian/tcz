@@ -33,8 +33,8 @@ function removeDerivedEdges(matrix: KCAdjacencyMatrix): { removed: number; rever
       
       // Handle no-poly-quasi edges with structured descriptions
       if (edge.status === 'no-poly-quasi' && (edge.noPolyDescription || edge.quasiDescription)) {
-        const noPolyDerived = edge.noPolyDescription?.derived ?? true;
-        const quasiDerived = edge.quasiDescription?.derived ?? true;
+        const noPolyDerived = edge.noPolyDescription?.derived === true || edge.noPolyDescription?.origin === 'derived';
+        const quasiDerived = edge.quasiDescription?.derived === true || edge.quasiDescription?.origin === 'derived';
         
         if (noPolyDerived && quasiDerived) {
           // Both parts are derived - remove entirely
@@ -62,7 +62,7 @@ function removeDerivedEdges(matrix: KCAdjacencyMatrix): { removed: number; rever
           reverted++;
         }
         // If neither is derived, keep as-is
-      } else if (edge.derived === true) {
+      } else if (edge.derived === true || edge.origin === 'derived' || edge.origin === 'batch') {
         // Standard derived edge - remove entirely
         matrix.matrix[i][j] = null;
         removed++;
@@ -88,7 +88,7 @@ function removeDerivedOperations(languages: any[]): { queriesRemoved: number; tr
     if (language.properties.queries) {
       for (const [opCode, opData] of Object.entries(language.properties.queries)) {
         const op = opData as any;
-        if (op && op.derived === true) {
+        if (op && (op.derived === true || op.origin === 'derived' || op.origin === 'batch')) {
           // Reset to unknown-to-us
           language.properties.queries[opCode] = {
             complexity: 'unknown-to-us',
@@ -103,7 +103,7 @@ function removeDerivedOperations(languages: any[]): { queriesRemoved: number; tr
     if (language.properties.transformations) {
       for (const [opCode, opData] of Object.entries(language.properties.transformations)) {
         const op = opData as any;
-        if (op && op.derived === true) {
+        if (op && (op.derived === true || op.origin === 'derived' || op.origin === 'batch')) {
           // Reset to unknown-to-us
           language.properties.transformations[opCode] = {
             complexity: 'unknown-to-us',
@@ -126,7 +126,7 @@ function countDerivedEdges(matrix: KCAdjacencyMatrix): number {
     if (!matrix.matrix[i]) continue;
     for (let j = 0; j < size; j++) {
       const edge = matrix.matrix[i][j] as DirectedSuccinctnessRelation | null;
-      if (edge && edge.derived === true) {
+      if (edge && (edge.derived === true || edge.origin === 'derived' || edge.origin === 'batch')) {
         count++;
       }
     }
