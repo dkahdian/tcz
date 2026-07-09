@@ -362,10 +362,10 @@ function seedAuthoredRelation(
     const noPolyDerived = relation.noPolyDescription?.derived === true || relation.noPolyDescription?.origin === 'derived';
     const quasiDerived = relation.quasiDescription?.derived === true || relation.quasiDescription?.origin === 'derived';
     if (!noPolyDerived) {
-      add('notLeP', relation.noPolyDescription?.refs ?? baseRefs, relation.noPolyDescription?.description ?? baseDescription, baseAssumption);
+      add('notLeP', relation.noPolyDescription?.refs ?? baseRefs, relation.noPolyDescription?.description, baseAssumption);
     }
     if (!quasiDerived) {
-      add('leQ', relation.quasiDescription?.refs ?? baseRefs, relation.quasiDescription?.description ?? baseDescription, baseAssumption);
+      add('leQ', relation.quasiDescription?.refs ?? baseRefs, relation.quasiDescription?.description, baseAssumption);
     }
   }
 }
@@ -439,7 +439,7 @@ export function collectExistingProofs(data: GraphData): FactMetadataStore {
         add(
           edgeAtom('notLeP', source, target),
           relation.noPolyDescription?.refs ?? relation.refs,
-          relation.noPolyDescription?.description ?? relation.description,
+          relation.noPolyDescription?.description,
           relation.assumption,
           relation.noPolyDescription?.origin ?? relation.origin,
           relation.noPolyDescription?.proof
@@ -447,7 +447,7 @@ export function collectExistingProofs(data: GraphData): FactMetadataStore {
         add(
           edgeAtom('leQ', source, target),
           relation.quasiDescription?.refs ?? relation.refs,
-          relation.quasiDescription?.description ?? relation.description,
+          relation.quasiDescription?.description,
           relation.assumption,
           relation.quasiDescription?.origin ?? relation.origin,
           relation.quasiDescription?.proof

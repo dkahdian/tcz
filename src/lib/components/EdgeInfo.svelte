@@ -88,12 +88,25 @@
       draftEdgeStatus = originalEdge?.forward?.status ?? '';
       draftEdgeAssumption = originalEdge?.forward?.assumption ?? '';
       draftEdgeDescription = originalEdge?.forward?.description ?? '';
-      draftNoPolyDescription =
-        originalEdge?.forward?.noPolyDescription?.description ?? originalEdge?.forward?.description ?? '';
-      draftQuasiDescription = originalEdge?.forward?.quasiDescription?.description ?? '';
+      draftNoPolyDescription = draftNoPolyText(originalEdge?.forward);
+      draftQuasiDescription = draftQuasiText(originalEdge?.forward);
       statusDropdownOpen = false;
     }
   });
+
+  function draftNoPolyText(relation: DirectedSuccinctnessRelation | null | undefined): string {
+    if (!relation) return '';
+    if (relation.status === 'no-poly-quasi') return relation.noPolyDescription?.description ?? '';
+    if (relation.status === 'no-poly-unknown-quasi') return relation.description ?? '';
+    return '';
+  }
+
+  function draftQuasiText(relation: DirectedSuccinctnessRelation | null | undefined): string {
+    if (!relation) return '';
+    if (relation.status === 'no-poly-quasi') return relation.quasiDescription?.description ?? '';
+    if (relation.status === 'unknown-poly-quasi') return relation.description ?? '';
+    return '';
+  }
 
   onMount(() => {
     const handlePointerDown = (event: PointerEvent) => {

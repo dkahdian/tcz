@@ -405,7 +405,14 @@ function edgeNoPolyDescriptionForEdit(
   status: string
 ): string | undefined {
   if (status !== 'no-poly-quasi') return undefined;
-  if (hasOwn(edit, 'noPolyDescription')) return cleanOptionalText(edit.noPolyDescription);
+  if (hasOwn(edit, 'noPolyDescription')) {
+    const text = cleanOptionalText(edit.noPolyDescription);
+    const quasiText = hasOwn(edit, 'quasiDescription') ? cleanOptionalText(edit.quasiDescription) : undefined;
+    if (existing?.status === 'unknown-poly-quasi' && text === existing.description && !quasiText) {
+      return undefined;
+    }
+    return text;
+  }
   if (existing?.status === 'no-poly-quasi') return existing.noPolyDescription?.description;
   if (existing?.status === 'no-poly-unknown-quasi') return existing.description;
   return undefined;
@@ -417,7 +424,15 @@ function edgeQuasiDescriptionForEdit(
   status: string
 ): string | undefined {
   if (status !== 'no-poly-quasi') return undefined;
-  if (hasOwn(edit, 'quasiDescription')) return cleanOptionalText(edit.quasiDescription);
+  if (hasOwn(edit, 'quasiDescription')) {
+    const text = cleanOptionalText(edit.quasiDescription);
+    if (text) return text;
+    const noPolyText = hasOwn(edit, 'noPolyDescription') ? cleanOptionalText(edit.noPolyDescription) : undefined;
+    if (existing?.status === 'unknown-poly-quasi' && noPolyText === existing.description) {
+      return existing.description;
+    }
+    return undefined;
+  }
   if (existing?.status === 'no-poly-quasi') return existing.quasiDescription?.description;
   if (existing?.status === 'unknown-poly-quasi') return existing.description;
   return undefined;
