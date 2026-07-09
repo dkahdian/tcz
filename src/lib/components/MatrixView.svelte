@@ -7,6 +7,7 @@
     DirectedSuccinctnessRelation
   } from '$lib/types.js';
   import { compareByCanonicalOrder } from '$lib/utils/canonical-order.js';
+  import { validSandboxEdgeStatuses } from '$lib/utils/sandbox-status-options.js';
 
   /**
    * Sort language IDs by canonical order. Unknown languages are appended alphabetically.
@@ -51,21 +52,6 @@
     onSandboxEdgeEdit?: (sourceId: string, targetId: string) => void;
     onSandboxEdgeStatusChange?: (sourceId: string, targetId: string, status: string | null) => boolean;
   } = $props();
-
-  const DEFAULT_SANDBOX_EDGE_OPTIONS = [
-    'no-poly-unknown-quasi',
-    'poly',
-    'unknown-both'
-  ];
-
-  const ALL_SANDBOX_EDGE_OPTIONS = [
-    'poly',
-    'no-poly-unknown-quasi',
-    'no-poly-quasi',
-    'unknown-poly-quasi',
-    'unknown-both',
-    'no-quasi'
-  ];
 
   const STATUS_LABELS = $derived.by<Record<string, string>>(() => {
     return Object.fromEntries(Object.values(graphData.complexities).map((c) => [c.code, c.label]));
@@ -402,25 +388,7 @@
   }
 
   function validSandboxOptions(currentValue: string): string[] {
-    if (!showQuasipolynomialSandboxOptions) {
-      const displayValue = getSandboxDisplayStatus(currentValue || UNKNOWN_STATUS);
-      return displayValue === 'unknown' ? DEFAULT_SANDBOX_EDGE_OPTIONS : [];
-    }
-
-    switch (currentValue) {
-      case 'poly':
-      case 'no-quasi':
-      case 'no-poly-quasi':
-        return [];
-      case 'no-poly-unknown-quasi':
-        return ['no-poly-unknown-quasi', 'no-poly-quasi', 'no-quasi'];
-      case 'unknown-poly-quasi':
-        return ['unknown-poly-quasi', 'no-poly-quasi', 'poly'];
-      case 'unknown-both':
-      case '':
-      default:
-        return ALL_SANDBOX_EDGE_OPTIONS;
-    }
+    return validSandboxEdgeStatuses(currentValue, showQuasipolynomialSandboxOptions);
   }
 
   function handleSandboxStatusClick(

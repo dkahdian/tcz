@@ -16,14 +16,25 @@
   import { extractCitationKeys, formatAssumptionForMathText } from '$lib/utils/math-text.js';
   import { getGlobalRefNumber } from '$lib/data/references.js';
   import { getOperationTractabilityDisplay } from '$lib/utils/operation-tractability.js';
+  import {
+    UNKNOWN_OPERATION_COMPLEXITIES,
+    validSandboxOperationOptions,
+    type SandboxOperationOption
+  } from '$lib/utils/sandbox-status-options.js';
 
-  import { QUERIES, TRANSFORMATIONS, getOperationDescription } from '$lib/data/operations.js';
+  import {
+    QUERIES,
+    TRANSFORMATIONS,
+    displayCodeToSafeKey,
+    getOperationDescription
+  } from '$lib/data/operations.js';
 
   let {
     selectedOperation = null,
     selectedOperationCell = null,
     graphData,
     filteredGraphData,
+    sandboxBaselineGraphData = null,
     onLanguageSelect,
     onOperationSelect,
     sandboxMode = false,
@@ -37,6 +48,7 @@
     selectedOperationCell: SelectedOperationCell | null;
     graphData: GraphData | FilteredGraphData;
     filteredGraphData?: GraphData | FilteredGraphData;
+    sandboxBaselineGraphData?: GraphData | FilteredGraphData | null;
     onLanguageSelect?: (language: KCLanguage) => void;
     onOperationSelect?: (operation: SelectedOperation) => void;
     sandboxMode?: boolean;
@@ -68,18 +80,15 @@
   let draftOperationAssumption = $state('');
   let draftOperationDescription = $state('');
 
-  const HIDDEN_OPERATION_UNKNOWN_CODES = new Set([
-    'unknown',
-    'unknown-both',
-    'unknown-to-us',
-    'unknown-poly-quasi'
-  ]);
-
-  const operationStatusOptions = $derived(
-    Object.values(graphData.complexities).filter(
-      (complexity) => !complexity.internal && !HIDDEN_OPERATION_UNKNOWN_CODES.has(complexity.code)
-    )
-  );
+  const operationStatusOptions = $derived.by<SandboxOperationOption[]>(() => {
+    if (!selectedOperationCell) return [];
+    const baselineSupport = getBaselineOperationSupport();
+    return validSandboxOperationOptions({
+      baselineComplexity: baselineSupport?.complexity,
+      baselineAssumption: baselineSupport?.assumption,
+      currentAssumption: selectedOperationCell.support.assumption
+    });
+  });
 
   $effect(() => {
     const key = selectedOperationCell
@@ -95,11 +104,65 @@
     if (key !== draftOperationCellId || snapshot !== draftOperationSnapshot) {
       draftOperationCellId = key;
       draftOperationSnapshot = snapshot;
-      draftOperationComplexity = selectedOperationCell?.support.complexity ?? '';
+      draftOperationComplexity = normalizeOperationComplexityForSelect(
+        selectedOperationCell?.support.complexity
+      );
       draftOperationAssumption = selectedOperationCell?.support.assumption ?? '';
       draftOperationDescription = selectedOperationCell?.support.description ?? '';
     }
   });
+
+  function normalizeOperationComplexityForSelect(complexity: string | null | undefined): string {
+    if (!complexity || UNKNOWN_OPERATION_COMPLEXITIES.has(complexity)) return '';
+    return complexity;
+  }
+
+  function getBaselineOperationSupport(): KCOpEntry | null {
+    if (!selectedOperationCell) return null;
+    const sourceData = sandboxBaselineGraphData ?? graphData;
+    const language = sourceData.languages.find(
+      (candidate) => candidate.id === selectedOperationCell.language.id
+    );
+    if (!language) return null;
+
+    const supportMap = selectedOperationCell.operationType === 'query'
+      ? language.properties.queries
+      : language.properties.transformations;
+    const operations = selectedOperationCell.operationType === 'query' ? QUERIES : TRANSFORMATIONS;
+    const operationKey = selectedOperationCell.operationType === 'query'
+      ? selectedOperationCell.operationCode
+      : displayCodeToSafeKey(selectedOperationCell.operationCode);
+    const operation = operations[operationKey] ??
+      Object.values(operations).find((candidate) => candidate.code === selectedOperationCell.operationCode);
+    if (!operation) return null;
+
+    const support = supportMap?.[operationKey] ?? supportMap?.[operation.code];
+    if (!support) return null;
+
+    return {
+      code: operation.code,
+      label: operation.label,
+      complexity: support.complexity,
+      assumption: support.assumption,
+      refs: support.refs ?? [],
+      description: support.description,
+      derived: support.derived,
+      origin: support.origin,
+      proof: support.proof,
+      batchId: support.batchId,
+      dimmed: support.dimmed,
+      explicit: support.explicit
+    };
+  }
+
+  function operationStatusLabel(option: SandboxOperationOption): string {
+    return operationComplexityLabel(option.complexity);
+  }
+
+  function operationComplexityLabel(complexity: string | null | undefined): string {
+    if (!complexity || UNKNOWN_OPERATION_COMPLEXITIES.has(complexity)) return 'Unknown';
+    return graphData.complexities[complexity]?.label ?? complexity;
+  }
 
   function handleCitationClick(_key: string) {
     referencesSection?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -257,11 +320,15 @@
               class="sidebar-input"
               bind:value={draftOperationComplexity}
               onchange={commitOperationEdit}
+              disabled={operationStatusOptions.length === 0}
             >
-              <option value="">Unknown</option>
-              {#each operationStatusOptions as option}
-                <option value={option.code}>{option.label}</option>
-              {/each}
+              {#if operationStatusOptions.length === 0}
+                <option value={draftOperationComplexity}>{operationComplexityLabel(draftOperationComplexity)}</option>
+              {:else}
+                {#each operationStatusOptions as option}
+                  <option value={option.complexity ?? ''}>{operationStatusLabel(option)}</option>
+                {/each}
+              {/if}
             </select>
             <AssumptionPicker
               value={draftOperationAssumption}

@@ -12,13 +12,12 @@
   import { compareByCanonicalOrder } from '$lib/utils/canonical-order.js';
   import { getOperationTractabilityDisplay } from '$lib/utils/operation-tractability.js';
   import { renderMathText } from '$lib/utils/math-text.js';
+  import {
+    validSandboxOperationOptions,
+    type SandboxOperationOption
+  } from '$lib/utils/sandbox-status-options.js';
 
   type OperationType = 'queries' | 'transformations';
-  type SandboxOperationOption = {
-    id: string;
-    complexity: string | null;
-    assumption?: string;
-  };
 
   let {
     graphData,
@@ -60,14 +59,6 @@
       complexity: string | null
     ) => boolean;
   } = $props();
-
-  const UNKNOWN_OPERATION_COMPLEXITIES = new Set([
-    '',
-    'unknown',
-    'unknown-both',
-    'unknown-to-us',
-    'unknown-poly-quasi'
-  ]);
 
   const POSITIVE_COMPILATION_STATUSES = new Set(['poly', 'unknown-poly-quasi', 'no-poly-quasi']);
 
@@ -343,28 +334,11 @@
     baselineSupport: KCOpEntry | null,
     currentSupport: KCOpEntry | null
   ): SandboxOperationOption[] {
-    const baselineComplexity = baselineSupport?.complexity ?? '';
-    const currentAssumption = currentSupport?.assumption?.trim() || undefined;
-    if (UNKNOWN_OPERATION_COMPLEXITIES.has(baselineComplexity)) {
-      return [
-        { id: 'blank', complexity: null },
-        { id: 'poly', complexity: 'poly', assumption: currentAssumption },
-        { id: 'no-poly', complexity: 'no-poly-unknown-quasi', assumption: currentAssumption }
-      ];
-    }
-
-    if (baselineSupport?.assumption) {
-      return [
-        { id: 'blank', complexity: null },
-        {
-          id: baselineComplexity,
-          complexity: baselineComplexity,
-          assumption: currentAssumption ?? baselineSupport.assumption
-        },
-      ];
-    }
-
-    return [];
+    return validSandboxOperationOptions({
+      baselineComplexity: baselineSupport?.complexity,
+      baselineAssumption: baselineSupport?.assumption,
+      currentAssumption: currentSupport?.assumption
+    });
   }
 
   function optionDisplay(option: SandboxOperationOption) {

@@ -1205,17 +1205,21 @@
     operationCode: string,
     edit: { complexity: string | null; assumption?: string; description?: string }
   ) {
+    const editOperationCode = operationType === 'transformation'
+      ? displayCodeToSafeKey(operationCode)
+      : operationCode;
     const applied = handleSandboxApply({
       kind: 'operation',
       operationType,
       languageId,
-      operationCode,
+      operationCode: editOperationCode,
       ...edit
     });
     if (
       applied &&
       selectedOperationCell?.language.id === languageId &&
-      selectedOperationCell.operationCode === operationCode
+      (selectedOperationCell.operationCode === operationCode ||
+        selectedOperationCell.operationCode === editOperationCode)
     ) {
       selectedOperationCell = {
         ...selectedOperationCell,
@@ -1254,17 +1258,25 @@
     languageId: string,
     operationCode: string
   ) {
+    const editOperationCode = operationType === 'transformation'
+      ? displayCodeToSafeKey(operationCode)
+      : operationCode;
     const applied = commitSandboxEdits(
       sandboxEdits.filter((edit) =>
         !(
           edit.kind === 'operation' &&
           edit.operationType === operationType &&
           edit.languageId === languageId &&
-          edit.operationCode === operationCode
+          edit.operationCode === editOperationCode
         )
       )
     );
-    if (applied && selectedOperationCell?.language.id === languageId && selectedOperationCell.operationCode === operationCode) {
+    if (
+      applied &&
+      selectedOperationCell?.language.id === languageId &&
+      (selectedOperationCell.operationCode === operationCode ||
+        selectedOperationCell.operationCode === editOperationCode)
+    ) {
       selectedOperationCell = null;
     }
   }
@@ -1402,11 +1414,14 @@
     languageId: string,
     operationCode: string
   ): boolean {
+    const editOperationCode = operationType === 'transformation'
+      ? displayCodeToSafeKey(operationCode)
+      : operationCode;
     return sandboxEdits.some((edit) =>
       edit.kind === 'operation' &&
       edit.operationType === operationType &&
       edit.languageId === languageId &&
-      edit.operationCode === operationCode
+      edit.operationCode === editOperationCode
     );
   }
 
@@ -1730,6 +1745,7 @@
             {selectedOperationCell}
             graphData={displayedBaseGraphData}
             filteredGraphData={displayedFilteredGraphData}
+            sandboxBaselineGraphData={initialGraphData}
             {viewMode}
             sandboxMode={sandboxSidebarEditingEnabled}
             sandboxEdited={hasSandboxOperationEdit(
@@ -1756,6 +1772,7 @@
             {selectedOperationCell}
             graphData={displayedBaseGraphData}
             filteredGraphData={displayedFilteredGraphData}
+            sandboxBaselineGraphData={initialGraphData}
             {viewMode}
             sandboxMode={sandboxSidebarEditingEnabled}
             onSandboxOperationEdit={handleSandboxOperationMetadataEdit}
@@ -1791,6 +1808,7 @@
             selectedOperationCell={null}
             graphData={displayedBaseGraphData}
             filteredGraphData={displayedFilteredGraphData}
+            sandboxBaselineGraphData={initialGraphData}
             {viewMode}
             sandboxMode={sandboxSidebarEditingEnabled}
             onSandboxOperationEdit={handleSandboxOperationMetadataEdit}
@@ -1803,8 +1821,10 @@
           selectedEdge={selectedEdge}
           graphData={displayedBaseGraphData}
           filteredGraphData={displayedFilteredGraphData}
+          sandboxBaselineGraphData={initialGraphData}
           sandboxMode={sandboxSidebarEditingEnabled}
           sandboxEdited={hasSandboxEdgeEdit(selectedEdge.source, selectedEdge.target)}
+          showQuasipolynomialSandboxOptions={showQuasipolynomialSandboxOptions}
           onSandboxEdgeEdit={handleSandboxEdgeMetadataEdit}
           onSandboxEdgeReset={handleSandboxEdgeReset}
           onSandboxReferenceAdd={handleSandboxReferenceAdd}

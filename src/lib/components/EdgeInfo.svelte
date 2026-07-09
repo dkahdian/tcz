@@ -7,6 +7,7 @@
   import { getComplexityFromCatalog } from '$lib/data/complexities.js';
   import { extractCitationKeys, formatAssumptionForMathText } from '$lib/utils/math-text.js';
   import { getGlobalRefNumber } from '$lib/data/references.js';
+  import { validSandboxEdgeStatuses } from '$lib/utils/sandbox-status-options.js';
   import DynamicLegend from './DynamicLegend.svelte';
   import ReferenceList from './ReferenceList.svelte';
   
@@ -14,8 +15,10 @@
     selectedEdge,
     graphData,
     filteredGraphData,
+    sandboxBaselineGraphData = null,
     sandboxMode = false,
     sandboxEdited = false,
+    showQuasipolynomialSandboxOptions = true,
     onSandboxEdgeEdit,
     onSandboxEdgeReset,
     onSandboxReferenceAdd,
@@ -24,8 +27,10 @@
     selectedEdge: SelectedEdge | null; 
     graphData: GraphData | FilteredGraphData;
     filteredGraphData?: GraphData | FilteredGraphData;
+    sandboxBaselineGraphData?: GraphData | FilteredGraphData | null;
     sandboxMode?: boolean;
     sandboxEdited?: boolean;
+    showQuasipolynomialSandboxOptions?: boolean;
     onSandboxEdgeEdit?: (
       sourceId: string,
       targetId: string,
@@ -56,14 +61,15 @@
   let statusDropdownOpen = $state(false);
   let statusDropdownRoot: HTMLElement | null = $state(null);
 
-  const relationStatusOptions = [
-    'poly',
-    'no-poly-unknown-quasi',
-    'no-poly-quasi',
-    'unknown-poly-quasi',
-    'no-quasi'
-  ];
-  const statusChoices = [null, ...relationStatusOptions] as const;
+  const statusChoices = $derived.by<string[]>(() => {
+    if (!selectedEdge) return [];
+    const baselineData = sandboxBaselineGraphData ?? graphData;
+    const baselinePair = lookupRelationPair(baselineData, selectedEdge.source, selectedEdge.target);
+    return validSandboxEdgeStatuses(
+      baselinePair?.forward?.status ?? '',
+      showQuasipolynomialSandboxOptions
+    );
+  });
 
   $effect(() => {
     const key = selectedEdge ? `${selectedEdge.source}->${selectedEdge.target}` : null;
@@ -238,7 +244,8 @@
   }
 
   function commitSelectedEdgeStatus(status: string | null) {
-    draftEdgeStatus = status ?? '';
+    const nextStatus = status === 'unknown-both' ? null : status;
+    draftEdgeStatus = nextStatus ?? '';
     statusDropdownOpen = false;
     commitSelectedEdgeEdit();
   }
@@ -296,7 +303,8 @@
                     type="button"
                     class={`succinctness-statement status-trigger ${getStatusCssClass(statusForDisplay(draftEdgeStatus || relation.status))}`}
                     aria-expanded={statusDropdownOpen}
-                    onclick={() => statusDropdownOpen = !statusDropdownOpen}
+                    disabled={statusChoices.length === 0}
+                    onclick={() => statusDropdownOpen = statusChoices.length > 0 && !statusDropdownOpen}
                   >
                     <MathText text={fromName} className="inline" />
                     <span class="compile-arrow">&rarr;</span>
@@ -307,7 +315,7 @@
                       <MathText text={fromName} className="inline" />)
                     </span>
                   </button>
-                  {#if statusDropdownOpen}
+                  {#if statusDropdownOpen && statusChoices.length > 0}
                     <div class="status-dropdown">
                       {#each statusChoices as status}
                         {@const displayStatus = statusForDisplay(status)}
@@ -432,7 +440,8 @@
                     type="button"
                     class={`succinctness-statement status-trigger ${getStatusCssClass(statusForDisplay(draftEdgeStatus))}`}
                     aria-expanded={statusDropdownOpen}
-                    onclick={() => statusDropdownOpen = !statusDropdownOpen}
+                    disabled={statusChoices.length === 0}
+                    onclick={() => statusDropdownOpen = statusChoices.length > 0 && !statusDropdownOpen}
                   >
                     <MathText text={fromName} className="inline" />
                     <span class="compile-arrow">&rarr;</span>
@@ -443,7 +452,7 @@
                       <MathText text={fromName} className="inline" />)
                     </span>
                   </button>
-                  {#if statusDropdownOpen}
+                  {#if statusDropdownOpen && statusChoices.length > 0}
                     <div class="status-dropdown">
                       {#each statusChoices as status}
                         {@const displayStatus = statusForDisplay(status)}
@@ -611,6 +620,15 @@
   .status-trigger:hover {
     border-color: #2563eb;
     box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+  }
+
+  .status-trigger:disabled {
+    cursor: default;
+  }
+
+  .status-trigger:disabled:hover {
+    border-color: transparent;
+    box-shadow: none;
   }
 
   .status-dropdown {
