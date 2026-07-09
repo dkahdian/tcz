@@ -212,7 +212,22 @@
     return entries;
   });
 
+  const matrixLayoutSignature = $derived(matrixLanguages.map((entry) => entry.id).join('|'));
+
   const visibleEdgeIds = $derived.by<Set<string> | null>(() => ('visibleEdgeIds' in graphData ? graphData.visibleEdgeIds : null));
+
+  type MatrixCellModel = {
+    key: string;
+    relation: DirectedSuccinctnessRelation | null;
+    status: string;
+    statusHtml: string;
+    currentValue: string;
+    title: string;
+    buttonClass: string;
+    editing: boolean;
+  };
+
+  const matrixCellCache = new Map<string, { signature: string; model: MatrixCellModel }>();
 
   function getRelation(
     rowLanguage: MatrixLanguageEntry,
@@ -224,6 +239,61 @@
     const { adjacencyMatrix } = graphData;
     const relation = adjacencyMatrix.matrix[colLanguage.matrixIndex]?.[rowLanguage.matrixIndex] ?? null;
     return relation;
+  }
+
+  function getMatrixCellModel(rowLanguage: MatrixLanguageEntry, colLanguage: MatrixLanguageEntry): MatrixCellModel {
+    const relation = getRelation(rowLanguage, colLanguage);
+    const sourceId = colLanguage.id;
+    const targetId = rowLanguage.id;
+    const status = relation?.status ?? UNKNOWN_STATUS;
+    const hasAssumption = Boolean(relation?.assumption);
+    const editing = isSandboxEditing(sourceId, targetId);
+    const selected = isEdgeSelected(sourceId, targetId);
+    const complement = isComplementSelected(sourceId, targetId);
+    const rowHighlighted = isLanguageHighlighted(rowLanguage.id);
+    const colHighlighted = isLanguageHighlighted(colLanguage.id);
+    const previewHighlighted = isPreviewHighlighted(sourceId, targetId);
+    const directEdit = isDirectSandboxEdit(sourceId, targetId);
+    const statusClass = STATUS_CLASSES[status] ?? '';
+    const statusHtml = relation
+      ? getStatusHtml(status, hasAssumption)
+      : STATUS_SHORT_HTML[UNKNOWN_STATUS] ?? '?';
+    const key = `${sourceId}->${targetId}`;
+    const signature = [
+      relation ? 'relation' : 'empty',
+      status,
+      relation?.assumption ?? '',
+      relation?.dimmed ? 'dimmed' : '',
+      relation?.explicit ? 'explicit' : '',
+      selected ? 'selected' : '',
+      complement ? 'complement' : '',
+      rowHighlighted ? 'row' : '',
+      colHighlighted ? 'col' : '',
+      previewHighlighted ? 'preview' : '',
+      directEdit ? 'direct' : '',
+      editing ? 'editing' : '',
+      sandboxMode ? 'sandbox' : '',
+      statusClass,
+      statusHtml
+    ].join('|');
+    const cached = matrixCellCache.get(key);
+    if (cached?.signature === signature) return cached.model;
+
+    const buttonClass = relation
+      ? `matrix-cell matrix-cell--button ${statusClass} ${relation.dimmed ? 'is-dimmed' : ''} ${relation.explicit ? 'is-explicit' : ''} ${selected ? 'is-selected' : ''} ${complement ? 'is-complement' : ''} ${rowHighlighted ? 'is-row-highlighted' : ''} ${colHighlighted ? 'is-col-highlighted' : ''} ${previewHighlighted ? 'is-preview-highlighted' : ''} ${directEdit ? 'is-sandbox-direct' : ''}`
+      : `matrix-cell matrix-cell--button matrix-cell--unknown ${STATUS_CLASSES[UNKNOWN_STATUS]} ${selected ? 'is-selected' : ''} ${complement ? 'is-complement' : ''} ${rowHighlighted ? 'is-row-highlighted' : ''} ${colHighlighted ? 'is-col-highlighted' : ''} ${previewHighlighted ? 'is-preview-highlighted' : ''} ${directEdit ? 'is-sandbox-direct' : ''}`;
+    const model = {
+      key,
+      relation,
+      status,
+      statusHtml,
+      currentValue: relation?.status ?? '',
+      title: getCellTitle(rowLanguage.language, colLanguage.language, relation),
+      buttonClass,
+      editing
+    };
+    matrixCellCache.set(key, { signature, model });
+    return model;
   }
 
   function buildSelectedEdge(sourceId: string, targetId: string): SelectedEdge | null {
@@ -447,7 +517,7 @@
 
   $effect(() => {
     // Re-measure when languages change
-    matrixLanguages;
+    matrixLayoutSignature;
     rememberScrollPosition();
     measured = false;
     // Use microtask to ensure DOM is updated
@@ -508,7 +578,7 @@
               </button>
             {/if}
           </th>
-          {#each matrixLanguages as column}
+          {#each matrixLanguages as column (column.id)}
             <th class={`col-header ${selectedNode?.id === column.id ? 'is-active' : ''}`}>
               <div class="language-header-control language-header-control--column">
                 {#if isSandboxAddedLanguage(column.id)}
@@ -529,7 +599,7 @@
         </tr>
       </thead>
       <tbody>
-        {#each matrixLanguages as rowLanguage}
+        {#each matrixLanguages as rowLanguage (rowLanguage.id)}
           <tr>
             <th class={`row-header ${selectedNode?.id === rowLanguage.id ? 'is-active' : ''}`}>
               <div class="language-header-control">
@@ -547,7 +617,7 @@
                 </button>
               </div>
             </th>
-            {#each matrixLanguages as colLanguage}
+            {#each matrixLanguages as colLanguage (colLanguage.id)}
               {#if rowLanguage.id === colLanguage.id}
                 <td class={`matrix-cell--diagonal ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted is-col-highlighted' : ''}`}>
                   <button
@@ -561,19 +631,19 @@
                   </button>
                 </td>
               {:else}
-                {@const relation = getRelation(rowLanguage, colLanguage)}
-                {#if relation}
-                  <td class:is-sandbox-editor-cell={isSandboxEditing(colLanguage.id, rowLanguage.id)}>
+                {@const cell = getMatrixCellModel(rowLanguage, colLanguage)}
+                {#if cell.relation}
+                  <td class:is-sandbox-editor-cell={cell.editing}>
                     <button
                       type="button"
-                      class={`matrix-cell matrix-cell--button ${STATUS_CLASSES[relation.status]} ${relation.dimmed ? 'is-dimmed' : ''} ${relation.explicit ? 'is-explicit' : ''} ${isEdgeSelected(colLanguage.id, rowLanguage.id) ? 'is-selected' : ''} ${isComplementSelected(colLanguage.id, rowLanguage.id) ? 'is-complement' : ''} ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted' : ''} ${isLanguageHighlighted(colLanguage.id) ? 'is-col-highlighted' : ''} ${isPreviewHighlighted(colLanguage.id, rowLanguage.id) ? 'is-preview-highlighted' : ''} ${isDirectSandboxEdit(colLanguage.id, rowLanguage.id) ? 'is-sandbox-direct' : ''}`}
-                      onclick={() => handleCellClick(colLanguage.id, rowLanguage.id, relation)}
-                      title={getCellTitle(rowLanguage.language, colLanguage.language, relation)}
+                      class={cell.buttonClass}
+                      onclick={() => handleCellClick(colLanguage.id, rowLanguage.id, cell.relation)}
+                      title={cell.title}
                     >
-                      <span class="cell-short">{@html getStatusHtml(relation.status, Boolean(relation.assumption))}</span>
+                      <span class="cell-short">{@html cell.statusHtml}</span>
                     </button>
-                    {#if isSandboxEditing(colLanguage.id, rowLanguage.id)}
-                      {@const currentValue = getSandboxCellValue(relation)}
+                    {#if cell.editing}
+                      {@const currentValue = cell.currentValue}
                       {@const baselineRelation = getBaselineRelation(colLanguage.id, rowLanguage.id)}
                       {@const baselineValue = getSandboxCellValue(baselineRelation)}
                       {@const options = validSandboxOptions(baselineValue)}
@@ -581,7 +651,7 @@
                         <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${colLanguage.language.name} to ${rowLanguage.language.name}`}>
                           {#each options as option}
                             {@const isOriginalOption = isOriginalSandboxOption(option, baselineValue)}
-                            {@const optionAssumption = relation.assumption ?? (isOriginalOption ? baselineRelation?.assumption : undefined)}
+                            {@const optionAssumption = cell.relation.assumption ?? (isOriginalOption ? baselineRelation?.assumption : undefined)}
                             <button
                               type="button"
                               class={`sandbox-option ${option ? getSandboxOptionClass(option) : 'sandbox-option--blank'} ${isOriginalOption ? 'is-original' : ''}`}
@@ -599,19 +669,19 @@
                     {/if}
                   </td>
                 {:else}
-                  <td class:is-sandbox-editor-cell={isSandboxEditing(colLanguage.id, rowLanguage.id)}>
+                  <td class:is-sandbox-editor-cell={cell.editing}>
                     {#if sandboxMode}
                       <button
                         type="button"
-                        class={`matrix-cell matrix-cell--button matrix-cell--unknown ${STATUS_CLASSES[UNKNOWN_STATUS]} ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted' : ''} ${isLanguageHighlighted(colLanguage.id) ? 'is-col-highlighted' : ''} ${isPreviewHighlighted(colLanguage.id, rowLanguage.id) ? 'is-preview-highlighted' : ''} ${isDirectSandboxEdit(colLanguage.id, rowLanguage.id) ? 'is-sandbox-direct' : ''}`}
+                        class={cell.buttonClass}
                         onclick={() => handleCellClick(colLanguage.id, rowLanguage.id, null)}
                         aria-label={`Edit ${colLanguage.language.name} to ${rowLanguage.language.name}`}
-                        title={getCellTitle(rowLanguage.language, colLanguage.language, null)}
+                        title={cell.title}
                       >
-                        <span class="cell-short">{@html STATUS_SHORT_HTML[UNKNOWN_STATUS] ?? '?'}</span>
+                        <span class="cell-short">{@html cell.statusHtml}</span>
                       </button>
-                      {#if isSandboxEditing(colLanguage.id, rowLanguage.id)}
-                        {@const currentValue = getSandboxCellValue(null)}
+                      {#if cell.editing}
+                        {@const currentValue = cell.currentValue}
                         {@const baselineRelation = getBaselineRelation(colLanguage.id, rowLanguage.id)}
                         {@const baselineValue = getSandboxCellValue(baselineRelation)}
                         {@const options = validSandboxOptions(baselineValue)}
@@ -638,11 +708,11 @@
                     {:else}
                       <button
                         type="button"
-                        class={`matrix-cell matrix-cell--button matrix-cell--unknown ${STATUS_CLASSES[UNKNOWN_STATUS]} ${isEdgeSelected(colLanguage.id, rowLanguage.id) ? 'is-selected' : ''} ${isComplementSelected(colLanguage.id, rowLanguage.id) ? 'is-complement' : ''} ${isLanguageHighlighted(rowLanguage.id) ? 'is-row-highlighted' : ''} ${isLanguageHighlighted(colLanguage.id) ? 'is-col-highlighted' : ''} ${isPreviewHighlighted(colLanguage.id, rowLanguage.id) ? 'is-preview-highlighted' : ''}`}
+                        class={cell.buttonClass}
                         onclick={() => handleCellClick(colLanguage.id, rowLanguage.id, null)}
-                        title={getCellTitle(rowLanguage.language, colLanguage.language, null)}
+                        title={cell.title}
                       >
-                        <span class="cell-short">{@html STATUS_SHORT_HTML[UNKNOWN_STATUS] ?? '?'}</span>
+                        <span class="cell-short">{@html cell.statusHtml}</span>
                       </button>
                     {/if}
                   </td>

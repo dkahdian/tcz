@@ -133,6 +133,10 @@
     return map;
   });
 
+  const operationLayoutSignature = $derived(
+    `${operationType}:${visibleLanguages.map((language) => language.id).join('|')}:${operationCodes.join('|')}`
+  );
+
   // Get operation support for a language
   function getOperationSupport(
     language: KCLanguage,
@@ -176,6 +180,69 @@
       complexity: 'unknown-to-us',
       refs: []
     };
+  }
+
+  type OperationCellModel = {
+    key: string;
+    support: KCOpEntry | null;
+    displayedSupport: KCOpEntry | null;
+    display: ReturnType<typeof getOperationTractabilityDisplay> | null;
+    title: string;
+    buttonClass: string;
+    editing: boolean;
+  };
+
+  const operationCellCache = new Map<string, { signature: string; model: OperationCellModel }>();
+
+  function getOperationCellModel(language: KCLanguage, opCode: string): OperationCellModel {
+    const support = getOperationSupport(language, opCode);
+    const displayedSupport = support ?? getUnknownOperationSupport(opCode);
+    const display = displayedSupport
+      ? getOperationTractabilityDisplay(
+          displayedSupport,
+          operationType === 'queries' ? 'query' : 'transformation'
+        )
+      : null;
+    const selected = isCellSelected(language, opCode);
+    const rowHighlighted = isLanguageHighlighted(language);
+    const colHighlighted = isOperationHighlighted(opCode);
+    const previewHighlighted = isPreviewHighlighted(language, opCode);
+    const directEdit = isDirectSandboxEdit(language, opCode);
+    const editing = isSandboxEditing(language, opCode);
+    const key = operationCellId(language, opCode);
+    const signature = [
+      support ? 'support' : 'empty',
+      displayedSupport?.complexity ?? '',
+      displayedSupport?.assumption ?? '',
+      support?.dimmed ? 'dimmed' : '',
+      support?.explicit ? 'explicit' : '',
+      selected ? 'selected' : '',
+      rowHighlighted ? 'row' : '',
+      colHighlighted ? 'col' : '',
+      previewHighlighted ? 'preview' : '',
+      directEdit ? 'direct' : '',
+      editing ? 'editing' : '',
+      sandboxMode ? 'sandbox' : '',
+      display?.cssClass ?? '',
+      display?.symbolHtml ?? ''
+    ].join('|');
+    const cached = operationCellCache.get(key);
+    if (cached?.signature === signature) return cached.model;
+
+    const buttonClass = display
+      ? `matrix-cell matrix-cell--button ${display.cssClass} ${!support ? 'matrix-cell--unknown' : ''} ${selected ? 'is-selected' : ''} ${rowHighlighted ? 'is-row-highlighted' : ''} ${colHighlighted ? 'is-col-highlighted' : ''} ${support?.dimmed ? 'is-dimmed' : ''} ${support?.explicit ? 'is-explicit' : ''} ${previewHighlighted ? 'is-preview-highlighted' : ''} ${directEdit ? 'is-sandbox-direct' : ''}`
+      : `matrix-cell matrix-cell--button matrix-cell--empty ${rowHighlighted ? 'is-row-highlighted' : ''} ${colHighlighted ? 'is-col-highlighted' : ''} ${previewHighlighted ? 'is-preview-highlighted' : ''} ${directEdit ? 'is-sandbox-direct' : ''}`;
+    const model = {
+      key,
+      support,
+      displayedSupport,
+      display,
+      title: display ? getCellTitle(language, opCode, support) : `${language.name}: ${opCode} - no data`,
+      buttonClass,
+      editing
+    };
+    operationCellCache.set(key, { signature, model });
+    return model;
   }
 
   function handleLanguageClick(language: KCLanguage) {
@@ -412,8 +479,7 @@
   }
 
   $effect(() => {
-    visibleLanguages;
-    operationCodes;
+    operationLayoutSignature;
     rememberScrollPosition();
     measured = false;
     queueMicrotask(() => scheduleCellSizeUpdate());
@@ -480,7 +546,7 @@
               </button>
             {/if}
           </th>
-          {#each operationCodes as opCode}
+          {#each operationCodes as opCode (opCode)}
             {@const opDef = operations[opCode]}
             <th class={`col-header ${isOperationHighlighted(opCode) ? 'is-active' : ''}`}>
               <button 
@@ -495,7 +561,7 @@
         </tr>
       </thead>
       <tbody>
-        {#each visibleLanguages as language}
+        {#each visibleLanguages as language (language.id)}
           <tr>
             <th class={`row-header ${isLanguageHighlighted(language) ? 'is-active' : ''}`}>
               <div class="language-header-control">
@@ -513,26 +579,21 @@
                 </button>
               </div>
             </th>
-            {#each operationCodes as opCode}
-              {@const support = getOperationSupport(language, opCode)}
-              {@const displayedSupport = support ?? getUnknownOperationSupport(opCode)}
-              {@const display = getOperationTractabilityDisplay(
-                displayedSupport,
-                operationType === 'queries' ? 'query' : 'transformation'
-              )}
-              <td class:is-sandbox-editor-cell={isSandboxEditing(language, opCode)}>
-                {#if displayedSupport}
+            {#each operationCodes as opCode (opCode)}
+              {@const cell = getOperationCellModel(language, opCode)}
+              <td class:is-sandbox-editor-cell={cell.editing}>
+                {#if cell.displayedSupport && cell.display}
                 <button
                   type="button"
-                  class={`matrix-cell matrix-cell--button ${display.cssClass} ${!support ? 'matrix-cell--unknown' : ''} ${isCellSelected(language, opCode) ? 'is-selected' : ''} ${isLanguageHighlighted(language) ? 'is-row-highlighted' : ''} ${isOperationHighlighted(opCode) ? 'is-col-highlighted' : ''} ${support?.dimmed ? 'is-dimmed' : ''} ${support?.explicit ? 'is-explicit' : ''} ${isPreviewHighlighted(language, opCode) ? 'is-preview-highlighted' : ''} ${isDirectSandboxEdit(language, opCode) ? 'is-sandbox-direct' : ''}`}
+                  class={cell.buttonClass}
                   onclick={() => handleCellClick(language, opCode)}
-                  title={getCellTitle(language, opCode, support)}
+                  title={cell.title}
                 >
-                  <span class="cell-symbol">{@html display.symbolHtml}</span>
+                  <span class="cell-symbol">{@html cell.display.symbolHtml}</span>
                 </button>
-                {#if isSandboxEditing(language, opCode)}
+                {#if cell.editing}
                   {@const baselineSupport = getOperationSupport(language, opCode, sandboxBaselineGraphData ?? graphData)}
-                  {@const options = validSandboxOptions(baselineSupport, support)}
+                  {@const options = validSandboxOptions(baselineSupport, cell.support)}
                   {#if visibleSandboxOptionCount(options) > 1}
                     <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${language.name} ${opCode}`}>
                       {#each options as option}
@@ -556,14 +617,14 @@
                   {#if sandboxMode}
                     <button
                       type="button"
-                      class={`matrix-cell matrix-cell--button matrix-cell--empty ${isLanguageHighlighted(language) ? 'is-row-highlighted' : ''} ${isOperationHighlighted(opCode) ? 'is-col-highlighted' : ''} ${isPreviewHighlighted(language, opCode) ? 'is-preview-highlighted' : ''} ${isDirectSandboxEdit(language, opCode) ? 'is-sandbox-direct' : ''}`}
+                      class={cell.buttonClass}
                       onclick={() => handleCellClick(language, opCode)}
                       aria-label={`Edit ${language.name} ${opCode}`}
-                      title={`${language.name}: ${opCode} - no data`}
+                      title={cell.title}
                     >&nbsp;</button>
-                    {#if isSandboxEditing(language, opCode)}
+                    {#if cell.editing}
                       {@const baselineSupport = getOperationSupport(language, opCode, sandboxBaselineGraphData ?? graphData)}
-                      {@const options = validSandboxOptions(baselineSupport, support)}
+                      {@const options = validSandboxOptions(baselineSupport, cell.support)}
                       {#if visibleSandboxOptionCount(options) > 1}
                         <div class="sandbox-cell-popover" role="menu" aria-label={`Sandbox status for ${language.name} ${opCode}`}>
                           {#each options as option}
@@ -585,7 +646,7 @@
                     {/if}
                   {:else}
                     <span
-                      class={`matrix-cell matrix-cell--empty ${isLanguageHighlighted(language) ? 'is-row-highlighted' : ''} ${isOperationHighlighted(opCode) ? 'is-col-highlighted' : ''}`}
+                      class={cell.buttonClass}
                       title={`${language.name}: ${opCode} — no data`}
                     >&nbsp;</span>
                   {/if}

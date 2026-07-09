@@ -133,7 +133,7 @@
       if (key === pendingHydrationKey) pendingHydrationKey = '';
       if (key !== JSON.stringify(sandboxEdits.filter(isSemanticSandboxEdit))) return;
       hydratedSemanticSandboxKey = key;
-      hydratedSemanticSandboxEvaluation = message.result;
+      hydratedSemanticSandboxEvaluation = patchHydratedSandboxEvaluation(key, message.result);
       if (message.result.ok) refreshSelectedClaimFromGraph(message.result.graphData);
     };
     sandboxTargetProofWorker.onmessage = (event: MessageEvent<SandboxWorkerResponse>) => {
@@ -442,6 +442,103 @@
           label: selectedOperationCell.support.label
         }
       };
+    }
+  }
+
+  function patchHydratedSandboxEvaluation(
+    key: string,
+    hydrated: SandboxEvaluationResult
+  ): SandboxEvaluationResult {
+    if (
+      !hydrated.ok ||
+      key !== lastSemanticSandboxKey ||
+      !lastSemanticSandboxEvaluation?.ok
+    ) {
+      return hydrated;
+    }
+
+    patchHydratedCells(lastSemanticSandboxEvaluation.graphData, hydrated.graphData);
+    return lastSemanticSandboxEvaluation;
+  }
+
+  function patchHydratedCells(target: GraphData, source: GraphData): void {
+    patchEdgeCells(target, source);
+    patchOperationCells(target, source);
+    target.assumptions = source.assumptions;
+  }
+
+  function patchEdgeCells(target: GraphData, source: GraphData): void {
+    const targetMatrix = target.adjacencyMatrix.matrix;
+    const sourceMatrix = source.adjacencyMatrix.matrix;
+    const languageIds = target.adjacencyMatrix.languageIds;
+    for (let i = 0; i < languageIds.length; i += 1) {
+      for (let j = 0; j < languageIds.length; j += 1) {
+        const targetRelation = targetMatrix[i]?.[j] ?? null;
+        const sourceRelation = sourceMatrix[i]?.[j] ?? null;
+        if (!targetRelation && !sourceRelation) continue;
+        if (!targetRelation || !sourceRelation) {
+          targetMatrix[i][j] = sourceRelation;
+          continue;
+        }
+
+        targetRelation.status = sourceRelation.status;
+        if (sourceRelation.assumption) {
+          targetRelation.assumption = sourceRelation.assumption;
+        } else {
+          delete targetRelation.assumption;
+        }
+        targetRelation.refs = sourceRelation.refs ?? [];
+        targetRelation.description = sourceRelation.description;
+        targetRelation.proof = sourceRelation.proof;
+        targetRelation.derived = sourceRelation.derived;
+        targetRelation.origin = sourceRelation.origin;
+        targetRelation.hidden = sourceRelation.hidden;
+        targetRelation.dimmed = sourceRelation.dimmed;
+        targetRelation.explicit = sourceRelation.explicit;
+        targetRelation.noPolyDescription = sourceRelation.noPolyDescription;
+        targetRelation.quasiDescription = sourceRelation.quasiDescription;
+      }
+    }
+  }
+
+  function patchOperationCells(target: GraphData, source: GraphData): void {
+    for (const targetLanguage of target.languages) {
+      const sourceLanguage = source.languages.find((language) => language.id === targetLanguage.id);
+      if (!sourceLanguage) continue;
+      for (const mapName of ['queries', 'transformations'] as const) {
+        const targetMap = targetLanguage.properties?.[mapName];
+        const sourceMap = sourceLanguage.properties?.[mapName];
+        if (!targetMap || !sourceMap) continue;
+        const codes = new Set([...Object.keys(targetMap), ...Object.keys(sourceMap)]);
+        for (const code of codes) {
+          const targetSupport = targetMap[code];
+          const sourceSupport = sourceMap[code];
+          if (!targetSupport && !sourceSupport) continue;
+          if (!targetSupport || !sourceSupport) {
+            if (sourceSupport) {
+              targetMap[code] = sourceSupport;
+            } else {
+              delete targetMap[code];
+            }
+            continue;
+          }
+
+          targetSupport.complexity = sourceSupport.complexity;
+          if (sourceSupport.assumption) {
+            targetSupport.assumption = sourceSupport.assumption;
+          } else {
+            delete targetSupport.assumption;
+          }
+          targetSupport.refs = sourceSupport.refs ?? [];
+          targetSupport.description = sourceSupport.description;
+          targetSupport.proof = sourceSupport.proof;
+          targetSupport.derived = sourceSupport.derived;
+          targetSupport.origin = sourceSupport.origin;
+          targetSupport.dimmed = sourceSupport.dimmed;
+          targetSupport.explicit = sourceSupport.explicit;
+          targetSupport.batchId = sourceSupport.batchId;
+        }
+      }
     }
   }
 
