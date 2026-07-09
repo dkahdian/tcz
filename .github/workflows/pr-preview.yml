@@ -18,13 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
         if: github.event.action != 'closed'
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
       - name: Install dependencies
@@ -37,7 +37,7 @@ jobs:
 
       - name: Deploy PR preview
         id: preview
-        uses: rossjrw/pr-preview-action@v1
+        uses: rossjrw/pr-preview-action@v1.8.1
         with:
           source-dir: ./build
           action: deploy
@@ -45,7 +45,7 @@ jobs:
 
       - name: Upsert preview comment
         if: steps.preview.outputs.deployment-action == 'deploy'
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           PREVIEW_PATH: ${{ steps.preview.outputs['preview-url-path'] }}
         with:
