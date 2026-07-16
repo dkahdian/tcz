@@ -1055,6 +1055,15 @@ Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. 
 
 \begin{succinctnessclaim}
 \source{\langfam{uOBDD}{<}}
+\target{\langref{SDD}}
+\status{\nopolyunknownquasi}
+\begin{description}
+The proof of \citet[Theorem 2]{Vinall-Smeeth_2024} constructs unambiguous DNFs $f$ whose negation requires quasipolynomially larger SDNNFs. One may convert an unambiguous DNF to an equivalent \langfam{uOBDD}{<} with only a linear change in size (for any order $<$). However, any \langref{SDD} computing $f$ may be efficiently negated (\supportspoly{\langref{SDD}}{\NOTC}) and then efficiently converted to an equivalent \langref{SDNNF}. A quasipolynomial separation in the \langfam{uOBDD}{<} and \langref{SDD} sizes of $f$ follows. \citep{Darwiche_2011}
+\end{description}
+\end{succinctnessclaim}
+
+\begin{succinctnessclaim}
+\source{\langfam{uOBDD}{<}}
 \target{\langref{uOBDD}}
 \status{\poly}
 \begin{description}

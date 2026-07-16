@@ -15079,7 +15079,39 @@
             ]
           }
         },
-        null,
+        {
+          "status": "no-poly-unknown-quasi",
+          "refs": [
+            "Amarilli_2018",
+            "Vinall-Smeeth_2024",
+            "VanDenBroeck_2015",
+            "Darwiche_2011"
+          ],
+          "description": "\\compilespoly{\\langfam{uOBDD}{<}}{\\langfam{d-SDNNF}{T}}. \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. \\compilespoly{\\langref{cSDD}}{\\langref{SDD}}. If \\langfam{d-SDNNF}{T} compiled to \\langref{cSDD} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langfam{d-SDNNF}{T}}{\\langref{cSDD}}.",
+          "hidden": false,
+          "derived": true,
+          "origin": "derived",
+          "proof": {
+            "rule": "negative-obstruction",
+            "premises": [
+              {
+                "kind": "leP",
+                "sourceId": "lang_43a33aec",
+                "targetId": "lang_91f812d0"
+              },
+              {
+                "kind": "notLeP",
+                "sourceId": "lang_43a33aec",
+                "targetId": "lang_1afefbe2"
+              },
+              {
+                "kind": "leP",
+                "sourceId": "lang_83e3b023",
+                "targetId": "lang_1afefbe2"
+              }
+            ]
+          }
+        },
         {
           "status": "poly",
           "refs": [
@@ -15486,7 +15518,33 @@
             ]
           }
         },
-        null,
+        {
+          "status": "no-poly-unknown-quasi",
+          "refs": [
+            "Amarilli_2018",
+            "Vinall-Smeeth_2024",
+            "Darwiche_2011"
+          ],
+          "description": "\\compilespoly{\\langfam{uOBDD}{<}}{\\langfam{d-SDNNF}{T}}. \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. If \\langfam{d-SDNNF}{T} compiled to \\langref{SDD} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langfam{d-SDNNF}{T}}{\\langref{SDD}}.",
+          "hidden": false,
+          "derived": true,
+          "origin": "derived",
+          "proof": {
+            "rule": "negative-obstruction",
+            "premises": [
+              {
+                "kind": "leP",
+                "sourceId": "lang_43a33aec",
+                "targetId": "lang_91f812d0"
+              },
+              {
+                "kind": "notLeP",
+                "sourceId": "lang_43a33aec",
+                "targetId": "lang_1afefbe2"
+              }
+            ]
+          }
+        },
         {
           "status": "no-poly-unknown-quasi",
           "description": "\\citet[Theorem 1 and proof of Theorem 2]{Vinall-Smeeth_2024} gives small source circuits that are explicitly structured: for the hard unambiguous \\langref{DNF} $\\psi'$, the proof fixes a vtree $T$ over $\\operatorname{var}(\\psi')$, compiles each term as a \\langref{d-DNNF} respecting $T$, and takes their deterministic disjunction. Thus the source side can be stated as \\langfam{d-SDNNF}{T}. The lower bound is against every equivalent \\langref{SDD}; since \\langfam{SDD}{T} is a subclass of \\langref{SDD}, it also rules out every target vtree class member.",
@@ -15765,7 +15823,39 @@
             ]
           }
         },
-        null,
+        {
+          "status": "no-poly-unknown-quasi",
+          "refs": [
+            "Amarilli_2018",
+            "Vinall-Smeeth_2024",
+            "Capelli_2026",
+            "Darwiche_2011"
+          ],
+          "description": "\\compilespoly{\\langfam{uOBDD}{<}}{\\langfam{d-SDNNF}{T}}. \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. \\compilespoly{\\langref{TDD}}{\\langref{SDD}}. If \\langfam{d-SDNNF}{T} compiled to \\langref{TDD} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langfam{d-SDNNF}{T}}{\\langref{TDD}}.",
+          "hidden": false,
+          "derived": true,
+          "origin": "derived",
+          "proof": {
+            "rule": "negative-obstruction",
+            "premises": [
+              {
+                "kind": "leP",
+                "sourceId": "lang_43a33aec",
+                "targetId": "lang_91f812d0"
+              },
+              {
+                "kind": "notLeP",
+                "sourceId": "lang_43a33aec",
+                "targetId": "lang_1afefbe2"
+              },
+              {
+                "kind": "leP",
+                "sourceId": "lang_d7403a53",
+                "targetId": "lang_1afefbe2"
+              }
+            ]
+          }
+        },
         {
           "status": "no-quasi",
           "refs": [
@@ -29422,7 +29512,39 @@
             ]
           }
         },
-        null,
+        {
+          "status": "no-poly-unknown-quasi",
+          "refs": [
+            "Wegener_2000",
+            "Vinall-Smeeth_2024",
+            "VanDenBroeck_2015",
+            "Darwiche_2011"
+          ],
+          "description": "\\compilespoly{\\langfam{uOBDD}{<}}{\\langref{uOBDD}}. \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. \\compilespoly{\\langref{cSDD}}{\\langref{SDD}}. If \\langref{uOBDD} compiled to \\langref{cSDD} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langref{uOBDD}}{\\langref{cSDD}}.",
+          "hidden": false,
+          "derived": true,
+          "origin": "derived",
+          "proof": {
+            "rule": "negative-obstruction",
+            "premises": [
+              {
+                "kind": "leP",
+                "sourceId": "lang_43a33aec",
+                "targetId": "lang_c2df8c2b"
+              },
+              {
+                "kind": "notLeP",
+                "sourceId": "lang_43a33aec",
+                "targetId": "lang_1afefbe2"
+              },
+              {
+                "kind": "leP",
+                "sourceId": "lang_83e3b023",
+                "targetId": "lang_1afefbe2"
+              }
+            ]
+          }
+        },
         {
           "status": "poly",
           "refs": [
@@ -29763,7 +29885,33 @@
             ]
           }
         },
-        null,
+        {
+          "status": "no-poly-unknown-quasi",
+          "refs": [
+            "Wegener_2000",
+            "Vinall-Smeeth_2024",
+            "Darwiche_2011"
+          ],
+          "description": "\\compilespoly{\\langfam{uOBDD}{<}}{\\langref{uOBDD}}. \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. If \\langref{uOBDD} compiled to \\langref{SDD} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langref{uOBDD}}{\\langref{SDD}}.",
+          "hidden": false,
+          "derived": true,
+          "origin": "derived",
+          "proof": {
+            "rule": "negative-obstruction",
+            "premises": [
+              {
+                "kind": "leP",
+                "sourceId": "lang_43a33aec",
+                "targetId": "lang_c2df8c2b"
+              },
+              {
+                "kind": "notLeP",
+                "sourceId": "lang_43a33aec",
+                "targetId": "lang_1afefbe2"
+              }
+            ]
+          }
+        },
         {
           "status": "no-quasi",
           "refs": [
@@ -29909,7 +30057,39 @@
             ]
           }
         },
-        null,
+        {
+          "status": "no-poly-unknown-quasi",
+          "refs": [
+            "Wegener_2000",
+            "Vinall-Smeeth_2024",
+            "Capelli_2026",
+            "Darwiche_2011"
+          ],
+          "description": "\\compilespoly{\\langfam{uOBDD}{<}}{\\langref{uOBDD}}. \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. \\compilespoly{\\langref{TDD}}{\\langref{SDD}}. If \\langref{uOBDD} compiled to \\langref{TDD} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langref{uOBDD}}{\\langref{TDD}}.",
+          "hidden": false,
+          "derived": true,
+          "origin": "derived",
+          "proof": {
+            "rule": "negative-obstruction",
+            "premises": [
+              {
+                "kind": "leP",
+                "sourceId": "lang_43a33aec",
+                "targetId": "lang_c2df8c2b"
+              },
+              {
+                "kind": "notLeP",
+                "sourceId": "lang_43a33aec",
+                "targetId": "lang_1afefbe2"
+              },
+              {
+                "kind": "leP",
+                "sourceId": "lang_d7403a53",
+                "targetId": "lang_1afefbe2"
+              }
+            ]
+          }
+        },
         {
           "status": "no-quasi",
           "refs": [
@@ -37454,7 +37634,33 @@
             ]
           }
         },
-        null,
+        {
+          "status": "no-poly-unknown-quasi",
+          "refs": [
+            "Vinall-Smeeth_2024",
+            "VanDenBroeck_2015",
+            "Darwiche_2011"
+          ],
+          "description": "\\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. \\compilespoly{\\langref{cSDD}}{\\langref{SDD}}. If \\langfam{uOBDD}{<} compiled to \\langref{cSDD} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{cSDD}}.",
+          "hidden": false,
+          "derived": true,
+          "origin": "derived",
+          "proof": {
+            "rule": "negative-obstruction",
+            "premises": [
+              {
+                "kind": "notLeP",
+                "sourceId": "lang_43a33aec",
+                "targetId": "lang_1afefbe2"
+              },
+              {
+                "kind": "leP",
+                "sourceId": "lang_83e3b023",
+                "targetId": "lang_1afefbe2"
+              }
+            ]
+          }
+        },
         {
           "status": "poly",
           "refs": [
@@ -37859,8 +38065,42 @@
             ]
           }
         },
-        null,
-        null,
+        {
+          "status": "no-poly-unknown-quasi",
+          "description": "The proof of \\citet[Theorem 2]{Vinall-Smeeth_2024} constructs unambiguous DNFs $f$ whose negation requires quasipolynomially larger SDNNFs. One may convert an unambiguous DNF to an equivalent \\langfam{uOBDD}{<} with only a linear change in size (for any order $<$). However, any \\langref{SDD} computing $f$ may be efficiently negated (\\supportspoly{\\langref{SDD}}{\\NOTC}) and then efficiently converted to an equivalent \\langref{SDNNF}. A quasipolynomial separation in the \\langfam{uOBDD}{<} and \\langref{SDD} sizes of $f$ follows.",
+          "refs": [
+            "Vinall-Smeeth_2024",
+            "Darwiche_2011"
+          ],
+          "derived": false,
+          "origin": "authored"
+        },
+        {
+          "status": "no-poly-unknown-quasi",
+          "refs": [
+            "Vinall-Smeeth_2024",
+            "Darwiche_2011"
+          ],
+          "description": "\\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. \\compilespoly{\\langfam{SDD}{T}}{\\langref{SDD}}. If \\langfam{uOBDD}{<} compiled to \\langfam{SDD}{T} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langfam{SDD}{T}}.",
+          "hidden": false,
+          "derived": true,
+          "origin": "derived",
+          "proof": {
+            "rule": "negative-obstruction",
+            "premises": [
+              {
+                "kind": "notLeP",
+                "sourceId": "lang_43a33aec",
+                "targetId": "lang_1afefbe2"
+              },
+              {
+                "kind": "leP",
+                "sourceId": "lang_9c84a267",
+                "targetId": "lang_1afefbe2"
+              }
+            ]
+          }
+        },
         {
           "status": "poly",
           "refs": [
@@ -37993,8 +38233,65 @@
             ]
           }
         },
-        null,
-        null,
+        {
+          "status": "no-poly-unknown-quasi",
+          "refs": [
+            "Vinall-Smeeth_2024",
+            "Capelli_2026",
+            "Darwiche_2011"
+          ],
+          "description": "\\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. \\compilespoly{\\langfam{TDD}{T}}{\\langfam{SDD}{T}}. \\compilespoly{\\langfam{SDD}{T}}{\\langref{SDD}}. If \\langfam{uOBDD}{<} compiled to \\langfam{TDD}{T} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langfam{TDD}{T}}.",
+          "hidden": false,
+          "derived": true,
+          "origin": "derived",
+          "proof": {
+            "rule": "negative-obstruction",
+            "premises": [
+              {
+                "kind": "notLeP",
+                "sourceId": "lang_43a33aec",
+                "targetId": "lang_1afefbe2"
+              },
+              {
+                "kind": "leP",
+                "sourceId": "lang_8cf1da0e",
+                "targetId": "lang_9c84a267"
+              },
+              {
+                "kind": "leP",
+                "sourceId": "lang_9c84a267",
+                "targetId": "lang_1afefbe2"
+              }
+            ]
+          }
+        },
+        {
+          "status": "no-poly-unknown-quasi",
+          "refs": [
+            "Vinall-Smeeth_2024",
+            "Capelli_2026",
+            "Darwiche_2011"
+          ],
+          "description": "\\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. \\compilespoly{\\langref{TDD}}{\\langref{SDD}}. If \\langfam{uOBDD}{<} compiled to \\langref{TDD} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{TDD}}.",
+          "hidden": false,
+          "derived": true,
+          "origin": "derived",
+          "proof": {
+            "rule": "negative-obstruction",
+            "premises": [
+              {
+                "kind": "notLeP",
+                "sourceId": "lang_43a33aec",
+                "targetId": "lang_1afefbe2"
+              },
+              {
+                "kind": "leP",
+                "sourceId": "lang_d7403a53",
+                "targetId": "lang_1afefbe2"
+              }
+            ]
+          }
+        },
         {
           "status": "no-quasi",
           "refs": [
@@ -38132,7 +38429,38 @@
             ]
           }
         },
-        null,
+        {
+          "status": "no-poly-unknown-quasi",
+          "refs": [
+            "Vinall-Smeeth_2024",
+            "Darwiche_2011",
+            "VanDenBroeck_2015"
+          ],
+          "description": "\\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. \\compilespoly{\\langfam{cSDD}{T}}{\\langref{cSDD}}. \\compilespoly{\\langref{cSDD}}{\\langref{SDD}}. If \\langfam{uOBDD}{<} compiled to \\langfam{cSDD}{T} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langfam{cSDD}{T}}.",
+          "hidden": false,
+          "derived": true,
+          "origin": "derived",
+          "proof": {
+            "rule": "negative-obstruction",
+            "premises": [
+              {
+                "kind": "notLeP",
+                "sourceId": "lang_43a33aec",
+                "targetId": "lang_1afefbe2"
+              },
+              {
+                "kind": "leP",
+                "sourceId": "lang_82fa749e",
+                "targetId": "lang_83e3b023"
+              },
+              {
+                "kind": "leP",
+                "sourceId": "lang_83e3b023",
+                "targetId": "lang_1afefbe2"
+              }
+            ]
+          }
+        },
         {
           "status": "poly",
           "description": "For any fixed variable order $<$, every \\langfam{uOBDD}{<} formula is a \\langfam{nOBDD}{<} formula respecting the same order $<$. Thus, for each $<$, \\langfam{uOBDD}{<} $\\subset$ \\langfam{nOBDD}{<}, and the compilation is the identity. \\citep{Amarilli_2018,Wegener_2000}",
@@ -38152,7 +38480,7 @@
       "id": "poly",
       "name": "Polynomial",
       "label": "$\\leq_p$",
-      "description": "Polynomial transformation exists",
+      "description": "Polynomial compilation exists",
       "style": {
         "lineStyle": "solid",
         "width": 2,
@@ -38170,8 +38498,8 @@
     {
       "id": "no-poly-unknown-quasi",
       "name": "No Poly, Quasi Unknown",
-      "label": "$\\not\\leq_p$ · $\\leq_q^?$",
-      "description": "No polynomial algorithm; quasipolynomial unknown",
+      "label": "$\\not\\leq_p \\ \\leq_q^?$",
+      "description": "No polynomial compilation; quasipolynomial unknown",
       "style": {
         "lineStyle": "solid",
         "width": 2,
@@ -38189,8 +38517,8 @@
     {
       "id": "no-poly-quasi",
       "name": "No Poly, Quasi Exists",
-      "label": "$\\not\\leq_p$ · $\\leq_q$",
-      "description": "No polynomial algorithm; quasipolynomial unknown",
+      "label": "$\\not\\leq_p \\ \\leq_q$",
+      "description": "No polynomial compilation; quasipolynomial exists",
       "style": {
         "lineStyle": "solid",
         "width": 2,
@@ -38208,7 +38536,7 @@
     {
       "id": "unknown-poly-quasi",
       "name": "Poly Unknown, Quasi Exists",
-      "label": "$\\leq_p^?$ · $\\leq_q$",
+      "label": "$\\leq_p^? \\ \\leq_q$",
       "description": "Polynomial unknown; quasipolynomial exists",
       "style": {
         "lineStyle": "solid",
@@ -38247,7 +38575,7 @@
       "id": "no-quasi",
       "name": "No Quasi",
       "label": "$\\not\\leq_q$",
-      "description": "No quasipolynomial algorithm (implies no polynomial)",
+      "description": "No quasipolynomial compilation (implies no polynomial)",
       "style": {
         "lineStyle": "solid",
         "width": 2,
