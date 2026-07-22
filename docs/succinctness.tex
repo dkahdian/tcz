@@ -76,7 +76,6 @@
 \begin{document}
 \maketitle
 
-% Status: GOOD
 \begin{succinctnessclaim}
 \source{\langref{CNF}}
 \target{\langref{DNNF}}
@@ -86,7 +85,6 @@
 \end{description}
 \end{succinctnessclaim}
 
-% Status: CONSIDER DIFFERENT SOURCE
 \begin{succinctnessclaim}
 \source{\langref{CNF}}
 \target{\langref{NNF}}
@@ -96,7 +94,6 @@ As defined by \citet{Darwiche_2002}, \langref{CNF} is a subset of \langref{NNF}.
 \end{description}
 \end{succinctnessclaim}
 
-% Status: CONSIDER DIFFERENT SOURCE
 \begin{succinctnessclaim}
 \source{\langref{CNF}}
 \target{\langref{PI}}
@@ -106,7 +103,6 @@ It is well-known that some \langref{CNF} formulas (i.e. the negation of the pari
 \end{description}
 \end{succinctnessclaim}
 
-% Status: GOOD
 \begin{succinctnessclaim}
 \source{\langref{cSDD}}
 \target{\langref{SDD}}
@@ -117,7 +113,6 @@ For each fixed vtree $T$, \langfam{cSDD}{T} is the compressed subset of \langfam
 \end{succinctnessclaim}
 
 
-% Status: GOOD
 \begin{succinctnessclaim}
 \source{\langref{cSDD}}
 \target{\langref{OBDD}}
@@ -127,27 +122,26 @@ For each fixed vtree $T$, \langfam{cSDD}{T} is the compressed subset of \langfam
 \end{description}
 \end{succinctnessclaim}
 
-% Status: NEED TO CANONICALIZE REF
 \begin{succinctnessclaim}
 \source{\langref{d-DNNF}}
 \target{\langref{DNNF}}
 \status{\poly}
 \begin{description}
 As introduced in \citet{Darwiche_2001b}, \langref{d-DNNF} is a subset of \langref{DNNF} satisfying the determinism property, making a polynomial compilation trivial.
+As introduced in \citet{Darwiche_2001b}, \langref{d-DNNF} is a subset of \langref{DNNF} satisfying the determinism property, making a polynomial compilation trivial.
 \end{description}
 \end{succinctnessclaim}
 
-% Status: Darwiche makes this claim in the KCM but it is missing from the arxiv version of the paper?
 \begin{succinctnessclaim}
 \source{\langref{d-DNNF}}
 \target{\langref{FBDD}}
 \status{\noquasi}
 \begin{description}
 \citet{Darwiche_2001a} provides an example of a d-DNNF sentence which only has exponential FBDD representations.
+\citet{Darwiche_2001a} provides an example of a d-DNNF sentence which only has exponential FBDD representations.
 \end{description}
 \end{succinctnessclaim}
 
-% Status: GOOD, maybe update citation provenance
 \begin{succinctnessclaim}
 \source{\langref{d-DNNF}}
 \target{\langref{MODS}}
@@ -157,7 +151,6 @@ The $OR_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \lang
 \end{description}
 \end{succinctnessclaim}
 
-% Status: GOOD
 \begin{succinctnessclaim}
 \source{\langref{d-SDNNF}}
 \target{\langref{d-DNNF}}
@@ -167,7 +160,6 @@ As defined by \citet{Pipatsrisawat_Darwiche_2010}, a \langref{d-SDNNF} is simply
 \end{description}
 \end{succinctnessclaim}
 
-% Status: GOOD
 \begin{succinctnessclaim}
 \source{\langref{d-SDNNF}}
 \target{\langref{SDD}}
@@ -177,7 +169,6 @@ As defined by \citet{Pipatsrisawat_Darwiche_2010}, a \langref{d-SDNNF} is simply
 \end{description}
 \end{succinctnessclaim}
 
-% Status: GOOD
 \begin{succinctnessclaim}
 \source{\langref{d-SDNNF}}
 \target{\langref{SDNNF}}
@@ -202,18 +193,10 @@ As defined by \citet{Pipatsrisawat_Darwiche_2010}, \langref{d-SDNNF} is exactly 
 \target{\langref{d-SDNNF}}
 \status{\poly}
 \begin{description}
-\langref{d-SDNNF} is the union of the fixed-vtree languages \langfam{d-SDNNF}{T}. Hence any \langfam{d-SDNNF}{T} formula is already a \langref{d-SDNNF} formula, so the compilation is trivial and polynomial-time. \citep{Pipatsrisawat_2008}
+\langref{d-SDNNF} is the union of the fixed-vtree languages \langfam{d-SDNNF}{T}. Hence any \langfam{d-SDNNF}{T} formula is already a \langref{d-SDNNF} formula, so the compilation is trivial and polynomial-time. \citep{TCZ_Forthcoming}
 \end{description}
 \end{succinctnessclaim}
 
-\begin{succinctnessclaim}
-\source{\langfam{d-SDNNF}{T}}
-\target{\langref{nFBDD}}
-\status{\nopolyunknownquasi}
-\begin{description}
-This follows because \langfam{dec-SDNNF}{T} is a polynomial-time sublanguage of \langfam{d-SDNNF}{T} and \langfam{dec-SDNNF}{T} does not compile to \langref{nFBDD} with polynomial blowup.
-\end{description}
-\end{succinctnessclaim}
 
 \begin{succinctnessclaim}
 \source{\langfam{d-SDNNF}{T}}
@@ -232,6 +215,7 @@ This follows because \langfam{dec-SDNNF}{T} is a polynomial-time sublanguage of 
 For any fixed vtree $T$, \langfam{d-SDNNF}{T} is exactly the subset of \langfam{SDNNF}{T} satisfying determinism, so compilation is trivial. \citep{Amarilli_2018}
 \end{description}
 \end{succinctnessclaim}
+
 
 \begin{succinctnessclaim}
 \source{\langfam{d-SDNNF}{T}}
@@ -284,7 +268,7 @@ It is well-known that some \langref{DNF} formulas (i.e. the parity function $PAR
 \target{\langref{OBDD}}
 \status{\noquasi}
 \begin{description}
-\citet{Devadas_1993} showed that there exist Boolean functions with polynomial-size \langref{DNF} representations but requiring exponential-size \langref{OBDD} representations for any variable ordering.
+\citet[Chapter 4]{Wegener_2000} showed that the $ISA_n$ function has only exponential \langref{OBDD} size for every variable ordering $<$; from its definition, the function has a polynomial-size \langref{DNF} representation. 
 \end{description}
 \end{succinctnessclaim}
 
@@ -311,7 +295,7 @@ Fix any variable order $<$. Each term of a \langref{DNF} can be represented as a
 \target{\langref{nFBDD}}
 \status{\unknownpolyquasi}
 \begin{description}
-\citet[Section 5]{Bodlaender_1993} extends the compilation of \langref{dec-DNNF}s into \langref{FBDD}s (shown in \citet{Beame_2013}) to show that \langref{DNNF} can be quasipolynomial-time compiled into \langref{nFBDD}.
+\citet[Section 5]{Beame_2015} extends the compilation of \langref{dec-DNNF}s into \langref{FBDD}s (shown in \citet{Beame_2013}) to show that \langref{DNNF} can be quasipolynomial-time compiled into  langref{nFBDD}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -347,7 +331,7 @@ As defined by \citet{Darwiche_2002}, \langref{FBDD} is a subset of \langref{d-DN
 \target{\langref{SDNNF}}
 \status{\noquasi}
 \begin{description}
-\citet{Pipatsrisawat_2010} and \citet[Section 6.3]{Capelli_2016} independently proved this result using different techniques.
+\citet[Appendix D.2]{Pipatsrisawat_2010} and \citet[Section 6.3]{Capelli_2016} independently proved this result using different techniques.
 \end{description}
 \end{succinctnessclaim}
 
@@ -365,7 +349,7 @@ As defined by \citet{Amarilli_2018}, \langref{FBDD} is the subset of \langref{uF
 \target{\langref{OBDD}}
 \status{\noquasi}
 \begin{description}
-The hidden weighted bit function $HWB_n$ has \langref{OBDD} size $2^{\Omega(n/4)}$ \citep{Bryant_1986} but \langref{FBDD} size $O(n^2)$ \citep{Gergov_1994}.
+The hidden weighted bit function $HWB_n$ has \langref{OBDD} size $2^{\Omega(n)}$ \citep{Bryant_1986} but \langref{FBDD} size $O(n^2)$ \citep{Gergov_1994}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -506,6 +490,7 @@ The Sauerhoff function has an \langref{nFBDD} of size $O(n^2)$ over $n^2$ variab
 \end{description}
 \end{succinctnessclaim}
 
+
 \begin{succinctnessclaim}
 \source{\langref{nOBDD}}
 \target{\langref{nFBDD}}
@@ -520,7 +505,7 @@ As defined by \citet{Amarilli_2018}, \langref{nOBDD} is the subset of \langref{n
 \target{\langref{SDNNF}}
 \status{\poly}
 \begin{description}
-Construct a right-linear v-tree from the variable order, then rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The v-tree alignment ensures every $\wedge$-gate respects the variable partition, yielding an \langref{SDNNF} in linear time \citep{Amarilli_2018}.
+Construct a right-linear vtree from the variable order, then rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The vtree alignment ensures every $\wedge$-gate respects the variable partition, yielding an \langref{SDNNF} in linear time \citep{Amarilli_2018}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -650,6 +635,7 @@ For any fixed vtree $T$, \langfam{SDD}{T} is a strict subset of \langfam{d-SDNNF
 \end{description}
 \end{succinctnessclaim}
 
+
 \begin{succinctnessclaim}
 \source{\langfam{SDD}{T}}
 \target{\langref{FBDD}}
@@ -682,7 +668,7 @@ By \citet[Corollary 3]{Bollig_2018}, the weighted sum function $WS_n$ can be rep
 \target{\langref{DNNF}}
 \status{\poly}
 \begin{description}
-As defined by \citet{Amarilli_2018}, a structured \langref{DNNF} is a triple of the corresponding \langref{DNNF}, the v-tree $T$, and a mapping $\rho$; as such, extracting a \langref{DNNF} from a \langref{SDNNF} is trivial.
+As defined by \citet{Amarilli_2018}, a structured \langref{DNNF} is a triple of the corresponding \langref{DNNF}, the vtree $T$, and a mapping $\rho$; as such, extracting a \langref{DNNF} from a \langref{SDNNF} is trivial.
 \end{description}
 \end{succinctnessclaim}
 
@@ -745,7 +731,7 @@ As defined by \citet{Amarilli_2018}, \langref{uFBDD} is the subset of \langref{n
 \target{\langref{d-SDNNF}}
 \status{\poly}
 \begin{description}
-Construct a right-linear v-tree from the variable order, then rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The v-tree alignment ensures structuredness, and unambiguity of the \langref{uOBDD} makes all introduced $\vee$-gates deterministic, yielding a \langref{d-SDNNF} in linear time \citep{Amarilli_2018}.
+Construct a right-linear vtree from the variable order, then rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The vtree alignment ensures structuredness, and unambiguity of the \langref{uOBDD} makes all introduced $\vee$-gates deterministic, yielding a \langref{d-SDNNF} in linear time \citep{Amarilli_2018}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -844,7 +830,7 @@ As defined by \citet{Amarilli_2018}, \langref{OBDD} is the subset of \langref{uO
 \target{\langref{dec-SDNNF}}
 \status{\poly}
 \begin{description}
-Construct a right-linear v-tree from the variable order, then rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The v-tree alignment ensures structuredness, and since all $\vee$-gates arise from decision node rewrites, every $\vee$-gate is a decision gate, yielding a \langref{dec-SDNNF} in linear time \citep{Amarilli_2018}.
+Construct a right-linear vtree from the variable order, then rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The vtree alignment ensures structuredness, and since all $\vee$-gates arise from decision node rewrites, every $\vee$-gate is a decision gate, yielding a \langref{dec-SDNNF} in linear time \citep{Amarilli_2018}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -934,7 +920,7 @@ As defined by \citet{Amarilli_2018}, \langref{dec-SDNNF} is the subset of \langr
 \target{\langref{OBDD}}
 \status{\unknownpolyquasi}
 \begin{description}
-\citet[Theorem 2]{Bollig_2018} shows that \langref{SDNNF} can be compiled into \langref{nOBDD} by adapting the compilation of \citet{Beame_2015} from \langref{DNNF} to \langref{nFBDD}; \citet[Proposition 2]{Bollig_2018} shows that this \langref{nOBDD} is unambiguous if the \langref{SDNNF} is deterministic. Additionally, the same compilation yields an \langref{OBDD} if the input is a \langref{dec-SDNNF} since there are no $\vee$-gates that are not decision gates in a \langref{dec-SDNNF}.
+\citet[Theorem 2]{Bollig_2018} shows that \langref{SDNNF} can be compiled into \langref{nOBDD} by adapting the compilation of \citet{Beame_2015} from \langref{DNNF} to \langref{nFBDD}; The same compilation yields an \langref{OBDD} if the input is a \langref{dec-SDNNF} since there are no $\vee$-gates that are not decision gates in a \langref{dec-SDNNF}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -943,7 +929,7 @@ As defined by \citet{Amarilli_2018}, \langref{dec-SDNNF} is the subset of \langr
 \target{\langref{dec-DNNF}}
 \status{\poly}
 \begin{description}
-As defined by \citet{Amarilli_2018}, a \langref{dec-SDNNF} is simply a structured \langref{dec-DNNF}, so discarding the v-tree completes the compilation.
+As defined by \citet{Amarilli_2018}, a \langref{dec-SDNNF} is simply a structured \langref{dec-DNNF}, so discarding the vtree completes the compilation.
 \end{description}
 \end{succinctnessclaim}
 
