@@ -3,12 +3,14 @@
 import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
-import { fileURLToPath, pathToFileURL } from 'url';
+import { fileURLToPath } from 'url';
 import { DATABASE_PATH, loadDatabase, saveDatabase, type DatabaseSchema } from './shared/database.js';
 import { cleanBibtexText, extractBibtexField } from '../src/lib/utils/bibtex.js';
 import { generateLanguageId } from '../src/lib/utils/language-id.js';
 import { guaranteesPoly, guaranteesQuasi } from '../src/lib/data/validation/semantic.js';
 import { collectAssumptions } from '../src/lib/data/assumptions.js';
+import { authoredRelation } from '../src/lib/data/authored-relation.js';
+import { refreshDerivedDatabase } from './refresh-derived.js';
 import type {
   DirectedSuccinctnessRelation,
   KCBatchClaim,
@@ -168,17 +170,6 @@ function extractCitationKeys(text?: string): string[] {
     }
   }
   return refs;
-}
-
-function ensureInlineCitations(text: string, refs?: string[]): string {
-  const cleanRefs = [...new Set((refs ?? []).filter(Boolean))];
-  if (cleanRefs.length === 0) return text;
-  const existing = new Set(extractCitationKeys(text));
-  const missing = cleanRefs.filter((ref) => !existing.has(ref));
-  if (missing.length === 0) return text;
-  const trimmed = text.trimEnd();
-  const suffix = ` \\citep{${missing.join(',')}}`;
-  return `${trimmed}${trimmed.endsWith('.') ? '' : '.'}${suffix}`;
 }
 
 function stripDefRefs(text: string): string {
@@ -492,7 +483,7 @@ function generateDefinitionsLatex(database: DatabaseSchema): string {
   const blocks = (database.definitions ?? []).map((definition) => `\\begin{concept}
 \\title{${definition.title}}
 \\begin{description}
-${ensureInlineCitations(migrateLegacyDescription(definition.statement, database), definition.refs)}
+${migrateLegacyDescription(definition.statement, database)}
 \\end{description}
 \\end{concept}`).join('\n\n');
   return titlePreamble('Conceptual Definitions') + blocks + postamble();
@@ -516,22 +507,17 @@ function generateSuccinctnessLatex(database: DatabaseSchema): string {
   for (let i = 0; i < languageIds.length; i++) {
     for (let j = 0; j < languageIds.length; j++) {
       if (i === j) continue;
-      const relation = matrix[i]?.[j];
-      if (!relation || relation.derived || relation.origin === 'derived' || relation.origin === 'batch' || !STATUS_TO_MACRO[relation.status]) continue;
+      const relation = authoredRelation(matrix[i]?.[j]);
+      if (!relation || !STATUS_TO_MACRO[relation.status]) continue;
       const source = idToLanguage.get(languageIds[i]);
       const target = idToLanguage.get(languageIds[j]);
       if (!source || !target) continue;
-      const refs = [
-        ...(relation.refs ?? []),
-        ...(relation.noPolyDescription?.refs ?? []),
-        ...(relation.quasiDescription?.refs ?? [])
-      ];
       blocks.push(`\\begin{succinctnessclaim}
 \\source{${languageToLatex(source.name)}}
 \\target{${languageToLatex(target.name)}}
 \\status{${STATUS_TO_MACRO[relation.status]}}
 ${relation.assumption ? `\\assuming{${relation.assumption}}\n` : ''}\\begin{description}
-${ensureInlineCitations(migrateLegacyDescription(relationDescription(relation), database), refs)}
+${migrateLegacyDescription(relationDescription(relation), database)}
 \\end{description}
 \\end{succinctnessclaim}`);
     }
@@ -565,7 +551,7 @@ function generateOperationClaim(
 \\operation{${opMacro(opType, op)}}
 \\status{${STATUS_TO_MACRO[support.complexity] ?? fail(`Unknown operation status ${support.complexity}`)}}
 ${support.assumption ? `\\assuming{${support.assumption}}\n` : ''}\\begin{description}
-${ensureInlineCitations(migrateLegacyDescription(support.description, database), support.refs)}
+${migrateLegacyDescription(support.description, database)}
 \\end{description}
 \\end{${environment}}`;
 }
@@ -609,7 +595,7 @@ function generateBatchClaim(database: DatabaseSchema, batch: KCBatchClaim, idToL
 \\operation{${opMacro(batch.opType, batch.op)}}
 \\status{${STATUS_TO_MACRO[batch.status] ?? fail(`Unknown batch status ${batch.status}`)}}
 ${batch.assumption ? `\\assuming{${batch.assumption}}\n` : ''}\\begin{description}
-${ensureInlineCitations(migrateLegacyDescription(batch.descriptionTemplate, database), batch.refs)}
+${migrateLegacyDescription(batch.descriptionTemplate, database)}
 \\end{description}
 \\end{batchclaim}`;
 }
@@ -1159,20 +1145,10 @@ async function writeJson(): Promise<void> {
   stripCanonicalOnlyFields(database);
   database.assumptions = collectAssumptions(database, { includeCanonical: false });
   assertNoOperationQuasiDetail(database, 'LaTeX -> database.json');
+  refreshDerivedDatabase(database);
   validateRelationMacroAssertions(database);
+  assertNoOperationQuasiDetail(database, 'refresh-derived output');
   saveDatabase(database);
-
-  const { execFileSync } = await import('child_process');
-  execFileSync(process.execPath, [
-    '--import',
-    pathToFileURL(path.join(__dirname, 'tsx-register.mjs')).href,
-    path.join(__dirname, 'refresh-derived.ts')
-  ], {
-    cwd: path.join(__dirname, '..'),
-    stdio: 'inherit'
-  });
-
-  assertNoOperationQuasiDetail(loadDatabase(), 'refresh-derived output');
 }
 
 function normalizeRefs(): void {

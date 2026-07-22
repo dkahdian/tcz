@@ -76,15 +76,17 @@
 \begin{document}
 \maketitle
 
+% Status: GOOD
 \begin{succinctnessclaim}
 \source{\langref{CNF}}
 \target{\langref{DNNF}}
 \status{\noquasi}
 \begin{description}
-\citet[Theorem 1]{Bova_2014} gives a family of \langref{CNF} formulas whose every \langref{DNNF} representation has exponential size, so \langref{CNF} cannot compile to \langref{DNNF} in quasipolynomial size.
+\citet[Theorem 1]{Bova_2014} gives a family of \langref{CNF} formulas whose smallest \langref{DNNF} representation has exponential size, so \langref{CNF} cannot compile to \langref{DNNF} in quasipolynomial size.
 \end{description}
 \end{succinctnessclaim}
 
+% Status: CONSIDER DIFFERENT SOURCE
 \begin{succinctnessclaim}
 \source{\langref{CNF}}
 \target{\langref{NNF}}
@@ -94,6 +96,7 @@ As defined by \citet{Darwiche_2002}, \langref{CNF} is a subset of \langref{NNF}.
 \end{description}
 \end{succinctnessclaim}
 
+% Status: CONSIDER DIFFERENT SOURCE
 \begin{succinctnessclaim}
 \source{\langref{CNF}}
 \target{\langref{PI}}
@@ -103,6 +106,7 @@ It is well-known that some \langref{CNF} formulas (i.e. the negation of the pari
 \end{description}
 \end{succinctnessclaim}
 
+% Status: GOOD
 \begin{succinctnessclaim}
 \source{\langref{cSDD}}
 \target{\langref{SDD}}
@@ -112,33 +116,38 @@ For each fixed vtree $T$, \langfam{cSDD}{T} is the compressed subset of \langfam
 \end{description}
 \end{succinctnessclaim}
 
+
+% Status: GOOD
 \begin{succinctnessclaim}
 \source{\langref{cSDD}}
 \target{\langref{OBDD}}
 \status{\noquasi}
 \begin{description}
-\citet[Theorem 4]{Bova_2016_a} constructs a generalized hidden weighted bit function $F_n$ on $2n+1$ variables with \langref{cSDD} size $O(n^3)$ but \langref{OBDD} size $2^{\Omega(n)}$. The function $F_n$ augments $HWB_n$ with fresh variables $y_0, \ldots, y_n$ to ensure the resulting \langref{SDD} is compressed; conditioning $F_n$ on $y_i = 1$ recovers $HWB_n$, preserving Bryant's exponential \langref{OBDD} lower bound.
+\citet[Theorem 4]{Bova_2016_a} constructs a generalized hidden weighted bit function $F_n$ on $2n+1$ variables with \langref{cSDD} size $O(n^3)$ but \langref{OBDD} size $2^{\Omega(n)}$.
 \end{description}
 \end{succinctnessclaim}
 
+% Status: NEED TO CANONICALIZE REF
 \begin{succinctnessclaim}
 \source{\langref{d-DNNF}}
 \target{\langref{DNNF}}
 \status{\poly}
 \begin{description}
-As formalized by \citet{Darwiche_2002} and originally introduced in \citet{Darwiche_2001a}, \langref{d-DNNF} is a subset of \langref{DNNF} satisfying the determinism property, making a polynomial compilation trivial.
+As introduced in \citet{Darwiche_2001b}, \langref{d-DNNF} is a subset of \langref{DNNF} satisfying the determinism property, making a polynomial compilation trivial.
 \end{description}
 \end{succinctnessclaim}
 
+% Status: Darwiche makes this claim in the KCM but it is missing from the arxiv version of the paper?
 \begin{succinctnessclaim}
 \source{\langref{d-DNNF}}
 \target{\langref{FBDD}}
 \status{\noquasi}
 \begin{description}
-\langref{d-DNNF} formulas can polynomially represent the disjunction of two functions with conflicting variable orders, which forces \langref{FBDD}{s} to grow exponentially to track the state of both orders within a single "read-once" path. \citep{Darwiche_2000}
+\citet{Darwiche_2001a} provides an example of a d-DNNF sentence which only has exponential FBDD representations.
 \end{description}
 \end{succinctnessclaim}
 
+% Status: GOOD, maybe update citation provenance
 \begin{succinctnessclaim}
 \source{\langref{d-DNNF}}
 \target{\langref{MODS}}
@@ -148,41 +157,43 @@ The $OR_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \lang
 \end{description}
 \end{succinctnessclaim}
 
+% Status: GOOD
 \begin{succinctnessclaim}
 \source{\langref{d-SDNNF}}
 \target{\langref{d-DNNF}}
 \status{\poly}
 \begin{description}
-As defined by \citet{Amarilli_2018}, a \langref{d-SDNNF} is simply a structured \langref{d-DNNF}, so discarding the vtree completes the compilation.
+As defined by \citet{Pipatsrisawat_Darwiche_2010}, a \langref{d-SDNNF} is simply a structured \langref{d-DNNF}, so discarding the vtree completes the compilation.
 \end{description}
 \end{succinctnessclaim}
 
+% Status: GOOD
 \begin{succinctnessclaim}
 \source{\langref{d-SDNNF}}
 \target{\langref{SDD}}
 \status{\nopolyunknownquasi}
 \begin{description}
-\citet[Theorem 1]{Vinall-Smeeth_2024} proves that there are functions with structured deterministic \langref{DNNF} representations of size $s$ but whose every equivalent \langref{SDD} has size $s^{\widetilde{\Omega}(\log s)}$. The source side is genuinely structured: in the proof of Theorem 2, the hard function is an unambiguous \langref{DNF} $\psi'$, and the authors fix a vtree $T$ over $\operatorname{var}(\psi')$; each term of $\psi'$ is compiled as a \langref{d-DNNF} respecting $T$, and their disjunction still respects $T$, with determinism following from unambiguity of $\psi'$. Theorem 1 then transfers this to a \langref{SDD} lower bound using closure of \langref{SDD}s under negation.
+\citet[Theorem 1]{Vinall-Smeeth_2024} proves that there are functions with structured deterministic \langref{DNNF} representations of size $s$ but whose every equivalent \langref{SDD} has size $s^{\widetilde{\Omega}(\log s)}$.
 \end{description}
 \end{succinctnessclaim}
 
+% Status: GOOD
 \begin{succinctnessclaim}
 \source{\langref{d-SDNNF}}
 \target{\langref{SDNNF}}
 \status{\poly}
 \begin{description}
-As defined by \citet{Amarilli_2018}, \langref{d-SDNNF} is exactly the subset of \langref{SDNNF} satisfying determinism, so compilation is trivial.
+As defined by \citet{Pipatsrisawat_Darwiche_2010}, \langref{d-SDNNF} is exactly the subset of \langref{SDNNF} satisfying determinism, so compilation is trivial.
 \end{description}
 \end{succinctnessclaim}
+
 
 \begin{succinctnessclaim}
 \source{\langref{d-SDNNF}}
 \target{\langref{uOBDD}}
-\status{\nopolyquasi}
+\status{\unknownpolyquasi}
 \begin{description}
-\compilespoly{\langref{uOBDD}}{\langref{nFBDD}}. \nocompilespoly{\langref{d-SDNNF}}{\langref{nFBDD}}. If d-SDNNF compiled to uOBDD with polynomial blowup, then d-SDNNF would compile to nFBDD with polynomial blowup, contradicting the above. Therefore d-SDNNF cannot compile to uOBDD with polynomial blowup.
-
-\citet[Theorem 2]{Bollig_2018} shows that \langref{SDNNF} can be compiled into \langref{nOBDD} by adapting the compilation of \citet{Beame_2015} from \langref{DNNF} to \langref{nFBDD}; \citet[Proposition 2]{Bollig_2018} shows that this \langref{nOBDD} is unambiguous if the \langref{SDNNF} is deterministic. \citep{Amarilli_2018,Pipatsrisawat_2008,TCZ_Forthcoming,Wegener_2000}. \citep{Darwiche_2002,Darwiche_2001a,Bodlaender_1993,Beame_2013}
+\citet[Theorem 2]{Bollig_2018} shows that \langref{SDNNF} can be compiled into \langref{nOBDD} by adapting the compilation of \citet{Beame_2015} from \langref{DNNF} to \langref{nFBDD}; \citet[Proposition 2]{Bollig_2018} shows that this \langref{nOBDD} is unambiguous if the \langref{SDNNF} is deterministic.
 \end{description}
 \end{succinctnessclaim}
 
@@ -198,11 +209,9 @@ As defined by \citet{Amarilli_2018}, \langref{d-SDNNF} is exactly the subset of 
 \begin{succinctnessclaim}
 \source{\langfam{d-SDNNF}{T}}
 \target{\langref{nFBDD}}
-\status{\nopolyquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 This follows because \langfam{dec-SDNNF}{T} is a polynomial-time sublanguage of \langfam{d-SDNNF}{T} and \langfam{dec-SDNNF}{T} does not compile to \langref{nFBDD} with polynomial blowup.
-
-\compilesquasi{\langfam{d-SDNNF}{T}}{\langfam{uOBDD}{<}}. \compilespoly{\langfam{uOBDD}{<}}{\langfam{nOBDD}{<}}. \compilespoly{\langfam{nOBDD}{<}}{\langref{nOBDD}}. \compilespoly{\langref{nOBDD}}{\langref{nFBDD}}. Therefore d-SDNNF$_T$ compiles to nFBDD with quasipolynomial blowup. \citep{Amarilli_2018,Bollig_2018,Beame_2015,TCZ_Forthcoming,Wegener_2000}
 \end{description}
 \end{succinctnessclaim}
 
@@ -227,11 +236,9 @@ For any fixed vtree $T$, \langfam{d-SDNNF}{T} is exactly the subset of \langfam{
 \begin{succinctnessclaim}
 \source{\langfam{d-SDNNF}{T}}
 \target{\langfam{uOBDD}{<}}
-\status{\nopolyquasi}
+\status{\unknownpolyquasi}
 \begin{description}
-\compilespoly{\langfam{uOBDD}{<}}{\langref{nFBDD}}. \nocompilespoly{\langfam{d-SDNNF}{T}}{\langref{nFBDD}}. If d-SDNNF$_T$ compiled to uOBDD$_<$ with polynomial blowup, then d-SDNNF$_T$ would compile to nFBDD with polynomial blowup, contradicting the above. Therefore d-SDNNF$_T$ cannot compile to uOBDD$_<$ with polynomial blowup.
-
-The common-order quasipolynomial simulation of \citet{TCZ_Forthcoming} specializes to \langfam{d-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$; determinism guarantees that the output is a \langfam{uOBDD}{<}. \citep{Amarilli_2018,Wegener_2000,Bollig_2018,Beame_2015}
+The common-order quasipolynomial simulation of \citet{TCZ_Forthcoming} specializes to \langfam{d-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$; determinism guarantees that the output is a \langfam{uOBDD}{<}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -302,11 +309,9 @@ Fix any variable order $<$. Each term of a \langref{DNF} can be represented as a
 \begin{succinctnessclaim}
 \source{\langref{DNNF}}
 \target{\langref{nFBDD}}
-\status{\nopolyquasi}
+\status{\unknownpolyquasi}
 \begin{description}
-\compilespoly{\langref{d-DNNF}}{\langref{DNNF}}. \nocompilespoly{\langref{d-DNNF}}{\langref{nFBDD}}. If DNNF compiled to nFBDD with polynomial blowup, then d-DNNF would compile to nFBDD with polynomial blowup, contradicting the above. Therefore DNNF cannot compile to nFBDD with polynomial blowup.
-
-\citet[Section 5]{Bodlaender_1993} extends the compilation of \langref{dec-DNNF}s into \langref{FBDD}s (shown in \citet{Beame_2013}) to show that \langref{DNNF} can be quasipolynomial-time compiled into \langref{nFBDD}. \citep{Darwiche_2002,Pipatsrisawat_2008,Amarilli_2018,Bollig_2018,Beame_2015,TCZ_Forthcoming,Wegener_2000}. \citep{Darwiche_2001a}
+\citet[Section 5]{Bodlaender_1993} extends the compilation of \langref{dec-DNNF}s into \langref{FBDD}s (shown in \citet{Beame_2013}) to show that \langref{DNNF} can be quasipolynomial-time compiled into \langref{nFBDD}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -684,11 +689,9 @@ As defined by \citet{Amarilli_2018}, a structured \langref{DNNF} is a triple of 
 \begin{succinctnessclaim}
 \source{\langref{SDNNF}}
 \target{\langref{nOBDD}}
-\status{\nopolyquasi}
+\status{\unknownpolyquasi}
 \begin{description}
-\compilespoly{\langref{d-SDNNF}}{\langref{SDNNF}}. \compilespoly{\langref{nOBDD}}{\langref{nFBDD}}. \nocompilespoly{\langref{d-SDNNF}}{\langref{nFBDD}}. If SDNNF compiled to nOBDD with polynomial blowup, then d-SDNNF would compile to nFBDD with polynomial blowup, contradicting the above. Therefore SDNNF cannot compile to nOBDD with polynomial blowup.
-
-\citet[Theorem 2]{Bollig_2018} shows that \langref{SDNNF} can be compiled into \langref{nOBDD} by adapting the compilation of \citet{Beame_2015} from \langref{DNNF} to \langref{nFBDD}. \citep{Amarilli_2018,Pipatsrisawat_2008,TCZ_Forthcoming,Wegener_2000}. \citep{Darwiche_2002,Darwiche_2001a,Bodlaender_1993,Beame_2013}
+\citet[Theorem 2]{Bollig_2018} shows that \langref{SDNNF} can be compiled into \langref{nOBDD} by adapting the compilation of \citet{Beame_2015} from \langref{DNNF} to \langref{nFBDD}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -704,11 +707,9 @@ As defined by \citet{Amarilli_2018}, a structured \langref{DNNF} is a triple of 
 \begin{succinctnessclaim}
 \source{\langfam{SDNNF}{T}}
 \target{\langfam{nOBDD}{<}}
-\status{\nopolyquasi}
+\status{\unknownpolyquasi}
 \begin{description}
-\compilespoly{\langfam{d-SDNNF}{T}}{\langfam{SDNNF}{T}}. \compilespoly{\langfam{nOBDD}{<}}{\langref{nFBDD}}. \nocompilespoly{\langfam{d-SDNNF}{T}}{\langref{nFBDD}}. If SDNNF$_T$ compiled to nOBDD$_<$ with polynomial blowup, then d-SDNNF$_T$ would compile to nFBDD with polynomial blowup, contradicting the above. Therefore SDNNF$_T$ cannot compile to nOBDD$_<$ with polynomial blowup.
-
-The \langref{SDNNF}-to-\langref{nOBDD} simulation can be oriented as in \citet{TCZ_Forthcoming}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and gives a quasipolynomial-size \langfam{nOBDD}{<}. \citep{Amarilli_2018,Wegener_2000,Bollig_2018,Beame_2015}
+The \langref{SDNNF}-to-\langref{nOBDD} simulation can be oriented as in \citet{TCZ_Forthcoming}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and gives a quasipolynomial-size \langfam{nOBDD}{<}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -913,11 +914,9 @@ As defined by \citet{Amarilli_2018}, \langref{dec-DNNF} is the subset of \langre
 \begin{succinctnessclaim}
 \source{\langref{dec-DNNF}}
 \target{\langref{FBDD}}
-\status{\nopolyquasi}
+\status{\unknownpolyquasi}
 \begin{description}
-\compilespoly{\langfam{dec-SDNNF}{T}}{\langref{dec-DNNF}}. \compilespoly{\langref{FBDD}}{\langref{nFBDD}}. \nocompilespoly{\langfam{dec-SDNNF}{T}}{\langref{nFBDD}}. If dec-DNNF compiled to FBDD with polynomial blowup, then dec-SDNNF$_T$ would compile to nFBDD with polynomial blowup, contradicting the above. Therefore dec-DNNF cannot compile to FBDD with polynomial blowup.
-
-\citet[Corollary 3.2]{Beame_2013} shows quasipolynomial compilation from \langref{dec-DNNF} to \langref{FBDD}. \citep{Amarilli_2018}
+\citet[Corollary 3.2]{Beame_2013} shows quasipolynomial compilation from \langref{dec-DNNF} to \langref{FBDD}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -933,11 +932,9 @@ As defined by \citet{Amarilli_2018}, \langref{dec-SDNNF} is the subset of \langr
 \begin{succinctnessclaim}
 \source{\langref{dec-SDNNF}}
 \target{\langref{OBDD}}
-\status{\nopolyquasi}
+\status{\unknownpolyquasi}
 \begin{description}
-\compilespoly{\langref{OBDD}}{\langref{FBDD}}. \nocompilespoly{\langref{dec-SDNNF}}{\langref{FBDD}}. If dec-SDNNF compiled to OBDD with polynomial blowup, then dec-SDNNF would compile to FBDD with polynomial blowup, contradicting the above. Therefore dec-SDNNF cannot compile to OBDD with polynomial blowup.
-
-\citet[Theorem 2]{Bollig_2018} shows that \langref{SDNNF} can be compiled into \langref{nOBDD} by adapting the compilation of \citet{Beame_2015} from \langref{DNNF} to \langref{nFBDD}; \citet[Proposition 2]{Bollig_2018} shows that this \langref{nOBDD} is unambiguous if the \langref{SDNNF} is deterministic. Additionally, the same compilation yields an \langref{OBDD} if the input is a \langref{dec-SDNNF} since there are no $\vee$-gates that are not decision gates in a \langref{dec-SDNNF}. \citep{Darwiche_2002,Amarilli_2018,Beame_2013}
+\citet[Theorem 2]{Bollig_2018} shows that \langref{SDNNF} can be compiled into \langref{nOBDD} by adapting the compilation of \citet{Beame_2015} from \langref{DNNF} to \langref{nFBDD}; \citet[Proposition 2]{Bollig_2018} shows that this \langref{nOBDD} is unambiguous if the \langref{SDNNF} is deterministic. Additionally, the same compilation yields an \langref{OBDD} if the input is a \langref{dec-SDNNF} since there are no $\vee$-gates that are not decision gates in a \langref{dec-SDNNF}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -962,22 +959,18 @@ For any fixed vtree $T$, \langfam{dec-SDNNF}{T} is the subset of \langfam{d-SDNN
 \begin{succinctnessclaim}
 \source{\langfam{dec-SDNNF}{T}}
 \target{\langref{nFBDD}}
-\status{\nopolyquasi}
+\status{\nopolyunknownquasi}
 \begin{description}
 This is the fixed-vtree form of Proposition 3.10 of \citet{Amarilli_2018}.
-
-\compilespoly{\langfam{dec-SDNNF}{T}}{\langref{dec-SDNNF}}. \compilespoly{\langref{dec-SDNNF}}{\langref{dec-DNNF}}. \compilesquasi{\langref{dec-DNNF}}{\langref{FBDD}}. \compilespoly{\langref{FBDD}}{\langref{uFBDD}}. \compilespoly{\langref{uFBDD}}{\langref{nFBDD}}. Therefore dec-SDNNF$_T$ compiles to nFBDD with quasipolynomial blowup. \citep{Beame_2013}
 \end{description}
 \end{succinctnessclaim}
 
 \begin{succinctnessclaim}
 \source{\langfam{dec-SDNNF}{T}}
 \target{\langfam{OBDD}{<}}
-\status{\nopolyquasi}
+\status{\unknownpolyquasi}
 \begin{description}
-\compilespoly{\langfam{OBDD}{<}}{\langref{FBDD}}. \nocompilespoly{\langfam{dec-SDNNF}{T}}{\langref{FBDD}}. If dec-SDNNF$_T$ compiled to OBDD$_<$ with polynomial blowup, then dec-SDNNF$_T$ would compile to FBDD with polynomial blowup, contradicting the above. Therefore dec-SDNNF$_T$ cannot compile to OBDD$_<$ with polynomial blowup.
-
-The common-order quasipolynomial simulation of \citet{TCZ_Forthcoming} specializes to \langfam{dec-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and produces a quasipolynomial-size \langfam{OBDD}{<}. \citep{Darwiche_2002,Amarilli_2018,Bollig_2018,Beame_2015,Beame_2013}
+The common-order quasipolynomial simulation of \citet{TCZ_Forthcoming} specializes to \langfam{dec-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and produces a quasipolynomial-size \langfam{OBDD}{<}.
 \end{description}
 \end{succinctnessclaim}
 
