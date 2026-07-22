@@ -13,7 +13,7 @@
  */
 
 import { loadDatabase, saveDatabase, type DatabaseSchema } from './shared/database.js';
-import { hydrateEntityReferenceRefs } from './shared/entity-reference-refs.js';
+import { hydrateEntityReferenceRefs } from '../src/lib/data/propagation/entity-reference-refs.js';
 
 // Import the propagation logic and types
 import { propagateImplicitRelations } from '../src/lib/data/propagation/index.js';

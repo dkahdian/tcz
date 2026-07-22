@@ -11,6 +11,7 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test:latex-projection": "node --import ./scripts/tsx-register.mjs scripts/latex-authored-projection-test.ts",
+		"test:propagation-refs": "node --import ./scripts/tsx-register.mjs scripts/propagation-entity-reference-test.ts",
 		"deploy": "npm run build",
 		"stats": "node --import ./scripts/tsx-register.mjs scripts/database-stats.ts",
 		"refresh": "node --import ./scripts/tsx-register.mjs scripts/refresh-derived.ts",
