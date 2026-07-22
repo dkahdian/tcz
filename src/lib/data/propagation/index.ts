@@ -4,6 +4,7 @@ import { initNameMap } from '../../utils/language-id.js';
 import { buildFactContext, seedAuthoredFacts } from './facts/index.js';
 import { deriveCandidateFacts, validateNoContradictions } from './derive/index.js';
 import { certifyFacts, serializeCandidateFacts, serializeCertifiedFacts, stripGeneratedFacts } from './prove/index.js';
+import { hydrateEntityReferenceRefs } from './entity-reference-refs.js';
 
 export interface PropagationOptions {
   proofMode?: 'eager' | 'lazy';
@@ -23,6 +24,11 @@ export function propagateImplicitRelations(data: GraphData, options: Propagation
     data.adjacencyMatrix.languageIds.map((id, index) => [id, index])
   );
   initNameMap(data.languages);
+
+  // Entity assertions inside authored descriptions are proof premises too.
+  // Hydrate their references before the fact context snapshots metadata so
+  // downstream derivations inherit the complete reference set immediately.
+  hydrateEntityReferenceRefs(data);
 
   const context = buildFactContext(data, options.oldProofSource);
   stripGeneratedFacts(data);
