@@ -1084,7 +1084,7 @@
         }
       },
       "id": "lang_83e3b023",
-      "definition": "\\langref{cSDD} $= \\bigcup_T \\langfam{cSDD}{T}$. \\citep{VanDenBroeck_2015,Darwiche_2011}"
+      "definition": "\\langref{cSDD} $= \\bigcup_T$ \\langfam{cSDD}{T}. \\citep{VanDenBroeck_2015,Darwiche_2011}"
     },
     {
       "name": "d-DNNF",
