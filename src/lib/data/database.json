@@ -15084,8 +15084,8 @@
           "refs": [
             "Amarilli_2018",
             "Vinall-Smeeth_2024",
-            "VanDenBroeck_2015",
-            "Darwiche_2011"
+            "Darwiche_2011",
+            "VanDenBroeck_2015"
           ],
           "description": "\\compilespoly{\\langfam{uOBDD}{<}}{\\langfam{d-SDNNF}{T}}. \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. \\compilespoly{\\langref{cSDD}}{\\langref{SDD}}. If \\langfam{d-SDNNF}{T} compiled to \\langref{cSDD} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langfam{d-SDNNF}{T}}{\\langref{cSDD}}.",
           "hidden": false,
@@ -15828,8 +15828,8 @@
           "refs": [
             "Amarilli_2018",
             "Vinall-Smeeth_2024",
-            "Capelli_2026",
-            "Darwiche_2011"
+            "Darwiche_2011",
+            "Capelli_2026"
           ],
           "description": "\\compilespoly{\\langfam{uOBDD}{<}}{\\langfam{d-SDNNF}{T}}. \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. \\compilespoly{\\langref{TDD}}{\\langref{SDD}}. If \\langfam{d-SDNNF}{T} compiled to \\langref{TDD} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langfam{d-SDNNF}{T}}{\\langref{TDD}}.",
           "hidden": false,
@@ -29517,8 +29517,8 @@
           "refs": [
             "Wegener_2000",
             "Vinall-Smeeth_2024",
-            "VanDenBroeck_2015",
-            "Darwiche_2011"
+            "Darwiche_2011",
+            "VanDenBroeck_2015"
           ],
           "description": "\\compilespoly{\\langfam{uOBDD}{<}}{\\langref{uOBDD}}. \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. \\compilespoly{\\langref{cSDD}}{\\langref{SDD}}. If \\langref{uOBDD} compiled to \\langref{cSDD} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langref{uOBDD}}{\\langref{cSDD}}.",
           "hidden": false,
@@ -30062,8 +30062,8 @@
           "refs": [
             "Wegener_2000",
             "Vinall-Smeeth_2024",
-            "Capelli_2026",
-            "Darwiche_2011"
+            "Darwiche_2011",
+            "Capelli_2026"
           ],
           "description": "\\compilespoly{\\langfam{uOBDD}{<}}{\\langref{uOBDD}}. \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. \\compilespoly{\\langref{TDD}}{\\langref{SDD}}. If \\langref{uOBDD} compiled to \\langref{TDD} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langref{uOBDD}}{\\langref{TDD}}.",
           "hidden": false,
@@ -37638,8 +37638,8 @@
           "status": "no-poly-unknown-quasi",
           "refs": [
             "Vinall-Smeeth_2024",
-            "VanDenBroeck_2015",
-            "Darwiche_2011"
+            "Darwiche_2011",
+            "VanDenBroeck_2015"
           ],
           "description": "\\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. \\compilespoly{\\langref{cSDD}}{\\langref{SDD}}. If \\langfam{uOBDD}{<} compiled to \\langref{cSDD} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{cSDD}}.",
           "hidden": false,
@@ -38067,7 +38067,7 @@
         },
         {
           "status": "no-poly-unknown-quasi",
-          "description": "The proof of \\citet[Theorem 2]{Vinall-Smeeth_2024} constructs unambiguous DNFs $f$ whose negation requires quasipolynomially larger SDNNFs. One may convert an unambiguous DNF to an equivalent \\langfam{uOBDD}{<} with only a linear change in size (for any order $<$). However, any \\langref{SDD} computing $f$ may be efficiently negated (\\supportspoly{\\langref{SDD}}{\\NOTC}) and then efficiently converted to an equivalent \\langref{SDNNF}. A quasipolynomial separation in the \\langfam{uOBDD}{<} and \\langref{SDD} sizes of $f$ follows.",
+          "description": "The proof of \\citet[Theorem 2]{Vinall-Smeeth_2024} constructs unambiguous DNFs $f$ whose negation requires quasipolynomially larger SDNNFs. One may convert an unambiguous DNF to an equivalent \\langfam{uOBDD}{<} with only a linear change in size (for any order $<$). However, any \\langref{SDD} computing $f$ may be efficiently negated (\\supportspoly{\\langref{SDD}}{\\NOTC}) and then efficiently converted to an equivalent \\langref{SDNNF}. A quasipolynomial separation in the \\langfam{uOBDD}{<} and \\langref{SDD} sizes of $f$ follows. \\citep{Darwiche_2011}",
           "refs": [
             "Vinall-Smeeth_2024",
             "Darwiche_2011"
@@ -38237,8 +38237,8 @@
           "status": "no-poly-unknown-quasi",
           "refs": [
             "Vinall-Smeeth_2024",
-            "Capelli_2026",
-            "Darwiche_2011"
+            "Darwiche_2011",
+            "Capelli_2026"
           ],
           "description": "\\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. \\compilespoly{\\langfam{TDD}{T}}{\\langfam{SDD}{T}}. \\compilespoly{\\langfam{SDD}{T}}{\\langref{SDD}}. If \\langfam{uOBDD}{<} compiled to \\langfam{TDD}{T} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langfam{TDD}{T}}.",
           "hidden": false,
@@ -38269,8 +38269,8 @@
           "status": "no-poly-unknown-quasi",
           "refs": [
             "Vinall-Smeeth_2024",
-            "Capelli_2026",
-            "Darwiche_2011"
+            "Darwiche_2011",
+            "Capelli_2026"
           ],
           "description": "\\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. \\compilespoly{\\langref{TDD}}{\\langref{SDD}}. If \\langfam{uOBDD}{<} compiled to \\langref{TDD} with polynomial blowup, this would contradict \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{SDD}}. Therefore \\nocompilespoly{\\langfam{uOBDD}{<}}{\\langref{TDD}}.",
           "hidden": false,

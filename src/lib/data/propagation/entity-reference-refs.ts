@@ -1,4 +1,4 @@
-import type { DatabaseSchema } from './database.js';
+import type { GraphData } from '../../types.js';
 
 const ENTITY_REF_PATTERN = /\\(compilespoly|compilesquasi|nocompilespoly|nocompilesquasi)\{((?:[^{}]|\{[^{}]*\})+)\}\{((?:[^{}]|\{[^{}]*\})+)\}/g;
 const OPERATION_RESULT_REF_PATTERN = /\\(supportspoly|supportsquasi|nosupportspoly|nosupportsquasi)\{((?:[^{}]|\{[^{}]*\})+)\}\{(\\[A-Za-z]+)\}/g;
@@ -21,6 +21,8 @@ const OPERATION_MACRO_TO_CODE: Record<string, string> = {
   '\\ORC': 'OR_C',
   '\\ORBC': 'OR_BC'
 };
+
+type EntityReferenceData = Pick<GraphData, 'languages' | 'adjacencyMatrix'>;
 
 function addUnique(target: string[], refs?: string[]): boolean {
   let changed = false;
@@ -53,7 +55,7 @@ function edgeRefLanguageName(name: string): string {
     .replace(/\$/g, '');
 }
 
-function buildLanguageResolver(database: DatabaseSchema): (ref: string) => string | undefined {
+function buildLanguageResolver(database: EntityReferenceData): (ref: string) => string | undefined {
   const byRef = new Map<string, string>();
   for (const language of database.languages) {
     const aliases = [
@@ -75,7 +77,7 @@ function buildLanguageResolver(database: DatabaseSchema): (ref: string) => strin
   };
 }
 
-function relationRefs(database: DatabaseSchema, sourceId: string, targetId: string): string[] {
+function relationRefs(database: EntityReferenceData, sourceId: string, targetId: string): string[] {
   const sourceIdx = database.adjacencyMatrix.indexByLanguage[sourceId];
   const targetIdx = database.adjacencyMatrix.indexByLanguage[targetId];
   if (sourceIdx === undefined || targetIdx === undefined) return [];
@@ -89,7 +91,7 @@ function relationRefs(database: DatabaseSchema, sourceId: string, targetId: stri
   return refs;
 }
 
-function operationRefs(database: DatabaseSchema, languageId: string, operationMacro: string): string[] {
+function operationRefs(database: EntityReferenceData, languageId: string, operationMacro: string): string[] {
   const operationCode = OPERATION_MACRO_TO_CODE[operationMacro];
   if (!operationCode) return [];
   const language = database.languages.find((item) => item.id === languageId);
@@ -98,7 +100,7 @@ function operationRefs(database: DatabaseSchema, languageId: string, operationMa
 }
 
 function referencedEntityRefs(
-  database: DatabaseSchema,
+  database: EntityReferenceData,
   resolveLanguageId: (ref: string) => string | undefined,
   text?: string
 ): string[] {
@@ -126,10 +128,10 @@ function referencedEntityRefs(
 
 /**
  * Ensure fact-level refs include the refs of every entity premise cited in the
- * description. This runs after propagation and batch hydration so entity refs
- * resolve against the final, current database state.
+ * description. Propagation calls this before seeding facts so derived proofs
+ * inherit complete premise metadata on their first pass.
  */
-export function hydrateEntityReferenceRefs(database: DatabaseSchema): number {
+export function hydrateEntityReferenceRefs(database: EntityReferenceData): number {
   const resolveLanguageId = buildLanguageResolver(database);
   let changedFacts = 0;
 
