@@ -99,7 +99,7 @@ As defined by \citet{Darwiche_2002}, \langref{CNF} is a subset of \langref{NNF}.
 \target{\langref{PI}}
 \status{\noquasi}
 \begin{description}
-It is well-known that some \langref{CNF} formulas (i.e. the negation of the parity function $\neg PARITY_n=\neg\bigoplus_{i=1}^n x_i$) have exponentially many prime implicants. \citep{Darwiche_2002}
+It is well-known that some \langref{CNF} formulas have exponentially many prime implicants. \citep{Darwiche_2002}
 \end{description}
 \end{succinctnessclaim}
 
@@ -108,7 +108,7 @@ It is well-known that some \langref{CNF} formulas (i.e. the negation of the pari
 \target{\langref{SDD}}
 \status{\poly}
 \begin{description}
-For each fixed vtree $T$, \langfam{cSDD}{T} is the compressed subset of \langfam{SDD}{T}, so compilation between \langref{cSDD} and \langref{SDD} is trivial. \citep{VanDenBroeck_2015}
+For each fixed vtree $T$, \langfam{cSDD}{T} is the compressed subset of \langfam{SDD}{T}, so compilation from \langref{cSDD} to \langref{SDD} is trivial. \citep{VanDenBroeck_2015}
 \end{description}
 \end{succinctnessclaim}
 
@@ -128,7 +128,6 @@ For each fixed vtree $T$, \langfam{cSDD}{T} is the compressed subset of \langfam
 \status{\poly}
 \begin{description}
 As introduced in \citet{Darwiche_2001b}, \langref{d-DNNF} is a subset of \langref{DNNF} satisfying the determinism property, making a polynomial compilation trivial.
-As introduced in \citet{Darwiche_2001b}, \langref{d-DNNF} is a subset of \langref{DNNF} satisfying the determinism property, making a polynomial compilation trivial.
 \end{description}
 \end{succinctnessclaim}
 
@@ -137,8 +136,7 @@ As introduced in \citet{Darwiche_2001b}, \langref{d-DNNF} is a subset of \langre
 \target{\langref{FBDD}}
 \status{\noquasi}
 \begin{description}
-\citet{Darwiche_2001a} provides an example of a d-DNNF sentence which only has exponential FBDD representations.
-\citet{Darwiche_2001a} provides an example of a d-DNNF sentence which only has exponential FBDD representations.
+\citet{Darwiche_2001b} provides an example of a d-DNNF sentence which only has exponential FBDD representations.
 \end{description}
 \end{succinctnessclaim}
 
@@ -147,7 +145,7 @@ As introduced in \citet{Darwiche_2001b}, \langref{d-DNNF} is a subset of \langre
 \target{\langref{MODS}}
 \status{\noquasi}
 \begin{description}
-The $OR_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \langref{d-DNNF} formula but has $2^n-1$ models. \citep{Darwiche_2002}
+The $ANY_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \langref{d-DNNF} formula but has $2^n-1$ models. \citep{Darwiche_2002}
 \end{description}
 \end{succinctnessclaim}
 
@@ -188,12 +186,13 @@ As defined by \citet{Pipatsrisawat_Darwiche_2010}, \langref{d-SDNNF} is exactly 
 \end{description}
 \end{succinctnessclaim}
 
+% Status: GOOD 
 \begin{succinctnessclaim}
 \source{\langfam{d-SDNNF}{T}}
 \target{\langref{d-SDNNF}}
 \status{\poly}
 \begin{description}
-\langref{d-SDNNF} is the union of the fixed-vtree languages \langfam{d-SDNNF}{T}. Hence any \langfam{d-SDNNF}{T} formula is already a \langref{d-SDNNF} formula, so the compilation is trivial and polynomial-time. \citep{TCZ_Forthcoming}
+\langref{d-SDNNF} is the union of the fixed-vtree languages \langfam{d-SDNNF}{T}. Hence any \langfam{d-SDNNF}{T} formula is already a \langref{d-SDNNF} formula, so the compilation is trivial and polynomial-time. \citep{Amarilli_2018}
 \end{description}
 \end{succinctnessclaim}
 
@@ -222,7 +221,7 @@ For any fixed vtree $T$, \langfam{d-SDNNF}{T} is exactly the subset of \langfam{
 \target{\langfam{uOBDD}{<}}
 \status{\unknownpolyquasi}
 \begin{description}
-The common-order quasipolynomial simulation of \citet{TCZ_Forthcoming} specializes to \langfam{d-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$; determinism guarantees that the output is a \langfam{uOBDD}{<}.
+\citet{TCZ_Forthcoming} adapts the quasipolynomial simulation of \citet{beame_2013} to compile \langfam{d-SDNNF}{T} into \langfam{uOBDD}{<} in quasipolynomial time.
 \end{description}
 \end{succinctnessclaim}
 
@@ -232,7 +231,7 @@ The common-order quasipolynomial simulation of \citet{TCZ_Forthcoming} specializ
 \status{\nopolyunknownquasi}
 \assuming{the polynomial hierarchy does not collapse}
 \begin{description}
-Because counting the models of a \langref{d-DNNF} is in P and counting the models of a \langref{DNF} is \#P-complete, \langref{DNF} cannot be polynomially compiled into \langref{d-DNNF} unconditionally. Such a compilation implies P = \#P, collapsing the polynomial hierarchy \citep{Darwiche_2002}.
+Because counting the models of a \langref{d-DNNF} is in P and counting the models of a \langref{DNF} is \#P-complete, \langref{DNF} cannot be polynomially compiled into \langref{d-DNNF}, or else the polynomial hierarchy would collapse. \citep{Darwiche_2002}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -259,7 +258,7 @@ As defined by \citet{Darwiche_2002}, \langref{DNF} is a subset of \langref{DNNF}
 \target{\langref{IP}}
 \status{\noquasi}
 \begin{description}
-It is well-known that some \langref{DNF} formulas (i.e. the parity function $PARITY_n=\bigoplus_{i=1}^n x_i$) have exponentially many prime implicates. \citep{Darwiche_2002}
+It is well-known that some \langref{DNF} formulas have exponentially many prime implicants. \citep{Darwiche_2002}
 \end{description}
 \end{succinctnessclaim}
 
@@ -277,7 +276,7 @@ It is well-known that some \langref{DNF} formulas (i.e. the parity function $PAR
 \target{\langfam{nOBDD}{<}}
 \status{\poly}
 \begin{description}
-Fix any variable order $<$. Each term of a \langref{DNF} can be represented as an \langfam{OBDD}{<} of linear size (a chain of decision nodes for each literal in the term). Their nondeterministic disjunction yields an \langfam{nOBDD}{<} of size $O(|\phi|)$ because every branch follows the same fixed order. \citep{Amarilli_2018,Wegener_2000}
+Fix any variable order $<$. Each term of a \langref{DNF} can be represented as an \langfam{OBDD}{<} of linear size (a chain of decision nodes for each literal in the term). Their nondeterministic disjunction yields an \langfam{nOBDD}{<} of size $O(|\phi|)$ because every branch follows the same fixed order. \citep{Amarilli_2018}
 \end{description}
 \end{succinctnessclaim}
 
@@ -295,7 +294,7 @@ Fix any variable order $<$. Each term of a \langref{DNF} can be represented as a
 \target{\langref{nFBDD}}
 \status{\unknownpolyquasi}
 \begin{description}
-\citet[Section 5]{Beame_2015} extends the compilation of \langref{dec-DNNF}s into \langref{FBDD}s (shown in \citet{Beame_2013}) to show that \langref{DNNF} can be quasipolynomial-time compiled into  langref{nFBDD}.
+\citet[Section 5]{Beame_2015} extends the compilation of \langref{dec-DNNF}s into \langref{FBDD}s (shown in \citet{beame_2013}) to show that \langref{DNNF} can be quasipolynomial-time compiled into \langref{nFBDD}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -322,7 +321,7 @@ As defined by \citet{Darwiche_2002}, \langref{FBDD} is a subset of \langref{d-DN
 \target{\langref{SDD}}
 \status{\noquasi}
 \begin{description}
-\citet{Beame_2015} relates the size of \langref{SDD} representations to best-partition communication complexity and derive simple examples for which \langref{FBDD} representations are exponentially more concise than \langref{SDD} representations.
+\citet{Beame_2015} relates the size of \langref{SDD} representations to best-partition communication complexity and derives simple examples for which \langref{FBDD} representations are exponentially more concise than \langref{SDD} representations.
 \end{description}
 \end{succinctnessclaim}
 
@@ -349,7 +348,7 @@ As defined by \citet{Amarilli_2018}, \langref{FBDD} is the subset of \langref{uF
 \target{\langref{OBDD}}
 \status{\noquasi}
 \begin{description}
-The hidden weighted bit function $HWB_n$ has \langref{OBDD} size $2^{\Omega(n)}$ \citep{Bryant_1986} but \langref{FBDD} size $O(n^2)$ \citep{Gergov_1994}.
+The hidden weighted bit function $HWB_n$ has \langref{OBDD} size $2^{\Omega(n)}$ \citep{Bryant_1991} but \langref{FBDD} size $O(n^2)$ \citep{Sieling_Wegener_1995}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -358,7 +357,7 @@ The hidden weighted bit function $HWB_n$ has \langref{OBDD} size $2^{\Omega(n)}$
 \target{\langref{dec-DNNF}}
 \status{\poly}
 \begin{description}
-Rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0$ and $D_1$ are the rewritings of the 0- and 1-successors. The introduced $\vee$-gates are decision gates and the $\wedge$-gates are decomposable, so all $\vee$-gates arise from decision node rewrites, yielding a \langref{dec-DNNF} in linear time \citep{Amarilli_2018}.
+Rewrite each decision node labeled $x$ as $(\neg x \wedge D_0) \vee (x \wedge D_1)$, where $D_0$ and $D_1$ are the rewritings of the 0- and 1-successors. The introduced $\vee$-gates are decision gates and the $\wedge$-gates are decomposable, so all $\vee$-gates arise from decision node rewrites, yielding a \langref{dec-DNNF} in linear time \citep{Amarilli_2018}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -367,9 +366,7 @@ Rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_
 \target{\langref{CNF}}
 \status{\noquasi}
 \begin{description}
-Consider the \langref{DNF} formula $\Pi_n=\bigvee_{i=0}^{n-1}(x_{2i} \wedge x_{2i+1})$. This formula is in prime implicants form and each clause in $\Pi_n$ is an essential prime implicant of it. Hence its negation $\neg\Pi_n$ lies in \langref{IP}.
-
-Since the early work of Quine, we know that the number of essential prime implicates of a formula is a lower bound on the number of clauses that can be found in any \langref{CNF} representation of it. However, since $\Pi_n$ has $2^n$ prime implicants, $\neg\Pi_n$ has $2^n$ prime implicates, so any \langref{CNF} representation of $\neg\Pi_n$ must have at least $2^n$ clauses. \citep{Darwiche_2002}
+Let $\Pi_n = \bigvee_{i=0}^{n-1}(x_{2i} \wedge x_{2i+1})$. Its $n$ terms are its essential prime implicants, so $\Pi_n$ is a linear-size \langref{IP} formula. It has $2^n$ essential prime implicates, and hence every equivalent \langref{CNF} has at least $2^n$ clauses. \citep{Darwiche_2002}
 \end{description}
 \end{succinctnessclaim}
 
@@ -387,7 +384,7 @@ As defined by \citet{Darwiche_2002}, \langref{IP} is a subset of \langref{DNF}. 
 \target{\langref{FBDD}}
 \status{\noquasi}
 \begin{description}
-The negation of the clique detection function $\neg\Sigma_{n,k}$ has $O(n^3)$ prime implicants (hence polynomial \langref{IP} size), but any \langref{FBDD} for $\neg\Sigma_{n,k}$ has exponential size for suitable $k$ \citep{Darwiche_2002,Wegener_1987}.
+The clique detection function $\Sigma_{n,k}$ has $O(n^3)$ prime implicants (hence polynomial \langref{IP} size), but any \langref{FBDD} for $\Sigma_{n,k}$ has exponential size for suitable $k$ \citep{Darwiche_2002,Wegener_1987}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -396,7 +393,7 @@ The negation of the clique detection function $\neg\Sigma_{n,k}$ has $O(n^3)$ pr
 \target{\langref{MODS}}
 \status{\noquasi}
 \begin{description}
-The $OR_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \langref{IP} formula but has $2^n-1$ models. \citep{Darwiche_2002}
+The $ANY_n$ function $\bigvee_{i=1}^nx_i$ can be represented in $O(n)$ as a \langref{IP} formula but has $2^n-1$ models. \citep{Darwiche_2002}
 \end{description}
 \end{succinctnessclaim}
 
@@ -427,15 +424,17 @@ As defined by \citet{Darwiche_2002}, \langref{MODS} is a subset of \langref{DNF}
 \end{description}
 \end{succinctnessclaim}
 
+% Status: CHECK IF WEGENER ACTUALLY CONTAINS THIS
 \begin{succinctnessclaim}
 \source{\langref{MODS}}
 \target{\langref{IP}}
 \status{\poly}
 \begin{description}
-The Quine-McCluskey algorithm generates an \langref{IP} formula in polynomial time. \citep{Wegener_1987}
+The prime implicants of a function given by an explicit \langref{MODS} representation can be generated in time polynomial in the MODS input size; see the proof of \citet[Proposition 3.1]{Darwiche_2002}.
 \end{description}
 \end{succinctnessclaim}
 
+% Status: GOOD
 \begin{succinctnessclaim}
 \source{\langref{MODS}}
 \target{\langfam{OBDD}{<}}
@@ -468,7 +467,7 @@ The Sauerhoff function has an \langref{nFBDD} of size $O(n^2)$ over $n^2$ variab
 \target{\langref{DNNF}}
 \status{\poly}
 \begin{description}
-Rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The $\wedge$-gates are decomposable, yielding a \langref{DNNF} in linear time \citep{Amarilli_2018}.
+Rewrite each decision node labeled $x$ as $(\neg x \wedge D_0) \vee (x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The $\wedge$-gates are decomposable, yielding a \langref{DNNF} in linear time \citep{Amarilli_2018}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -478,15 +477,6 @@ Rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_
 \status{\noquasi}
 \begin{description}
 Consider the Boolean functions $\psi_n,\phi_n:\{0,1\}^{n^2}\to\{0,1\}$ that respectively test whether, in an $n \times n$ Boolean matrix, either the number of 1's is odd and there is a full row of 1's, or the number of 1's is even and there is a column full of 1's. An \langref{FBDD} of size $O(n^2)$ may simulate either $\psi_n$ or $\phi_n$, and thus the \langref{uFBDD} $\psi_n\vee\phi_n$ is of size $O(n^2)$; however, an \langref{FBDD} for $\psi_n\vee\phi_n$ is provably of size $2^{\Omega(n^{1/2})}$ \citep{Amarilli_2018}.
-\end{description}
-\end{succinctnessclaim}
-
-\begin{succinctnessclaim}
-\source{\langref{nFBDD}}
-\target{\langref{uFBDD}}
-\status{\noquasi}
-\begin{description}
-The Sauerhoff function has an \langref{nFBDD} of size $O(n^2)$ over $n^2$ variables, but as a \langref{d-DNNF}, which generalize \langref{uFBDD}, has size $2^{\Omega(n)}$. \citep{Amarilli_2018}
 \end{description}
 \end{succinctnessclaim}
 
@@ -505,7 +495,7 @@ As defined by \citet{Amarilli_2018}, \langref{nOBDD} is the subset of \langref{n
 \target{\langref{SDNNF}}
 \status{\poly}
 \begin{description}
-Construct a right-linear vtree from the variable order, then rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The vtree alignment ensures every $\wedge$-gate respects the variable partition, yielding an \langref{SDNNF} in linear time \citep{Amarilli_2018}.
+Construct a right-linear vtree from the variable order, then rewrite each decision node labeled $x$ as $(\neg x \wedge D_0) \vee (x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The vtree alignment ensures every $\wedge$-gate respects the variable partition, yielding an \langref{SDNNF} in linear time \citep{Amarilli_2018}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -514,7 +504,7 @@ Construct a right-linear vtree from the variable order, then rewrite each decisi
 \target{\langref{CNF}}
 \status{\noquasi}
 \begin{description}
-The parity function $PARITY_n=\bigoplus_{i=1}^n x_i$ has linear size \langfam{OBDD}{<} representations but only exponential size \langref{CNF} representations. \citep{Darwiche_2002}
+The parity function $PARITY_n=\bigoplus_{i=1}^n x_i$ has linear size \langfam{OBDD}{<} representations but requires exponential size \langref{CNF} representations. \citep{Darwiche_2002}
 \end{description}
 \end{succinctnessclaim}
 
@@ -523,7 +513,7 @@ The parity function $PARITY_n=\bigoplus_{i=1}^n x_i$ has linear size \langfam{OB
 \target{\langref{DNF}}
 \status{\noquasi}
 \begin{description}
-The parity function $PARITY_n=\bigoplus_{i=1}^n x_i$ has linear size \langfam{OBDD}{<} representations but only exponential size \langref{DNF} representations. \citep{Darwiche_2002}
+The parity function $PARITY_n=\bigoplus_{i=1}^n x_i$ has linear size \langfam{OBDD}{<} representations but requires exponential size \langref{DNF} representations. \citep{Darwiche_2002}
 \end{description}
 \end{succinctnessclaim}
 
@@ -532,7 +522,7 @@ The parity function $PARITY_n=\bigoplus_{i=1}^n x_i$ has linear size \langfam{OB
 \target{\langref{OBDD}}
 \status{\poly}
 \begin{description}
-As defined by \citet{Darwiche_2002}, \langfam{OBDD}{<} is a subset of \langref{OBDD}. Therefore, a polynomial compilation is trivial.
+As defined by \citet{TCZ_Forthcoming}, for each order $<$, \langfam{OBDD}{<} is a subset of \langref{OBDD}. Therefore, a polynomial compilation is trivial.
 \end{description}
 \end{succinctnessclaim}
 
@@ -541,7 +531,7 @@ As defined by \citet{Darwiche_2002}, \langfam{OBDD}{<} is a subset of \langref{O
 \target{\langfam{TDD}{T}}
 \status{\poly}
 \begin{description}
-\citet[Theorem 17]{Capelli_2026} show that an \langfam{OBDD}{<} over order $\pi$ can be converted in linear time into an equivalent \langfam{TDD}{T} respecting the corresponding linear vtree $T_{\pi^{-1}}$, with size at most three times the input size.
+\citet[Theorem 17]{Capelli_2026} shows that an \langfam{OBDD}{<} over order $\pi$ can be converted in linear time into an equivalent \langfam{TDD}{T} respecting the corresponding linear vtree $T_{\pi^{-1}}$, with size at most three times the input size.
 \end{description}
 \end{succinctnessclaim}
 
@@ -550,7 +540,7 @@ As defined by \citet{Darwiche_2002}, \langfam{OBDD}{<} is a subset of \langref{O
 \target{\langfam{dec-SDNNF}{T}}
 \status{\poly}
 \begin{description}
-Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. Rewriting each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$ yields a structured output that respects $T$, and all introduced $\vee$-gates are decision gates, producing \langfam{dec-SDNNF}{T} in linear time. \citep{Amarilli_2018}
+Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. Rewriting each decision node labeled $x$ as $(\neg x \wedge D_0) \vee (x \wedge D_1)$ yields a structured output that respects $T$, and all introduced $\vee$-gates are decision gates, producing \langfam{dec-SDNNF}{T} in linear time. \citep{Amarilli_2018}
 \end{description}
 \end{succinctnessclaim}
 
@@ -559,7 +549,7 @@ Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. 
 \target{\langfam{cSDD}{T}}
 \status{\poly}
 \begin{description}
-Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. Every \langfam{OBDD}{<} is a right-linear \langfam{SDD}{T}, and this representation is compressed (canonical), so compilation to \langfam{cSDD}{T} is polynomial-time. \citep{Darwiche_2011}
+Reduce the input \langfam{OBDD}{<} first, then view the reduced \langref{OBDD} as a compressed \langref{SDD} on the corresponding right-linear vtree. This yields a polynomial-time compilation to \langfam{cSDD}{T} \citep{Darwiche_2011}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -586,7 +576,7 @@ As defined by \citet{Darwiche_2002}, \langref{PI} is a subset of \langref{CNF}. 
 \target{\langref{DNF}}
 \status{\noquasi}
 \begin{description}
-The Pairwise \langref{CNF} formula $\Sigma_n = \bigwedge_{i=0}^{n-1}(x_{2i} \vee x_{2i+1})$ has $2^n$ prime implicates; its negation $\neg\Sigma_n$ lies in \langref{PI} and therefore has $2^n$ essential prime implicants, forcing any \langref{DNF} representation to have at least $2^n$ terms \citep{Darwiche_2002}.
+Let $\Sigma_n = \bigwedge_{i=0}^{n-1}(x_{2i} \vee x_{2i+1})$. Its n clauses are essential prime implicates, so it is a linear-size \langref{PI} formula. It has $2^n$ essential prime implicants, forcing every equivalent \langref{DNF} to contain at least $2^n$ terms \citep{Darwiche_2002}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -595,7 +585,7 @@ The Pairwise \langref{CNF} formula $\Sigma_n = \bigwedge_{i=0}^{n-1}(x_{2i} \vee
 \target{\langref{DNNF}}
 \status{\noquasi}
 \begin{description}
-\citet[Proposition 11]{Bova_2016} shows that the $JS_n$ has \langref{PI} size $O(n^2)$. \citet[Proposition 12]{Bova_2016} shows that $JS_n$ has \langref{DNNF} size $2^{\Omega(n^2)}$.
+\citet[Proposition 11]{Bova_2016} shows that $JS_n$ has \langref{PI} size $O(n^2)$. \citet[Proposition 12]{Bova_2016} shows that $JS_n$ has \langref{DNNF} size $2^{\Omega(n^2)}$.
 \end{description}
 \end{succinctnessclaim}
 
@@ -604,7 +594,7 @@ The Pairwise \langref{CNF} formula $\Sigma_n = \bigwedge_{i=0}^{n-1}(x_{2i} \vee
 \target{\langref{FBDD}}
 \status{\noquasi}
 \begin{description}
-The clique detection function $\Sigma_{n,k}$ has $O(n^3)$ prime implicates (hence polynomial \langref{PI} size), but any \langref{FBDD} for $\Sigma_{n,k}$ has exponential size for suitable $k$ \citep{Wegener_1987,Darwiche_2002}.
+The negation of the clique detection function $\not \Sigma_{n,k}$ has $O(n^3)$ prime implicates (hence polynomial \langref{PI} size), but any \langref{FBDD} for $\neg\Sigma_{n,k}$ has exponential size for suitable $k$ \citep{Wegener_1987,Darwiche_2002}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -641,10 +631,11 @@ For any fixed vtree $T$, \langfam{SDD}{T} is a strict subset of \langfam{d-SDNNF
 \target{\langref{FBDD}}
 \status{\noquasi}
 \begin{description}
-By \citet[Corollary 3]{Bollig_2018}, the weighted sum function $WS_n$ can be represented by \langfam{SDD}{T}{s} of size $O(n^3)$ respecting the vtrees used in the construction, but has exponential \langref{FBDD} size. Hence \langfam{SDD}{T} does not compile to \langref{FBDD} in quasipolynomial size.
+By \citet[Corollary 3]{Bollig_2018}, the weighted sum function $WS_n$ can be represented by \langfam{SDD}{T}{s} of size $O(n^3)$ respecting the vtrees used in the construction, but \citet{Savicky_Zak_2000} shows that it has exponential \langref{FBDD} size. Hence \langfam{SDD}{T} does not compile to \langref{FBDD} in quasipolynomial size.
 \end{description}
 \end{succinctnessclaim}
 
+% Status: GOOD
 \begin{succinctnessclaim}
 \source{\langfam{SDD}{T}}
 \target{\langref{SDD}}
@@ -686,7 +677,7 @@ As defined by \citet{Amarilli_2018}, a structured \langref{DNNF} is a triple of 
 \target{\langref{SDNNF}}
 \status{\poly}
 \begin{description}
-\langref{SDNNF} is the union of the fixed-vtree classes \langfam{SDNNF}{T}. Hence any \langfam{SDNNF}{T} formula is already an \langref{SDNNF} formula, so the compilation is trivial and polynomial-time. \citep{Pipatsrisawat_2008}
+\langref{SDNNF} = $\bigcup_T$ \langfam{SDNNF}{T}. Hence any \langfam{SDNNF}{T} representation is already an \langref{SDNNF} representation, so the compilation is trivial and polynomial-time. \citep{Pipatsrisawat_2008}
 \end{description}
 \end{succinctnessclaim}
 
@@ -695,7 +686,7 @@ As defined by \citet{Amarilli_2018}, a structured \langref{DNNF} is a triple of 
 \target{\langfam{nOBDD}{<}}
 \status{\unknownpolyquasi}
 \begin{description}
-The \langref{SDNNF}-to-\langref{nOBDD} simulation can be oriented as in \citet{TCZ_Forthcoming}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and gives a quasipolynomial-size \langfam{nOBDD}{<}.
+\citet{TCZ_Forthcoming} adapts the quasipolynomial simulation of \citet{beame_2013} to compile \langfam{SDNNF}{T} into \langfam{nOBDD}{<} in quasipolynomial time.
 \end{description}
 \end{succinctnessclaim}
 
@@ -704,7 +695,7 @@ The \langref{SDNNF}-to-\langref{nOBDD} simulation can be oriented as in \citet{T
 \target{\langref{d-DNNF}}
 \status{\poly}
 \begin{description}
-Rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The $\wedge$-gates are decomposable, and unambiguity of the \langref{uFBDD} ensures all introduced $\vee$-gates are deterministic, yielding a \langref{d-DNNF} in linear time \citep{Amarilli_2018}.
+Rewrite each decision node labeled $x$ as $(\neg x \wedge D_0) \vee (x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The $\wedge$-gates are decomposable, and unambiguity of the \langref{uFBDD} ensures all introduced $\vee$-gates are deterministic, yielding a \langref{d-DNNF} in linear time \citep{Amarilli_2018}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -731,7 +722,7 @@ As defined by \citet{Amarilli_2018}, \langref{uFBDD} is the subset of \langref{n
 \target{\langref{d-SDNNF}}
 \status{\poly}
 \begin{description}
-Construct a right-linear vtree from the variable order, then rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The vtree alignment ensures structuredness, and unambiguity of the \langref{uOBDD} makes all introduced $\vee$-gates deterministic, yielding a \langref{d-SDNNF} in linear time \citep{Amarilli_2018}.
+Construct a right-linear vtree from the variable order, then rewrite each decision node labeled $x$ as $(\neg x \wedge D_0) \vee (x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The vtree alignment ensures structuredness, and unambiguity of the \langref{uOBDD} makes all introduced $\vee$-gates deterministic, yielding a \langref{d-SDNNF} in linear time \citep{Amarilli_2018}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -740,7 +731,7 @@ Construct a right-linear vtree from the variable order, then rewrite each decisi
 \target{\langref{FBDD}}
 \status{\noquasi}
 \begin{description}
-The weighted sum function $WS_n$ has polynomial-size \langref{uOBDD} formulas: \citet{Wegener_2000} gives polynomial-size \langref{nOBDD}{<} formulas for $WS_n$ under every variable ordering $<$, and the pointer-guess construction has at most one accepting guess, so the formula is unambiguous. By \citet{Savicky_Zak_1996}, every \langref{FBDD} for $WS_n$ has size $2^{n-o(n)}$. Hence no quasipolynomial compilation from \langref{uOBDD} to \langref{FBDD} is possible.
+The weighted sum function $WS_n$ has polynomial-size \langref{uOBDD} formulas: \citet{Wegener_2000} gives polynomial-size \langref{nOBDD}{<} formulas for $WS_n$ under every variable ordering $<$, and the pointer-guess construction has at most one accepting guess, so the formula is unambiguous. By \citet{Savicky_Zak_2000}, every \langref{FBDD} for $WS_n$ has size $2^{n-o(n)}$. Hence no quasipolynomial compilation from \langref{uOBDD} to \langref{FBDD} is possible.
 \end{description}
 \end{succinctnessclaim}
 
@@ -767,7 +758,7 @@ As defined by \citet{Amarilli_2018}, \langref{uOBDD} is the subset of \langref{u
 \target{\langref{OBDD}}
 \status{\noquasi}
 \begin{description}
-The hidden weighted bit function $HWB_n$ has polynomial-size \langref{uOBDD} representations under a fixed order $<$: $HWB_n = \bigvee_{k=1}^n(E_k^n(x) \wedge x_k)$, where each branch for $k$ tests the variables in the same order to verify the exact Hamming weight and $x_k=1$, and the branches are disjoint. Thus the representation is unambiguous and has polynomial size, as in the 2-\langref{OBDD}/\langref{FBDD} constructions discussed by \citet{Wegener_2000}. Bryant's hidden-weighted-bit lower bound says every \langref{OBDD} formula for $HWB_n$, regardless of variable order $<$, has exponential size \citep{Bryant_1986,Wegener_2000}. Hence no quasipolynomial compilation to \langref{OBDD} is possible.
+$HWB_n$ can be represented by \langref{uOBDD}: For any fixed order $<$, nondetermistically choose $k$, test in order that the input has Hamming weight $k$ and that $x_k=1$, and accept. The branches are disjoint, giving a polynomial-size \langfam{uOBDD}{<}. However, every \langref{OBDD} for $HWB_n$ has size $2^{\Omega(n)}$ for every order \citep{Bryaint_1991}
 \end{description}
 \end{succinctnessclaim}
 
@@ -776,7 +767,7 @@ The hidden weighted bit function $HWB_n$ has polynomial-size \langref{uOBDD} rep
 \target{\langref{cSDD}}
 \status{\poly}
 \begin{description}
-As established by \citet{Darwiche_2011}, every \langref{OBDD} is a right-linear \langref{SDD}, which is already compressed (canonical). Thus, \langref{cSDD} strictly generalizes \langref{OBDD}.
+Reduce the input \langref{OBDD} and view the reduced diagram as a compressed \langref{SDD} on its associated right-linear vtree. This proves polynomial compilation to \langref{cSDD}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -821,7 +812,7 @@ As defined by \citet{Amarilli_2018}, \langref{OBDD} is the subset of \langref{uO
 \target{\langref{TDD}}
 \status{\poly}
 \begin{description}
-\citet[Theorem 17]{Capelli_2026} convert every fixed-order \langfam{OBDD}{<} into an equivalent \langfam{TDD}{T} of linear size for the corresponding linear vtree. Taking the union over orders gives a polynomial compilation from \langref{OBDD} to \langref{TDD}.
+\citet[Theorem 17]{Capelli_2026} shows how to convert every fixed-order \langfam{OBDD}{<} into an equivalent \langfam{TDD}{T} of linear size for the corresponding linear vtree. Taking the union over orders gives a polynomial compilation from \langref{OBDD} to \langref{TDD}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -830,7 +821,7 @@ As defined by \citet{Amarilli_2018}, \langref{OBDD} is the subset of \langref{uO
 \target{\langref{dec-SDNNF}}
 \status{\poly}
 \begin{description}
-Construct a right-linear vtree from the variable order, then rewrite each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The vtree alignment ensures structuredness, and since all $\vee$-gates arise from decision node rewrites, every $\vee$-gate is a decision gate, yielding a \langref{dec-SDNNF} in linear time \citep{Amarilli_2018}.
+Construct a right-linear vtree from the variable order, then rewrite each decision node labeled $x$ as $(\neg x \wedge D_0) \vee (x \wedge D_1)$, where $D_0, D_1$ are the rewritings of the 0- and 1-successors. The vtree alignment ensures structuredness, and since all $\vee$-gates arise from decision node rewrites, every $\vee$-gate is a decision gate, yielding a \langref{dec-SDNNF} in linear time \citep{Amarilli_2018}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -839,7 +830,7 @@ Construct a right-linear vtree from the variable order, then rewrite each decisi
 \target{\langfam{d-SDNNF}{T}}
 \status{\poly}
 \begin{description}
-\citet[Theorem 3]{Capelli_2026} show that a \langfam{TDD}{T} can be converted in linear time into an equivalent \langfam{d-SDNNF}{T} respecting the same vtree.
+\citet[Theorem 3]{Capelli_2026} shows that a \langfam{TDD}{T} can be converted in linear time into an equivalent \langfam{d-SDNNF}{T} respecting the same vtree.
 \end{description}
 \end{succinctnessclaim}
 
@@ -920,7 +911,7 @@ As defined by \citet{Amarilli_2018}, \langref{dec-SDNNF} is the subset of \langr
 \target{\langref{OBDD}}
 \status{\unknownpolyquasi}
 \begin{description}
-\citet[Theorem 2]{Bollig_2018} shows that \langref{SDNNF} can be compiled into \langref{nOBDD} by adapting the compilation of \citet{Beame_2015} from \langref{DNNF} to \langref{nFBDD}; The same compilation yields an \langref{OBDD} if the input is a \langref{dec-SDNNF} since there are no $\vee$-gates that are not decision gates in a \langref{dec-SDNNF}.
+\citet[Theorem 2]{Bollig_2018} shows that \langref{SDNNF} can be compiled into \langref{nOBDD} by adapting the compilation of \citet{Beame_2015} from \langref{DNNF} to \langref{nFBDD}. The same compilation yields an \langref{OBDD} if the input is a \langref{dec-SDNNF} since there are no $\vee$-gates that are not decision gates in a \langref{dec-SDNNF}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -947,7 +938,7 @@ For any fixed vtree $T$, \langfam{dec-SDNNF}{T} is the subset of \langfam{d-SDNN
 \target{\langref{nFBDD}}
 \status{\nopolyunknownquasi}
 \begin{description}
-This is the fixed-vtree form of Proposition 3.10 of \citet{Amarilli_2018}.
+\citet[Proposition 3.10]{Amarilli_2018} proves that there exist a family of functions with $O(n^2)$ \langref{dec-SDNNF} representations but no \langref{nFBDD} of size smaller than $n^{\Omega(\log n)}$.
 \end{description}
 \end{succinctnessclaim}
 
@@ -956,7 +947,7 @@ This is the fixed-vtree form of Proposition 3.10 of \citet{Amarilli_2018}.
 \target{\langfam{OBDD}{<}}
 \status{\unknownpolyquasi}
 \begin{description}
-The common-order quasipolynomial simulation of \citet{TCZ_Forthcoming} specializes to \langfam{dec-SDNNF}{T}: for every fixed source vtree $T$, it chooses one output order $<$ depending only on $T$ and produces a quasipolynomial-size \langfam{OBDD}{<}.
+\citet{TCZ_Forthcoming} adapts the quasipolynomial simulation of \citet{beame_2013} to compile \langfam{dec-SDNNF}{T} into \langfam{OBDD}{<} in quasipolynomial time.
 \end{description}
 \end{succinctnessclaim}
 
@@ -983,7 +974,7 @@ The common-order quasipolynomial simulation of \citet{TCZ_Forthcoming} specializ
 \target{\langfam{OBDD}{<}}
 \status{\noquasi}
 \begin{description}
-\citet{Bova_2016_a} gives functions $F_n$ with polynomial-size \langfam{cSDD}{T} representations over explicit vtrees. Conditioning the auxiliary variables of $F_n$ recovers $HWB_n$, and conditioning a \langfam{OBDD}{<} preserves the order and cannot increase size. Since \citet{Bryant_1986,Wegener_2000} give exponential \langfam{OBDD}{<} size for $HWB_n$ for every order, every \langfam{OBDD}{<} for $F_n$ is exponential. Hence \langfam{cSDD}{T} is not quasipolynomial-time compilable to \langfam{OBDD}{<}.
+\citet[Theorem 4]{Bova_2016_a} gives functions $F_n$ with polynomial-size \langfam{cSDD}{T} representations over explicit vtrees. Conditioning the auxiliary variables of $F_n$ recovers $HWB_n$, and conditioning a \langfam{OBDD}{<} preserves the order and cannot increase size. Since \citet{Bryant_1991} gives exponential \langfam{OBDD}{<} size for $HWB_n$ for every order, every \langfam{OBDD}{<} for $F_n$ is exponential. Hence \langfam{cSDD}{T} is not quasipolynomial-time compilable to \langfam{OBDD}{<}.
 \end{description}
 \end{succinctnessclaim}
 
@@ -1019,7 +1010,7 @@ For any fixed vtree $T$, \langfam{cSDD}{T} is the compressed subset of \langfam{
 \target{\langfam{SDNNF}{T}}
 \status{\poly}
 \begin{description}
-Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. Rewriting each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$ yields an output respecting $T$, so \langfam{nOBDD}{<} compiles to \langfam{SDNNF}{T} in linear time. \citep{Amarilli_2018}
+Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. Rewriting each decision node labeled $x$ as $(\neg x \wedge D_0) \vee (x \wedge D_1)$ yields an output respecting $T$, so \langfam{nOBDD}{<} compiles to \langfam{SDNNF}{T} in linear time. \citep{Amarilli_2018}
 \end{description}
 \end{succinctnessclaim}
 
@@ -1028,7 +1019,7 @@ Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. 
 \target{\langfam{d-SDNNF}{T}}
 \status{\poly}
 \begin{description}
-Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. Rewriting each decision node labeled $x$ as $(x \wedge D_0) \vee (\neg x \wedge D_1)$ yields a structured output respecting $T$, and unambiguity ensures determinism of introduced $\vee$-gates, giving \langfam{d-SDNNF}{T} in linear time. \citep{Amarilli_2018}
+Fix any variable order $<$ and let $T$ be the corresponding right-linear vtree. Rewriting each decision node labeled $x$ as $(\neg x \wedge D_0) \vee (x \wedge D_1)$ yields a structured output respecting $T$, and unambiguity ensures determinism of introduced $\vee$-gates, giving \langfam{d-SDNNF}{T} in linear time. \citep{Amarilli_2018}
 \end{description}
 \end{succinctnessclaim}
 
